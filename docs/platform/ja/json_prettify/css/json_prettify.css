@@ -1,0 +1,8 @@
+body{font-family:sans-serif;display:flex;flex-direction:column;align-items:center;}
+.container{display:flex;width:90%;max-width:1200px;margin-bottom:20px;}
+textarea,pre{flex:1;margin:5px;padding:10px;border:1px solid #ddd;font-family:monospace;font-size:14px;}
+textarea{height:300px;}
+pre{background-color:#f4f4f4;white-space:pre-wrap;overflow-y:auto;}
+.button-container{margin-bottom:10px;}
+button{padding:8px 15px;cursor:pointer;}
+.description{margin-top:20px;padding:15px;border-top:1px solid #ccc;font-size:.9em;color:#555;background-color:#fff;box-shadow:0 -2px 5px rgba(0,0,0,.05);}
