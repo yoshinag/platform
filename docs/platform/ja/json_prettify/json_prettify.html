@@ -21,8 +21,26 @@
     <button onclick="minifyJSON()">← 圧縮</button>
 </div>
 <div class="container">
-    <textarea id="jsonInput" placeholder="ここにJSONを入力してください"></textarea>
-    <pre id="jsonOutput">整形されたJSONが表示されます</pre>
+    <div class="text-area-container">
+        <div class="text-area-header">
+            <div class="text-actions">
+                <button id="copy-input-btn" title="入力をコピー"></button>
+                <button id="paste-input-btn" title="入力にペースト"></button>
+                <button id="clear-input-btn" title="入力をクリア"></button>
+            </div>
+        </div>
+        <textarea id="jsonInput" placeholder="ここにJSONを入力してください"></textarea>
+    </div>
+    <div class="text-area-container">
+        <div class="text-area-header">
+            <div class="text-actions">
+                <button id="copy-output-btn" title="出力をコピー"></button>
+                <button id="paste-output-btn" title="出力にペースト"></button>
+                <button id="clear-output-btn" title="出力をクリア"></button>
+            </div>
+        </div>
+        <pre id="jsonOutput">整形されたJSONが表示されます</pre>
+    </div>
 </div>
 <div class="description">
     <h2>説明</h2>
