@@ -5,9 +5,9 @@
   "description": "DOT言語とMermaid記法に対応したグラフ描画・確認ツール",
   "action": {
     "default_icon": {
-      "16": "images/dot_128.png",
-      "48": "images/dot_128.png",
-      "128": "images/dot_128.png"
+      "16": "images/dot_mermaid.png",
+      "48": "images/dot_mermaid.png",
+      "128": "images/dot_mermaid.png"
     }
   },
   "background": {
@@ -20,8 +20,8 @@
     "system.display"
   ],
   "icons": {
-    "16": "images/dot_128.png",
-    "48": "images/dot_128.png",
-    "128": "images/dot_128.png"
+    "16": "images/dot_mermaid.png",
+    "48": "images/dot_mermaid.png",
+    "128": "images/dot_mermaid.png"
   }
 }
