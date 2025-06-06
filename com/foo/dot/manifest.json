@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "DOT/Mermaid Viewer",
   "version": "1.0",
-  "description": "DOT言語とMermaid記法に対応したグラフ描画・確認ツール",
+  "description": "A graph drawing and checking tool that supports DOT language and Mermaid notation. It can also output as an image.",
   "action": {
     "default_icon": {
       "16": "images/dot_mermaid.png",
