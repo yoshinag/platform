@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>年齢計算</title>
+  <style>
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;margin:0;background-color:#f0f2f5;color:#333;padding:20px;box-sizing:border-box;}
+    .calculator-container{background-color:#fff;padding:25px 30px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);width:100%;max-width:520px;text-align:center;}
+    h2{color:#333;margin-top:0;margin-bottom:20px;font-size:1.5em;}
+    .input-group{margin-bottom:18px;text-align:left;}
+    label{display:block;margin-bottom:6px;font-weight:600;color:#555;}
+    .date-input-container{display:flex;align-items:center;gap:8px;}
+    input[type="date"]{flex-grow:1;padding:10px;border:1px solid #ccc;border-radius:5px;font-size:1em;box-sizing:border-box;}
+    .year-buttons{display:flex;gap:4px;}
+    .year-buttons button{padding:8px 9px;font-size:0.9em;background-color:#6c757d;color:white;border:none;border-radius:4px;cursor:pointer;transition:background-color 0.2s ease;white-space:nowrap;}
+    .year-buttons button:hover{background-color:#5a6268;}
+    #calculateAgeButton{width:100%;padding:12px;background-color:#007bff;color:white;border:none;border-radius:5px;font-size:1em;font-weight:600;cursor:pointer;transition:background-color 0.2s ease-in-out;margin-top:10px;}
+    #calculateAgeButton:hover{background-color:#0056b3;}
+    #result{margin-top:20px;font-size:1.1em;font-weight:500;min-height:1.5em;}
+    .error{color:#dc3545;}
+    .success{color:#28a745;}
+  </style>
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W6YKJ74672"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-W6YKJ74672');
+</script>
+<body>
+<div class="calculator-container">
+  <h2>年齢計算</h2>
+  <div class="input-group">
+    <label for="birthdate">生年月日:</label>
+    <div class="date-input-container">
+      <input type="date" id="birthdate">
+      <div class="year-buttons">
+        <button type="button" id="subtract10Years" title="10年戻す">-10年</button>
+        <button type="button" id="subtract5Years" title="5年戻す">-5年</button>
+        <button type="button" id="subtract1Year" title="1年戻す">-1年</button>
+        <button type="button" id="add1Year" title="1年進める">+1年</button>
+        <button type="button" id="add5Years" title="5年進める">+5年</button>
+        <button type="button" id="add10Years" title="10年進める">+10年</button>
+      </div>
+    </div>
+  </div>
+  <div class="input-group">
+    <label for="referenceDate">基準日:</label>
+    <input type="date" id="referenceDate">
+  </div>
+  <button id="calculateAgeButton">年齢を計算する</button>
+  <div id="result"></div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded',()=>{const birthdateInput=document.getElementById('birthdate');const referenceDateInput=document.getElementById('referenceDate');const calculateAgeButton=document.getElementById('calculateAgeButton');const resultDiv=document.getElementById('result');
+    const subtract10YearsButton=document.getElementById('subtract10Years');const subtract5YearsButton=document.getElementById('subtract5Years');const subtract1YearButton=document.getElementById('subtract1Year');const add1YearButton=document.getElementById('add1Year');const add5YearsButton=document.getElementById('add5Years');const add10YearsButton=document.getElementById('add10Years');
+    const displayFeedback=(message,type='info')=>{resultDiv.textContent=message;resultDiv.className=type;};
+    const formatDateToYMD=(date)=>{if(!date||isNaN(date.getTime()))return '';const y=date.getFullYear();const m=String(date.getMonth()+1).padStart(2,'0');const d=String(date.getDate()).padStart(2,'0');return`${y}-${m}-${d}`;};
+    birthdateInput.value="1974-06-08";referenceDateInput.value=formatDateToYMD(new Date());
+    const adjustYear=(years)=>{const dateVal=birthdateInput.value;let targetDate;if(!dateVal){targetDate=new Date();}else{targetDate=new Date(dateVal.replace(/-/g,'/'));if(isNaN(targetDate.getTime()))targetDate=new Date();}
+      targetDate.setFullYear(targetDate.getFullYear()+years);birthdateInput.value=formatDateToYMD(targetDate);};
+    subtract10YearsButton.addEventListener('click',()=>adjustYear(-10));subtract5YearsButton.addEventListener('click',()=>adjustYear(-5));subtract1YearButton.addEventListener('click',()=>adjustYear(-1));add1YearButton.addEventListener('click',()=>adjustYear(1));add5YearsButton.addEventListener('click',()=>adjustYear(5));add10YearsButton.addEventListener('click',()=>adjustYear(10));
+    calculateAgeButton.addEventListener('click',()=>{const birthdateVal=birthdateInput.value;const referenceDateVal=referenceDateInput.value;
+      if(!birthdateVal){displayFeedback('生年月日を選択してください。','error');return;}
+      if(!referenceDateVal){displayFeedback('基準日を選択してください。','error');return;}
+      const birthDate=new Date(birthdateVal.replace(/-/g,'/'));const referenceDate=new Date(referenceDateVal.replace(/-/g,'/'));
+      if(isNaN(birthDate.getTime())){displayFeedback('有効な生年月日を入力してください。','error');return;}
+      if(isNaN(referenceDate.getTime())){displayFeedback('有効な基準日を入力してください。','error');return;}
+      const birthDateOnly=new Date(birthDate.getFullYear(),birthDate.getMonth(),birthDate.getDate());const referenceDateOnly=new Date(referenceDate.getFullYear(),referenceDate.getMonth(),referenceDate.getDate());
+      if(birthDateOnly>referenceDateOnly){displayFeedback('生年月日は基準日より過去の日付にしてください。','error');return;}
+      let age=referenceDate.getFullYear()-birthDate.getFullYear();const monthDiff=referenceDate.getMonth()-birthDate.getMonth();const dayDiff=referenceDate.getDate()-birthDate.getDate();
+      if(monthDiff<0||(monthDiff===0&&dayDiff<0)){age--;}
+      const refDateFormatted=formatDateToYMD(referenceDate);displayFeedback(`${refDateFormatted} 時点の年齢は ${age} 歳です。`,'success');});});
+</script>
+</body>
+</html>
