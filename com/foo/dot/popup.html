@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>dot/Mermaid viewer</title>
+  <meta name="description" content="DOT言語とMermaid記法に対応した無料のオンライングラフ描画・確認ツール。コードを入力するだけで、フローチャート、シーケンス図、ガントチャートなどを簡単に作成・表示・ダウンロードできます。">
+  <link rel="stylesheet" href="css/dot_viewer/base.css">
+  <link rel="stylesheet" href="css/dot_viewer/panels.css">
+  <link rel="stylesheet" href="css/dot_viewer/graph_output.css">
+  <link rel="stylesheet" href="css/dot_viewer/global_controls.css">
+  <link rel="stylesheet" href="css/dot_viewer/fullscreen_view.css">
+</head>
+<body>
+
+<div class="container">
+  <div class="global-controls">
+    <button id="toggle-all-panels-btn" title="設定を隠す"></button>
+    <button id="toggle-fullscreen-btn" title="全画面表示"></button>
+  </div>
+
+  <div class="panels-wrapper">
+    <div class="settings-panel">
+      <h2>設定</h2>
+      <div class="settings-content">
+        <div>
+          <label>記法:</label>
+          <input type="radio" name="notation" value="dot" id="radio-dot"> <label for="radio-dot">DOT</label>
+          <input type="radio" name="notation" value="mermaid" id="radio-mermaid" checked> <label for="radio-mermaid">Mermaid</label>
+        </div>
+        <div>
+          <label for="template-select">テンプレート:</label>
+          <select id="template-select"></select>
+        </div>
+        <div>
+          <label for="download-format-select">ファイル形式:</label>
+          <select id="download-format-select">
+            <option value="png">PNG</option>
+            <option value="svg">SVG</option>
+          </select>
+          <button id="download-btn">ダウンロード</button>
+        </div>
+<!-- CDN settings panel removed as we're now using static script tags -->
+      </div>
+    </div>
+
+    <div class="code-panel">
+      <div class="code-panel-header">
+        <h2>コード</h2>
+        <div class="code-actions">
+          <button id="copy-code-btn" title="コピー"></button>
+          <button id="paste-code-btn" title="ペースト（クリアしてからペースト）"></button>
+          <button id="clear-code-btn" title="クリア"></button>
+        </div>
+      </div>
+      <textarea id="code-input" spellcheck="false"></textarea>
+    </div>
+  </div>
+
+
+  <div class="output-panel">
+    <div id="graph-container">
+      <p>記法を選択し、有効なコードを入力してください。</p>
+    </div>
+  </div>
+</div>
+
+<!-- External libraries -->
+<script src="js/viz/viz.js"></script>
+<script src="js/viz/full.render.js"></script>
+<script src="js/mermaid/mermaid.js"></script>
+
+<!-- Main application script -->
+<script type="module" src="js/dot_viewer/dot_viewer.js" defer></script>
+
+<section aria-labelledby="tool-description-heading">
+  <h2 id="tool-description-heading" style="position:absolute;left:-9999px;">dot/Mermaid viewerについて</h2>
+  <p>このツールを使用すると、DOT言語とMermaid.js記法を使用して、様々な種類の図を簡単に作成、表示、編集することができます。</p>
+  <p>コードは送信されません。</p>
+  <p>ブラウザ版: <a href="https://yoshinag.github.io/calc/" target="_blank">https://yoshinag.github.io/calc/</a></p>
+</section>
+
+</body>
+</html>
