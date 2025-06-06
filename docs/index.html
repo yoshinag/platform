@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>calc</title>
@@ -116,18 +116,18 @@
 <body>
 
 <div class="sidebar" id="sidebar">
-    <h1>目次</h1>
+    <h1>Table of Contents</h1>
     <ul>
-        <li><a href="platform/en/dot/dot_viewer.html" target="contentFrame">dot言語サポート</a></li>
-        <li><a href="platform/en/timezone/timezone.html" target="contentFrame">タイムゾーン計算</a></li>
-        <li><a href="platform/en/number/number.html" target="contentFrame">進数計算</a></li>
-        <li><a href="platform/en/binary/binary.html" target="contentFrame">バイナリ計算</a></li>
+        <li><a href="platform/en/dot/dot_viewer.html" target="contentFrame">DOT Language Support</a></li>
+        <li><a href="platform/en/timezone/timezone.html" target="contentFrame">Timezone Calculator</a></li>
+        <li><a href="platform/en/number/number.html" target="contentFrame">Number System Calculator</a></li>
+        <li><a href="platform/en/binary/binary.html" target="contentFrame">Binary Calculator</a></li>
         <li><a href="platform/en/json_prettify/json_prettify.html" target="contentFrame">json prettify</a></li>
     </ul>
 </div>
 
 <div class="content-wrapper">
-    <button id="sidebar-toggle-btn" title="サイドバー開閉"><</button> <!-- Initial icon set by JS -->
+    <button id="sidebar-toggle-btn" title="Toggle Sidebar"><</button> <!-- Initial icon set by JS -->
     <div class="content">
         <iframe name="contentFrame" src="platform/en/dot/dot_viewer.html"></iframe>
     </div>
@@ -143,10 +143,10 @@
         function updateToggleButton() {
             if (sidebar.classList.contains('collapsed')) {
                 toggleBtn.innerHTML = '&gt;'; // Icon for "open" (>)
-                toggleBtn.title = 'サイドバーを開く';
+                toggleBtn.title = 'Open Sidebar';
             } else {
                 toggleBtn.innerHTML = '&lt;'; // Icon for "close" (<)
-                toggleBtn.title = 'サイドバーを閉じる';
+                toggleBtn.title = 'Close Sidebar';
             }
         }
 
