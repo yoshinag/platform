@@ -118,21 +118,18 @@
 <div class="sidebar" id="sidebar">
     <h1>目次</h1>
     <ul>
-        <li><a href="platform/dot/dot_viewer.html" target="contentFrame">dot言語サポート</a></li>
-        <li><a href="platform/timezone.html" target="contentFrame">タイムゾーン計算</a></li>
-        <li><a href="platform/number.html" target="contentFrame">進数計算</a></li>
-        <li><a href="platform/binary.html" target="contentFrame">バイナリ計算</a></li>
-        <li><a href="platform/ronrikairo.html" target="contentFrame">論理回路</a></li>
-        <li><a href="platform/json_kotlin.html" target="contentFrame">json to kotlin</a></li>
-        <li><a href="platform/json_mysql.html" target="contentFrame">json to mysql</a></li>
-        <li><a href="platform/json_prettify.html" target="contentFrame">json prettify</a></li>
+        <li><a href="platform/en/dot/dot_viewer.html" target="contentFrame">dot言語サポート</a></li>
+        <li><a href="platform/en/timezone/timezone.html" target="contentFrame">タイムゾーン計算</a></li>
+        <li><a href="platform/en/number/number.html" target="contentFrame">進数計算</a></li>
+        <li><a href="platform/en/binary/binary.html" target="contentFrame">バイナリ計算</a></li>
+        <li><a href="platform/en/json_prettify/json_prettify.html" target="contentFrame">json prettify</a></li>
     </ul>
 </div>
 
 <div class="content-wrapper">
     <button id="sidebar-toggle-btn" title="サイドバー開閉"><</button> <!-- Initial icon set by JS -->
     <div class="content">
-        <iframe name="contentFrame" src="platform/dot/dot_viewer.html"></iframe>
+        <iframe name="contentFrame" src="platform/en/dot/dot_viewer.html"></iframe>
     </div>
 </div>
 
@@ -158,7 +155,7 @@
         if (isCollapsed) {
             sidebar.classList.add('collapsed');
         }
-        updateToggleButton(); // Set initial button state
+        updateToggleButton();
 
         toggleBtn.addEventListener('click', function() {
             sidebar.classList.toggle('collapsed');
