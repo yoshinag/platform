@@ -1,118 +1,15 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>タイムゾーン／時差変換</title>
-  <style>
-    body{font-family:sans-serif;line-height:1.6;margin:20px;background-color:#f4f7f6;}
-    .container{max-width:700px;margin:20px auto;padding:25px;border:1px solid #ddd;border-radius:10px;box-shadow:0 4px 8px rgba(0,0,0,0.1);background-color:white;}
-    h2{text-align:center;color:#333;margin-bottom:25px;}
-    .input-group{display:flex;flex-wrap:wrap;gap:15px;margin-bottom:18px;}
-    .input-group > div{flex:1;min-width:200px;}
-    label{display:block;margin-bottom:6px;font-weight:bold;color:#555;}
-    input[type="date"],input[type="time"],select{width:100%;padding:12px;border:1px solid #ccc;border-radius:5px;font-size:1rem;box-sizing:border-box;transition:border-color 0.3s ease;}
-    input[type="date"]:focus,input[type="time"]:focus,select:focus{border-color:#007bff;outline:none;}
-    .checkbox-group label {display:inline-block; margin-left:5px; font-weight:normal;}
-    .checkbox-group input[type="checkbox"] {width:auto; vertical-align:middle;}
-    button{display:block;width:100%;padding:12px;margin-top:10px;background-color:#007bff;color:white;border:none;border-radius:5px;font-size:1.1rem;cursor:pointer;transition:background-color 0.3s ease;}
-    button:hover{background-color:#0056b3;}
-    #resultTableContainer{margin-top:25px;}
-    #resultTable{width:100%;border-collapse:collapse;margin-top:10px;}
-    #resultTable th, #resultTable td{border:1px solid #ddd;padding:10px;text-align:left;word-break:break-word;}
-    #resultTable th{background-color:#e9f7ef;color:#2e7d32;font-weight:bold;}
-    #resultTable td{background-color:#fff;}
-    .error{color:#d32f2f;margin-top:12px;font-weight:bold;padding:10px;background-color:#ffebee;border:1px solid #ffcdd2;border-radius:5px;}
-    .highlight {background-color: #fff9c4 !important;}
-    .explanation{margin-top:20px;padding:15px;background-color:#eef;border-left:5px solid #55a;font-size:0.9rem;line-height:1.5;}
-    .explanation h3{margin-top:0;margin-bottom:10px;color:#336;}
-    .explanation ul {padding-left: 20px; margin-top: 5px; margin-bottom: 10px;}
-    .explanation li { margin-bottom: 5px; }
-  </style>
-</head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-W6YKJ74672"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+const definedTimezones = {
+  'JST': { name: 'JST (Japan Standard Time)', iana: 'Asia/Tokyo', standardOffsetHours: 9, supportsDst: false },
+  'UTC': { name: 'UTC (Coordinated Universal Time)', iana: 'Etc/UTC', standardOffsetHours: 0, supportsDst: false },
+  'GMT': { name: 'GMT (Greenwich Mean Time)', iana: 'Etc/GMT', standardOffsetHours: 0, supportsDst: false },
+  'PST': { name: 'PST (Pacific Standard Time)', iana: 'America/Los_Angeles', standardOffsetHours: -8, supportsDst: true },
+  'EST': { name: 'EST (Eastern Standard Time)', iana: 'America/New_York', standardOffsetHours: -5, supportsDst: true },
+  'CST': { name: 'CST (Central Standard Time)', iana: 'America/Chicago', standardOffsetHours: -6, supportsDst: true },
+  'CET': { name: 'CET (Central European Time)', iana: 'Europe/Berlin', standardOffsetHours: 1, supportsDst: true },
+  'AST': { name: 'AST (Arabia Standard Time)', iana: 'Asia/Riyadh', standardOffsetHours: 3, supportsDst: false }
+};
 
-  gtag('config', 'G-W6YKJ74672');
-</script>
-<body>
-<div class="container">
-  <h2>タイムゾーン／時差変換</h2>
-  <p>入力された日時を「基準タイムゾーン」での時刻として、各タイムゾーンの時刻を表示します。</p>
-  <div class="input-group">
-    <div>
-      <label for="dateInput">日付:</label>
-      <input type="date" id="dateInput" required>
-    </div>
-    <div>
-      <label for="timeInput">時刻:</label>
-      <input type="time" id="timeInput" required>
-    </div>
-  </div>
-  <div>
-    <label for="baseTimezone">基準タイムゾーン:</label>
-    <select id="baseTimezone" required></select>
-  </div>
-  <div class="checkbox-group" id="dstToggleContainer" style="display:none; margin-bottom:15px;">
-    <input type="checkbox" id="applyDstCheckbox">
-    <label for="applyDstCheckbox">サマータイムを適用する (可能な場合)</label>
-  </div>
-  <div>
-    <button id="convertButton">一括変換</button>
-  </div>
-  <div id="resultTableContainer" style="display:none;">
-    <strong>変換結果:</strong>
-    <table id="resultTable">
-      <thead>
-      <tr>
-        <th>タイムゾーン</th>
-        <th>変換後の日時</th>
-        <th>オフセット</th>
-      </tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
-  </div>
-  <div id="additionalExplanation" class="explanation">
-    <h3>補足情報</h3>
-    <h4>UTCとGMTの関係について</h4>
-    <ul>
-      <li><strong>UTC (協定世界時):</strong> 原子時計に基づく国際的な標準時です。時刻システムの基礎として広く使用されています。</li>
-      <li><strong>GMT (グリニッジ標準時):</strong> 歴史的にはグリニッジ天文台の平均太陽時を指しましたが、現在では多くの場合UTCと同じ時刻（オフセット0）を意味します。このツールではGMTを常にUTCと同じ「オフセット0 (Etc/GMT)」として扱います。</li>
-    </ul>
-    <h4>サマータイム（夏時間）と各タイムゾーンについて</h4>
-    <ul>
-      <li>このツールは、サマータイムを適用する場合、指定された日付に基づいて自動的に夏時間 (DST) を考慮します。サマータイム適用チェックボックスがオフの場合、または対象日時がサマータイム期間外の場合、各タイムゾーンの「標準時」に基づいて時刻が表示されます。</li>
-    </ul>
-    <h4>各タイムゾーンについて</h4>
-    <ul>
-      <li><strong>JST (日本標準時):</strong> サマータイムは導入されていません。常にUTC+9です。</li>
-      <li><strong>PST (太平洋標準時):</strong> アメリカやカナダの一部で使用され、夏季にはPDT (太平洋夏時間, UTC-7) になります。標準時はUTC-8です。</li>
-      <li><strong>EST (東部標準時):</strong> アメリカやカナダの一部で使用され、夏季にはEDT (東部夏時間, UTC-4) になります。標準時はUTC-5です。</li>
-      <li><strong>CST (中部標準時):</strong> アメリカやカナダ、メキシコの一部で使用され、夏季にはCDT (中部夏時間, UTC-5) になります。標準時はUTC-6です。</li>
-      <li><strong>CET (中央ヨーロッパ時間):</strong> ヨーロッパの多くの国で使用され、夏季にはCEST (中央ヨーロッパ夏時間, UTC+2) になります。標準時はUTC+1です。</li>
-      <li><strong>UTC (協定世界時)</strong> およびこのツールで扱う <strong>GMT (グリニッジ標準時, Etc/GMT)</strong> にはサマータイムの概念はありません。</li>
-    </ul>
-  </div>
-  <div id="error-message" class="error" style="display:none;"></div>
-</div>
-
-<script>
-  const definedTimezones = {
-    'JST': { name: 'JST (日本標準時)', iana: 'Asia/Tokyo', standardOffsetHours: 9, supportsDst: false },
-    'UTC': { name: 'UTC (協定世界時)', iana: 'Etc/UTC', standardOffsetHours: 0, supportsDst: false },
-    'GMT': { name: 'GMT (グリニッジ標準時)', iana: 'Etc/GMT', standardOffsetHours: 0, supportsDst: false },
-    'PST': { name: 'PST (太平洋標準時)', iana: 'America/Los_Angeles', standardOffsetHours: -8, supportsDst: true },
-    'EST': { name: 'EST (東部標準時)', iana: 'America/New_York', standardOffsetHours: -5, supportsDst: true },
-    'CST': { name: 'CST (中部標準時)', iana: 'America/Chicago', standardOffsetHours: -6, supportsDst: true },
-    'CET': { name: 'CET (中央ヨーロッパ時間)', iana: 'Europe/Berlin', standardOffsetHours: 1, supportsDst: true }
-  };
-
+document.addEventListener('DOMContentLoaded', function() {
   const baseTimezoneSelect = document.getElementById('baseTimezone');
   const dateInput = document.getElementById('dateInput');
   const timeInput = document.getElementById('timeInput');
@@ -234,7 +131,7 @@
   timeInput.addEventListener('change', updateDstCheckboxState);
   baseTimezoneSelect.addEventListener('change', updateDstCheckboxState);
 
-  convertButton.addEventListener('click', () => {
+  function performConversion() {
     clearError();
     resultTableBody.innerHTML = '';
     const dateValue = dateInput.value;
@@ -242,8 +139,8 @@
     const baseTZKey = baseTimezoneSelect.value;
     const useDst = applyDstCheckbox.checked && !applyDstCheckbox.disabled;
 
-    if (!dateValue || !timeValue) { displayError('日付と時刻を入力してください。'); return; }
-    if (!baseTZKey || !definedTimezones[baseTZKey]) { displayError('有効な基準タイムゾーンを選択してください。'); return; }
+    if (!dateValue || !timeValue) { displayError('Please enter date and time.'); return; }
+    if (!baseTZKey || !definedTimezones[baseTZKey]) { displayError('Please select a valid base timezone.'); return; }
 
     const baseTzInfo = definedTimezones[baseTZKey];
     let baseTimeUtc;
@@ -260,11 +157,11 @@
       }
       baseTimeUtc = new Date(isoStringForBaseUtc);
       if (isNaN(baseTimeUtc.getTime())) {
-        throw new Error(`基準時刻のUTC変換に失敗。ISO: ${isoStringForBaseUtc}`);
+        throw new Error(`Failed to convert base time to UTC. ISO: ${isoStringForBaseUtc}`);
       }
     } catch (error) {
       console.error("Base UTC calculation error:", error);
-      displayError(`基準時刻の解析エラー: ${error.message}`);
+      displayError(`Base time parsing error: ${error.message}`);
       return;
     }
 
@@ -292,7 +189,7 @@
           actualOffsetHours = getCurrentOffsetHours(tempDateForOffset, targetTzInfo.iana);
         }
 
-        const targetFormatter = new Intl.DateTimeFormat('ja-JP', {
+        const targetFormatter = new Intl.DateTimeFormat('en-US', {
           year: 'numeric', month: '2-digit', day: '2-digit',
           hour: '2-digit', minute: '2-digit', second: '2-digit',
           hourCycle: 'h23',
@@ -303,7 +200,7 @@
         if (targetTZKey === baseTZKey) {
           newRow.classList.add('highlight');
         }
-        newRow.insertCell().textContent = targetTzInfo.name + (targetTzInfo.supportsDst && !useDst ? " (標準時)" : "");
+        newRow.insertCell().textContent = targetTzInfo.name + (targetTzInfo.supportsDst && !useDst ? " (Standard Time)" : "");
         newRow.insertCell().textContent = formattedTargetTime;
 
         let offsetDisplayString = "N/A";
@@ -316,19 +213,23 @@
           const sign = targetTzInfo.standardOffsetHours >= 0 ? '+' : '-';
           const h = Math.floor(Math.abs(targetTzInfo.standardOffsetHours));
           const m = Math.round((Math.abs(targetTzInfo.standardOffsetHours) - h) * 60);
-          offsetDisplayString = `UTC${sign}${String(h).padStart(1,'0')}${m > 0 ? `:${String(m).padStart(2,'0')}`: ''} (標準)`;
+          offsetDisplayString = `UTC${sign}${String(h).padStart(1,'0')}${m > 0 ? `:${String(m).padStart(2,'0')}`: ''} (Standard)`;
         }
         newRow.insertCell().textContent = offsetDisplayString;
       }
     }
-  });
+  }
 
+  convertButton.addEventListener('click', performConversion);
+
+  // Initialize the page
   populateBaseTimezoneSelect();
   const now=new Date();
   dateInput.value=now.toISOString().slice(0,10);
   timeInput.value=now.toTimeString().slice(0,5);
   updateDstCheckboxState();
   clearError();
-</script>
-</body>
-</html>
+
+  // Automatically perform conversion when the page loads
+  performConversion();
+});
