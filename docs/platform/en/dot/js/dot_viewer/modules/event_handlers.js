@@ -44,7 +44,7 @@ export function handleDownload() {
     if (svgElement) {
         if (format === 'svg') downloadSVG(svgElement); // graphContainer no longer strictly needed
         else if (format === 'png') downloadPNG(svgElement); // graphContainer no longer strictly needed
-        else alert('不明なグラフィックダウンロード形式です: ' + format);
+        else alert('Unknown graphic download format: ' + format);
     } else {
         const currentText = graphContainer.textContent || graphContainer.innerText;
         if (currentText && currentText.trim() !== '') {
@@ -52,7 +52,7 @@ export function handleDownload() {
             const url = URL.createObjectURL(blob);
             triggerDownload(url, 'graph_content.txt');
         } else {
-            alert('ダウンロード可能なコンテンツが graph container に見つかりません。');
+            alert('No downloadable content found in the graph container.');
         }
     }
 }

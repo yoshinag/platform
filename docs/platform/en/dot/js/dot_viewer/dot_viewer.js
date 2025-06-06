@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Display a user-friendly message in the graph container or a dedicated error div
         const gc = document.getElementById('graph-container');
         if (gc) {
-            gc.innerHTML = '<p class="error-message">致命的なエラーによりアプリケーションを起動できませんでした。コンソールを確認してください。</p>';
+            gc.innerHTML = '<p class="error-message">The application could not be started due to a fatal error. Please check the console.</p>';
         }
     });
 });

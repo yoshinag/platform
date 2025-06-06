@@ -22,7 +22,7 @@ export function populateTemplateSelectWithOptions(selectElement, templates) {
     selectElement.innerHTML = '';
     if (templates.length === 0) {
         const option = document.createElement('option');
-        option.textContent = 'テンプレートなし';
+        option.textContent = 'No templates';
         option.disabled = true;
         selectElement.appendChild(option);
         return;

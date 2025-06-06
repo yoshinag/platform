@@ -24,17 +24,17 @@ export function setupAllPanelsToggle(buttonElement, settingsPanelElement, codePa
             settingsPanelElement.classList.remove('hidden');
             codePanelElement.classList.remove('hidden');
             this.innerHTML = SVG_ICON_CHEVRON_UP;
-            this.title = 'パネルを隠す';
+            this.title = 'Hide panels';
         } else {
             settingsPanelElement.classList.add('hidden');
             codePanelElement.classList.add('hidden');
             this.innerHTML = SVG_ICON_CHEVRON_DOWN;
-            this.title = 'パネルを表示';
+            this.title = 'Show panels';
         }
     });
     const arePanelsInitiallyHidden = settingsPanelElement.classList.contains('hidden') && codePanelElement.classList.contains('hidden');
     buttonElement.innerHTML = arePanelsInitiallyHidden ? SVG_ICON_CHEVRON_DOWN : SVG_ICON_CHEVRON_UP;
-    buttonElement.title = arePanelsInitiallyHidden ? 'パネルを表示' : 'パネルを隠す';
+    buttonElement.title = arePanelsInitiallyHidden ? 'Show panels' : 'Hide panels';
 }
 
 export function setupFullscreenToggle(buttonElement, bodyElement) {
@@ -44,7 +44,7 @@ export function setupFullscreenToggle(buttonElement, bodyElement) {
     }
     function updateFullscreenButtonState(isFullscreenActive) {
         buttonElement.innerHTML = isFullscreenActive ? SVG_ICON_FULLSCREEN_EXIT : SVG_ICON_FULLSCREEN;
-        buttonElement.title = isFullscreenActive ? '通常表示に戻す' : '全画面表示 (ビュー)';
+        buttonElement.title = isFullscreenActive ? 'Exit fullscreen' : 'Fullscreen view';
     }
     updateFullscreenButtonState(bodyElement.classList.contains('graph-view-fullscreen'));
     buttonElement.addEventListener('click', function() {
@@ -65,7 +65,7 @@ export function setupClearCodeButton(clearButton, codeInputElement, afterClearCa
         return;
     }
     clearButton.innerHTML = SVG_ICON_TRASH;
-    clearButton.title = "コードをクリア";
+    clearButton.title = "Clear code";
     clearButton.addEventListener('click', () => {
         codeInputElement.value = '';
         codeInputElement.focus();
@@ -81,12 +81,12 @@ export function setupCopyCodeButton(copyButton, codeInputElement) {
         return;
     }
     copyButton.innerHTML = SVG_ICON_COPY;
-    const originalCopyTitle = "コードをコピー";
+    const originalCopyTitle = "Copy code";
     copyButton.title = originalCopyTitle;
 
     copyButton.addEventListener('click', () => {
         if (codeInputElement.value.trim() === '') {
-            copyButton.title = 'コピーするコードがありません';
+            copyButton.title = 'No code to copy';
             setTimeout(() => {
                 copyButton.title = originalCopyTitle;
             }, 1500);
@@ -99,20 +99,20 @@ export function setupCopyCodeButton(copyButton, codeInputElement) {
                 codeInputElement.select();
                 document.execCommand('copy');
                 copyButton.innerHTML = SVG_ICON_COPY_SUCCESS;
-                copyButton.title = 'コピーしました!';
+                copyButton.title = 'Copied!';
             } catch (err) {
                 console.error('Fallback copy failed:', err);
-                alert('コードのコピーに失敗しました (execCommand)。');
-                copyButton.title = 'コピー失敗';
+                alert('Failed to copy code (execCommand).');
+                copyButton.title = 'Copy failed';
             }
         } else {
             navigator.clipboard.writeText(codeInputElement.value).then(() => {
                 copyButton.innerHTML = SVG_ICON_COPY_SUCCESS;
-                copyButton.title = 'コピーしました!';
+                copyButton.title = 'Copied!';
             }).catch(err => {
                 console.error('Async copy failed:', err);
-                alert('コードのコピーに失敗しました (Clipboard API)。');
-                copyButton.title = 'コピー失敗';
+                alert('Failed to copy code (Clipboard API).');
+                copyButton.title = 'Copy failed';
             });
         }
         setTimeout(() => {
@@ -128,13 +128,13 @@ export function setupPasteCodeButton(pasteButton, codeInputElement, afterPasteCa
         return;
     }
     pasteButton.innerHTML = SVG_ICON_PASTE;
-    const originalPasteTitle = "コードをペースト (既存の内容はクリアされます)";
+    const originalPasteTitle = "Paste code (existing content will be cleared)";
     pasteButton.title = originalPasteTitle;
 
     pasteButton.addEventListener('click', async () => {
         if (!navigator.clipboard || !navigator.clipboard.readText) {
-            alert('このブラウザではクリップボードの読み取りがサポートされていません。');
-            pasteButton.title = 'ペースト失敗';
+            alert('Clipboard reading is not supported in this browser.');
+            pasteButton.title = 'Paste failed';
             setTimeout(() => { pasteButton.title = originalPasteTitle; }, 2000);
             return;
         }
@@ -144,18 +144,18 @@ export function setupPasteCodeButton(pasteButton, codeInputElement, afterPasteCa
             codeInputElement.focus();
 
             pasteButton.innerHTML = SVG_ICON_PASTE_SUCCESS;
-            pasteButton.title = 'ペーストしました!';
+            pasteButton.title = 'Pasted!';
             if (typeof afterPasteCallback === 'function') {
                 afterPasteCallback();
             }
         } catch (err) {
             console.error('Paste failed:', err);
             if (err.name === 'NotAllowedError' || (err.message && err.message.toLowerCase().includes('permission denied'))) {
-                alert('クリップボードへのアクセス許可が必要です。ページをクリックしてから再度お試しください。');
+                alert('Clipboard access permission is required. Please click on the page and try again.');
             } else {
-                alert('クリップボードからのペーストに失敗しました。');
+                alert('Failed to paste from clipboard.');
             }
-            pasteButton.title = 'ペースト失敗';
+            pasteButton.title = 'Paste failed';
         }
         setTimeout(() => {
             pasteButton.innerHTML = SVG_ICON_PASTE;
