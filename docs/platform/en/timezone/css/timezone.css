@@ -21,3 +21,28 @@ button:hover{background-color:#0056b3;}
 .explanation h3{margin-top:0;margin-bottom:10px;color:#336;}
 .explanation ul {padding-left: 20px; margin-top: 5px; margin-bottom: 10px;}
 .explanation li { margin-bottom: 5px; }
+.copy-icon {
+  cursor: pointer;
+  color: #007bff;
+  margin-left: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+.copy-icon svg {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}
+.copy-icon:hover {
+  color: #0056b3;
+}
+.copy-success {
+  color: #28a745;
+}
+.action-cell {
+  text-align: center !important;
+  width: 50px;
+  vertical-align: middle;
+}

@@ -33,6 +33,18 @@
     <label for="baseTimezone">Base Timezone:</label>
     <select id="baseTimezone" required></select>
   </div>
+  <div>
+    <label for="dateFormatSelect">Date Format:</label>
+    <select id="dateFormatSelect">
+      <option value="en-US">MM/DD/YYYY, HH:mm:ss</option>
+      <option value="en-GB">DD/MM/YYYY, HH:mm:ss</option>
+      <option value="ja-JP-hyphen">YYYY-MM-DD HH:mm:ss</option>
+      <option value="ja-JP-slash">YYYY/MM/DD HH:mm:ss</option>
+      <option value="ja-JP">YYYY年MM月DD日 HH:mm:ss</option>
+      <option value="ja-JP-u-ca-japanese">Japanese Era YYYY年MM月DD日 HH:mm:ss</option>
+      <option value="iso">ISO 8601 (YYYY-MM-DDTHH:mm:ss)</option>
+    </select>
+  </div>
   <div class="checkbox-group" id="dstToggleContainer" style="display:none; margin-bottom:15px;">
     <input type="checkbox" id="applyDstCheckbox">
     <label for="applyDstCheckbox">Apply Daylight Saving Time (if applicable)</label>
@@ -48,6 +60,7 @@
         <th>Timezone</th>
         <th>Converted Date/Time</th>
         <th>Offset</th>
+        <th>Actions</th>
       </tr>
       </thead>
       <tbody>

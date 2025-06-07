@@ -33,12 +33,24 @@
     <label for="baseTimezone">基準タイムゾーン:</label>
     <select id="baseTimezone" required></select>
   </div>
+  <div>
+    <label for="dateFormatSelect">日付表示形式:</label>
+    <select id="dateFormatSelect">
+      <option value="ja-JP">YYYY年MM月DD日 HH:mm:ss</option>
+      <option value="ja-JP-u-ca-japanese">和暦 YYYY年MM月DD日 HH:mm:ss</option>
+      <option value="ja-JP-hyphen">YYYY-MM-DD HH:mm:ss</option>
+      <option value="ja-JP-slash">YYYY/MM/DD HH:mm:ss</option>
+      <option value="en-US">MM/DD/YYYY, HH:mm:ss</option>
+      <option value="en-GB">DD/MM/YYYY, HH:mm:ss</option>
+      <option value="iso">ISO 8601 (YYYY-MM-DDTHH:mm:ss)</option>
+    </select>
+  </div>
   <div class="checkbox-group" id="dstToggleContainer" style="display:none; margin-bottom:15px;">
     <input type="checkbox" id="applyDstCheckbox">
     <label for="applyDstCheckbox">サマータイムを適用する (可能な場合)</label>
   </div>
   <div>
-    <button id="convertButton">一括変換</button>
+    <button id="convertButton">変換</button>
   </div>
   <div id="resultTableContainer" style="display:none;">
     <strong>変換結果:</strong>
@@ -48,6 +60,7 @@
         <th>タイムゾーン</th>
         <th>変換後の日時</th>
         <th>オフセット</th>
+        <th>操作</th>
       </tr>
       </thead>
       <tbody>

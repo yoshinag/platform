@@ -1,3 +1,7 @@
+// SVG Icon definitions
+const SVG_ICON_COPY = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>';
+const SVG_ICON_COPY_SUCCESS = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>';
+
 const definedTimezones = {
   'JST': { name: 'JST (日本標準時)', iana: 'Asia/Tokyo', standardOffsetHours: 9, supportsDst: false },
   'UTC': { name: 'UTC (協定世界時)', iana: 'Etc/UTC', standardOffsetHours: 0, supportsDst: false },
@@ -16,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const dstToggleContainer = document.getElementById('dstToggleContainer');
   const applyDstCheckbox = document.getElementById('applyDstCheckbox');
   const convertButton = document.getElementById('convertButton');
+  const dateFormatSelect = document.getElementById('dateFormatSelect');
   const resultTableBody = document.getElementById('resultTable').getElementsByTagName('tbody')[0];
   const resultTableContainer = document.getElementById('resultTableContainer');
   const errorMessageDiv = document.getElementById('error-message');
@@ -128,8 +133,132 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   dateInput.addEventListener('change', updateDstCheckboxState);
+  dateInput.addEventListener('change', performConversion);
   timeInput.addEventListener('change', updateDstCheckboxState);
+  timeInput.addEventListener('change', performConversion);
   baseTimezoneSelect.addEventListener('change', updateDstCheckboxState);
+  baseTimezoneSelect.addEventListener('change', performConversion);
+  applyDstCheckbox.addEventListener('change', performConversion);
+
+  // Function to format date based on selected format
+  function formatDateWithSelectedFormat(date, timezone) {
+    const formatValue = dateFormatSelect.value;
+    let options = {
+      timeZone: timezone,
+      hourCycle: 'h23'
+    };
+
+    // Set format options based on selected format
+    if (formatValue === 'ja-JP') {
+      options = {
+        ...options,
+        year: 'numeric', month: 'long', day: 'numeric',
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
+      };
+      return new Intl.DateTimeFormat('ja-JP', options).format(date);
+    } else if (formatValue === 'ja-JP-u-ca-japanese') {
+      options = {
+        ...options,
+        year: 'numeric', month: 'long', day: 'numeric',
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        era: 'long', calendar: 'japanese'
+      };
+      return new Intl.DateTimeFormat('ja-JP-u-ca-japanese', options).format(date);
+    } else if (formatValue === 'ja-JP-hyphen') {
+      options = {
+        ...options,
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
+      };
+      return new Intl.DateTimeFormat('ja-JP', options).format(date).replace(/\//g, '-');
+    } else if (formatValue === 'ja-JP-slash') {
+      options = {
+        ...options,
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
+      };
+      return new Intl.DateTimeFormat('ja-JP', options).format(date);
+    } else if (formatValue === 'en-US') {
+      options = {
+        ...options,
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
+      };
+      return new Intl.DateTimeFormat('en-US', options).format(date);
+    } else if (formatValue === 'en-GB') {
+      options = {
+        ...options,
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
+      };
+      return new Intl.DateTimeFormat('en-GB', options).format(date);
+    } else if (formatValue === 'iso') {
+      // ISO 8601 format
+      const isoString = date.toISOString();
+      // Convert to target timezone
+      const formatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: timezone,
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        hourCycle: 'h23'
+      });
+      const parts = formatter.formatToParts(date);
+      const dateObj = {};
+      parts.forEach(part => {
+        if (part.type !== 'literal') {
+          dateObj[part.type] = part.value;
+        }
+      });
+      return `${dateObj.year}-${dateObj.month}-${dateObj.day}T${dateObj.hour}:${dateObj.minute}:${dateObj.second}`;
+    }
+
+    // Default format
+    options = {
+      ...options,
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit'
+    };
+    return new Intl.DateTimeFormat('ja-JP', options).format(date).replace(/\//g, '-');
+  }
+
+  // Function to copy text to clipboard
+  function copyToClipboard(text, element) {
+    const originalTitle = element.title;
+
+    if (!navigator.clipboard) {
+      try {
+        // Create a temporary textarea element to copy from
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';  // Prevent scrolling to bottom
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+
+        element.innerHTML = SVG_ICON_COPY_SUCCESS;
+        element.title = 'コピーしました!';
+      } catch (err) {
+        console.error('Fallback copy failed:', err);
+        alert('テキストのコピーに失敗しました (execCommand)。');
+        element.title = 'コピー失敗';
+      }
+    } else {
+      navigator.clipboard.writeText(text).then(() => {
+        element.innerHTML = SVG_ICON_COPY_SUCCESS;
+        element.title = 'コピーしました!';
+      }).catch(err => {
+        console.error('Async copy failed:', err);
+        alert('テキストのコピーに失敗しました (Clipboard API)。');
+        element.title = 'コピー失敗';
+      });
+    }
+
+    setTimeout(() => {
+      element.innerHTML = SVG_ICON_COPY;
+      element.title = originalTitle;
+    }, 2000);
+  }
 
   function performConversion() {
     clearError();
@@ -189,21 +318,28 @@ document.addEventListener('DOMContentLoaded', function() {
           actualOffsetHours = getCurrentOffsetHours(tempDateForOffset, targetTzInfo.iana);
         }
 
-        const targetFormatter = new Intl.DateTimeFormat('ja-JP', {
-          year: 'numeric', month: '2-digit', day: '2-digit',
-          hour: '2-digit', minute: '2-digit', second: '2-digit',
-          hourCycle: 'h23',
-          timeZone: displayIana,
-        });
-        const formattedTargetTime = targetFormatter.format(baseTimeUtc).replace(/\//g, '-');
+        // Format the date using the selected format
+        const formattedTargetTime = formatDateWithSelectedFormat(baseTimeUtc, displayIana);
+
         const newRow = resultTableBody.insertRow();
         if (targetTZKey === baseTZKey) {
           newRow.classList.add('highlight');
         }
+
+        // Timezone name cell
         newRow.insertCell().textContent = targetTzInfo.name + (targetTzInfo.supportsDst && !useDst ? " (標準時)" : "");
-        newRow.insertCell().textContent = formattedTargetTime;
+
+        // Formatted date cell
+        const dateCell = newRow.insertCell();
+        dateCell.textContent = formattedTargetTime;
+
+        // Create a data attribute to store the formatted date for copying
+        dateCell.setAttribute('data-datetime', formattedTargetTime);
 
         let offsetDisplayString = "N/A";
+
+        // Offset cell
+        const offsetCell = newRow.insertCell();
         if (!isNaN(actualOffsetHours)) {
           const sign = actualOffsetHours >= 0 ? '+' : '-';
           const h = Math.floor(Math.abs(actualOffsetHours));
@@ -215,12 +351,34 @@ document.addEventListener('DOMContentLoaded', function() {
           const m = Math.round((Math.abs(targetTzInfo.standardOffsetHours) - h) * 60);
           offsetDisplayString = `UTC${sign}${String(h).padStart(1,'0')}${m > 0 ? `:${String(m).padStart(2,'0')}`: ''} (標準)`;
         }
-        newRow.insertCell().textContent = offsetDisplayString;
+        offsetCell.textContent = offsetDisplayString;
+
+        // Add copy icon cell
+        const actionCell = newRow.insertCell();
+        actionCell.className = 'action-cell';
+
+        // Create copy icon
+        const copyIcon = document.createElement('span');
+        copyIcon.innerHTML = SVG_ICON_COPY;
+        copyIcon.className = 'copy-icon';
+        copyIcon.title = '日時をコピー';
+        copyIcon.setAttribute('data-datetime', formattedTargetTime);
+
+        // Add click event to copy the date
+        copyIcon.addEventListener('click', function() {
+          const textToCopy = this.getAttribute('data-datetime');
+          copyToClipboard(textToCopy, this);
+        });
+
+        actionCell.appendChild(copyIcon);
       }
     }
   }
 
   convertButton.addEventListener('click', performConversion);
+
+  // Add event listener to date format select
+  dateFormatSelect.addEventListener('change', performConversion);
 
   // Initialize the page
   populateBaseTimezoneSelect();
