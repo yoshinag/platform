@@ -34,7 +34,9 @@ export function populateTemplateSelectWithOptions(selectElement, templates) {
         selectElement.appendChild(option);
     });
     if (templates.length > 0) { // Ensure there's at least one template before setting value
-        selectElement.value = templates[0].id;
+        // Randomly select a template instead of always using the first one
+        const randomIndex = Math.floor(Math.random() * templates.length);
+        selectElement.value = templates[randomIndex].id;
     }
 }
 
