@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>進数変換ツール</title>
+    <link rel="stylesheet" href="css/number.css">
+</head>
+<!-- Google Analytics -->
+<script src="../../../platform/js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <h1>進数変換ツール</h1>
+    <div>
+        <label for="inputRadix">入力進数:</label>
+        <select id="inputRadix">
+            <option value="2">2進数 (Binary)</option><option value="8">8進数 (Octal)</option>
+            <option value="10" selected>10進数 (Decimal)</option><option value="16">16進数 (Hexadecimal)</option>
+        </select>
+    </div>
+    <div>
+        <label for="inputValue">入力値:</label>
+        <input type="text" id="inputValue" value="0">
+    </div>
+    <div class="error-message" id="errorMessage"></div>
+    <h2>変換結果</h2>
+    <div class="output">
+        <label for="outputBinary">2進数:</label>
+        <input type="text" id="outputBinary" readonly>
+    </div>
+    <div class="output">
+        <label for="outputOctal">8進数:</label>
+        <input type="text" id="outputOctal" readonly>
+    </div>
+    <div class="output">
+        <label for="outputDecimal">10進数:</label>
+        <input type="text" id="outputDecimal" readonly>
+    </div>
+    <div class="output">
+        <label for="outputHexadecimal">16進数:</label>
+        <input type="text" id="outputHexadecimal" readonly>
+    </div>
+
+    <div class="explanation">
+        <h3>各種進数について</h3>
+        <h4>10進数 (Decimal)</h4>
+        <p>
+            私たちが日常生活で最も一般的に使用する進数で、底（基数）は10です。<code>0</code>から<code>9</code>までの10個の数字を使って数を表現します。桁が一つ上がるごとに値は10倍になります。
+        </p>
+        <h4>2進数 (Binary)</h4>
+        <p>
+            コンピュータが情報を処理する際に使用する進数で、底は2です。<code>0</code>と<code>1</code>の2個の数字（ビット）を使って数を表現します。桁が一つ上がるごとに値は2倍になります。コンピュータの内部では、電気信号のオン/オフなど、2つの状態を表現するのに適しているため広く使われています。
+        </p>
+        <h4>8進数 (Octal)</h4>
+        <p>
+            底は8です。<code>0</code>から<code>7</code>までの8個の数字を使って数を表現します。コンピュータの初期の頃に、2進数表現をより短くするために使われました。3桁の2進数は1桁の8進数で表せるため、2進数と相性が良いです (例: 2進数の <code>111</code> は8進数の <code>7</code>)。
+        </p>
+        <h4>16進数 (Hexadecimal)</h4>
+        <p>
+            底は16です。<code>0</code>から<code>9</code>までの数字と、<code>A</code>から<code>F</code>までのアルファベット（<code>A=10</code>, <code>B=11</code>, ..., <code>F=15</code>）の合計16個の記号を使って数を表現します。8進数と同様に、2進数表現を短くするために広く使われます。4桁の2進数は1桁の16進数で表せるため、特にプログラミングやコンピュータの低レベルな部分で頻繁に使用されます (例: 2進数の <code>1111</code> は16進数の <code>F</code>)。
+        </p>
+    </div>
+</div>
+<!-- Main application script -->
+<script src="js/number.js"></script>
+</body>
+</html>

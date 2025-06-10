@@ -1,0 +1,14 @@
+body{font-family:sans-serif;display:flex;flex-direction:column;align-items:center;}
+.container{display:flex;width:90%;max-width:1200px;margin-bottom:20px;}
+.text-area-container{flex:1;margin:5px;display:flex;flex-direction:column;}
+.text-area-header{display:flex;flex-direction:column;width:100%;}
+.text-actions{display:flex;justify-content:flex-end;margin-bottom:5px;}
+.text-actions button{background-color:transparent;color:#555;border:1px solid #ccc;border-radius:4px;padding:4px 6px;margin-left:8px;cursor:pointer;font-size:16px;line-height:1;display:inline-flex;align-items:center;justify-content:center;transition:background-color 0.2s ease-in-out,color 0.2s ease-in-out,border-color 0.2s ease-in-out;}
+.text-actions button:hover{background-color:#f0f0f0;color:#333;border-color:#bbb;}
+.text-actions button svg{display:block;width:1em;height:1em;fill:currentColor;}
+textarea,pre{width:100%;padding:10px;border:1px solid #ddd;font-family:monospace;font-size:14px;box-sizing:border-box;}
+textarea{height:300px;resize:vertical;}
+pre{background-color:#f4f4f4;white-space:pre-wrap;overflow-y:auto;height:300px;margin:0;}
+.button-container{margin-bottom:10px;}
+.button-container button{padding:8px 15px;cursor:pointer;}
+.description{margin-top:20px;padding:15px;border-top:1px solid #ccc;font-size:.9em;color:#555;background-color:#fff;box-shadow:0 -2px 5px rgba(0,0,0,.05);}

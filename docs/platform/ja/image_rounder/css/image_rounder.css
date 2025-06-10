@@ -1,0 +1,156 @@
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+    margin: 0;
+}
+
+.container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: center;
+    max-width: 600px;
+    width: 90%;
+    border: 2px dashed transparent;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.container.dragover {
+    border-color: #007bff;
+    background-color: #f0f8ff;
+}
+
+#previewCanvas {
+    border: 1px solid #ccc;
+    max-width: 100%;
+    height: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background-image:
+            linear-gradient(45deg, #eee 25%, transparent 25%),
+            linear-gradient(-45deg, #eee 25%, transparent 25%),
+            linear-gradient(45deg, transparent 75%, #eee 75%),
+            linear-gradient(-45deg, transparent 75%, #eee 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.controls, .downloads {
+    margin-top: 15px;
+}
+
+.control-group {
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.control-group label {
+    margin-right: 5px;
+}
+
+.options-group {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+label, button, input[type="file"], input[type="color"] {
+    margin: 5px;
+    vertical-align: middle;
+}
+
+button {
+    padding: 8px 15px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.2s;
+}
+
+button:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+input[type="range"] {
+    width: 180px;
+    vertical-align: middle;
+}
+
+input[type="color"] {
+    width: 50px;
+    height: 30px;
+    border: 1px solid #ccc;
+    padding: 0;
+    vertical-align: middle;
+    border-radius: 4px;
+}
+
+.info {
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.section-title {
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: left;
+    font-size: 1.1em;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #ddd;
+    margin: 25px 0;
+}
+
+input[type="file"] {
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    color: #495057;
+    display: inline-block;
+}
+
+input[type="file"]::file-selector-button {
+    display:none;
+}
+
+.upload-area {
+    margin-bottom: 15px;
+}
+
+.upload-area p {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.bg-color-settings {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日付の加算・減算（曜日表示付き）</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #f0f2f5;
+      color: #333;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .calculator-container {
+      background-color: #fff;
+      padding: 25px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+    h2 {
+      color: #333;
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 1.5em;
+    }
+    .input-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #555;
+    }
+    input[type="date"], input[type="number"] {
+      width: calc(100% - 22px); /* padding + border */
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+      box-sizing: border-box;
+    }
+    .operation-group label {
+      display: inline-block;
+      margin-right: 15px;
+      font-weight: normal;
+    }
+    .operation-group input[type="radio"] {
+      margin-right: 5px;
+      vertical-align: middle;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 1.1em;
+      font-weight: 500;
+      min-height: 1.5em;
+    }
+    .error { color: #dc3545; }
+    .success { color: #17a2b8; }
+  </style>
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W6YKJ74672"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-W6YKJ74672');
+</script>
+<body>
+
+<div class="calculator-container">
+  <h2>日付の加算・減算</h2>
+  <div class="input-group">
+    <label for="baseDate">基準日:</label>
+    <input type="date" id="baseDate">
+  </div>
+  <div class="input-group">
+    <label for="days">日数:</label>
+    <input type="number" id="days" value="1" min="0">
+  </div>
+  <div class="input-group operation-group">
+    <label>操作:</label>
+    <input type="radio" id="add" name="operation" value="add" checked>
+    <label for="add">加算</label>
+    <input type="radio" id="subtract" name="operation" value="subtract">
+    <label for="subtract">減算</label>
+  </div>
+  <button id="calculateButton">計算する</button>
+  <div id="result"></div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const baseDateInput = document.getElementById('baseDate');
+    const daysInput = document.getElementById('days');
+    const calculateButton = document.getElementById('calculateButton');
+    const resultDiv = document.getElementById('result');
+    const dayNames = ["日", "月", "火", "水", "木", "金", "土"];
+
+    const displayFeedback = (message, type = 'info') => {
+      resultDiv.textContent = message;
+      resultDiv.className = type;
+    };
+
+    const formatDate = (date) => {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+      const dayIndex = date.getDay();
+      return `${y}-${m}-${d} (${dayNames[dayIndex]})`;
+    };
+
+    calculateButton.addEventListener('click', () => {
+      const baseDateVal = baseDateInput.value;
+      const daysVal = parseInt(daysInput.value, 10);
+      const operation = document.querySelector('input[name="operation"]:checked').value;
+
+      if (!baseDateVal) {
+        displayFeedback('基準日を選択してください。', 'error');
+        return;
+      }
+      if (isNaN(daysVal) || daysVal < 0) {
+        displayFeedback('日数は0以上の数値を入力してください。', 'error');
+        return;
+      }
+
+      const baseDate = new Date(baseDateVal.replace(/-/g, '/'));
+      if (isNaN(baseDate.getTime())) {
+        displayFeedback('有効な基準日を入力してください。', 'error');
+        return;
+      }
+
+      const resultDate = new Date(baseDate);
+
+      if (operation === 'add') {
+        resultDate.setDate(baseDate.getDate() + daysVal);
+      } else if (operation === 'subtract') {
+        resultDate.setDate(baseDate.getDate() - daysVal);
+      }
+
+      displayFeedback(`結果: ${formatDate(resultDate)}`, 'success');
+    });
+
+    // 初期値として今日の日付を基準日に設定 (曜日なしで良い)
+    const today = new Date();
+    const y = today.getFullYear();
+    const m = String(today.getMonth() + 1).padStart(2, '0');
+    const d = String(today.getDate()).padStart(2, '0');
+    baseDateInput.value = `${y}-${m}-${d}`;
+  });
+</script>
+
+</body>
+</html>

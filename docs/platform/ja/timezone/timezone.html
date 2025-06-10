@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>タイムゾーン／時差変換</title>
+  <link rel="stylesheet" href="css/timezone.css">
+</head>
+<!-- Google Analytics -->
+<script src="../../../platform/js/common/analytics.js"></script>
+<body>
+<div class="container">
+  <h2>タイムゾーン／時差変換</h2>
+  <p>入力された日時を「基準タイムゾーン」での時刻として、各タイムゾーンの時刻を表示します。</p>
+  <div class="input-group">
+    <div>
+      <label for="dateInput">日付:</label>
+      <input type="date" id="dateInput" required>
+    </div>
+    <div>
+      <label for="timeInput">時刻:</label>
+      <input type="time" id="timeInput" required>
+    </div>
+  </div>
+  <div>
+    <label for="baseTimezone">基準タイムゾーン:</label>
+    <select id="baseTimezone" required></select>
+  </div>
+  <div>
+    <label for="dateFormatSelect">日付表示形式:</label>
+    <select id="dateFormatSelect">
+      <option value="ja-JP">YYYY年MM月DD日 HH:mm:ss</option>
+      <option value="ja-JP-u-ca-japanese">和暦 YYYY年MM月DD日 HH:mm:ss</option>
+      <option value="ja-JP-hyphen">YYYY-MM-DD HH:mm:ss</option>
+      <option value="ja-JP-slash">YYYY/MM/DD HH:mm:ss</option>
+      <option value="en-US">MM/DD/YYYY, HH:mm:ss</option>
+      <option value="en-GB">DD/MM/YYYY, HH:mm:ss</option>
+      <option value="iso">ISO 8601 (YYYY-MM-DDTHH:mm:ss)</option>
+    </select>
+  </div>
+  <div class="checkbox-group" id="dstToggleContainer" style="display:none; margin-bottom:15px;">
+    <input type="checkbox" id="applyDstCheckbox">
+    <label for="applyDstCheckbox">サマータイムを適用する (可能な場合)</label>
+  </div>
+  <div>
+    <button id="convertButton">変換</button>
+  </div>
+  <div id="resultTableContainer" style="display:none;">
+    <strong>変換結果:</strong>
+    <table id="resultTable">
+      <thead>
+      <tr>
+        <th>タイムゾーン</th>
+        <th>変換後の日時</th>
+        <th>オフセット</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+  <div id="additionalExplanation" class="explanation">
+    <h3>補足情報</h3>
+    <h4>UTCとGMTの関係について</h4>
+    <ul>
+      <li><strong>UTC (協定世界時):</strong> 原子時計に基づく国際的な標準時です。時刻システムの基礎として広く使用されています。</li>
+      <li><strong>GMT (グリニッジ標準時):</strong> 歴史的にはグリニッジ天文台の平均太陽時を指しましたが、現在では多くの場合UTCと同じ時刻（オフセット0）を意味します。このツールではGMTを常にUTCと同じ「オフセット0 (Etc/GMT)」として扱います。</li>
+    </ul>
+    <h4>サマータイム（夏時間）と各タイムゾーンについて</h4>
+    <ul>
+      <li>このツールは、サマータイムを適用する場合、指定された日付に基づいて自動的に夏時間 (DST) を考慮します。サマータイム適用チェックボックスがオフの場合、または対象日時がサマータイム期間外の場合、各タイムゾーンの「標準時」に基づいて時刻が表示されます。</li>
+    </ul>
+    <h4>各タイムゾーンについて</h4>
+    <ul>
+      <li><strong>JST (日本標準時):</strong> サマータイムは導入されていません。常にUTC+9です。</li>
+      <li><strong>PST (太平洋標準時):</strong> アメリカやカナダの一部で使用され、夏季にはPDT (太平洋夏時間, UTC-7) になります。標準時はUTC-8です。</li>
+      <li><strong>EST (東部標準時):</strong> アメリカやカナダの一部で使用され、夏季にはEDT (東部夏時間, UTC-4) になります。標準時はUTC-5です。</li>
+      <li><strong>CST (中部標準時):</strong> アメリカやカナダ、メキシコの一部で使用され、夏季にはCDT (中部夏時間, UTC-5) になります。標準時はUTC-6です。</li>
+      <li><strong>CET (中央ヨーロッパ時間):</strong> ヨーロッパの多くの国で使用され、夏季にはCEST (中央ヨーロッパ夏時間, UTC+2) になります。標準時はUTC+1です。</li>
+      <li><strong>AST (アラビア標準時):</strong> サウジアラビアやその他の湾岸諸国で使用されています。サマータイムは導入されていません。常にUTC+3です。</li>
+      <li><strong>UTC (協定世界時)</strong> およびこのツールで扱う <strong>GMT (グリニッジ標準時, Etc/GMT)</strong> にはサマータイムの概念はありません。</li>
+    </ul>
+  </div>
+  <div id="error-message" class="error" style="display:none;"></div>
+</div>
+
+<!-- Main application script -->
+<script src="js/timezone.js"></script>
+</body>
+</html>

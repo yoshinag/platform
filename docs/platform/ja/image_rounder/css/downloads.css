@@ -1,0 +1,41 @@
+/* --- START OF FILE css/downloads.css --- */
+.downloads .section-title {
+    text-align: left; /* Align download section titles to the left */
+}
+
+.options-group {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center buttons and color pickers */
+    align-items: center;
+    gap: 10px; /* Add some gap between items */
+}
+
+/* Background color settings specific styling */
+.bg-color-settings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    background-color: #fafafa;
+}
+.bg-color-settings > label { /* Label for RGB picker */
+    font-weight: bold;
+}
+
+
+/* Info text at the bottom of the downloads section */
+.downloads + .info, /* Selects .info immediately following .downloads */
+.downloads + .info + .info { /* And the one after that */
+    text-align: left;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* --- END OF FILE css/downloads.css --- */

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Data Unit Conversion (KB/KiB, MB/MiB, GB/GiB, TB/TiB)</title>
+    <link rel="stylesheet" href="css/binary.css">
+</head>
+<!-- Google Analytics -->
+<script src="../../../platform/js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <h1>Data Unit Conversion</h1>
+    <div class="input-group">
+        <label for="inputValue">Value:</label>
+        <input type="number" id="inputValue" step="any" min="0" value="1024">
+        <label for="inputUnit">Unit:</label>
+        <select id="inputUnit">
+            <option value="kib">KiB</option><option value="mib">MiB</option><option value="gib">GiB</option><option value="tib">TiB</option>
+            <option value="kb">KB</option><option value="mb">MB</option><option value="gb">GB</option><option value="tb">TB</option>
+        </select>
+    </div>
+    <h2>Results:</h2>
+    <div class="result-group">
+        <div class="result-item"><label for="resultKib">KiB:</label><input type="text" id="resultKib" readonly></div>
+        <div class="result-item"><label for="resultMib">MiB:</label><input type="text" id="resultMib" readonly></div>
+        <div class="result-item"><label for="resultGib">GiB:</label><input type="text" id="resultGib" readonly></div>
+        <div class="result-item"><label for="resultTib">TiB:</label><input type="text" id="resultTib" readonly></div>
+        <div class="result-item"><label for="resultKb">KB:</label><input type="text" id="resultKb" readonly></div>
+        <div class="result-item"><label for="resultMb">MB:</label><input type="text" id="resultMb" readonly></div>
+        <div class="result-item"><label for="resultGb">GB:</label><input type="text" id="resultGb" readonly></div>
+        <div class="result-item"><label for="resultTb">TB:</label><input type="text" id="resultTb" readonly></div>
+    </div>
+    <div class="explanation">
+        <h3>Understanding the Difference Between "kb" and "KiB"</h3>
+        <p>
+            Prefixes like "kilo (k)", "mega (M)", and "giga (G)" used in digital data sizes originally represent powers of 10 (10³=1000 times, 10⁶=1,000,000 times, etc.).
+            However, in computing, where binary is fundamental, these prefixes have sometimes been used to represent powers of 2 (2¹⁰=1024 times, 2²⁰=1,048,576 times, etc.), causing confusion.
+        </p>
+        <p>
+            To resolve this confusion, the IEC (International Electrotechnical Commission) standardized new prefixes to represent powers of 2.
+            These are "kibi (Ki)", "mebi (Mi)", "gibi (Gi)", "tebi (Ti)", etc.
+        </p>
+        <p>
+            According to these standards:
+        </p>
+        <ul>
+            <li><code>kb</code> (kilobit): 10³ bits = 1000 bits</li>
+            <li><code>KB</code> (kilobyte): 10³ bytes = 1000 bytes</li>
+            <li><code>kib</code> (kibibit): 2¹⁰ bits = 1024 bits</li>
+            <li><code>KiB</code> (kibibyte): 2¹⁰ bytes = 1024 bytes</li>
+        </ul>
+        <p>
+            In other words, the prefix "k" correctly represents 1000 times, while "Ki" represents 1024 times. Also, lowercase "b" represents "bits", and uppercase "B" represents "bytes" (1 byte = 8 bits).
+            However, in older systems or certain contexts, "KB" might still mean 1024 bytes, differing from the standard. Notably, storage capacities (HDD, SSD, etc.) are often calculated using 1000-based units, while memory capacities (RAM) typically use 1024-based units.
+        </p>
+    </div>
+</div>
+<!-- Main application script -->
+<script src="js/binary.js"></script>
+</body>
+</html>

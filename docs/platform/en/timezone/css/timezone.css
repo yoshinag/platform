@@ -1,0 +1,48 @@
+body{font-family:sans-serif;line-height:1.6;margin:20px;background-color:#f4f7f6;}
+.container{max-width:700px;margin:20px auto;padding:25px;border:1px solid #ddd;border-radius:10px;box-shadow:0 4px 8px rgba(0,0,0,0.1);background-color:white;}
+h2{text-align:center;color:#333;margin-bottom:25px;}
+.input-group{display:flex;flex-wrap:wrap;gap:15px;margin-bottom:18px;}
+.input-group > div{flex:1;min-width:200px;}
+label{display:block;margin-bottom:6px;font-weight:bold;color:#555;}
+input[type="date"],input[type="time"],select{width:100%;padding:12px;border:1px solid #ccc;border-radius:5px;font-size:1rem;box-sizing:border-box;transition:border-color 0.3s ease;}
+input[type="date"]:focus,input[type="time"]:focus,select:focus{border-color:#007bff;outline:none;}
+.checkbox-group label {display:inline-block; margin-left:5px; font-weight:normal;}
+.checkbox-group input[type="checkbox"] {width:auto; vertical-align:middle;}
+button{display:block;width:100%;padding:12px;margin-top:10px;background-color:#007bff;color:white;border:none;border-radius:5px;font-size:1.1rem;cursor:pointer;transition:background-color 0.3s ease;}
+button:hover{background-color:#0056b3;}
+#resultTableContainer{margin-top:25px;}
+#resultTable{width:100%;border-collapse:collapse;margin-top:10px;}
+#resultTable th, #resultTable td{border:1px solid #ddd;padding:10px;text-align:left;word-break:break-word;}
+#resultTable th{background-color:#e9f7ef;color:#2e7d32;font-weight:bold;}
+#resultTable td{background-color:#fff;}
+.error{color:#d32f2f;margin-top:12px;font-weight:bold;padding:10px;background-color:#ffebee;border:1px solid #ffcdd2;border-radius:5px;}
+.highlight {background-color: #fff9c4 !important;}
+.explanation{margin-top:20px;padding:15px;background-color:#eef;border-left:5px solid #55a;font-size:0.9rem;line-height:1.5;}
+.explanation h3{margin-top:0;margin-bottom:10px;color:#336;}
+.explanation ul {padding-left: 20px; margin-top: 5px; margin-bottom: 10px;}
+.explanation li { margin-bottom: 5px; }
+.copy-icon {
+  cursor: pointer;
+  color: #007bff;
+  margin-left: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+.copy-icon svg {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}
+.copy-icon:hover {
+  color: #0056b3;
+}
+.copy-success {
+  color: #28a745;
+}
+.action-cell {
+  text-align: center !important;
+  width: 50px;
+  vertical-align: middle;
+}

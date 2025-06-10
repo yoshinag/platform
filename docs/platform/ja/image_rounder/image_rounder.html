@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画像の角丸め＆リサイズ＆ダウンロード</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/preview.css">
+    <link rel="stylesheet" href="css/controls.css">
+    <link rel="stylesheet" href="css/downloads.css">
+</head>
+<!-- Google Analytics -->
+<script src="../../../platform/js/common/analytics.js"></script>
+<body>
+<div class="container" id="dropZone">
+    <h1>画像の角丸め＆リサイズ＆ダウンロードツール</h1>
+
+    <details open>
+        <summary>使用方法</summary>
+        <ol>
+            <li>画像をアップロードする（ファイル選択またはドラッグ＆ドロップ）</li>
+            <li>角の丸みを調整する</li>
+            <li>必要に応じて土台レイヤーのサイズを設定する</li>
+            <li>必要に応じて画像レイヤーのサイズを調整する</li>
+            <li>プレビューで確認する</li>
+            <li>希望の形式でダウンロードする
+                <ul>
+                    <li>透過背景が必要な場合: SVGまたはPNG（透過）</li>
+                    <li>背景色が必要な場合: PNG（背景色指定）またはJPEG（背景色指定）</li>
+                </ul>
+            </li>
+            <li>サーバーへの画像アップロードは行われません。すべての処理はブラウザ上で実行されます。</li>
+        </ol>
+    </details>
+
+    <div class="upload-area">
+        <input type="file" id="imageUpload" accept="image/*">
+        <p>または、ここに画像をドラッグ＆ドロップしてください</p>
+    </div>
+
+    <div class="controls">
+        <div class="control-group"> <!-- 角丸 -->
+            <label for="borderRadiusSlider">角の丸み (画像レイヤー): </label>
+            <input type="range" id="borderRadiusSlider" min="0" max="100" value="20" disabled>
+            <span id="radiusValueDisplay">20</span>px
+        </div>
+
+        <hr>
+        <p class="section-title">土台レイヤーオプション</p>
+        <div class="control-group"> <!-- 土台 幅 -->
+            <label for="basePresetWidth">幅:</label>
+            <input type="text" id="basePresetWidth" list="baseWidthOptions" placeholder="カスタム" disabled>
+            <datalist id="baseWidthOptions">
+                <option value="16">16px</option>
+                <option value="32">32px</option>
+                <option value="64">64px</option>
+                <option value="128">128px</option>
+                <option value="256">256px</option>
+                <option value="512">512px</option>
+                <option value="1024">1024px</option>
+                <option value="2048">2048px</option>
+                <option value="4096">4096px</option>
+            </datalist>
+            <input type="number" id="baseCustomWidth" min="1" style="display: none;" disabled> px
+        </div>
+        <div class="control-group"> <!-- 土台 高さ -->
+            <label for="basePresetHeight">高さ:</label>
+            <input type="text" id="basePresetHeight" list="baseHeightOptions" placeholder="カスタム" disabled>
+            <datalist id="baseHeightOptions">
+                <option value="16">16px</option>
+                <option value="32">32px</option>
+                <option value="64">64px</option>
+                <option value="128">128px</option>
+                <option value="256">256px</option>
+                <option value="512">512px</option>
+                <option value="1024">1024px</option>
+                <option value="2048">2048px</option>
+                <option value="4096">4096px</option>
+            </datalist>
+            <input type="number" id="baseCustomHeight" min="1" style="display: none;" disabled> px
+        </div>
+        <div class="control-group"> <!-- 土台 アスペクト比 -->
+            <input type="checkbox" id="baseAspectRatioLock" checked disabled>
+            <label for="baseAspectRatioLock">アスペクト比を維持 (カスタム時)</label>
+        </div>
+
+        <hr>
+        <p class="section-title">画像レイヤーオプション</p>
+        <div class="control-group"> <!-- 画像 割合 -->
+            <label for="imageLayerScalePercentage">土台に対する割合:</label>
+            <button id="decreaseScaleBtn" class="scale-btn" disabled>-</button>
+            <input type="range" id="imageLayerScalePercentage" min="1" max="200" value="100" disabled>
+            <button id="increaseScaleBtn" class="scale-btn" disabled>+</button>
+            <span id="imageLayerScaleDisplay">100</span>%
+        </div>
+        <div class="control-group"> <!-- 画像 幅 高さ -->
+            <label for="imageLayerResizeWidth">幅 (px):</label>
+            <input type="number" id="imageLayerResizeWidth" min="1" disabled>
+            <label for="imageLayerResizeHeight">高さ (px):</label>
+            <input type="number" id="imageLayerResizeHeight" min="1" disabled>
+        </div>
+        <div class="control-group"> <!-- 画像 アスペクト比 -->
+            <input type="checkbox" id="imageLayerAspectRatioLock" checked disabled>
+            <label for="imageLayerAspectRatioLock">画像のアスペクト比を維持</label>
+        </div>
+    </div>
+
+    <canvas id="previewCanvas"></canvas>
+    <p class="info">↑プレビュー（透過部分はチェッカーボードで表示）</p>
+    <p class="info">画像レイヤーは土台レイヤーの中央に配置されます。</p>
+
+    <div class="downloads">
+        <p class="section-title">透過ダウンロード</p>
+        <div class="options-group">
+            <button id="downloadSvgBtn" disabled>SVG (透過)</button>
+            <button id="downloadPngTransparentBtn" disabled>PNG (透過)</button>
+        </div>
+        <hr>
+        <p class="section-title">背景色付きダウンロード</p>
+        <div class="options-group">
+            <button id="downloadPngBgColorBtn" disabled>PNG (背景色指定)</button>
+            <button id="downloadJpegBtn" disabled>JPEG (背景色指定)</button>
+        </div>
+        <div class="options-group bg-color-settings">
+            <label for="bgColorPicker">RGB/HEX:</label>
+            <input type="color" id="bgColorPicker" value="#ffffff" disabled>
+        </div>
+    </div>
+    <p class="info">SVG/PNG(透過)は透過情報を保持します。</p>
+    <p class="info">PNG/JPEG(背景色指定)は選択した共通背景色で透過部分が塗りつぶされます。</p>
+    <p class="info">SVGは土台サイズの透過ファイルとして、角丸画像が中央に配置されます。</p>
+</div>
+
+<script src="js/utils.js"></script>
+<script src="js/color_manager.js"></script>
+<script src="js/base_layer_manager.js"></script>
+<script src="js/image_layer_manager.js"></script>
+<script src="js/image_rounder.js"></script>
+</body>
+</html>

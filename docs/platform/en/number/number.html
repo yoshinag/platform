@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Number Base Converter</title>
+    <link rel="stylesheet" href="css/number.css">
+</head>
+<!-- Google Analytics -->
+<script src="../../../platform/js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <h1>Number Base Converter</h1>
+    <div>
+        <label for="inputRadix">Input Base:</label>
+        <select id="inputRadix">
+            <option value="2">Binary (Base 2)</option><option value="8">Octal (Base 8)</option>
+            <option value="10" selected>Decimal (Base 10)</option><option value="16">Hexadecimal (Base 16)</option>
+        </select>
+    </div>
+    <div>
+        <label for="inputValue">Input Value:</label>
+        <input type="text" id="inputValue" value="0">
+    </div>
+    <div class="error-message" id="errorMessage"></div>
+    <h2>Conversion Results</h2>
+    <div class="output">
+        <label for="outputBinary">Binary:</label>
+        <input type="text" id="outputBinary" readonly>
+    </div>
+    <div class="output">
+        <label for="outputOctal">Octal:</label>
+        <input type="text" id="outputOctal" readonly>
+    </div>
+    <div class="output">
+        <label for="outputDecimal">Decimal:</label>
+        <input type="text" id="outputDecimal" readonly>
+    </div>
+    <div class="output">
+        <label for="outputHexadecimal">Hexadecimal:</label>
+        <input type="text" id="outputHexadecimal" readonly>
+    </div>
+
+    <div class="explanation">
+        <h3>About Number Systems</h3>
+        <h4>Decimal (Base 10)</h4>
+        <p>
+            The most commonly used number system in our daily lives, with a base of 10. It uses 10 digits from <code>0</code> to <code>9</code> to represent numbers. Each position increase multiplies the value by 10.
+        </p>
+        <h4>Binary (Base 2)</h4>
+        <p>
+            The number system used by computers to process information, with a base of 2. It uses only 2 digits, <code>0</code> and <code>1</code> (bits), to represent numbers. Each position increase multiplies the value by 2. It's widely used in computers because it's well-suited for representing two states, such as on/off electrical signals.
+        </p>
+        <h4>Octal (Base 8)</h4>
+        <p>
+            A number system with a base of 8, using 8 digits from <code>0</code> to <code>7</code>. It was used in early computing to shorten binary representations. It works well with binary because 3 binary digits can be represented by 1 octal digit (e.g., binary <code>111</code> is octal <code>7</code>).
+        </p>
+        <h4>Hexadecimal (Base 16)</h4>
+        <p>
+            A number system with a base of 16, using 16 symbols: digits <code>0</code> to <code>9</code> and letters <code>A</code> to <code>F</code> (where <code>A=10</code>, <code>B=11</code>, ..., <code>F=15</code>). Like octal, it's widely used to shorten binary representations. 4 binary digits can be represented by 1 hexadecimal digit, making it particularly useful in programming and low-level computing (e.g., binary <code>1111</code> is hexadecimal <code>F</code>).
+        </p>
+    </div>
+</div>
+<!-- Main application script -->
+<script src="js/number.js"></script>
+</body>
+</html>

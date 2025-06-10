@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timezone / Time Difference Converter</title>
+  <link rel="stylesheet" href="css/timezone.css">
+</head>
+<!-- Google Analytics -->
+<script src="../../../platform/js/common/analytics.js"></script>
+<body>
+<div class="container">
+  <h2>Timezone / Time Difference Converter</h2>
+  <p>Displays the time in various timezones based on the input date and time in the "Base Timezone".</p>
+  <div class="input-group">
+    <div>
+      <label for="dateInput">Date:</label>
+      <input type="date" id="dateInput" required>
+    </div>
+    <div>
+      <label for="timeInput">Time:</label>
+      <input type="time" id="timeInput" required>
+    </div>
+  </div>
+  <div>
+    <label for="baseTimezone">Base Timezone:</label>
+    <select id="baseTimezone" required></select>
+  </div>
+  <div>
+    <label for="dateFormatSelect">Date Format:</label>
+    <select id="dateFormatSelect">
+      <option value="en-US">MM/DD/YYYY, HH:mm:ss</option>
+      <option value="en-GB">DD/MM/YYYY, HH:mm:ss</option>
+      <option value="ja-JP-hyphen">YYYY-MM-DD HH:mm:ss</option>
+      <option value="ja-JP-slash">YYYY/MM/DD HH:mm:ss</option>
+      <option value="ja-JP">YYYY年MM月DD日 HH:mm:ss</option>
+      <option value="ja-JP-u-ca-japanese">Japanese Era YYYY年MM月DD日 HH:mm:ss</option>
+      <option value="iso">ISO 8601 (YYYY-MM-DDTHH:mm:ss)</option>
+    </select>
+  </div>
+  <div class="checkbox-group" id="dstToggleContainer" style="display:none; margin-bottom:15px;">
+    <input type="checkbox" id="applyDstCheckbox">
+    <label for="applyDstCheckbox">Apply Daylight Saving Time (if applicable)</label>
+  </div>
+  <div>
+    <button id="convertButton">Convert All</button>
+  </div>
+  <div id="resultTableContainer" style="display:none;">
+    <strong>Conversion Results:</strong>
+    <table id="resultTable">
+      <thead>
+      <tr>
+        <th>Timezone</th>
+        <th>Converted Date/Time</th>
+        <th>Offset</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+  <div id="additionalExplanation" class="explanation">
+    <h3>Additional Information</h3>
+    <h4>Relationship Between UTC and GMT</h4>
+    <ul>
+      <li><strong>UTC (Coordinated Universal Time):</strong> An international time standard based on atomic clocks. It is widely used as the foundation for time systems.</li>
+      <li><strong>GMT (Greenwich Mean Time):</strong> Historically referred to the mean solar time at the Royal Observatory in Greenwich, but today it often means the same time as UTC (offset 0). In this tool, GMT is always treated as equivalent to UTC with "offset 0 (Etc/GMT)".</li>
+    </ul>
+    <h4>About Daylight Saving Time (DST) and Timezones</h4>
+    <ul>
+      <li>When applying Daylight Saving Time, this tool automatically considers DST based on the specified date. If the DST checkbox is off, or if the target date is outside the DST period, times will be displayed based on the "standard time" of each timezone.</li>
+    </ul>
+    <h4>About Each Timezone</h4>
+    <ul>
+      <li><strong>JST (Japan Standard Time):</strong> Does not observe Daylight Saving Time. Always UTC+9.</li>
+      <li><strong>PST (Pacific Standard Time):</strong> Used in parts of the United States and Canada. Changes to PDT (Pacific Daylight Time, UTC-7) during summer. Standard time is UTC-8.</li>
+      <li><strong>EST (Eastern Standard Time):</strong> Used in parts of the United States and Canada. Changes to EDT (Eastern Daylight Time, UTC-4) during summer. Standard time is UTC-5.</li>
+      <li><strong>CST (Central Standard Time):</strong> Used in parts of the United States, Canada, and Mexico. Changes to CDT (Central Daylight Time, UTC-5) during summer. Standard time is UTC-6.</li>
+      <li><strong>CET (Central European Time):</strong> Used in many European countries. Changes to CEST (Central European Summer Time, UTC+2) during summer. Standard time is UTC+1.</li>
+      <li><strong>AST (Arabia Standard Time):</strong> Used in Saudi Arabia and other Gulf countries. Does not observe Daylight Saving Time. Always UTC+3.</li>
+      <li><strong>UTC (Coordinated Universal Time)</strong> and <strong>GMT (Greenwich Mean Time, Etc/GMT)</strong> as used in this tool do not have the concept of Daylight Saving Time.</li>
+    </ul>
+  </div>
+  <div id="error-message" class="error" style="display:none;"></div>
+</div>
+
+<!-- Main application script -->
+<script src="js/timezone.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindmap to JSON Converter</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<!-- Google Analytics -->
+<script src="../../../platform/js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <h1>Mindmap Text to JSON Converter</h1>
+
+    <label for="mindmapInput">Mindmap Text:</label>
+    <textarea id="mindmapInput" placeholder="Enter mindmap text here...">
+mindmap
+  root((Mind Map Root))
+    Origins
+      Long history
+      Popularisation
+        British popular psychology author Tony Buzan
+    Research
+      On effectiveness<br/>and features
+      On techniques<br/>and links
+    Tools
+      Pen and paper
+      Mermaid</textarea>
+
+    <label for="outputPattern">Output Pattern:</label>
+    <select id="outputPattern">
+        <option value="pattern1" selected>Pattern 1 (name/children)</option>
+        <option value="pattern2">Pattern 2 (key/object)</option>
+    </select>
+
+    <button id="convertButton">Convert to JSON</button>
+
+    <div class="output-area">
+        <h2>JSON Output:</h2>
+        <pre id="jsonOutput"></pre>
+    </div>
+
+    <div class="explanation-area">
+        <h2>JSON出力パターンの説明</h2>
+        <p><strong>パターン1 (name/children):</strong></p>
+        <ul>
+            <li>各ノードは <code>{"name": "ノード名", "children": [...]}</code> という形式のオブジェクトになります。</li>
+            <li><code>name</code> プロパティにはノードのテキストが格納されます。入力テキスト中の <code><br/></code> は、このパターンを生成するパーサーの内部ではそのまま保持されます（表示時に改行として扱われるかは利用側によります）。</li>
+            <li><code>children</code> プロパティは、そのノードの子ノードの配列です。子がない場合は空の配列 <code>[]</code> になります。</li>
+            <li>階層構造が明確に表現され、多くのツリー可視化ライブラリと互換性があります。</li>
+        </ul>
+        <p><strong>例 (パターン1):</strong></p>
+        <pre>
+{
+  "name": "Mind Map Root",
+  "children": [
+    {
+      "name": "Origins",
+      "children": [
+        { "name": "Long history", "children": [] }
+      ]
+    }
+    // ...
+  ]
+}
+            </pre>
+
+        <p><strong>パターン2 (key/object):</strong></p>
+        <ul>
+            <li>各ノードのテキスト (<code><br/></code> を含む) がJSONオブジェクトのキーになります。</li>
+            <li>キーに対応する値は、そのノードの子要素を表すネストされたオブジェクトです。</li>
+            <li>子要素がない場合、値は空のオブジェクト <code>{}</code> になります。</li>
+            <li>ルートノード (例: "Mind Map Root") の名前自体は、この形式のトップレベルには現れません。ルートノードの子要素がトップレベルのキーとなります。</li>
+            <li>特定のキーでデータに直接アクセスしやすい形式です。</li>
+        </ul>
+        <p><strong>例 (パターン2):</strong></p>
+        <pre>
+{
+  "Origins": {
+    "Long history": {},
+    "Popularisation": {
+      "British popular psychology author Tony Buzan": {}
+    }
+  },
+  "Research": {
+    "On effectiveness<br/>and features": {}
+    // ...
+  }
+  // ...
+}
+            </pre>
+    </div>
+
+</div> <!-- .container の終了 -->
+
+<script src="js/script.js"></script>
+</body>
+</html>

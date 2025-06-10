@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>年齢計算</title>
+  <link rel="stylesheet" href="css/age_calculator.css">
+</head>
+<!-- Google Analytics -->
+<script src="../../../platform/js/common/analytics.js"></script>
+<body>
+<div class="calculator-container">
+  <h2>年齢計算</h2>
+  <div class="input-group">
+    <label for="birthdate">生年月日:</label>
+    <div class="date-input-container">
+      <input type="date" id="birthdate">
+      <div class="year-buttons">
+        <button type="button" id="subtract10Years" title="10年戻す">-10年</button>
+        <button type="button" id="subtract5Years" title="5年戻す">-5年</button>
+        <button type="button" id="subtract1Year" title="1年戻す">-1年</button>
+        <button type="button" id="add1Year" title="1年進める">+1年</button>
+        <button type="button" id="add5Years" title="5年進める">+5年</button>
+        <button type="button" id="add10Years" title="10年進める">+10年</button>
+      </div>
+    </div>
+  </div>
+  <div class="input-group">
+    <label for="referenceDate">基準日:</label>
+    <input type="date" id="referenceDate">
+  </div>
+  <button id="calculateAgeButton">年齢を計算する</button>
+  <div id="result"></div>
+</div>
+<!-- Main application script -->
+<script src="js/age_calculator.js"></script>
+</body>
+</html>
