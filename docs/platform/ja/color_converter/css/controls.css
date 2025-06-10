@@ -1,0 +1,88 @@
+/* --- START OF FILE css/controls.css --- */
+.controls, .downloads { /* Keep this for overall margin */
+    margin-top: 15px;
+}
+
+.upload-area {
+    margin-bottom: 20px; /* Increased margin */
+    padding: 15px;
+    border: 2px dashed #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.upload-area input[type="file"] {
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    color: #495057;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.upload-area input[type="file"]::file-selector-button {
+    display:none;
+}
+
+.upload-area p {
+    font-size: 0.9em;
+    color: #777;
+    margin-top: 5px;
+}
+
+.control-group {
+    margin-bottom: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center; /* Center items within the group */
+    gap: 5px 10px; /* row-gap column-gap */
+}
+
+.control-group label {
+    margin-right: 3px; /* Slightly reduced */
+    text-align: right;
+}
+
+/* Specific control styling */
+.controls .section-title {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+/* Color picker controls */
+.control-group label[for="sourceColorPicker"],
+.control-group label[for="targetColorPicker"] {
+    min-width: 100px;
+}
+
+/* Pick from image button */
+#pickFromImageBtn {
+    margin-left: 10px;
+}
+
+/* Tolerance slider */
+.control-group label[for="toleranceSlider"] {
+    min-width: 100px;
+}
+#toleranceSlider {
+    width: 160px;
+}
+#toleranceValueDisplay {
+    min-width: 25px;
+    text-align: left;
+}
+
+/* Apply and Reset buttons */
+#applyConversionBtn, #resetImageBtn {
+    margin: 5px 10px;
+}
+
+.control-group input[type="checkbox"] + label {
+    margin-left: 2px; /* Space between checkbox and its label */
+    text-align: left;
+}
+/* --- END OF FILE css/controls.css --- */
