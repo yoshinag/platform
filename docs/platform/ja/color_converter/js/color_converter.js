@@ -121,12 +121,12 @@ class ColorConverterApp {
     togglePickFromImage() {
         const isPicking = !this.colorManager.isPickingFromImage();
         this.colorManager.setPickingFromImage(isPicking);
-        
+
         if (this.pickFromImageBtn) {
             this.pickFromImageBtn.textContent = isPicking ? '選択をキャンセル' : '画像から色を選択';
             this.pickFromImageBtn.style.backgroundColor = isPicking ? '#dc3545' : '#007bff';
         }
-        
+
         if (this.previewCanvas) {
             this.previewCanvas.style.cursor = isPicking ? 'crosshair' : 'default';
         }
@@ -134,59 +134,69 @@ class ColorConverterApp {
 
     pickColorFromCanvas(event) {
         if (!this.previewCtx || !this.originalImage) return;
-        
+
         const rect = this.previewCanvas.getBoundingClientRect();
         const x = Math.floor((event.clientX - rect.left) * (this.previewCanvas.width / rect.width));
         const y = Math.floor((event.clientY - rect.top) * (this.previewCanvas.height / rect.height));
-        
+
         const pixelData = this.previewCtx.getImageData(x, y, 1, 1).data;
         const hexColor = rgbToHex(pixelData[0], pixelData[1], pixelData[2]);
-        
+
         this.colorManager.setSourceColor(hexColor);
         this.togglePickFromImage(); // Turn off picking mode
     }
 
     applyColorConversion() {
         if (!this.originalImage || !this.previewCtx) return;
-        
+
         const sourceColor = hexToRgb(this.colorManager.getSourceColor());
         const targetColor = hexToRgb(this.colorManager.getTargetColor());
+        const targetAlpha = this.colorManager.getTargetAlpha(); // Get alpha value (0-1)
         const tolerance = getSafeInt(this.toleranceSlider.value, 10);
-        
+
         // Create a temporary canvas to process the image
         const tempCanvas = document.createElement('canvas');
-        const tempCtx = tempCanvas.getContext('2d');
+        const tempCtx = tempCanvas.getContext('2d', { willReadFrequently: true });
         tempCanvas.width = this.originalImage.naturalWidth;
         tempCanvas.height = this.originalImage.naturalHeight;
-        
+
         // Draw the original image to the temporary canvas
         tempCtx.drawImage(this.originalImage, 0, 0);
-        
+
         // Get the image data
         const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
         const data = imageData.data;
-        
+
         // Calculate the maximum distance based on tolerance (0-100)
         // Max possible distance in RGB space is sqrt(255^2 + 255^2 + 255^2) = 441.67
         const maxDistance = 441.67 * (tolerance / 100);
-        
+
         // Process each pixel
         for (let i = 0; i < data.length; i += 4) {
             const pixelColor = { r: data[i], g: data[i + 1], b: data[i + 2] };
             const distance = colorDistance(pixelColor, sourceColor);
-            
+
             if (distance <= maxDistance) {
                 // Replace the color
                 data[i] = targetColor.r;
                 data[i + 1] = targetColor.g;
                 data[i + 2] = targetColor.b;
-                // Alpha channel (data[i + 3]) remains unchanged
+
+                // Apply transparency if needed
+                if (targetAlpha > 0) {
+                    // Calculate new alpha value
+                    // If targetAlpha is 1 (100% transparent), the pixel becomes fully transparent
+                    // If targetAlpha is 0 (0% transparent), the original alpha is preserved
+                    const originalAlpha = data[i + 3] / 255; // Convert to 0-1 range
+                    const newAlpha = originalAlpha * (1 - targetAlpha);
+                    data[i + 3] = Math.round(newAlpha * 255); // Convert back to 0-255 range
+                }
             }
         }
-        
+
         // Put the processed image data back
         tempCtx.putImageData(imageData, 0, 0);
-        
+
         // Create a new image from the processed canvas
         this.convertedImage = new Image();
         this.convertedImage.onload = () => {
@@ -202,16 +212,16 @@ class ColorConverterApp {
 
     updatePreview(useConverted = false) {
         if (!this.originalImage || !this.previewCtx) return;
-        
+
         const imageToUse = useConverted && this.convertedImage ? this.convertedImage : this.originalImage;
-        
+
         // Resize canvas to match image dimensions
         this.previewCanvas.width = imageToUse.naturalWidth;
         this.previewCanvas.height = imageToUse.naturalHeight;
-        
+
         // Clear canvas
         this.previewCtx.clearRect(0, 0, this.previewCanvas.width, this.previewCanvas.height);
-        
+
         // Draw image
         this.previewCtx.drawImage(imageToUse, 0, 0);
     }
@@ -222,23 +232,23 @@ class ColorConverterApp {
         link.href = uri; document.body.appendChild(link); link.click(); document.body.removeChild(link);
         if (uri.startsWith('blob:')) URL.revokeObjectURL(uri);
     }
-    
+
     _getCleanFileName() { return this.originalFileName; }
 
     _prepareDownloadCanvas(fill, fillColor = '#ffffff') {
         const imageToUse = this.convertedImage || this.originalImage;
         if (!imageToUse) return null;
-        
+
         const tempCanvas = document.createElement('canvas');
         const tempCtx = tempCanvas.getContext('2d');
         tempCanvas.width = imageToUse.naturalWidth;
         tempCanvas.height = imageToUse.naturalHeight;
-        
+
         if (fill) { 
             tempCtx.fillStyle = fillColor; 
             tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height); 
         }
-        
+
         tempCtx.drawImage(imageToUse, 0, 0);
         return tempCanvas;
     }
@@ -250,7 +260,7 @@ class ColorConverterApp {
             this._downloadURI(dataUrl, `${this._getCleanFileName()}_converted_transparent.png`);
         }
     }
-    
+
     _downloadPngWithBackground() {
         const bgColor = this.colorManager.getBgColor();
         const canvas = this._prepareDownloadCanvas(true, bgColor);
@@ -259,7 +269,7 @@ class ColorConverterApp {
             this._downloadURI(dataUrl, `${this._getCleanFileName()}_converted_bg_${bgColor.replace('#','')}.png`);
         }
     }
-    
+
     _downloadJpeg() {
         const bgColor = this.colorManager.getBgColor();
         const canvas = this._prepareDownloadCanvas(true, bgColor);
@@ -308,7 +318,7 @@ class ColorConverterApp {
         if(this.previewCanvas) {
             this.previewCanvas.style.cursor = 'default';
         }
-        
+
         this._enableElements(false);
     }
 }

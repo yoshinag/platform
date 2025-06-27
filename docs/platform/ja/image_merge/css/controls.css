@@ -1,0 +1,78 @@
+/* Styles for the control elements */
+.controls {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+
+.control-group {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.control-group label {
+    margin-right: 10px;
+    min-width: 100px;
+}
+
+.control-group input[type="range"] {
+    flex: 1;
+    margin: 0 10px;
+    min-width: 150px;
+}
+
+.control-group input[type="number"] {
+    width: 80px;
+    margin: 0 10px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+.control-group input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.scale-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    background-color: #f5f5f5;
+    border-radius: 3px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scale-btn:hover:not(:disabled) {
+    background-color: #e0e0e0;
+}
+
+.scale-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .control-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .control-group label {
+        margin-bottom: 5px;
+    }
+    
+    .control-group input[type="range"] {
+        width: 100%;
+        margin: 5px 0;
+    }
+}

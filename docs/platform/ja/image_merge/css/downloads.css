@@ -1,0 +1,65 @@
+/* Styles for the download options area */
+.downloads {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+
+.options-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.options-group button {
+    padding: 8px 15px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.options-group button:hover:not(:disabled) {
+    background-color: #2980b9;
+}
+
+.options-group button:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+}
+
+.bg-color-settings {
+    display: flex;
+    align-items: center;
+}
+
+.bg-color-settings label {
+    margin-right: 10px;
+}
+
+.bg-color-settings input[type="color"] {
+    width: 40px;
+    height: 30px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 0;
+    cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .options-group {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .options-group button {
+        width: 100%;
+    }
+}

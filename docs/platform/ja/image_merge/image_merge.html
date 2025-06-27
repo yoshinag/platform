@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画像の重ね合わせ＆ダウンロード</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/preview.css">
+    <link rel="stylesheet" href="css/controls.css">
+    <link rel="stylesheet" href="css/downloads.css">
+</head>
+<!-- Google Analytics -->
+<script src="../../../platform/js/common/analytics.js"></script>
+<body>
+<div class="container" id="dropZone">
+    <h1>画像の重ね合わせ＆ダウンロードツール</h1>
+
+    <details open>
+        <summary>使用方法</summary>
+        <ol>
+            <li>ベース画像をアップロードする（ファイル選択またはドラッグ＆ドロップ）</li>
+            <li>オーバーレイ画像をアップロードする（ファイル選択またはドラッグ＆ドロップ）</li>
+            <li>必要に応じてオーバーレイ画像の位置とサイズを調整する</li>
+            <li>必要に応じて透明度を調整する</li>
+            <li>プレビューで確認する</li>
+            <li>希望の形式でダウンロードする
+                <ul>
+                    <li>透過背景が必要な場合: PNG（透過）</li>
+                    <li>背景色が必要な場合: PNG（背景色指定）またはJPEG（背景色指定）</li>
+                </ul>
+            </li>
+            <li>サーバーへの画像アップロードは行われません。すべての処理はブラウザ上で実行されます。</li>
+        </ol>
+    </details>
+
+    <div class="upload-area">
+        <h3>ベース画像</h3>
+        <input type="file" id="baseImageUpload" accept="image/*">
+        <p>または、ここにベース画像をドラッグ＆ドロップしてください</p>
+    </div>
+
+    <div class="upload-area">
+        <h3>オーバーレイ画像</h3>
+        <input type="file" id="overlayImageUpload" accept="image/*">
+        <p>または、ここにオーバーレイ画像をドラッグ＆ドロップしてください</p>
+    </div>
+
+    <div class="controls">
+        <p class="section-title">オーバーレイ画像オプション</p>
+        <div class="control-group">
+            <label for="opacitySlider">透明度: </label>
+            <input type="range" id="opacitySlider" min="0" max="100" value="100" disabled>
+            <span id="opacityValueDisplay">100</span>%
+        </div>
+
+        <div class="control-group">
+            <label for="positionX">X位置: </label>
+            <input type="number" id="positionX" value="0" disabled> px
+        </div>
+
+        <div class="control-group">
+            <label for="positionY">Y位置: </label>
+            <input type="number" id="positionY" value="0" disabled> px
+        </div>
+
+        <div class="control-group">
+            <label for="overlayScalePercentage">サイズ: </label>
+            <button id="decreaseScaleBtn" class="scale-btn" disabled>-</button>
+            <input type="range" id="overlayScalePercentage" min="1" max="200" value="100" disabled>
+            <button id="increaseScaleBtn" class="scale-btn" disabled>+</button>
+            <span id="overlayScaleDisplay">100</span>%
+        </div>
+
+        <div class="control-group">
+            <input type="checkbox" id="overlayAspectRatioLock" checked disabled>
+            <label for="overlayAspectRatioLock">アスペクト比を維持</label>
+        </div>
+
+        <div class="control-group">
+            <label for="overlayWidth">幅 (px):</label>
+            <input type="number" id="overlayWidth" min="1" disabled>
+            <label for="overlayHeight">高さ (px):</label>
+            <input type="number" id="overlayHeight" min="1" disabled>
+        </div>
+    </div>
+
+    <canvas id="previewCanvas"></canvas>
+    <p class="info">↑プレビュー（透過部分はチェッカーボードで表示）</p>
+
+    <div class="downloads">
+        <p class="section-title">透過ダウンロード</p>
+        <div class="options-group">
+            <button id="downloadPngTransparentBtn" disabled>PNG (透過)</button>
+        </div>
+        <hr>
+        <p class="section-title">背景色付きダウンロード</p>
+        <div class="options-group">
+            <button id="downloadPngBgColorBtn" disabled>PNG (背景色指定)</button>
+            <button id="downloadJpegBtn" disabled>JPEG (背景色指定)</button>
+        </div>
+        <div class="options-group bg-color-settings">
+            <label for="bgColorPicker">RGB/HEX:</label>
+            <input type="color" id="bgColorPicker" value="#ffffff" disabled>
+        </div>
+    </div>
+    <p class="info">PNG(透過)は透過情報を保持します。</p>
+    <p class="info">PNG/JPEG(背景色指定)は選択した共通背景色で透過部分が塗りつぶされます。</p>
+</div>
+
+<script src="js/utils.js"></script>
+<script src="js/color_manager.js"></script>
+<script src="js/base_image_manager.js"></script>
+<script src="js/overlay_image_manager.js"></script>
+<script src="js/image_merge.js"></script>
+</body>
+</html>

@@ -51,6 +51,21 @@ function hexToRgb(hex) {
 }
 
 /**
+ * 16進数カラーコードとアルファ値をRGBA形式に変換する関数
+ * 
+ * @param {string} hex - 変換する16進数カラーコード（例: '#FF0000'）
+ * @param {number} alpha - アルファ値（0〜1の範囲、0が完全に透明、1が完全に不透明）
+ * @returns {Object} - {r, g, b, a}形式のRGBAオブジェクト
+ * 
+ * この関数は16進数形式のカラーコードとアルファ値を受け取り、RGBAの各成分に分解します。
+ * 返されるオブジェクトのプロパティr、g、bはそれぞれ0〜255の範囲の整数値、aは0〜1の範囲の浮動小数点数です。
+ */
+function hexToRgba(hex, alpha) {
+    const rgb = hexToRgb(hex);
+    return { ...rgb, a: alpha };
+}
+
+/**
  * RGB値を16進数カラーコードに変換する関数
  * 
  * @param {number} r - 赤成分（0〜255）

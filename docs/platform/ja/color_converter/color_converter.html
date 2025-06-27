@@ -42,11 +42,18 @@
         <div class="control-group">
             <label for="sourceColorPicker">変換元の色:</label>
             <input type="color" id="sourceColorPicker" value="#ffffff" disabled>
+            <button id="pickFromImageBtn" disabled>画像から色を選択</button>
         </div>
 
         <div class="control-group">
             <label for="targetColorPicker">変換先の色:</label>
             <input type="color" id="targetColorPicker" value="#000000" disabled>
+        </div>
+
+        <div class="control-group">
+            <label for="targetTransparencySlider">変換先の透明度: </label>
+            <input type="range" id="targetTransparencySlider" min="0" max="100" value="0" disabled>
+            <span id="targetTransparencyValueDisplay">0</span>%
         </div>
 
         <div class="control-group">
