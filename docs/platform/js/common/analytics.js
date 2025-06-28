@@ -3,12 +3,12 @@
   // Load the Google Analytics script
   var script = document.createElement('script');
   script.async = true;
-  script.src = 'https://www.googletagmanager.com/gtag/js?id=G-W6YKJ74672';
+  script.src = 'https://www.googletagmanager.com/gtag/js?id=G-XSBND7P00L';
   document.head.appendChild(script);
 
   // Initialize Google Analytics
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-W6YKJ74672');
+  gtag('config', 'G-XSBND7P00L');
 })();
