@@ -1,0 +1,75 @@
+/* Styles for the download options section */
+.downloads {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.options-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.options-group:last-child {
+    margin-bottom: 0;
+}
+
+.options-group button {
+    padding: 8px 15px;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s;
+}
+
+.options-group button:hover {
+    background-color: #27ae60;
+}
+
+.options-group button:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+}
+
+.bg-color-settings {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.bg-color-settings label {
+    margin-right: 10px;
+}
+
+.bg-color-settings input[type="color"] {
+    width: 40px;
+    height: 30px;
+    padding: 0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .options-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .options-group button {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    
+    .bg-color-settings {
+        flex-wrap: wrap;
+    }
+}

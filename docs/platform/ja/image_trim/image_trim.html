@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画像の輪郭抽出ツール</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/preview.css">
+    <link rel="stylesheet" href="css/controls.css">
+    <link rel="stylesheet" href="css/downloads.css">
+</head>
+<!-- Google Analytics -->
+<script src="../../../platform/js/common/analytics.js"></script>
+<body>
+<div class="container" id="dropZone">
+    <h1>画像の輪郭抽出ツール</h1>
+
+    <details open>
+        <summary>使用方法</summary>
+        <ol>
+            <li>画像をアップロードする（ファイル選択またはドラッグ＆ドロップ）</li>
+            <li>輪郭検出の感度を調整する</li>
+            <li>輪郭の太さを調整する（必要に応じて）</li>
+            <li>プレビューで確認する</li>
+            <li>希望の形式でダウンロードする
+                <ul>
+                    <li>透過背景が必要な場合: PNG（透過）</li>
+                    <li>背景色が必要な場合: PNG（背景色指定）またはJPEG（背景色指定）</li>
+                </ul>
+            </li>
+            <li>サーバーへの画像アップロードは行われません。すべての処理はブラウザ上で実行されます。</li>
+        </ol>
+    </details>
+
+    <div class="upload-area">
+        <input type="file" id="imageUpload" accept="image/*">
+        <p>または、ここに画像をドラッグ＆ドロップしてください</p>
+    </div>
+
+    <div class="controls">
+        <div class="control-group">
+            <label for="thresholdSlider">輪郭検出の感度: </label>
+            <input type="range" id="thresholdSlider" min="0" max="255" value="100" disabled>
+            <span id="thresholdValueDisplay">100</span>
+        </div>
+
+        <div class="control-group">
+            <label for="edgeWidthSlider">輪郭の太さ: </label>
+            <input type="range" id="edgeWidthSlider" min="1" max="10" value="1" disabled>
+            <span id="edgeWidthValueDisplay">1</span>px
+        </div>
+
+        <div class="control-group">
+            <label for="edgeColorPicker">輪郭の色:</label>
+            <input type="color" id="edgeColorPicker" value="#000000" disabled>
+        </div>
+
+        <div class="control-group">
+            <input type="checkbox" id="outerContourOnlyCheckbox" disabled>
+            <label for="outerContourOnlyCheckbox">外郭の輪郭だけ抽出</label>
+        </div>
+
+        <div class="control-group">
+            <input type="checkbox" id="fillContourCheckbox" disabled>
+            <label for="fillContourCheckbox">輪郭内部を塗りつぶす</label>
+        </div>
+
+        <div class="control-group">
+            <label for="fillColorPicker">塗りつぶしの色:</label>
+            <input type="color" id="fillColorPicker" value="#ffffff" disabled>
+        </div>
+
+        <div class="control-group">
+            <button id="applyContourBtn" disabled>輪郭抽出を適用</button>
+            <button id="resetImageBtn" disabled>元の画像に戻す</button>
+        </div>
+    </div>
+
+    <canvas id="previewCanvas"></canvas>
+    <p class="info">↑プレビュー（透過部分はチェッカーボードで表示）</p>
+
+    <div class="downloads">
+        <p class="section-title">ダウンロード</p>
+        <div class="options-group">
+            <button id="downloadPngTransparentBtn" disabled>PNG (透過)</button>
+            <button id="downloadPngBgColorBtn" disabled>PNG (背景色指定)</button>
+            <button id="downloadJpegBtn" disabled>JPEG (背景色指定)</button>
+        </div>
+        <div class="options-group bg-color-settings">
+            <label for="bgColorPicker">背景色:</label>
+            <input type="color" id="bgColorPicker" value="#ffffff" disabled>
+        </div>
+    </div>
+    <p class="info">PNG(透過)は透過情報を保持します。</p>
+    <p class="info">PNG/JPEG(背景色指定)は選択した共通背景色で透過部分が塗りつぶされます。</p>
+</div>
+
+<script src="js/utils.js"></script>
+<script src="js/color_manager.js"></script>
+<script src="js/image_trim.js"></script>
+</body>
+</html>
