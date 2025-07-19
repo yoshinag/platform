@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>MD5 Hash Generation Tool</title>
+    <link rel="stylesheet" href="css/converter.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../platform/js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="converter_main.html">Back to Main Page</a>
+    </div>
+
+    <h1>MD5 Hash Generation Tool</h1>
+
+    <div class="input-group">
+        <label for="inputText">Input Text:</label>
+        <textarea id="inputText" placeholder="Enter text here..."></textarea>
+    </div>
+
+    <div class="buttons">
+        <button id="generateBtn">Generate MD5 Hash</button>
+        <button id="clearBtn">Clear</button>
+    </div>
+
+    <div class="output-group">
+        <label for="outputText">Result:</label>
+        <textarea id="outputText" readonly></textarea>
+        <button id="copyBtn">Copy Result</button>
+    </div>
+
+    <div class="explanation">
+        <h3>What is MD5?</h3>
+        <p>
+            MD5 (Message-Digest Algorithm 5) is a hash function that generates a 128-bit (16-byte) hash value from any data.
+            It is mainly used for checking data integrity.
+        </p>
+        <p>
+            MD5 always produces the same hash value for the same input. However, for slightly different inputs,
+            it generates a completely different hash value. This is a characteristic called the "avalanche effect".
+        </p>
+        <p>
+            From a security perspective, MD5 is no longer recommended for cryptographic purposes.
+            This is because it has been proven that collision attacks (generating the same hash value from different inputs) are possible.
+            However, it is still widely used for non-security purposes such as data integrity checks.
+        </p>
+        <p>
+            For example, the MD5 hash value for the string "Hello, World!" is
+            <code>65a8e27d8879283831b664bd8b7f0ad4</code>.
+        </p>
+        <h3>How to execute with Linux command</h3>
+        <p>
+            In Linux, you can use the <code>md5sum</code> command to generate an MD5 hash.
+        </p>
+        <p>
+            Example of generating a hash from text:
+            <br>
+            <code>echo -n "Hello, World!" | md5sum</code>
+            <br>
+            Result: <code>65a8e27d8879283831b664bd8b7f0ad4 -</code>
+        </p>
+        <p>
+            Example of generating a hash of a file:
+            <br>
+            <code>md5sum filename</code>
+            <br>
+            Result: <code>hash_value filename</code>
+        </p>
+        <p>
+            Example of generating hashes of multiple files at once:
+            <br>
+            <code>md5sum file1 file2 file3</code>
+        </p>
+        <p>
+            Example of verifying a hash value:
+            <br>
+            <code>md5sum -c hash_list_file</code>
+            <br>
+            *The hash list file should be in the format "hash_value filename".
+        </p>
+    </div>
+</div>
+
+<!-- Main application script -->
+<script src="js/md5.js"></script>
+</body>
+</html>
