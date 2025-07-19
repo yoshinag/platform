@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Linuxアーカイブコマンド解説</title>
+    <link rel="stylesheet" href="css/linux_command.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="linux_command_permission.html">前のカテゴリ: 権限管理</a> |
+        <a href="linux_command.html">メインページに戻る</a> |
+        <a href="linux_command_find.html">次のカテゴリ: 検索</a>
+    </div>
+
+    <h1>Linuxアーカイブコマンド解説</h1>
+    
+    <!-- アーカイブコマンド -->
+    <section id="archive" class="command-section">
+        <h2>アーカイブコマンド</h2>
+        <p>ファイルの圧縮、解凍、アーカイブを行うコマンドです。</p>
+        
+        <!-- tar コマンド -->
+        <h3>tar - ファイルのアーカイブ</h3>
+        <p>複数のファイルを1つのアーカイブファイルにまとめたり、展開したりします。</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>オプション</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>-c</td>
+                <td>新しいアーカイブを作成</td>
+            </tr>
+            <tr>
+                <td>-x</td>
+                <td>アーカイブからファイルを展開</td>
+            </tr>
+            <tr>
+                <td>-t</td>
+                <td>アーカイブの内容を一覧表示</td>
+            </tr>
+            <tr>
+                <td>-f [file]</td>
+                <td>アーカイブファイル名を指定</td>
+            </tr>
+            <tr>
+                <td>-v</td>
+                <td>詳細な情報を表示（処理されるファイルを表示）</td>
+            </tr>
+            <tr>
+                <td>-z</td>
+                <td>gzipで圧縮/解凍（.tar.gz, .tgz）</td>
+            </tr>
+            <tr>
+                <td>-j</td>
+                <td>bzip2で圧縮/解凍（.tar.bz2）</td>
+            </tr>
+            <tr>
+                <td>-J</td>
+                <td>xzで圧縮/解凍（.tar.xz）</td>
+            </tr>
+            <tr>
+                <td>-C [dir]</td>
+                <td>指定したディレクトリに展開</td>
+            </tr>
+            <tr>
+                <td>--exclude=[pattern]</td>
+                <td>指定したパターンに一致するファイルを除外</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>例:</strong></p>
+            <code>tar -cvf archive.tar file1 file2 dir1</code> - ファイルとディレクトリをアーカイブ化<br>
+            <code>tar -xvf archive.tar</code> - アーカイブを展開<br>
+            <code>tar -tvf archive.tar</code> - アーカイブの内容を一覧表示<br>
+            <code>tar -czvf archive.tar.gz directory/</code> - ディレクトリをgzipで圧縮してアーカイブ化<br>
+            <code>tar -xzvf archive.tar.gz</code> - gzip圧縮されたアーカイブを展開<br>
+            <code>tar -xzvf archive.tar.gz -C /path/to/extract</code> - 指定したディレクトリに展開<br>
+            <code>tar -czvf backup-$(date +%Y%m%d).tar.gz /home/user/data</code> - 日付を含むバックアップファイルを作成<br>
+            <code>tar --exclude='*.log' --exclude='tmp/' -czvf archive.tar.gz directory/</code> - 特定のファイルやディレクトリを除外してアーカイブ化<br>
+            <code>tar -czvf - directory/ | ssh user@remote "cat > archive.tar.gz"</code> - アーカイブをリモートサーバーに直接転送<br>
+            <code>tar -xvf archive.tar --wildcards '*.txt'</code> - アーカイブから特定のパターンに一致するファイルのみを展開
+        </div>
+
+        <!-- gzip/gunzip コマンド -->
+        <h3>gzip/gunzip - gzip形式の圧縮/解凍</h3>
+        <p>ファイルをgzip形式で圧縮したり、解凍したりします。</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>コマンド/オプション</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>gzip [file]</td>
+                <td>ファイルを圧縮（元のファイルは削除され、.gzファイルが作成される）</td>
+            </tr>
+            <tr>
+                <td>gzip -k [file]</td>
+                <td>元のファイルを保持したまま圧縮</td>
+            </tr>
+            <tr>
+                <td>gzip -d [file.gz]</td>
+                <td>ファイルを解凍（gunzipと同等）</td>
+            </tr>
+            <tr>
+                <td>gzip -l [file.gz]</td>
+                <td>圧縮ファイルの情報を表示</td>
+            </tr>
+            <tr>
+                <td>gzip -[1-9]</td>
+                <td>圧縮レベルを指定（1が最速で圧縮率低、9が最遅で圧縮率高）</td>
+            </tr>
+            <tr>
+                <td>gunzip [file.gz]</td>
+                <td>gzipファイルを解凍</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>例:</strong></p>
+            <code>gzip file.txt</code> - ファイルを圧縮（file.txt.gzが作成され、元のファイルは削除される）<br>
+            <code>gzip -k file.txt</code> - 元のファイルを保持したまま圧縮<br>
+            <code>gzip -9 file.txt</code> - 最高圧縮率でファイルを圧縮<br>
+            <code>gunzip file.txt.gz</code> - 圧縮ファイルを解凍<br>
+            <code>gzip -d file.txt.gz</code> - 圧縮ファイルを解凍（gunzipと同等）<br>
+            <code>find . -type f -name "*.log" -exec gzip {} \;</code> - すべてのログファイルを圧縮<br>
+            <code>gzip -c file.txt > file.txt.gz</code> - 標準出力に圧縮結果を出力し、リダイレクトで保存（元ファイルを保持）<br>
+            <code>gzip -r directory/</code> - ディレクトリ内のすべてのファイルを再帰的に圧縮<br>
+            <code>gzip -tv file.txt.gz</code> - 圧縮ファイルの整合性をテスト
+        </div>
+
+        <!-- bzip2/bunzip2 コマンド -->
+        <h3>bzip2/bunzip2 - bzip2形式の圧縮/解凍</h3>
+        <p>ファイルをbzip2形式で圧縮したり、解凍したりします。gzipより圧縮率が高いが処理時間も長い。</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>コマンド/オプション</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>bzip2 [file]</td>
+                <td>ファイルを圧縮（元のファイルは削除され、.bz2ファイルが作成される）</td>
+            </tr>
+            <tr>
+                <td>bzip2 -k [file]</td>
+                <td>元のファイルを保持したまま圧縮</td>
+            </tr>
+            <tr>
+                <td>bzip2 -d [file.bz2]</td>
+                <td>ファイルを解凍（bunzip2と同等）</td>
+            </tr>
+            <tr>
+                <td>bzip2 -[1-9]</td>
+                <td>圧縮レベルを指定（1が最速で圧縮率低、9が最遅で圧縮率高）</td>
+            </tr>
+            <tr>
+                <td>bunzip2 [file.bz2]</td>
+                <td>bzip2ファイルを解凍</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>例:</strong></p>
+            <code>bzip2 file.txt</code> - ファイルを圧縮（file.txt.bz2が作成され、元のファイルは削除される）<br>
+            <code>bzip2 -k file.txt</code> - 元のファイルを保持したまま圧縮<br>
+            <code>bunzip2 file.txt.bz2</code> - 圧縮ファイルを解凍<br>
+            <code>bzip2 -d file.txt.bz2</code> - 圧縮ファイルを解凍（bunzip2と同等）<br>
+            <code>bzip2 -v file.txt</code> - 圧縮の詳細情報を表示<br>
+            <code>bzip2 -c file.txt > file.txt.bz2</code> - 標準出力に圧縮結果を出力し、リダイレクトで保存（元ファイルを保持）<br>
+            <code>find . -name "*.dat" -exec bzip2 -9 {} \;</code> - すべての.datファイルを最高圧縮率で圧縮<br>
+            <code>tar -cf - directory/ | bzip2 > directory.tar.bz2</code> - tarとbzip2を組み合わせてディレクトリをアーカイブ化
+        </div>
+
+        <!-- xz コマンド -->
+        <h3>xz - xz形式の圧縮/解凍</h3>
+        <p>ファイルをxz形式で圧縮したり、解凍したりします。bzip2よりさらに圧縮率が高いが処理時間も長い。</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>オプション</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>-z</td>
+                <td>圧縮（デフォルト）</td>
+            </tr>
+            <tr>
+                <td>-d</td>
+                <td>解凍</td>
+            </tr>
+            <tr>
+                <td>-k</td>
+                <td>元のファイルを保持</td>
+            </tr>
+            <tr>
+                <td>-l</td>
+                <td>圧縮ファイルの情報を表示</td>
+            </tr>
+            <tr>
+                <td>-[0-9]</td>
+                <td>圧縮レベルを指定（0が最速で圧縮なし、9が最遅で圧縮率高）</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>例:</strong></p>
+            <code>xz file.txt</code> - ファイルを圧縮（file.txt.xzが作成され、元のファイルは削除される）<br>
+            <code>xz -k file.txt</code> - 元のファイルを保持したまま圧縮<br>
+            <code>xz -d file.txt.xz</code> - 圧縮ファイルを解凍<br>
+            <code>xz -l file.txt.xz</code> - 圧縮ファイルの情報を表示<br>
+            <code>xz -9 -e file.txt</code> - 最高圧縮率と追加の圧縮フラグを使用して圧縮<br>
+            <code>xz -T0 large_file.dat</code> - すべての利用可能なCPUスレッドを使用して圧縮（並列処理）<br>
+            <code>find . -name "*.log" -size +10M -exec xz {} \;</code> - 10MB以上のすべてのログファイルを圧縮<br>
+            <code>tar -cf - directory/ | xz -9 > directory.tar.xz</code> - tarとxzを組み合わせて高圧縮率でディレクトリをアーカイブ化
+        </div>
+
+        <!-- zip/unzip コマンド -->
+        <h3>zip/unzip - ZIP形式の圧縮/解凍</h3>
+        <p>ファイルをZIP形式で圧縮したり、解凍したりします。Windows/macOSとの互換性が高い。</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>コマンド/オプション</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>zip [archive.zip] [files]</td>
+                <td>ファイルをZIP形式で圧縮</td>
+            </tr>
+            <tr>
+                <td>zip -r [archive.zip] [directory]</td>
+                <td>ディレクトリを再帰的に圧縮</td>
+            </tr>
+            <tr>
+                <td>zip -u [archive.zip] [files]</td>
+                <td>既存のZIPアーカイブを更新</td>
+            </tr>
+            <tr>
+                <td>zip -e [archive.zip] [files]</td>
+                <td>パスワード保護付きで圧縮</td>
+            </tr>
+            <tr>
+                <td>unzip [archive.zip]</td>
+                <td>ZIPアーカイブを解凍</td>
+            </tr>
+            <tr>
+                <td>unzip -l [archive.zip]</td>
+                <td>ZIPアーカイブの内容を一覧表示</td>
+            </tr>
+            <tr>
+                <td>unzip -d [directory] [archive.zip]</td>
+                <td>指定したディレクトリにZIPアーカイブを解凍</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>例:</strong></p>
+            <code>zip archive.zip file1.txt file2.txt</code> - 複数のファイルを圧縮<br>
+            <code>zip -r archive.zip directory/</code> - ディレクトリを再帰的に圧縮<br>
+            <code>unzip archive.zip</code> - ZIPアーカイブを解凍<br>
+            <code>unzip -l archive.zip</code> - ZIPアーカイブの内容を一覧表示<br>
+            <code>unzip archive.zip -d /path/to/extract</code> - 指定したディレクトリに解凍<br>
+            <code>zip -e secure.zip confidential.txt</code> - パスワード保護付きでファイルを圧縮<br>
+            <code>zip -9 -r backup.zip documents/ -x "*.tmp" "*/temp/*"</code> - 最高圧縮率で特定のファイルを除外して圧縮<br>
+            <code>find . -name "*.jpg" -mtime -7 | zip -@ recent_photos.zip</code> - 過去7日以内に変更された画像ファイルを圧縮<br>
+            <code>unzip -j archive.zip "*.txt" -d /path/to/extract</code> - パスを無視してテキストファイルのみを特定のディレクトリに解凍
+        </div>
+
+        <!-- 7z コマンド -->
+        <h3>7z - 7-Zip形式の圧縮/解凍</h3>
+        <p>7-Zipは高圧縮率のアーカイブ形式で、様々な形式のアーカイブを扱えます。</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>コマンド/オプション</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>7z a [archive.7z] [files]</td>
+                <td>ファイルをアーカイブに追加（圧縮）</td>
+            </tr>
+            <tr>
+                <td>7z x [archive.7z]</td>
+                <td>アーカイブを展開（パスを保持）</td>
+            </tr>
+            <tr>
+                <td>7z e [archive.7z]</td>
+                <td>アーカイブを展開（パスを無視）</td>
+            </tr>
+            <tr>
+                <td>7z l [archive.7z]</td>
+                <td>アーカイブの内容を一覧表示</td>
+            </tr>
+            <tr>
+                <td>7z t [archive.7z]</td>
+                <td>アーカイブの整合性をテスト</td>
+            </tr>
+            <tr>
+                <td>7z u [archive.7z] [files]</td>
+                <td>アーカイブを更新</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>例:</strong></p>
+            <code>7z a archive.7z file1.txt file2.txt</code> - ファイルを7z形式で圧縮<br>
+            <code>7z a -r archive.7z directory/</code> - ディレクトリを再帰的に圧縮<br>
+            <code>7z x archive.7z</code> - 7zアーカイブを展開<br>
+            <code>7z l archive.7z</code> - 7zアーカイブの内容を一覧表示<br>
+            <code>7z x archive.7z -o/path/to/extract</code> - 指定したディレクトリに展開<br>
+            <code>7z a -p archive.7z confidential_files/</code> - パスワード保護付きでアーカイブを作成<br>
+            <code>7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=32m -ms=on archive.7z directory/</code> - 高度な圧縮設定でアーカイブを作成<br>
+            <code>7z x archive.7z -r "*.txt" -o/path/to/extract</code> - テキストファイルのみを抽出<br>
+            <code>find . -type f -size +10M | 7z a -si large_files.7z</code> - 10MB以上のファイルを標準入力から圧縮
+        </div>
+
+        <!-- zcat/zless コマンド -->
+        <h3>zcat/zless - 圧縮ファイルの内容表示</h3>
+        <p>圧縮ファイルを解凍せずに内容を表示します。</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>コマンド</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>zcat [file.gz]</td>
+                <td>gzip圧縮ファイルの内容を表示</td>
+            </tr>
+            <tr>
+                <td>bzcat [file.bz2]</td>
+                <td>bzip2圧縮ファイルの内容を表示</td>
+            </tr>
+            <tr>
+                <td>xzcat [file.xz]</td>
+                <td>xz圧縮ファイルの内容を表示</td>
+            </tr>
+            <tr>
+                <td>zless [file.gz]</td>
+                <td>gzip圧縮ファイルの内容をページャーで表示</td>
+            </tr>
+            <tr>
+                <td>bzless [file.bz2]</td>
+                <td>bzip2圧縮ファイルの内容をページャーで表示</td>
+            </tr>
+            <tr>
+                <td>xzless [file.xz]</td>
+                <td>xz圧縮ファイルの内容をページャーで表示</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>例:</strong></p>
+            <code>zcat file.txt.gz</code> - gzip圧縮ファイルの内容を表示<br>
+            <code>bzcat file.txt.bz2</code> - bzip2圧縮ファイルの内容を表示<br>
+            <code>zcat file.txt.gz | grep "pattern"</code> - 圧縮ファイル内のテキストを検索<br>
+            <code>zless large_file.txt.gz</code> - 大きな圧縮ファイルの内容をページャーで表示<br>
+            <code>zcat file1.gz file2.gz > combined.txt</code> - 複数の圧縮ファイルの内容を結合<br>
+            <code>zcat log.gz | awk '/ERROR/ {print $0}'</code> - 圧縮ログファイル内のエラーを抽出<br>
+            <code>find . -name "*.log.gz" -exec zcat {} \; | grep "CRITICAL"</code> - 複数の圧縮ログファイルから重要なメッセージを検索<br>
+            <code>zcat -f file.txt file.txt.gz</code> - 圧縮・非圧縮ファイルの両方を処理（-fオプション）
+        </div>
+    </section>
+
+    <div class="navigation-links">
+        <a href="linux_command_permission.html">前のカテゴリ: 権限管理</a> | 
+        <a href="linux_command.html">メインページに戻る</a> | 
+        <a href="linux_command_find.html">次のカテゴリ: 検索</a>
+    </div>
+
+    <button id="back-to-top" title="トップに戻る">↑</button>
+</div>
+
+<!-- Main application script -->
+<script src="js/linux_command.js"></script>
+</body>
+</html>

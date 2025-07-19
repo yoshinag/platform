@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>SHAハッシュ生成ツール</title>
+    <link rel="stylesheet" href="css/converter.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../platform/js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="converter_main.html">メインページに戻る</a>
+    </div>
+
+    <h1>SHAハッシュ生成ツール</h1>
+
+    <div class="input-group">
+        <label for="inputText">入力テキスト:</label>
+        <textarea id="inputText" placeholder="ここにテキストを入力してください..."></textarea>
+    </div>
+
+    <div class="buttons">
+        <button id="generateSHA1Btn">SHA-1ハッシュを生成</button>
+        <button id="generateSHA256Btn">SHA-256ハッシュを生成</button>
+        <button id="generateSHA512Btn">SHA-512ハッシュを生成</button>
+        <button id="clearBtn">クリア</button>
+    </div>
+
+    <div class="output-group">
+        <label for="outputText">結果:</label>
+        <textarea id="outputText" readonly></textarea>
+        <button id="copyBtn">結果をコピー</button>
+    </div>
+
+    <div class="explanation">
+        <h3>SHAとは？</h3>
+        <p>
+            SHA（Secure Hash Algorithm）は、米国国家安全保障局（NSA）によって設計された一連のハッシュ関数です。
+            SHA-1は160ビット（20バイト）のハッシュ値を生成し、SHA-256は256ビット（32バイト）、SHA-512は512ビット（64バイト）のハッシュ値を生成します。
+        </p>
+        <p>
+            SHAハッシュ関数は、同じ入力に対して常に同じハッシュ値を生成します。しかし、わずかに異なる入力に対しては、
+            全く異なるハッシュ値を生成します。これは「雪崩効果」と呼ばれる特性です。
+        </p>
+        <p>
+            セキュリティの観点からは、SHA-1は現在では推奨されていませんが、SHA-256とSHA-512は依然として安全であると考えられています。
+            これらは、デジタル署名、メッセージ認証コード、パスワードのハッシュ化など、様々なセキュリティアプリケーションで使用されています。
+        </p>
+        <p>
+            例えば、「Hello, World!」という文字列のSHA-256ハッシュ値は
+            <code>dffd6021bb2bd5b0af676290809ec3a53191dd81c7f70a4b28688a362182986f</code> となります。
+        </p>
+        <h3>Linuxコマンドでの実行方法</h3>
+        <p>
+            Linuxでは、<code>sha1sum</code>、<code>sha256sum</code>、<code>sha512sum</code>コマンドを使用して
+            それぞれSHA-1、SHA-256、SHA-512ハッシュを生成することができます。
+        </p>
+        <p>
+            SHA-1ハッシュを生成する例:
+            <br>
+            <code>echo -n "Hello, World!" | sha1sum</code>
+            <br>
+            結果: <code>0a0a9f2a6772942557ab5355d76af442f8f65e01 -</code>
+        </p>
+        <p>
+            SHA-256ハッシュを生成する例:
+            <br>
+            <code>echo -n "Hello, World!" | sha256sum</code>
+            <br>
+            結果: <code>dffd6021bb2bd5b0af676290809ec3a53191dd81c7f70a4b28688a362182986f -</code>
+        </p>
+        <p>
+            SHA-512ハッシュを生成する例:
+            <br>
+            <code>echo -n "Hello, World!" | sha512sum</code>
+            <br>
+            結果: <code>374d794a95cdcfd8b35993185fef9ba368f160d8daf432d08ba9f1ed1e5abe6cc69291e0fa2fe0006a52570ef18c19def4e617c33ce52ef0a6e5fbe318cb0387 -</code>
+        </p>
+        <p>
+            ファイルのSHA-256ハッシュを生成する例:
+            <br>
+            <code>sha256sum ファイル名</code>
+            <br>
+            結果: <code>ハッシュ値 ファイル名</code>
+        </p>
+        <p>
+            複数のファイルのSHA-256ハッシュを一度に生成する例:
+            <br>
+            <code>sha256sum ファイル1 ファイル2 ファイル3</code>
+        </p>
+        <p>
+            ハッシュ値を検証する例:
+            <br>
+            <code>sha256sum -c ハッシュリストファイル</code>
+            <br>
+            ※ハッシュリストファイルは「ハッシュ値 ファイル名」の形式で記述されています。
+        </p>
+    </div>
+</div>
+
+<!-- Main application script -->
+<script src="js/sha.js"></script>
+</body>
+</html>

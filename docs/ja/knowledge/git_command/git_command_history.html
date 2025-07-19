@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Git履歴と差分の確認コマンド解説</title>
+    <link rel="stylesheet" href="css/git_command.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="git_command.html">メインページに戻る</a> |
+        <a href="git_command_remote.html">前のカテゴリ: リモートリポジトリ操作</a> |
+        <a href="git_command_stash.html">次のカテゴリ: 一時保存と作業の復元</a>
+    </div>
+
+    <h1>Git履歴と差分の確認コマンド解説</h1>
+    
+    <section class="command-section">
+        <h2>履歴と差分の確認</h2>
+        
+        <!-- git log コマンド -->
+        <h3>git log - コミット履歴の表示</h3>
+        <p>リポジトリのコミット履歴を表示します。</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>オプション</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>--oneline</td>
+                <td>各コミットを1行で表示</td>
+            </tr>
+            <tr>
+                <td>--graph</td>
+                <td>ブランチとマージの履歴をASCIIグラフで表示</td>
+            </tr>
+            <tr>
+                <td>--decorate</td>
+                <td>ブランチやタグなどの参照を表示</td>
+            </tr>
+            <tr>
+                <td>--all</td>
+                <td>すべてのブランチのコミットを表示</td>
+            </tr>
+            <tr>
+                <td>-p, --patch</td>
+                <td>各コミットの差分も表示</td>
+            </tr>
+            <tr>
+                <td>-n &lt;数&gt;</td>
+                <td>表示するコミット数を制限</td>
+            </tr>
+            <tr>
+                <td>--author=&lt;パターン&gt;</td>
+                <td>特定の作者のコミットのみ表示</td>
+            </tr>
+            <tr>
+                <td>--since=&lt;日付&gt;, --after=&lt;日付&gt;</td>
+                <td>指定した日付以降のコミットを表示</td>
+            </tr>
+            <tr>
+                <td>--until=&lt;日付&gt;, --before=&lt;日付&gt;</td>
+                <td>指定した日付以前のコミットを表示</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>例:</strong></p>
+            <code>git log</code> - コミット履歴を表示<br>
+            <code>git log --oneline</code> - 簡潔な形式でコミット履歴を表示<br>
+            <code>git log --oneline --graph --all</code> - すべてのブランチのコミット履歴をグラフ形式で表示<br>
+            <code>git log -p</code> - 各コミットの差分も含めて表示<br>
+            <code>git log -n 5</code> - 最新の5つのコミットのみ表示<br>
+            <code>git log --author="John"</code> - Johnが作成したコミットのみ表示<br>
+            <code>git log --since="2023-01-01"</code> - 2023年1月1日以降のコミットを表示<br>
+            <code>git log file.txt</code> - 特定のファイルに関するコミット履歴を表示
+        </div>
+
+        <!-- git diff コマンド -->
+        <h3>git diff - 変更内容の表示</h3>
+        <p>ファイルの変更内容を表示します。</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>オプション/引数</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>（引数なし）</td>
+                <td>作業ディレクトリとステージングエリアの差分</td>
+            </tr>
+            <tr>
+                <td>--staged, --cached</td>
+                <td>ステージングエリアと最新のコミットの差分</td>
+            </tr>
+            <tr>
+                <td>&lt;コミット1&gt; &lt;コミット2&gt;</td>
+                <td>2つのコミット間の差分</td>
+            </tr>
+            <tr>
+                <td>--name-only</td>
+                <td>変更されたファイル名のみを表示</td>
+            </tr>
+            <tr>
+                <td>--name-status</td>
+                <td>変更されたファイル名と変更タイプ（追加/修正/削除）を表示</td>
+            </tr>
+            <tr>
+                <td>--color-words</td>
+                <td>単語単位で差分を色付け</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>例:</strong></p>
+            <code>git diff</code> - 作業ディレクトリとステージングエリアの差分を表示<br>
+            <code>git diff --staged</code> - ステージングエリアと最新のコミットの差分を表示<br>
+            <code>git diff HEAD</code> - 作業ディレクトリと最新のコミットの差分を表示<br>
+            <code>git diff HEAD~1 HEAD</code> - 最新のコミットと1つ前のコミットの差分を表示<br>
+            <code>git diff main feature</code> - mainブランチとfeatureブランチの差分を表示<br>
+            <code>git diff -- file.txt</code> - 特定のファイルの差分のみを表示
+        </div>
+    </section>
+
+    <div class="navigation-links">
+        <a href="git_command.html">メインページに戻る</a> |
+        <a href="git_command_remote.html">前のカテゴリ: リモートリポジトリ操作</a> | 
+        <a href="git_command_stash.html">次のカテゴリ: 一時保存と作業の復元</a>
+    </div>
+
+    <button id="back-to-top" title="トップに戻る">↑</button>
+</div>
+
+<!-- Main application script -->
+<script src="js/git_command.js"></script>
+</body>
+</html>

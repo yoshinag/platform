@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Base64エンコード・デコードツール</title>
+    <link rel="stylesheet" href="css/converter.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../platform/js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="converter_main.html">メインページに戻る</a>
+    </div>
+
+    <h1>Base64エンコード・デコードツール</h1>
+
+    <div class="input-group">
+        <label for="inputText">入力テキスト:</label>
+        <textarea id="inputText" placeholder="ここにテキストを入力してください..."></textarea>
+    </div>
+
+    <div class="buttons">
+        <button id="encodeBtn">Base64にエンコード</button>
+        <button id="decodeBtn">Base64からデコード</button>
+        <button id="clearBtn">クリア</button>
+    </div>
+
+    <div class="output-group">
+        <label for="outputText">結果:</label>
+        <textarea id="outputText" readonly></textarea>
+        <button id="copyBtn">結果をコピー</button>
+    </div>
+
+    <div class="explanation">
+        <h3>Base64とは？</h3>
+        <p>
+            Base64は、バイナリデータをASCII文字のみで表現するためのエンコード方式です。
+            64種類の印字可能な英数字のみを使用して、あらゆるデータを表現することができます。
+        </p>
+        <p>
+            主に、電子メールやHTTPなど、テキストベースのプロトコルでバイナリデータを安全に送信するために使用されます。
+            また、HTMLやCSSでデータURLを使用する際にも利用されます。
+        </p>
+        <p>
+            Base64エンコードされたデータは元のデータよりも約33%大きくなりますが、
+            あらゆる環境で安全に扱えるという利点があります。
+        </p>
+        <p>
+            例えば、「Hello, World!」という文字列をBase64エンコードすると、
+            <code>SGVsbG8sIFdvcmxkIQ==</code> となります。
+        </p>
+        <h3>Linuxコマンドでの実行方法</h3>
+        <p>
+            Linuxでは、<code>base64</code>コマンドを使用してBase64エンコードとデコードを行うことができます。
+        </p>
+        <p>
+            エンコードの例:
+            <br>
+            <code>echo -n "Hello, World!" | base64</code>
+            <br>
+            結果: <code>SGVsbG8sIFdvcmxkIQ==</code>
+        </p>
+        <p>
+            デコードの例:
+            <br>
+            <code>echo -n "SGVsbG8sIFdvcmxkIQ==" | base64 -d</code>
+            <br>
+            結果: <code>Hello, World!</code>
+        </p>
+        <p>
+            ファイルをエンコードする場合:
+            <br>
+            <code>base64 ファイル名 > エンコード結果.txt</code>
+        </p>
+        <p>
+            ファイルをデコードする場合:
+            <br>
+            <code>base64 -d エンコードされたファイル > デコード結果.txt</code>
+        </p>
+    </div>
+</div>
+
+<!-- Main application script -->
+<script src="js/base64.js"></script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Gitリモートリポジトリ操作コマンド解説</title>
+    <link rel="stylesheet" href="css/git_command.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="git_command.html">メインページに戻る</a> |
+        <a href="git_command_branch.html">前のカテゴリ: ブランチ関連のコマンド</a> |
+        <a href="git_command_history.html">次のカテゴリ: 履歴と差分の確認</a>
+    </div>
+
+    <h1>Gitリモートリポジトリ操作コマンド解説</h1>
+    
+    <section class="command-section">
+        <h2>リモートリポジトリ操作</h2>
+        
+        <!-- git remote コマンド -->
+        <h3>git remote - リモートリポジトリの管理</h3>
+        <p>リモートリポジトリの追加、削除、表示などを行います。</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>オプション/サブコマンド</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>add &lt;名前&gt; &lt;URL&gt;</td>
+                <td>新しいリモートリポジトリを追加</td>
+            </tr>
+            <tr>
+                <td>remove &lt;名前&gt;</td>
+                <td>リモートリポジトリを削除</td>
+            </tr>
+            <tr>
+                <td>rename &lt;古い名前&gt; &lt;新しい名前&gt;</td>
+                <td>リモートリポジトリの名前を変更</td>
+            </tr>
+            <tr>
+                <td>-v, --verbose</td>
+                <td>リモートリポジトリの名前とURLを表示</td>
+            </tr>
+            <tr>
+                <td>show &lt;名前&gt;</td>
+                <td>指定したリモートリポジトリの詳細情報を表示</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>例:</strong></p>
+            <code>git remote</code> - リモートリポジトリの一覧を表示<br>
+            <code>git remote -v</code> - リモートリポジトリの一覧とURLを表示<br>
+            <code>git remote add origin https://github.com/username/repo.git</code> - originという名前でリモートリポジトリを追加<br>
+            <code>git remote remove origin</code> - originリモートを削除<br>
+            <code>git remote rename origin upstream</code> - originリモートの名前をupstreamに変更<br>
+            <code>git remote show origin</code> - originリモートの詳細情報を表示
+        </div>
+
+        <!-- git push コマンド -->
+        <h3>git push - ローカルの変更をリモートリポジトリに送信</h3>
+        <p>ローカルブランチの変更をリモートリポジトリに送信します。</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>オプション</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>-u, --set-upstream</td>
+                <td>アップストリームブランチを設定（以降は引数なしでpush可能）</td>
+            </tr>
+            <tr>
+                <td>--force, -f</td>
+                <td>リモートブランチを強制的に上書き（注意: 履歴が書き換わる）</td>
+            </tr>
+            <tr>
+                <td>--force-with-lease</td>
+                <td>リモートブランチが予期せず変更されていない場合のみ強制プッシュ</td>
+            </tr>
+            <tr>
+                <td>--tags</td>
+                <td>すべてのタグをプッシュ</td>
+            </tr>
+            <tr>
+                <td>--delete</td>
+                <td>リモートブランチを削除</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>例:</strong></p>
+            <code>git push origin main</code> - ローカルのmainブランチをoriginリモートにプッシュ<br>
+            <code>git push -u origin feature</code> - featureブランチをプッシュし、アップストリームとして設定<br>
+            <code>git push</code> - 現在のブランチを設定済みのアップストリームにプッシュ<br>
+            <code>git push --force origin main</code> - mainブランチを強制的にプッシュ（注意して使用）<br>
+            <code>git push --force-with-lease origin main</code> - 安全な強制プッシュ<br>
+            <code>git push origin --delete feature</code> - リモートのfeatureブランチを削除
+        </div>
+
+        <!-- git pull コマンド -->
+        <h3>git pull - リモートの変更をローカルリポジトリに取り込む</h3>
+        <p>リモートブランチの変更をローカルブランチに取り込みます（fetch + merge）。</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>オプション</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>--rebase</td>
+                <td>マージの代わりにリベースを使用</td>
+            </tr>
+            <tr>
+                <td>--no-commit</td>
+                <td>自動コミットせずに変更をステージング</td>
+            </tr>
+            <tr>
+                <td>--ff-only</td>
+                <td>Fast-forwardのみ許可（マージコミットを作成しない）</td>
+            </tr>
+            <tr>
+                <td>--prune</td>
+                <td>リモートで削除されたブランチの参照を削除</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>例:</strong></p>
+            <code>git pull</code> - 現在のブランチに対応するリモートブランチから変更を取得してマージ<br>
+            <code>git pull origin main</code> - originリモートのmainブランチから変更を取得してマージ<br>
+            <code>git pull --rebase</code> - リモートの変更を取得し、ローカルの変更をリベース<br>
+            <code>git pull --ff-only</code> - Fast-forwardできる場合のみプル（マージコミットを作成しない）
+        </div>
+
+        <!-- git fetch コマンド -->
+        <h3>git fetch - リモートの変更をローカルに取得（マージはしない）</h3>
+        <p>リモートリポジトリから変更を取得しますが、ローカルブランチにはマージしません。</p>
+
+        <table class="command-table">
+            <tr>
+                <th>オプション</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>--all</td>
+                <td>すべてのリモートから取得</td>
+            </tr>
+            <tr>
+                <td>--prune</td>
+                <td>リモートで削除されたブランチの参照を削除</td>
+            </tr>
+            <tr>
+                <td>--tags</td>
+                <td>すべてのタグを取得</td>
+            </tr>
+            <tr>
+                <td>--depth=&lt;深さ&gt;</td>
+                <td>指定した深さまでの履歴のみを取得</td>
+            </tr>
+        </table>
+
+        <div class="example">
+            <p><strong>例:</strong></p>
+            <code>git fetch</code> - デフォルトリモート（通常はorigin）から変更を取得<br>
+            <code>git fetch origin</code> - originリモートから変更を取得<br>
+            <code>git fetch --all</code> - すべてのリモートから変更を取得<br>
+            <code>git fetch --prune</code> - リモートで削除されたブランチの参照も削除<br>
+            <code>git fetch origin main</code> - originリモートのmainブランチのみ取得
+        </div>
+
+        <!-- git pullとgit fetchの違い -->
+        <h3>git pullとgit fetchの違い - 詳細な比較</h3>
+        <p>
+            <code>git pull</code>と<code>git fetch</code>はどちらもリモートリポジトリからデータを取得するコマンドですが、
+            その動作と用途には重要な違いがあります。
+        </p>
+
+        <div class="example">
+            <h4>基本的な違い</h4>
+            <table class="command-table">
+                <tr>
+                    <th>git fetch</th>
+                    <th>git pull</th>
+                </tr>
+                <tr>
+                    <td>リモートリポジトリからデータを取得するだけで、ローカルの作業ブランチには変更を加えない</td>
+                    <td>リモートリポジトリからデータを取得し、自動的にローカルの作業ブランチにマージ（または指定した場合はリベース）する</td>
+                </tr>
+                <tr>
+                    <td>安全な操作：現在の作業に影響を与えない</td>
+                    <td>マージによってコンフリクトが発生する可能性がある</td>
+                </tr>
+                <tr>
+                    <td>2ステップ操作の最初のステップ（後で手動でマージするため）</td>
+                    <td>1ステップ操作（fetchとmergeを自動的に実行）</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="example">
+            <h4>内部動作の違い</h4>
+            <p><strong>git fetchの動作：</strong></p>
+            <ol>
+                <li>リモートリポジトリから最新のコミット履歴をダウンロード</li>
+                <li>ローカルの<code>refs/remotes/</code>を更新（例：<code>refs/remotes/origin/main</code>）</li>
+                <li>ローカルの作業ブランチ（<code>refs/heads/main</code>など）は変更されない</li>
+                <li>ダウンロードしたコミットはローカルの<code>.git/objects</code>ディレクトリに保存される</li>
+            </ol>
+
+            <p><strong>git pullの動作：</strong></p>
+            <ol>
+                <li><code>git fetch</code>を実行してリモートの変更を取得</li>
+                <li>その後、自動的に<code>git merge</code>（または<code>--rebase</code>オプションを指定した場合は<code>git rebase</code>）を実行</li>
+                <li>ローカルの作業ブランチが更新される</li>
+            </ol>
+        </div>
+
+        <div class="example">
+            <h4>使い分けのポイント</h4>
+            <p><strong>git fetchを使うべき場合：</strong></p>
+            <ul>
+                <li>リモートの変更を確認してから統合したい場合</li>
+                <li>マージする前に変更内容を詳しく調査したい場合</li>
+                <li>現在の作業を中断せずにリモートの最新状態を知りたい場合</li>
+                <li>複数のリモートブランチの変更を選択的に統合したい場合</li>
+            </ul>
+
+            <p><strong>git pullを使うべき場合：</strong></p>
+            <ul>
+                <li>リモートの変更をすぐに統合したい場合</li>
+                <li>リモートの変更が自分の作業と競合しないことが分かっている場合</li>
+                <li>迅速に最新の状態に更新したい場合</li>
+            </ul>
+        </div>
+
+        <div class="example">
+            <h4>fetchした後の変更確認とマージ</h4>
+            <p>fetchした後、以下のコマンドでリモートとの差分を確認できます：</p>
+            <code>git diff main origin/main</code> - ローカルのmainブランチとリモートのmainブランチの差分を表示<br>
+            <code>git log main..origin/main</code> - リモートにあって、ローカルにないコミットを表示<br>
+            <code>git log -p main..origin/main</code> - 差分のあるコミットの詳細な変更内容も表示<br>
+            
+            <p>確認後、マージする場合は：</p>
+            <code>git merge origin/main</code> - リモートの変更をローカルブランチにマージ<br>
+            <code>git rebase origin/main</code> - リモートの変更をベースにローカルの変更を再適用
+        </div>
+
+        <div class="note">
+            <p><strong>ワークフロー例：</strong> 多くの開発者は、<code>git fetch</code>を使って変更を確認してから、明示的に<code>git merge</code>または<code>git rebase</code>を実行するワークフローを好みます。これにより、リモートの変更を統合する前に、その内容を理解し、潜在的な問題を特定する機会が得られます。</p>
+        </div>
+
+    </section>
+
+    <div class="navigation-links">
+        <a href="git_command.html">メインページに戻る</a> |
+        <a href="git_command_branch.html">前のカテゴリ: ブランチ関連のコマンド</a> | 
+        <a href="git_command_history.html">次のカテゴリ: 履歴と差分の確認</a>
+    </div>
+
+    <button id="back-to-top" title="トップに戻る">↑</button>
+</div>
+
+<!-- Main application script -->
+<script src="js/git_command.js"></script>
+</body>
+</html>

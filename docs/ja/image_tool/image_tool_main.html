@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>画像ツール集</title>
+    <link rel="stylesheet" href="css/image_tool.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../platform/js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <h1>画像ツール一覧</h1>
+    
+    <section id="introduction" class="tool-section">
+        <h2>はじめに</h2>
+        <p>
+            このページでは、様々な画像処理ツールを提供しています。
+            画像の角丸め、輪郭抽出、重ね合わせ、色変換など、画像編集に必要な機能を簡単に利用できます。
+            各ツールは専用ページで詳細な機能を提供しています。
+            すべての処理はブラウザ上で実行されます。
+            画像をアップロードしても外部への送信は行われません。
+        </p>
+    </section>
+
+    <section class="tool-section">
+        <h2>画像編集ツール</h2>
+
+        <div class="category-description">
+            <h3>画像形状編集</h3>
+            <p>画像の形状を編集するツールです。</p>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <h4>画像の角丸め＆リサイズ</h4>
+                    <p>丸みを帯びたアイコンの作成ができます。透過背景にも対応しています。</p>
+                    <p><a href="image_rounder.html">画像の角丸めツールを使用する</a></p>
+                </div>
+                
+                <div class="tool-item">
+                    <h4>画像の輪郭抽出</h4>
+                    <p>画像から輪郭を抽出し、線画として保存できます。感度や線の太さを調整可能です。</p>
+                    <p><a href="image_trim.html">画像の輪郭抽出ツールを使用する</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-description">
+            <h3>画像合成・変換</h3>
+            <p>複数の画像を合成したり、色を変換したりするツールです。</p>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <h4>画像の重ね合わせ</h4>
+                    <p>2つの画像を重ね合わせて1つの画像として保存できます。位置や透明度を調整可能です。</p>
+                    <p><a href="image_merge.html">画像の重ね合わせツールを使用する</a></p>
+                </div>
+                
+                <div class="tool-item">
+                    <h4>画像の色変換</h4>
+                    <p>画像内の特定の色を別の色に変換できます。透明度や許容範囲を調整可能です。</p>
+                    <p><a href="color_converter.html">画像の色変換ツールを使用する</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <button id="back-to-top" title="トップに戻る">↑</button>
+</div>
+
+<!-- Main application script -->
+<script src="js/image_tool.js"></script>
+</body>
+</html>

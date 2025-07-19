@@ -1,0 +1,12 @@
+body{font-family:sans-serif;line-height:1.6;margin:20px;background-color:#f4f4f4;color:#333;}
+.container{max-width:600px;margin:0 auto;padding:20px;background-color:#fff;box-shadow:0 0 10px rgba(0,0,0,.1);border-radius:8px;}
+h1,h2{color:#555;border-bottom:2px solid #eee;padding-bottom:5px;margin-bottom:15px;}
+.input-group{margin-bottom:25px;}
+.result-group{margin-bottom:15px;}
+.result-item{margin-bottom:10px;}
+label{display:inline-block;width:100px;margin-right:10px;font-weight:bold;vertical-align:middle;}
+input[type="number"],input[type="text"],select{padding:8px;border:1px solid #ccc;border-radius:4px;font-size:1rem;box-sizing:border-box;vertical-align:middle;}
+input[type="number"]{width:150px;}
+input[type="text"][readonly]{background-color:#eee;width:150px;cursor:default;}
+select{width:100px;}
+.input-group label[for="inputUnit"]{width:auto;}

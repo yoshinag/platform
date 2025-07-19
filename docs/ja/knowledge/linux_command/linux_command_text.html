@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Linuxテキスト処理コマンド解説</title>
+    <link rel="stylesheet" href="css/linux_command.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="linux_command_file.html">前のカテゴリ: ファイル操作</a> |
+        <a href="linux_command.html">メインページに戻る</a> |
+        <a href="linux_command_system.html">次のカテゴリ: システム情報</a>
+    </div>
+
+    <h1>Linuxテキスト処理コマンド解説</h1>
+    
+    <!-- テキスト処理コマンド -->
+    <section id="text-processing" class="command-section">
+        <h2>テキスト処理コマンド</h2>
+        <p>テキストファイルの表示、検索、編集、加工などを行うコマンドです。</p>
+        
+        <!-- cat コマンド -->
+        <h3>cat - ファイルの内容表示・連結</h3>
+        <p>ファイルの内容を表示したり、複数のファイルを連結したりします。</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>オプション</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>-n</td>
+                <td>行番号を表示</td>
+            </tr>
+            <tr>
+                <td>-b</td>
+                <td>空行以外の行に行番号を表示</td>
+            </tr>
+            <tr>
+                <td>-s</td>
+                <td>連続する空行を1行にまとめる</td>
+            </tr>
+            <tr>
+                <td>-A</td>
+                <td>制御文字や特殊文字を表示（タブ、改行など）</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>例:</strong></p>
+            <code>cat file.txt</code> - ファイルの内容を表示<br>
+            <code>cat file1.txt file2.txt</code> - 複数のファイルの内容を連結して表示<br>
+            <code>cat file1.txt file2.txt > combined.txt</code> - 複数のファイルを連結して新しいファイルに保存
+        </div>
+
+        <!-- grep コマンド -->
+        <h3>grep - テキスト検索</h3>
+        <p>ファイル内のテキストパターンを検索します。</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>オプション</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>-i</td>
+                <td>大文字と小文字を区別しない</td>
+            </tr>
+            <tr>
+                <td>-v</td>
+                <td>パターンに一致しない行を表示</td>
+            </tr>
+            <tr>
+                <td>-n</td>
+                <td>行番号を表示</td>
+            </tr>
+            <tr>
+                <td>-r, -R</td>
+                <td>ディレクトリ内のファイルを再帰的に検索</td>
+            </tr>
+            <tr>
+                <td>-l</td>
+                <td>パターンを含むファイル名のみを表示</td>
+            </tr>
+            <tr>
+                <td>-c</td>
+                <td>パターンに一致する行数を表示</td>
+            </tr>
+            <tr>
+                <td>-E</td>
+                <td>拡張正規表現を使用</td>
+            </tr>
+            <tr>
+                <td>-A n</td>
+                <td>一致した行の後 n 行を表示</td>
+            </tr>
+            <tr>
+                <td>-B n</td>
+                <td>一致した行の前 n 行を表示</td>
+            </tr>
+            <tr>
+                <td>-C n</td>
+                <td>一致した行の前後 n 行を表示</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>例:</strong></p>
+            <code>grep "pattern" file.txt</code> - ファイル内でパターンに一致する行を検索<br>
+            <code>grep -i "pattern" file.txt</code> - 大文字小文字を区別せずに検索<br>
+            <code>grep -r "pattern" directory/</code> - ディレクトリ内のすべてのファイルから再帰的に検索<br>
+            <code>grep -E "pattern1|pattern2" file.txt</code> - 複数のパターンのいずれかに一致する行を検索<br>
+            <code>grep -v "^#" config.txt | grep -v "^$"</code> - コメント行と空行を除外（パイプを使用）<br>
+            <code>ps aux | grep "[f]irefox"</code> - grepプロセス自体を除外してfirefoxプロセスを検索<br>
+            <code>grep -A 2 -B 1 "ERROR" log.txt</code> - エラー行とその前後の行を表示<br>
+            <code>grep -o "([0-9]\{1,3\}\.){3}[0-9]\{1,3\}" file.txt</code> - IPアドレスのみを抽出<br>
+            <code>find . -name "*.log" -exec grep -l "ERROR" {} \; | xargs wc -l</code> - エラーを含むログファイルの行数をカウント<br>
+            <code>history | grep "git commit" | sed 's/^[ 0-9]*//'</code> - コミット履歴のコマンドのみを抽出
+        </div>
+
+        <!-- sed コマンド -->
+        <h3>sed - ストリームエディタ</h3>
+        <p>テキストの置換、削除、挿入などの編集を行います。</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>オプション/構文</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>-i</td>
+                <td>ファイルを直接編集（デフォルトでは標準出力に出力）</td>
+            </tr>
+            <tr>
+                <td>-e</td>
+                <td>複数のコマンドを指定</td>
+            </tr>
+            <tr>
+                <td>-n</td>
+                <td>自動出力を抑制（特定のパターンに一致する行のみ出力）</td>
+            </tr>
+            <tr>
+                <td>s/pattern/replacement/</td>
+                <td>パターンを置換</td>
+            </tr>
+            <tr>
+                <td>s/pattern/replacement/g</td>
+                <td>パターンをすべて置換（gはグローバルの意味）</td>
+            </tr>
+            <tr>
+                <td>d</td>
+                <td>パターンに一致する行を削除</td>
+            </tr>
+            <tr>
+                <td>p</td>
+                <td>パターンに一致する行を出力（通常は-nと共に使用）</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>例:</strong></p>
+            <code>sed 's/old/new/' file.txt</code> - 各行の最初の「old」を「new」に置換<br>
+            <code>sed 's/old/new/g' file.txt</code> - 各行のすべての「old」を「new」に置換<br>
+            <code>sed -i 's/old/new/g' file.txt</code> - ファイルを直接編集して置換<br>
+            <code>sed '/pattern/d' file.txt</code> - パターンに一致する行を削除<br>
+            <code>sed -n '/pattern/p' file.txt</code> - パターンに一致する行のみを表示<br>
+            <code>sed -i.bak 's/old/new/g' file.txt</code> - 元ファイルをバックアップしてから編集<br>
+            <code>sed '1,5s/old/new/g' file.txt</code> - 1行目から5行目までの「old」を「new」に置換<br>
+            <code>sed '/start/,/end/d' file.txt</code> - 「start」から「end」までのパターンに一致する行の範囲を削除<br>
+            <code>sed 's/[0-9]\{3\}-[0-9]\{4\}/XXX-XXXX/g' file.txt</code> - 電話番号形式のテキストをマスク<br>
+            <code>cat file.txt | sed 's/^[ \t]*//'</code> - 各行の先頭の空白を削除（パイプを使用）<br>
+            <code>echo "hello world" | sed 's/\b\(.\)/\u\1/g'</code> - 各単語の先頭を大文字に変換<br>
+            <code>sed -e 's/old/new/g' -e 's/foo/bar/g' file.txt</code> - 複数の置換を一度に実行<br>
+            <code>grep "ERROR" log.txt | sed 's/.*ERROR: \(.*\)/\1/'</code> - エラーメッセージのみを抽出
+        </div>
+
+        <!-- awk コマンド -->
+        <h3>awk - テキスト処理言語</h3>
+        <p>テキストデータの加工や分析を行うためのプログラミング言語です。</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>構文/パターン</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>'{print $1}'</td>
+                <td>各行の1番目のフィールド（列）を出力</td>
+            </tr>
+            <tr>
+                <td>'{print $1, $3}'</td>
+                <td>各行の1番目と3番目のフィールドを出力</td>
+            </tr>
+            <tr>
+                <td>-F</td>
+                <td>フィールド区切り文字を指定（デフォルトは空白）</td>
+            </tr>
+            <tr>
+                <td>'/pattern/ {action}'</td>
+                <td>パターンに一致する行に対してアクションを実行</td>
+            </tr>
+            <tr>
+                <td>NR</td>
+                <td>現在の行番号</td>
+            </tr>
+            <tr>
+                <td>NF</td>
+                <td>現在の行のフィールド数</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>例:</strong></p>
+            <code>awk '{print $1}' file.txt</code> - 各行の1番目のフィールドを出力<br>
+            <code>awk -F, '{print $1, $3}' file.csv</code> - CSVファイルの1番目と3番目のフィールドを出力<br>
+            <code>awk '/pattern/ {print $0}' file.txt</code> - パターンに一致する行を出力<br>
+            <code>awk '{sum += $1} END {print sum}' file.txt</code> - 1番目のフィールドの合計を計算して出力<br>
+            <code>awk '{count[$1]++} END {for (word in count) print word, count[word]}' file.txt</code> - 各単語の出現回数をカウント<br>
+            <code>awk -F, '{if ($3 > 100) print $1, $2, $3}' data.csv</code> - 条件に一致する行のみを出力<br>
+            <code>awk 'NR % 2 == 0' file.txt</code> - 偶数行のみを出力<br>
+            <code>awk 'length($0) > 80' file.txt</code> - 80文字より長い行を出力<br>
+            <code>awk 'BEGIN {FS=","; OFS="\t"} {print $1, $2, $3}' file.csv</code> - CSVをTSVに変換<br>
+            <code>ps aux | awk '$3 > 10.0 {print $2, $3, $11}'</code> - CPU使用率が10%を超えるプロセスを表示<br>
+            <code>cat /etc/passwd | awk -F: '{print "User: " $1 ", Home: " $6}'</code> - ユーザー情報を整形して表示<br>
+            <code>ls -l | awk '{sum += $5} END {printf "Total size: %.2f MB\n", sum/1024/1024}'</code> - ディレクトリ内のファイルサイズ合計をMB単位で表示<br>
+            <code>grep "ERROR" log.txt | awk -F: '{print $1}' | sort | uniq -c</code> - エラーが発生したファイルとその回数を表示
+        </div>
+
+        <!-- head/tail コマンド -->
+        <h3>head/tail - ファイルの先頭/末尾部分の表示</h3>
+        <p>ファイルの先頭または末尾の一部を表示します。</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>コマンド/オプション</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>head file.txt</td>
+                <td>ファイルの先頭10行を表示</td>
+            </tr>
+            <tr>
+                <td>head -n N file.txt</td>
+                <td>ファイルの先頭N行を表示</td>
+            </tr>
+            <tr>
+                <td>tail file.txt</td>
+                <td>ファイルの末尾10行を表示</td>
+            </tr>
+            <tr>
+                <td>tail -n N file.txt</td>
+                <td>ファイルの末尾N行を表示</td>
+            </tr>
+            <tr>
+                <td>tail -f file.txt</td>
+                <td>ファイルの末尾を表示し、追加されるデータをリアルタイムに表示（ログ監視などに便利）</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>例:</strong></p>
+            <code>head -n 5 file.txt</code> - ファイルの先頭5行を表示<br>
+            <code>tail -n 20 file.txt</code> - ファイルの末尾20行を表示<br>
+            <code>tail -f /var/log/syslog</code> - システムログをリアルタイムに監視<br>
+            <code>head -n 5 file.txt | tail -n 1</code> - ファイルの5行目のみを表示<br>
+            <code>tail -n +10 file.txt | head -n 5</code> - 10行目から5行分を表示<br>
+            <code>ls -l | head -n 5</code> - ディレクトリ内の最初の5つのファイルを表示<br>
+            <code>find . -type f -name "*.log" | head</code> - 最初の10個のログファイルを表示<br>
+            <code>ps aux | sort -nrk 3,3 | head -n 5</code> - CPU使用率の高い上位5つのプロセスを表示<br>
+            <code>tail -f log.txt | grep --color "ERROR"</code> - エラーメッセージをハイライト表示しながらログを監視<br>
+            <code>tail -f /var/log/apache2/access.log /var/log/apache2/error.log</code> - 複数のログファイルを同時に監視<br>
+            <code>find . -type f -mtime -1 | xargs wc -l | head</code> - 過去24時間以内に変更されたファイルの行数上位10件を表示
+        </div>
+
+        <!-- sort コマンド -->
+        <h3>sort - テキストのソート</h3>
+        <p>テキストファイルの行をソートします。</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>オプション</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>-r</td>
+                <td>逆順（降順）でソート</td>
+            </tr>
+            <tr>
+                <td>-n</td>
+                <td>数値としてソート</td>
+            </tr>
+            <tr>
+                <td>-k N</td>
+                <td>N番目のフィールド（列）でソート</td>
+            </tr>
+            <tr>
+                <td>-t</td>
+                <td>フィールド区切り文字を指定</td>
+            </tr>
+            <tr>
+                <td>-u</td>
+                <td>重複行を削除（ユニークな行のみ出力）</td>
+            </tr>
+            <tr>
+                <td>-f</td>
+                <td>大文字小文字を区別せずにソート</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>例:</strong></p>
+            <code>sort file.txt</code> - ファイルの内容をアルファベット順にソート<br>
+            <code>sort -r file.txt</code> - 逆順でソート<br>
+            <code>sort -n numbers.txt</code> - 数値としてソート<br>
+            <code>sort -k 2 -t, file.csv</code> - CSVファイルの2番目のフィールドでソート<br>
+            <code>sort -k 2n -t: file.txt</code> - 2番目のフィールドを数値としてソート（区切り文字は:）<br>
+            <code>sort -k 3,3 -k 1,1 file.txt</code> - 3列目でソートし、同じ値は1列目でソート<br>
+            <code>sort -u file.txt</code> - ソートして重複行を削除<br>
+            <code>sort -h sizes.txt</code> - 人間が読みやすい形式（K, M, G）でソート<br>
+            <code>du -h | sort -hr</code> - ディレクトリサイズを大きい順にソート<br>
+            <code>ps aux | sort -nrk 3,3 | head -n 10</code> - CPU使用率の高い順に上位10プロセスを表示<br>
+            <code>cat /etc/passwd | sort -t: -k 3 -n</code> - ユーザーをUID順にソート<br>
+            <code>find . -type f -name "*.log" | xargs ls -l | sort -k 5 -nr</code> - ログファイルをサイズ順にソート
+        </div>
+
+        <!-- uniq コマンド -->
+        <h3>uniq - 重複行の処理</h3>
+        <p>連続する重複行を処理します（通常はsortと組み合わせて使用）。</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>オプション</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>-c</td>
+                <td>出現回数を表示</td>
+            </tr>
+            <tr>
+                <td>-d</td>
+                <td>重複する行のみを表示</td>
+            </tr>
+            <tr>
+                <td>-u</td>
+                <td>重複しない行のみを表示</td>
+            </tr>
+            <tr>
+                <td>-i</td>
+                <td>大文字小文字を区別せずに比較</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>例:</strong></p>
+            <code>sort file.txt | uniq</code> - ソートしてから重複行を削除<br>
+            <code>sort file.txt | uniq -c</code> - 各行の出現回数を表示<br>
+            <code>sort file.txt | uniq -d</code> - 重複する行のみを表示<br>
+            <code>sort file.txt | uniq -u</code> - 重複しない行のみを表示<br>
+            <code>sort file.txt | uniq -c | sort -nr</code> - 出現頻度の高い順に表示<br>
+            <code>cat access.log | cut -d' ' -f1 | sort | uniq -c | sort -nr</code> - IPアドレスのアクセス頻度を集計<br>
+            <code>cat file.txt | tr '[:upper:]' '[:lower:]' | sort | uniq</code> - 大文字小文字を区別せずに重複を削除<br>
+            <code>history | cut -c8- | sort | uniq -c | sort -nr | head -n 10</code> - 最もよく使うコマンド上位10個を表示<br>
+            <code>find . -type f -name "*.txt" | xargs cat | sort | uniq -c</code> - 全テキストファイル内の行の出現回数を集計<br>
+            <code>grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' access.log | sort | uniq -c | sort -nr</code> - ログファイル内のIPアドレスの出現頻度を集計
+        </div>
+
+        <!-- wc コマンド -->
+        <h3>wc - 行数・単語数・バイト数のカウント</h3>
+        <p>ファイルの行数、単語数、バイト数をカウントします。</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>オプション</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>-l</td>
+                <td>行数のみをカウント</td>
+            </tr>
+            <tr>
+                <td>-w</td>
+                <td>単語数のみをカウント</td>
+            </tr>
+            <tr>
+                <td>-c</td>
+                <td>バイト数のみをカウント</td>
+            </tr>
+            <tr>
+                <td>-m</td>
+                <td>文字数のみをカウント</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>例:</strong></p>
+            <code>wc file.txt</code> - ファイルの行数、単語数、バイト数を表示<br>
+            <code>wc -l file.txt</code> - ファイルの行数のみを表示<br>
+            <code>wc -w file.txt</code> - ファイルの単語数のみを表示<br>
+            <code>wc -c file.txt</code> - ファイルのバイト数のみを表示<br>
+            <code>wc -m file.txt</code> - ファイルの文字数を表示（マルチバイト文字を正しくカウント）<br>
+            <code>find . -name "*.py" | xargs wc -l</code> - すべてのPythonファイルの行数を表示<br>
+            <code>find . -name "*.py" | xargs wc -l | sort -nr</code> - Pythonファイルを行数の多い順にソート<br>
+            <code>grep -v "^#" script.sh | grep -v "^$" | wc -l</code> - コメントと空行を除いたスクリプトの実行行数<br>
+            <code>cat file.txt | tr -s ' ' '\n' | sort | uniq | wc -l</code> - ファイル内のユニークな単語数をカウント<br>
+            <code>ls -la | wc -l</code> - ディレクトリ内のファイル数をカウント（ヘッダー行を含む）<br>
+            <code>for file in *.txt; do echo -n "$file: "; wc -l < "$file"; done</code> - 各テキストファイルの行数を表示<br>
+            <code>find . -type f -exec cat {} \; | wc -l</code> - ディレクトリ内のすべてのファイルの合計行数
+        </div>
+    </section>
+
+    <div class="navigation-links">
+        <a href="linux_command_file.html">前のカテゴリ: ファイル操作</a> | 
+        <a href="linux_command.html">メインページに戻る</a> | 
+        <a href="linux_command_system.html">次のカテゴリ: システム情報</a>
+    </div>
+
+    <button id="back-to-top" title="トップに戻る">↑</button>
+</div>
+
+<!-- Main application script -->
+<script src="js/linux_command.js"></script>
+</body>
+</html>
