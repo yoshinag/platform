@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>iroirotool</title>
+    <link rel="stylesheet" href="platform/css/common/index.css">
+    <link rel="stylesheet" href="platform/en/converter/css/converter.css">
+    <style>
+        body {
+            overflow: auto !important;
+            height: auto !important;
+            display: block !important;
+        }
+        
+        .embedded-content {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        
+        .embedded-content .converter-section {
+            margin-bottom: 0;
+        }
+        
+        .embedded-content .category-description {
+            margin-bottom: 20px;
+        }
+        
+        .embedded-content h3 {
+            margin-top: 0;
+        }
+        
+        /* Table of Contents Styles */
+        .toc-container {
+            background-color: #f8f8f8;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .toc-list {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 20px;
+        }
+        
+        .toc-list li {
+            margin-bottom: 8px;
+            flex-basis: 30%;
+            min-width: 200px;
+        }
+        
+        .toc-list a {
+            text-decoration: none;
+            color: #3498db;
+            padding: 5px;
+            display: block;
+            border-radius: 3px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .toc-list a:hover {
+            background-color: #e9e9e9;
+            color: #2980b9;
+        }
+        
+        @media (max-width: 768px) {
+            .toc-list {
+                flex-direction: column;
+            }
+            
+            .toc-list li {
+                flex-basis: 100%;
+                min-width: auto;
+            }
+        }
+    </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="platform/js/common/analytics.js"></script>
+<body>
+
+<div class="container">
+    <h1>iroirotool - Useful Tools Collection</h1>
+    
+    <section id="introduction" class="converter-section">
+        <h2>Introduction</h2>
+        <p>
+            This site provides various useful tools.
+            You can easily use functions that are needed daily, such as conversion tools, image editing, and visualization tools.
+            Each tool provides detailed functionality on a dedicated page. All input data used on each page is processed within the site. No data is sent externally.
+        </p>
+    </section>
+    
+    <section id="table-of-contents" class="converter-section">
+        <h2>Table of Contents</h2>
+        <div class="toc-container">
+            <ul class="toc-list">
+                <li><a href="#encode-decode">Encode & Decode</a></li>
+                <li><a href="#hash-generation">Hash Generation</a></li>
+                <li><a href="#tech-docs">Technical Documentation</a></li>
+                <li><a href="#image-editing">Image Editing</a></li>
+                <li><a href="#image-shape-editing">Image Shape Editing</a></li>
+                <li><a href="#image-composition">Image Composition</a></li>
+                <li><a href="#data-visualization">Data Visualization</a></li>
+                <li><a href="#text-number-conversion">Text & Number Conversion</a></li>
+                <li><a href="#date-time-calc">Date & Time Calculation</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="converter-section">
+        <h2>Conversion Tools</h2>
+
+        <div class="category-description">
+            <h3 id="encode-decode">Encode & Decode</h3>
+            <p>Tools for encoding and decoding text and binary data.</p>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <h4>Base64 Encode & Decode</h4>
+                    <p>Encode text or binary data to Base64 format, or decode from Base64.</p>
+                    <p><a href="platform/en/converter/base64.html">Use Base64 Encode & Decode Tool</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-description">
+            <h3 id="hash-generation">Hash Generation</h3>
+            <p>Tools for generating hash values from text.</p>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <h4>MD5 Hash Generation</h4>
+                    <p>Generate MD5 hash values from text. Used for data integrity checks and more.</p>
+                    <p><a href="platform/en/converter/md5.html">Use MD5 Hash Generation Tool</a></p>
+                </div>
+
+                <div class="tool-item">
+                    <h4>SHA Hash Generation</h4>
+                    <p>Generate SHA-1, SHA-256, and SHA-512 hash values from text. These are more secure hash algorithms.</p>
+                    <p><a href="platform/en/converter/sha.html">Use SHA Hash Generation Tool</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="converter-section">
+        <h2>Documentation</h2>
+
+        <div class="category-description">
+            <h3 id="tech-docs">Technical Documentation</h3>
+            <p>Technical information and command explanations.</p>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <h4>Linux Command Guide</h4>
+                    <p>Provides usage and explanations of Linux commands.</p>
+                    <p><a href="platform/ja/linux_command/linux_command.html">View Linux Command Guide</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="converter-section">
+        <h2>Image Tools</h2>
+
+        <div class="category-description">
+            <h3 id="image-editing">Image Editing</h3>
+            <p>Tools for editing and processing images.</p>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <div class="embedded-content">
+                        <section class="tool-section">
+                            <div class="category-description">
+                                <h3 id="image-shape-editing">Image Shape Editing</h3>
+                                <p>Tools for editing the shape of images.</p>
+                                <div class="tool-list">
+                                    <div class="tool-item">
+                                        <h4>Image Rounding & Resizing</h4>
+                                        <p>Create rounded icons. Supports transparent backgrounds.</p>
+                                        <p><a href="platform/ja/image_tool/image_rounder.html">Use Image Rounding Tool</a></p>
+                                    </div>
+                                    
+                                    <div class="tool-item">
+                                        <h4>Image Contour Extraction</h4>
+                                        <p>Extract contours from images and save as line drawings. Sensitivity and line thickness can be adjusted.</p>
+                                        <p><a href="platform/ja/image_tool/image_trim.html">Use Image Contour Extraction Tool</a></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="category-description">
+                                <h3 id="image-composition">Image Composition & Conversion</h3>
+                                <p>Tools for compositing multiple images or converting colors.</p>
+                                <div class="tool-list">
+                                    <div class="tool-item">
+                                        <h4>Image Overlay</h4>
+                                        <p>Overlay two images and save as a single image. Position and transparency can be adjusted.</p>
+                                        <p><a href="platform/ja/image_tool/image_merge.html">Use Image Overlay Tool</a></p>
+                                    </div>
+                                    
+                                    <div class="tool-item">
+                                        <h4>Image Color Conversion</h4>
+                                        <p>Convert specific colors in an image to different colors. Transparency and tolerance can be adjusted.</p>
+                                        <p><a href="platform/ja/image_tool/color_converter.html">Use Image Color Conversion Tool</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="converter-section">
+        <h2>Visualization Tools</h2>
+
+        <div class="category-description">
+            <h3 id="data-visualization">Data Visualization</h3>
+            <p>Tools for visualizing data and code.</p>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <h4>DOT Language Support</h4>
+                    <p>Supports creation and display of graphs and diagrams using DOT language.</p>
+                    <p><a href="platform/en/dot/dot_viewer.html">Use DOT Language Support Tool</a></p>
+                </div>
+
+                <div class="tool-item">
+                    <h4>JSON Prettify</h4>
+                    <p>Format and display JSON data in a readable format.</p>
+                    <p><a href="platform/en/json_prettify/json_prettify.html">Use JSON Prettify Tool</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="converter-section">
+        <div class="category-description">
+            <h3 id="text-number-conversion">Text & Number Conversion</h3>
+            <p>Tools for converting text and numbers.</p>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <h4>Number System Calculator</h4>
+                    <p>Convert between decimal, hexadecimal, binary, and other number systems.</p>
+                    <p><a href="platform/en/number/number.html">Use Number System Calculator</a></p>
+                </div>
+
+                <div class="tool-item">
+                    <h4>Binary Calculator</h4>
+                    <p>Calculate and convert binary data.</p>
+                    <p><a href="platform/en/binary/binary.html">Use Binary Calculator</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="converter-section">
+        <h2>Date & Time Tools</h2>
+        
+        <div class="category-description">
+            <h3 id="date-time-calc">Date & Time Calculation</h3>
+            <p>Tools for calculating dates and times.</p>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <h4>Timezone Calculator</h4>
+                    <p>Convert times between different timezones.</p>
+                    <p><a href="platform/en/timezone/timezone.html">Use Timezone Calculator</a></p>
+                </div>
+                
+                <div class="tool-item">
+                    <h4>Age Calculator</h4>
+                    <p>Calculate age from date of birth.</p>
+                    <p><a href="platform/ja/age_calculator/age_calculator.html">Use Age Calculator</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="navigation-links">
+        <a href="platform/ja/" target="_blank">Japanese Version (日本語版)</a>
+    </div>
+    
+    <button id="back-to-top" title="Back to Top" style="display: none;">↑</button>
+</div>
+
+<script src="platform/js/common/index.js"></script>
+<script>
+// Back to top button functionality
+document.getElementById('back-to-top').addEventListener('click', function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
+// Show back to top button when scrolling down
+window.addEventListener('scroll', function() {
+    var backToTopBtn = document.getElementById('back-to-top');
+    if (window.pageYOffset > 300) {
+        backToTopBtn.style.display = 'block';
+    } else {
+        backToTopBtn.style.display = 'none';
+    }
+});
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('.toc-list a').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+            window.scrollTo({
+                top: targetElement.offsetTop - 20,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+</script>
+
+</body>
+</html>
