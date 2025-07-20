@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>iroirotool</title>
+    <link rel="stylesheet" href="../../platform/css/common/index.css">
+    <link rel="stylesheet" href="converter/css/converter.css">
+    <style>
+        body {
+            overflow: auto !important;
+            height: auto !important;
+            display: block !important;
+        }
+        
+        .embedded-content {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        
+        .embedded-content .converter-section {
+            margin-bottom: 0;
+        }
+        
+        .embedded-content .category-description {
+            margin-bottom: 20px;
+        }
+        
+        .embedded-content h3 {
+            margin-top: 0;
+        }
+        
+        /* Table of Contents Styles */
+        .toc-container {
+            background-color: #f8f8f8;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .toc-list {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 20px;
+        }
+        
+        .toc-list li {
+            margin-bottom: 8px;
+            flex-basis: 30%;
+            min-width: 200px;
+        }
+        
+        .toc-list a {
+            text-decoration: none;
+            color: #3498db;
+            padding: 5px;
+            display: block;
+            border-radius: 3px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .toc-list a:hover {
+            background-color: #e9e9e9;
+            color: #2980b9;
+        }
+        
+        @media (max-width: 768px) {
+            .toc-list {
+                flex-direction: column;
+            }
+            
+            .toc-list li {
+                flex-basis: 100%;
+                min-width: auto;
+            }
+        }
+    </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../platform/js/common/analytics.js"></script>
+<body>
+
+<div class="container">
+    <h1>iroirotool - 便利ツール集</h1>
+    
+    <section id="introduction" class="converter-section">
+        <h2>はじめに</h2>
+        <p>
+            このサイトでは、様々な便利ツールを提供しています。
+            変換ツール、画像編集、可視化ツールなど、日常的に必要となる機能を簡単に利用できます。
+            各ツールは専用ページで詳細な機能を提供しています。各ページで使用された入力データはサイト内で完結します。外部への送信は行われません。
+        </p>
+    </section>
+    
+    <section id="table-of-contents" class="converter-section">
+        <h2>目次</h2>
+        <div class="toc-container">
+            <ul class="toc-list">
+                <li><a href="#encode-decode">エンコード・デコード</a></li>
+                <li><a href="#hash-generation">ハッシュ生成</a></li>
+                <li><a href="#tech-docs">技術ドキュメント</a></li>
+                <li><a href="#image-editing">画像編集・加工</a></li>
+                <li><a href="#image-shape-editing">画像形状編集</a></li>
+                <li><a href="#image-composition">画像合成・変換</a></li>
+                <li><a href="#data-visualization">データ可視化</a></li>
+                <li><a href="#text-number-conversion">テキスト・数値変換</a></li>
+                <li><a href="#date-time-calc">日時計算</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="converter-section">
+        <h2>変換ツール</h2>
+
+        <div class="category-description">
+            <h3 id="encode-decode">エンコード・デコード</h3>
+            <p>テキストやバイナリデータのエンコード・デコードを行うツールです。</p>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <h4>Base64エンコード・デコード</h4>
+                    <p>テキストやバイナリデータをBase64形式にエンコード、またはBase64からデコードします。</p>
+                    <p><a href="converter/base64.html">Base64エンコード・デコードツールを使用する</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-description">
+            <h3 id="hash-generation">ハッシュ生成</h3>
+            <p>テキストからハッシュ値を生成するツールです。</p>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <h4>MD5ハッシュ生成</h4>
+                    <p>テキストからMD5ハッシュ値を生成します。データの整合性チェックなどに使用されます。</p>
+                    <p><a href="converter/md5.html">MD5ハッシュ生成ツールを使用する</a></p>
+                </div>
+
+                <div class="tool-item">
+                    <h4>SHAハッシュ生成</h4>
+                    <p>テキストからSHA-1、SHA-256、SHA-512ハッシュ値を生成します。より安全なハッシュアルゴリズムです。</p>
+                    <p><a href="converter/sha.html">SHAハッシュ生成ツールを使用する</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="converter-section">
+        <h2>ドキュメント</h2>
+
+        <div class="category-description">
+            <h3 id="tech-docs">技術ドキュメント</h3>
+            <p>技術的な情報やコマンドの解説です。</p>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <h4>Linuxコマンド解説</h4>
+                    <p>Linuxコマンドの使い方や解説を提供します。</p>
+                    <p><a href="knowledge/linux_command/linux_command.html">Linuxコマンド解説を見る</a></p>
+                </div>
+                
+                <div class="tool-item">
+                    <h4>Gitコマンド解説</h4>
+                    <p>Gitコマンドの使い方や解説を提供します。</p>
+                    <p><a href="knowledge/git_command/git_command.html">Gitコマンド解説を見る</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="converter-section">
+        <h2>画像ツール</h2>
+
+        <div class="category-description">
+            <h3 id="image-editing">画像編集・加工</h3>
+            <p>画像の編集や加工を行うツールです。</p>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <div class="embedded-content">
+                        <section class="tool-section">
+                            <div class="category-description">
+                                <h3 id="image-shape-editing">画像形状編集</h3>
+                                <p>画像の形状を編集するツールです。</p>
+                                <div class="tool-list">
+                                    <div class="tool-item">
+                                        <h4>画像の角丸め＆リサイズ</h4>
+                                        <p>丸みを帯びたアイコンの作成ができます。透過背景にも対応しています。</p>
+                                        <p><a href="image_tool/image_rounder.html">画像の角丸めツールを使用する</a></p>
+                                    </div>
+                                    
+                                    <div class="tool-item">
+                                        <h4>画像の輪郭抽出</h4>
+                                        <p>画像から輪郭を抽出し、線画として保存できます。感度や線の太さを調整可能です。</p>
+                                        <p><a href="image_tool/image_trim.html">画像の輪郭抽出ツールを使用する</a></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="category-description">
+                                <h3 id="image-composition">画像合成・変換</h3>
+                                <p>複数の画像を合成したり、色を変換したりするツールです。</p>
+                                <div class="tool-list">
+                                    <div class="tool-item">
+                                        <h4>画像の重ね合わせ</h4>
+                                        <p>2つの画像を重ね合わせて1つの画像として保存できます。位置や透明度を調整可能です。</p>
+                                        <p><a href="image_tool/image_merge.html">画像の重ね合わせツールを使用する</a></p>
+                                    </div>
+                                    
+                                    <div class="tool-item">
+                                        <h4>画像の色変換</h4>
+                                        <p>画像内の特定の色を別の色に変換できます。透明度や許容範囲を調整可能です。</p>
+                                        <p><a href="image_tool/color_converter.html">画像の色変換ツールを使用する</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="converter-section">
+        <h2>可視化ツール</h2>
+
+        <div class="category-description">
+            <h3 id="data-visualization">データ可視化</h3>
+            <p>データやコードの可視化を行うツールです。</p>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <h4>dot言語サポート</h4>
+                    <p>dot言語を使ったグラフやダイアグラムの作成・表示を支援します。</p>
+                    <p><a href="viewer/dot/dot_viewer.html">dot言語サポートツールを使用する</a></p>
+                </div>
+
+                <div class="tool-item">
+                    <h4>JSON Prettify</h4>
+                    <p>JSON形式のデータを整形して表示します。</p>
+                    <p><a href="json_prettify/json_prettify.html">JSON Prettifyツールを使用する</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="converter-section">
+        <div class="category-description">
+            <h3 id="text-number-conversion">テキスト・数値変換</h3>
+            <p>テキストや数値の変換を行うツールです。</p>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <h4>進数計算</h4>
+                    <p>10進数、16進数、2進数などの進数変換を行います。</p>
+                    <p><a href="number/number.html">進数計算ツールを使用する</a></p>
+                </div>
+
+                <div class="tool-item">
+                    <h4>バイナリ計算</h4>
+                    <p>バイナリデータの計算や変換を行います。</p>
+                    <p><a href="binary/binary.html">バイナリ計算ツールを使用する</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="converter-section">
+        <h2>日時ツール</h2>
+        
+        <div class="category-description">
+            <h3 id="date-time-calc">日時計算</h3>
+            <p>日付や時間に関する計算を行うツールです。</p>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <h4>タイムゾーン計算</h4>
+                    <p>異なるタイムゾーン間の時間変換を行います。</p>
+                    <p><a href="timezone/timezone.html">タイムゾーン計算ツールを使用する</a></p>
+                </div>
+                
+                <div class="tool-item">
+                    <h4>年齢計算</h4>
+                    <p>生年月日から年齢を計算します。</p>
+                    <p><a href="age_calculator/age_calculator.html">年齢計算ツールを使用する</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="navigation-links">
+        <a href="https://iroirotool.com/" target="_blank">English Version</a>
+    </div>
+    
+    <button id="back-to-top" title="トップに戻る" style="display: none;">↑</button>
+</div>
+
+<script src="../../platform/js/common/index.js"></script>
+<script>
+// Back to top button functionality
+document.getElementById('back-to-top').addEventListener('click', function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
+// Show back to top button when scrolling down
+window.addEventListener('scroll', function() {
+    var backToTopBtn = document.getElementById('back-to-top');
+    if (window.pageYOffset > 300) {
+        backToTopBtn.style.display = 'block';
+    } else {
+        backToTopBtn.style.display = 'none';
+    }
+});
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('.toc-list a').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+            window.scrollTo({
+                top: targetElement.offsetTop - 20,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+</script>
+
+</body>
+</html>
