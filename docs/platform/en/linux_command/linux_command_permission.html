@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Linux Permission Management Commands Guide</title>
+    <link rel="stylesheet" href="css/linux_command.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../platform/js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="linux_command_process.html">Previous Category: Process Management</a> |
+        <a href="linux_command.html">Back to Main Page</a> |
+        <a href="linux_command_archive.html">Next Category: Archive</a>
+    </div>
+
+    <h1>Linux Permission Management Commands Guide</h1>
+    
+    <!-- Permission Management Commands -->
+    <section id="permissions" class="command-section">
+        <h2>Permission Management Commands</h2>
+        <p>Commands for managing file and directory ownership and permissions.</p>
+        
+        <!-- chmod command -->
+        <h3>chmod - Change File/Directory Permissions</h3>
+        <p>Changes access permissions for files and directories.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Syntax/Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>chmod [mode] [file]</td>
+                <td>Change file permissions</td>
+            </tr>
+            <tr>
+                <td>-R</td>
+                <td>Change permissions recursively for directories and their contents</td>
+            </tr>
+            <tr>
+                <td>-v</td>
+                <td>Display verbose information about the process</td>
+            </tr>
+            <tr>
+                <td>--reference=[file]</td>
+                <td>Use the same permissions as the specified file</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Numeric Mode (Octal):</strong></p>
+            <code>chmod 755 file.txt</code> - Give owner read/write/execute, group and others read/execute permissions<br>
+            <code>chmod 644 file.txt</code> - Give owner read/write, group and others read-only permissions<br>
+            <code>chmod -R 755 directory</code> - Recursively set permissions for a directory and its contents<br>
+            <code>chmod 600 id_rsa</code> - Set private key file to be readable/writable only by owner<br>
+            <code>chmod 440 /etc/sudoers</code> - Set sudoers file to be readable only by root owner and sudo group<br>
+            <code>find . -type f -name "*.sh" -exec chmod 755 {} \;</code> - Give execute permission to all shell scripts
+        </div>
+        
+        <div class="example">
+            <p><strong>Symbolic Mode:</strong></p>
+            <code>chmod u+x file.txt</code> - Add execute permission for owner<br>
+            <code>chmod g-w file.txt</code> - Remove write permission for group<br>
+            <code>chmod o=r file.txt</code> - Set read-only permission for others<br>
+            <code>chmod a+r file.txt</code> - Add read permission for all users<br>
+            <code>chmod u+x,g+x,o-rwx script.sh</code> - Add execute permission for owner and group, remove all permissions for others<br>
+            <code>chmod -R g+rX directory/</code> - Recursively add read permission for group to all files, and execute permission only to directories (capital X applies only to directories or files that already have execute permission)<br>
+            <code>find . -type d -exec chmod g+s {} \;</code> - Set SGID bit on all directories (new files created will inherit the directory's group)
+        </div>
+        
+        <div class="note">
+            <p><strong>Numeric Permission Representation:</strong></p>
+            <ul>
+                <li>4 - Read permission (r)</li>
+                <li>2 - Write permission (w)</li>
+                <li>1 - Execute permission (x)</li>
+            </ul>
+            <p>These values are combined. For example, 7 (4+2+1) represents read, write, and execute permissions.</p>
+            <p>The three digits represent permissions for "owner", "group", and "other users" from left to right.</p>
+        </div>
+
+        <!-- chown command -->
+        <h3>chown - Change File/Directory Owner</h3>
+        <p>Changes the owner and group of files and directories.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Syntax/Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>chown [owner]:[group] [file]</td>
+                <td>Change both owner and group of a file</td>
+            </tr>
+            <tr>
+                <td>chown [owner] [file]</td>
+                <td>Change only the owner of a file</td>
+            </tr>
+            <tr>
+                <td>chown :[group] [file]</td>
+                <td>Change only the group of a file</td>
+            </tr>
+            <tr>
+                <td>-R</td>
+                <td>Change ownership recursively for directories and their contents</td>
+            </tr>
+            <tr>
+                <td>-v</td>
+                <td>Display verbose information about the process</td>
+            </tr>
+            <tr>
+                <td>--reference=[file]</td>
+                <td>Use the same owner and group as the specified file</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>sudo chown user1 file.txt</code> - Change file owner to user1<br>
+            <code>sudo chown user1:group1 file.txt</code> - Change file owner to user1 and group to group1<br>
+            <code>sudo chown :group1 file.txt</code> - Change only the group to group1<br>
+            <code>sudo chown -R user1:group1 directory</code> - Recursively change owner and group of a directory and its contents<br>
+            <code>sudo chown --reference=ref_file.txt target_file.txt</code> - Set the same owner and group as the reference file<br>
+            <code>find /var/www -type f -exec sudo chown www-data:www-data {} \;</code> - Set appropriate ownership for web server files<br>
+            <code>sudo chown -R $(whoami) ~/.config</code> - Change ownership of config directory to current user<br>
+            <code>sudo find /home/user -not -user user -exec chown user:user {} \;</code> - Fix ownership of files in user's home directory
+        </div>
+
+        <!-- chgrp command -->
+        <h3>chgrp - Change File/Directory Group</h3>
+        <p>Changes the group ownership of files and directories.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Syntax/Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>chgrp [group] [file]</td>
+                <td>Change the group of a file</td>
+            </tr>
+            <tr>
+                <td>-R</td>
+                <td>Change group recursively for directories and their contents</td>
+            </tr>
+            <tr>
+                <td>-v</td>
+                <td>Display verbose information about the process</td>
+            </tr>
+            <tr>
+                <td>--reference=[file]</td>
+                <td>Use the same group as the specified file</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>sudo chgrp group1 file.txt</code> - Change file group to group1<br>
+            <code>sudo chgrp -R group1 directory</code> - Recursively change group of a directory and its contents<br>
+            <code>sudo chgrp --reference=ref_file.txt file.txt</code> - Set the same group as ref_file.txt<br>
+            <code>find /opt/app -type f -name "*.log" -exec sudo chgrp syslog {} \;</code> - Change group of all log files to syslog<br>
+            <code>sudo chgrp -R $(id -gn) ~/projects</code> - Change group of projects directory to current user's primary group<br>
+            <code>sudo find /var/www -type d -exec chgrp www-data {} \;</code> - Set appropriate group for web server directories<br>
+            <code>sudo chgrp -v developers *.py</code> - Change group of all Python files to developers and show details
+        </div>
+
+        <!-- umask command -->
+        <h3>umask - Set Default File Creation Permissions</h3>
+        <p>Controls the default permissions for newly created files and directories.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Syntax/Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>umask</td>
+                <td>Display current umask value</td>
+            </tr>
+            <tr>
+                <td>umask [mode]</td>
+                <td>Set umask value</td>
+            </tr>
+            <tr>
+                <td>-S</td>
+                <td>Display in symbolic mode</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>umask</code> - Display current umask value (e.g., 0022)<br>
+            <code>umask -S</code> - Display in symbolic mode (e.g., u=rwx,g=rx,o=rx)<br>
+            <code>umask 022</code> - Set umask to 022 (new files will be 644, directories 755)<br>
+            <code>umask 027</code> - Set umask to 027 (new files will be 640, directories 750)<br>
+            <code>umask 077</code> - Set most restrictive umask (new files will be 600, directories 700)<br>
+            <code>echo "umask 002" >> ~/.bashrc</code> - Automatically set umask to 002 at login (good for group collaboration)<br>
+            <code>( umask 077 && touch secret.txt )</code> - Temporarily change umask to create a secure file<br>
+            <code>umask -p</code> - Display current umask in a format usable in shell scripts
+        </div>
+        
+        <div class="note">
+            <p><strong>How umask works:</strong></p>
+            <p>Maximum permissions for files are 666 (rw-rw-rw-), and for directories are 777 (rwxrwxrwx).</p>
+            <p>The umask value specifies which permissions to "subtract" from these maximums.</p>
+            <p>For example, with umask 022:</p>
+            <ul>
+                <li>Files: 666 - 022 = 644 (rw-r--r--)</li>
+                <li>Directories: 777 - 022 = 755 (rwxr-xr-x)</li>
+            </ul>
+        </div>
+
+        <!-- getfacl/setfacl command -->
+        <h3>getfacl/setfacl - Manage Access Control Lists</h3>
+        <p>Display and set more detailed Access Control Lists (ACLs).</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Command/Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>getfacl [file]</td>
+                <td>Display ACLs for a file</td>
+            </tr>
+            <tr>
+                <td>setfacl -m u:[user]:[permissions] [file]</td>
+                <td>Set ACL for a specific user</td>
+            </tr>
+            <tr>
+                <td>setfacl -m g:[group]:[permissions] [file]</td>
+                <td>Set ACL for a specific group</td>
+            </tr>
+            <tr>
+                <td>setfacl -x u:[user] [file]</td>
+                <td>Remove ACL for a specific user</td>
+            </tr>
+            <tr>
+                <td>setfacl -b [file]</td>
+                <td>Remove all ACL entries</td>
+            </tr>
+            <tr>
+                <td>setfacl -R</td>
+                <td>Apply recursively to directory and its contents</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>getfacl file.txt</code> - Display ACLs for a file<br>
+            <code>setfacl -m u:user1:rw file.txt</code> - Grant read/write permissions to user1<br>
+            <code>setfacl -m g:group1:r file.txt</code> - Grant read permission to group1<br>
+            <code>setfacl -x u:user1 file.txt</code> - Remove ACL entry for user1<br>
+            <code>setfacl -b file.txt</code> - Remove all ACL entries<br>
+            <code>setfacl -R -m u:user1:rx directory/</code> - Recursively grant read/execute permissions to user1 for directory and contents<br>
+            <code>getfacl file1.txt | setfacl --set-file=- file2.txt</code> - Copy ACLs from file1.txt to file2.txt<br>
+            <code>setfacl -d -m g:project:rw directory/</code> - Set default ACLs for newly created files in directory<br>
+            <code>setfacl -m m:rx file.txt</code> - Limit effective mask to read/execute only<br>
+            <code>find /shared -type d -exec setfacl -d -m g:team:rwx {} \;</code> - Set default team ACLs for shared directories
+        </div>
+
+        <!-- sudo command -->
+        <h3>sudo - Execute Command as Privileged User</h3>
+        <p>Execute commands as another user (typically root).</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>-u [user]</td>
+                <td>Execute command as specified user (default is root)</td>
+            </tr>
+            <tr>
+                <td>-i</td>
+                <td>Simulate initial login of the target user</td>
+            </tr>
+            <tr>
+                <td>-s</td>
+                <td>Run a shell</td>
+            </tr>
+            <tr>
+                <td>-l</td>
+                <td>List allowed commands for current user</td>
+            </tr>
+            <tr>
+                <td>-v</td>
+                <td>Update timestamp (extend authentication cache)</td>
+            </tr>
+            <tr>
+                <td>-k</td>
+                <td>Invalidate timestamp (require re-authentication next time)</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>sudo apt update</code> - Run apt command as root<br>
+            <code>sudo -u www-data php script.php</code> - Run PHP script as www-data user<br>
+            <code>sudo -i</code> - Start a login shell as root<br>
+            <code>sudo -l</code> - List allowed commands<br>
+            <code>sudo -s</code> - Start a shell as root while keeping current environment variables<br>
+            <code>sudo -E apt upgrade</code> - Run command with current user's environment variables<br>
+            <code>sudo -k</code> - Invalidate sudo authentication cache (require password next time)<br>
+            <code>sudo !!</code> - Run previous command with sudo<br>
+            <code>sudo -u postgres psql</code> - Connect to database as postgres user<br>
+            <code>sudo -g wheel command</code> - Run command with specified group privileges
+        </div>
+    </section>
+
+    <div class="navigation-links">
+        <a href="linux_command_process.html">Previous Category: Process Management</a> | 
+        <a href="linux_command.html">Back to Main Page</a> | 
+        <a href="linux_command_archive.html">Next Category: Archive</a>
+    </div>
+
+    <button id="back-to-top" title="Back to Top">↑</button>
+</div>
+
+<!-- Main application script -->
+<script src="js/linux_command.js"></script>
+</body>
+</html>

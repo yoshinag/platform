@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Linux Search Commands Guide</title>
+    <link rel="stylesheet" href="css/linux_command.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../platform/js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="linux_command_archive.html">Previous Category: Archive</a> |
+        <a href="linux_command.html">Back to Main Page</a>
+    </div>
+
+    <h1>Linux Search Commands Guide</h1>
+    
+    <!-- Search Commands -->
+    <section id="search" class="command-section">
+        <h2>Search Commands</h2>
+        <p>Commands for searching files, directories, and text content.</p>
+        
+        <!-- find command -->
+        <h3>find - Search for Files and Directories</h3>
+        <p>Searches for files and directories that match specified criteria.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Syntax/Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>find [path] -name [pattern]</td>
+                <td>Search for files with names matching the pattern</td>
+            </tr>
+            <tr>
+                <td>find [path] -iname [pattern]</td>
+                <td>Search for files with names matching the pattern (case-insensitive)</td>
+            </tr>
+            <tr>
+                <td>find [path] -type f</td>
+                <td>Search for regular files only</td>
+            </tr>
+            <tr>
+                <td>find [path] -type d</td>
+                <td>Search for directories only</td>
+            </tr>
+            <tr>
+                <td>find [path] -size [+/-]Nc</td>
+                <td>Search for files of specific size (N=size, c=unit, +/-=larger/smaller than)</td>
+            </tr>
+            <tr>
+                <td>find [path] -mtime [+/-]N</td>
+                <td>Search for files modified N days ago</td>
+            </tr>
+            <tr>
+                <td>find [path] -user [username]</td>
+                <td>Search for files owned by specific user</td>
+            </tr>
+            <tr>
+                <td>find [path] -perm [mode]</td>
+                <td>Search for files with specific permissions</td>
+            </tr>
+            <tr>
+                <td>find [path] -exec [command] {} \;</td>
+                <td>Execute command on each found file</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>find /home -name "*.txt"</code> - Find all .txt files in /home directory<br>
+            <code>find . -type f -size +10M</code> - Find files larger than 10MB in current directory<br>
+            <code>find /var/log -name "*.log" -mtime -7</code> - Find log files modified in the last 7 days<br>
+            <code>find . -type f -name "*.jpg" -exec cp {} /backup/ \;</code> - Copy all JPG files to backup directory<br>
+            <code>find . -type f -empty</code> - Find empty files<br>
+            <code>find . -type f -perm 0777 -print</code> - Find files with 777 permissions (readable/writable/executable by all users)<br>
+            <code>find . -type f -not -name "*.txt" -not -name "*.log"</code> - Find files that are not text or log files<br>
+            <code>find . -type f -name "*.log" -size +1M -exec ls -lh {} \; | sort -k5,5hr</code> - List log files larger than 1MB sorted by size<br>
+            <code>find . -type f -name "*.conf" -exec grep -l "DEBUG" {} \;</code> - Find configuration files containing "DEBUG"<br>
+            <code>find . -type f -mtime +30 -name "*.bak" -delete</code> - Delete backup files older than 30 days
+        </div>
+
+        <!-- locate command -->
+        <h3>locate - Database-driven File Search</h3>
+        <p>Quickly searches for files and directories using a pre-built database.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>-i</td>
+                <td>Case-insensitive search</td>
+            </tr>
+            <tr>
+                <td>-l, --limit N</td>
+                <td>Limit results to N entries</td>
+            </tr>
+            <tr>
+                <td>-c, --count</td>
+                <td>Display only the number of matching files</td>
+            </tr>
+            <tr>
+                <td>-r, --regexp</td>
+                <td>Search using regular expressions</td>
+            </tr>
+            <tr>
+                <td>-S, --statistics</td>
+                <td>Display database statistics</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>locate "*.conf"</code> - Find all .conf files<br>
+            <code>locate -i "readme"</code> - Find files containing "readme" (case-insensitive)<br>
+            <code>locate -c "*.jpg"</code> - Count the number of JPG files<br>
+            <code>sudo updatedb</code> - Update the locate database (run before searching for most recent results)<br>
+            <code>locate -r "\.mp4$"</code> - Find MP4 files using regular expression<br>
+            <code>locate -l 10 "*.pdf"</code> - Show only first 10 PDF files<br>
+            <code>locate -e "report"</code> - Show only existing files (exclude files deleted since database update)<br>
+            <code>locate "*.log" | grep "/var/" | xargs ls -lh</code> - Show detailed information for log files in /var directory
+        </div>
+        
+        <div class="note">
+            <p><strong>Note:</strong> locate uses a database for fast searching, but since the database is updated periodically, recently created files might not appear in search results. To search with the most up-to-date information, run <code>sudo updatedb</code> to update the database.</p>
+        </div>
+
+        <!-- which command -->
+        <h3>which - Locate Executable Files</h3>
+        <p>Shows the full path of commands by searching directories in the PATH environment variable.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>-a</td>
+                <td>Display all matching executables in PATH (default shows only the first match)</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>which python</code> - Show location of python executable<br>
+            <code>which -a python</code> - Show all python executables in PATH<br>
+            <code>which gcc g++ make</code> - Show locations of multiple commands at once<br>
+            <code>which -a java | xargs ls -l</code> - Show detailed information for all java executables<br>
+            <code>which $SHELL</code> - Show location of current shell
+        </div>
+
+        <!-- whereis command -->
+        <h3>whereis - Locate Binary, Source, and Manual Files</h3>
+        <p>Shows the locations of a command's binary, source code, and manual pages.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>-b</td>
+                <td>Search for binary files only</td>
+            </tr>
+            <tr>
+                <td>-m</td>
+                <td>Search for manual pages only</td>
+            </tr>
+            <tr>
+                <td>-s</td>
+                <td>Search for source files only</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>whereis ls</code> - Show locations of ls command binary, source, and manual<br>
+            <code>whereis -b python</code> - Show only binary locations for python<br>
+            <code>whereis -m gcc</code> - Show only manual page locations for gcc<br>
+            <code>whereis -s bash</code> - Show only source file locations for bash<br>
+            <code>whereis -B /usr/bin -f ls</code> - Search for ls command in specific directory<br>
+            <code>for cmd in ls cp mv rm; do whereis $cmd; done</code> - Show locations for multiple commands at once
+        </div>
+
+        <!-- grep command (detailed) -->
+        <h3>grep - Search Text Patterns</h3>
+        <p>Searches for text patterns in files. This is a more detailed explanation than in the Text Processing section.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>-i</td>
+                <td>Case-insensitive search</td>
+            </tr>
+            <tr>
+                <td>-v</td>
+                <td>Display lines that don't match the pattern</td>
+            </tr>
+            <tr>
+                <td>-n</td>
+                <td>Display line numbers</td>
+            </tr>
+            <tr>
+                <td>-r, -R</td>
+                <td>Search recursively through directories</td>
+            </tr>
+            <tr>
+                <td>-l</td>
+                <td>Display only filenames containing matches</td>
+            </tr>
+            <tr>
+                <td>-c</td>
+                <td>Display count of matching lines</td>
+            </tr>
+            <tr>
+                <td>-w</td>
+                <td>Match whole words only</td>
+            </tr>
+            <tr>
+                <td>-E</td>
+                <td>Use extended regular expressions</td>
+            </tr>
+            <tr>
+                <td>-F</td>
+                <td>Treat pattern as fixed string (disable regular expressions)</td>
+            </tr>
+            <tr>
+                <td>-A n</td>
+                <td>Display n lines after the match</td>
+            </tr>
+            <tr>
+                <td>-B n</td>
+                <td>Display n lines before the match</td>
+            </tr>
+            <tr>
+                <td>-C n</td>
+                <td>Display n lines before and after the match</td>
+            </tr>
+            <tr>
+                <td>--color</td>
+                <td>Highlight matching text with color</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>grep "error" /var/log/syslog</code> - Search for "error" in syslog<br>
+            <code>grep -i "warning" *.log</code> - Search for "warning" in all log files (case-insensitive)<br>
+            <code>grep -r "TODO" --include="*.py" .</code> - Recursively search for "TODO" in Python files<br>
+            <code>grep -v "^#" config.conf</code> - Display lines that don't start with # (exclude comments)<br>
+            <code>grep -E "error|warning" log.txt</code> - Search for lines containing "error" or "warning"<br>
+            <code>grep -n "function" script.js</code> - Show line numbers for lines containing "function"<br>
+            <code>grep -o "IP: [0-9.]\+" server.log</code> - Extract and display only IP addresses<br>
+            <code>grep -A 2 -B 1 "ERROR" application.log</code> - Show error lines with context<br>
+            <code>grep -l "TODO" *.py | xargs wc -l</code> - Count lines in Python files containing "TODO"<br>
+            <code>history | grep "git commit"</code> - Search command history for git commits<br>
+            <code>ps aux | grep "[n]ginx"</code> - Search for nginx processes (excluding grep process itself)
+        </div>
+
+        <!-- ack/ag command -->
+        <h3>ack/ag - Programmer-friendly grep Alternatives</h3>
+        <p>ack and ag (The Silver Searcher) are grep alternatives optimized for programmers.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Command/Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>ack [pattern]</td>
+                <td>Search for pattern in files in current directory</td>
+            </tr>
+            <tr>
+                <td>ack --[language]</td>
+                <td>Search only in files of specific language</td>
+            </tr>
+            <tr>
+                <td>ack -i</td>
+                <td>Case-insensitive search</td>
+            </tr>
+            <tr>
+                <td>ack -l</td>
+                <td>Display only filenames containing matches</td>
+            </tr>
+            <tr>
+                <td>ag [pattern]</td>
+                <td>Similar to ack but faster</td>
+            </tr>
+            <tr>
+                <td>ag --ignore-dir=[dir]</td>
+                <td>Ignore specific directory</td>
+            </tr>
+            <tr>
+                <td>ag --depth=[n]</td>
+                <td>Limit search depth</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>ack "function"</code> - Search for "function" in files in current directory<br>
+            <code>ack --js "setTimeout"</code> - Search for "setTimeout" in JavaScript files<br>
+            <code>ag "import"</code> - Quickly search for "import" in files in current directory<br>
+            <code>ag --python "def main"</code> - Search for "def main" in Python files<br>
+            <code>ack -i "todo" --ignore-dir=vendor/</code> - Search for "todo" case-insensitively, excluding vendor directory<br>
+            <code>ack -w "log" --type=ruby</code> - Search for whole word "log" in Ruby files<br>
+            <code>ag -G "\.java$" "public class"</code> - Search for "public class" in Java files<br>
+            <code>ag -l "TODO|FIXME" | xargs wc -l</code> - Count lines in files containing "TODO" or "FIXME"<br>
+            <code>ag --count "import" --sort-files</code> - Show count of "import" occurrences in each file, sorted by filename
+        </div>
+        
+        <div class="note">
+            <p><strong>Note:</strong> ack and ag ignore version control directories (.git, .svn, etc.) and temporary files by default, and only search text files. This makes them more efficient than grep for searching code.</p>
+        </div>
+
+        <!-- Combining find and grep -->
+        <h3>Combining find and grep</h3>
+        <p>Combining find and grep allows you to search for text in specific file types.</p>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>find . -name "*.py" -exec grep "import" {} \;</code> - Search for "import" in Python files<br>
+            <code>find . -name "*.log" -mtime -7 -exec grep "ERROR" {} \;</code> - Search for "ERROR" in log files modified in the last 7 days<br>
+            <code>find . -type f -not -path "*/\.*" -exec grep -l "TODO" {} \;</code> - Find files containing "TODO", excluding hidden files<br>
+            <code>find . -name "*.conf" -exec grep -l "DEBUG" {} \; | xargs cp -t /backup/debug-configs/</code> - Copy configuration files containing "DEBUG" to backup directory<br>
+            <code>find . -name "*.java" -exec grep -l "Deprecated" {} \; | xargs sed -i 's/Deprecated/DEPRECATED/g'</code> - Batch edit Java files containing "Deprecated"<br>
+            <code>find . -type f -size +1M -exec grep -l "ERROR" {} \; | xargs ls -lh</code> - Show details of large files containing "ERROR"<br>
+            <code>find . -name "*.log" -exec grep -q "FATAL" {} \; -print</code> - Show only paths of log files containing "FATAL"<br>
+            <code>find . -name "*.sh" -type f -exec grep -l "#!/bin/bash" {} \; | xargs chmod +x</code> - Make all bash scripts executable
+        </div>
+    </section>
+
+    <div class="navigation-links">
+        <a href="linux_command_archive.html">Previous Category: Archive</a> | 
+        <a href="linux_command.html">Back to Main Page</a>
+    </div>
+
+    <button id="back-to-top" title="Back to Top">↑</button>
+</div>
+
+<!-- Main application script -->
+<script src="js/linux_command.js"></script>
+</body>
+</html>

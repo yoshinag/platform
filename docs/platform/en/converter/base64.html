@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Base64 Encode/Decode Tool</title>
+    <link rel="stylesheet" href="css/converter.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../platform/js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="converter_main.html">Back to Main Page</a>
+    </div>
+
+    <h1>Base64 Encode/Decode Tool</h1>
+
+    <div class="input-group">
+        <label for="inputText">Input Text:</label>
+        <textarea id="inputText" placeholder="Enter text here..."></textarea>
+    </div>
+
+    <div class="buttons">
+        <button id="encodeBtn">Encode to Base64</button>
+        <button id="decodeBtn">Decode from Base64</button>
+        <button id="clearBtn">Clear</button>
+    </div>
+
+    <div class="output-group">
+        <label for="outputText">Result:</label>
+        <textarea id="outputText" readonly></textarea>
+        <button id="copyBtn">Copy Result</button>
+    </div>
+
+    <div class="explanation">
+        <h3>What is Base64?</h3>
+        <p>
+            Base64 is an encoding scheme for representing binary data using only ASCII characters.
+            It can represent any data using only 64 printable alphanumeric characters.
+        </p>
+        <p>
+            It is mainly used to safely transmit binary data in text-based protocols such as email and HTTP.
+            It is also used when using data URLs in HTML and CSS.
+        </p>
+        <p>
+            Base64 encoded data is about 33% larger than the original data, but it has the advantage of being
+            safely handled in any environment.
+        </p>
+        <p>
+            For example, if you Base64-encode the string "Hello, World!", it becomes
+            <code>SGVsbG8sIFdvcmxkIQ==</code>.
+        </p>
+        <h3>How to execute with Linux command</h3>
+        <p>
+            In Linux, you can use the <code>base64</code> command to perform Base64 encoding and decoding.
+        </p>
+        <p>
+            Encoding example:
+            <br>
+            <code>echo -n "Hello, World!" | base64</code>
+            <br>
+            Result: <code>SGVsbG8sIFdvcmxkIQ==</code>
+        </p>
+        <p>
+            Decoding example:
+            <br>
+            <code>echo -n "SGVsbG8sIFdvcmxkIQ==" | base64 -d</code>
+            <br>
+            Result: <code>Hello, World!</code>
+        </p>
+        <p>
+            To encode a file:
+            <br>
+            <code>base64 filename > encoded_result.txt</code>
+        </p>
+        <p>
+            To decode a file:
+            <br>
+            <code>base64 -d encoded_file > decoded_result.txt</code>
+        </p>
+    </div>
+</div>
+
+<!-- Main application script -->
+<script src="js/base64.js"></script>
+</body>
+</html>
