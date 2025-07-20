@@ -1,27 +1,27 @@
 [
   {
-    "id": "mermaid-flowchart-lr",
-    "name": "Mermaid: Flowchart (Left->Right)",
+    "id": "mermaid-pdca-cycle",
+    "name": "Mermaid: PDCA Cycle - graph LR",
     "notation": "mermaid",
-    "code": "graph LR\n    A[開始] --> B{判定}\n    B -- Yes --> C[処理1]\n    B -- No --> D[処理2]\n    C --> E[終了]\n    D --> E;"
+    "code": "graph LR\n    %% Style definitions\n    classDef plan fill:#e0f7fa,stroke:#00796b,stroke-width:2px,color:#004d40\n    classDef do fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#1b5e20\n    classDef check fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100\n    classDef act fill:#fce4ec,stroke:#d81b60,stroke-width:2px,color:#880e4f\n\n    %% Node definitions and connections\n    A((⚙️ <b>Plan</b><br>Planning)) --> B((🚀 <b>Do</b><br>Execution))\n    B --> C((📊 <b>Check</b><br>Evaluation))\n    C --> D((💡 <b>Action</b><br>Improvement))\n    D -.-> A\n\n    %% Style application\n    class A plan\n    class B do\n    class C check\n    class D act"
   },
   {
-    "id": "dot-simple",
-    "name": "DOT: Simple Graph",
-    "notation": "dot",
-    "code": "digraph G {\n  rankdir=LR;\n  A [label=\"Start\"]\n  B [label=\"End\"]\n  A -> B;\n}"
+    "id": "mermaid-web-architecture",
+    "name": "Mermaid: Web Application Architecture - graph TD",
+    "notation": "mermaid",
+    "code": "graph TD\n    %% Style definitions\n    classDef user fill:#fce4ec,stroke:#c2185b,stroke-width:2px\n    classDef frontend fill:#e3f2fd,stroke:#1565c0,stroke-width:2px\n    classDef backend fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px\n    classDef database fill:#fffde7,stroke:#fbc02d,stroke-width:2px\n    classDef external fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px\n\n    %% Node definitions (surround text with \"\")\n    U(\"🧑‍💻 User\")\n    \n    subgraph \"Frontend (Browser)\"\n        direction LR\n        FE[\"SPA<br>(React / Vue)\"]\n    end\n\n    subgraph \"Backend (Cloud)\"\n        direction TB\n        API[\"API Server<br>(Node.js / Go)\"] --- DB[(\"🗄️ Database<br>PostgreSQL\")]\n        API --- Cache[(\"⚡ Cache<br>Redis\")]\n    end\n    \n    subgraph \"External Services (SaaS)\"\n        Auth(\"Firebase Auth<br>Authentication\")\n        Payment(\"Stripe<br>Payment\")\n    end\n\n    %% Relationship definitions\n    U -- \"1\\. Access\" --> FE\n    FE -- \"2\\. API Request\" --> API\n    API -- \"3\\. Data Query\" --> DB\n    API -- \"4\\. Optimization\" --> Cache\n    API -- \"5\\. Authentication\" --> Auth\n    API -- \"6\\. Payment Processing\" --> Payment\n    \n    subgraph \"Response Flow\"\n        direction RL\n        API -- \"JSON\" --> FE\n        FE -- \"Screen Rendering\" --> U\n    end\n\n    %% Style application\n    class U user\n    class FE frontend\n    class API backend\n    class DB,Cache database\n    class Auth,Payment external"
   },
   {
-    "id": "mermaid-sequence",
-    "name": "Mermaid: Sequence Diagram",
+    "id": "mermaid-ssh-tunnel",
+    "name": "Mermaid: SSH Tunnel for MySQL - sequenceDiagram",
     "notation": "mermaid",
-    "code": "sequenceDiagram\n    participant Alice\n    participant Bob\n    Alice->>John: Hello John, how are you?\n    loop Healthcheck\n        John->>John: Fight against hypochondria\n    end\n    Note right of John: Rational thoughts<br/>prevail...\n    John-->>Alice: Great!\n    John->>Bob: How about you?\n    Bob-->>John: Jolly good!"
+    "code": "sequenceDiagram\n    autonumber\n    participant App as \"MySQL Client<br>@Client PC\"\n    participant ClientSSH as \"SSH Client<br>@Client PC\"\n    participant SSHServer as \"SSH Server\"\n    participant TargetServer as \"MySQL\"\n\n    rect rgb(230, 240, 255)\n        note over ClientSSH, SSHServer: Prerequisite: `ssh -L 3307:target-db:3306 user@server` has been executed\n        ClientSSH ->> SSHServer: Establish SSH tunnel (port 22)\n    end\n\n    App ->> ClientSSH: ① DB connection request\n    Note right of App: Source: localhost:(random port A)<br>Destination: localhost:3307\n\n    activate ClientSSH\n    ClientSSH -->> SSHServer: ② Transfer data through tunnel\n    Note over ClientSSH, SSHServer: Transfer within encrypted SSH session (port 22)\n\n    activate SSHServer\n    SSHServer ->> TargetServer: ③ Transfer data via new connection\n    Note right of SSHServer: Source: SSH server:(random port B)<br>Destination: target:3306\n    deactivate ClientSSH\n\n    activate TargetServer\n    TargetServer -->> SSHServer: ④ Response from DB\n    Note right of SSHServer: Source: target:3306<br>Destination: SSH server:(random port B)\n    deactivate TargetServer\n\n    SSHServer -->> ClientSSH: ⑤ Transfer response through tunnel\n    Note over ClientSSH, SSHServer: Transfer within encrypted SSH session (port 22)\n\n    activate ClientSSH\n    deactivate SSHServer\n    ClientSSH -->> App: ⑥ Return response to application\n    Note right of App: Source: localhost:3307<br>Destination: localhost:(random port A)\n    deactivate ClientSSH"
   },
   {
-    "id": "mermaid-gantt",
-    "name": "Mermaid: Gantt Chart",
+    "id": "mermaid-gunpla-gantt",
+    "name": "Mermaid: Gunpla Production Process - Gantt Chart",
     "notation": "mermaid",
-    "code": "gantt\n    dateFormat  YYYY-MM-DD\n    title Project Timeline\n    excludes    weekends\n    section Section A\n    Task 1            :a1, 2024-01-01, 30d\n    Task 2            :after a1  , 20d\n    section Critical tasks\n    Critical Task 1   :crit1, 2024-01-15, 15d"
+    "code": "gantt\n    title Gundam (Gunpla) Production Process\n    dateFormat YYYY-MM-DD\n    axisFormat %m/%d\n\n    section Preparation Phase\n    Planning & Runner Check :crit, done, id:plan, 2025-07-21, 1d\n    \n    section Assembly Phase\n    Parts Cutting :done, id:cut, after plan, 3d\n    Gate & Surface Treatment :active, id:sand, after cut, 4d\n    Leg Assembly :id:legs, after sand, 2d\n    Waist Assembly :id:waist, after legs, 1d\n    Torso Assembly :id:torso, after waist, 1d\n    Arm Assembly :id:arms, after torso, 2d\n    Head Assembly :id:head, after arms, 1d\n    Weapons & Backpack :id:weapons, after head, 2d\n\n    section Finishing Phase\n    Panel Lining :id:lining, after weapons, 2d\n    Decal Application :id:decal, after lining, 3d\n    Top Coat :id:coat, after decal, 1d\n    Final Assembly & Completion :crit, id:finish, after coat, 1d"
   },
   {
     "id": "mermaid-class",
@@ -48,28 +48,10 @@
     "code": "erDiagram\n    CUSTOMER ||--o{ ORDER : places\n    ORDER ||--|{ LINE-ITEM : \"contains\"\n    CUSTOMER }|..|{ DELIVERY-ADDRESS : \"uses\""
   },
   {
-    "id": "mermaid-git",
-    "name": "Mermaid: Git Graph",
+    "id": "mermaid-git-flow",
+    "name": "Mermaid: Git Flow",
     "notation": "mermaid",
-    "code": "gitGraph\n   commit id: \"A0\"\n   branch feature-A\n   commit id: \"A1\"\n   commit id: \"A2\"\n   checkout main\n   commit id: \"M1\"\n   merge feature-A id: \"merge-A\"\n   branch feature-B\n   commit id: \"B1\"\n   checkout main\n   commit id: \"M2\"\n   checkout feature-B\n   commit id: \"B2\"\n   checkout main\n   merge feature-B id: \"merge-B\"\n   commit id: \"C\""
-  },
-  {
-    "id": "dot-state",
-    "name": "DOT: State Diagram",
-    "notation": "dot",
-    "code": "digraph StateMachine {\n  rankdir=LR;\n  node [shape = circle];\n  S0 -> S1 [label=\"Event A\"];\n  S1 -> S2 [label=\"Event B\"];\n  S2 -> S0 [label=\"Event C\"];\n}"
-  },
-  {
-    "id": "dot-complex-flowchart",
-    "name": "DOT: Complex Flowchart",
-    "notation": "dot",
-    "code": "digraph ComplexFlowchart {\n  rankdir=TD;\n  node [shape=box, style=rounded];\n  Start [shape=ellipse];\n  End [shape=ellipse];\n  Input [label=\"データ入力\", shape=parallelogram];\n  Decision1 [label=\"条件1?\", shape=diamond];\n  Process1A [label=\"処理1A\"];\n  Start -> Input -> Decision1 -> Process1A -> End; \n}"
-  },
-  {
-    "id": "dot-network",
-    "name": "DOT: Network Diagram",
-    "notation": "dot",
-    "code": "graph Network {\n  layout=neato;\n  node [shape=box, style=filled, color=lightblue];\n  Router1 -- ServerA;\n  Router1 -- ServerB;\n  ServerA -- Database1;\n}"
+    "code": "gitGraph\n    %% --- Initial Setup ---\n    commit id: \"Initial Commit\"\n    branch develop\n    \n    %% --- Feature Development (Feature Branch) ---\n    checkout develop\n    commit id: \"dev-A\"\n    branch feature/add-login\n    checkout feature/add-login\n    commit id: \"feat-1\"\n    commit id: \"feat-2\"\n    checkout develop\n    merge feature/add-login id: \"merge-feature\"\n    commit id: \"dev-B\"\n    \n    %% --- Release Preparation (Release Branch) ---\n    branch release/v1.0\n    checkout release/v1.0\n    commit id: \"Release Prep\"\n    \n    %% --- Merge to Main Branch and Tagging ---\n    checkout main\n    merge release/v1.0\n    %% Commented out for environments where 'tag' is not supported\n    %% tag \"v1.0.0\"\n    \n    %% --- Merge to Develop Branch ---\n    checkout develop\n    merge release/v1.0\n    \n    %% --- Emergency Fix (Hotfix Branch) ---\n    checkout main\n    branch hotfix/v1.0.1\n    checkout hotfix/v1.0.1\n    commit id: \"Critical Bug Fix\"\n    \n    %% --- Merge Hotfix to Main and Develop ---\n    checkout main\n    merge hotfix/v1.0.1\n    %% Commented out for environments where 'tag' is not supported\n    %% tag \"v1.0.1\"\n    checkout develop\n    merge hotfix/v1.0.1"
   },
   {
     "id": "mermaid-user-journey",
@@ -78,34 +60,52 @@
     "code": "journey\n    title My working day\n    section Go to work\n      Make tea: 5: Me\n      Go upstairs: 3: Me\n      Do work: 1: Me, Cat\n    section Go home\n      Go downstairs: 5: Me\n      Sit down: 5: Me"
   },
   {
-    "id": "mermaid-mindmap",
-    "name": "Mermaid: Mind Map",
+    "id": "mermaid-ai-learning-assistant",
+    "name": "Mermaid: AI Learning Assistant Business Proposal - mindmap",
     "notation": "mermaid",
-    "code": "mindmap\n  root((Mind Map Root))\n    Origins\n      Long history\n      Popularisation\n        British popular psychology author Tony Buzan\n    Research\n      On effectiveness<br/>and features\n      On techniques<br/>and links\n    Tools\n      Pen and paper\n      Mermaid"
+    "code": "mindmap\n  root((✨ New Business Proposal<br/>AI Learning Assistant))\n    )Concept(\n      [Personalized learning plans optimized by AI]\n      [Gamification to make learning a habit]\n      [AI tutor available for questions anytime]\n    )Target Customers(\n      [Working professionals seeking certifications]\n      [Highly motivated university students]\n      [Anyone interested in lifelong learning]\n    )Key Features(\n      ))Automated Learning Plan Generation((\n        - Working backward from goals\n        - Focus on weak areas\n      ))Progress Visualization((\n        - Graph display of study time and achievement\n        - Motivation maintenance\n      ))AI Q&A System((\n        - 24/7 question availability\n        - Generation of easy-to-understand explanations\n      ))Review Reminders((\n        - Notifications based on forgetting curve\n        - Promoting knowledge retention\n    )Revenue Model(\n      [Basic features free (Freemium)]\n      )Premium Plan (Monthly)(\n        [Ad-free experience]\n        [Advanced progress analytics]\n        [Specialized AI tutors for specific fields]\n    )Marketing Strategy(\n      )Social Media(\n        [Learning record sharing feature]\n        [Hashtag campaigns]\n      )Web Advertising(\n        [Placements on educational media sites]\n      )Influencer Marketing(\n        [Partnerships with educational YouTubers]"
   },
   {
-    "id": "mermaid-timeline",
-    "name": "Mermaid: Timeline",
+    "id": "mermaid-vtuber-timeline",
+    "name": "Mermaid: VTuber Popularity Timeline - timeline",
     "notation": "mermaid",
-    "code": "timeline\n  title History of Social Media\n  2002 : Friendster\n  2003 : LinkedIn\n  2004 : Facebook\n       : Flickr\n  2005 : YouTube\n  2006 : Twitter"
+    "code": "timeline\n    title VTuber Popularity Ranking Trends (2020-2024)\n    2020\n        : 1st Kizuna AI\n        : 2nd Gawr Gura\n        : 3rd Kaguya Luna\n        : 4th Mirai Akari\n        : 5th Shirakami Fubuki\n    2021\n        : 1st Gawr Gura\n        : 2nd Kizuna AI\n        : 3rd Usada Pekora\n        : 4th Houshou Marine\n        : 5th Mori Calliope\n    2022\n        : 1st Gawr Gura\n        : 2nd Kizuna AI\n        : 3rd Usada Pekora\n        : 4th Houshou Marine\n        : 5th Kobo Kanaeru\n    2023\n        : 1st Gawr Gura\n        : 2nd Usada Pekora\n        : 3rd Houshou Marine\n        : 4th Kobo Kanaeru\n        : 5th Shirakami Fubuki\n    2024\n        : 1st Gawr Gura\n        : 2nd Houshou Marine\n        : 3rd Usada Pekora\n        : 4th filian\n        : 5th Kobo Kanaeru"
   },
   {
-    "id": "mermaid-quadrant",
-    "name": "Mermaid: Quadrant Chart",
+    "id": "mermaid-ppm",
+    "name": "Mermaid: PPM - quadrantChart",
     "notation": "mermaid",
-    "code": "quadrantChart\n  title Reach and engagement of campaigns\n  x-axis Low Reach --> High Reach\n  y-axis Low Engagement --> High Engagement\n  quadrant-1 We should expand\n  quadrant-2 Need to promote\n  quadrant-3 Re-evaluate\n  quadrant-4 May be improved\n  Campaign A: [0.3, 0.6]\n  Campaign B: [0.45, 0.23]\n  Campaign C: [0.57, 0.69]\n  Campaign D: [0.78, 0.34]\n  Campaign E: [0.40, 0.34]\n  Campaign F: [0.35, 0.78]"
+    "code": "quadrantChart\n    title Business Portfolio Analysis\n    x-axis \"Relative Market Share (High → Low)\"\n    y-axis \"Market Growth Rate (Low → High)\"\n    quadrant-1 \"Star\"\n    quadrant-2 \"Question Mark\"\n    quadrant-3 \"Cash Cow\"\n    quadrant-4 \"Dog\"\n    %% Star Area\n    \"Core Business A\": [0.85, 0.8]\n    \"New Business B\": [0.7, 0.9]\n    %% Question Mark Area\n    \"R&D Project C\": [0.2, 0.85]\n    \"Test Launch D\": [0.1, 0.6]\n    %% Cash Cow Area\n    \"Mature Business E\": [0.9, 0.3]\n    \"Niche Business F\": [0.65, 0.2]\n    %% Dog Area\n    \"Divestment Candidate G\": [0.3, 0.1]\n    \"Unprofitable Business H\": [0.15, 0.4]"
+  },
+  {
+    "id": "dot-simple",
+    "name": "DOT: Simple Graph",
+    "notation": "dot",
+    "code": "digraph G {\n  rankdir=LR;\n  A [label=\"Start\"]\n  B [label=\"End\"]\n  A -> B;\n}"
+  },
+  {
+    "id": "dot-state",
+    "name": "DOT: State Diagram",
+    "notation": "dot",
+    "code": "digraph StateMachine {\n  rankdir=LR;\n  node [shape = circle];\n  S0 -> S1 [label=\"Event A\"];\n  S1 -> S2 [label=\"Event B\"];\n  S2 -> S0 [label=\"Event C\"];\n}"
+  },
+  {
+    "id": "dot-network",
+    "name": "DOT: Network Diagram",
+    "notation": "dot",
+    "code": "graph Network {\n  layout=neato;\n  node [shape=box, style=filled, color=lightblue];\n  Router1 -- ServerA;\n  Router1 -- ServerB;\n  ServerA -- Database1;\n}"
   },
   {
     "id": "dot-dataflow",
     "name": "DOT: Data Flow Diagram (Simple)",
     "notation": "dot",
-    "code": "digraph DFD {\n  rankdir=LR;\n  node [shape=box];\n  ExternalEntity [shape=rect, label=\"外部エンティティ\"];\n  Process1 [shape=circle, label=\"プロセス1\"];\n  DataStore1 [shape=record, label=\"データストアA\"];\n  ExternalEntity -> Process1 [label=\"入力データ\"];\n  Process1 -> DataStore1 [label=\"書き込み\"];\n  DataStore1 -> Process1 [label=\"読み出し\"];\n  Process1 -> ExternalEntity [label=\"出力データ\"];\n}"
+    "code": "digraph DFD {\n  rankdir=LR;\n  node [shape=box];\n  ExternalEntity [shape=rect, label=\"External Entity\"];\n  Process1 [shape=circle, label=\"Process 1\"];\n  DataStore1 [shape=record, label=\"Data Store A\"];\n  ExternalEntity -> Process1 [label=\"Input Data\"];\n  Process1 -> DataStore1 [label=\"Write\"];\n  DataStore1 -> Process1 [label=\"Read\"];\n  Process1 -> ExternalEntity [label=\"Output Data\"];\n}"
   },
   {
     "id": "dot-usecase",
     "name": "DOT: Use Case Diagram",
     "notation": "dot",
-    "code": "digraph UseCase {\n    actor User\n    node [shape=ellipse];\n    UC1 [label=\"機能Aを実行\"];\n    UC2 [label=\"機能Bを利用\"];\n    UC3 [label=\"レポートを生成\"];\n    User -> UC1;\n    User -> UC2;\n    UC2 -> UC3 [label=\"<<include>>\", style=dashed, arrowhead=open]; \n}"
+    "code": "digraph UseCase {\n    actor User\n    node [shape=ellipse];\n    UC1 [label=\"Execute Function A\"];\n    UC2 [label=\"Use Function B\"];\n    UC3 [label=\"Generate Report\"];\n    User -> UC1;\n    User -> UC2;\n    UC2 -> UC3 [label=\"<<include>>\", style=dashed, arrowhead=open]; \n}"
   },
   {
     "id": "dot-filesystem-tree",
