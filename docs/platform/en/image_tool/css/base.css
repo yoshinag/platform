@@ -1,0 +1,123 @@
+/* --- START OF FILE css/base.css --- */
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+    margin: 0;
+}
+
+.container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: center;
+    max-width: 600px; /* Max width for the entire tool */
+    width: 90%;
+    border: 2px dashed transparent;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.container.dragover {
+    border-color: #007bff;
+    background-color: #f0f8ff;
+}
+
+label, button, input[type="file"], input[type="color"], select {
+    margin: 5px;
+    vertical-align: middle;
+    font-size: 0.95em;
+}
+
+button {
+    padding: 8px 15px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.2s;
+}
+
+button:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+input[type="range"] {
+    vertical-align: middle;
+}
+
+input[type="color"] {
+    width: 50px;
+    height: 30px;
+    border: 1px solid #ccc;
+    padding: 0;
+    vertical-align: middle;
+    border-radius: 4px;
+}
+
+input[type="number"] {
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: right;
+}
+/* Hide number input spinners */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+}
+
+select {
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #ddd;
+    margin: 25px 0;
+}
+
+.info {
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.section-title {
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+details {
+    text-align: left;
+}
+
+details summary {
+    cursor: pointer;
+}
+
+details ol, details ul {
+    text-align: left;
+    padding-left: 2em;
+}
+/* --- END OF FILE css/base.css --- */

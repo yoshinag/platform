@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Corner Rounding & Resize & Download Tool</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/preview.css">
+    <link rel="stylesheet" href="css/controls.css">
+    <link rel="stylesheet" href="css/downloads.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../platform/js/common/analytics.js"></script>
+<body>
+<div class="container" id="dropZone">
+    <div class="navigation-links">
+        <a href="../../../index.html">Return to Main Page</a>
+    </div>
+    <h1>Image Corner Rounding & Resize & Download Tool</h1>
+
+    <details open>
+        <summary>How to Use</summary>
+        <ol>
+            <li>Upload an image (file selection or drag & drop)</li>
+            <li>Adjust the corner roundness</li>
+            <li>Set the base layer size if needed</li>
+            <li>Adjust the image layer size if needed</li>
+            <li>Check the preview</li>
+            <li>Download in your preferred format
+                <ul>
+                    <li>For transparent background: SVG or PNG (Transparent)</li>
+                    <li>For background color: PNG (With background color) or JPEG (With background color)</li>
+                </ul>
+            </li>
+            <li>No images are uploaded to any server. All processing is done in your browser.</li>
+        </ol>
+    </details>
+
+    <div class="upload-area">
+        <input type="file" id="imageUpload" accept="image/*">
+        <p>Or drag & drop an image here</p>
+    </div>
+
+    <div class="controls">
+        <div class="control-group"> <!-- Corner roundness -->
+            <label for="borderRadiusSlider">Corner roundness (image layer): </label>
+            <input type="range" id="borderRadiusSlider" min="0" max="100" value="20" disabled>
+            <span id="radiusValueDisplay">20</span>px
+        </div>
+
+        <hr>
+        <p class="section-title">Base Layer Options</p>
+        <div class="control-group"> <!-- Base width -->
+            <label for="basePresetWidth">Width:</label>
+            <input type="text" id="basePresetWidth" list="baseWidthOptions" placeholder="Custom" disabled>
+            <datalist id="baseWidthOptions">
+                <option value="16">16px</option>
+                <option value="32">32px</option>
+                <option value="64">64px</option>
+                <option value="128">128px</option>
+                <option value="256">256px</option>
+                <option value="512">512px</option>
+                <option value="1024">1024px</option>
+                <option value="2048">2048px</option>
+                <option value="4096">4096px</option>
+            </datalist>
+            <input type="number" id="baseCustomWidth" min="1" style="display: none;" disabled> px
+        </div>
+        <div class="control-group"> <!-- Base height -->
+            <label for="basePresetHeight">Height:</label>
+            <input type="text" id="basePresetHeight" list="baseHeightOptions" placeholder="Custom" disabled>
+            <datalist id="baseHeightOptions">
+                <option value="16">16px</option>
+                <option value="32">32px</option>
+                <option value="64">64px</option>
+                <option value="128">128px</option>
+                <option value="256">256px</option>
+                <option value="512">512px</option>
+                <option value="1024">1024px</option>
+                <option value="2048">2048px</option>
+                <option value="4096">4096px</option>
+            </datalist>
+            <input type="number" id="baseCustomHeight" min="1" style="display: none;" disabled> px
+        </div>
+        <div class="control-group"> <!-- Base aspect ratio -->
+            <input type="checkbox" id="baseAspectRatioLock" checked disabled>
+            <label for="baseAspectRatioLock">Maintain aspect ratio (for custom size)</label>
+        </div>
+
+        <hr>
+        <p class="section-title">Image Layer Options</p>
+        <div class="control-group"> <!-- Image percentage -->
+            <label for="imageLayerScalePercentage">Percentage of base:</label>
+            <button id="decreaseScaleBtn" class="scale-btn" disabled>-</button>
+            <input type="range" id="imageLayerScalePercentage" min="1" max="200" value="100" disabled>
+            <button id="increaseScaleBtn" class="scale-btn" disabled>+</button>
+            <span id="imageLayerScaleDisplay">100</span>%
+        </div>
+        <div class="control-group"> <!-- Image width height -->
+            <label for="imageLayerResizeWidth">Width (px):</label>
+            <input type="number" id="imageLayerResizeWidth" min="1" disabled>
+            <label for="imageLayerResizeHeight">Height (px):</label>
+            <input type="number" id="imageLayerResizeHeight" min="1" disabled>
+        </div>
+        <div class="control-group"> <!-- Image aspect ratio -->
+            <input type="checkbox" id="imageLayerAspectRatioLock" checked disabled>
+            <label for="imageLayerAspectRatioLock">Maintain image aspect ratio</label>
+        </div>
+    </div>
+
+    <canvas id="previewCanvas"></canvas>
+    <p class="info">↑ Preview (transparent areas shown with checkerboard pattern)</p>
+    <p class="info">The image layer is centered within the base layer.</p>
+
+    <div class="downloads">
+        <p class="section-title">Transparent Download</p>
+        <div class="options-group">
+            <button id="downloadSvgBtn" disabled>SVG (Transparent)</button>
+            <button id="downloadPngTransparentBtn" disabled>PNG (Transparent)</button>
+        </div>
+        <hr>
+        <p class="section-title">Download with Background Color</p>
+        <div class="options-group">
+            <button id="downloadPngBgColorBtn" disabled>PNG (With background color)</button>
+            <button id="downloadJpegBtn" disabled>JPEG (With background color)</button>
+        </div>
+        <div class="options-group bg-color-settings">
+            <label for="bgColorPicker">RGB/HEX:</label>
+            <input type="color" id="bgColorPicker" value="#ffffff" disabled>
+        </div>
+    </div>
+    <p class="info">SVG/PNG (Transparent) preserves transparency information.</p>
+    <p class="info">PNG/JPEG (With background color) fills transparent areas with the selected background color.</p>
+    <p class="info">SVG is a transparent file of the base size with the rounded image centered within it.</p>
+</div>
+
+<script src="js/utils.js"></script>
+<script src="js/color_manager.js"></script>
+<script src="js/base_layer_manager.js"></script>
+<script src="js/image_layer_manager.js"></script>
+<script src="js/image_rounder.js"></script>
+</body>
+</html>

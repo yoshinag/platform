@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Contour Extraction Tool</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/preview.css">
+    <link rel="stylesheet" href="css/controls.css">
+    <link rel="stylesheet" href="css/downloads.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../platform/js/common/analytics.js"></script>
+<body>
+<div class="container" id="dropZone">
+    <div class="navigation-links">
+        <a href="../../../index.html">Return to Main Page</a>
+    </div>
+    <h1>Image Contour Extraction Tool</h1>
+
+    <details open>
+        <summary>How to Use</summary>
+        <ol>
+            <li>Upload an image (file selection or drag & drop)</li>
+            <li>Adjust the contour detection sensitivity</li>
+            <li>Adjust the contour thickness (if needed)</li>
+            <li>Check the preview</li>
+            <li>Download in your preferred format
+                <ul>
+                    <li>For transparent background: PNG (Transparent)</li>
+                    <li>For background color: PNG (With background color) or JPEG (With background color)</li>
+                </ul>
+            </li>
+            <li>No images are uploaded to any server. All processing is done in your browser.</li>
+        </ol>
+    </details>
+
+    <div class="upload-area">
+        <input type="file" id="imageUpload" accept="image/*">
+        <p>Or drag & drop an image here</p>
+    </div>
+
+    <div class="controls">
+        <div class="control-group">
+            <label for="thresholdSlider">Contour detection sensitivity: </label>
+            <input type="range" id="thresholdSlider" min="0" max="255" value="100" disabled>
+            <span id="thresholdValueDisplay">100</span>
+        </div>
+
+        <div class="control-group">
+            <label for="edgeWidthSlider">Contour thickness: </label>
+            <input type="range" id="edgeWidthSlider" min="1" max="10" value="1" disabled>
+            <span id="edgeWidthValueDisplay">1</span>px
+        </div>
+
+        <div class="control-group">
+            <label for="edgeColorPicker">Contour color:</label>
+            <input type="color" id="edgeColorPicker" value="#000000" disabled>
+        </div>
+
+        <div class="control-group">
+            <input type="checkbox" id="outerContourOnlyCheckbox" disabled>
+            <label for="outerContourOnlyCheckbox">Extract outer contour only</label>
+        </div>
+
+        <div class="control-group">
+            <input type="checkbox" id="fillContourCheckbox" disabled>
+            <label for="fillContourCheckbox">Fill inside of contours</label>
+        </div>
+
+        <div class="control-group">
+            <label for="fillColorPicker">Fill color:</label>
+            <input type="color" id="fillColorPicker" value="#ffffff" disabled>
+        </div>
+
+        <div class="control-group">
+            <button id="applyContourBtn" disabled>Apply Contour Extraction</button>
+            <button id="resetImageBtn" disabled>Reset to Original Image</button>
+        </div>
+    </div>
+
+    <canvas id="previewCanvas"></canvas>
+    <p class="info">↑ Preview (transparent areas shown with checkerboard pattern)</p>
+
+    <div class="downloads">
+        <p class="section-title">Download</p>
+        <div class="options-group">
+            <button id="downloadPngTransparentBtn" disabled>PNG (Transparent)</button>
+            <button id="downloadPngBgColorBtn" disabled>PNG (With background color)</button>
+            <button id="downloadJpegBtn" disabled>JPEG (With background color)</button>
+        </div>
+        <div class="options-group bg-color-settings">
+            <label for="bgColorPicker">Background color:</label>
+            <input type="color" id="bgColorPicker" value="#ffffff" disabled>
+        </div>
+    </div>
+    <p class="info">PNG (Transparent) preserves transparency information.</p>
+    <p class="info">PNG/JPEG (With background color) fills transparent areas with the selected background color.</p>
+</div>
+
+<script src="js/utils.js"></script>
+<script src="js/color_manager.js"></script>
+<script src="js/image_trim.js"></script>
+</body>
+</html>
