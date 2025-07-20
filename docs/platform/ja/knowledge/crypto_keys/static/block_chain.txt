@@ -1,0 +1,32 @@
+graph TD
+    %% --- ブロックチェーンの基本構造 ---
+
+    subgraph "Block 1 (Genesis Block)"
+        A1["<strong>Nonce:</strong> 1337"]
+        A2["<strong>Data:</strong><br/>- Transaction A<br/>- Transaction B"]
+        A3["<strong>Prev. Hash:</strong><br/>0000000000000000"]
+        A4["<strong>Hash:</strong><br/><u>0000a1b2c3d4e5f6</u>"]
+    end
+
+    subgraph "Block 2"
+        B1["<strong>Nonce:</strong> 54321"]
+        B2["<strong>Data:</strong><br/>- Transaction C<br/>- Transaction D"]
+        B3["<strong>Prev. Hash:</strong><br/><u>0000a1b2c3d4e5f6</u>"]
+        B4["<strong>Hash:</strong><br/><u>0000f6e5d4c3b2a1</u>"]
+    end
+
+    subgraph "Block 3"
+        C1["<strong>Nonce:</strong> 98765"]
+        C2["<strong>Data:</strong><br/>- Transaction E<br/>- Transaction F"]
+        C3["<strong>Prev. Hash:</strong><br/><u>0000f6e5d4c3b2a1</u>"]
+        C4["<strong>Hash:</strong><br/><u>0000a9b8c7d6e5f4</u>"]
+    end
+
+    %% --- ブロック間の連携 ---
+    A4 -- "このハッシュ値が次のブロックに取り込まれる" --> B3
+    B4 -- "データが鎖(チェーン)のように繋がる" --> C3
+
+    style A4 fill:#f2f2f2,stroke:#333
+    style B3 fill:#f2f2f2,stroke:#333
+    style B4 fill:#e6e6e6,stroke:#333
+    style C3 fill:#e6e6e6,stroke:#333

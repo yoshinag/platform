@@ -1,0 +1,13 @@
+graph LR
+    subgraph クライアントPCでの作業
+        A["ユーザーが ssh-keygen を実行 🔑"] --> B{"秘密鍵と公開鍵のペアを生成"};
+        B --> C["<b>秘密鍵 (id_rsa) を</b><br>厳重に保管 ~/.ssh/"];
+        B --> D["<b>公開鍵 (id_rsa.pub) を生成</b>"];
+    end
+
+    subgraph リモートサーバーでの処理
+      D -- "ssh-copy-idなどで転送" --> E["公開鍵の登録(共有)"];
+      E --> F["受け取った公開鍵を authorized_keys に追記 ~/.ssh/"];
+    end
+
+    F --> G(("事前準備完了"));

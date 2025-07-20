@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>セキュアな通信: VPN、ワイヤレス通信（WPA2/WPA3）</title>
+    <link rel="stylesheet" href="css/crypto_keys.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="crypto_keys.html">暗号化鍵の解説に戻る</a>
+    </div>
+    <h1>セキュアな通信: VPN、ワイヤレス通信（WPA2/WPA3）</h1>
+    
+    <section id="table-of-contents" class="crypto-section">
+        <h2>目次</h2>
+        <ul>
+            <li><a href="#introduction">はじめに</a></li>
+            <li><a href="#vpn">VPN（仮想プライベートネットワーク）</a>
+                <ul>
+                    <li><a href="#vpn-intro">VPNとは</a></li>
+                    <li><a href="#vpn-types">VPNの種類</a></li>
+                    <li><a href="#vpn-protocols">VPNプロトコル</a></li>
+                    <li><a href="#vpn-encryption">VPNの暗号化</a></li>
+                    <li><a href="#vpn-use-cases">VPNの利用シーン</a></li>
+                </ul>
+            </li>
+            <li><a href="#wireless-security">ワイヤレス通信のセキュリティ</a>
+                <ul>
+                    <li><a href="#wifi-security-evolution">Wi-Fiセキュリティの進化</a></li>
+                    <li><a href="#wpa2">WPA2（Wi-Fi Protected Access 2）</a></li>
+                    <li><a href="#wpa3">WPA3（Wi-Fi Protected Access 3）</a></li>
+                    <li><a href="#wifi-best-practices">Wi-Fiセキュリティのベストプラクティス</a></li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    
+    <section id="introduction" class="crypto-section">
+        <h2>はじめに</h2>
+        <p>
+            インターネットやワイヤレスネットワークを利用する際、通信の安全性は非常に重要です。
+            公共のWi-Fiや一般のインターネット接続では、通信内容が第三者に傍受されるリスクがあります。
+            このページでは、通信を安全に保護するための技術であるVPN（仮想プライベートネットワーク）とワイヤレス通信のセキュリティ規格（WPA2/WPA3）について解説します。
+        </p>
+    </section>
+
+    <section id="vpn" class="crypto-section">
+        <h2>VPN（仮想プライベートネットワーク）</h2>
+        
+        <section id="vpn-intro" class="crypto-section">
+            <h3>VPNとは</h3>
+            <p>
+                VPN（Virtual Private Network：仮想プライベートネットワーク）は、公共のインターネットを経由しながらも、
+                プライベートネットワークのように安全に通信できる技術です。
+                VPNは暗号化されたトンネルを作成し、その中でデータをやり取りすることで、
+                通信内容の盗聴や改ざんを防ぎます。
+            </p>
+            <p>
+                VPNを使用すると、以下のようなメリットがあります：
+            </p>
+            <ul>
+                <li>通信内容の暗号化によるプライバシー保護</li>
+                <li>IPアドレスの匿名化</li>
+                <li>地理的制限のあるコンテンツへのアクセス</li>
+                <li>公共Wi-Fiでの安全な通信</li>
+                <li>企業の内部ネットワークへの安全なリモートアクセス</li>
+            </ul>
+        </section>
+
+        <section id="vpn-types" class="crypto-section">
+            <h3>VPNの種類</h3>
+            <h4>リモートアクセスVPN</h4>
+            <p>
+                リモートアクセスVPNは、個人ユーザーがインターネットを経由して企業のプライベートネットワークに接続するために使用されます。
+                テレワークやリモートワークで社内システムにアクセスする際によく利用されます。
+            </p>
+
+            <h4>サイト間VPN</h4>
+            <p>
+                サイト間VPN（Site-to-Site VPN）は、地理的に離れた複数の拠点のネットワークを接続するために使用されます。
+                例えば、本社と支社のネットワークを安全に接続し、一つの大きなネットワークとして機能させることができます。
+            </p>
+
+            <h4>クライアントVPN</h4>
+            <p>
+                クライアントVPNは、個人ユーザーがインターネット接続を暗号化し、プライバシーを保護するために使用します。
+                公共のWi-Fiを使用する際や、地理的制限のあるコンテンツにアクセスする際に利用されます。
+            </p>
+        </section>
+
+        <section id="vpn-protocols" class="crypto-section">
+            <h3>VPNプロトコル</h3>
+            <p>
+                VPNプロトコルは、VPN接続の確立方法と暗号化方式を定義します。
+                主なVPNプロトコルには以下のようなものがあります：
+            </p>
+
+            <h4>OpenVPN</h4>
+            <p>
+                OpenVPNはオープンソースのVPNプロトコルで、高いセキュリティと柔軟性を提供します。
+                SSL/TLSを使用した暗号化を行い、ファイアウォールの制限を回避しやすいという特徴があります。
+                TCP/UDPの両方のポートで動作可能で、多くのVPNサービスで採用されています。
+            </p>
+
+            <h4>WireGuard</h4>
+            <p>
+                WireGuardは比較的新しいVPNプロトコルで、シンプルな設計と高速な接続が特徴です。
+                最新の暗号化技術を使用し、コードベースが小さいため、セキュリティ監査が容易です。
+                バッテリー消費も少なく、モバイルデバイスに適しています。
+            </p>
+
+            <h4>IKEv2/IPsec</h4>
+            <p>
+                IKEv2（Internet Key Exchange version 2）とIPsec（Internet Protocol Security）の組み合わせは、
+                安定した高速な接続を提供します。特にネットワーク間の切り替え（例：Wi-Fiからモバイルデータへ）に強く、
+                モバイルデバイスに適しています。
+            </p>
+
+            <h4>L2TP/IPsec</h4>
+            <p>
+                L2TP（Layer 2 Tunneling Protocol）とIPsecの組み合わせは、広くサポートされているVPNプロトコルです。
+                L2TPはトンネリングを提供し、IPsecが暗号化を担当します。
+                適切に設定された場合は安全ですが、一部のファイアウォールでブロックされることがあります。
+            </p>
+
+            <h4>SSTP</h4>
+            <p>
+                SSTP（Secure Socket Tunneling Protocol）はMicrosoftが開発したプロトコルで、
+                SSL/TLSを使用してHTTPSトラフィックと同様に通信します。
+                ファイアウォールを通過しやすいという利点がありますが、主にWindowsプラットフォームでサポートされています。
+            </p>
+        </section>
+
+        <section id="vpn-encryption" class="crypto-section">
+            <h3>VPNの暗号化</h3>
+            <p>
+                VPNの安全性は、使用される暗号化アルゴリズムに大きく依存します。
+                現代のVPNサービスでは、以下のような暗号化技術が使用されています：
+            </p>
+
+            <h4>AES（Advanced Encryption Standard）</h4>
+            <p>
+                AESは現在最も広く使用されている対称暗号アルゴリズムです。
+                VPNでは通常、AES-128、AES-192、またはAES-256が使用されます。
+                数字が大きいほど暗号強度が高くなりますが、処理負荷も増加します。
+            </p>
+
+            <h4>ChaCha20</h4>
+            <p>
+                ChaCha20はストリーム暗号の一種で、特にハードウェアアクセラレーションがない環境（モバイルデバイスなど）で
+                AESよりも高速に動作することがあります。WireGuardなどの新しいVPNプロトコルで採用されています。
+            </p>
+
+            <h4>RSAと楕円曲線暗号（ECC）</h4>
+            <p>
+                RSAや楕円曲線暗号は、公開鍵暗号方式として鍵交換や認証に使用されます。
+                ECCはRSAと比較して、同等のセキュリティレベルでより短い鍵長を実現できるため、
+                効率的な処理が可能です。
+            </p>
+
+            <h4>Perfect Forward Secrecy（PFS）</h4>
+            <p>
+                PFSは、セッションごとに一時的な鍵を生成する技術です。
+                これにより、万が一秘密鍵が漏洩しても、過去の通信内容を復号することができなくなります。
+                現代のVPNプロトコルでは、Diffie-Hellman鍵交換などを使用してPFSを実現しています。
+            </p>
+        </section>
+
+        <section id="vpn-use-cases" class="crypto-section">
+            <h3>VPNの利用シーン</h3>
+            <h4>リモートワーク</h4>
+            <p>
+                企業のネットワークに安全にアクセスするために、多くの企業がリモートワーカー向けにVPNを提供しています。
+                これにより、社外からでも社内システムやリソースに安全にアクセスできます。
+            </p>
+
+            <h4>公共Wi-Fiの利用</h4>
+            <p>
+                カフェやホテル、空港などの公共Wi-Fiは、セキュリティリスクが高い場合があります。
+                VPNを使用することで、通信内容を暗号化し、盗聴や中間者攻撃からデータを保護できます。
+            </p>
+
+            <h4>地理的制限の回避</h4>
+            <p>
+                一部のウェブサイトやストリーミングサービスは、地域によってアクセスが制限されています。
+                VPNを使用すると、異なる国や地域のサーバーを経由してアクセスすることで、
+                これらの制限を回避できる場合があります。
+            </p>
+
+            <h4>プライバシー保護</h4>
+            <p>
+                VPNを使用すると、インターネットサービスプロバイダ（ISP）や広告ネットワークからの
+                ブラウジング履歴の追跡を防ぐことができます。IPアドレスが匿名化されるため、
+                オンラインでのプライバシーが向上します。
+            </p>
+        </section>
+    </section>
+
+    <section id="wireless-security" class="crypto-section">
+        <h2>ワイヤレス通信のセキュリティ</h2>
+        
+        <section id="wifi-security-evolution" class="crypto-section">
+            <h3>Wi-Fiセキュリティの進化</h3>
+            <p>
+                Wi-Fiネットワークのセキュリティは、技術の発展とともに進化してきました。
+                主なWi-Fiセキュリティプロトコルの進化は以下の通りです：
+            </p>
+
+            <h4>WEP（Wired Equivalent Privacy）</h4>
+            <p>
+                WEPは初期のWi-Fiセキュリティプロトコルで、1999年に導入されました。
+                しかし、深刻な脆弱性が発見され、現在では安全でないとされています。
+                WEPは数分で解読可能なため、使用すべきではありません。
+            </p>
+
+            <h4>WPA（Wi-Fi Protected Access）</h4>
+            <p>
+                WPAはWEPの脆弱性に対応するために2003年に導入されました。
+                TKIP（Temporal Key Integrity Protocol）を使用し、WEPよりも安全でしたが、
+                依然としていくつかの脆弱性が存在していました。
+            </p>
+
+            <h4>WPA2（Wi-Fi Protected Access 2）</h4>
+            <p>
+                WPA2は2004年に導入され、AES暗号化を採用したことで大幅にセキュリティが向上しました。
+                長年にわたり標準的なWi-Fiセキュリティプロトコルとして使用されてきました。
+            </p>
+
+            <h4>WPA3（Wi-Fi Protected Access 3）</h4>
+            <p>
+                WPA3は2018年に導入された最新のWi-Fiセキュリティプロトコルです。
+                WPA2の脆弱性に対応し、より強力な暗号化と認証メカニズムを提供します。
+            </p>
+        </section>
+
+        <section id="wpa2" class="crypto-section">
+            <h3>WPA2（Wi-Fi Protected Access 2）</h3>
+            <p>
+                WPA2は2004年に導入され、2006年以降製造されるすべてのWi-Fi認証デバイスで必須となりました。
+                主な特徴は以下の通りです：
+            </p>
+
+            <h4>AES-CCMP暗号化</h4>
+            <p>
+                WPA2はAES（Advanced Encryption Standard）とCCMP（Counter Mode with Cipher Block Chaining Message Authentication Code Protocol）
+                を使用しています。これにより、WEPやWPAのTKIPよりも強力な暗号化が実現されています。
+            </p>
+
+            <h4>WPA2-Personal（PSK）</h4>
+            <p>
+                WPA2-Personal（Pre-Shared Key）は、家庭や小規模オフィス向けのモードです。
+                すべてのデバイスが同じパスフレーズ（Wi-Fiパスワード）を使用してネットワークに接続します。
+                パスフレーズから生成されたPMK（Pairwise Master Key）を使用して通信を暗号化します。
+            </p>
+
+            <h4>WPA2-Enterprise（802.1X/EAP）</h4>
+            <p>
+                WPA2-Enterpriseは、企業や大規模組織向けのモードです。
+                RADIUSサーバーなどの認証サーバーと連携し、ユーザーごとに異なる認証情報（ユーザー名とパスワードなど）を
+                使用してネットワークにアクセスします。これにより、ユーザー管理が容易になり、
+                セキュリティが向上します。
+            </p>
+
+            <h4>WPA2の脆弱性</h4>
+            <p>
+                WPA2にもいくつかの脆弱性が発見されています：
+            </p>
+            <ul>
+                <li>KRACK（Key Reinstallation Attack）: 2017年に発見された脆弱性で、攻撃者がWPA2のハンドシェイクプロセスを悪用して通信を傍受する可能性があります。</li>
+                <li>辞書攻撃: 弱いパスフレーズを使用している場合、総当たり攻撃や辞書攻撃によってパスフレーズが解読される可能性があります。</li>
+                <li>WPS（Wi-Fi Protected Setup）の脆弱性: WPSが有効になっている場合、PINコードを総当たりで試すことでネットワークにアクセスできる可能性があります。</li>
+            </ul>
+        </section>
+
+        <section id="wpa3" class="crypto-section">
+            <h3>WPA3（Wi-Fi Protected Access 3）</h3>
+            <p>
+                WPA3は2018年に導入された最新のWi-Fiセキュリティプロトコルで、WPA2の脆弱性に対応するために開発されました。
+                主な特徴は以下の通りです：
+            </p>
+
+            <h4>SAE（Simultaneous Authentication of Equals）</h4>
+            <p>
+                WPA3はWPA2のPSK（Pre-Shared Key）に代わり、SAE（Dragonfly Handshakeとも呼ばれる）を採用しています。
+                SAEは総当たり攻撃に対する耐性を高め、オフライン辞書攻撃を防止します。
+                また、Perfect Forward Secrecy（PFS）を提供し、過去の通信が将来鍵が漏洩しても安全であることを保証します。
+            </p>
+
+            <h4>WPA3-Personal</h4>
+            <p>
+                WPA3-Personalは家庭や小規模オフィス向けのモードで、SAEを使用してより強力な保護を提供します。
+                簡単なパスワードを使用していても、オフライン辞書攻撃からの保護が強化されています。
+            </p>
+
+            <h4>WPA3-Enterprise</h4>
+            <p>
+                WPA3-Enterpriseは、企業や大規模組織向けのモードで、192ビットのセキュリティスイートを提供します。
+                これには、GCMP-256（Galois/Counter Mode Protocol）による暗号化、GMAC-256による認証、
+                ECDSA（楕円曲線デジタル署名アルゴリズム）または3072ビットのRSAによる鍵交換と認証が含まれます。
+            </p>
+
+            <h4>Easy Connect（DPP）</h4>
+            <p>
+                WPA3はDevice Provisioning Protocol（DPP）を導入し、WPSに代わる安全な方法を提供します。
+                QRコードやNFCタグをスキャンするだけで、ディスプレイやキーボードのないIoTデバイスを
+                安全にネットワークに接続できます。
+            </p>
+
+            <h4>Enhanced Open（OWE）</h4>
+            <p>
+                Enhanced Openは、オープン（パスワードなし）のWi-Fiネットワークでも暗号化を提供する機能です。
+                Opportunistic Wireless Encryption（OWE）を使用して、認証なしでも通信を暗号化し、
+                公共のWi-Fiでの盗聴リスクを軽減します。
+            </p>
+        </section>
+
+        <section id="wifi-best-practices" class="crypto-section">
+            <h3>Wi-Fiセキュリティのベストプラクティス</h3>
+            <p>
+                Wi-Fiネットワークのセキュリティを強化するためのベストプラクティスは以下の通りです：
+            </p>
+            <ul>
+                <li>可能な限りWPA3を使用する（対応していない場合はWPA2）</li>
+                <li>強力で複雑なパスワードを使用する（12文字以上、大文字、小文字、数字、特殊文字を含む）</li>
+                <li>デフォルトのSSID（ネットワーク名）を変更する</li>
+                <li>ルーターのファームウェアを定期的に更新する</li>
+                <li>WPSを無効にする</li>
+                <li>ゲストネットワークを設定し、メインネットワークと分離する</li>
+                <li>使用していないときはWi-Fiを無効にする</li>
+                <li>企業環境ではWPA2/WPA3-Enterpriseを使用する</li>
+                <li>公共のWi-Fiを使用する際はVPNを利用する</li>
+            </ul>
+        </section>
+    </section>
+
+    <button id="back-to-top" title="トップに戻る">↑</button>
+</div>
+
+<!-- Main application script -->
+<script src="js/crypto_keys.js"></script>
+</body>
+</html>

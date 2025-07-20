@@ -1,0 +1,34 @@
+sequenceDiagram
+    participant Alice as アリス (クライアント)
+    participant Bob as ボブ (サーバー)
+
+    Note over Alice,Bob: 公開鍵暗号で共通鍵を安全に配送し、<br>その共通鍵で高速にデータ通信を行う
+
+    %% 1. サーバーの公開鍵/秘密鍵の準備 (事前)
+    Bob-->>Bob: 公開鍵 (Bob_PK) と秘密鍵 (Bob_SK) を生成 (事前)
+
+    %% 2. 共通鍵の生成と暗号化 (Alice)
+    Alice->>Bob: 接続要求 (Bobの公開鍵要求など)
+    Bob->>Alice: Bob_PK (公開鍵) を送信
+
+    Alice->>Alice: セッション共通鍵 (K_session) を生成
+    Alice->>Alice: Bob_PK で K_session を暗号化
+
+    Alice->>Bob: 暗号化された K_session を送信 (公開鍵暗号)
+
+    %% 3. 共通鍵の復号 (Bob)
+    Bob->>Bob: 暗号化された K_session を受信
+    Bob->>Bob: Bob_SK で K_session を復号
+
+    Note over Alice,Bob: これ以降、K_session を使って通信
+
+    %% 4. データ通信 (共通鍵暗号)
+    Alice->>Alice: データ平文を作成
+    Alice->>Alice: K_session でデータ平文を暗号化
+
+    Alice->>Bob: 暗号化されたデータを送信 (共通鍵暗号)
+
+    Bob->>Bob: 暗号化されたデータを受信
+    Bob->>Bob: K_session で暗号化されたデータを復号
+
+    Bob->>Bob: データ平文を取得

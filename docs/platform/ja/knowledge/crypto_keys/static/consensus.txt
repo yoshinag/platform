@@ -1,0 +1,28 @@
+graph TD
+    %% --- 合意形成メカニズムのフロー ---
+
+    Start("新しいトランザクションが発生")
+
+    subgraph "Proof of Work (PoW) 🔥"
+        direction LR
+        PoW1["計算問題を解く競争<br>(マイニング)"] --> PoW2{"最初に解いた<br>マイナーは？"}
+        PoW2 -- "勝者" --> PoW3["新しいブロックを生成し<br>報酬を得る 💰"]
+        PoW2 -- "敗者" --> PoW1
+    end
+
+    subgraph "Proof of Stake (PoS) 🛡️"
+        direction LR
+        PoS1["コインの保有量(Stake)に応じて<br>ブロック生成者が選出される"] --> PoS2["選ばれたバリデーターが<br>ブロックを生成・提案 ✨"]
+    end
+
+    Start --> PoW1
+    Start --> PoS1
+
+    PoW3 --> Broadcast["生成されたブロックを<br>ネットワーク全体に共有(ブロードキャスト)"]
+    PoS2 --> Broadcast
+
+    Broadcast --> Verify["他の参加者(ノード)が<br>ブロックを検証"]
+    Verify -- "正当なブロック" --> AddChain["ブロックをチェーンに追加"]
+    Verify -- "不正なブロック" --> Reject["ブロックを拒否 ❌"]
+
+    AddChain --> Consensus["合意形成が完了 ✅"]

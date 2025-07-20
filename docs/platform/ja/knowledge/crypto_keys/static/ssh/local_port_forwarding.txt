@@ -1,0 +1,37 @@
+sequenceDiagram
+    autonumber
+    participant App as "MySQLクライアント<br>@クライアントPC"
+    participant ClientSSH as "SSHクライアント<br>@クライアントPC"
+    participant SSHServer as "SSHサーバー"
+    participant TargetServer as "MySQL"
+
+    rect rgb(230, 240, 255)
+        note over ClientSSH, SSHServer: 前提: `ssh -L 3307:target-db:3306 user@server` を実行済み
+        ClientSSH ->> SSHServer: SSHトンネル(ポート22)を確立
+    end
+
+    App ->> ClientSSH: ① DB接続要求
+    Note right of App: 送信元: localhost:(ランダムポートA)<br>宛先: localhost:3307
+
+    activate ClientSSH
+    ClientSSH -->> SSHServer: ② トンネル経由でデータを転送
+    Note over ClientSSH, SSHServer: SSH(ポート22)の暗号化セッション内で転送
+
+    activate SSHServer
+    SSHServer ->> TargetServer: ③ 新規接続でデータを転送
+    Note right of SSHServer: 送信元: SSHサーバー:(ランダムポートB)<br>宛先: ターゲット:3306
+    deactivate ClientSSH
+
+    activate TargetServer
+    TargetServer -->> SSHServer: ④ DBからの応答
+    Note right of SSHServer: 送信元: ターゲット:3306<br>宛先: SSHサーバー:(ランダムポートB)
+    deactivate TargetServer
+
+    SSHServer -->> ClientSSH: ⑤ トンネル経由で応答を転送
+    Note over ClientSSH, SSHServer: SSH(ポート22)の暗号化セッション内で転送
+
+    activate ClientSSH
+    deactivate SSHServer
+    ClientSSH -->> App: ⑥ アプリへ応答を返す
+    Note right of App: 送信元: localhost:3307<br>宛先: localhost:(ランダムポートA)
+    deactivate ClientSSH

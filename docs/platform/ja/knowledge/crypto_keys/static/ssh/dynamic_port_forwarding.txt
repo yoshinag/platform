@@ -1,0 +1,42 @@
+sequenceDiagram
+    autonumber
+    participant Browser as "ブラウザなど<br>@クライアントPC"
+    participant ClientSSH as "SSHクライアント (SOCKSプロキシ)<br>@クライアントPC"
+    participant SSHServer as "SSHサーバー"
+    participant DestinationServer as "接続先のサーバー<br>(例: Webサイト)"
+
+    rect rgb(230, 240, 255)
+        note over ClientSSH, SSHServer: 前提: `ssh -D 1080 user@server` を実行済み
+        ClientSSH ->> SSHServer: ① SSHトンネル(ポート22)を確立
+        activate ClientSSH
+        ClientSSH ->> ClientSSH: SOCKSプロキシをポート1080で起動
+        deactivate ClientSSH
+    end
+
+    note over Browser: ブラウザのプロキシ設定は `localhost:1080` に設定済み
+
+    Browser ->> ClientSSH: ② Webサイトへのアクセス要求
+    Note right of Browser: 送信先: localhost:1080<br>要求内容: DestinationServer:443 へ接続
+
+    activate ClientSSH
+    ClientSSH -->> SSHServer: ③ トンネル経由で要求を転送
+    Note over ClientSSH, SSHServer: SSH(ポート22)の暗号化セッション内で転送
+
+    activate SSHServer
+    SSHServer ->> DestinationServer: ④ 新規接続でデータを転送
+    Note right of SSHServer: 送信元: SSHサーバーIP:(ランダムポートA)<br>宛先: DestinationServer:443
+    deactivate ClientSSH
+
+    activate DestinationServer
+    DestinationServer -->> SSHServer: ⑤ Webサイトからの応答
+    Note right of SSHServer: 送信元: DestinationServer:443<br>宛先: SSHサーバーIP:(ランダムポートA)
+    deactivate DestinationServer
+
+    SSHServer -->> ClientSSH: ⑥ トンネル経由で応答を転送
+    Note over ClientSSH, SSHServer: SSH(ポート22)の暗号化セッション内で転送
+
+    activate ClientSSH
+    deactivate SSHServer
+    ClientSSH -->> Browser: ⑦ ブラウザへ応答を返す
+    Note right of Browser: SOCKSプロキシ(localhost:1080)から<br>応答を受信
+    deactivate ClientSSH

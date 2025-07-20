@@ -1,0 +1,30 @@
+sequenceDiagram
+    participant Client as クライアントPC
+    participant Server as リモートサーバー
+
+    autonumber
+
+    Note over Client,Server: 事前準備：クライアントの公開鍵はサーバーに登録済み
+
+    %% 接続とホスト鍵の交換
+    Client->>Server: 1. 接続リクエスト (TCPポート22)
+    Server-->>Client: 2. サーバーの公開鍵を送信
+    Client->>Client: 3. サーバーの公開鍵を検証 (known_hosts)
+
+    %% 暗号化セッションの確立
+    Note over Client,Server: 4. 暗号化されたセッションキーを交換 (Diffie-Hellman)
+
+    %% ユーザー認証 (公開鍵認証)
+    Client->>Server: 5. 公開鍵認証を要求
+    Server-->>Client: 6. チャレンジ (ランダムなデータ) を送信
+    Client->>Client: 7. 保管していた秘密鍵でチャレンジに署名 ✍️
+    Client->>Server: 8. 署名済みデータを送信
+
+    %% 認証結果とセッション開始
+    Server->>Server: 9. 登録済みの公開鍵で署名を検証 ✅
+    alt 認証成功
+        Server-->>Client: 10. 認証成功！シェルセッション開始
+        Note over Client,Server: これ以降、全ての通信は暗号化される
+    else 認証失敗
+        Server-->>Client: 認証失敗・接続を閉じる ❌
+    end

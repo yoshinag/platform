@@ -1,0 +1,40 @@
+sequenceDiagram
+    autonumber
+    participant ExternalUser as "外部ユーザー"
+    participant SSHServer as "SSHサーバー"
+    participant ClientSSH as "SSHクライアント<br>@クライアントPC"
+    participant LocalService as "ローカルサービス (例: Web)<br>@クライアントPC"
+
+    rect rgb(230, 240, 255)
+        note over ClientSSH, SSHServer: 前提: `ssh -R 8080:localhost:3000 user@server` を実行済み
+        ClientSSH ->> SSHServer: ① SSHトンネル(ポート22)を確立 & ポート8080のListenを要求
+        activate SSHServer
+        SSHServer ->> SSHServer: 要求に基づきポート8080で待機開始
+        deactivate SSHServer
+    end
+
+    ExternalUser ->> SSHServer: ② サービスへアクセス
+    Note left of SSHServer: 送信元: 外部IP:(ランダムポートA)<br>宛先: SSHサーバーIP:8080
+
+    activate SSHServer
+    SSHServer -->> ClientSSH: ③ トンネル経由でデータを転送
+    Note over SSHServer, ClientSSH: SSH(ポート22)の暗号化セッション内で転送
+
+    activate ClientSSH
+    ClientSSH ->> LocalService: ④ 新規接続でデータを転送
+    Note right of ClientSSH: 送信元: localhost:(ランダムポートB)<br>宛先: localhost:3000
+    deactivate SSHServer
+
+    activate LocalService
+    LocalService -->> ClientSSH: ⑤ サービスからの応答
+    Note right of ClientSSH: 送信元: localhost:3000<br>宛先: localhost:(ランダムポートB)
+    deactivate LocalService
+
+    ClientSSH -->> SSHServer: ⑥ トンネル経由で応答を転送
+    Note over SSHServer, ClientSSH: SSH(ポート22)の暗号化セッション内で転送
+
+    activate SSHServer
+    deactivate ClientSSH
+    SSHServer -->> ExternalUser: ⑦ 外部ユーザーへ応答を返す
+    Note left of SSHServer: 送信元: SSHサーバーIP:8080<br>宛先: 外部IP:(ランダムポートA)
+    deactivate SSHServer

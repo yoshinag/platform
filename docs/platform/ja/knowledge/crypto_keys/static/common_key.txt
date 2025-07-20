@@ -1,0 +1,19 @@
+sequenceDiagram
+    participant Alice as アリス (送信者)
+    participant Bob as ボブ (受信者)
+    participant Trusted Channel as 安全な経路 (鍵配送)
+
+    Note over Alice,Bob: 事前に共通鍵を共有する必要がある
+
+    Alice->>Trusted Channel: 共通鍵 (K) を安全に配送
+    Trusted Channel-->>Bob: 共通鍵 (K)
+
+    Alice->>Alice: 平文を作成
+    Alice->>Alice: 共通鍵 (K) を使って平文を暗号化
+
+    Alice->>Bob: 暗号文を送信
+
+    Bob->>Bob: 暗号文を受信
+    Bob->>Bob: 共通鍵 (K) を使って暗号文を復号
+
+    Bob->>Bob: 平文を取得 (元のメッセージ)

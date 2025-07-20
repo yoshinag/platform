@@ -1,0 +1,24 @@
+sequenceDiagram
+    participant Sender as 送信者
+    participant Receiver as 受信者
+
+    Sender->>Sender: 1. 元の文書からハッシュ値を計算
+    Note right of Sender: ハッシュ関数を用いて<br>固定長のハッシュ値（ダイジェスト）を生成
+
+    Sender->>Sender: 2. 秘密鍵でハッシュ値を暗号化
+    Note right of Sender: これが「デジタル署名」となる
+
+    Sender->>Receiver: 3. 元の文書とデジタル署名を送信
+
+    Receiver->>Receiver: 4. 送信者の公開鍵で署名を復号
+    Note left of Receiver: 復号して元のハッシュ値'A'を取得
+
+    Receiver->>Receiver: 5. 受信した文書からハッシュ値を計算
+    Note left of Receiver: 送信者と同じハッシュ関数を使い<br>ハッシュ値'B'を生成
+
+    Receiver->>Receiver: 6. 2つのハッシュ値を比較
+    alt ハッシュ値'A'と'B'が一致
+        Note left of Receiver: ✅ 完全性の確認<br>✅ 認証<br>✅ 否認防止
+    else ハッシュ値'A'と'B'が不一致
+        Note left of Receiver: ❌ データが改ざんされたか<br>送信者が正しくない可能性がある
+    end

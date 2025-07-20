@@ -5,88 +5,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>iroirotool</title>
     <link rel="stylesheet" href="../../platform/css/common/index.css">
-    <link rel="stylesheet" href="converter/css/converter.css">
-    <style>
-        body {
-            overflow: auto !important;
-            height: auto !important;
-            display: block !important;
-        }
-        
-        .embedded-content {
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-        }
-        
-        .embedded-content .converter-section {
-            margin-bottom: 0;
-        }
-        
-        .embedded-content .category-description {
-            margin-bottom: 20px;
-        }
-        
-        .embedded-content h3 {
-            margin-top: 0;
-        }
-        
-        /* Table of Contents Styles */
-        .toc-container {
-            background-color: #f8f8f8;
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-left: 4px solid #3498db;
-        }
-        
-        .toc-list {
-            list-style-type: none;
-            padding-left: 0;
-            margin: 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px 20px;
-        }
-        
-        .toc-list li {
-            margin-bottom: 8px;
-            flex-basis: 30%;
-            min-width: 200px;
-        }
-        
-        .toc-list a {
-            text-decoration: none;
-            color: #3498db;
-            padding: 5px;
-            display: block;
-            border-radius: 3px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        
-        .toc-list a:hover {
-            background-color: #e9e9e9;
-            color: #2980b9;
-        }
-        
-        @media (max-width: 768px) {
-            .toc-list {
-                flex-direction: column;
-            }
-            
-            .toc-list li {
-                flex-basis: 100%;
-                min-width: auto;
-            }
-        }
-    </style>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
 <!-- Google Analytics -->
 <script src="../../platform/js/common/analytics.js"></script>
-<body>
+<body class="index-page">
 
 <div class="container">
     <div class="navigation-links">
@@ -170,14 +94,38 @@
             <div class="tool-list">
                 <div class="tool-item">
                     <h4>Linuxコマンド解説</h4>
-                    <p>Linuxコマンドの使い方や解説を提供します。</p>
+                    <p>Linuxコマンドの使い方や解説します。</p>
                     <p><a href="knowledge/linux_command/linux_command.html">Linuxコマンド解説を見る</a></p>
                 </div>
                 
                 <div class="tool-item">
                     <h4>Gitコマンド解説</h4>
-                    <p>Gitコマンドの使い方や解説を提供します。</p>
+                    <p>Gitコマンドの使い方について解説します。</p>
                     <p><a href="knowledge/git_command/git_command.html">Gitコマンド解説を見る</a></p>
+                </div>
+
+                <div class="tool-item">
+                    <h4>Git運用解説</h4>
+                    <p>flowやcircleci, github actionsなどを解説します。</p>
+                    <p><a href="knowledge/git_command/git_operation.html">Git運用解説を見る</a></p>
+                </div>
+
+                <div class="tool-item">
+                    <h4>暗号化鍵の解説</h4>
+                    <p>暗号化鍵、公開鍵、共通鍵などの暗号技術に関する解説します。</p>
+                    <p><a href="knowledge/crypto_keys/crypto_keys.html">暗号化鍵の解説を見る</a></p>
+                </div>
+
+                <div class="tool-item">
+                    <h4>SSH接続</h4>
+                    <p>SSH接続の基本設定の他にX11, PORTフォワーディングなどを解説します。</p>
+                    <p><a href="knowledge/crypto_keys/ssh.html">SSH接続の解説を見る</a></p>
+                </div>
+
+                <div class="tool-item">
+                    <h4>ウェブセキュリティ: HTTPS通信とSSL/TLS証明書</h4>
+                    <p>HTTPS通信の仕組みとSSL/TLS証明書の役割について詳しく解説します。</p>
+                    <p><a href="knowledge/crypto_keys/web_security.html">ウェブセキュリティの解説を見る</a></p>
                 </div>
             </div>
         </div>
@@ -243,9 +191,9 @@
             <p>データやコードの可視化を行うツールです。</p>
             <div class="tool-list">
                 <div class="tool-item">
-                    <h4>dot言語サポート</h4>
-                    <p>dot言語を使ったグラフやダイアグラムの作成・表示を支援します。</p>
-                    <p><a href="viewer/dot/dot_viewer.html">dot言語サポートツールを使用する</a></p>
+                    <h4>dot / Mermaidサポート</h4>
+                    <p>dot / Mermaidを使ったグラフやダイアグラムの作成・表示を支援します。</p>
+                    <p><a href="viewer/dot/dot_viewer.html">dot / Mermaidサポートツールを使用する</a></p>
                 </div>
 
                 <div class="tool-item">
@@ -303,42 +251,6 @@
 </div>
 
 <script src="../../platform/js/common/index.js"></script>
-<script>
-// Back to top button functionality
-document.getElementById('back-to-top').addEventListener('click', function() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-});
-
-// Show back to top button when scrolling down
-window.addEventListener('scroll', function() {
-    var backToTopBtn = document.getElementById('back-to-top');
-    if (window.pageYOffset > 300) {
-        backToTopBtn.style.display = 'block';
-    } else {
-        backToTopBtn.style.display = 'none';
-    }
-});
-
-// Smooth scrolling for anchor links
-document.querySelectorAll('.toc-list a').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-        
-        if (targetElement) {
-            window.scrollTo({
-                top: targetElement.offsetTop - 20,
-                behavior: 'smooth'
-            });
-        }
-    });
-});
-</script>
 
 </body>
 </html>
