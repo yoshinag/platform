@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Git Remote Repository Operations Commands Guide</title>
+    <link rel="stylesheet" href="css/git_command.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="git_command.html">Return to Main Page</a> |
+        <a href="git_command_branch.html">Previous Category: Branch-Related Commands</a> |
+        <a href="git_command_history.html">Next Category: History and Diff Checking</a>
+    </div>
+
+    <h1>Git Remote Repository Operations Commands Guide</h1>
+    
+    <section class="command-section">
+        <h2>Remote Repository Operations</h2>
+        
+        <!-- git remote command -->
+        <h3>git remote - Manage Remote Repositories</h3>
+        <p>Adds, removes, and displays remote repositories.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option/Subcommand</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>add &lt;name&gt; &lt;URL&gt;</td>
+                <td>Add a new remote repository</td>
+            </tr>
+            <tr>
+                <td>remove &lt;name&gt;</td>
+                <td>Remove a remote repository</td>
+            </tr>
+            <tr>
+                <td>rename &lt;old-name&gt; &lt;new-name&gt;</td>
+                <td>Rename a remote repository</td>
+            </tr>
+            <tr>
+                <td>-v, --verbose</td>
+                <td>Display remote repository names and URLs</td>
+            </tr>
+            <tr>
+                <td>show &lt;name&gt;</td>
+                <td>Display detailed information about the specified remote repository</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>git remote</code> - List remote repositories<br>
+            <code>git remote -v</code> - List remote repositories with URLs<br>
+            <code>git remote add origin https://github.com/username/repo.git</code> - Add a remote repository named origin<br>
+            <code>git remote remove origin</code> - Remove the origin remote<br>
+            <code>git remote rename origin upstream</code> - Rename the origin remote to upstream<br>
+            <code>git remote show origin</code> - Show detailed information about the origin remote
+        </div>
+
+        <!-- git push command -->
+        <h3>git push - Send Local Changes to Remote Repository</h3>
+        <p>Sends changes from local branches to a remote repository.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>-u, --set-upstream</td>
+                <td>Set upstream branch (allows future pushes without arguments)</td>
+            </tr>
+            <tr>
+                <td>--force, -f</td>
+                <td>Force overwrite of remote branch (caution: rewrites history)</td>
+            </tr>
+            <tr>
+                <td>--force-with-lease</td>
+                <td>Force push only if the remote branch hasn't been unexpectedly modified</td>
+            </tr>
+            <tr>
+                <td>--tags</td>
+                <td>Push all tags</td>
+            </tr>
+            <tr>
+                <td>--delete</td>
+                <td>Delete a remote branch</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>git push origin main</code> - Push local main branch to origin remote<br>
+            <code>git push -u origin feature</code> - Push feature branch and set it as upstream<br>
+            <code>git push</code> - Push current branch to its configured upstream<br>
+            <code>git push --force origin main</code> - Force push main branch (use with caution)<br>
+            <code>git push --force-with-lease origin main</code> - Safer force push<br>
+            <code>git push origin --delete feature</code> - Delete the feature branch from the remote
+        </div>
+
+        <!-- git pull command -->
+        <h3>git pull - Incorporate Remote Changes into Local Repository</h3>
+        <p>Incorporates changes from a remote branch into the local branch (fetch + merge).</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>--rebase</td>
+                <td>Use rebase instead of merge</td>
+            </tr>
+            <tr>
+                <td>--no-commit</td>
+                <td>Stage changes without automatically committing</td>
+            </tr>
+            <tr>
+                <td>--ff-only</td>
+                <td>Allow only fast-forward (don't create a merge commit)</td>
+            </tr>
+            <tr>
+                <td>--prune</td>
+                <td>Remove references to remote branches that have been deleted</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>git pull</code> - Fetch and merge changes from the remote branch corresponding to the current branch<br>
+            <code>git pull origin main</code> - Fetch and merge changes from the main branch of the origin remote<br>
+            <code>git pull --rebase</code> - Fetch remote changes and rebase local changes<br>
+            <code>git pull --ff-only</code> - Pull only if fast-forward is possible (don't create a merge commit)
+        </div>
+
+        <!-- git fetch command -->
+        <h3>git fetch - Get Remote Changes Without Merging</h3>
+        <p>Retrieves changes from a remote repository but does not merge them into local branches.</p>
+
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>--all</td>
+                <td>Fetch from all remotes</td>
+            </tr>
+            <tr>
+                <td>--prune</td>
+                <td>Remove references to remote branches that have been deleted</td>
+            </tr>
+            <tr>
+                <td>--tags</td>
+                <td>Fetch all tags</td>
+            </tr>
+            <tr>
+                <td>--depth=&lt;depth&gt;</td>
+                <td>Fetch only history up to the specified depth</td>
+            </tr>
+        </table>
+
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>git fetch</code> - Fetch changes from the default remote (usually origin)<br>
+            <code>git fetch origin</code> - Fetch changes from the origin remote<br>
+            <code>git fetch --all</code> - Fetch changes from all remotes<br>
+            <code>git fetch --prune</code> - Fetch changes and remove references to deleted remote branches<br>
+            <code>git fetch origin main</code> - Fetch only the main branch from the origin remote
+        </div>
+
+        <!-- git pull vs git fetch differences -->
+        <h3>Differences Between git pull and git fetch - Detailed Comparison</h3>
+        <p>
+            Both <code>git pull</code> and <code>git fetch</code> are commands that retrieve data from a remote repository,
+            but there are important differences in their behavior and use cases.
+        </p>
+
+        <div class="example">
+            <h4>Basic Differences</h4>
+            <table class="command-table">
+                <tr>
+                    <th>git fetch</th>
+                    <th>git pull</th>
+                </tr>
+                <tr>
+                    <td>Only retrieves data from the remote repository without modifying local working branches</td>
+                    <td>Retrieves data from the remote repository and automatically merges (or rebases if specified) into the local working branch</td>
+                </tr>
+                <tr>
+                    <td>Safe operation: does not affect your current work</td>
+                    <td>May cause conflicts during the merge process</td>
+                </tr>
+                <tr>
+                    <td>First step of a two-step process (for manual merging later)</td>
+                    <td>One-step operation (automatically executes fetch and merge)</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="example">
+            <h4>Internal Operation Differences</h4>
+            <p><strong>How git fetch works:</strong></p>
+            <ol>
+                <li>Downloads the latest commit history from the remote repository</li>
+                <li>Updates local <code>refs/remotes/</code> (e.g., <code>refs/remotes/origin/main</code>)</li>
+                <li>Does not modify local working branches (e.g., <code>refs/heads/main</code>)</li>
+                <li>Downloaded commits are stored in the local <code>.git/objects</code> directory</li>
+            </ol>
+
+            <p><strong>How git pull works:</strong></p>
+            <ol>
+                <li>Executes <code>git fetch</code> to retrieve remote changes</li>
+                <li>Then automatically executes <code>git merge</code> (or <code>git rebase</code> if the <code>--rebase</code> option is specified)</li>
+                <li>Updates the local working branch</li>
+            </ol>
+        </div>
+
+        <div class="example">
+            <h4>使い分けのポイント</h4>
+            <p><strong>git fetchを使うべき場合：</strong></p>
+            <ul>
+                <li>リモートの変更を確認してから統合したい場合</li>
+                <li>マージする前に変更内容を詳しく調査したい場合</li>
+                <li>現在の作業を中断せずにリモートの最新状態を知りたい場合</li>
+                <li>複数のリモートブランチの変更を選択的に統合したい場合</li>
+            </ul>
+
+            <p><strong>git pullを使うべき場合：</strong></p>
+            <ul>
+                <li>リモートの変更をすぐに統合したい場合</li>
+                <li>リモートの変更が自分の作業と競合しないことが分かっている場合</li>
+                <li>迅速に最新の状態に更新したい場合</li>
+            </ul>
+        </div>
+
+        <div class="example">
+            <h4>fetchした後の変更確認とマージ</h4>
+            <p>fetchした後、以下のコマンドでリモートとの差分を確認できます：</p>
+            <code>git diff main origin/main</code> - ローカルのmainブランチとリモートのmainブランチの差分を表示<br>
+            <code>git log main..origin/main</code> - リモートにあって、ローカルにないコミットを表示<br>
+            <code>git log -p main..origin/main</code> - 差分のあるコミットの詳細な変更内容も表示<br>
+            
+            <p>確認後、マージする場合は：</p>
+            <code>git merge origin/main</code> - リモートの変更をローカルブランチにマージ<br>
+            <code>git rebase origin/main</code> - リモートの変更をベースにローカルの変更を再適用
+        </div>
+
+        <div class="note">
+            <p><strong>ワークフロー例：</strong> 多くの開発者は、<code>git fetch</code>を使って変更を確認してから、明示的に<code>git merge</code>または<code>git rebase</code>を実行するワークフローを好みます。これにより、リモートの変更を統合する前に、その内容を理解し、潜在的な問題を特定する機会が得られます。</p>
+        </div>
+
+    </section>
+
+    <div class="navigation-links">
+        <a href="git_command.html">メインページに戻る</a> |
+        <a href="git_command_branch.html">前のカテゴリ: ブランチ関連のコマンド</a> | 
+        <a href="git_command_history.html">次のカテゴリ: 履歴と差分の確認</a>
+    </div>
+
+    <button id="back-to-top" title="トップに戻る">↑</button>
+</div>
+
+<!-- Main application script -->
+<script src="js/git_command.js"></script>
+</body>
+</html>

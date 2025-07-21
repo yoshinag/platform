@@ -1,0 +1,19 @@
+sequenceDiagram
+    participant Alice as Alice (Sender)
+    participant Bob as Bob (Receiver)
+    participant Trusted Channel as Secure Channel (Key Distribution)
+
+    Note over Alice,Bob: A common key must be shared in advance
+
+    Alice->>Trusted Channel: Securely distribute common key (K)
+    Trusted Channel-->>Bob: Common key (K)
+
+    Alice->>Alice: Create plaintext
+    Alice->>Alice: Encrypt plaintext using common key (K)
+
+    Alice->>Bob: Send ciphertext
+
+    Bob->>Bob: Receive ciphertext
+    Bob->>Bob: Decrypt ciphertext using common key (K)
+
+    Bob->>Bob: Obtain plaintext (original message)

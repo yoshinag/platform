@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Git Submodule Management Commands Guide</title>
+    <link rel="stylesheet" href="css/git_command.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="git_command.html">Return to Main Page</a> |
+        <a href="git_command_merge.html">Previous Category: Merging and Rebasing</a>
+    </div>
+
+    <h1>Git Submodule Management Commands Guide</h1>
+    
+    <section class="command-section">
+        <h2>Submodule Management</h2>
+        
+        <p>
+            Submodules are a feature that allows you to include one Git repository inside another Git repository.
+            This is useful for large projects or when using common code across multiple projects.
+            This section explains the basic usage of submodules, with a particular focus on how to change branches.
+        </p>
+        
+        <!-- git submodule add command -->
+        <h3>git submodule add - Adding Submodules</h3>
+        <p>Adds an existing repository as a submodule.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>-b, --branch &lt;branch-name&gt;</td>
+                <td>Specify the branch to track</td>
+            </tr>
+            <tr>
+                <td>--name &lt;name&gt;</td>
+                <td>Specify the name of the submodule</td>
+            </tr>
+            <tr>
+                <td>-f, --force</td>
+                <td>Overwrite existing path</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>git submodule add https://github.com/username/library.git lib</code> - Add repository as a submodule in the lib directory<br>
+            <code>git submodule add -b develop https://github.com/username/library.git lib</code> - Add a submodule that tracks the develop branch
+        </div>
+
+        <!-- git submodule init/update command -->
+        <h3>git submodule init/update - Initializing and Updating Submodules</h3>
+        <p>Initializes submodules and fetches data from the remote repository.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Command/Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>git submodule init</td>
+                <td>Initialize submodules (copy information from .gitmodules to .git/config)</td>
+            </tr>
+            <tr>
+                <td>git submodule update</td>
+                <td>Update submodule content</td>
+            </tr>
+            <tr>
+                <td>--init</td>
+                <td>Initialize uninitialized submodules before updating</td>
+            </tr>
+            <tr>
+                <td>--recursive</td>
+                <td>Process nested submodules recursively</td>
+            </tr>
+            <tr>
+                <td>--remote</td>
+                <td>Update to the latest remote commit (by default, updates to the commit recorded in the superproject)</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>git submodule init</code> - Initialize all submodules<br>
+            <code>git submodule update</code> - Update all submodules<br>
+            <code>git submodule update --init</code> - Perform initialization and update in one step<br>
+            <code>git submodule update --init --recursive</code> - Initialize and update including nested submodules<br>
+            <code>git clone --recurse-submodules https://github.com/username/project.git</code> - Clone a repository and fetch its submodules at the same time
+        </div>
+
+        <!-- git submodule set-branch command -->
+        <h3>git submodule set-branch - Changing Submodule Branch</h3>
+        <p>Changes the branch that a submodule tracks.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>--branch &lt;branch-name&gt;</td>
+                <td>Specify the branch to track</td>
+            </tr>
+            <tr>
+                <td>--default</td>
+                <td>Revert to the default branch (usually main/master)</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>git submodule set-branch --branch develop lib</code> - Change the tracking branch of the lib submodule to develop<br>
+            <code>git submodule set-branch --default lib</code> - Revert the tracking branch of the lib submodule to the default
+        </div>
+
+        <!-- Changing branches within a submodule -->
+        <h3>Changing Branches Within a Submodule</h3>
+        <p>Method for directly changing branches within a submodule directory.</p>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>cd lib</code> - Navigate to the submodule directory<br>
+            <code>git checkout develop</code> - Checkout the develop branch<br>
+            <code>cd ..</code> - Return to the parent directory<br>
+            <code>git add lib</code> - Stage the submodule changes<br>
+            <code>git commit -m "Switch lib submodule to develop branch"</code> - Commit the changes
+        </div>
+
+        <!-- Batch updating submodules -->
+        <h3>Batch Updating and Managing Submodules</h3>
+        <p>Commands for efficiently managing multiple submodules.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Command</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>git submodule foreach &lt;command&gt;</td>
+                <td>Execute the specified command in each submodule</td>
+            </tr>
+            <tr>
+                <td>git submodule status</td>
+                <td>Display the status of all submodules</td>
+            </tr>
+            <tr>
+                <td>git submodule sync</td>
+                <td>Synchronize submodule remote URLs</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>git submodule foreach git pull origin master</code> - Update the master branch in all submodules<br>
+            <code>git submodule foreach git checkout develop</code> - Checkout the develop branch in all submodules<br>
+            <code>git submodule foreach 'git checkout -b feature/new-feature || true'</code> - Create a new branch in all submodules (ignore errors if it already exists)<br>
+            <code>git submodule status</code> - Check the status of all submodules<br>
+            <code>git submodule sync</code> - Update submodule remote URLs from the .gitmodules file
+        </div>
+
+        <div class="note">
+            <p><strong>Note:</strong> After changing a submodule's branch, you need to commit that change in the parent repository. Otherwise, when other developers clone or update the project, the submodule will revert to its original branch.</p>
+        </div>
+    </section>
+
+    <div class="navigation-links">
+        <a href="git_command.html">Return to Main Page</a> |
+        <a href="git_command_merge.html">Previous Category: Merging and Rebasing</a>
+    </div>
+
+    <button id="back-to-top" title="Back to Top">↑</button>
+</div>
+
+<!-- Main application script -->
+<script src="js/git_command.js"></script>
+</body>
+</html>

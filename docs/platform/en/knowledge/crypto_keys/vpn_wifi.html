@@ -1,0 +1,345 @@
+```html
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Secure Communication: VPN, Wireless Communication (WPA2/WPA3)</title>
+    <link rel="stylesheet" href="css/crypto_keys.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<script src="../../../js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="../../../../index.html">Return to Main Page</a>
+        <a href="crypto_keys.html">Back to Explanation of Encryption Keys</a>
+    </div>
+    <h1>Secure Communication: VPN, Wireless Communication (WPA2/WPA3)</h1>
+
+    <section id="table-of-contents" class="crypto-section">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#vpn">VPN (Virtual Private Network)</a>
+                <ul>
+                    <li><a href="#vpn-intro">What is a VPN?</a></li>
+                    <li><a href="#vpn-types">Types of VPNs</a></li>
+                    <li><a href="#vpn-protocols">VPN Protocols</a></li>
+                    <li><a href="#vpn-encryption">VPN Encryption</a></li>
+                    <li><a href="#vpn-use-cases">VPN Use Cases</a></li>
+                </ul>
+            </li>
+            <li><a href="#wireless-security">Wireless Communication Security</a>
+                <ul>
+                    <li><a href="#wifi-security-evolution">The Evolution of Wi-Fi Security</a></li>
+                    <li><a href="#wpa2">WPA2 (Wi-Fi Protected Access 2)</a></li>
+                    <li><a href="#wpa3">WPA3 (Wi-Fi Protected Access 3)</a></li>
+                    <li><a href="#wifi-best-practices">Wi-Fi Security Best Practices</a></li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section id="introduction" class="crypto-section">
+        <h2>Introduction</h2>
+        <p>
+            When using the internet or wireless networks, the security of your communication is extremely important.
+            On public Wi-Fi or general internet connections, there is a risk that your communications could be intercepted by third parties.
+            This page explains VPNs (Virtual Private Networks) and wireless security standards (WPA2/WPA3), which are technologies for securely protecting communications.
+        </p>
+    </section>
+
+    <section id="vpn" class="crypto-section">
+        <h2>VPN (Virtual Private Network)</h2>
+
+        <section id="vpn-intro" class="crypto-section">
+            <h3>What is a VPN?</h3>
+            <p>
+                A VPN (Virtual Private Network) is a technology that allows you to communicate securely as if you were on a private network, even while using the public internet.
+                A VPN creates an encrypted tunnel and exchanges data within it,
+                preventing eavesdropping and tampering of communication content.
+            </p>
+            <p>
+                Using a VPN provides the following benefits:
+            </p>
+            <ul>
+                <li>Privacy protection through encryption of communication content</li>
+                <li>Anonymization of your IP address</li>
+                <li>Access to geo-restricted content</li>
+                <li>Secure communication on public Wi-Fi</li>
+                <li>Secure remote access to a company's internal network</li>
+            </ul>
+        </section>
+
+        <section id="vpn-types" class="crypto-section">
+            <h3>Types of VPNs</h3>
+            <h4>Remote Access VPN</h4>
+            <p>
+                A remote access VPN is used by individual users to connect to a company's private network over the internet.
+                It is often used for telecommuting or remote work to access internal company systems.
+            </p>
+
+            <h4>Site-to-Site VPN</h4>
+            <p>
+                A Site-to-Site VPN is used to connect the networks of multiple geographically dispersed locations.
+                For example, it can securely connect the networks of a headquarters and a branch office, allowing them to function as a single large network.
+            </p>
+
+            <h4>Client VPN</h4>
+            <p>
+                A client VPN is used by individual users to encrypt their internet connection and protect their privacy.
+                It is used when using public Wi-Fi or when accessing geo-restricted content.
+            </p>
+        </section>
+
+        <section id="vpn-protocols" class="crypto-section">
+            <h3>VPN Protocols</h3>
+            <p>
+                VPN protocols define the method for establishing a VPN connection and the encryption method.
+                The main VPN protocols include the following:
+            </p>
+
+            <h4>OpenVPN</h4>
+            <p>
+                OpenVPN is an open-source VPN protocol that offers high security and flexibility.
+                It uses SSL/TLS for encryption and has the advantage of being able to easily bypass firewall restrictions.
+                It can operate on both TCP/UDP ports and is adopted by many VPN services.
+            </p>
+
+            <h4>WireGuard</h4>
+            <p>
+                WireGuard is a relatively new VPN protocol characterized by its simple design and high-speed connection.
+                It uses the latest encryption technology and has a small codebase, making security audits easier.
+                It also has low battery consumption, making it suitable for mobile devices.
+            </p>
+
+            <h4>IKEv2/IPsec</h4>
+            <p>
+                The combination of IKEv2 (Internet Key Exchange version 2) and IPsec (Internet Protocol Security)
+                provides a stable and high-speed connection. It is particularly strong when switching between networks (e.g., from Wi-Fi to mobile data)
+                and is suitable for mobile devices.
+            </p>
+
+            <h4>L2TP/IPsec</h4>
+            <p>
+                The combination of L2TP (Layer 2 Tunneling Protocol) and IPsec is a widely supported VPN protocol.
+                L2TP provides tunneling, and IPsec handles the encryption.
+                It is secure when properly configured, but it can be blocked by some firewalls.
+            </p>
+
+            <h4>SSTP</h4>
+            <p>
+                SSTP (Secure Socket Tunneling Protocol) is a protocol developed by Microsoft that
+                communicates similarly to HTTPS traffic using SSL/TLS.
+                It has the advantage of being able to easily pass through firewalls, but it is mainly supported on the Windows platform.
+            </p>
+        </section>
+
+        <section id="vpn-encryption" class="crypto-section">
+            <h3>VPN Encryption</h3>
+            <p>
+                The security of a VPN largely depends on the encryption algorithms used.
+                Modern VPN services use the following encryption technologies:
+            </p>
+
+            <h4>AES (Advanced Encryption Standard)</h4>
+            <p>
+                AES is currently the most widely used symmetric encryption algorithm.
+                VPNs typically use AES-128, AES-192, or AES-256.
+                The higher the number, the stronger the encryption, but the processing load also increases.
+            </p>
+
+            <h4>ChaCha20</h4>
+            <p>
+                ChaCha20 is a type of stream cipher that can operate faster than AES,
+                especially in environments without hardware acceleration (such as mobile devices). It is adopted by new VPN protocols like WireGuard.
+            </p>
+
+            <h4>RSA and Elliptic Curve Cryptography (ECC)</h4>
+            <p>
+                RSA and Elliptic Curve Cryptography are used as public-key cryptosystems for key exchange and authentication.
+                Compared to RSA, ECC can achieve a similar level of security with a shorter key length,
+                enabling more efficient processing.
+            </p>
+
+            <h4>Perfect Forward Secrecy (PFS)</h4>
+            <p>
+                PFS is a technology that generates a temporary key for each session.
+                This ensures that even if a private key is compromised, past communication content cannot be decrypted.
+                Modern VPN protocols achieve PFS using methods like the Diffie-Hellman key exchange.
+            </p>
+        </section>
+
+        <section id="vpn-use-cases" class="crypto-section">
+            <h3>VPN Use Cases</h3>
+            <h4>Remote Work</h4>
+            <p>
+                Many companies provide VPNs for remote workers to securely access the corporate network.
+                This allows for secure access to internal systems and resources from outside the company.
+            </p>
+
+            <h4>Using Public Wi-Fi</h4>
+            <p>
+                Public Wi-Fi in places like cafes, hotels, and airports can pose a high security risk.
+                By using a VPN, you can encrypt your communication content and protect your data from eavesdropping and man-in-the-middle attacks.
+            </p>
+
+            <h4>Bypassing Geographic Restrictions</h4>
+            <p>
+                Some websites and streaming services have access restrictions based on region.
+                By using a VPN to access them through a server in a different country or region,
+                you may be able to bypass these restrictions.
+            </p>
+
+            <h4>Privacy Protection</h4>
+            <p>
+                Using a VPN can prevent your Browse history from being tracked by your Internet Service Provider (ISP) and ad networks.
+                Your IP address is anonymized, which enhances your online privacy.
+            </p>
+        </section>
+    </section>
+
+    <section id="wireless-security" class="crypto-section">
+        <h2>Wireless Communication Security</h2>
+
+        <section id="wifi-security-evolution" class="crypto-section">
+            <h3>The Evolution of Wi-Fi Security</h3>
+            <p>
+                The security of Wi-Fi networks has evolved with the advancement of technology.
+                The evolution of the main Wi-Fi security protocols is as follows:
+            </p>
+
+            <h4>WEP (Wired Equivalent Privacy)</h4>
+            <p>
+                WEP was an early Wi-Fi security protocol introduced in 1999.
+                However, serious vulnerabilities were discovered, and it is now considered insecure.
+                WEP should not be used as it can be cracked in a matter of minutes.
+            </p>
+
+            <h4>WPA (Wi-Fi Protected Access)</h4>
+            <p>
+                WPA was introduced in 2003 to address the vulnerabilities of WEP.
+                It used TKIP (Temporal Key Integrity Protocol) and was more secure than WEP,
+                but some vulnerabilities still existed.
+            </p>
+
+            <h4>WPA2 (Wi-Fi Protected Access 2)</h4>
+            <p>
+                WPA2 was introduced in 2004, and its security was significantly improved by adopting AES encryption.
+                It has been used as the standard Wi-Fi security protocol for many years.
+            </p>
+
+            <h4>WPA3 (Wi-Fi Protected Access 3)</h4>
+            <p>
+                WPA3 is the latest Wi-Fi security protocol, introduced in 2018.
+                It addresses the vulnerabilities of WPA2 and provides stronger encryption and authentication mechanisms.
+            </p>
+        </section>
+
+        <section id="wpa2" class="crypto-section">
+            <h3>WPA2 (Wi-Fi Protected Access 2)</h3>
+            <p>
+                WPA2 was introduced in 2004 and became mandatory for all Wi-Fi certified devices manufactured after 2006.
+                Its main features are as follows:
+            </p>
+
+            <h4>AES-CCMP Encryption</h4>
+            <p>
+                WPA2 uses AES (Advanced Encryption Standard) and CCMP (Counter Mode with Cipher Block Chaining Message Authentication Code Protocol).
+                This provides stronger encryption than the TKIP used in WEP and WPA.
+            </p>
+
+            <h4>WPA2-Personal (PSK)</h4>
+            <p>
+                WPA2-Personal (Pre-Shared Key) is a mode for homes and small offices.
+                All devices connect to the network using the same passphrase (Wi-Fi password).
+                Communication is encrypted using a PMK (Pairwise Master Key) generated from the passphrase.
+            </p>
+
+            <h4>WPA2-Enterprise (802.1X/EAP)</h4>
+            <p>
+                WPA2-Enterprise is a mode for businesses and large organizations.
+                It works in conjunction with an authentication server, such as a RADIUS server,
+                and uses different authentication credentials (such as a username and password) for each user to access the network.
+                This simplifies user management and improves security.
+            </p>
+
+            <h4>Vulnerabilities of WPA2</h4>
+            <p>
+                Several vulnerabilities have also been discovered in WPA2:
+            </p>
+            <ul>
+                <li>KRACK (Key Reinstallation Attack): A vulnerability discovered in 2017 that allows an attacker to intercept communications by exploiting the WPA2 handshake process.</li>
+                <li>Dictionary Attack: If a weak passphrase is used, it can be cracked through brute-force or dictionary attacks.</li>
+                <li>WPS (Wi-Fi Protected Setup) Vulnerability: If WPS is enabled, it may be possible to access the network by brute-forcing the PIN code.</li>
+            </ul>
+        </section>
+
+        <section id="wpa3" class="crypto-section">
+            <h3>WPA3 (Wi-Fi Protected Access 3)</h3>
+            <p>
+                WPA3 is the latest Wi-Fi security protocol, introduced in 2018, and was developed to address the vulnerabilities of WPA2.
+                Its main features are as follows:
+            </p>
+
+            <h4>SAE (Simultaneous Authentication of Equals)</h4>
+            <p>
+                WPA3 replaces the PSK (Pre-Shared Key) of WPA2 with SAE (also known as the Dragonfly Handshake).
+                SAE increases resistance to brute-force attacks and prevents offline dictionary attacks.
+                It also provides Perfect Forward Secrecy (PFS), ensuring that past communications remain secure even if a key is compromised in the future.
+            </p>
+
+            <h4>WPA3-Personal</h4>
+            <p>
+                WPA3-Personal is a mode for homes and small offices that provides stronger protection using SAE.
+                Even if a simple password is used, protection against offline dictionary attacks is enhanced.
+            </p>
+
+            <h4>WPA3-Enterprise</h4>
+            <p>
+                WPA3-Enterprise is a mode for businesses and large organizations that provides a 192-bit security suite.
+                This includes encryption with GCMP-256 (Galois/Counter Mode Protocol), authentication with GMAC-256,
+                and key exchange and authentication with ECDSA (Elliptic Curve Digital Signature Algorithm) or 3072-bit RSA.
+            </p>
+
+            <h4>Easy Connect (DPP)</h4>
+            <p>
+                WPA3 introduces the Device Provisioning Protocol (DPP) to provide a secure alternative to WPS.
+                By simply scanning a QR code or NFC tag, IoT devices without a display or keyboard
+                can be securely connected to the network.
+            </p>
+
+            <h4>Enhanced Open (OWE)</h4>
+            <p>
+                Enhanced Open is a feature that provides encryption even on open (password-less) Wi-Fi networks.
+                It uses Opportunistic Wireless Encryption (OWE) to encrypt communications even without authentication,
+                reducing the risk of eavesdropping on public Wi-Fi.
+            </p>
+        </section>
+
+        <section id="wifi-best-practices" class="crypto-section">
+            <h3>Wi-Fi Security Best Practices</h3>
+            <p>
+                The best practices for enhancing the security of your Wi-Fi network are as follows:
+            </p>
+            <ul>
+                <li>Use WPA3 whenever possible (or WPA2 if not supported)</li>
+                <li>Use a strong, complex password (12 characters or more, including uppercase letters, lowercase letters, numbers, and special characters)</li>
+                <li>Change the default SSID (network name)</li>
+                <li>Regularly update the router's firmware</li>
+                <li>Disable WPS</li>
+                <li>Set up a guest network and separate it from the main network</li>
+                <li>Disable Wi-Fi when not in use</li>
+                <li>Use WPA2/WPA3-Enterprise in a corporate environment</li>
+                <li>Use a VPN when using public Wi-Fi</li>
+            </ul>
+        </section>
+    </section>
+
+    <button id="back-to-top" title="Back to top">↑</button>
+</div>
+
+<script src="js/crypto_keys.js"></script>
+</body>
+</html>

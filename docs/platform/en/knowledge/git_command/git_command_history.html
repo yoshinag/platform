@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Git History and Diff Checking Commands Guide</title>
+    <link rel="stylesheet" href="css/git_command.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="git_command.html">Return to Main Page</a> |
+        <a href="git_command_remote.html">Previous Category: Remote Repository Operations</a> |
+        <a href="git_command_stash.html">Next Category: Temporary Storage and Work Restoration</a>
+    </div>
+
+    <h1>Git History and Diff Checking Commands Guide</h1>
+    
+    <section class="command-section">
+        <h2>History and Diff Checking</h2>
+        
+        <!-- git log command -->
+        <h3>git log - Display Commit History</h3>
+        <p>Displays the commit history of the repository.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>--oneline</td>
+                <td>Display each commit on a single line</td>
+            </tr>
+            <tr>
+                <td>--graph</td>
+                <td>Display branch and merge history as an ASCII graph</td>
+            </tr>
+            <tr>
+                <td>--decorate</td>
+                <td>Show references (branches, tags, etc.)</td>
+            </tr>
+            <tr>
+                <td>--all</td>
+                <td>Show commits from all branches</td>
+            </tr>
+            <tr>
+                <td>-p, --patch</td>
+                <td>Show the diff for each commit</td>
+            </tr>
+            <tr>
+                <td>-n &lt;number&gt;</td>
+                <td>Limit the number of commits displayed</td>
+            </tr>
+            <tr>
+                <td>--author=&lt;pattern&gt;</td>
+                <td>Show only commits by specific author</td>
+            </tr>
+            <tr>
+                <td>--since=&lt;date&gt;, --after=&lt;date&gt;</td>
+                <td>Show commits more recent than specified date</td>
+            </tr>
+            <tr>
+                <td>--until=&lt;date&gt;, --before=&lt;date&gt;</td>
+                <td>Show commits older than specified date</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>git log</code> - Display commit history<br>
+            <code>git log --oneline</code> - Display commit history in a concise format<br>
+            <code>git log --oneline --graph --all</code> - Display commit history for all branches in graph format<br>
+            <code>git log -p</code> - Display commit history including diffs<br>
+            <code>git log -n 5</code> - Display only the 5 most recent commits<br>
+            <code>git log --author="John"</code> - Display only commits by John<br>
+            <code>git log --since="2023-01-01"</code> - Display commits since January 1, 2023<br>
+            <code>git log file.txt</code> - Display commit history for a specific file
+        </div>
+
+        <!-- git diff command -->
+        <h3>git diff - Display Changes</h3>
+        <p>Displays changes between files.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option/Argument</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>(no arguments)</td>
+                <td>Show differences between working directory and staging area</td>
+            </tr>
+            <tr>
+                <td>--staged, --cached</td>
+                <td>Show differences between staging area and the latest commit</td>
+            </tr>
+            <tr>
+                <td>&lt;commit1&gt; &lt;commit2&gt;</td>
+                <td>Show differences between two commits</td>
+            </tr>
+            <tr>
+                <td>--name-only</td>
+                <td>Show only names of changed files</td>
+            </tr>
+            <tr>
+                <td>--name-status</td>
+                <td>Show names of changed files and their status (added/modified/deleted)</td>
+            </tr>
+            <tr>
+                <td>--color-words</td>
+                <td>Highlight changes at word level</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>git diff</code> - Show differences between working directory and staging area<br>
+            <code>git diff --staged</code> - Show differences between staging area and the latest commit<br>
+            <code>git diff HEAD</code> - Show differences between working directory and the latest commit<br>
+            <code>git diff HEAD~1 HEAD</code> - Show differences between the latest commit and the previous commit<br>
+            <code>git diff main feature</code> - Show differences between main branch and feature branch<br>
+            <code>git diff -- file.txt</code> - Show differences for a specific file only
+        </div>
+    </section>
+
+    <div class="navigation-links">
+        <a href="git_command.html">Return to Main Page</a> |
+        <a href="git_command_remote.html">Previous Category: Remote Repository Operations</a> | 
+        <a href="git_command_stash.html">Next Category: Temporary Storage and Work Restoration</a>
+    </div>
+
+    <button id="back-to-top" title="Back to Top">↑</button>
+</div>
+
+<!-- Main application script -->
+<script src="js/git_command.js"></script>
+</body>
+</html>

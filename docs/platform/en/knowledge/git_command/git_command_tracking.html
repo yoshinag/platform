@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Git Tracking and Checking Changes Commands Guide</title>
+    <link rel="stylesheet" href="css/git_command.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="git_command.html">Return to Main Page</a> |
+        <a href="git_command_basic.html">Previous Category: Basic Git Commands</a> |
+        <a href="git_command_commit.html">Next Category: Commit-Related Commands</a>
+    </div>
+
+    <h1>Git Tracking and Checking Changes Commands Guide</h1>
+    
+    <section class="command-section">
+        <h2>Tracking and Checking Changes</h2>
+        
+        <!-- git status command -->
+        <h3>git status - Check Working Directory Status</h3>
+        <p>Displays the state of the working directory and the staging area.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>-s, --short</td>
+                <td>Output in short format</td>
+            </tr>
+            <tr>
+                <td>-b, --branch</td>
+                <td>Show branch information as well</td>
+            </tr>
+            <tr>
+                <td>--ignored</td>
+                <td>Show ignored files as well</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>git status</code> - Display the current state of the working directory<br>
+            <code>git status -s</code> - Display status in short format<br>
+            <code>git status -sb</code> - Display status in short format including branch information
+        </div>
+
+        <!-- git add command -->
+        <h3>git add - Add Changes to the Staging Area</h3>
+        <p>Adds changes to the staging area (index).</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>-A, --all</td>
+                <td>Stage all changes</td>
+            </tr>
+            <tr>
+                <td>-p, --patch</td>
+                <td>Interactively select changes to stage</td>
+            </tr>
+            <tr>
+                <td>-u, --update</td>
+                <td>Stage only tracked files</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>git add file.txt</code> - Stage a specific file<br>
+            <code>git add .</code> - Stage all changes in the current directory<br>
+            <code>git add -A</code> - Stage all changes in the repository<br>
+            <code>git add -p</code> - Interactively select changes to stage
+        </div>
+    </section>
+
+    <div class="navigation-links">
+        <a href="git_command.html">Return to Main Page</a> |
+        <a href="git_command_basic.html">Previous Category: Basic Git Commands</a> | 
+        <a href="git_command_commit.html">Next Category: Commit-Related Commands</a>
+    </div>
+
+    <button id="back-to-top" title="Back to Top">↑</button>
+</div>
+
+<!-- Main application script -->
+<script src="js/git_command.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+sequenceDiagram
+    participant Client as Client PC
+    participant Server as Remote Server
+
+    autonumber
+
+    Note over Client,Server: Prerequisite: Client's public key is already registered on the server
+
+    %% Connection and host key exchange
+    Client->>Server: 1. Connection request (TCP port 22)
+    Server-->>Client: 2. Send server's public key
+    Client->>Client: 3. Verify server's public key (known_hosts)
+
+    %% Establishing encrypted session
+    Note over Client,Server: 4. Exchange encrypted session key (Diffie-Hellman)
+
+    %% User authentication (public key authentication)
+    Client->>Server: 5. Request public key authentication
+    Server-->>Client: 6. Send challenge (random data)
+    Client->>Client: 7. Sign the challenge with stored private key ✍️
+    Client->>Server: 8. Send signed data
+
+    %% Authentication result and session start
+    Server->>Server: 9. Verify signature with registered public key ✅
+    alt Authentication successful
+        Server-->>Client: 10. Authentication successful! Shell session starts
+        Note over Client,Server: All subsequent communication is encrypted
+    else Authentication failed
+        Server-->>Client: Authentication failed - connection closed ❌
+    end

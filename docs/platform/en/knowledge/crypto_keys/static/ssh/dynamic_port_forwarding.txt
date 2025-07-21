@@ -1,0 +1,42 @@
+sequenceDiagram
+    autonumber
+    participant Browser as "Browser etc.<br>@Client PC"
+    participant ClientSSH as "SSH Client (SOCKS Proxy)<br>@Client PC"
+    participant SSHServer as "SSH Server"
+    participant DestinationServer as "Destination Server<br>(e.g., Website)"
+
+    rect rgb(230, 240, 255)
+        note over ClientSSH, SSHServer: Prerequisite: `ssh -D 1080 user@server` has been executed
+        ClientSSH ->> SSHServer: ① Establish SSH tunnel (port 22)
+        activate ClientSSH
+        ClientSSH ->> ClientSSH: Start SOCKS proxy on port 1080
+        deactivate ClientSSH
+    end
+
+    note over Browser: Browser proxy settings configured to use `localhost:1080`
+
+    Browser ->> ClientSSH: ② Request access to website
+    Note right of Browser: Destination: localhost:1080<br>Request: Connect to DestinationServer:443
+
+    activate ClientSSH
+    ClientSSH -->> SSHServer: ③ Forward request through tunnel
+    Note over ClientSSH, SSHServer: Transferred within encrypted SSH session (port 22)
+
+    activate SSHServer
+    SSHServer ->> DestinationServer: ④ Transfer data via new connection
+    Note right of SSHServer: Source: SSH server IP:(random port A)<br>Destination: DestinationServer:443
+    deactivate ClientSSH
+
+    activate DestinationServer
+    DestinationServer -->> SSHServer: ⑤ Response from website
+    Note right of SSHServer: Source: DestinationServer:443<br>Destination: SSH server IP:(random port A)
+    deactivate DestinationServer
+
+    SSHServer -->> ClientSSH: ⑥ Forward response through tunnel
+    Note over ClientSSH, SSHServer: Transferred within encrypted SSH session (port 22)
+
+    activate ClientSSH
+    deactivate SSHServer
+    ClientSSH -->> Browser: ⑦ Return response to browser
+    Note right of Browser: Receives response from<br>SOCKS proxy (localhost:1080)
+    deactivate ClientSSH

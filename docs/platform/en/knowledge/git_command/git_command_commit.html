@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Git Commit-Related Commands Guide</title>
+    <link rel="stylesheet" href="css/git_command.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="git_command.html">Return to Main Page</a> |
+        <a href="git_command_tracking.html">Previous Category: Tracking and Checking Changes</a> |
+        <a href="git_command_branch.html">Next Category: Branch-Related Commands</a>
+    </div>
+
+    <h1>Git Commit-Related Commands Guide</h1>
+    
+    <section class="command-section">
+        <h2>Commit-Related Commands</h2>
+        
+        <!-- git commit command -->
+        <h3>git commit - Commit Changes to Repository</h3>
+        <p>Records changes from the staging area to the repository.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>-m &lt;message&gt;</td>
+                <td>Specify commit message</td>
+            </tr>
+            <tr>
+                <td>-a, --all</td>
+                <td>Automatically stage all tracked files before committing</td>
+            </tr>
+            <tr>
+                <td>--amend</td>
+                <td>Modify the previous commit</td>
+            </tr>
+            <tr>
+                <td>--no-edit</td>
+                <td>Use with amend to reuse the previous commit message</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>git commit -m "Add new feature"</code> - Commit with a message<br>
+            <code>git commit -am "Fix bugs"</code> - Automatically stage all tracked files and commit<br>
+            <code>git commit --amend</code> - Modify the previous commit (opens editor)<br>
+            <code>git commit --amend -m "Updated commit message"</code> - Change the previous commit message<br>
+            <code>git commit --amend --no-edit</code> - Add changes to the previous commit (without changing the message)
+        </div>
+    </section>
+
+    <div class="navigation-links">
+        <a href="git_command.html">Return to Main Page</a> |
+        <a href="git_command_tracking.html">Previous Category: Tracking and Checking Changes</a> | 
+        <a href="git_command_branch.html">Next Category: Branch-Related Commands</a>
+    </div>
+
+    <button id="back-to-top" title="Back to Top">↑</button>
+</div>
+
+<!-- Main application script -->
+<script src="js/git_command.js"></script>
+</body>
+</html>

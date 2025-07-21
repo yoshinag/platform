@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Linux Text Processing Commands Guide</title>
+    <link rel="stylesheet" href="css/linux_command.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="linux_command_file.html">Previous Category: File Operations</a> |
+        <a href="linux_command.html">Back to Main Page</a> |
+        <a href="linux_command_system.html">Next Category: System Information</a>
+    </div>
+
+    <h1>Linux Text Processing Commands Guide</h1>
+    
+    <!-- Text Processing Commands -->
+    <section id="text-processing" class="command-section">
+        <h2>Text Processing Commands</h2>
+        <p>Commands for displaying, searching, editing, and processing text files.</p>
+        
+        <!-- cat command -->
+        <h3>cat - Display and Concatenate Files</h3>
+        <p>Displays file contents or concatenates multiple files.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>-n</td>
+                <td>Display line numbers</td>
+            </tr>
+            <tr>
+                <td>-b</td>
+                <td>Display line numbers (except for blank lines)</td>
+            </tr>
+            <tr>
+                <td>-s</td>
+                <td>Squeeze multiple blank lines into one</td>
+            </tr>
+            <tr>
+                <td>-A</td>
+                <td>Display control and special characters (tabs, line breaks, etc.)</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>cat file.txt</code> - Display file contents<br>
+            <code>cat file1.txt file2.txt</code> - Concatenate and display multiple files<br>
+            <code>cat file1.txt file2.txt > combined.txt</code> - Concatenate multiple files and save to a new file
+        </div>
+
+        <!-- grep command -->
+        <h3>grep - Search Text</h3>
+        <p>Searches for text patterns in files.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>-i</td>
+                <td>Case-insensitive search</td>
+            </tr>
+            <tr>
+                <td>-v</td>
+                <td>Display lines that don't match the pattern</td>
+            </tr>
+            <tr>
+                <td>-n</td>
+                <td>Display line numbers</td>
+            </tr>
+            <tr>
+                <td>-r, -R</td>
+                <td>Search recursively through directories</td>
+            </tr>
+            <tr>
+                <td>-l</td>
+                <td>Display only filenames containing matches</td>
+            </tr>
+            <tr>
+                <td>-c</td>
+                <td>Display count of matching lines</td>
+            </tr>
+            <tr>
+                <td>-E</td>
+                <td>Use extended regular expressions</td>
+            </tr>
+            <tr>
+                <td>-A n</td>
+                <td>Display n lines after the match</td>
+            </tr>
+            <tr>
+                <td>-B n</td>
+                <td>Display n lines before the match</td>
+            </tr>
+            <tr>
+                <td>-C n</td>
+                <td>Display n lines before and after the match</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>grep "pattern" file.txt</code> - Search for pattern in file<br>
+            <code>grep -i "pattern" file.txt</code> - Case-insensitive search<br>
+            <code>grep -r "pattern" directory/</code> - Search recursively through all files in directory<br>
+            <code>grep -E "pattern1|pattern2" file.txt</code> - Search for multiple patterns (OR)<br>
+            <code>grep -v "^#" config.txt | grep -v "^$"</code> - Exclude comment lines and blank lines (using pipe)<br>
+            <code>ps aux | grep "[f]irefox"</code> - Search for firefox processes excluding the grep process itself<br>
+            <code>grep -A 2 -B 1 "ERROR" log.txt</code> - Display error lines with context<br>
+            <code>grep -o "([0-9]\{1,3\}\.){3}[0-9]\{1,3\}" file.txt</code> - Extract only IP addresses<br>
+            <code>find . -name "*.log" -exec grep -l "ERROR" {} \; | xargs wc -l</code> - Count lines in log files containing errors<br>
+            <code>history | grep "git commit" | sed 's/^[ 0-9]*//'</code> - Extract only git commit commands from history
+        </div>
+
+        <!-- sed command -->
+        <h3>sed - Stream Editor</h3>
+        <p>Performs text transformations like substitution, deletion, and insertion.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option/Syntax</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>-i</td>
+                <td>Edit files in-place (default is to output to stdout)</td>
+            </tr>
+            <tr>
+                <td>-e</td>
+                <td>Specify multiple commands</td>
+            </tr>
+            <tr>
+                <td>-n</td>
+                <td>Suppress automatic printing (print only specific patterns)</td>
+            </tr>
+            <tr>
+                <td>s/pattern/replacement/</td>
+                <td>Substitute pattern</td>
+            </tr>
+            <tr>
+                <td>s/pattern/replacement/g</td>
+                <td>Substitute all occurrences of pattern (g means global)</td>
+            </tr>
+            <tr>
+                <td>d</td>
+                <td>Delete lines matching pattern</td>
+            </tr>
+            <tr>
+                <td>p</td>
+                <td>Print lines matching pattern (usually used with -n)</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>sed 's/old/new/' file.txt</code> - Replace first occurrence of "old" with "new" on each line<br>
+            <code>sed 's/old/new/g' file.txt</code> - Replace all occurrences of "old" with "new"<br>
+            <code>sed -i 's/old/new/g' file.txt</code> - Edit file in-place<br>
+            <code>sed '/pattern/d' file.txt</code> - Delete lines matching pattern<br>
+            <code>sed -n '/pattern/p' file.txt</code> - Print only lines matching pattern<br>
+            <code>sed -i.bak 's/old/new/g' file.txt</code> - Create backup before editing file<br>
+            <code>sed '1,5s/old/new/g' file.txt</code> - Replace "old" with "new" only in lines 1-5<br>
+            <code>sed '/start/,/end/d' file.txt</code> - Delete range of lines from "start" to "end" pattern<br>
+            <code>sed 's/[0-9]\{3\}-[0-9]\{4\}/XXX-XXXX/g' file.txt</code> - Mask phone numbers<br>
+            <code>cat file.txt | sed 's/^[ \t]*//'</code> - Remove leading whitespace from each line<br>
+            <code>echo "hello world" | sed 's/\b\(.\)/\u\1/g'</code> - Capitalize first letter of each word<br>
+            <code>sed -e 's/old/new/g' -e 's/foo/bar/g' file.txt</code> - Perform multiple substitutions at once<br>
+            <code>grep "ERROR" log.txt | sed 's/.*ERROR: \(.*\)/\1/'</code> - Extract only error messages
+        </div>
+
+        <!-- awk command -->
+        <h3>awk - Text Processing Language</h3>
+        <p>A programming language for text processing and data extraction.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Syntax/Pattern</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>'{print $1}'</td>
+                <td>Print first field (column) of each line</td>
+            </tr>
+            <tr>
+                <td>'{print $1, $3}'</td>
+                <td>Print first and third fields</td>
+            </tr>
+            <tr>
+                <td>-F</td>
+                <td>Specify field separator (default is whitespace)</td>
+            </tr>
+            <tr>
+                <td>'/pattern/ {action}'</td>
+                <td>Perform action on lines matching pattern</td>
+            </tr>
+            <tr>
+                <td>NR</td>
+                <td>Current line number</td>
+            </tr>
+            <tr>
+                <td>NF</td>
+                <td>Number of fields in current line</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>awk '{print $1}' file.txt</code> - Print first field of each line<br>
+            <code>awk -F, '{print $1, $3}' file.csv</code> - Print first and third fields from CSV file<br>
+            <code>awk '/pattern/ {print $0}' file.txt</code> - Print lines matching pattern<br>
+            <code>awk '{sum += $1} END {print sum}' file.txt</code> - Calculate and print sum of first field<br>
+            <code>awk '{count[$1]++} END {for (word in count) print word, count[word]}' file.txt</code> - Count occurrences of each word<br>
+            <code>awk -F, '{if ($3 > 100) print $1, $2, $3}' data.csv</code> - Print lines where third field is greater than 100<br>
+            <code>awk 'NR % 2 == 0' file.txt</code> - Print only even-numbered lines<br>
+            <code>awk 'length($0) > 80' file.txt</code> - Print lines longer than 80 characters<br>
+            <code>awk 'BEGIN {FS=","; OFS="\t"} {print $1, $2, $3}' file.csv</code> - Convert CSV to TSV<br>
+            <code>ps aux | awk '$3 > 10.0 {print $2, $3, $11}'</code> - Print processes using more than 10% CPU<br>
+            <code>cat /etc/passwd | awk -F: '{print "User: " $1 ", Home: " $6}'</code> - Format user information<br>
+            <code>ls -l | awk '{sum += $5} END {printf "Total size: %.2f MB\n", sum/1024/1024}'</code> - Calculate total file size in MB<br>
+            <code>grep "ERROR" log.txt | awk -F: '{print $1}' | sort | uniq -c</code> - Count errors by file
+        </div>
+
+        <!-- head/tail command -->
+        <h3>head/tail - Display Beginning/End of Files</h3>
+        <p>Display the beginning or end portions of files.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Command/Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>head file.txt</td>
+                <td>Display first 10 lines of file</td>
+            </tr>
+            <tr>
+                <td>head -n N file.txt</td>
+                <td>Display first N lines of file</td>
+            </tr>
+            <tr>
+                <td>tail file.txt</td>
+                <td>Display last 10 lines of file</td>
+            </tr>
+            <tr>
+                <td>tail -n N file.txt</td>
+                <td>Display last N lines of file</td>
+            </tr>
+            <tr>
+                <td>tail -f file.txt</td>
+                <td>Display last lines and follow file updates in real-time (useful for log monitoring)</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>head -n 5 file.txt</code> - Display first 5 lines<br>
+            <code>tail -n 20 file.txt</code> - Display last 20 lines<br>
+            <code>tail -f /var/log/syslog</code> - Monitor system log in real-time<br>
+            <code>head -n 5 file.txt | tail -n 1</code> - Display only line 5<br>
+            <code>tail -n +10 file.txt | head -n 5</code> - Display lines 10-14<br>
+            <code>ls -l | head -n 5</code> - Display first 5 files in directory<br>
+            <code>find . -type f -name "*.log" | head</code> - Display first 10 log files<br>
+            <code>ps aux | sort -nrk 3,3 | head -n 5</code> - Display top 5 CPU-consuming processes<br>
+            <code>tail -f log.txt | grep --color "ERROR"</code> - Monitor log with highlighted errors<br>
+            <code>tail -f /var/log/apache2/access.log /var/log/apache2/error.log</code> - Monitor multiple log files simultaneously<br>
+            <code>find . -type f -mtime -1 | xargs wc -l | head</code> - Display line counts of 10 most recently modified files
+        </div>
+
+        <!-- sort command -->
+        <h3>sort - Sort Text</h3>
+        <p>Sorts lines of text files.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>-r</td>
+                <td>Sort in reverse (descending) order</td>
+            </tr>
+            <tr>
+                <td>-n</td>
+                <td>Sort numerically</td>
+            </tr>
+            <tr>
+                <td>-k N</td>
+                <td>Sort by Nth field (column)</td>
+            </tr>
+            <tr>
+                <td>-t</td>
+                <td>Specify field separator</td>
+            </tr>
+            <tr>
+                <td>-u</td>
+                <td>Remove duplicates (output unique lines only)</td>
+            </tr>
+            <tr>
+                <td>-f</td>
+                <td>Case-insensitive sort</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>sort file.txt</code> - Sort file alphabetically<br>
+            <code>sort -r file.txt</code> - Sort in reverse order<br>
+            <code>sort -n numbers.txt</code> - Sort numerically<br>
+            <code>sort -k 2 -t, file.csv</code> - Sort CSV file by second field<br>
+            <code>sort -k 2n -t: file.txt</code> - Sort numerically by second field (delimiter is :)<br>
+            <code>sort -k 3,3 -k 1,1 file.txt</code> - Sort by third field, then by first field<br>
+            <code>sort -u file.txt</code> - Sort and remove duplicates<br>
+            <code>sort -h sizes.txt</code> - Sort by human-readable sizes (K, M, G)<br>
+            <code>du -h | sort -hr</code> - Sort directory sizes in descending order<br>
+            <code>ps aux | sort -nrk 3,3 | head -n 10</code> - Display top 10 CPU-consuming processes<br>
+            <code>cat /etc/passwd | sort -t: -k 3 -n</code> - Sort users by UID<br>
+            <code>find . -type f -name "*.log" | xargs ls -l | sort -k 5 -nr</code> - Sort log files by size
+        </div>
+
+        <!-- uniq command -->
+        <h3>uniq - Process Duplicate Lines</h3>
+        <p>Processes duplicate lines (typically used with sort).</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>-c</td>
+                <td>Display count of occurrences</td>
+            </tr>
+            <tr>
+                <td>-d</td>
+                <td>Display only duplicate lines</td>
+            </tr>
+            <tr>
+                <td>-u</td>
+                <td>Display only unique lines (no duplicates)</td>
+            </tr>
+            <tr>
+                <td>-i</td>
+                <td>Case-insensitive comparison</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>sort file.txt | uniq</code> - Sort and remove duplicate lines<br>
+            <code>sort file.txt | uniq -c</code> - Count occurrences of each line<br>
+            <code>sort file.txt | uniq -d</code> - Display only duplicate lines<br>
+            <code>sort file.txt | uniq -u</code> - Display only unique lines<br>
+            <code>sort file.txt | uniq -c | sort -nr</code> - Display lines by frequency (most frequent first)<br>
+            <code>cat access.log | cut -d' ' -f1 | sort | uniq -c | sort -nr</code> - Count IP address access frequency<br>
+            <code>cat file.txt | tr '[:upper:]' '[:lower:]' | sort | uniq</code> - Case-insensitive duplicate removal<br>
+            <code>history | cut -c8- | sort | uniq -c | sort -nr | head -n 10</code> - Display top 10 most used commands<br>
+            <code>find . -type f -name "*.txt" | xargs cat | sort | uniq -c</code> - Count occurrences of lines across all text files<br>
+            <code>grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' access.log | sort | uniq -c | sort -nr</code> - Count IP address frequency in log file
+        </div>
+
+        <!-- wc command -->
+        <h3>wc - Count Lines, Words, Bytes</h3>
+        <p>Counts lines, words, and bytes in files.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>-l</td>
+                <td>Count lines only</td>
+            </tr>
+            <tr>
+                <td>-w</td>
+                <td>Count words only</td>
+            </tr>
+            <tr>
+                <td>-c</td>
+                <td>Count bytes only</td>
+            </tr>
+            <tr>
+                <td>-m</td>
+                <td>Count characters only</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>wc file.txt</code> - Display line, word, and byte counts<br>
+            <code>wc -l file.txt</code> - Display line count only<br>
+            <code>wc -w file.txt</code> - Display word count only<br>
+            <code>wc -c file.txt</code> - Display byte count only<br>
+            <code>wc -m file.txt</code> - Display character count (correctly counts multibyte characters)<br>
+            <code>find . -name "*.py" | xargs wc -l</code> - Count lines in all Python files<br>
+            <code>find . -name "*.py" | xargs wc -l | sort -nr</code> - Sort Python files by line count<br>
+            <code>grep -v "^#" script.sh | grep -v "^$" | wc -l</code> - Count non-comment, non-blank lines in script<br>
+            <code>cat file.txt | tr -s ' ' '\n' | sort | uniq | wc -l</code> - Count unique words in file<br>
+            <code>ls -la | wc -l</code> - Count files in directory (including header line)<br>
+            <code>for file in *.txt; do echo -n "$file: "; wc -l < "$file"; done</code> - Display line count for each text file<br>
+            <code>find . -type f -exec cat {} \; | wc -l</code> - Count total lines in all files in directory
+        </div>
+    </section>
+
+    <div class="navigation-links">
+        <a href="linux_command_file.html">Previous Category: File Operations</a> | 
+        <a href="linux_command.html">Back to Main Page</a> | 
+        <a href="linux_command_system.html">Next Category: System Information</a>
+    </div>
+
+    <button id="back-to-top" title="Back to Top">↑</button>
+</div>
+
+<!-- Main application script -->
+<script src="js/linux_command.js"></script>
+</body>
+</html>

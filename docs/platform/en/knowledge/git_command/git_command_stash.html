@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Git Stash and Work Restoration Commands Guide</title>
+    <link rel="stylesheet" href="css/git_command.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="git_command.html">Return to Main Page</a> |
+        <a href="git_command_history.html">Previous Category: History and Diff Viewing</a> |
+        <a href="git_command_merge.html">Next Category: Merging and Rebasing</a>
+    </div>
+
+    <h1>Git Stash and Work Restoration Commands Guide</h1>
+    
+    <section class="command-section">
+        <h2>Temporary Storage and Work Restoration</h2>
+        
+        <!-- git stash command -->
+        <h3>git stash - Temporarily Save Work</h3>
+        <p>Temporarily saves current work and cleans the working directory.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Subcommand/Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>push [message]</td>
+                <td>Save changes temporarily (message is optional)</td>
+            </tr>
+            <tr>
+                <td>list</td>
+                <td>Display a list of saved changes</td>
+            </tr>
+            <tr>
+                <td>show [stash@{n}]</td>
+                <td>Display the content of saved changes</td>
+            </tr>
+            <tr>
+                <td>apply [stash@{n}]</td>
+                <td>Apply saved changes (without removing from stack)</td>
+            </tr>
+            <tr>
+                <td>pop [stash@{n}]</td>
+                <td>Apply saved changes and remove from stack</td>
+            </tr>
+            <tr>
+                <td>drop [stash@{n}]</td>
+                <td>Delete saved changes</td>
+            </tr>
+            <tr>
+                <td>clear</td>
+                <td>Delete all saved changes</td>
+            </tr>
+            <tr>
+                <td>-u, --include-untracked</td>
+                <td>Include untracked files in the stash</td>
+            </tr>
+            <tr>
+                <td>-a, --all</td>
+                <td>Include all files, including ignored ones</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>git stash</code> - Save current changes temporarily<br>
+            <code>git stash push -m "WIP: feature implementation"</code> - Save changes with a message<br>
+            <code>git stash list</code> - Display a list of saved changes<br>
+            <code>git stash show</code> - Display a summary of the latest saved changes<br>
+            <code>git stash show -p</code> - Display details of the latest saved changes<br>
+            <code>git stash apply</code> - Apply the latest saved changes (remains in stack)<br>
+            <code>git stash pop</code> - Apply the latest saved changes and remove from stack<br>
+            <code>git stash drop stash@{2}</code> - Delete specific saved changes<br>
+            <code>git stash clear</code> - Delete all saved changes<br>
+            <code>git stash branch new-branch</code> - Create a new branch and apply saved changes to it
+        </div>
+    </section>
+
+    <div class="navigation-links">
+        <a href="git_command.html">Return to Main Page</a> |
+        <a href="git_command_history.html">Previous Category: History and Diff Viewing</a> | 
+        <a href="git_command_merge.html">Next Category: Merging and Rebasing</a>
+    </div>
+
+    <button id="back-to-top" title="Back to Top">↑</button>
+</div>
+
+<!-- Main application script -->
+<script src="js/git_command.js"></script>
+</body>
+</html>

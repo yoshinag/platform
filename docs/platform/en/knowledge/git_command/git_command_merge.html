@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Git Merge and Rebase Commands Guide</title>
+    <link rel="stylesheet" href="css/git_command.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="git_command.html">Return to Main Page</a> |
+        <a href="git_command_stash.html">Previous Category: Temporary Storage and Work Restoration</a> |
+        <a href="git_command_submodule.html">Next Category: Submodule Management</a>
+    </div>
+
+    <h1>Git Merge and Rebase Commands Guide</h1>
+    
+    <section class="command-section">
+        <h2>Merge and Rebase</h2>
+        
+        <!-- git merge command -->
+        <h3>git merge - Merge Branches</h3>
+        <p>Integrates changes from the specified branch into the current branch.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>--no-ff</td>
+                <td>Always create a merge commit (no fast-forward)</td>
+            </tr>
+            <tr>
+                <td>--ff-only</td>
+                <td>Merge only if fast-forward is possible</td>
+            </tr>
+            <tr>
+                <td>--squash</td>
+                <td>Combine all changes into a single commit</td>
+            </tr>
+            <tr>
+                <td>--abort</td>
+                <td>Abort the merge when conflicts occur</td>
+            </tr>
+            <tr>
+                <td>--continue</td>
+                <td>Continue the merge after resolving conflicts</td>
+            </tr>
+            <tr>
+                <td>-m &lt;message&gt;</td>
+                <td>Specify the commit message for the merge</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>git merge feature</code> - Merge the feature branch into the current branch<br>
+            <code>git merge --no-ff feature</code> - Create a merge commit without fast-forwarding<br>
+            <code>git merge --ff-only origin/main</code> - Merge only if fast-forward is possible<br>
+            <code>git merge --squash feature</code> - Combine all changes from the feature branch into a single commit<br>
+            <code>git merge --abort</code> - Abort the merge when conflicts occur<br>
+            <code>git merge -m "Merge feature branch" feature</code> - Merge with a custom commit message
+        </div>
+
+        <!-- git rebase command -->
+        <h3>git rebase - Reconstruct Commit History</h3>
+        <p>Changes the base of a branch and reorganizes the commit history.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option/Argument</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>&lt;branch-name&gt;</td>
+                <td>Rebase the current branch onto the specified branch</td>
+            </tr>
+            <tr>
+                <td>-i, --interactive</td>
+                <td>Interactive rebase (allows editing, reordering, and combining commits)</td>
+            </tr>
+            <tr>
+                <td>--onto &lt;new-base&gt; &lt;old-base&gt; &lt;branch&gt;</td>
+                <td>Move a range of commits to a new base</td>
+            </tr>
+            <tr>
+                <td>--continue</td>
+                <td>Continue the rebase after resolving conflicts</td>
+            </tr>
+            <tr>
+                <td>--abort</td>
+                <td>Abort the rebase and return to the original state</td>
+            </tr>
+            <tr>
+                <td>--skip</td>
+                <td>Skip the current commit and continue the rebase</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>git rebase main</code> - Rebase the current branch onto the tip of the main branch<br>
+            <code>git rebase -i HEAD~3</code> - Interactively edit the last 3 commits<br>
+            <code>git rebase --onto main feature-base feature</code> - Move commits from feature-base to feature onto the tip of main branch<br>
+            <code>git rebase --continue</code> - Continue the rebase after resolving conflicts<br>
+            <code>git rebase --abort</code> - Abort the rebase and return to the original state
+        </div>
+
+        <div class="note">
+            <p><strong>Note:</strong> Rebasing rewrites commit history, which can cause problems if done on changes that have already been pushed. Avoid rebasing on shared branches and use it only on your personal branches.</p>
+        </div>
+
+        <!-- git cherry-pick command -->
+        <h3>git cherry-pick - Apply Specific Commits</h3>
+        <p>Selects and applies specific commits from other branches to the current branch.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option/Argument</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>&lt;commit-hash&gt;</td>
+                <td>Hash value of the commit to apply</td>
+            </tr>
+            <tr>
+                <td>-n, --no-commit</td>
+                <td>Stage changes only without committing</td>
+            </tr>
+            <tr>
+                <td>-e, --edit</td>
+                <td>Edit the commit message</td>
+            </tr>
+            <tr>
+                <td>-x</td>
+                <td>Add the original commit hash to the commit message</td>
+            </tr>
+            <tr>
+                <td>-s, --signoff</td>
+                <td>Add a Signed-off-by line to the commit message</td>
+            </tr>
+            <tr>
+                <td>--continue</td>
+                <td>Continue cherry-pick after resolving conflicts</td>
+            </tr>
+            <tr>
+                <td>--abort</td>
+                <td>Abort cherry-pick and return to the original state</td>
+            </tr>
+            <tr>
+                <td>--skip</td>
+                <td>Skip the current commit and continue cherry-pick</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>git cherry-pick abc123</code> - Apply commit abc123 to the current branch<br>
+            <code>git cherry-pick abc123 def456</code> - Apply multiple commits in sequence<br>
+            <code>git cherry-pick abc123..def456</code> - Apply a range of commits (excluding abc123)<br>
+            <code>git cherry-pick abc123^..def456</code> - Apply a range of commits (including abc123)<br>
+            <code>git cherry-pick -n abc123</code> - Add changes to the staging area without committing<br>
+            <code>git cherry-pick --continue</code> - Continue cherry-pick after resolving conflicts<br>
+            <code>git cherry-pick --abort</code> - Abort cherry-pick
+        </div>
+
+        <div class="note">
+            <p><strong>Note:</strong> Cherry-picking is useful when you want to include only specific commits from other branches, but it can make future merges more complex because the same changes will exist in multiple places.</p>
+        </div>
+
+        <div class="best-practices">
+            <h4>Cherry-Pick Best Practices Between Develop and Staging Environments</h4>
+            <p>The following shows best practices in script format for selectively applying specific features or fixes from the develop environment to the staging environment.</p>
+            
+            <pre class="script">
+# 1. Update to the latest state
+git checkout develop
+git pull origin develop    # Update develop environment to the latest
+
+git checkout staging
+git pull origin staging    # Update staging environment to the latest
+
+# 2. Identify commits to apply from the develop branch
+git checkout develop
+git log --oneline -n 10    # Display the last 10 commits to identify which ones to apply
+
+# 3. Note the commit IDs (example: abc123, def456)
+
+# 4. Switch to the staging branch and execute cherry-pick
+git checkout staging
+
+# For applying a single commit
+git cherry-pick abc123
+
+# For applying multiple commits (in sequence)
+git cherry-pick abc123 def456
+
+# For applying a range of commits
+git cherry-pick abc123^..def456    # Including abc123
+# or
+git cherry-pick abc123..def456     # Excluding abc123
+
+# 5. Handling conflicts
+# If conflicts occur, edit files to resolve the conflicts
+git add .                  # Stage resolved files
+git cherry-pick --continue # Continue cherry-pick
+
+# If you want to abort midway
+# git cherry-pick --abort
+
+# 6. Push to remote repository
+git push origin staging    # Push changes to the staging branch
+            </pre>
+            
+            <div class="tips">
+                <p><strong>Tips:</strong></p>
+                <ul>
+                    <li>It's important to update both environments (develop and staging) to the latest state before cherry-picking.</li>
+                    <li>Use the <code>-x</code> option to include the original commit hash in the commit message (example: <code>git cherry-pick -x abc123</code>).</li>
+                    <li>When cherry-picking multiple commits, apply them in the correct order considering their dependencies.</li>
+                    <li>Consider merging branches instead of cherry-picking when migrating entire large features.</li>
+                    <li>Keep track of which environment cherry-picked commits came from to make tracking easier.</li>
+                    <li>Regularly merge from develop to staging to minimize differences between environments.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div class="navigation-links">
+        <a href="git_command.html">Return to Main Page</a> |
+        <a href="git_command_stash.html">Previous Category: Temporary Storage and Work Restoration</a> | 
+        <a href="git_command_submodule.html">Next Category: Submodule Management</a>
+    </div>
+
+    <button id="back-to-top" title="Back to Top">↑</button>
+</div>
+
+<!-- Main application script -->
+<script src="js/git_command.js"></script>
+</body>
+</html>

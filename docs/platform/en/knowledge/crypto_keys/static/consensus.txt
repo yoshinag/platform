@@ -1,0 +1,28 @@
+graph TD
+    %% --- Consensus Mechanism Flow ---
+
+    Start("New transaction occurs")
+
+    subgraph "Proof of Work (PoW) 🔥"
+        direction LR
+        PoW1["Competition to solve computation problem<br>(Mining)"] --> PoW2{"Who solved it<br>first?"}
+        PoW2 -- "Winner" --> PoW3["Generate new block and<br>receive reward 💰"]
+        PoW2 -- "Losers" --> PoW1
+    end
+
+    subgraph "Proof of Stake (PoS) 🛡️"
+        direction LR
+        PoS1["Block creator is selected based on<br>coin holdings (Stake)"] --> PoS2["Selected validator creates<br>and proposes block ✨"]
+    end
+
+    Start --> PoW1
+    Start --> PoS1
+
+    PoW3 --> Broadcast["Share generated block<br>with entire network (broadcast)"]
+    PoS2 --> Broadcast
+
+    Broadcast --> Verify["Other participants (nodes)<br>verify the block"]
+    Verify -- "Valid block" --> AddChain["Add block to the chain"]
+    Verify -- "Invalid block" --> Reject["Reject block ❌"]
+
+    AddChain --> Consensus["Consensus complete ✅"]

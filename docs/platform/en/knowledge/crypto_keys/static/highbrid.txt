@@ -1,0 +1,34 @@
+sequenceDiagram
+    participant Alice as Alice (Client)
+    participant Bob as Bob (Server)
+
+    Note over Alice,Bob: Securely deliver a common key using public key encryption,<br>then use that common key for fast data communication
+
+    %% 1. Server's public/private key preparation (in advance)
+    Bob-->>Bob: Generate public key (Bob_PK) and private key (Bob_SK) (in advance)
+
+    %% 2. Common key generation and encryption (Alice)
+    Alice->>Bob: Connection request (request for Bob's public key, etc.)
+    Bob->>Alice: Send Bob_PK (public key)
+
+    Alice->>Alice: Generate session common key (K_session)
+    Alice->>Alice: Encrypt K_session with Bob_PK
+
+    Alice->>Bob: Send encrypted K_session (public key encryption)
+
+    %% 3. Common key decryption (Bob)
+    Bob->>Bob: Receive encrypted K_session
+    Bob->>Bob: Decrypt K_session with Bob_SK
+
+    Note over Alice,Bob: From this point on, communicate using K_session
+
+    %% 4. Data communication (common key encryption)
+    Alice->>Alice: Create data plaintext
+    Alice->>Alice: Encrypt data plaintext with K_session
+
+    Alice->>Bob: Send encrypted data (common key encryption)
+
+    Bob->>Bob: Receive encrypted data
+    Bob->>Bob: Decrypt encrypted data with K_session
+
+    Bob->>Bob: Obtain data plaintext

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Linux Archive Commands Guide</title>
+    <link rel="stylesheet" href="css/linux_command.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="linux_command_permission.html">Previous Category: Permission Management</a> |
+        <a href="linux_command.html">Back to Main Page</a> |
+        <a href="linux_command_find.html">Next Category: Search</a>
+    </div>
+
+    <h1>Linux Archive Commands Guide</h1>
+    
+    <!-- Archive Commands -->
+    <section id="archive" class="command-section">
+        <h2>Archive Commands</h2>
+        <p>Commands for compressing, decompressing, and archiving files.</p>
+        
+        <!-- tar command -->
+        <h3>tar - Archive Files</h3>
+        <p>Combines multiple files into a single archive file or extracts files from archives.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>-c</td>
+                <td>Create a new archive</td>
+            </tr>
+            <tr>
+                <td>-x</td>
+                <td>Extract files from archive</td>
+            </tr>
+            <tr>
+                <td>-t</td>
+                <td>List contents of archive</td>
+            </tr>
+            <tr>
+                <td>-f [file]</td>
+                <td>Specify archive filename</td>
+            </tr>
+            <tr>
+                <td>-v</td>
+                <td>Verbose mode (show processed files)</td>
+            </tr>
+            <tr>
+                <td>-z</td>
+                <td>Compress/decompress with gzip (.tar.gz, .tgz)</td>
+            </tr>
+            <tr>
+                <td>-j</td>
+                <td>Compress/decompress with bzip2 (.tar.bz2)</td>
+            </tr>
+            <tr>
+                <td>-J</td>
+                <td>Compress/decompress with xz (.tar.xz)</td>
+            </tr>
+            <tr>
+                <td>-C [dir]</td>
+                <td>Extract to specified directory</td>
+            </tr>
+            <tr>
+                <td>--exclude=[pattern]</td>
+                <td>Exclude files matching pattern</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>tar -cvf archive.tar file1 file2 dir1</code> - Archive files and directories<br>
+            <code>tar -xvf archive.tar</code> - Extract archive<br>
+            <code>tar -tvf archive.tar</code> - List contents of archive<br>
+            <code>tar -czvf archive.tar.gz directory/</code> - Archive and compress directory with gzip<br>
+            <code>tar -xzvf archive.tar.gz</code> - Extract gzip-compressed archive<br>
+            <code>tar -xzvf archive.tar.gz -C /path/to/extract</code> - Extract to specified directory<br>
+            <code>tar -czvf backup-$(date +%Y%m%d).tar.gz /home/user/data</code> - Create backup file with date in filename<br>
+            <code>tar --exclude='*.log' --exclude='tmp/' -czvf archive.tar.gz directory/</code> - Archive excluding specific files and directories<br>
+            <code>tar -czvf - directory/ | ssh user@remote "cat > archive.tar.gz"</code> - Archive and transfer directly to remote server<br>
+            <code>tar -xvf archive.tar --wildcards '*.txt'</code> - Extract only files matching pattern from archive
+        </div>
+
+        <!-- gzip/gunzip command -->
+        <h3>gzip/gunzip - gzip Compression/Decompression</h3>
+        <p>Compresses or decompresses files using the gzip format.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Command/Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>gzip [file]</td>
+                <td>Compress file (original file is replaced with .gz file)</td>
+            </tr>
+            <tr>
+                <td>gzip -k [file]</td>
+                <td>Compress file while keeping original</td>
+            </tr>
+            <tr>
+                <td>gzip -d [file.gz]</td>
+                <td>Decompress file (equivalent to gunzip)</td>
+            </tr>
+            <tr>
+                <td>gzip -l [file.gz]</td>
+                <td>Display information about compressed file</td>
+            </tr>
+            <tr>
+                <td>gzip -[1-9]</td>
+                <td>Specify compression level (1 is fastest with less compression, 9 is slowest with best compression)</td>
+            </tr>
+            <tr>
+                <td>gunzip [file.gz]</td>
+                <td>Decompress gzip file</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>gzip file.txt</code> - Compress file (creates file.txt.gz and removes original)<br>
+            <code>gzip -k file.txt</code> - Compress file while keeping original<br>
+            <code>gzip -9 file.txt</code> - Compress file with maximum compression level<br>
+            <code>gunzip file.txt.gz</code> - Decompress file<br>
+            <code>gzip -d file.txt.gz</code> - Decompress file (equivalent to gunzip)<br>
+            <code>find . -type f -name "*.log" -exec gzip {} \;</code> - Compress all log files<br>
+            <code>gzip -c file.txt > file.txt.gz</code> - Output compressed result to stdout and redirect to save (keeps original)<br>
+            <code>gzip -r directory/</code> - Recursively compress all files in directory<br>
+            <code>gzip -tv file.txt.gz</code> - Test integrity of compressed file
+        </div>
+
+        <!-- bzip2/bunzip2 command -->
+        <h3>bzip2/bunzip2 - bzip2 Compression/Decompression</h3>
+        <p>Compresses or decompresses files using the bzip2 format. Higher compression ratio than gzip but slower.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Command/Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>bzip2 [file]</td>
+                <td>Compress file (original file is replaced with .bz2 file)</td>
+            </tr>
+            <tr>
+                <td>bzip2 -k [file]</td>
+                <td>Compress file while keeping original</td>
+            </tr>
+            <tr>
+                <td>bzip2 -d [file.bz2]</td>
+                <td>Decompress file (equivalent to bunzip2)</td>
+            </tr>
+            <tr>
+                <td>bzip2 -[1-9]</td>
+                <td>Specify compression level (1 is fastest with less compression, 9 is slowest with best compression)</td>
+            </tr>
+            <tr>
+                <td>bunzip2 [file.bz2]</td>
+                <td>Decompress bzip2 file</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>bzip2 file.txt</code> - Compress file (creates file.txt.bz2 and removes original)<br>
+            <code>bzip2 -k file.txt</code> - Compress file while keeping original<br>
+            <code>bunzip2 file.txt.bz2</code> - Decompress file<br>
+            <code>bzip2 -d file.txt.bz2</code> - Decompress file (equivalent to bunzip2)<br>
+            <code>bzip2 -v file.txt</code> - Show compression details<br>
+            <code>bzip2 -c file.txt > file.txt.bz2</code> - Output compressed result to stdout and redirect to save (keeps original)<br>
+            <code>find . -name "*.dat" -exec bzip2 -9 {} \;</code> - Compress all .dat files with maximum compression<br>
+            <code>tar -cf - directory/ | bzip2 > directory.tar.bz2</code> - Combine tar and bzip2 to archive directory
+        </div>
+
+        <!-- xz command -->
+        <h3>xz - xz Compression/Decompression</h3>
+        <p>Compresses or decompresses files using the xz format. Higher compression ratio than bzip2 but slower.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>-z</td>
+                <td>Compress (default)</td>
+            </tr>
+            <tr>
+                <td>-d</td>
+                <td>Decompress</td>
+            </tr>
+            <tr>
+                <td>-k</td>
+                <td>Keep original files</td>
+            </tr>
+            <tr>
+                <td>-l</td>
+                <td>Display information about compressed file</td>
+            </tr>
+            <tr>
+                <td>-[0-9]</td>
+                <td>Specify compression level (0 is fastest with no compression, 9 is slowest with best compression)</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>xz file.txt</code> - Compress file (creates file.txt.xz and removes original)<br>
+            <code>xz -k file.txt</code> - Compress file while keeping original<br>
+            <code>xz -d file.txt.xz</code> - Decompress file<br>
+            <code>xz -l file.txt.xz</code> - Display information about compressed file<br>
+            <code>xz -9 -e file.txt</code> - Compress with maximum compression level and additional compression flags<br>
+            <code>xz -T0 large_file.dat</code> - Compress using all available CPU threads (parallel processing)<br>
+            <code>find . -name "*.log" -size +10M -exec xz {} \;</code> - Compress all log files larger than 10MB<br>
+            <code>tar -cf - directory/ | xz -9 > directory.tar.xz</code> - Combine tar and xz with high compression to archive directory
+        </div>
+
+        <!-- zip/unzip command -->
+        <h3>zip/unzip - ZIP Compression/Decompression</h3>
+        <p>Compresses or decompresses files using the ZIP format. High compatibility with Windows/macOS.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Command/Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>zip [archive.zip] [files]</td>
+                <td>Compress files into ZIP format</td>
+            </tr>
+            <tr>
+                <td>zip -r [archive.zip] [directory]</td>
+                <td>Recursively compress directory</td>
+            </tr>
+            <tr>
+                <td>zip -u [archive.zip] [files]</td>
+                <td>Update existing ZIP archive</td>
+            </tr>
+            <tr>
+                <td>zip -e [archive.zip] [files]</td>
+                <td>Compress with password protection</td>
+            </tr>
+            <tr>
+                <td>unzip [archive.zip]</td>
+                <td>Extract ZIP archive</td>
+            </tr>
+            <tr>
+                <td>unzip -l [archive.zip]</td>
+                <td>List contents of ZIP archive</td>
+            </tr>
+            <tr>
+                <td>unzip -d [directory] [archive.zip]</td>
+                <td>Extract ZIP archive to specified directory</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>zip archive.zip file1.txt file2.txt</code> - Compress multiple files<br>
+            <code>zip -r archive.zip directory/</code> - Recursively compress directory<br>
+            <code>unzip archive.zip</code> - Extract ZIP archive<br>
+            <code>unzip -l archive.zip</code> - List contents of ZIP archive<br>
+            <code>unzip archive.zip -d /path/to/extract</code> - Extract to specified directory<br>
+            <code>zip -e secure.zip confidential.txt</code> - Compress file with password protection<br>
+            <code>zip -9 -r backup.zip documents/ -x "*.tmp" "*/temp/*"</code> - Compress with maximum compression level excluding specific files<br>
+            <code>find . -name "*.jpg" -mtime -7 | zip -@ recent_photos.zip</code> - Compress image files modified in the last 7 days<br>
+            <code>unzip -j archive.zip "*.txt" -d /path/to/extract</code> - Extract only text files to specified directory ignoring paths
+        </div>
+
+        <!-- 7z command -->
+        <h3>7z - 7-Zip Compression/Decompression</h3>
+        <p>7-Zip is a high-compression archive format that can handle various archive formats.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Command/Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>7z a [archive.7z] [files]</td>
+                <td>Add files to archive (compress)</td>
+            </tr>
+            <tr>
+                <td>7z x [archive.7z]</td>
+                <td>Extract archive with full paths</td>
+            </tr>
+            <tr>
+                <td>7z e [archive.7z]</td>
+                <td>Extract archive ignoring paths</td>
+            </tr>
+            <tr>
+                <td>7z l [archive.7z]</td>
+                <td>List contents of archive</td>
+            </tr>
+            <tr>
+                <td>7z t [archive.7z]</td>
+                <td>Test integrity of archive</td>
+            </tr>
+            <tr>
+                <td>7z u [archive.7z] [files]</td>
+                <td>Update archive</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>7z a archive.7z file1.txt file2.txt</code> - Compress files in 7z format<br>
+            <code>7z a -r archive.7z directory/</code> - Recursively compress directory<br>
+            <code>7z x archive.7z</code> - Extract 7z archive<br>
+            <code>7z l archive.7z</code> - List contents of 7z archive<br>
+            <code>7z x archive.7z -o/path/to/extract</code> - Extract to specified directory<br>
+            <code>7z a -p archive.7z confidential_files/</code> - Create password-protected archive<br>
+            <code>7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=32m -ms=on archive.7z directory/</code> - Create archive with advanced compression settings<br>
+            <code>7z x archive.7z -r "*.txt" -o/path/to/extract</code> - Extract only text files<br>
+            <code>find . -type f -size +10M | 7z a -si large_files.7z</code> - Compress files larger than 10MB from standard input
+        </div>
+
+        <!-- zcat/zless command -->
+        <h3>zcat/zless - Display Contents of Compressed Files</h3>
+        <p>Display contents of compressed files without decompressing them.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Command</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>zcat [file.gz]</td>
+                <td>Display contents of gzip compressed file</td>
+            </tr>
+            <tr>
+                <td>bzcat [file.bz2]</td>
+                <td>Display contents of bzip2 compressed file</td>
+            </tr>
+            <tr>
+                <td>xzcat [file.xz]</td>
+                <td>Display contents of xz compressed file</td>
+            </tr>
+            <tr>
+                <td>zless [file.gz]</td>
+                <td>Display contents of gzip compressed file with pager</td>
+            </tr>
+            <tr>
+                <td>bzless [file.bz2]</td>
+                <td>Display contents of bzip2 compressed file with pager</td>
+            </tr>
+            <tr>
+                <td>xzless [file.xz]</td>
+                <td>Display contents of xz compressed file with pager</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>zcat file.txt.gz</code> - Display contents of gzip compressed file<br>
+            <code>bzcat file.txt.bz2</code> - Display contents of bzip2 compressed file<br>
+            <code>zcat file.txt.gz | grep "pattern"</code> - Search for text in compressed file<br>
+            <code>zless large_file.txt.gz</code> - View large compressed file with pager<br>
+            <code>zcat file1.gz file2.gz > combined.txt</code> - Combine contents of multiple compressed files<br>
+            <code>zcat log.gz | awk '/ERROR/ {print $0}'</code> - Extract errors from compressed log file<br>
+            <code>find . -name "*.log.gz" -exec zcat {} \; | grep "CRITICAL"</code> - Search for critical messages in multiple compressed log files<br>
+            <code>zcat -f file.txt file.txt.gz</code> - Process both compressed and uncompressed files (with -f option)
+        </div>
+    </section>
+
+    <div class="navigation-links">
+        <a href="linux_command_permission.html">Previous Category: Permission Management</a> | 
+        <a href="linux_command.html">Back to Main Page</a> | 
+        <a href="linux_command_find.html">Next Category: Search</a>
+    </div>
+
+    <button id="back-to-top" title="Back to Top">↑</button>
+</div>
+
+<!-- Main application script -->
+<script src="js/linux_command.js"></script>
+</body>
+</html>

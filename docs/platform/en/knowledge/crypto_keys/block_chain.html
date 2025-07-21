@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Blockchain Technology: Cryptocurrency Wallet Management</title>
+    <link rel="stylesheet" href="css/crypto_keys.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<script src="../../../js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="../../../../index.html">Return to Main Page</a>
+        <a href="crypto_keys.html">Back to Explanation of Encryption Keys</a>
+    </div>
+    <h1>Blockchain Technology: Cryptocurrency Wallet Management</h1>
+
+    <section id="table-of-contents" class="crypto-section">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#blockchain-basics">Blockchain Basics</a>
+                <ul>
+                    <li><a href="#what-is-blockchain">What is Blockchain?</a></li>
+                    <li><a href="#blockchain-structure">Structure of a Blockchain</a></li>
+                    <li><a href="#consensus-mechanisms">Consensus Mechanisms</a></li>
+                    <li><a href="#blockchain-broadcasting">Broadcasting</a></li>
+                    <li><a href="#blockchain-validation">Validation</a></li>
+                </ul>
+            </li>
+            <li><a href="#cryptocurrency">Cryptocurrency</a>
+                <ul>
+                    <li><a href="#crypto-intro">What is Cryptocurrency?</a></li>
+                    <li><a href="#crypto-types">Major Types of Cryptocurrencies</a></li>
+                </ul>
+            </li>
+            <li><a href="#crypto-wallets">Cryptocurrency Wallets</a>
+                <ul>
+                    <li><a href="#wallet-intro">What is a Wallet?</a></li>
+                    <li><a href="#wallet-types">Types of Wallets</a></li>
+                    <li><a href="#wallet-security">Wallet Security</a></li>
+                </ul>
+            </li>
+            <li><a href="#keys-management">Key Management</a>
+                <ul>
+                    <li><a href="#private-public-keys">Private and Public Keys</a></li>
+                    <li><a href="#key-storage">Key Storage Methods</a></li>
+                    <li><a href="#key-recovery">Key Recovery and Backup</a></li>
+                </ul>
+            </li>
+            <li><a href="#best-practices">Wallet Management Best Practices</a></li>
+            <li><a href="#common-issues">Common Issues and Solutions</a></li>
+        </ul>
+    </section>
+
+    <section id="introduction" class="crypto-section">
+        <h2>Introduction</h2>
+        <p>
+            Blockchain technology and cryptocurrencies are rapidly developing as a new foundation for the digital economy.
+            In particular, wallets, which are responsible for the secure storage and management of cryptocurrencies, play a crucial role in this new financial system.
+        </p>
+        <p>
+            This page provides a detailed explanation from the basics of blockchain technology to the types of cryptocurrency wallets and secure management methods.
+            You can acquire the knowledge to securely store and transact with cryptocurrencies.
+        </p>
+    </section>
+
+    <section id="blockchain-basics" class="crypto-section">
+        <h2>Blockchain Basics</h2>
+
+        <section id="what-is-blockchain" class="crypto-subsection">
+            <h3>What is Blockchain?</h3>
+            <p>
+                A blockchain is a distributed ledger technology that stores data in units called "blocks" and links them together using cryptographic techniques.
+                Since each block contains the hash value of the previous block, it is extremely difficult to alter data once it has been recorded.
+            </p>
+            <p>
+                The main feature of this technology is its "decentralized" mechanism, where all participants share and verify data without the need for a central administrator.
+                This creates a highly transparent and fault-tolerant system.
+            </p>
+        </section>
+
+        <section id="blockchain-structure" class="crypto-subsection">
+            <h3>Structure of a Blockchain</h3>
+            <p>
+                Each block in a blockchain is mainly composed of the following elements:
+            </p>
+
+            <h4>1. Block Header</h4>
+            <p>
+                The block header contains important metadata for identifying and verifying the block. The main components are as follows:
+            </p>
+            <ul>
+                <li><strong>Previous Block Hash</strong>: By referencing the hash value of the immediately preceding block, it ensures the continuity of the blockchain. This means that if any block in the chain is altered, all subsequent blocks become invalid.</li>
+                <li><strong>Timestamp</strong>: Records the time the block was created. This ensures the chronological order of transactions and prevents issues like "double-spending".</li>
+                <li><strong>Merkle Root</strong>: A single hash value generated by combining the hash values of all transactions in the block in a binary tree structure. This allows for the efficient verification of large amounts of transaction data.</li>
+                <li><strong>Nonce</strong>: A special value that miners find during the "Proof of Work" calculation process. By changing this value, the hash of the entire block can be made to meet a specific condition (difficulty).</li>
+                <li><strong>Difficulty Target</strong>: Defines the condition that the block's hash value must meet. This adjusts the difficulty of block generation, ensuring blocks are created at a constant interval.</li>
+                <li><strong>Version</strong>: Indicates the version of the blockchain protocol being used. This allows for the management of protocol updates and forks.</li>
+            </ul>
+
+            <h4>2. Transaction Data</h4>
+            <p>
+                This is the body of the block and contains all the transaction information recorded in that block:
+            </p>
+            <ul>
+                <li><strong>Transaction Count</strong>: The total number of transactions included in the block. Due to block size limits, there is a maximum number of transactions that can be included in a single block.</li>
+                <li><strong>Individual Transactions</strong>: Each transaction includes the following information:
+                    <ul>
+                        <li><strong>Inputs</strong>: The source of the funds being used (outputs from previous transactions).</li>
+                        <li><strong>Outputs</strong>: The destination address and amount of the funds being sent.</li>
+                        <li><strong>Digital Signature</strong>: A signature for the sender to prove ownership of the funds.</li>
+                        <li><strong>Transaction ID</strong>: A hash value that uniquely identifies the transaction.</li>
+                    </ul>
+                </li>
+                <li><strong>Coinbase Transaction</strong>: The first transaction in each block, which records the reward to the miner (newly issued coins and transaction fees). This is a special transaction that has no inputs.</li>
+            </ul>
+
+            <h4>3. Hash Value</h4>
+            <p>
+                A unique identifier generated from the entire block's data, which plays a central role in the security of the blockchain:
+            </p>
+            <ul>
+                <li><strong>Generation Method</strong>: Generated by passing all the information in the block header (previous block's hash, Merkle root, timestamp, nonce, etc.) through a cryptographic hash function (like SHA-256).</li>
+                <li><strong>Properties</strong>:
+                    <ul>
+                        <li><strong>Uniqueness</strong>: If the input data is changed even slightly, a completely different hash value is generated.</li>
+                        <li><strong>Irreversibility</strong>: It is computationally impossible to reconstruct the original data from the hash value.</li>
+                        <li><strong>Unpredictability</strong>: You cannot predict the hash value without knowing the input data.</li>
+                    </ul>
+                </li>
+                <li><strong>Role</strong>:
+                    <ul>
+                        <li>Ensures the integrity of the block (prevents data tampering).</li>
+                        <li>Ensures the continuity of the blockchain (each block references the previous one).</li>
+                        <li>Forms the basis of the mining process (a competition to find a hash value that meets certain conditions).</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>
+                The blocks are linked in a chain, with each block referencing the previous one, thus ensuring the continuity and integrity of the data.
+            </p>
+            <div class="diagram-container">
+                <img src="image/block_chain.png" alt="Basic Structure of a Blockchain" class="crypto-diagram">
+            </div>
+        </section>
+
+        <section id="consensus-mechanisms" class="crypto-subsection">
+            <h3>Consensus Mechanisms</h3>
+            <p>
+                In a blockchain network, participants must reach a consensus on the addition of new blocks.
+                This is an essential process for all participants in a decentralized system to share the same state of the blockchain.
+            </p>
+
+            <h4>Basic Flow of Consensus</h4>
+            <p>
+                Consensus on a blockchain follows a basic flow like this:
+            </p>
+            <ol>
+                <li><strong>A new transaction occurs</strong>: A user creates a new transaction and sends it to the network.</li>
+                <li><strong>Processing by the consensus mechanism</strong>: It is processed based on the network's consensus mechanism (e.g., PoW or PoS).</li>
+                <li><strong>Block generation</strong>: A selected node (a miner or validator) generates a new block.</li>
+                <li><strong>Broadcasting</strong>: The generated block is shared across the entire network.</li>
+                <li><strong>Validation</strong>: Other nodes validate the block.</li>
+                <li><strong>Addition to the chain</strong>: Legitimate blocks are added to the blockchain, and invalid blocks are rejected.</li>
+                <li><strong>Consensus is reached</strong>: The entire network agrees on the new state.</li>
+            </ol>
+
+            <div class="diagram-container">
+                <img src="image/consensus.png" alt="Blockchain Consensus Mechanism" class="crypto-diagram">
+            </div>
+
+            <h4>Major Consensus Mechanisms</h4>
+            <p>
+                The main consensus mechanisms used in blockchains include the following:
+            </p>
+
+            <div class="two-column-content">
+                <div class="column">
+                    <h4>Proof of Work (PoW)</h4>
+                    <p>
+                        This is the oldest and most widely used consensus mechanism, adopted by Bitcoin.
+                    </p>
+                    <ul>
+                        <li><strong>Mechanism</strong>: Participants (miners) use computational resources to perform a task called "mining" to find a hash value that meets a specific condition.</li>
+                        <li><strong>Process</strong>:
+                            <ol>
+                                <li>Miners bundle unconfirmed transactions into a block.</li>
+                                <li>They repeatedly change the "nonce" in the block header and calculate the hash of the entire block until it meets a specific condition (difficulty).</li>
+                                <li>The first miner to find a hash that meets the condition earns the right to generate a new block and receives a reward (newly issued coins and transaction fees).</li>
+                                <li>Other miners lose the competition and move on to mining the next block.</li>
+                            </ol>
+                        </li>
+                        <li><strong>Features</strong>:
+                            <ul>
+                                <li>High security: To alter the blockchain, an attacker would need to control more than 51% of the network's total computing power.</li>
+                                <li>High energy consumption: It consumes a large amount of electricity, raising environmental concerns.</li>
+                                <li>Scalability issues: Processing speed is limited, and there is a cap on transaction throughput.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Examples of Adoption</strong>: Bitcoin (BTC), Litecoin (LTC), Monero (XMR), etc.</li>
+                    </ul>
+                </div>
+
+                <div class="column">
+                    <h4>Proof of Stake (PoS)</h4>
+                    <p>
+                        A more environmentally friendly consensus mechanism developed to solve the high energy consumption problem of PoW.
+                    </p>
+                    <ul>
+                        <li><strong>Mechanism</strong>: Participants (validators) increase their chances of earning the right to generate a block by staking (depositing as collateral) their cryptocurrency holdings.</li>
+                        <li><strong>Process</strong>:
+                            <ol>
+                                <li>To become a validator, you must stake a certain amount of cryptocurrency.</li>
+                                <li>Block generators are selected based on the amount of coins they hold (their Stake).</li>
+                                <li>The selected validator generates and proposes a block.</li>
+                            </ol>
+                        </li>
+                        <li><strong>Features</strong>:
+                            <ul>
+                                <li>Energy efficiency: Power consumption is significantly lower compared to PoW.</li>
+                                <li>Economic security: An attacker would need to own a majority of the currency, and if an attack were to succeed, the value of their own assets would also fall, making it economically irrational.</li>
+                                <li>Higher scalability: Allows for faster transaction processing than PoW.</li>
+                                <li>Risk of centralization: "Whales" (large holders) who hold a large amount of currency could have significant influence.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Examples of Adoption</strong>: Ethereum 2.0 (ETH), Cardano (ADA), Solana (SOL), Polkadot (DOT), etc.</li>
+                    </ul>
+                </div>
+            </div>
+            <h4>Comparison of PoW and PoS</h4>
+            <p>
+                Here is a comparison table of the features of Proof of Work (PoW) and Proof of Stake (PoS), the main consensus mechanisms of blockchain:
+            </p>
+
+            <div class="table-container">
+                <table class="comparison-table">
+                    <thead>
+                    <tr>
+                        <th>Comparison Item</th>
+                        <th>Proof of Work (PoW)</th>
+                        <th>Proof of Stake (PoS)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><strong>Basic Principle</strong></td>
+                        <td>Competition based on computational power</td>
+                        <td>Selection based on the amount of currency held</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Participants</strong></td>
+                        <td>Miners</td>
+                        <td>Validators</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Required Resources</strong></td>
+                        <td>High-performance computers, dedicated ASICs</td>
+                        <td>Cryptocurrency holdings (stake)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Energy Consumption</strong></td>
+                        <td>Extremely high (comparable to a nation's power consumption)</td>
+                        <td>Low (about 0.01% of PoW)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Security Model</strong></td>
+                        <td>A 51% attack requires a majority of the computational power</td>
+                        <td>An attack requires owning a majority of the currency (economically irrational)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Scalability</strong></td>
+                        <td>Low (around tens of transactions per second)</td>
+                        <td>Relatively high (thousands of transactions per second possible)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Decentralization</strong></td>
+                        <td>Tendency towards concentration in mining pools</td>
+                        <td>Risk of concentration among large holders (whales)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Barrier to Entry</strong></td>
+                        <td>High (requires expensive equipment investment)</td>
+                        <td>Medium (requires holding a certain amount of currency)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Examples of Adoption</strong></td>
+                        <td>Bitcoin (BTC), Litecoin (LTC), Monero (XMR)</td>
+                        <td>Ethereum 2.0 (ETH), Cardano (ADA), Solana (SOL)</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Other Consensus Mechanisms</h4>
+            <p>
+                In addition to the above, various consensus mechanisms tailored to different characteristics and uses have been developed:
+            </p>
+            <ul class="multi-column-list-3">
+                <li><strong>Delegated Proof of Stake (DPoS)</strong>: Token holders vote to elect a small number of "delegates" who are responsible for generating and validating blocks.</li>
+                <li><strong>Practical Byzantine Fault Tolerance (PBFT)</strong>: Pre-selected validating nodes reach consensus through message exchange and voting.</li>
+                <li><strong>Proof of Authority (PoA)</strong>: A system where specific trusted entities (authorities) generate blocks, used in enterprise private blockchains.</li>
+                <li><strong>Proof of Capacity (PoC)</strong>: A system where the right to generate blocks is earned using hard disk free space.</li>
+                <li><strong>Proof of Elapsed Time (PoET)</strong>: Each node is assigned a random waiting time, and the node whose waiting time ends first generates the block.</li>
+                <li><strong>Proof of History (PoH)</strong>: A method that cryptographically proves the passage of time and ensures the order of transactions (adopted by Solana).</li>
+            </ul>
+
+            <p>
+                These consensus mechanisms each attempt to solve the security, scalability, and decentralization trilemma (the difficulty of optimizing all three simultaneously) with different approaches.
+                Blockchain projects choose the optimal consensus mechanism according to their purpose and requirements.
+            </p>
+
+        </section>
+
+        <section class="crypto-subsection">
+            <h3>Broadcasting and Validation</h3>
+            <p>
+                An important part of the consensus process is the broadcasting and validation of generated blocks. These are sequential processes that are essential for ensuring the integrity and reliability of the blockchain:
+            </p>
+            <ul>
+                <li><strong>Broadcasting</strong>:
+                    <ul>
+                        <li>The node that generates a new block (a miner or validator) shares (broadcasts) that block to the entire network.</li>
+                        <li>Broadcasting is done through mechanisms like the gossip protocol, where information propagates from node to node in a chain reaction.</li>
+                    </ul>
+                </li>
+                <li><strong>Validation</strong>:
+                    <ul>
+                        <li>Each node independently validates the received block.</li>
+                        <li>Validation includes checking the validity of transactions, the structure of the block, and its consistency with the previous block.</li>
+                        <li>If the block is deemed legitimate, it is added to their copy of the blockchain.</li>
+                        <li>If it is deemed invalid, it is rejected.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <p>
+                Below, we will explain the processes of broadcasting and validation in detail. First, let's look at the details of broadcasting in a blockchain network.
+            </p>
+        </section>
+
+        <section id="blockchain-broadcasting" class="crypto-subsection">
+            <h3>Details on Blockchain Broadcasting</h3>
+            <p>
+                Broadcasting is the process of propagating information to all participants (nodes) within a blockchain network.
+                In a decentralized system like a blockchain, this broadcasting function plays an essential role in ensuring that all nodes share the same information and maintain a consistent state across the entire network.
+            </p>
+
+            <h4>Types and Purposes of Broadcasting</h4>
+            <p>
+                In a blockchain network, the following information is primarily broadcasted:
+            </p>
+            <ul class="multi-column-list">
+                <li><strong>Transaction Broadcasting</strong>: When a user creates a new transaction, it is first sent to the connected node and then broadcasted from there to other nodes. This allows unconfirmed transactions to propagate throughout the network, ready to be processed by miners or validators.</li>
+                <li><strong>Block Broadcasting</strong>: When a miner or validator generates a new block, that block is broadcasted to the entire network. Each node receives this block, validates it, and then adds it to its copy of the blockchain.</li>
+                <li><strong>Consensus Information Broadcasting</strong>: Depending on the consensus mechanism, information such as votes or approvals may also be broadcasted. For example, in PBFT, "prepare" or "commit" messages are broadcasted among nodes.</li>
+            </ul>
+
+            <h4>How Broadcasting Works</h4>
+            <p>
+                Broadcasting in a blockchain network is mainly done through the following process:
+            </p>
+            <ol>
+                <li><strong>Initial Propagation</strong>: Information (transactions or blocks) is first sent from the node that generated it to its directly connected "neighboring nodes".</li>
+                <li><strong>Flooding</strong>: When each node receives new information, it forwards it to all neighboring nodes to which it has not yet sent it. This causes the information to ripple through the entire network.</li>
+                <li><strong>Duplicate Prevention</strong>: Each node records the ID of the information it has already received to avoid processing it again.</li>
+                <li><strong>Validation</strong>: Nodes validate the received information, and if it is valid, they process it and forward it to other nodes. Invalid information is rejected and not forwarded.</li>
+            </ol>
+
+            <h4>Broadcasting Protocols</h4>
+            <p>
+                Various protocols are used in blockchain networks to achieve efficient broadcasting:
+            </p>
+            <ul class="multi-column-list">
+                <li><strong>Gossip Protocol</strong>: A method where a node tells a few randomly chosen neighboring nodes, and the information spreads in a chain reaction. It allows for efficient and robust broadcasting, but propagation can take time.</li>
+                <li><strong>Direct Broadcast</strong>: A method where a central node sends information directly to all participating nodes. It may be used in small-scale private blockchains.</li>
+                <li><strong>Hierarchical Broadcast</strong>: A method where nodes form a hierarchical structure, and information propagates from upper-level nodes to lower-level nodes. This helps to make large networks more efficient.</li>
+            </ul>
+
+            <h4>Challenges and Solutions for Broadcasting</h4>
+            <p>
+                Broadcasting in a blockchain network has the following challenges:
+            </p>
+            <ul class="multi-column-list">
+                <li><strong>Network Latency</strong>: Information propagation between geographically dispersed nodes takes time, which can cause "forks" (temporary splits).
+                    <ul>
+                        <li><strong>Solution</strong>: The use of relay networks (dedicated networks that provide high-speed connections between nodes) and the optimal placement of geographically dispersed nodes are being implemented.</li>
+                    </ul>
+                </li>
+                <li><strong>Bandwidth Limitations</strong>: Transmitting large amounts of transaction or block data requires significant bandwidth.
+                    <ul>
+                        <li><strong>Solution</strong>: Technologies like compact blocks (sending only the block header and unknown transactions) and mini-blocks (splitting a block into smaller parts for sending) have been developed.</li>
+                    </ul>
+                </li>
+                <li><strong>Scalability</strong>: As the number of nodes increases, the efficiency of broadcasting may decrease.
+                    <ul>
+                        <li><strong>Solution</strong>: Technologies like sharding (dividing the network into multiple parts) and layer 2 solutions (processing off the main chain) are being introduced.</li>
+                    </ul>
+                </li>
+                <li><strong>Security Risks</strong>: Malicious nodes may broadcast fraudulent information.
+                    <ul>
+                        <li><strong>Solution</strong>: Measures such as the application of strict validation rules and reputation-based node selection are being taken.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>Optimization of Broadcasting</h4>
+            <p>
+                To improve blockchain performance, the optimization of the broadcasting process is constantly being researched:
+            </p>
+            <ul>
+                <li><strong>Faster Block Propagation</strong>: Technologies like Bitcoin's "Compact Block Relay" (BIP 152) and Ethereum's "Fast Block Propagation" have significantly improved the speed of block propagation.</li>
+                <li><strong>Memory Pool Synchronization</strong>: A mechanism for efficiently synchronizing the pool of unconfirmed transactions between nodes reduces the transfer of duplicate data.</li>
+                <li><strong>Network Topology Optimization</strong>: Optimizing the connection structure between nodes improves the efficiency of information propagation.</li>
+            </ul>
+
+            <p>
+                An efficient broadcasting mechanism plays an important role in maintaining the balance of performance, security, and decentralization of a blockchain network.
+                As technology evolves, faster and more efficient broadcasting methods continue to be developed.
+            </p>
+
+            <p>
+                The next step after broadcasting is the validation process for the received blocks or transactions. Below, we will explain this validation process in detail.
+            </p>
+        </section>
+
+        <section id="blockchain-validation" class="crypto-subsection">
+            <h3>Details on Blockchain Validation</h3>
+            <p>
+                "Validation" in a blockchain is a core process for maintaining the reliability and integrity of the network.
+                In a decentralized system, there is no central authority, so each participant (node) performs validation independently, which ensures the reliability of the entire system.
+            </p>
+
+            <h4>Significance and Role of Validation</h4>
+            <p>
+                Validation in a blockchain plays the following important roles:
+            </p>
+            <ul class="multi-column-list">
+                <li><strong>Prevention of Double-Spending</strong>: Prevents the same coin from being used multiple times.</li>
+                <li><strong>Elimination of Fraudulent Transactions</strong>: Prevents transactions that violate the rules from being recorded on the blockchain.</li>
+                <li><strong>Ensuring Data Integrity</strong>: Maintains the consistency and accuracy of the entire blockchain.</li>
+                <li><strong>Formation of Decentralized Consensus</strong>: Provides the basis for all participants to agree on the same state of the ledger without a central authority.</li>
+                <li><strong>Enhancement of Security</strong>: Protects the network from malicious attacks and tampering.</li>
+            </ul>
+
+            <h4>Types and Levels of Validation</h4>
+            <p>
+                Validation is performed at multiple levels in a blockchain:
+            </p>
+            <ol>
+                <li><strong>Transaction-Level Validation</strong>: Confirms the legitimacy of individual transactions.</li>
+                <li><strong>Block-Level Validation</strong>: Validates the overall structure and content of a block.</li>
+                <li><strong>Chain-Level Validation</strong>: Confirms the integrity of the entire blockchain.</li>
+            </ol>
+
+            <h4>Transaction Validation Process</h4>
+            <p>
+                The following items are checked during transaction validation:
+            </p>
+            <ul class="multi-column-list">
+                <li><strong>Syntax and Format Validation</strong>:
+                    <ul>
+                        <li>Whether the transaction's data structure follows the correct format.</li>
+                        <li>Whether all required fields (input, output, signature, etc.) are present.</li>
+                        <li>Whether the transaction size is within the allowable range.</li>
+                    </ul>
+                </li>
+                <li><strong>Digital Signature Validation</strong>:
+                    <ul>
+                        <li>Using the sender's public key to verify that the transaction's signature is valid.</li>
+                        <li>Verifying that the signature was truly created by the owner of the corresponding private key.</li>
+                        <li>Checking that the transaction data has not been tampered with after signing.</li>
+                    </ul>
+                </li>
+                <li><strong>Double-Spending Check</strong>:
+                    <ul>
+                        <li>Checking that the input being used (UTXO) has not already been used in another transaction.</li>
+                        <li>Checking both the memory pool (pool of unconfirmed transactions) and the existing blockchain.</li>
+                    </ul>
+                </li>
+                <li><strong>Balance and Fee Validation</strong>:
+                    <ul>
+                        <li>Whether the total amount of the inputs is greater than or equal to the total amount of the outputs (no insufficient balance).</li>
+                        <li>Whether the transaction fee (total inputs - total outputs) meets the minimum requirement.</li>
+                    </ul>
+                </li>
+                <li><strong>Script Execution and Validation</strong>:
+                    <ul>
+                        <li>In systems like Bitcoin, executing the script included in the transaction to confirm that the conditions are met.</li>
+                        <li>In smart contract platforms, validating the execution result of the contract code.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>Block Validation Process</h4>
+            <p>
+                The following items are checked during the validation of an entire block:
+            </p>
+            <ul class="multi-column-list">
+                <li><strong>Block Header Validation</strong>:
+                    <ul>
+                        <li>Whether the block's hash value meets the current difficulty requirement (in the case of PoW).</li>
+                        <li>Whether the timestamp is within a reasonable range (not in the future, not older than the previous block).</li>
+                        <li>Whether the block size is within the allowable range.</li>
+                        <li>Whether the version number is compatible with the current protocol.</li>
+                    </ul>
+                </li>
+                <li><strong>Continuity Check with the Previous Block</strong>:
+                    <ul>
+                        <li>Whether the "previous block's hash" included in the block header points to an existing block.</li>
+                        <li>Whether that block is part of the current longest chain (main chain).</li>
+                    </ul>
+                </li>
+                <li><strong>Merkle Root Validation</strong>:
+                    <ul>
+                        <li>Whether the Merkle root calculated from all transactions in the block matches the one recorded in the header.</li>
+                        <li>This efficiently confirms that all transactions in the block have not been tampered with.</li>
+                    </ul>
+                </li>
+                <li><strong>Block Reward Validation</strong>:
+                    <ul>
+                        <li>Whether the amount of the coinbase transaction (miner's reward) follows the current block reward rules.</li>
+                        <li>Whether all transaction fees are calculated correctly.</li>
+                    </ul>
+                </li>
+                <li><strong>Validation of All Transactions</strong>:
+                    <ul>
+                        <li>Whether all transactions in the block are individually valid.</li>
+                        <li>Whether there are no contradictions between transactions within the block (e.g., double-spending the same input).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>Technical Implementation of Validation</h4>
+            <p>
+                Various technical innovations have been implemented to make the validation process more efficient:
+            </p>
+            <ul class="multi-column-list">
+                <li><strong>Merkle Trees</strong>:
+                    <ul>
+                        <li>A structure that combines the hash values of all transactions in a binary tree.</li>
+                        <li>Allows for the efficient verification of whether a specific transaction is included (O(log n) computational complexity).</li>
+                        <li>Allows light nodes that do not have the full block data to verify the existence of a specific transaction.</li>
+                    </ul>
+                </li>
+                <li><strong>Signature Aggregation</strong>:
+                    <ul>
+                        <li>Improves computational efficiency by combining multiple signatures into one for verification.</li>
+                        <li>Uses technologies like Schnorr signatures or BLS signatures.</li>
+                    </ul>
+                </li>
+                <li><strong>Parallel Validation</strong>:
+                    <ul>
+                        <li>Improves processing speed by validating multiple transactions simultaneously.</li>
+                        <li>Implementation of parallel processing utilizing multi-core processors.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>Challenges and Countermeasures for Validation</h4>
+            <p>
+                The blockchain validation process has the following challenges and countermeasures:
+            </p>
+            <ul class="multi-column-list">
+                <li><strong>Scalability Issues</strong>:
+                    <ul>
+                        <li><strong>Challenge</strong>: As the number of transactions increases, validation takes longer, limiting throughput.</li>
+                        <li><strong>Countermeasure</strong>: Addressed with technologies like layer 2 solutions (e.g., Lightning Network), sharding, and sidechains.</li>
+                    </ul>
+                </li>
+                <li><strong>Occurrence of Forks</strong>:
+                    <ul>
+                        <li><strong>Challenge</strong>: If multiple nodes generate different blocks at the same time, a temporary split in the chain (fork) occurs.</li>
+                        <li><strong>Countermeasure</strong>: Resolved by fork selection algorithms like the "longest chain rule".</li>
+                    </ul>
+                </li>
+                <li><strong>Decrease in Validating Nodes</strong>:
+                    <ul>
+                        <li><strong>Challenge</strong>: The high cost of running a full node poses a risk of a decrease in the number of validating nodes.</li>
+                        <li><strong>Countermeasure</strong>: Addressed by lightweight client protocols and improvements in incentive design.</li>
+                    </ul>
+                </li>
+                <li><strong>Threat of Quantum Computers</strong>:
+                    <ul>
+                        <li><strong>Challenge</strong>: The risk that quantum computers may be able to break current cryptography in the future.</li>
+                        <li><strong>Countermeasure</strong>: Research and preparation for the implementation of quantum-resistant cryptography.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>Importance and Future Prospects of Validation</h4>
+            <p>
+                The validation process is a fundamental element of blockchain technology, and its efficiency and robustness greatly affect the performance and security of the blockchain.
+                The improvement of validation mechanisms remains an important research topic for the future development of blockchain technology.
+            </p>
+            <p>
+                New validation technologies are being developed that balance privacy protection and validation efficiency, such as Zero-Knowledge Proofs, STARKs, and SNARKs,
+                as well as new consensus algorithms that achieve both decentralization and efficiency of validation.
+                These technological innovations are expected to lead to the realization of faster, more secure, and privacy-protecting blockchains.
+            </p>
+
+        </section>
+    </section>
+
+    <section id="cryptocurrency" class="crypto-section">
+        <h2>Cryptocurrency</h2>
+
+        <section id="crypto-intro" class="crypto-subsection">
+            <h3>What is Cryptocurrency?</h3>
+            <p>
+                Cryptocurrency is a digital currency that uses cryptographic techniques to ensure its security.
+                It functions based on blockchain technology, without relying on central authorities like central banks or governments.
+            </p>
+            <p>
+                Main features of cryptocurrency:
+            </p>
+            <ul>
+                <li><strong>Decentralized</strong>: Operated on a peer-to-peer network without a central administrator.</li>
+                <li><strong>Anonymity</strong>: Transactions are public, but their link to personal information is limited.</li>
+                <li><strong>Cross-border Transfers</strong>: International transfers are possible without geographical constraints and at low cost.</li>
+                <li><strong>Tamper-resistant</strong>: Blockchain technology makes it difficult to alter transaction history.</li>
+            </ul>
+        </section>
+
+        <section id="crypto-types" class="crypto-subsection">
+            <h3>Major Types of Cryptocurrencies</h3>
+            <p>
+                There are currently thousands of types of cryptocurrencies, but the most representative ones include:
+            </p>
+            <ul>
+                <li><strong>Bitcoin (BTC)</strong>: The first cryptocurrency, with the largest market value. Also called "digital gold".</li>
+                <li><strong>Ethereum (ETH)</strong>: Has smart contract functionality and also serves as a development platform for decentralized applications (DApps).</li>
+                <li><strong>Ripple (XRP)</strong>: A cryptocurrency aimed at being an international money transfer system for financial institutions.</li>
+                <li><strong>Stablecoins</strong>: Cryptocurrencies whose value is pegged to fiat currencies like the US dollar (e.g., USDT, USDC).</li>
+                <li><strong>Altcoins</strong>: A general term for cryptocurrencies other than Bitcoin. Many have unique features and uses.</li>
+            </ul>
+        </section>
+    </section>
+
+    <section id="crypto-wallets" class="crypto-section">
+        <h2>Cryptocurrency Wallets</h2>
+
+        <section id="wallet-intro" class="crypto-subsection">
+            <h3>What is a Wallet?</h3>
+            <p>
+                A cryptocurrency wallet is a tool for storing and managing cryptocurrencies. However, unlike a regular wallet, it does not physically store the cryptocurrency itself.
+                In reality, it is a system that manages the private and public key pairs needed to access assets on the blockchain.
+            </p>
+            <p>
+                Main functions of a wallet:
+            </p>
+            <ul>
+                <li>Sending and receiving cryptocurrencies</li>
+                <li>Checking balances</li>
+                <li>Displaying transaction history</li>
+                <li>Secure storage of private keys</li>
+            </ul>
+        </section>
+
+        <section id="wallet-types" class="crypto-subsection">
+            <h3>Types of Wallets</h3>
+            <p>
+                Cryptocurrency wallets are classified as follows based on their form and connectivity:
+            </p>
+            <h4>Classification by Connectivity</h4>
+            <ul>
+                <li><strong>Hot Wallet</strong>: A wallet that is connected to the internet.
+                    <ul>
+                        <li>Web wallet: Accessible from a browser.</li>
+                        <li>Mobile wallet: Provided as a smartphone app.</li>
+                        <li>Desktop wallet: Software for a PC.</li>
+                    </ul>
+                </li>
+                <li><strong>Cold Wallet</strong>: A wallet that is not connected to the internet.
+                    <ul>
+                        <li>Hardware wallet: Stores private keys on a dedicated device (e.g., Ledger, Trezor).</li>
+                        <li>Paper wallet: Stores private keys by printing them on paper.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>Classification by Management Method</h4>
+            <ul>
+                <li><strong>Custodial Wallet</strong>: A third party (like an exchange) manages the private keys.</li>
+                <li><strong>Non-custodial Wallet</strong>: The user manages their own private keys.</li>
+            </ul>
+        </section>
+
+        <section id="wallet-security" class="crypto-subsection">
+            <h3>Wallet Security</h3>
+            <p>
+                The security of a wallet is the most important matter for securely storing cryptocurrencies. The main security features include:
+            </p>
+            <ul>
+                <li><strong>Seed Phrase (Recovery Phrase)</strong>: A sequence of usually 12 to 24 words used to restore a wallet.</li>
+                <li><strong>Password Protection</strong>: Restricts access to the wallet.</li>
+                <li><strong>Two-Factor Authentication (2FA)</strong>: Provides an additional layer of authentication.</li>
+                <li><strong>Multi-signature</strong>: A mechanism that requires approval from multiple private keys.</li>
+            </ul>
+            <p>
+                The security level is generally considered to be highest in the order of cold wallet > non-custodial hot wallet > custodial wallet.
+            </p>
+        </section>
+    </section>
+
+    <section id="keys-management" class="crypto-section">
+        <h2>Key Management</h2>
+
+        <section id="private-public-keys" class="crypto-subsection">
+            <h3>Private and Public Keys</h3>
+            <p>
+                The core of a cryptocurrency wallet lies in the management of key pairs based on public-key cryptography.
+            </p>
+            <ul>
+                <li><strong>Private Key</strong>: A randomly generated number used to prove ownership of cryptocurrencies and to sign transactions. The private key should be kept literally "private," as anyone who knows it can use the associated cryptocurrency.</li>
+                <li><strong>Public Key</strong>: A key that is mathematically derived from the private key and is used to receive cryptocurrencies by sharing it with others.</li>
+                <li><strong>Address</strong>: An even shorter form generated from the public key, used as the actual destination for sending funds.</li>
+            </ul>
+            <p>
+                This mechanism creates a secure system where only the person with the private key can use the assets, while knowing only the public key or address does not grant access to the assets.
+            </p>
+        </section>
+
+        <section id="key-storage" class="crypto-subsection">
+            <h3>Key Storage Methods</h3>
+            <p>
+                The method of storing the private key is the most important factor affecting the security of cryptocurrencies. The main storage methods include:
+            </p>
+            <ul>
+                <li><strong>Hardware Wallet</strong>: The most secure method, which stores the private key on a dedicated device and performs signing offline.</li>
+                <li><strong>Software Wallet</strong>: Stores the private key as an encrypted digital file.</li>
+                <li><strong>Paper Wallet</strong>: Stores the private key by physically printing it on paper.</li>
+                <li><strong>Brain Wallet</strong>: Generates a private key from an easy-to-remember phrase (not recommended due to high security risks).</li>
+                <li><strong>Custodial Service</strong>: An exchange or wallet provider manages the private key.</li>
+            </ul>
+            <p>
+                When storing a large amount of cryptocurrency, it is recommended to use cold storage (offline storage).
+            </p>
+        </section>
+
+        <section id="key-recovery" class="crypto-subsection">
+            <h3>Key Recovery and Backup</h3>
+            <p>
+                If you lose your private key, you will permanently lose access to the associated cryptocurrency. Therefore, proper backup and recovery methods are essential:
+            </p>
+            <ul>
+                <li><strong>Seed Phrase (Mnemonic Phrase)</strong>: A sequence of 12 to 24 words based on standards like BIP39, used to restore the private key. This phrase must be stored in a safe place.</li>
+                <li><strong>Distributed Backup Storage</strong>: Storing copies of the seed phrase in multiple secure locations.</li>
+                <li><strong>Shamir's Secret Sharing</strong>: An advanced method that splits the seed phrase into multiple "shares," which can be used to restore it if a certain number of shares are available.</li>
+            </ul>
+            <p>
+                When creating backups, you also need to consider the risk of physical damage (fire, flood, etc.) and theft. It is also important to check the condition of the backup periodically.
+            </p>
+        </section>
+    </section>
+
+    <section id="best-practices" class="crypto-section">
+        <h2>Wallet Management Best Practices</h2>
+        <p>
+            Here are the best practices for securely managing your cryptocurrencies:
+        </p>
+        <ul>
+            <li><strong>Use multiple wallets</strong>: Use a hot wallet for daily small transactions and a cold wallet for long-term storage separately.</li>
+            <li><strong>Use strong passwords</strong>: Use a long, complex password for your wallet that is not shared with other services.</li>
+            <li><strong>Enable two-factor authentication</strong>: Set up two-factor authentication for your wallets and accounts whenever possible.</li>
+            <li><strong>Keep software up to date</strong>: Regularly update your wallet software and device firmware.</li>
+            <li><strong>Store multiple backups</strong>: Store backups of your seed phrase in multiple secure locations.</li>
+            <li><strong>Beware of phishing scams</strong>: Check the URL of official websites and do not click on suspicious links.</li>
+            <li><strong>Perform a small test transaction</strong>: When sending to a new address, first check if you can send a small amount correctly.</li>
+            <li><strong>Avoid using public Wi-Fi</strong>: Conduct cryptocurrency transactions in a secure network environment.</li>
+            <li><strong>Be mindful of privacy</strong>: Do not disclose your cryptocurrency holdings on social media.</li>
+        </ul>
+        <p>
+            By combining these measures, you can significantly improve the security of your cryptocurrencies.
+        </p>
+    </section>
+
+    <section id="common-issues" class="crypto-section">
+        <h2>Common Issues and Solutions</h2>
+        <p>
+            Here are common issues that occur while using cryptocurrency wallets and their solutions:
+        </p>
+
+        <h3>Loss of Private Key</h3>
+        <p>
+            <strong>Issue</strong>: If you lose your private key or seed phrase, you will lose access to the associated cryptocurrency.<br>
+            <strong>Solution</strong>:
+        </p>
+        <ul>
+            <li>Store your seed phrase in a safe place and check your backup periodically.</li>
+            <li>Store backups in multiple locations.</li>
+            <li>If you use a custodial service, check the account recovery options for that service.</li>
+        </ul>
+
+        <h3>Sending Mistakes</h3>
+        <p>
+            <strong>Issue</strong>: If you send funds to the wrong address or to an incompatible network, the funds may be lost.<br>
+            <strong>Solution</strong>:
+        </p>
+        <ul>
+            <li>Check the address multiple times before sending.</li>
+            <li>Perform a small test transaction to a new destination for the first time.</li>
+            <li>Use a QR code to prevent manual entry errors.</li>
+            <li>Confirm that the destination cryptocurrency and network are correct.</li>
+        </ul>
+
+        <h3>Phishing Scams</h3>
+        <p>
+            <strong>Issue</strong>: Your private key may be stolen by fake wallet sites or fraudulent apps.<br>
+            <strong>Solution</strong>:
+        </p>
+        <ul>
+            <li>Download wallets directly from official websites or app stores.</li>
+            <li>Enter the URL directly or use a bookmark.</li>
+            <li>Do not click on links in suspicious emails or messages.</li>
+            <li>Check the SSL certificate of the wallet's official website.</li>
+        </ul>
+
+        <h3>Malware Infection</h3>
+        <p>
+            <strong>Issue</strong>: There is malware that monitors clipboard operations and replaces cryptocurrency addresses.<br>
+            <strong>Solution</strong>:
+        </p>
+        <ul>
+            <li>Use reputable security software.</li>
+            <li>Re-check the address in the clipboard before sending.</li>
+            <li>Use a hardware wallet for important transactions.</li>
+            <li>Keep your OS and software up to date.</li>
+        </ul>
+
+        <h3>Exchange Hacking</h3>
+        <p>
+            <strong>Issue</strong>: Cryptocurrency exchanges can be hacked, and the assets stored there can be stolen.<br>
+            <strong>Solution</strong>:
+        </p>
+        <ul>
+            <li>Move assets for long-term storage from an exchange to your own wallet.</li>
+            <li>Choose an exchange with robust security measures.</li>
+            <li>Set up two-factor authentication for your exchange account.</li>
+        </ul>
+
+        <p>
+            By preparing for these issues in advance, you can manage your cryptocurrencies securely.
+            If a problem occurs, it is important to respond calmly and, if necessary, seek advice from experts.
+        </p>
+    </section>
+
+    <button id="back-to-top" title="Back to top">↑</button>
+</div>
+
+<script src="js/crypto_keys.js"></script>
+</body>
+</html>

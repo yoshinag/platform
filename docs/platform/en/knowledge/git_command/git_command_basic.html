@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Basic Git Commands Guide</title>
+    <link rel="stylesheet" href="css/git_command.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="git_command.html">Return to Main Page</a> |
+        <a href="git_command_tracking.html">Next Category: Tracking and Checking Changes</a>
+    </div>
+
+    <h1>Basic Git Commands Guide</h1>
+    
+    <section class="command-section">
+        <h2>Basic Git Commands</h2>
+        
+        <!-- git init command -->
+        <h3>git init - Repository Initialization</h3>
+        <p>Creates a new Git repository.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>--bare</td>
+                <td>Creates a bare repository without a working directory</td>
+            </tr>
+            <tr>
+                <td>--template=&lt;template-directory&gt;</td>
+                <td>Uses templates from the specified template directory</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>git init</code> - Creates a new Git repository in the current directory<br>
+            <code>git init my_project</code> - Creates a new Git repository in the specified directory<br>
+            <code>git init --bare remote_repo.git</code> - Creates a bare repository (for server use)
+        </div>
+
+        <!-- git clone command -->
+        <h3>git clone - Repository Cloning</h3>
+        <p>Copies an existing repository to your local machine.</p>
+        
+        <table class="command-table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>--branch, -b &lt;branch-name&gt;</td>
+                <td>Checks out the specified branch</td>
+            </tr>
+            <tr>
+                <td>--depth &lt;depth&gt;</td>
+                <td>Creates a shallow clone with the specified depth</td>
+            </tr>
+            <tr>
+                <td>--recursive</td>
+                <td>Recursively clones submodules</td>
+            </tr>
+        </table>
+        
+        <div class="example">
+            <p><strong>Examples:</strong></p>
+            <code>git clone https://github.com/username/repository.git</code> - Clones a remote repository<br>
+            <code>git clone https://github.com/username/repository.git my_folder</code> - Clones to a specified folder<br>
+            <code>git clone --branch develop https://github.com/username/repository.git</code> - Clones a specific branch<br>
+            <code>git clone --depth 1 https://github.com/username/repository.git</code> - Clones only the latest commit (no history)
+        </div>
+    </section>
+
+    <div class="navigation-links">
+        <a href="git_command.html">Return to Main Page</a> |
+        <a href="git_command_tracking.html">Next Category: Tracking and Checking Changes</a>
+    </div>
+
+    <button id="back-to-top" title="Back to Top">↑</button>
+</div>
+
+<!-- Main application script -->
+<script src="js/git_command.js"></script>
+</body>
+</html>

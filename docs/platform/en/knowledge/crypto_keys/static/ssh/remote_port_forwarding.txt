@@ -1,0 +1,40 @@
+sequenceDiagram
+    autonumber
+    participant ExternalUser as "External User"
+    participant SSHServer as "SSH Server"
+    participant ClientSSH as "SSH Client<br>@Client PC"
+    participant LocalService as "Local Service (e.g., Web)<br>@Client PC"
+
+    rect rgb(230, 240, 255)
+        note over ClientSSH, SSHServer: Prerequisite: `ssh -R 8080:localhost:3000 user@server` has been executed
+        ClientSSH ->> SSHServer: ① Establish SSH tunnel (port 22) & request to listen on port 8080
+        activate SSHServer
+        SSHServer ->> SSHServer: Start listening on port 8080 as requested
+        deactivate SSHServer
+    end
+
+    ExternalUser ->> SSHServer: ② Access the service
+    Note left of SSHServer: Source: External IP:(random port A)<br>Destination: SSH server IP:8080
+
+    activate SSHServer
+    SSHServer -->> ClientSSH: ③ Forward data through tunnel
+    Note over SSHServer, ClientSSH: Transferred within encrypted SSH session (port 22)
+
+    activate ClientSSH
+    ClientSSH ->> LocalService: ④ Transfer data via new connection
+    Note right of ClientSSH: Source: localhost:(random port B)<br>Destination: localhost:3000
+    deactivate SSHServer
+
+    activate LocalService
+    LocalService -->> ClientSSH: ⑤ Response from service
+    Note right of ClientSSH: Source: localhost:3000<br>Destination: localhost:(random port B)
+    deactivate LocalService
+
+    ClientSSH -->> SSHServer: ⑥ Forward response through tunnel
+    Note over SSHServer, ClientSSH: Transferred within encrypted SSH session (port 22)
+
+    activate SSHServer
+    deactivate ClientSSH
+    SSHServer -->> ExternalUser: ⑦ Return response to external user
+    Note left of SSHServer: Source: SSH server IP:8080<br>Destination: External IP:(random port A)
+    deactivate SSHServer

@@ -1,0 +1,24 @@
+sequenceDiagram
+    participant Sender as Sender
+    participant Receiver as Receiver
+
+    Sender->>Sender: 1. Calculate hash value from original document
+    Note right of Sender: Generate fixed-length hash value<br>(digest) using a hash function
+
+    Sender->>Sender: 2. Encrypt hash value with private key
+    Note right of Sender: This becomes the "digital signature"
+
+    Sender->>Receiver: 3. Send original document and digital signature
+
+    Receiver->>Receiver: 4. Decrypt signature with sender's public key
+    Note left of Receiver: Obtain original hash value 'A' through decryption
+
+    Receiver->>Receiver: 5. Calculate hash value from received document
+    Note left of Receiver: Generate hash value 'B' using<br>the same hash function as the sender
+
+    Receiver->>Receiver: 6. Compare the two hash values
+    alt Hash values 'A' and 'B' match
+        Note left of Receiver: ✅ Integrity verified<br>✅ Authentication confirmed<br>✅ Non-repudiation ensured
+    else Hash values 'A' and 'B' don't match
+        Note left of Receiver: ❌ Data may have been tampered with<br>or the sender may not be legitimate
+    end

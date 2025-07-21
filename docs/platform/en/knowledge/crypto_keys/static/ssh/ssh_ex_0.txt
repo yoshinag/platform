@@ -1,0 +1,13 @@
+graph LR
+    subgraph Client PC Operations
+        A["User executes ssh-keygen 🔑"] --> B{"Generate private and public key pair"};
+        B --> C["<b>Private key (id_rsa)</b><br>Securely stored in ~/.ssh/"];
+        B --> D["<b>Public key (id_rsa.pub) generated</b>"];
+    end
+
+    subgraph Remote Server Processing
+      D -- "Transfer using ssh-copy-id etc." --> E["Register (share) public key"];
+      E --> F["Append received public key to authorized_keys ~/.ssh/"];
+    end
+
+    F --> G(("Preparation complete"));

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Explanation of Encryption Keys</title>
+    <link rel="stylesheet" href="css/crypto_keys.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<script src="../../../js/common/analytics.js"></script>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="../../../../index.html">Return to Main Page</a>
+    </div>
+    <h1>Explanation of Encryption Keys</h1>
+
+    <section id="table-of-contents" class="crypto-section">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#encryption-basics">Basics of Encryption</a>
+                <ul>
+                    <li><a href="#what-is-encryption">What is Encryption?</a></li>
+                    <li><a href="#encryption-history">History of Encryption</a></li>
+                    <li><a href="#key-role">Role of Encryption Keys</a></li>
+                    <li><a href="#key-length">Key Length and Security</a></li>
+                    <li><a href="#key-management">Encryption Key Management</a></li>
+                </ul>
+            </li>
+            <li><a href="#symmetric-encryption">Symmetric-key Cryptography</a>
+                <ul>
+                    <li><a href="#symmetric-intro">What is Symmetric-key Cryptography?</a></li>
+                    <li><a href="#symmetric-mechanism">How Symmetric-key Cryptography Works</a></li>
+                    <li><a href="#symmetric-types">Types of Symmetric-key Ciphers</a></li>
+                    <li><a href="#symmetric-algorithms">Major Symmetric-key Algorithms</a></li>
+                    <li><a href="#block-cipher-modes">Block Cipher Modes of Operation</a></li>
+                    <li><a href="#symmetric-pros-cons">Advantages and Challenges of Symmetric-key Cryptography</a></li>
+                </ul>
+            </li>
+            <li><a href="#asymmetric-encryption">Public-key Cryptography</a>
+                <ul>
+                    <li><a href="#asymmetric-intro">What is Public-key Cryptography?</a></li>
+                    <li><a href="#asymmetric-mechanism">How Public-key Cryptography Works</a></li>
+                    <li><a href="#asymmetric-algorithms">Major Public-key Algorithms</a></li>
+                    <li><a href="#digital-signature">Digital Signatures</a></li>
+                    <li><a href="#pki">PKI (Public Key Infrastructure)</a></li>
+                    <li><a href="#asymmetric-pros-cons">Advantages and Challenges of Public-key Cryptography</a></li>
+                </ul>
+            </li>
+            <li><a href="#hybrid-systems">Hybrid Cryptosystems</a></li>
+            <li><a href="#applications">Applications of Encryption Keys</a></li>
+        </ul>
+    </section>
+
+    <section id="introduction" class="crypto-section">
+        <h2>Introduction</h2>
+        <p>
+            Encryption keys are a crucial element for securely protecting data.
+            This page explains the various types of encryption keys, their uses, and how they work.
+            Encryption technology forms the foundation of modern security systems and is used in many fields, including internet communication, data protection, and authentication.
+        </p>
+    </section>
+
+    <section id="encryption-basics" class="crypto-section">
+        <h2>Basics of Encryption</h2>
+
+        <section id="what-is-encryption" class="crypto-section">
+            <h3>What is Encryption?</h3>
+            <p>
+                Encryption is the process of converting information so that it cannot be read by third parties.
+                Encrypted data can only be converted back to the original information by someone who has the appropriate key.
+                Encryption is used to protect confidential information, ensure communication security, and verify data integrity.
+            </p>
+        </section>
+
+        <section id="encryption-history" class="crypto-section">
+            <h3>History of Encryption</h3>
+            <p>
+                The history of encryption dates back to ancient times. Early ciphers were simple methods like substituting or rearranging letters.
+                For example, the Caesar cipher of ancient Rome was a simple method of shifting the alphabet by a certain number of places.
+            </p>
+            <p>
+                Modern encryption has become more complex with the development of computers, and powerful cryptographic methods based on mathematical algorithms have been developed.
+                The breaking of the Enigma machine's code during World War II greatly contributed to the development of modern cryptography.
+            </p>
+        </section>
+
+        <section id="key-role" class="crypto-section">
+            <h3>Role of Encryption Keys</h3>
+            <p>
+                An encryption key is a secret value used in conjunction with a cryptographic algorithm.
+                The key controls the encryption and decryption process, and using different keys with the same algorithm produces different results.
+            </p>
+            <p>
+                The main roles of an encryption key are as follows:
+            </p>
+            <ul>
+                <li>Encrypting and decrypting data</li>
+                <li>Generating and verifying digital signatures</li>
+                <li>Authentication and identification</li>
+                <li>Ensuring data integrity</li>
+            </ul>
+        </section>
+
+        <section id="key-length" class="crypto-section">
+            <h3>Key Length and Security</h3>
+            <p>
+                The length of an encryption key is directly related to the strength of the encryption. The longer the key, the more resistant it is to brute-force attacks.
+            </p>
+            <p>
+                For example, a 128-bit key has 2<sup>128</sup> (approximately 3.4×10<sup>38</sup>) possible combinations, making a brute-force attack impractical with current computer technology.
+                Commonly used key lengths are as follows:
+            </p>
+            <ul>
+                <li>Symmetric-key cryptography (e.g., AES): 128 bits, 192 bits, 256 bits</li>
+                <li>RSA (Public-key cryptography): 2048 bits, 3072 bits, 4096 bits</li>
+                <li>Elliptic Curve Cryptography (ECC): 256 bits, 384 bits, 521 bits</li>
+            </ul>
+            <p>
+                As computer processing power improves, the recommended key lengths gradually increase.
+                It is important to select an appropriate key length according to security requirements.
+            </p>
+        </section>
+
+        <section id="key-management" class="crypto-section">
+            <h3>Encryption Key Management</h3>
+            <p>
+                Encryption key management is one of the most critical elements of an entire security system.
+                Without proper key management, even the strongest encryption algorithm is rendered meaningless.
+            </p>
+            <p>
+                The main aspects of key management include:
+            </p>
+            <ul>
+                <li>Key generation: Using an unpredictable random number generator to create keys</li>
+                <li>Key storage: Storing keys securely (e.g., in a Hardware Security Module)</li>
+                <li>Key distribution: Distributing keys to relevant parties in a secure manner</li>
+                <li>Key rotation: Regularly updating keys to maintain security</li>
+                <li>Key destruction: Securely destroying keys that are no longer needed</li>
+            </ul>
+        </section>
+    </section>
+
+    <section id="symmetric-encryption" class="crypto-section">
+        <h2>Symmetric-key Cryptography</h2>
+
+        <section id="symmetric-intro" class="crypto-section">
+            <h3>What is Symmetric-key Cryptography?</h3>
+            <p>
+                Symmetric-key cryptography (or symmetric encryption) is a cryptographic system that uses the same key for both encryption and decryption.
+                The sender and receiver must share the same key in a secure manner beforehand.
+                This method is faster than public-key cryptography and can efficiently encrypt large amounts of data.
+            </p>
+        </section>
+
+        <section id="symmetric-mechanism" class="crypto-section">
+            <h3>How Symmetric-key Cryptography Works</h3>
+            <p>
+                The basic mechanism of symmetric-key cryptography is as follows:
+            </p>
+            <ol>
+                <li>The sender and receiver share the same key in a secure manner beforehand.</li>
+                <li>The sender encrypts the message using this shared key.</li>
+                <li>The encrypted message is sent to the receiver.</li>
+                <li>The receiver decrypts the message using the same shared key.</li>
+            </ol>
+            <div class="diagram-container">
+                <img src="image/common_key.png" alt="How Symmetric-key Cryptography Works" class="crypto-diagram">
+            </div>
+            <p>
+                The biggest challenge with symmetric-key cryptography is how to securely share the key.
+                To solve this problem, hybrid systems that combine it with public-key cryptography are often used.
+            </p>
+        </section>
+
+        <section id="symmetric-types" class="crypto-section">
+            <h3>Types of Symmetric-key Ciphers</h3>
+            <h4>Block Ciphers</h4>
+            <p>
+                Block ciphers encrypt data in fixed-size blocks.
+                For example, AES uses a block size of 128 bits (16 bytes).
+                If the data is larger than the block size, it is divided into multiple blocks for processing.
+            </p>
+            <p>
+                Main features of block ciphers:
+            </p>
+            <ul>
+                <li>Process data in fixed-size blocks</li>
+                <li>The same plaintext block encrypted with the same key results in the same ciphertext</li>
+                <li>Various modes of operation are available (e.g., ECB, CBC, CTR, GCM)</li>
+            </ul>
+
+            <h4>Stream Ciphers</h4>
+            <p>
+                Stream ciphers encrypt data continuously, one bit or one byte at a time.
+                Encryption is performed by a bitwise XOR operation between the plaintext and a pseudorandom sequence (keystream) generated from the key.
+            </p>
+            <p>
+                Main features of stream ciphers:
+            </p>
+            <ul>
+                <li>Process data continuously</li>
+                <li>Low memory usage and high-speed processing</li>
+                <li>Suitable for real-time communication and streaming data</li>
+            </ul>
+        </section>
+
+        <section id="symmetric-algorithms" class="crypto-section">
+            <h3>Major Symmetric-key Algorithms</h3>
+            <h4>AES (Advanced Encryption Standard)</h4>
+            <p>
+                AES is currently the most widely used symmetric-key algorithm.
+                It was standardized by the U.S. National Institute of Standards and Technology (NIST) in 2001.
+                It supports a block size of 128 bits and key lengths of 128, 192, or 256 bits.
+            </p>
+            <p>
+                AES combines high security and efficiency and is used in many security protocols and applications.
+            </p>
+
+            <h4>DES (Data Encryption Standard)</h4>
+            <p>
+                DES is an early symmetric-key algorithm standardized in 1977.
+                It has a block size of 64 bits and an effective key length of 56 bits.
+                Its security is insufficient with modern computing power, and it is not recommended for use in new systems.
+            </p>
+
+            <h4>3DES (Triple DES)</h4>
+            <p>
+                3DES is a cryptographic algorithm that enhances security by applying the DES algorithm three times.
+                The effective key length is 112 or 168 bits.
+                It is slower than AES and is gradually being replaced.
+            </p>
+
+            <h4>ChaCha20</h4>
+            <p>
+                ChaCha20 is a fast stream cipher, particularly efficient on mobile devices and in environments without hardware acceleration.
+                It uses a 256-bit key and a 64-bit nonce (initialization vector).
+                It is used in protocols like TLS.
+            </p>
+        </section>
+
+        <section id="block-cipher-modes" class="crypto-section">
+            <h3>Block Cipher Modes of Operation</h3>
+            <p>
+                Block cipher modes of operation define how to securely encrypt large amounts of data using a single block cipher.
+                The main modes of operation include:
+            </p>
+
+            <h4>ECB (Electronic Codebook) Mode</h4>
+            <p>
+                This is the simplest mode of operation, encrypting each block independently.
+                The same plaintext block results in the same ciphertext block, so patterns are preserved.
+                For security reasons, it is not recommended for general use.
+            </p>
+
+            <h4>CBC (Cipher Block Chaining) Mode</h4>
+            <p>
+                Before encrypting each block, an XOR operation is performed with the ciphertext of the previous block.
+                An initialization vector (IV) is used for the first block.
+                CBC mode is more secure than ECB mode because the same plaintext block results in different ciphertext.
+            </p>
+
+            <h4>CTR (Counter) Mode</h4>
+            <p>
+                Encryption is performed by encrypting a counter value and then XORing the result with the plaintext.
+                This effectively allows a block cipher to be used as a stream cipher.
+                It allows for parallel processing and is fast.
+            </p>
+
+            <h4>GCM (Galois/Counter Mode)</h4>
+            <p>
+                This is a mode that adds authentication functionality to CTR mode.
+                It generates a Message Authentication Code (MAC) simultaneously with encryption, ensuring both data confidentiality and integrity.
+                It is used in many security protocols such as TLS.
+            </p>
+        </section>
+
+        <section id="symmetric-pros-cons" class="crypto-section">
+            <h3>Advantages and Challenges of Symmetric-key Cryptography</h3>
+            <h4>Advantages</h4>
+            <ul>
+                <li>Processing Speed: Very fast compared to public-key cryptography</li>
+                <li>Resource Efficiency: Can run with fewer computer resources</li>
+                <li>Cryptographic Strength: Stronger than public-key cryptography for the same key length</li>
+            </ul>
+
+            <h4>Challenges</h4>
+            <ul>
+                <li>Key Distribution Problem: A secure method for sharing the key is required</li>
+                <li>Key Management Complexity: To achieve secure communication among n users, n(n-1)/2 keys are needed</li>
+                <li>Lack of Non-repudiation: Since the sender and receiver have the same key, it's impossible to prove who initiated the communication</li>
+            </ul>
+        </section>
+    </section>
+
+    <section id="asymmetric-encryption" class="crypto-section">
+        <h2>Public-key Cryptography</h2>
+
+        <section id="asymmetric-intro" class="crypto-section">
+            <h3>What is Public-key Cryptography?</h3>
+            <p>
+                Public-key cryptography (or asymmetric cryptography) is a cryptographic system that uses different keys for encryption and decryption.
+                Each user has a "public key" and a "private key" pair. The public key can be used by anyone, but the private key is known only to the owner.
+                This method allows for encrypted communication without prior secure key sharing.
+            </p>
+        </section>
+
+        <section id="asymmetric-mechanism" class="crypto-section">
+            <h3>How Public-key Cryptography Works</h3>
+            <p>
+                The basic mechanism of public-key cryptography is as follows:
+            </p>
+            <ol>
+                <li>Each user generates a public key and a private key pair.</li>
+                <li>The public key is made available to anyone.</li>
+                <li>The private key is kept secret by the owner and never shared with anyone.</li>
+                <li>To send a message, the sender encrypts the message with the receiver's public key.</li>
+                <li>The encrypted message can only be decrypted with the receiver's private key.</li>
+            </ol>
+            <div class="diagram-container">
+                <img src="image/public_key.png" alt="How Public-key Cryptography Works" class="crypto-diagram">
+            </div>
+            <p>
+                An important feature of this method is that data encrypted with a public key can only be decrypted with the corresponding private key.
+                Also, data signed with a private key can be verified with the corresponding public key.
+            </p>
+        </section>
+
+        <section id="asymmetric-algorithms" class="crypto-section">
+            <h3>Major Public-key Algorithms</h3>
+            <h4>RSA (Rivest-Shamir-Adleman)</h4>
+            <p>
+                RSA is one of the most widely used public-key algorithms.
+                It is based on the difficulty of factoring the product of large prime numbers.
+                RSA can be used for encryption, decryption, and digital signatures.
+            </p>
+            <p>
+                An RSA key length of 2048 bits or more is generally recommended, with 4096 bits also used depending on security requirements.
+            </p>
+
+            <h4>Elliptic Curve Cryptography (ECC)</h4>
+            <p>
+                Elliptic Curve Cryptography is based on the difficulty of the discrete logarithm problem on elliptic curves.
+                Compared to RSA, it can achieve a similar level of security with a shorter key length.
+                For example, 256-bit ECC provides security equivalent to 3072-bit RSA.
+            </p>
+            <p>
+                ECC is particularly useful on mobile devices and systems with constraints.
+            </p>
+
+            <h4>ElGamal</h4>
+            <p>
+                ElGamal is a public-key algorithm based on the discrete logarithm problem.
+                It is mainly used for encryption and can also be applied to digital signatures.
+            </p>
+        </section>
+
+        <section id="digital-signature" class="crypto-section">
+            <h3>Digital Signatures</h3>
+            <p>
+                A digital signature is an important application of public-key cryptography.
+                Digital signatures allow for the verification of the message sender's identity (authentication) and the detection of message tampering (integrity).
+            </p>
+            <p>
+                The basic mechanism of a digital signature is as follows:
+            </p>
+            <div class="diagram-container">
+                <img src="image/digital_signature.png" alt="How Digital Signatures Work" class="crypto-diagram">
+            </div>
+        </section>
+
+        <section id="pki" class="crypto-section">
+            <h3>PKI (Public Key Infrastructure)</h3>
+            <p>
+                Public Key Infrastructure (PKI) is a framework for the practical operation of public-key cryptography.
+                PKI ensures that a public key truly belongs to a specific individual or organization by issuing, managing, and validating digital certificates.
+            </p>
+            <p>
+                The main components of PKI include:
+            </p>
+            <ul>
+                <li>Certificate Authority (CA): A trusted third-party organization that issues digital certificates and certifies the owner of a public key.</li>
+                <li>Registration Authority (RA): An authority that verifies the identity of a certificate applicant and requests the CA to issue a certificate.</li>
+                <li>Digital Certificate: An electronic document that contains a public key and its owner's information, digitally signed by a CA.</li>
+                <li>Certificate Revocation List (CRL): A list of certificates that have been revoked before their expiration date.</li>
+            </ul>
+            <p>
+                PKI is used in many applications, such as HTTPS connections in web browsers, encryption and signing of emails (S/MIME), and code signing.
+            </p>
+        </section>
+
+        <section id="asymmetric-pros-cons" class="crypto-section">
+            <h3>Advantages and Challenges of Public-key Cryptography</h3>
+            <h4>Advantages</h4>
+            <ul>
+                <li>No Prior Key Sharing Required: Encrypted communication is possible even over insecure communication channels.</li>
+                <li>Simplified Key Management: Fewer keys are required for n users (n pairs vs. n(n-1)/2 keys).</li>
+                <li>Enables Digital Signatures: Allows for authentication and integrity.</li>
+                <li>Non-repudiation: The sender cannot later deny having sent the message.</li>
+            </ul>
+
+            <h4>Challenges</h4>
+            <ul>
+                <li>Processing Speed: Computationally more expensive than symmetric-key cryptography.</li>
+                <li>Key Length: Requires longer keys to achieve the same level of security.</li>
+                <li>Public Key Trustworthiness: It is necessary to verify that a public key truly belongs to a specific individual or organization (the role of PKI).</li>
+            </ul>
+        </section>
+    </section>
+
+    <section id="hybrid-systems" class="crypto-section">
+        <h2>Hybrid Cryptosystems</h2>
+        <p>
+            A hybrid cryptosystem is a system that combines the advantages of public-key cryptography and symmetric-key cryptography.
+            Typically, public-key cryptography is used to securely exchange a symmetric key (session key), and that symmetric key is then used to encrypt the actual data.
+        </p>
+        <div class="diagram-container">
+            <img src="image/highbrid.png" alt="How Hybrid Cryptosystems Work" class="crypto-diagram">
+        </div>
+        <p>
+            This approach achieves both the secure key exchange of public-key cryptography and the high-speed processing of symmetric-key cryptography.
+            Many modern encryption protocols, such as TLS/SSL, PGP, and S/MIME, employ a hybrid system.
+        </p>
+    </section>
+
+    <section id="applications" class="crypto-section">
+        <h2>Applications of Encryption Keys</h2>
+        <p>
+            Encryption keys are used in various situations in modern digital society. The main application examples are as follows:
+        </p>
+        <ul>
+            <li><a href="ssh.html">About SSH Connections</a></li>
+            <li><a href="web_security.html">Web Security: HTTPS communication, SSL/TLS certificates</a></li>
+            <li>Email Security: Encryption and signatures with S/MIME, PGP</li>
+            <li>Digital Signatures: Signing electronic documents, code signing</li>
+            <li>Authentication Systems: Storing passwords, multi-factor authentication</li>
+            <li>Data Protection: Disk encryption, file encryption</li>
+            <li><a href="vpn_wifi.html">Secure Communication: VPN, wireless communication (WPA2/WPA3)</a></li>
+            <li><a href="block_chain.html">Blockchain Technology: Cryptocurrency wallet management</a></li>
+        </ul>
+    </section>
+
+    <button id="back-to-top" title="Back to top">↑</button>
+</div>
+
+<script src="js/crypto_keys.js"></script>
+</body>
+</html>

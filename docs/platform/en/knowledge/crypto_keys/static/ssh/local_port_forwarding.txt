@@ -1,0 +1,37 @@
+sequenceDiagram
+    autonumber
+    participant App as "MySQL Client<br>@Client PC"
+    participant ClientSSH as "SSH Client<br>@Client PC"
+    participant SSHServer as "SSH Server"
+    participant TargetServer as "MySQL"
+
+    rect rgb(230, 240, 255)
+        note over ClientSSH, SSHServer: Prerequisite: `ssh -L 3307:target-db:3306 user@server` has been executed
+        ClientSSH ->> SSHServer: Establish SSH tunnel (port 22)
+    end
+
+    App ->> ClientSSH: ① DB connection request
+    Note right of App: Source: localhost:(random port A)<br>Destination: localhost:3307
+
+    activate ClientSSH
+    ClientSSH -->> SSHServer: ② Forward data through tunnel
+    Note over ClientSSH, SSHServer: Transferred within encrypted SSH session (port 22)
+
+    activate SSHServer
+    SSHServer ->> TargetServer: ③ Transfer data via new connection
+    Note right of SSHServer: Source: SSH server:(random port B)<br>Destination: target:3306
+    deactivate ClientSSH
+
+    activate TargetServer
+    TargetServer -->> SSHServer: ④ Response from DB
+    Note right of SSHServer: Source: target:3306<br>Destination: SSH server:(random port B)
+    deactivate TargetServer
+
+    SSHServer -->> ClientSSH: ⑤ Forward response through tunnel
+    Note over ClientSSH, SSHServer: Transferred within encrypted SSH session (port 22)
+
+    activate ClientSSH
+    deactivate SSHServer
+    ClientSSH -->> App: ⑥ Return response to application
+    Note right of App: Source: localhost:3307<br>Destination: localhost:(random port A)
+    deactivate ClientSSH
