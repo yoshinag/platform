@@ -126,6 +126,67 @@
             <code>git diff main feature</code> - Show differences between main branch and feature branch<br>
             <code>git diff -- file.txt</code> - Show differences for a specific file only
         </div>
+
+        <!-- How to read diff output -->
+        <h3>How to Read Diff Output</h3>
+        <p>Understanding the output of git diff commands is essential for accurately interpreting changes. Here's a guide to reading diff output.</p>
+
+        <div class="diff-explanation">
+            <h4>Basic Structure of Diff Output</h4>
+            <pre>
+diff --git a/filename b/filename
+index hash1..hash2 mode
+--- a/filename
++++ b/filename
+@@ -startline,count +startline,count @@ context info
+- deleted line
++ added line
+  unchanged line
+            </pre>
+
+            <ul>
+                <li><strong>diff --git a/filename b/filename</strong>: Shows the files being compared. 'a' is the original file, 'b' is the modified file.</li>
+                <li><strong>index hash1..hash2 mode</strong>: Shows the object IDs and file mode.</li>
+                <li><strong>--- a/filename</strong>: Indicates the original file.</li>
+                <li><strong>+++ b/filename</strong>: Indicates the modified file.</li>
+                <li><strong>@@ -startline,count +startline,count @@</strong>: Shows the location of the changes.
+                    <ul>
+                        <li>-startline,count: Starting line and number of lines in the original file</li>
+                        <li>+startline,count: Starting line and number of lines in the modified file</li>
+                    </ul>
+                </li>
+                <li><strong>Lines starting with -</strong>: Lines that were deleted.</li>
+                <li><strong>Lines starting with +</strong>: Lines that were added.</li>
+                <li><strong>Lines starting with a space</strong>: Unchanged lines (context).</li>
+            </ul>
+
+            <h4>Example of Diff Output</h4>
+            <pre>
+diff --git a/example.txt b/example.txt
+index abc1234..def5678 100644
+--- a/example.txt
++++ b/example.txt
+@@ -1,5 +1,6 @@
+ This is an unchanged line.
+-This line was deleted.
++This line was added.
++This is another added line.
+ This is also an unchanged line.
+-This line was also deleted.
++This line was modified.
+ This is the last unchanged line.
+            </pre>
+
+            <p>In this example:</p>
+            <ul>
+                <li>Line 1 is unchanged.</li>
+                <li>Line 2 was deleted and replaced with a new line.</li>
+                <li>A new line was added at line 3.</li>
+                <li>Line 4 is unchanged.</li>
+                <li>Line 5 was deleted and replaced with modified content.</li>
+                <li>Line 6 is unchanged.</li>
+            </ul>
+        </div>
     </section>
 
     <div class="navigation-links">
