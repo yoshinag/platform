@@ -1,0 +1,195 @@
+/* css/dot_viewer/fullscreen_view.css */
+
+body.graph-view-fullscreen {
+    overflow: hidden !important; /* Prevent scrollbars on body */
+    background-color: #f9f9f9 !important; /* Match graph container bg for seamlessness */
+}
+
+/* Hide everything in .container except .output-panel, .global-controls, and tabs */
+body.graph-view-fullscreen .container > *:not(.output-panel):not(.global-controls):not(.code-panel) {
+    display: none !important;
+}
+
+/* Only show the tabs part of the code panel in fullscreen mode as an overlay */
+body.graph-view-fullscreen .code-panel {
+    display: block !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 10001 !important; /* Above graph-container, below global controls */
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    pointer-events: none !important; /* Allow clicks to pass through to the graph container */
+}
+
+body.graph-view-fullscreen .code-panel > *:not(.tabs-container) {
+    display: none !important;
+}
+
+body.graph-view-fullscreen .tabs-container {
+    background-color: rgba(245, 245, 245, 0.85) !important; /* More transparent */
+    border-bottom: 1px solid rgba(221, 221, 221, 0.7) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    padding: 5px 15px 0 15px !important;
+    width: 100% !important; /* Ensure full width */
+    opacity: 0.9 !important; /* Make slightly transparent */
+    transition: opacity 0.3s ease !important; /* Smooth transition */
+    pointer-events: auto !important; /* Re-enable pointer events for the tabs */
+}
+
+/* Make tabs more transparent when not hovered */
+body.graph-view-fullscreen .tabs-container:not(:hover) {
+    opacity: 0.6 !important;
+}
+
+body.graph-view-fullscreen .tabs-nav {
+    margin-bottom: 0 !important;
+    border-bottom: none !important;
+}
+
+body.graph-view-fullscreen .tab-buttons {
+    max-width: calc(100% - 50px) !important; /* Leave space for add tab button */
+    display: flex !important; /* Ensure flex display is maintained */
+    flex-wrap: wrap !important; /* Allow tabs to wrap to next line instead of scrolling */
+    /* overflow-x: auto !important; - Removed to disable horizontal scrolling */
+    /* scrollbar-width: thin !important; - Removed as scrollbar is no longer needed */
+}
+
+/* Removed webkit scrollbar styling as scrollbars are no longer needed */
+
+body.graph-view-fullscreen .tab-button {
+    background-color: rgba(255, 255, 255, 0.7) !important;
+    white-space: nowrap !important; /* Prevent text wrapping in tabs */
+    min-width: 100px !important; /* Ensure tabs have a minimum width */
+    border-right: 1px solid #ddd !important; /* Maintain visual separation between tabs */
+    margin: 2px !important; /* Add margin for better spacing when tabs wrap */
+    border-radius: 4px !important; /* Add border radius for better appearance */
+}
+
+body.graph-view-fullscreen .tab-button.active {
+    background-color: white !important;
+    border-bottom: 2px solid #007bff !important; /* Blue bottom border for active tab */
+    font-weight: bold !important; /* Make text bold for active tab */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1) !important; /* Subtle shadow for active tab */
+}
+
+body.graph-view-fullscreen .tab-controls {
+    background-color: rgba(245, 245, 245, 0.9) !important;
+}
+
+body.graph-view-fullscreen .tab-content {
+    display: none !important;
+}
+
+/* The main .container itself should become transparent and take no space effectively */
+body.graph-view-fullscreen .container {
+    padding: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background-color: transparent !important;
+}
+
+/* output-panel serves as a direct parent but should be 'invisible' in fullscreen */
+body.graph-view-fullscreen .output-panel {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background-color: transparent !important;
+    overflow: visible !important; /* Ensure it doesn't clip fixed #graph-container */
+}
+
+/* Make #graph-container itself fill the entire viewport */
+body.graph-view-fullscreen #graph-container {
+    position: fixed !important;
+    top: 0 !important; /* Use the entire screen height */
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important; /* Use full viewport height */
+    z-index: 10000 !important; /* Below global controls */
+    background-color: #f9f9f9 !important; /* Explicit background */
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 15px !important; /* Slightly reduced padding to maximize display area */
+    margin: 0 !important;
+    min-height: 0 !important; /* Override original min-height */
+    
+    /* Ensure content is centered */
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    overflow: auto !important;
+}
+
+body.graph-view-fullscreen #graph-container svg {
+    /* Max dimensions should consider the padding of #graph-container */
+    max-width: calc(100% - 30px) !important; /* If #graph-container has 15px padding each side */
+    max-height: calc(100% - 30px) !important; /* If #graph-container has 15px padding each side */
+    /* Ensure SVG is centered in the viewport */
+    margin: auto !important;
+    /* Improve rendering quality */
+    shape-rendering: geometricPrecision !important;
+}
+
+/* Reposition .global-controls in fullscreen mode */
+body.graph-view-fullscreen .global-controls {
+    position: fixed !important;
+    top: 15px;
+    right: 15px;
+    z-index: 10002 !important; /* Above graph-container and tabs */
+    background-color: rgba(40, 40, 40, 0.7); /* Slightly more opaque for better visibility */
+    padding: 8px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    text-align: right;
+    margin-bottom: 0; /* Override original margin */
+    opacity: 0.9; /* Default opacity */
+    transition: opacity 0.3s ease; /* Smooth transition */
+}
+
+/* Make controls more visible on hover */
+body.graph-view-fullscreen .global-controls:hover {
+    opacity: 1;
+}
+
+/* Hide panel toggle button when graph view is fullscreen */
+body.graph-view-fullscreen .global-controls #toggle-all-panels-btn {
+    display: none !important;
+}
+
+/* Style the fullscreen toggle button to indicate "exit" state */
+body.graph-view-fullscreen #toggle-fullscreen-btn {
+    background-color: #dc3545; /* "Exit" color (e.g., red) */
+}
+body.graph-view-fullscreen #toggle-fullscreen-btn:hover {
+    background-color: #c82333;
+}
+
+/* Show and style the prev/next tab buttons only in fullscreen mode */
+#prev-tab-btn, #next-tab-btn {
+    display: none; /* Hidden by default */
+}
+
+body.graph-view-fullscreen #prev-tab-btn {
+    display: inline-flex !important; /* Show only in fullscreen mode */
+    background-color: #007bff; /* Blue color for prev action */
+    color: white;
+    margin-left: 10px; /* Space from the fullscreen button */
+}
+
+body.graph-view-fullscreen #prev-tab-btn:hover {
+    background-color: #0069d9; /* Darker blue on hover */
+}
+
+body.graph-view-fullscreen #next-tab-btn {
+    display: inline-flex !important; /* Show only in fullscreen mode */
+    background-color: #28a745; /* Green color for next action */
+    color: white;
+    margin-left: 10px; /* Space from the prev button */
+}
+
+body.graph-view-fullscreen #next-tab-btn:hover {
+    background-color: #218838; /* Darker green on hover */
+}

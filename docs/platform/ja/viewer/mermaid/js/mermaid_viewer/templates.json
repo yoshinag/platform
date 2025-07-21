@@ -1,0 +1,80 @@
+[
+  {
+    "id": "mermaid-pdca-cycle",
+    "name": "Mermaid: PDCA Cycle - graph LR",
+    "notation": "mermaid",
+    "code": "graph LR\n    %% スタイルの定義\n    classDef plan fill:#e0f7fa,stroke:#00796b,stroke-width:2px,color:#004d40\n    classDef do fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#1b5e20\n    classDef check fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100\n    classDef act fill:#fce4ec,stroke:#d81b60,stroke-width:2px,color:#880e4f\n\n    %% ノードの定義と接続\n    A((⚙️ <b>Plan</b><br>計画)) --> B((🚀 <b>Do</b><br>実行))\n    B --> C((📊 <b>Check</b><br>評価))\n    C --> D((💡 <b>Action</b><br>改善))\n    D -.-> A\n\n    %% スタイルの適用\n    class A plan\n    class B do\n    class C check\n    class D act"
+  },
+  {
+    "id": "mermaid-web-architecture",
+    "name": "Mermaid: Web Application Architecture - graph TD",
+    "notation": "mermaid",
+    "code": "graph TD\n    %% スタイル定義\n    classDef user fill:#fce4ec,stroke:#c2185b,stroke-width:2px\n    classDef frontend fill:#e3f2fd,stroke:#1565c0,stroke-width:2px\n    classDef backend fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px\n    classDef database fill:#fffde7,stroke:#fbc02d,stroke-width:2px\n    classDef external fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px\n\n    %% ノード定義 (テキストを \"\" で囲む)\n    U(\"🧑‍💻 ユーザー\")\n    \n    subgraph \"フロントエンド (ブラウザ)\"\n        direction LR\n        FE[\"SPA<br>(React / Vue)\"]\n    end\n\n    subgraph \"バックエンド (クラウド)\"\n        direction TB\n        API[\"APIサーバー<br>(Node.js / Go)\"] --- DB[(\"🗄️ データベース<br>PostgreSQL\")]\n        API --- Cache[(\"⚡ キャッシュ<br>Redis\")]\n    end\n    \n    subgraph \"外部サービス (SaaS)\"\n        Auth(\"Firebase Auth<br>認証\")\n        Payment(\"Stripe<br>決済\")\n    end\n\n    %% 関連性の定義\n    U -- \"1\\. アクセス\" --> FE\n    FE -- \"2\\. APIリクエスト\" --> API\n    API -- \"3\\. データ照会\" --> DB\n    API -- \"4\\. 高速化\" --> Cache\n    API -- \"5\\. 認証\" --> Auth\n    API -- \"6\\. 支払い処理\" --> Payment\n    \n    subgraph \"レスポンスフロー\"\n        direction RL\n        API -- \"JSON\" --> FE\n        FE -- \"画面描画\" --> U\n    end\n\n    %% スタイルの適用\n    class U user\n    class FE frontend\n    class API backend\n    class DB,Cache database\n    class Auth,Payment external"
+  },
+  {
+    "id": "mermaid-ssh-tunnel",
+    "name": "Mermaid: SSH Tunnel for MySQL - sequenceDiagram",
+    "notation": "mermaid",
+    "code": "sequenceDiagram\n    autonumber\n    participant App as \"MySQLクライアント<br>@クライアントPC\"\n    participant ClientSSH as \"SSHクライアント<br>@クライアントPC\"\n    participant SSHServer as \"SSHサーバー\"\n    participant TargetServer as \"MySQL\"\n\n    rect rgb(230, 240, 255)\n        note over ClientSSH, SSHServer: 前提: `ssh -L 3307:target-db:3306 user@server` を実行済み\n        ClientSSH ->> SSHServer: SSHトンネル(ポート22)を確立\n    end\n\n    App ->> ClientSSH: ① DB接続要求\n    Note right of App: 送信元: localhost:(ランダムポートA)<br>宛先: localhost:3307\n\n    activate ClientSSH\n    ClientSSH -->> SSHServer: ② トンネル経由でデータを転送\n    Note over ClientSSH, SSHServer: SSH(ポート22)の暗号化セッション内で転送\n\n    activate SSHServer\n    SSHServer ->> TargetServer: ③ 新規接続でデータを転送\n    Note right of SSHServer: 送信元: SSHサーバー:(ランダムポートB)<br>宛先: ターゲット:3306\n    deactivate ClientSSH\n\n    activate TargetServer\n    TargetServer -->> SSHServer: ④ DBからの応答\n    Note right of SSHServer: 送信元: ターゲット:3306<br>宛先: SSHサーバー:(ランダムポートB)\n    deactivate TargetServer\n\n    SSHServer -->> ClientSSH: ⑤ トンネル経由で応答を転送\n    Note over ClientSSH, SSHServer: SSH(ポート22)の暗号化セッション内で転送\n\n    activate ClientSSH\n    deactivate SSHServer\n    ClientSSH -->> App: ⑥ アプリへ応答を返す\n    Note right of App: 送信元: localhost:3307<br>宛先: localhost:(ランダムポートA)\n    deactivate ClientSSH"
+  },
+  {
+    "id": "mermaid-gunpla-gantt",
+    "name": "Mermaid: Gunpla Production Process - Gantt Chart",
+    "notation": "mermaid",
+    "code": "gantt\n    title ガンダム（ガンプラ）製作工程\n    dateFormat YYYY-MM-DD\n    axisFormat %m/%d\n\n    section 準備フェーズ\n    計画・ランナー確認 :crit, done, id:plan, 2025-07-21, 1d\n    \n    section 組み立てフェーズ\n    パーツ切り出し :done, id:cut, after plan, 3d\n    ゲート処理・表面処理 :active, id:sand, after cut, 4d\n    脚部の組み立て :id:legs, after sand, 2d\n    腰部の組み立て :id:waist, after legs, 1d\n    胴体の組み立て :id:torso, after waist, 1d\n    腕部の組み立て :id:arms, after torso, 2d\n    頭部の組み立て :id:head, after arms, 1d\n    武装・バックパック :id:weapons, after head, 2d\n\n    section 仕上げフェーズ\n    スミ入れ :id:lining, after weapons, 2d\n    デカール貼り :id:decal, after lining, 3d\n    トップコート :id:coat, after decal, 1d\n    最終組み立て・完成 :crit, id:finish, after coat, 1d"
+  },
+  {
+    "id": "mermaid-class",
+    "name": "Mermaid: Class Diagram",
+    "notation": "mermaid",
+    "code": "classDiagram\n    Animal <|-- Duck\n    Animal <|-- Fish\n    Animal : +int age\n    Animal: +isMammal()\n    class Duck{\n      +String beakColor\n      +swim()\n    }"
+  },
+  {
+    "id": "mermaid-state",
+    "name": "Mermaid: State Diagram",
+    "notation": "mermaid",
+    "code": "stateDiagram-v2\n    [*] --> Still\n    Still --> [*]\n    Still --> Moving\n    Moving --> Still"
+  },
+  {
+    "id": "mermaid-pie",
+    "name": "Mermaid: Pie Chart",
+    "notation": "mermaid",
+    "code": "pie title Fruits Distribution\n    \"Apples\" : 386\n    \"Bananas\" : 250\n    \"Oranges\" : 200"
+  },
+  {
+    "id": "mermaid-er",
+    "name": "Mermaid: ER Diagram",
+    "notation": "mermaid",
+    "code": "erDiagram\n    CUSTOMER ||--o{ ORDER : places\n    ORDER ||--|{ LINE-ITEM : \"contains\"\n    CUSTOMER }|..|{ DELIVERY-ADDRESS : \"uses\""
+  },
+  {
+    "id": "mermaid-git-flow",
+    "name": "Mermaid: Git Flow",
+    "notation": "mermaid",
+    "code": "gitGraph\n    %% --- 初期設定 ---\n    commit id: \"Initial Commit\"\n    branch develop\n    \n    %% --- 機能開発 (Feature Branch) ---\n    checkout develop\n    commit id: \"dev-A\"\n    branch feature/add-login\n    checkout feature/add-login\n    commit id: \"feat-1\"\n    commit id: \"feat-2\"\n    checkout develop\n    merge feature/add-login id: \"merge-feature\"\n    commit id: \"dev-B\"\n    \n    %% --- リリース準備 (Release Branch) ---\n    branch release/v1.0\n    checkout release/v1.0\n    commit id: \"Release Prep\"\n    \n    %% --- メインブランチへのマージとタグ付け ---\n    checkout main\n    merge release/v1.0\n    %% 'tag'が未対応の環境向けにコメントアウト\n    %% tag \"v1.0.0\"\n    \n    %% --- developブランチへのマージ ---\n    checkout develop\n    merge release/v1.0\n    \n    %% --- 緊急修正 (Hotfix Branch) ---\n    checkout main\n    branch hotfix/v1.0.1\n    checkout hotfix/v1.0.1\n    commit id: \"Critical Bug Fix\"\n    \n    %% --- メインとdevelopへのHotfixマージ ---\n    checkout main\n    merge hotfix/v1.0.1\n    %% 'tag'が未対応の環境向けにコメントアウト\n    %% tag \"v1.0.1\"\n    checkout develop\n    merge hotfix/v1.0.1"
+  },
+  {
+    "id": "mermaid-user-journey",
+    "name": "Mermaid: User Journey",
+    "notation": "mermaid",
+    "code": "journey\n    title My working day\n    section Go to work\n      Make tea: 5: Me\n      Go upstairs: 3: Me\n      Do work: 1: Me, Cat\n    section Go home\n      Go downstairs: 5: Me\n      Sit down: 5: Me"
+  },
+  {
+    "id": "mermaid-ai-learning-assistant",
+    "name": "Mermaid: AI Learning Assistant Business Proposal - mindmap",
+    "notation": "mermaid",
+    "code": "mindmap\n  root((✨ 新規事業提案<br/>AI学習アシスタント))\n    )コンセプト(\n      [AIによる学習計画の個別最適化]\n      [ゲーミフィケーションで学習を習慣化]\n      [いつでも質問できるAIチューター]\n    )ターゲット顧客(\n      [資格取得を目指す社会人]\n      [学習意欲の高い大学生]\n      [生涯学習に関心を持つ全ての人]\n    )主要機能(\n      ))学習プラン自動生成((\n        - 目標設定から逆算\n        - 苦手分野を重点的に\n      ))進捗の可視化((\n        - 学習時間と達成度をグラフ表示\n        - モチベーション維持\n      ))AI質問応答((\n        - 24時間いつでも質問可能\n        - 分かりやすい解説を生成\n      ))復習リマインダー((\n        - 忘却曲線に基づき通知\n        - 知識の定着を促進\n    )収益モデル(\n      [基本機能無料（フリーミアム）]\n      )プレミアムプラン（月額）(\n        [広告の非表示]\n        [より高度な進捗分析]\n        [専門分野特化AIチューター]\n    )マーケティング戦略(\n      )SNS(\n        [学習記録のシェア機能]\n        [#タグキャンペーン]\n      )Web広告(\n        [学習系メディアへの出稿]\n      )インフルエンサー(\n        [教育系YouTuberとの連携]"
+  },
+  {
+    "id": "mermaid-vtuber-timeline",
+    "name": "Mermaid: VTuber Popularity Timeline - timeline",
+    "notation": "mermaid",
+    "code": "timeline\n    title VTuber人気ランキング推移 (2020-2024年)\n    2020年\n        : 1位 キズナアイ\n        : 2位 がうる・ぐら (Gawr Gura)\n        : 3位 輝夜月\n        : 4位 ミライアカリ\n        : 5位 白上フブキ\n    2021年\n        : 1位 がうる・ぐら (Gawr Gura)\n        : 2位 キズナアイ\n        : 3位 兎田ぺこら\n        : 4位 宝鐘マリン\n        : 5位 森カリオペ (Mori Calliope)\n    2022年\n        : 1位 がうる・ぐら (Gawr Gura)\n        : 2位 キズナアイ\n        : 3位 兎田ぺこら\n        : 4位 宝鐘マリン\n        : 5位 こぼ・かなえる (Kobo Kanaeru)\n    2023年\n        : 1位 がうる・ぐら (Gawr Gura)\n        : 2位 兎田ぺこら\n        : 3位 宝鐘マリン\n        : 4位 こぼ・かなえる (Kobo Kanaeru)\n        : 5位 白上フブキ\n    2024年\n        : 1位 がうる・ぐら (Gawr Gura)\n        : 2位 宝鐘マリン\n        : 3位 兎田ぺこら\n        : 4位 filian\n        : 5位 こぼ・かなえる (Kobo Kanaeru)"
+  },
+  {
+    "id": "mermaid-ppm",
+    "name": "Mermaid: PPM - quadrantChart",
+    "notation": "mermaid",
+    "code": "quadrantChart\n    title 事業ポートフォリオ分析\n    x-axis \"相対的市場シェア (高 → 低)\"\n    y-axis \"市場成長率 (低 → 高)\"\n    quadrant-1 \"花形 (Star)\"\n    quadrant-2 \"問題児 (Question Mark)\"\n    quadrant-3 \"金のなる木 (Cash Cow)\"\n    quadrant-4 \"負け犬 (Dog)\"\n    %% 花形エリア\n    \"主力事業A\": [0.85, 0.8]\n    \"新規事業B\": [0.7, 0.9]\n    %% 問題児エリア\n    \"研究開発中C\": [0.2, 0.85]\n    \"テスト導入D\": [0.1, 0.6]\n    %% 金のなる木エリア\n    \"成熟事業E\": [0.9, 0.3]\n    \"ニッチ事業F\": [0.65, 0.2]\n    %% 負け犬エリア\n    \"撤退検討G\": [0.3, 0.1]\n    \"不採算事業H\": [0.15, 0.4]"
+  }
+]

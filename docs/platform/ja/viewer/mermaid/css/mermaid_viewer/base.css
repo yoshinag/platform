@@ -1,0 +1,160 @@
+/* css/dot_viewer/base.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* --- General Form Elements --- */
+label {
+    margin-right: 10px;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+input[type="radio"],
+select,
+textarea, /* Generic textarea, specific ID styles in panels.css */
+#download-btn { /* Specific ID, but treated as a general form button here */
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+input[type="radio"] {
+    margin-right: 3px;
+}
+
+select {
+    margin-right: 8px;
+}
+
+textarea { /* Basic textarea reset/defaults */
+    font-family: 'Courier New', Courier, monospace;
+    white-space: pre;
+    line-height: 1.4;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+#download-btn {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+#download-btn:hover {
+    background-color: #4cae4c;
+}
+#download-btn svg {
+    display: block;
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+}
+
+/* Clear file button styling */
+#clear-file-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 6px;
+    margin-left: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease-in-out;
+}
+#clear-file-btn:hover {
+    background-color: #c82333;
+}
+#clear-file-btn svg {
+    display: block;
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+}
+
+/* Notification styles */
+#notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.notification {
+    margin-bottom: 10px;
+    padding: 12px 20px;
+    border-radius: 4px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    color: white;
+    font-size: 14px;
+    max-width: 300px;
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.notification.hide {
+    opacity: 0;
+    transform: translateX(50px);
+}
+
+.notification-info {
+    background-color: #2196F3;
+}
+
+.notification-success {
+    background-color: #4CAF50;
+}
+
+.notification-warning {
+    background-color: #FF9800;
+}
+
+.notification-error {
+    background-color: #F44336;
+}
+
+/* File upload info styling */
+.file-upload-info {
+    margin-top: 5px;
+    color: #666;
+    line-height: 1.4;
+}
+
+.file-upload-info small {
+    display: block;
+    max-width: 500px;
+}
