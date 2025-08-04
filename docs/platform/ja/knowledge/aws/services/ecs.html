@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Amazon ECS</title>
+    <link rel="stylesheet" href="../../../../css/knowledge.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../../../platform/js/common/analytics.js"></script>
+<body class="ja-knowledge">
+    <div style="margin-bottom: 20px;">
+        <a href="../aws.html">AWSに戻る</a>
+    </div>
+    <h1>Amazon ECS (Elastic Container Service)</h1>
+    
+    <h2>Amazon ECSとは</h2>
+    <p>Amazon Elastic Container Service (Amazon ECS) は、AWSが提供するフルマネージドのコンテナオーケストレーションサービスです。Dockerコンテナをサポートし、AWSのインフラストラクチャ上でコンテナ化されたアプリケーションを簡単に実行、停止、管理することができます。ECSを使用することで、独自のコンテナオーケストレーションソフトウェアをインストール・運用・スケーリングする必要がなく、アプリケーションの開発に集中できます。</p>
+    
+    <h2>Amazon ECSの主な特徴</h2>
+    <ul>
+        <li><strong>フルマネージドサービス：</strong> インフラストラクチャの管理やコンテナオーケストレーションソフトウェアの運用が不要</li>
+        <li><strong>AWS統合：</strong> IAM、VPC、Route 53、CloudWatch、ALBなど他のAWSサービスとの緊密な統合</li>
+        <li><strong>スケーラビリティ：</strong> 数千のコンテナにわたるアプリケーションを簡単にスケール</li>
+        <li><strong>柔軟な起動タイプ：</strong> EC2起動タイプとFargate起動タイプの選択が可能</li>
+        <li><strong>コンテナ管理：</strong> コンテナのデプロイ、更新、モニタリング、スケーリングを自動化</li>
+        <li><strong>タスク定義：</strong> JSONフォーマットでアプリケーションの構成を定義</li>
+        <li><strong>サービス管理：</strong> 指定された数のタスクを維持し、タスク障害時に自動的に再起動</li>
+        <li><strong>セキュリティ：</strong> IAMロール、VPC、セキュリティグループによる多層防御</li>
+    </ul>
+    
+    <h2>Amazon ECSの起動タイプ</h2>
+    <p>ECSには2つの起動タイプがあり、ニーズに合わせて選択できます：</p>
+    
+    <table>
+        <tr>
+            <th>起動タイプ</th>
+            <th>説明</th>
+            <th>適したユースケース</th>
+        </tr>
+        <tr>
+            <td>EC2起動タイプ</td>
+            <td>ユーザーが管理するEC2インスタンス上でコンテナを実行</td>
+            <td>カスタムインスタンスタイプが必要な場合、大規模なワークロード、コスト最適化が重要な場合</td>
+        </tr>
+        <tr>
+            <td>Fargate起動タイプ</td>
+            <td>サーバーレスでコンテナを実行（インフラストラクチャ管理不要）</td>
+            <td>インフラストラクチャ管理を避けたい場合、小〜中規模のワークロード、バッチ処理</td>
+        </tr>
+    </table>
+    
+    <h2>Amazon ECSの主要コンポーネント</h2>
+    
+    <h3>クラスター</h3>
+    <p>ECSクラスターは、タスクまたはサービスの論理的なグループです。EC2起動タイプを使用する場合、クラスターはコンテナインスタンスのグループでもあります。Fargate起動タイプを使用する場合、AWSがインフラストラクチャを管理します。</p>
+    
+    <h3>タスク定義</h3>
+    <p>タスク定義は、アプリケーションを構成するコンテナのブループリントです。コンテナイメージ、CPU/メモリ要件、ポートマッピング、環境変数、ボリュームなどを指定します。</p>
+    
+    <div class="example">
+        <h4>タスク定義の例</h4>
+        <pre><code>{
+  "family": "webapp",
+  "containerDefinitions": [
+    {
+      "name": "web",
+      "image": "nginx:latest",
+      "cpu": 256,
+      "memory": 512,
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 80
+        }
+      ]
+    }
+  ],
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "networkMode": "awsvpc",
+  "cpu": "256",
+  "memory": "512"
+}</code></pre>
+    </div>
+    
+    <h3>タスク</h3>
+    <p>タスクは、タスク定義に基づいて起動されるコンテナのインスタンスです。タスクは、クラスター内のコンテナインスタンス（EC2起動タイプ）またはAWSが管理するインフラストラクチャ（Fargate起動タイプ）で実行されます。</p>
+    
+    <h3>サービス</h3>
+    <p>ECSサービスは、クラスター内で指定された数のタスクを同時に実行および維持します。タスクが失敗した場合、サービススケジューラは新しいタスクを起動して置き換えます。サービスはApplication Load Balancerと統合して、タスク間でトラフィックを分散させることもできます。</p>
+    
+    <h2>Amazon ECSの使用方法</h2>
+    <p>ECSは、AWS Management Console、AWS CLI、SDKs、またはインフラストラクチャ as コード（IaC）ツールを使用して利用できます。</p>
+    
+    <h3>クラスターの作成</h3>
+    <div class="example">
+        <h4>AWS CLIを使用したクラスターの作成</h4>
+        <pre><code>aws ecs create-cluster --cluster-name my-cluster</code></pre>
+    </div>
+    
+    <h3>タスク定義の登録</h3>
+    <div class="example">
+        <h4>タスク定義の登録</h4>
+        <pre><code>aws ecs register-task-definition --cli-input-json file://task-definition.json</code></pre>
+    </div>
+    
+    <h3>サービスの作成</h3>
+    <div class="example">
+        <h4>サービスの作成</h4>
+        <pre><code>aws ecs create-service \
+    --cluster my-cluster \
+    --service-name my-service \
+    --task-definition my-task:1 \
+    --desired-count 2 \
+    --launch-type FARGATE \
+    --network-configuration "awsvpcConfiguration={subnets=[subnet-0123456789abcdef0,subnet-0123456789abcdef1],securityGroups=[sg-0123456789abcdef0],assignPublicIp=ENABLED}"</code></pre>
+    </div>
+    
+    <h3>タスクの実行</h3>
+    <div class="example">
+        <h4>タスクの実行</h4>
+        <pre><code>aws ecs run-task \
+    --cluster my-cluster \
+    --task-definition my-task:1 \
+    --count 1 \
+    --launch-type FARGATE \
+    --network-configuration "awsvpcConfiguration={subnets=[subnet-0123456789abcdef0],securityGroups=[sg-0123456789abcdef0],assignPublicIp=ENABLED}"</code></pre>
+    </div>
+    
+    <h2>Amazon ECSのネットワーキング</h2>
+    <p>ECSは、以下のネットワークモードをサポートしています：</p>
+    
+    <table>
+        <tr>
+            <th>ネットワークモード</th>
+            <th>説明</th>
+            <th>起動タイプの互換性</th>
+        </tr>
+        <tr>
+            <td>awsvpc</td>
+            <td>各タスクに独自のElastic Network Interface（ENI）とプライベートIPアドレスを提供</td>
+            <td>EC2、Fargate（Fargateでは必須）</td>
+        </tr>
+        <tr>
+            <td>bridge</td>
+            <td>Dockerのデフォルトネットワークモード。コンテナはホストのブリッジネットワークを使用</td>
+            <td>EC2のみ</td>
+        </tr>
+        <tr>
+            <td>host</td>
+            <td>コンテナはホストのネットワークインターフェースを直接使用</td>
+            <td>EC2のみ</td>
+        </tr>
+        <tr>
+            <td>none</td>
+            <td>コンテナにネットワーク接続なし</td>
+            <td>EC2のみ</td>
+        </tr>
+    </table>
+    
+    <h2>Amazon ECSのストレージオプション</h2>
+    <p>ECSタスクには複数のストレージオプションがあります：</p>
+    
+    <ul>
+        <li><strong>一時ストレージ：</strong> コンテナに自動的に割り当てられる一時ストレージ</li>
+        <li><strong>バインドマウント：</strong> ホストマシンのファイルやディレクトリをコンテナにマウント（EC2起動タイプのみ）</li>
+        <li><strong>Docker ボリューム：</strong> Dockerによって管理されるボリューム（EC2起動タイプのみ）</li>
+        <li><strong>EFS ボリューム：</strong> Amazon Elastic File Systemをコンテナにマウント（EC2およびFargate起動タイプ）</li>
+    </ul>
+    
+    <h2>Amazon ECSのセキュリティ</h2>
+    <p>ECSのセキュリティを確保するためのベストプラクティス：</p>
+    
+    <ul>
+        <li><strong>タスク実行ロールの使用：</strong> コンテナがAWSリソースにアクセスするための最小権限を持つIAMロールを使用</li>
+        <li><strong>タスクロールの使用：</strong> タスク内のアプリケーションが使用するIAMロールを指定</li>
+        <li><strong>プライベートリポジトリの使用：</strong> Amazon ECRなどのプライベートコンテナレジストリを使用</li>
+        <li><strong>シークレット管理：</strong> AWS Secrets ManagerやSSMパラメータストアを使用して機密情報を管理</li>
+        <li><strong>ネットワークセキュリティ：</strong> セキュリティグループとネットワークACLを使用してトラフィックを制限</li>
+        <li><strong>コンテナイメージのスキャン：</strong> 脆弱性のあるコンテナイメージをデプロイしないようにスキャン</li>
+    </ul>
+    
+    <h3>タスク実行ロールとタスクロール</h3>
+    <div class="example">
+        <h4>タスク定義でのIAMロールの指定</h4>
+        <pre><code>{
+  "family": "webapp",
+  "executionRoleArn": "arn:aws:iam::123456789012:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::123456789012:role/ecsTaskRole",
+  "containerDefinitions": [
+    {
+      "name": "web",
+      "image": "nginx:latest",
+      ...
+    }
+  ],
+  ...
+}</code></pre>
+    </div>
+    
+    <h2>Amazon ECSのモニタリングと可観測性</h2>
+    <p>ECSタスクとサービスのパフォーマンスと健全性を監視するためのツール：</p>
+    
+    <h3>Amazon CloudWatch</h3>
+    <p>CloudWatchは、ECSクラスター、サービス、タスクのメトリクスを収集し、アラームを設定して自動アクションをトリガーすることができます。</p>
+    
+    <h3>AWS CloudTrail</h3>
+    <p>CloudTrailは、ECS APIコールを記録し、誰が何をいつ行ったかを追跡します。</p>
+    
+    <h3>Amazon CloudWatch Logs</h3>
+    <p>CloudWatch Logsを使用して、ECSタスクからログを収集、監視、分析することができます。</p>
+    
+    <div class="example">
+        <h4>タスク定義でのCloudWatch Logsの設定</h4>
+        <pre><code>{
+  "family": "webapp",
+  "containerDefinitions": [
+    {
+      "name": "web",
+      "image": "nginx:latest",
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/webapp",
+          "awslogs-region": "us-west-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      ...
+    }
+  ],
+  ...
+}</code></pre>
+    </div>
+    
+    <h3>AWS Container Insights</h3>
+    <p>Container Insightsは、コンテナ化されたアプリケーションとマイクロサービスのメトリクスとログを収集、集約、要約します。</p>
+    
+    <h2>Amazon ECSのユースケース</h2>
+    <p>ECSは以下のようなユースケースに適しています：</p>
+    <ul>
+        <li><strong>マイクロサービスアーキテクチャ：</strong> 小さな独立したサービスとしてアプリケーションを構築</li>
+        <li><strong>バッチ処理：</strong> 定期的または一時的なバッチジョブの実行</li>
+        <li><strong>ウェブアプリケーション：</strong> スケーラブルなウェブアプリケーションのデプロイ</li>
+        <li><strong>APIバックエンド：</strong> RESTful APIサービスの提供</li>
+        <li><strong>継続的インテグレーション/継続的デプロイメント（CI/CD）：</strong> 自動化されたビルドとデプロイメントパイプライン</li>
+        <li><strong>機械学習：</strong> 機械学習モデルのトレーニングと推論</li>
+    </ul>
+    
+    <h2>Amazon ECSとの統合サービス</h2>
+    <p>ECSは他のAWSサービスと統合して、より強力なソリューションを構築できます：</p>
+    
+    <table>
+        <tr>
+            <th>サービス</th>
+            <th>統合の利点</th>
+        </tr>
+        <tr>
+            <td>AWS Fargate</td>
+            <td>サーバーレスコンテナ実行環境を提供</td>
+        </tr>
+        <tr>
+            <td>Amazon ECR</td>
+            <td>コンテナイメージのストレージと管理</td>
+        </tr>
+        <tr>
+            <td>Elastic Load Balancing</td>
+            <td>タスク間でトラフィックを分散</td>
+        </tr>
+        <tr>
+            <td>Amazon VPC</td>
+            <td>タスクの論理的に分離されたネットワーク環境を提供</td>
+        </tr>
+        <tr>
+            <td>AWS IAM</td>
+            <td>タスクとサービスのアクセス制御</td>
+        </tr>
+        <tr>
+            <td>Amazon CloudWatch</td>
+            <td>タスクとサービスのモニタリングとアラート</td>
+        </tr>
+        <tr>
+            <td>AWS CloudFormation</td>
+            <td>ECSリソースのインフラストラクチャ as コード</td>
+        </tr>
+        <tr>
+            <td>AWS CodePipeline</td>
+            <td>コンテナアプリケーションの継続的デリバリー</td>
+        </tr>
+    </table>
+    
+    <h2>Amazon ECSのベストプラクティス</h2>
+    <ul>
+        <li><strong>適切な起動タイプの選択：</strong> ワークロードに最適な起動タイプ（EC2またはFargate）を選択</li>
+        <li><strong>コンテナイメージの最適化：</strong> 小さく効率的なコンテナイメージを構築</li>
+        <li><strong>タスク定義のバージョン管理：</strong> タスク定義の変更を追跡するためにバージョン管理を使用</li>
+        <li><strong>サービスの自動スケーリング：</strong> 需要に応じて自動的にスケールするようにサービスを設定</li>
+        <li><strong>ヘルスチェックの実装：</strong> コンテナの健全性を監視するためのヘルスチェックを実装</li>
+        <li><strong>ログ記録と監視：</strong> CloudWatch Logsとメトリクスを使用してタスクを監視</li>
+        <li><strong>セキュリティのベストプラクティスの適用：</strong> 最小権限の原則に従い、機密情報を安全に管理</li>
+        <li><strong>タグ付け戦略の実装：</strong> リソースの管理とコスト追跡のためにタグを使用</li>
+    </ul>
+    
+    <h2>まとめ</h2>
+    <p>Amazon ECSは、AWSクラウド内でコンテナ化されたアプリケーションを簡単に実行、管理するためのフルマネージドコンテナオーケストレーションサービスです。EC2インスタンス上でコンテナを実行するか、Fargateを使用してサーバーレスでコンテナを実行するかを選択できます。</p>
+    
+    <p>ECSの主な利点は以下の通りです：</p>
+    <ul>
+        <li>コンテナオーケストレーションインフラストラクチャの管理が不要</li>
+        <li>他のAWSサービスとの緊密な統合</li>
+        <li>需要に応じた自動スケーリング</li>
+        <li>EC2とFargateの柔軟な起動タイプオプション</li>
+        <li>包括的なセキュリティ機能</li>
+        <li>詳細なモニタリングと可観測性</li>
+    </ul>
+    
+    <p>ECSを効果的に活用するには、ワークロードに適した起動タイプの選択、コンテナイメージの最適化、適切なネットワーキングとストレージの設定、セキュリティベストプラクティスの適用、適切なモニタリングの設定が重要です。また、他のAWSサービスと組み合わせることで、より強力で柔軟なコンテナベースのアプリケーションを構築することができます。</p>
+</body>
+</html>

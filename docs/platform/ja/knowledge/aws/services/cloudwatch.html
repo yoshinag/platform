@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Amazon CloudWatch</title>
+    <link rel="stylesheet" href="../../../../css/knowledge.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../../../platform/js/common/analytics.js"></script>
+<body class="ja-knowledge">
+    <div style="margin-bottom: 20px;">
+        <a href="../aws.html">AWSに戻る</a>
+    </div>
+    <h1>Amazon CloudWatch</h1>
+    
+    <h2>Amazon CloudWatchとは</h2>
+    <p>Amazon CloudWatchは、AWSリソースとアプリケーションのモニタリングと可観測性のためのサービスです。CloudWatchを使用することで、メトリクスの収集と追跡、ログファイルの収集と監視、アラームの設定、AWSリソースの変更への自動対応が可能になります。CloudWatchは、EC2インスタンス、RDSデータベースインスタンス、DynamoDBテーブルなどのAWSリソースだけでなく、アプリケーションが生成するカスタムメトリクスやログも監視できます。</p>
+    
+    <h2>Amazon CloudWatchの主な特徴</h2>
+    <ul>
+        <li><strong>メトリクス：</strong> AWSリソースとアプリケーションのパフォーマンスデータを収集・追跡</li>
+        <li><strong>ログ：</strong> ログファイルを収集、監視、分析、保存</li>
+        <li><strong>アラーム：</strong> メトリクスを監視し、しきい値を超えた場合に通知やアクションを実行</li>
+        <li><strong>ダッシュボード：</strong> カスタマイズ可能なダッシュボードでリソースとアプリケーションを可視化</li>
+        <li><strong>イベント（EventBridge）：</strong> AWSリソースの変更に対応するルールを設定</li>
+        <li><strong>Synthetics：</strong> エンドポイントとAPIをモニタリングするカナリアを作成</li>
+        <li><strong>Insights：</strong> 運用データの自動分析によるパターンの検出と異常の特定</li>
+        <li><strong>ServiceLens：</strong> トレース、メトリクス、ログ、アラームを組み合わせたアプリケーションの健全性の可視化</li>
+        <li><strong>Container Insights：</strong> コンテナ化されたアプリケーションとマイクロサービスのモニタリング</li>
+        <li><strong>Lambda Insights：</strong> サーバーレスアプリケーションのパフォーマンスモニタリング</li>
+    </ul>
+    
+    <h2>Amazon CloudWatchのコンポーネント</h2>
+    <p>CloudWatchは、以下の主要なコンポーネントで構成されています：</p>
+    
+    <h3>CloudWatch メトリクス</h3>
+    <p>メトリクスは、CloudWatchの基本的な概念で、時系列データポイントの順序付けられたセットです。メトリクスは、モニタリング対象のリソースの変数（CPU使用率、ネットワークトラフィックなど）を表します。</p>
+    
+    <h4>メトリクスの主な特徴</h4>
+    <ul>
+        <li><strong>名前空間：</strong> メトリクスを整理するための名前空間（例：AWS/EC2、AWS/RDS）</li>
+        <li><strong>ディメンション：</strong> メトリクスを一意に識別する名前と値のペア（例：InstanceId=i-1234567890abcdef0）</li>
+        <li><strong>統計：</strong> メトリクスデータの集計方法（Average、Sum、Minimum、Maximum、SampleCount、pNN.NN）</li>
+        <li><strong>期間：</strong> メトリクスデータの集計時間（1分、5分、1時間など）</li>
+        <li><strong>単位：</strong> メトリクスの測定単位（Bytes、Seconds、Count、Percentなど）</li>
+    </ul>
+    
+    <div class="example">
+        <h4>AWS CLIを使用したメトリクスの取得</h4>
+        <pre><code>aws cloudwatch get-metric-statistics \
+    --namespace AWS/EC2 \
+    --metric-name CPUUtilization \
+    --dimensions Name=InstanceId,Value=i-1234567890abcdef0 \
+    --start-time 2023-08-04T00:00:00Z \
+    --end-time 2023-08-05T00:00:00Z \
+    --period 3600 \
+    --statistics Average Maximum</code></pre>
+    </div>
+    
+    <h3>CloudWatch Logs</h3>
+    <p>CloudWatch Logsは、ログファイルを収集、監視、分析、保存するためのサービスです。EC2インスタンス、Lambda関数、その他のソースからのログを一元管理できます。</p>
+    
+    <h4>CloudWatch Logsの主な概念</h4>
+    <ul>
+        <li><strong>ロググループ：</strong> 同じ種類のログを格納するためのグループ（例：/aws/lambda/my-function）</li>
+        <li><strong>ログストリーム：</strong> ロググループ内の同じソースからのログシーケンス（例：特定のEC2インスタンスからのログ）</li>
+        <li><strong>メトリクスフィルター：</strong> ログデータからメトリクスを抽出するためのフィルター</li>
+        <li><strong>サブスクリプションフィルター：</strong> リアルタイムでログデータを処理するためのフィルター</li>
+        <li><strong>ログインサイト：</strong> ログデータをクエリして分析するためのツール</li>
+    </ul>
+    
+    <div class="example">
+        <h4>AWS CLIを使用したロググループの作成</h4>
+        <pre><code>aws logs create-log-group --log-group-name my-log-group</code></pre>
+        
+        <h4>AWS CLIを使用したログイベントの取得</h4>
+        <pre><code>aws logs get-log-events \
+    --log-group-name my-log-group \
+    --log-stream-name my-log-stream</code></pre>
+    </div>
+    
+    <h3>CloudWatch アラーム</h3>
+    <p>CloudWatchアラームは、指定したメトリクスを監視し、しきい値を超えた場合に通知を送信したりアクションを実行したりします。</p>
+    
+    <h4>アラームの主な特徴</h4>
+    <ul>
+        <li><strong>しきい値：</strong> アラームがトリガーされるメトリクスの値</li>
+        <li><strong>評価期間：</strong> アラームの状態を評価するための期間の数</li>
+        <li><strong>データポイント：</strong> アラームをトリガーするために必要なしきい値を超えるデータポイントの数</li>
+        <li><strong>アクション：</strong> アラームがトリガーされたときに実行されるアクション（SNS通知、Auto Scalingアクション、EC2アクションなど）</li>
+    </ul>
+    
+    <div class="example">
+        <h4>AWS CLIを使用したアラームの作成</h4>
+        <pre><code>aws cloudwatch put-metric-alarm \
+    --alarm-name cpu-high \
+    --comparison-operator GreaterThanThreshold \
+    --evaluation-periods 2 \
+    --metric-name CPUUtilization \
+    --namespace AWS/EC2 \
+    --period 300 \
+    --statistic Average \
+    --threshold 80 \
+    --alarm-actions arn:aws:sns:us-west-2:123456789012:my-topic \
+    --dimensions "Name=InstanceId,Value=i-1234567890abcdef0"</code></pre>
+    </div>
+    
+    <h3>CloudWatch ダッシュボード</h3>
+    <p>CloudWatchダッシュボードは、カスタマイズ可能なホームページで、複数のリージョンにまたがるリソースのメトリクスとアラームを一元的に表示できます。</p>
+    
+    <div class="example">
+        <h4>AWS CLIを使用したダッシュボードの作成</h4>
+        <pre><code>aws cloudwatch put-dashboard \
+    --dashboard-name my-dashboard \
+    --dashboard-body '{"widgets":[{"type":"metric","x":0,"y":0,"width":12,"height":6,"properties":{"metrics":[["AWS/EC2","CPUUtilization","InstanceId","i-1234567890abcdef0"]],"period":300,"stat":"Average","region":"us-west-2","title":"EC2 Instance CPU"}}]}'</code></pre>
+    </div>
+    
+    <h3>CloudWatch Events（Amazon EventBridge）</h3>
+    <p>CloudWatch Events（現在はAmazon EventBridgeとして知られています）は、AWSリソースの変更に対応するルールを設定するためのサービスです。イベントが発生したときに、Lambda関数の呼び出し、SNSトピックへのメッセージの送信、その他のアクションを実行できます。</p>
+    
+    <div class="example">
+        <h4>AWS CLIを使用したイベントルールの作成</h4>
+        <pre><code>aws events put-rule \
+    --name my-rule \
+    --event-pattern '{"source":["aws.ec2"],"detail-type":["EC2 Instance State-change Notification"],"detail":{"state":["running"]}}'</code></pre>
+        
+        <h4>AWS CLIを使用したイベントターゲットの追加</h4>
+        <pre><code>aws events put-targets \
+    --rule my-rule \
+    --targets "Id"="1","Arn"="arn:aws:lambda:us-west-2:123456789012:function:my-function"</code></pre>
+    </div>
+    
+    <h2>Amazon CloudWatchの使用方法</h2>
+    <p>CloudWatchは、AWS Management Console、AWS CLI、SDKs、またはインフラストラクチャ as コード（IaC）ツールを使用して利用できます。</p>
+    
+    <h3>メトリクスの監視</h3>
+    <p>CloudWatchコンソールでは、メトリクスをグラフ化して視覚的に監視できます。また、AWS CLIやSDKを使用してプログラムでメトリクスにアクセスすることもできます。</p>
+    
+    <div class="example">
+        <h4>AWS CLIを使用したメトリクスの一覧表示</h4>
+        <pre><code>aws cloudwatch list-metrics --namespace AWS/EC2</code></pre>
+    </div>
+    
+    <h3>カスタムメトリクスの作成</h3>
+    <p>CloudWatchでは、独自のカスタムメトリクスを作成して、アプリケーション固有のデータを監視できます。</p>
+    
+    <div class="example">
+        <h4>AWS CLIを使用したカスタムメトリクスの作成</h4>
+        <pre><code>aws cloudwatch put-metric-data \
+    --namespace MyApplication \
+    --metric-name RequestCount \
+    --value 42 \
+    --dimensions Service=MyService,Region=us-west-2</code></pre>
+    </div>
+    
+    <h3>ログの監視と分析</h3>
+    <p>CloudWatch Logsを使用して、ログファイルを収集、監視、分析できます。CloudWatch Logs Insightsを使用すると、ログデータをクエリして分析することができます。</p>
+    
+    <div class="example">
+        <h4>CloudWatch Logs Insightsクエリの例</h4>
+        <pre><code>fields @timestamp, @message
+| filter @message like /ERROR/
+| sort @timestamp desc
+| limit 20</code></pre>
+    </div>
+    
+    <h3>アラームの設定</h3>
+    <p>CloudWatchアラームを設定して、メトリクスがしきい値を超えたときに通知を受け取ったりアクションを実行したりできます。</p>
+    
+    <div class="example">
+        <h4>AWS CLIを使用したアラームの作成</h4>
+        <pre><code>aws cloudwatch put-metric-alarm \
+    --alarm-name high-cpu-alarm \
+    --alarm-description "Alarm when CPU exceeds 80%" \
+    --metric-name CPUUtilization \
+    --namespace AWS/EC2 \
+    --statistic Average \
+    --period 300 \
+    --threshold 80 \
+    --comparison-operator GreaterThanThreshold \
+    --dimensions Name=InstanceId,Value=i-1234567890abcdef0 \
+    --evaluation-periods 2 \
+    --alarm-actions arn:aws:sns:us-west-2:123456789012:my-topic</code></pre>
+    </div>
+    
+    <h3>ダッシュボードの作成</h3>
+    <p>CloudWatchダッシュボードを作成して、重要なメトリクスとアラームを一元的に表示できます。</p>
+    
+    <div class="example">
+        <h4>AWS CLIを使用したダッシュボードの作成</h4>
+        <pre><code>aws cloudwatch put-dashboard \
+    --dashboard-name my-dashboard \
+    --dashboard-body file://dashboard-body.json</code></pre>
+        
+        <p>dashboard-body.jsonの例：</p>
+        <pre><code>{
+  "widgets": [
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 0,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "metrics": [
+          [ "AWS/EC2", "CPUUtilization", "InstanceId", "i-1234567890abcdef0" ]
+        ],
+        "period": 300,
+        "stat": "Average",
+        "region": "us-west-2",
+        "title": "EC2 Instance CPU"
+      }
+    }
+  ]
+}</code></pre>
+    </div>
+    
+    <h2>Amazon CloudWatch Insights</h2>
+    <p>CloudWatch Insightsは、運用データの自動分析によるパターンの検出と異常の特定を支援する機能です。</p>
+    
+    <h3>CloudWatch Container Insights</h3>
+    <p>Container Insightsは、コンテナ化されたアプリケーションとマイクロサービスのメトリクスとログを収集、集約、要約します。Amazon ECS、Amazon EKS、Kubernetes on EC2、Fargateをサポートしています。</p>
+    
+    <div class="example">
+        <h4>AWS CLIを使用したContainer Insightsの有効化（Amazon ECS）</h4>
+        <pre><code>aws ecs update-cluster-settings \
+    --cluster my-cluster \
+    --settings name=containerInsights,value=enabled</code></pre>
+    </div>
+    
+    <h3>CloudWatch Lambda Insights</h3>
+    <p>Lambda Insightsは、AWS Lambda関数のパフォーマンスモニタリングと問題のトラブルシューティングを支援する機能です。CPU時間、メモリ、ディスク、ネットワークなどのシステムレベルのメトリクスを収集します。</p>
+    
+    <div class="example">
+        <h4>AWS CLIを使用したLambda Insightsの有効化</h4>
+        <pre><code>aws lambda update-function-configuration \
+    --function-name my-function \
+    --layers arn:aws:lambda:us-west-2:580247275435:layer:LambdaInsightsExtension:14</code></pre>
+    </div>
+    
+    <h3>CloudWatch Logs Insights</h3>
+    <p>Logs Insightsは、CloudWatch Logsのログデータをクエリして分析するためのツールです。シンプルで強力なクエリ言語を使用して、ログデータから有用な情報を抽出できます。</p>
+    
+    <div class="example">
+        <h4>Logs Insightsクエリの例</h4>
+        <pre><code># エラーログの検索
+fields @timestamp, @message
+| filter @message like /ERROR/
+| sort @timestamp desc
+| limit 20
+
+# HTTPステータスコード別のカウント
+fields @timestamp, status
+| stats count(*) as count by status
+| sort count desc</code></pre>
+    </div>
+    
+    <h3>CloudWatch Synthetics</h3>
+    <p>Syntheticsは、エンドポイントとAPIをモニタリングするカナリアを作成するための機能です。カナリアは、スケジュールに従って実行されるスクリプトで、エンドポイントやAPIの可用性とレイテンシーを監視します。</p>
+    
+    <div class="example">
+        <h4>AWS CLIを使用したSyntheticsカナリアの作成</h4>
+        <pre><code>aws synthetics create-canary \
+    --name my-canary \
+    --artifact-s3-location s3://my-bucket/canary/artifacts \
+    --execution-role-arn arn:aws:iam::123456789012:role/my-canary-role \
+    --schedule "rate(5 minutes)" \
+    --run-config '{"timeoutInSeconds":60,"memoryInMB":1024,"activeTracing":true}' \
+    --code '{"handler":"index.handler","s3Bucket":"my-bucket","s3Key":"canary/code.zip"}' \
+    --success-retention-period 30 \
+    --failure-retention-period 30</code></pre>
+    </div>
+    
+    <h2>Amazon CloudWatchのセキュリティ</h2>
+    <p>CloudWatchのセキュリティを確保するためのベストプラクティス：</p>
+    
+    <ul>
+        <li><strong>IAMポリシーの使用：</strong> 最小権限の原則に従い、必要最小限のアクセス権限のみを付与</li>
+        <li><strong>VPCエンドポイントの使用：</strong> VPC内からCloudWatchへのプライベート接続を確立</li>
+        <li><strong>ログの暗号化：</strong> CloudWatch Logsのログを暗号化して保護</li>
+        <li><strong>リソースベースのポリシーの使用：</strong> 特定のCloudWatchリソースへのアクセスを制御</li>
+        <li><strong>CloudTrailの有効化：</strong> CloudWatchへのAPIコールを記録して監査</li>
+    </ul>
+    
+    <div class="example">
+        <h4>CloudWatch Logsの暗号化の有効化</h4>
+        <pre><code>aws logs associate-kms-key \
+    --log-group-name my-log-group \
+    --kms-key-id arn:aws:kms:us-west-2:123456789012:key/abcdef12-3456-7890-abcd-ef1234567890</code></pre>
+    </div>
+    
+    <h2>Amazon CloudWatchの料金</h2>
+    <p>CloudWatchの料金は、以下の要素に基づいています：</p>
+    
+    <ul>
+        <li><strong>メトリクス：</strong> 基本モニタリングメトリクス（無料）、詳細モニタリングメトリクス（有料）、カスタムメトリクス（有料）</li>
+        <li><strong>ダッシュボード：</strong> 最初の3つのダッシュボードは無料、それ以降は有料</li>
+        <li><strong>アラーム：</strong> メトリクスアラーム、複合アラーム、異常検出アラームの料金が異なる</li>
+        <li><strong>ログ：</strong> 収集、保存、分析されたログデータの量に基づく</li>
+        <li><strong>イベント：</strong> カスタムイベントの数に基づく</li>
+        <li><strong>Insights：</strong> Container Insights、Lambda Insights、Contributor Insightsの使用量に基づく</li>
+        <li><strong>Synthetics：</strong> カナリアの実行回数と実行時間に基づく</li>
+    </ul>
+    
+    <p>詳細な料金情報は、<a href="https://aws.amazon.com/cloudwatch/pricing/" target="_blank">Amazon CloudWatch料金ページ</a>を参照してください。</p>
+    
+    <h2>Amazon CloudWatchのユースケース</h2>
+    <p>CloudWatchは以下のようなユースケースに適しています：</p>
+    <ul>
+        <li><strong>リソースの使用率監視：</strong> EC2インスタンス、RDSデータベース、その他のAWSリソースの使用率を監視</li>
+        <li><strong>アプリケーションのパフォーマンス監視：</strong> アプリケーションのパフォーマンスメトリクスを収集して監視</li>
+        <li><strong>ログ分析：</strong> アプリケーションログを収集、監視、分析</li>
+        <li><strong>自動スケーリング：</strong> メトリクスに基づいてAuto Scalingを設定</li>
+        <li><strong>障害検知と通知：</strong> 異常を検知し、通知を送信</li>
+        <li><strong>コンプライアンス監査：</strong> ログを保存して監査要件を満たす</li>
+        <li><strong>ビジネスメトリクスの追跡：</strong> カスタムメトリクスを使用してビジネスKPIを追跡</li>
+        <li><strong>サービスレベル目標（SLO）の監視：</strong> サービスの可用性とパフォーマンスを監視</li>
+    </ul>
+    
+    <h2>Amazon CloudWatchとの統合サービス</h2>
+    <p>CloudWatchは他のAWSサービスと統合して、より強力なモニタリングと可観測性のソリューションを構築できます：</p>
+    
+    <table>
+        <tr>
+            <th>サービス</th>
+            <th>統合の利点</th>
+        </tr>
+        <tr>
+            <td>Amazon EC2</td>
+            <td>インスタンスのCPU使用率、ディスクI/O、ネットワークトラフィックなどを監視</td>
+        </tr>
+        <tr>
+            <td>Amazon RDS</td>
+            <td>データベースインスタンスのCPU使用率、空きメモリ、接続数などを監視</td>
+        </tr>
+        <tr>
+            <td>Amazon DynamoDB</td>
+            <td>テーブルのスループット、レイテンシー、エラーなどを監視</td>
+        </tr>
+        <tr>
+            <td>AWS Lambda</td>
+            <td>関数の呼び出し回数、実行時間、エラーなどを監視</td>
+        </tr>
+        <tr>
+            <td>Amazon SNS</td>
+            <td>アラームの通知を送信</td>
+        </tr>
+        <tr>
+            <td>AWS Auto Scaling</td>
+            <td>メトリクスに基づいてリソースを自動的にスケール</td>
+        </tr>
+        <tr>
+            <td>AWS CloudTrail</td>
+            <td>APIコールを記録して監査</td>
+        </tr>
+        <tr>
+            <td>Amazon EventBridge</td>
+            <td>イベントに基づいてアクションを実行</td>
+        </tr>
+        <tr>
+            <td>AWS X-Ray</td>
+            <td>アプリケーションのトレースデータを収集して分析</td>
+        </tr>
+    </table>
+    
+    <h2>Amazon CloudWatchのベストプラクティス</h2>
+    <ul>
+        <li><strong>適切なメトリクスの選択：</strong> 監視するリソースとアプリケーションに適したメトリクスを選択</li>
+        <li><strong>適切なアラームしきい値の設定：</strong> 誤検知を避けるために適切なしきい値を設定</li>
+        <li><strong>複合アラームの使用：</strong> 複数の条件に基づいてアラームをトリガー</li>
+        <li><strong>異常検出の活用：</strong> 機械学習を使用して異常を検出</li>
+        <li><strong>ダッシュボードの整理：</strong> 関連するメトリクスとアラームをダッシュボードにまとめる</li>
+        <li><strong>ログの構造化：</strong> JSON形式などの構造化されたログを使用して分析を容易にする</li>
+        <li><strong>ログの保持期間の設定：</strong> コスト最適化のために適切なログ保持期間を設定</li>
+        <li><strong>高解像度メトリクスの選択的使用：</strong> 重要なメトリクスにのみ高解像度（1秒間隔）を使用</li>
+        <li><strong>カスタムメトリクスの活用：</strong> アプリケーション固有のメトリクスを作成して監視</li>
+        <li><strong>自動化の実装：</strong> CloudWatch EventsとLambdaを使用して自動修復を実装</li>
+    </ul>
+    
+    <h2>まとめ</h2>
+    <p>Amazon CloudWatchは、AWSリソースとアプリケーションのモニタリングと可観測性のための包括的なサービスです。メトリクスの収集と追跡、ログファイルの収集と監視、アラームの設定、AWSリソースの変更への自動対応など、幅広い機能を提供します。</p>
+    
+    <p>CloudWatchの主な利点は以下の通りです：</p>
+    <ul>
+        <li>AWSリソースとアプリケーションの統合モニタリング</li>
+        <li>リアルタイムのメトリクス収集と分析</li>
+        <li>カスタマイズ可能なダッシュボードによる可視化</li>
+        <li>柔軟なアラーム設定と通知オプション</li>
+        <li>ログの収集、保存、分析の一元管理</li>
+        <li>イベントに基づく自動アクション</li>
+        <li>Container Insights、Lambda Insightsなどの特化した分析機能</li>
+        <li>他のAWSサービスとの緊密な統合</li>
+    </ul>
+    
+    <p>CloudWatchを効果的に活用するには、監視するリソースとアプリケーションに適したメトリクスの選択、適切なアラームしきい値の設定、ダッシュボードの整理、ログの構造化、カスタムメトリクスの活用などのベストプラクティスを実践することが重要です。また、CloudWatch EventsとLambdaを組み合わせて自動修復を実装することで、運用効率を向上させることができます。</p>
+</body>
+</html>

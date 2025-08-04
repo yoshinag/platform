@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>AWS IoT Device Shadow</title>
+    <link rel="stylesheet" href="../../../../css/knowledge.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../../../platform/js/common/analytics.js"></script>
+<body class="ja-knowledge">
+    <div style="margin-bottom: 20px;">
+        <a href="../aws.html">AWSに戻る</a>
+    </div>
+    <h1>AWS IoT Device Shadow</h1>
+    
+    <h2>AWS IoT Device Shadowとは</h2>
+    <p>AWS IoT Device Shadow（デバイスシャドウ）は、AWS IoTの機能の一つで、IoTデバイスの状態を保存し、デバイスがオフラインの場合でもその状態を取得および制御できるようにするサービスです。デバイスシャドウは、デバイスの「仮想表現」または「デジタルツイン」として機能し、デバイスの現在の状態と望ましい状態を保存します。これにより、アプリケーションはデバイスの接続状態に関係なく、デバイスと通信できるようになります。</p>
+    
+    <h2>AWS IoT Device Shadowの主な特徴</h2>
+    <ul>
+        <li><strong>永続的な状態保存：</strong> デバイスの状態をクラウドに永続的に保存</li>
+        <li><strong>オフライン操作：</strong> デバイスがオフラインの場合でも状態の取得と更新が可能</li>
+        <li><strong>状態の同期：</strong> デバイスがオンラインに戻ったときに自動的に状態を同期</li>
+        <li><strong>バージョン管理：</strong> 状態の変更を追跡するためのバージョン管理</li>
+        <li><strong>JSONドキュメント：</strong> デバイスの状態をJSONドキュメントとして表現</li>
+        <li><strong>MQTTとHTTPSのサポート：</strong> MQTTとHTTPSプロトコルを使用してシャドウにアクセス</li>
+        <li><strong>アクセス制御：</strong> IAMポリシーとAWS IoTポリシーによるアクセス制御</li>
+        <li><strong>名前付きシャドウ：</strong> 1つのデバイスに複数のシャドウを作成可能</li>
+        <li><strong>イベント通知：</strong> シャドウの状態変更時にイベントを発行</li>
+    </ul>
+    
+    <h2>AWS IoT Device Shadowの仕組み</h2>
+    <p>デバイスシャドウは、以下の主要なコンポーネントで構成されています：</p>
+    
+    <h3>シャドウドキュメント</h3>
+    <p>シャドウドキュメントは、デバイスの状態を表すJSONドキュメントです。シャドウドキュメントには、以下のセクションが含まれています：</p>
+    
+    <ul>
+        <li><strong>state：</strong> デバイスの状態情報を含むセクション
+            <ul>
+                <li><strong>desired：</strong> デバイスに設定したい望ましい状態</li>
+                <li><strong>reported：</strong> デバイスから報告された現在の状態</li>
+                <li><strong>delta：</strong> desiredとreportedの差分（AWS IoTが自動的に計算）</li>
+            </ul>
+        </li>
+        <li><strong>metadata：</strong> 状態情報のタイムスタンプを含むセクション</li>
+        <li><strong>version：</strong> シャドウドキュメントのバージョン番号</li>
+        <li><strong>timestamp：</strong> シャドウドキュメントが最後に更新された時間</li>
+    </ul>
+    
+    <div class="example">
+        <h4>シャドウドキュメントの例</h4>
+        <pre><code>{
+  "state": {
+    "desired": {
+      "temperature": 25,
+      "mode": "auto",
+      "fanSpeed": 2
+    },
+    "reported": {
+      "temperature": 22,
+      "mode": "auto",
+      "fanSpeed": 1,
+      "connectionStatus": "online"
+    },
+    "delta": {
+      "temperature": 25,
+      "fanSpeed": 2
+    }
+  },
+  "metadata": {
+    "desired": {
+      "temperature": {
+        "timestamp": 1627824000
+      },
+      "mode": {
+        "timestamp": 1627824000
+      },
+      "fanSpeed": {
+        "timestamp": 1627824000
+      }
+    },
+    "reported": {
+      "temperature": {
+        "timestamp": 1627823900
+      },
+      "mode": {
+        "timestamp": 1627823900
+      },
+      "fanSpeed": {
+        "timestamp": 1627823900
+      },
+      "connectionStatus": {
+        "timestamp": 1627823900
+      }
+    }
+  },
+  "version": 10,
+  "timestamp": 1627824000
+}</code></pre>
+    </div>
+    
+    <h3>シャドウトピック</h3>
+    <p>AWS IoT Device Shadowは、MQTTトピックを使用してデバイスとアプリケーション間の通信を行います。以下は、シャドウ操作に使用される主要なMQTTトピックです：</p>
+    
+    <table>
+        <tr>
+            <th>トピック</th>
+            <th>説明</th>
+        </tr>
+        <tr>
+            <td>$aws/things/<i>thingName</i>/shadow/update</td>
+            <td>シャドウの状態を更新するためのトピック</td>
+        </tr>
+        <tr>
+            <td>$aws/things/<i>thingName</i>/shadow/update/accepted</td>
+            <td>シャドウの更新が受け入れられたときに発行されるトピック</td>
+        </tr>
+        <tr>
+            <td>$aws/things/<i>thingName</i>/shadow/update/rejected</td>
+            <td>シャドウの更新が拒否されたときに発行されるトピック</td>
+        </tr>
+        <tr>
+            <td>$aws/things/<i>thingName</i>/shadow/get</td>
+            <td>シャドウの状態を取得するためのトピック</td>
+        </tr>
+        <tr>
+            <td>$aws/things/<i>thingName</i>/shadow/get/accepted</td>
+            <td>シャドウの取得リクエストが受け入れられたときに発行されるトピック</td>
+        </tr>
+        <tr>
+            <td>$aws/things/<i>thingName</i>/shadow/get/rejected</td>
+            <td>シャドウの取得リクエストが拒否されたときに発行されるトピック</td>
+        </tr>
+        <tr>
+            <td>$aws/things/<i>thingName</i>/shadow/delete</td>
+            <td>シャドウを削除するためのトピック</td>
+        </tr>
+        <tr>
+            <td>$aws/things/<i>thingName</i>/shadow/delete/accepted</td>
+            <td>シャドウの削除が受け入れられたときに発行されるトピック</td>
+        </tr>
+        <tr>
+            <td>$aws/things/<i>thingName</i>/shadow/delete/rejected</td>
+            <td>シャドウの削除が拒否されたときに発行されるトピック</td>
+        </tr>
+    </table>
+    
+    <p>名前付きシャドウの場合は、トピックパターンが <code>$aws/things/<i>thingName</i>/shadow/name/<i>shadowName</i>/...</code> となります。</p>
+    
+    <h3>シャドウの操作フロー</h3>
+    <p>デバイスシャドウの一般的な操作フローは以下の通りです：</p>
+    
+    <ol>
+        <li><strong>アプリケーションがシャドウを更新：</strong> アプリケーションが望ましい状態を設定するためにシャドウを更新します。</li>
+        <li><strong>AWS IoTがシャドウを保存：</strong> AWS IoTがシャドウの状態を保存し、バージョン番号を増やします。</li>
+        <li><strong>AWS IoTがdeltaを計算：</strong> AWS IoTがdesiredとreportedの差分を計算し、deltaセクションを作成します。</li>
+        <li><strong>デバイスがdeltaを受信：</strong> オンラインのデバイスがdeltaを受信し、状態を更新します。</li>
+        <li><strong>デバイスが新しい状態を報告：</strong> デバイスが更新された状態をreportedセクションに報告します。</li>
+        <li><strong>AWS IoTがシャドウを更新：</strong> AWS IoTがシャドウのreportedセクションを更新し、deltaを再計算します。</li>
+    </ol>
+    
+    <div class="example">
+        <h3>シャドウの操作フロー図</h3>
+        <pre>
+アプリケーション                AWS IoT                  デバイス
+     |                           |                         |
+     |--- shadow/update -------->|                         |
+     |  (desired: {temp: 25})    |                         |
+     |                           |--- shadow/update/delta ->|
+     |                           |  (delta: {temp: 25})     |
+     |                           |                         |
+     |                           |                         |--- デバイスが温度を調整 ---
+     |                           |                         |
+     |                           |<-- shadow/update ------|
+     |                           |  (reported: {temp: 25}) |
+     |                           |                         |
+     |<-- shadow/update/accepted-|                         |
+     |  (state: {                |                         |
+     |    desired: {temp: 25},   |                         |
+     |    reported: {temp: 25},  |                         |
+     |    delta: {}              |                         |
+     |  })                       |                         |
+        </pre>
+    </div>
+    
+    <h2>AWS IoT Device Shadowの使用方法</h2>
+    <p>AWS IoT Device Shadowは、AWS Management Console、AWS CLI、SDKs、またはMQTT/HTTPSプロトコルを使用して利用できます。</p>
+    
+    <h3>AWS CLIを使用したシャドウの操作</h3>
+    <div class="example">
+        <h4>シャドウの取得</h4>
+        <pre><code>aws iot-data get-thing-shadow \
+    --thing-name MyThing \
+    --output text > shadow.json</code></pre>
+        
+        <h4>シャドウの更新</h4>
+        <pre><code>aws iot-data update-thing-shadow \
+    --thing-name MyThing \
+    --payload '{"state":{"desired":{"temperature":25,"mode":"auto"}}}' \
+    --output text > response.json</code></pre>
+        
+        <h4>名前付きシャドウの取得</h4>
+        <pre><code>aws iot-data get-thing-shadow \
+    --thing-name MyThing \
+    --shadow-name MyShadow \
+    --output text > named-shadow.json</code></pre>
+    </div>
+    
+    <h3>MQTTを使用したシャドウの操作</h3>
+    <div class="example">
+        <h4>シャドウの更新（デバイスから）</h4>
+        <pre><code>// トピック: $aws/things/MyThing/shadow/update
+// ペイロード:
+{
+  "state": {
+    "reported": {
+      "temperature": 22,
+      "humidity": 45,
+      "connectionStatus": "online"
+    }
+  }
+}</code></pre>
+        
+        <h4>シャドウの更新（アプリケーションから）</h4>
+        <pre><code>// トピック: $aws/things/MyThing/shadow/update
+// ペイロード:
+{
+  "state": {
+    "desired": {
+      "temperature": 25,
+      "mode": "auto"
+    }
+  }
+}</code></pre>
+        
+        <h4>シャドウの取得</h4>
+        <pre><code>// トピック: $aws/things/MyThing/shadow/get
+// ペイロード: (空)</code></pre>
+    </div>
+    
+    <h3>AWS IoT SDKを使用したシャドウの操作</h3>
+    <div class="example">
+        <h4>AWS IoT Device SDK for JavaScript v2を使用したシャドウの操作</h4>
+        <pre><code>const awsIot = require('aws-iot-device-sdk-v2');
+const iotshadow = awsIot.iotshadow;
+
+// シャドウクライアントの作成
+const shadowClient = new iotshadow.IotShadowClient(connection);
+
+// シャドウの更新
+const updateShadow = async () => {
+  const request = {
+    thingName: 'MyThing',
+    state: {
+      reported: {
+        temperature: 22,
+        humidity: 45,
+        connectionStatus: 'online'
+      }
+    }
+  };
+  
+  try {
+    await shadowClient.updateShadow(request);
+    console.log('Successfully updated shadow');
+  } catch (error) {
+    console.log('Failed to update shadow', error);
+  }
+};
+
+// シャドウの取得
+const getShadow = async () => {
+  const request = {
+    thingName: 'MyThing'
+  };
+  
+  try {
+    const response = await shadowClient.getShadow(request);
+    console.log('Shadow document:', response.state);
+  } catch (error) {
+    console.log('Failed to get shadow', error);
+  }
+};
+
+// deltaの購読
+const subscribeToDelta = () => {
+  const request = {
+    thingName: 'MyThing'
+  };
+  
+  shadowClient.subscribeToShadowDeltaUpdatedEvents(
+    request,
+    mqtt.QoS.AtLeastOnce,
+    (error, response) => {
+      if (error) {
+        console.log('Error subscribing to delta', error);
+        return;
+      }
+      
+      console.log('Received delta:', response.state);
+      // デバイスの状態を更新する処理
+    }
+  );
+};</code></pre>
+    </div>
+    
+    <h2>AWS IoT Device Shadowのユースケース</h2>
+    <p>AWS IoT Device Shadowは、以下のようなユースケースに適しています：</p>
+    
+    <ul>
+        <li><strong>間欠的に接続するデバイス：</strong> 常時接続されていないデバイスの状態管理</li>
+        <li><strong>モバイルアプリケーション：</strong> モバイルアプリからIoTデバイスを制御</li>
+        <li><strong>デバイス設定の管理：</strong> デバイスの設定を一元管理</li>
+        <li><strong>デバイス状態の監視：</strong> デバイスの現在の状態を監視</li>
+        <li><strong>デバイス間の状態同期：</strong> 複数のデバイス間で状態を同期</li>
+        <li><strong>オフライン操作：</strong> デバイスがオフラインの場合でも操作を可能にする</li>
+        <li><strong>デバイスのプロビジョニング：</strong> 新しいデバイスの初期設定</li>
+        <li><strong>デバイスのリモート制御：</strong> デバイスをリモートから制御</li>
+    </ul>
+    
+    <h3>具体的なユースケース例</h3>
+    
+    <h4>スマートホーム</h4>
+    <p>スマートホームシステムでは、ユーザーがモバイルアプリを使用して家電製品を制御します。デバイスシャドウを使用することで、ユーザーはデバイスがオフラインの場合でも設定を変更でき、デバイスがオンラインに戻ったときに自動的に新しい設定が適用されます。</p>
+    
+    <h4>産業用IoT</h4>
+    <p>工場の機械や設備は、デバイスシャドウを使用して現在の動作状態を報告し、オペレーターはリモートから設定を変更できます。機械がネットワークから一時的に切断された場合でも、オペレーターは設定を変更でき、機械が再接続したときに新しい設定が適用されます。</p>
+    
+    <h4>フリート管理</h4>
+    <p>車両や機器のフリートは、デバイスシャドウを使用して位置、状態、設定などの情報を報告します。フリート管理者は、デバイスシャドウを通じてフリート全体の状態を監視し、必要に応じて設定を変更できます。</p>
+    
+    <h2>AWS IoT Device Shadowのベストプラクティス</h2>
+    <p>AWS IoT Device Shadowを効果的に使用するためのベストプラクティス：</p>
+    
+    <ul>
+        <li><strong>シャドウドキュメントのサイズを最小限に抑える：</strong> シャドウドキュメントは8KBに制限されているため、必要な情報のみを含める</li>
+        <li><strong>バージョン競合の処理：</strong> バージョン番号を使用して競合を検出し、適切に処理する</li>
+        <li><strong>エラー処理：</strong> rejected トピックを購読して、エラーを適切に処理する</li>
+        <li><strong>デルタ処理：</strong> デバイスは delta トピックを購読して、状態の変更に対応する</li>
+        <li><strong>名前付きシャドウの活用：</strong> 複雑なデバイスでは、機能ごとに名前付きシャドウを使用する</li>
+        <li><strong>セキュリティポリシーの適用：</strong> 最小権限の原則に従い、必要最小限のアクセス権限のみを付与する</li>
+        <li><strong>接続状態の管理：</strong> デバイスの接続状態を reported セクションに含める</li>
+        <li><strong>定期的な状態の報告：</strong> デバイスは定期的に状態を報告して、シャドウを最新の状態に保つ</li>
+        <li><strong>部分的な更新の使用：</strong> 必要な属性のみを更新して、帯域幅とコストを削減する</li>
+    </ul>
+    
+    <h2>AWS IoT Device Shadowの制限事項</h2>
+    <p>AWS IoT Device Shadowを使用する際の主な制限事項：</p>
+    
+    <ul>
+        <li><strong>シャドウドキュメントのサイズ：</strong> 最大8KB</li>
+        <li><strong>シャドウの更新レート：</strong> 1秒あたり1回の更新</li>
+        <li><strong>名前付きシャドウの数：</strong> 1つのデバイスあたり最大10個の名前付きシャドウ</li>
+        <li><strong>シャドウ名の長さ：</strong> 最大64バイト</li>
+        <li><strong>シャドウ名の文字：</strong> a-z、A-Z、0-9、および _ - （ハイフンとアンダースコア）のみ</li>
+        <li><strong>JSONの深さ：</strong> 最大8レベルの深さ</li>
+    </ul>
+    
+    <h2>AWS IoT Device Shadowと他のAWSサービスとの統合</h2>
+    <p>AWS IoT Device Shadowは、他のAWSサービスと統合して、より強力なIoTソリューションを構築できます：</p>
+    
+    <table>
+        <tr>
+            <th>サービス</th>
+            <th>統合の利点</th>
+        </tr>
+        <tr>
+            <td>AWS IoT Core</td>
+            <td>デバイス接続、メッセージングの基盤</td>
+        </tr>
+        <tr>
+            <td>AWS IoT Rules Engine</td>
+            <td>シャドウの更新に基づいてアクションをトリガー</td>
+        </tr>
+        <tr>
+            <td>AWS Lambda</td>
+            <td>シャドウの更新に応じてカスタムロジックを実行</td>
+        </tr>
+        <tr>
+            <td>Amazon DynamoDB</td>
+            <td>シャドウの履歴を保存して分析</td>
+        </tr>
+        <tr>
+            <td>Amazon S3</td>
+            <td>シャドウデータの長期保存</td>
+        </tr>
+        <tr>
+            <td>Amazon CloudWatch</td>
+            <td>シャドウの操作を監視</td>
+        </tr>
+        <tr>
+            <td>AWS IoT Analytics</td>
+            <td>シャドウデータの分析</td>
+        </tr>
+        <tr>
+            <td>AWS IoT Events</td>
+            <td>シャドウの状態に基づいてイベントを検出</td>
+        </tr>
+        <tr>
+            <td>AWS IoT SiteWise</td>
+            <td>産業用デバイスのデータ収集と分析</td>
+        </tr>
+    </table>
+    
+    <h3>AWS IoT Rules Engineとの統合例</h3>
+    <div class="example">
+        <h4>シャドウの更新に基づいてSNS通知を送信するルール</h4>
+        <pre><code>// AWS IoT Ruleの定義
+{
+  "sql": "SELECT * FROM '$aws/things/+/shadow/update/accepted' WHERE state.reported.temperature > 30",
+  "actions": [
+    {
+      "sns": {
+        "targetArn": "arn:aws:sns:us-west-2:123456789012:high-temperature-alert",
+        "roleArn": "arn:aws:iam::123456789012:role/aws-iot-rules-role",
+        "messageFormat": "JSON"
+      }
+    }
+  ]
+}</code></pre>
+    </div>
+    
+    <h2>まとめ</h2>
+    <p>AWS IoT Device Shadowは、IoTデバイスの状態を保存し、デバイスがオフラインの場合でもその状態を取得および制御できるようにするサービスです。デバイスシャドウは、デバイスの「仮想表現」または「デジタルツイン」として機能し、デバイスの現在の状態と望ましい状態を保存します。</p>
+    
+    <p>AWS IoT Device Shadowの主な利点は以下の通りです：</p>
+    <ul>
+        <li>デバイスの状態をクラウドに永続的に保存</li>
+        <li>デバイスがオフラインの場合でも状態の取得と更新が可能</li>
+        <li>デバイスがオンラインに戻ったときに自動的に状態を同期</li>
+        <li>状態の変更を追跡するためのバージョン管理</li>
+        <li>MQTTとHTTPSプロトコルを使用してシャドウにアクセス</li>
+        <li>IAMポリシーとAWS IoTポリシーによるアクセス制御</li>
+        <li>1つのデバイスに複数のシャドウを作成可能</li>
+    </ul>
+    
+    <p>AWS IoT Device Shadowを効果的に活用するには、シャドウドキュメントのサイズを最小限に抑える、バージョン競合を適切に処理する、エラー処理を実装する、デルタ処理を実装する、名前付きシャドウを活用する、セキュリティポリシーを適用するなどのベストプラクティスを実践することが重要です。また、AWS IoT Rules Engine、AWS Lambda、Amazon DynamoDBなどの他のAWSサービスと統合することで、より強力なIoTソリューションを構築できます。</p>
+</body>
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>AWS WAF</title>
+    <link rel="stylesheet" href="../../../../css/knowledge.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../../../platform/js/common/analytics.js"></script>
+<body class="ja-knowledge">
+    <div style="margin-bottom: 20px;">
+        <a href="../aws.html">AWSに戻る</a>
+    </div>
+    <h1>AWS WAF (Web Application Firewall)</h1>
+    
+    <h2>AWS WAFとは</h2>
+    <p>AWS WAF（Web Application Firewall）は、一般的なウェブの脆弱性やボットからウェブアプリケーションやAPIを保護するためのマネージドファイアウォールサービスです。AWS WAFを使用することで、SQLインジェクション、クロスサイトスクリプティング（XSS）などの攻撃からアプリケーションを保護し、特定のトラフィックパターンをフィルタリングすることができます。AWS WAFは、Amazon CloudFront、Application Load Balancer、Amazon API Gateway、AWS AppSyncなどのAWSリソースと統合して使用できます。</p>
+    
+    <h2>AWS WAFの主な特徴</h2>
+    <ul>
+        <li><strong>ウェブトラフィックの可視性：</strong> ウェブリクエストの詳細な情報を提供</li>
+        <li><strong>カスタマイズ可能なルール：</strong> 特定のトラフィックパターンに基づいてカスタムルールを作成</li>
+        <li><strong>マネージドルール：</strong> 一般的な脆弱性に対する事前設定されたルールセット</li>
+        <li><strong>ボット制御：</strong> 悪意のあるボットからの保護</li>
+        <li><strong>IPレピュテーションリスト：</strong> 既知の悪意のあるIPアドレスからの保護</li>
+        <li><strong>地理的制限：</strong> 特定の国や地域からのアクセスを制限</li>
+        <li><strong>レート制限：</strong> 短時間に多数のリクエストを送信するクライアントを制限</li>
+        <li><strong>AWSサービスとの統合：</strong> CloudFront、ALB、API Gateway、AppSyncとの簡単な統合</li>
+        <li><strong>リアルタイムメトリクス：</strong> CloudWatchとの統合によるモニタリング</li>
+        <li><strong>フルマネージドサービス：</strong> インフラストラクチャの管理が不要</li>
+    </ul>
+    
+    <h2>AWS WAFの仕組み</h2>
+    <p>AWS WAFの基本的な仕組みは以下の通りです：</p>
+    
+    <ol>
+        <li><strong>ウェブACLの作成：</strong> ウェブアクセスコントロールリスト（Web ACL）を作成し、保護するリソース（CloudFront、ALB、API Gateway、AppSync）に関連付けます。</li>
+        <li><strong>ルールの定義：</strong> ウェブACLにルールを追加して、許可、ブロック、カウント、CAPTCHAなどのアクションを定義します。</li>
+        <li><strong>トラフィックの評価：</strong> リクエストがリソースに到達すると、AWS WAFはウェブACLのルールに基づいてリクエストを評価します。</li>
+        <li><strong>アクションの実行：</strong> 評価結果に基づいて、リクエストを許可、ブロック、カウント、またはCAPTCHA検証を要求します。</li>
+        <li><strong>ログとメトリクスの記録：</strong> リクエストの詳細をログに記録し、CloudWatchメトリクスを生成します。</li>
+    </ol>
+    
+    <div class="example">
+        <h3>AWS WAFの処理フロー</h3>
+        <pre>
+クライアント → AWS WAF → ルール評価 → アクション（許可/ブロック/カウント/CAPTCHA） → 保護されたリソース（CloudFront/ALB/API Gateway/AppSync）
+        </pre>
+    </div>
+    
+    <h2>AWS WAFのコンポーネント</h2>
+    <p>AWS WAFは、以下の主要なコンポーネントで構成されています：</p>
+    
+    <h3>ウェブACL（Web Access Control List）</h3>
+    <p>ウェブACLは、AWS WAFの中心的なコンポーネントで、保護するリソースに関連付けられます。ウェブACLには、トラフィックを検査するためのルールと、それらのルールに一致するリクエストに対して実行するアクションが含まれています。</p>
+    
+    <h3>ルール</h3>
+    <p>ルールは、ウェブリクエストのどの部分を検査するか、どのような条件で一致とみなすか、一致した場合にどのようなアクションを実行するかを定義します。ルールには、以下のタイプがあります：</p>
+    
+    <ul>
+        <li><strong>マネージドルールグループ：</strong> AWSやAWSマーケットプレイスのパートナーが提供する事前設定されたルールセット</li>
+        <li><strong>ルールグループ：</strong> 再利用可能なルールのコレクション</li>
+        <li><strong>個別のルール：</strong> カスタム条件とアクションを持つ単一のルール</li>
+    </ul>
+    
+    <h3>ルールステートメント</h3>
+    <p>ルールステートメントは、ウェブリクエストのどの部分を検査するか、どのような条件で一致とみなすかを定義します。ルールステートメントには、以下のタイプがあります：</p>
+    
+    <table>
+        <tr>
+            <th>ステートメントタイプ</th>
+            <th>説明</th>
+            <th>例</th>
+        </tr>
+        <tr>
+            <td>文字列一致</td>
+            <td>リクエストの特定の部分に特定の文字列が含まれているかどうかを検査</td>
+            <td>URLパスに「admin」が含まれているかどうか</td>
+        </tr>
+        <tr>
+            <td>正規表現一致</td>
+            <td>リクエストの特定の部分が正規表現パターンに一致するかどうかを検査</td>
+            <td>クエリ文字列が特定のパターンに一致するかどうか</td>
+        </tr>
+        <tr>
+            <td>地理的一致</td>
+            <td>リクエストの送信元の国を検査</td>
+            <td>リクエストが特定の国から送信されたかどうか</td>
+        </tr>
+        <tr>
+            <td>IPセット一致</td>
+            <td>リクエストの送信元IPアドレスが特定のIPセットに含まれているかどうかを検査</td>
+            <td>リクエストが許可または禁止されたIPアドレスから送信されたかどうか</td>
+        </tr>
+        <tr>
+            <td>サイズ制約</td>
+            <td>リクエストの特定の部分のサイズを検査</td>
+            <td>リクエストボディが特定のサイズを超えているかどうか</td>
+        </tr>
+        <tr>
+            <td>SQLインジェクション</td>
+            <td>リクエストにSQLインジェクションコードが含まれているかどうかを検査</td>
+            <td>クエリ文字列にSQLインジェクションコードが含まれているかどうか</td>
+        </tr>
+        <tr>
+            <td>クロスサイトスクリプティング</td>
+            <td>リクエストにXSSコードが含まれているかどうかを検査</td>
+            <td>リクエストボディにXSSコードが含まれているかどうか</td>
+        </tr>
+        <tr>
+            <td>論理演算子</td>
+            <td>複数のステートメントを組み合わせて複雑な条件を作成</td>
+            <td>AND、OR、NOTを使用して複数の条件を組み合わせる</td>
+        </tr>
+        <tr>
+            <td>レートベース</td>
+            <td>特定の期間内に送信されるリクエストの数を制限</td>
+            <td>5分間に100リクエストを超えるIPアドレスをブロック</td>
+        </tr>
+    </table>
+    
+    <h3>アクション</h3>
+    <p>アクションは、ルールに一致するリクエストに対して実行される操作を定義します。AWS WAFは、以下のアクションをサポートしています：</p>
+    
+    <ul>
+        <li><strong>Allow：</strong> リクエストを許可し、保護されたリソースに転送</li>
+        <li><strong>Block：</strong> リクエストをブロックし、保護されたリソースに転送しない</li>
+        <li><strong>Count：</strong> リクエストをカウントするが、ブロックせずに保護されたリソースに転送</li>
+        <li><strong>CAPTCHA：</strong> クライアントにCAPTCHA検証を要求し、成功した場合にのみリクエストを許可</li>
+        <li><strong>Challenge：</strong> クライアントにブラウザチャレンジを提示し、成功した場合にのみリクエストを許可</li>
+    </ul>
+    
+    <h2>AWS WAFの使用方法</h2>
+    <p>AWS WAFは、AWS Management Console、AWS CLI、SDKs、またはインフラストラクチャ as コード（IaC）ツールを使用して利用できます。</p>
+    
+    <h3>ウェブACLの作成</h3>
+    <div class="example">
+        <h4>AWS CLIを使用したウェブACLの作成</h4>
+        <pre><code>aws wafv2 create-web-acl \
+    --name my-web-acl \
+    --scope REGIONAL \
+    --default-action Allow={} \
+    --visibility-config SampledRequestsEnabled=true,CloudWatchMetricsEnabled=true,MetricName=my-web-acl-metric \
+    --region us-west-2</code></pre>
+    </div>
+    
+    <h3>ルールの追加</h3>
+    <div class="example">
+        <h4>IPセットの作成</h4>
+        <pre><code>aws wafv2 create-ip-set \
+    --name my-ip-set \
+    --scope REGIONAL \
+    --ip-address-version IPV4 \
+    --addresses 192.0.2.0/24 198.51.100.0/24 \
+    --region us-west-2</code></pre>
+        
+        <h4>IPセットを使用したルールの追加</h4>
+        <pre><code>aws wafv2 update-web-acl \
+    --name my-web-acl \
+    --scope REGIONAL \
+    --id abcdef12-3456-7890-abcd-ef1234567890 \
+    --default-action Allow={} \
+    --rules '[
+        {
+            "Name": "block-ip-rule",
+            "Priority": 1,
+            "Statement": {
+                "IPSetReferenceStatement": {
+                    "ARN": "arn:aws:wafv2:us-west-2:123456789012:regional/ipset/my-ip-set/abcdef12-3456-7890-abcd-ef1234567890"
+                }
+            },
+            "Action": {
+                "Block": {}
+            },
+            "VisibilityConfig": {
+                "SampledRequestsEnabled": true,
+                "CloudWatchMetricsEnabled": true,
+                "MetricName": "block-ip-rule-metric"
+            }
+        }
+    ]' \
+    --visibility-config SampledRequestsEnabled=true,CloudWatchMetricsEnabled=true,MetricName=my-web-acl-metric \
+    --region us-west-2 \
+    --lock-token "9e92ea24-5c73-4c13-a5c3-0d1e5EXAMPLE"</code></pre>
+    </div>
+    
+    <h3>マネージドルールグループの使用</h3>
+    <div class="example">
+        <h4>マネージドルールグループの追加</h4>
+        <pre><code>aws wafv2 update-web-acl \
+    --name my-web-acl \
+    --scope REGIONAL \
+    --id abcdef12-3456-7890-abcd-ef1234567890 \
+    --default-action Allow={} \
+    --rules '[
+        {
+            "Name": "AWS-AWSManagedRulesCommonRuleSet",
+            "Priority": 0,
+            "Statement": {
+                "ManagedRuleGroupStatement": {
+                    "VendorName": "AWS",
+                    "Name": "AWSManagedRulesCommonRuleSet"
+                }
+            },
+            "OverrideAction": {
+                "None": {}
+            },
+            "VisibilityConfig": {
+                "SampledRequestsEnabled": true,
+                "CloudWatchMetricsEnabled": true,
+                "MetricName": "AWS-AWSManagedRulesCommonRuleSet"
+            }
+        }
+    ]' \
+    --visibility-config SampledRequestsEnabled=true,CloudWatchMetricsEnabled=true,MetricName=my-web-acl-metric \
+    --region us-west-2 \
+    --lock-token "9e92ea24-5c73-4c13-a5c3-0d1e5EXAMPLE"</code></pre>
+    </div>
+    
+    <h3>ウェブACLのリソースへの関連付け</h3>
+    <div class="example">
+        <h4>Application Load Balancerへの関連付け</h4>
+        <pre><code>aws wafv2 associate-web-acl \
+    --web-acl-arn arn:aws:wafv2:us-west-2:123456789012:regional/webacl/my-web-acl/abcdef12-3456-7890-abcd-ef1234567890 \
+    --resource-arn arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb/1234567890abcdef \
+    --region us-west-2</code></pre>
+        
+        <h4>CloudFrontディストリビューションへの関連付け</h4>
+        <pre><code>aws wafv2 associate-web-acl \
+    --web-acl-arn arn:aws:wafv2:us-east-1:123456789012:global/webacl/my-web-acl/abcdef12-3456-7890-abcd-ef1234567890 \
+    --resource-arn arn:aws:cloudfront::123456789012:distribution/E1234EXAMPLE</code></pre>
+    </div>
+    
+    <h2>AWS WAFのマネージドルール</h2>
+    <p>AWS WAFは、一般的なウェブの脆弱性やボットから保護するための事前設定されたマネージドルールグループを提供しています。これらのルールグループは、AWSやAWSマーケットプレイスのパートナーによって作成および維持されています。</p>
+    
+    <h3>AWS マネージドルール</h3>
+    <p>AWSが提供するマネージドルールグループには、以下のようなものがあります：</p>
+    
+    <table>
+        <tr>
+            <th>ルールグループ</th>
+            <th>説明</th>
+        </tr>
+        <tr>
+            <td>AWSManagedRulesCommonRuleSet</td>
+            <td>一般的なウェブの脆弱性から保護するための基本的なルールセット</td>
+        </tr>
+        <tr>
+            <td>AWSManagedRulesAdminProtectionRuleSet</td>
+            <td>管理ページへのアクセスを保護するためのルールセット</td>
+        </tr>
+        <tr>
+            <td>AWSManagedRulesKnownBadInputsRuleSet</td>
+            <td>既知の悪意のある入力パターンから保護するためのルールセット</td>
+        </tr>
+        <tr>
+            <td>AWSManagedRulesSQLiRuleSet</td>
+            <td>SQLインジェクション攻撃から保護するためのルールセット</td>
+        </tr>
+        <tr>
+            <td>AWSManagedRulesLinuxRuleSet</td>
+            <td>Linuxオペレーティングシステムの脆弱性を悪用する攻撃から保護するためのルールセット</td>
+        </tr>
+        <tr>
+            <td>AWSManagedRulesWindowsRuleSet</td>
+            <td>Windowsオペレーティングシステムの脆弱性を悪用する攻撃から保護するためのルールセット</td>
+        </tr>
+        <tr>
+            <td>AWSManagedRulesPHPRuleSet</td>
+            <td>PHPアプリケーションの脆弱性を悪用する攻撃から保護するためのルールセット</td>
+        </tr>
+        <tr>
+            <td>AWSManagedRulesWordPressRuleSet</td>
+            <td>WordPressアプリケーションの脆弱性を悪用する攻撃から保護するためのルールセット</td>
+        </tr>
+        <tr>
+            <td>AWSManagedRulesAmazonIpReputationList</td>
+            <td>AWSの脅威インテリジェンスに基づく悪意のあるIPアドレスからの保護</td>
+        </tr>
+        <tr>
+            <td>AWSManagedRulesAnonymousIpList</td>
+            <td>匿名プロキシ、VPN、Torノードなどの匿名IPアドレスからの保護</td>
+        </tr>
+        <tr>
+            <td>AWSManagedRulesBotControlRuleSet</td>
+            <td>悪意のあるボットからの保護</td>
+        </tr>
+    </table>
+    
+    <h3>AWS Marketplace パートナーのマネージドルール</h3>
+    <p>AWS Marketplaceでは、サードパーティのセキュリティベンダーが提供するマネージドルールグループも利用できます。これらのルールグループは、特定の脅威や業界固有の要件に対応するために設計されています。</p>
+    
+    <h2>AWS WAFのセキュリティ</h2>
+    <p>AWS WAFは、ウェブアプリケーションとAPIを保護するための多層防御の一部として使用できます。以下は、AWS WAFを使用したセキュリティのベストプラクティスです：</p>
+    
+    <ul>
+        <li><strong>マネージドルールの使用：</strong> 基本的な保護として、AWSマネージドルールを使用</li>
+        <li><strong>カスタムルールの作成：</strong> アプリケーション固有の脅威に対応するためのカスタムルールを作成</li>
+        <li><strong>レート制限の設定：</strong> DDoS攻撃やブルートフォース攻撃からの保護のためにレートベースのルールを設定</li>
+        <li><strong>地理的制限の活用：</strong> ビジネスが運営されていない国からのトラフィックをブロック</li>
+        <li><strong>ログの有効化：</strong> トラフィックパターンの分析と潜在的な脅威の特定のためにログを有効化</li>
+        <li><strong>他のセキュリティサービスとの統合：</strong> AWS Shield、Amazon GuardDuty、AWS Securityなどの他のセキュリティサービスと統合</li>
+    </ul>
+    
+    <h3>AWS WAFとAWS Shieldの統合</h3>
+    <p>AWS WAFは、AWS Shieldと統合して、DDoS攻撃からの保護を強化できます。AWS Shield Standardは、すべてのAWSユーザーに無料で提供される基本的なDDoS保護サービスです。AWS Shield Advancedは、より高度なDDoS保護機能を提供する有料サービスです。</p>
+    
+    <h2>AWS WAFのログ記録とモニタリング</h2>
+    <p>AWS WAFは、ウェブリクエストのログ記録とモニタリングのための機能を提供しています：</p>
+    
+    <h3>ログ記録</h3>
+    <p>AWS WAFのログには、ウェブACLが評価したすべてのリクエストの詳細情報が含まれています。ログは、Amazon S3、Amazon CloudWatch Logs、Amazon Kinesis Data Firehoseに送信できます。</p>
+    
+    <div class="example">
+        <h4>ログ記録の有効化</h4>
+        <pre><code>aws wafv2 put-logging-configuration \
+    --resource-arn arn:aws:wafv2:us-west-2:123456789012:regional/webacl/my-web-acl/abcdef12-3456-7890-abcd-ef1234567890 \
+    --logging-configuration 'ResourceArn=arn:aws:firehose:us-west-2:123456789012:deliverystream/aws-waf-logs,RedactedFields=[{SingleHeader={Name=authorization}}]' \
+    --region us-west-2</code></pre>
+    </div>
+    
+    <h3>モニタリング</h3>
+    <p>AWS WAFは、CloudWatchと統合して、ウェブACLとルールのメトリクスを提供します。これらのメトリクスを使用して、アラームを設定したり、ダッシュボードを作成したりできます。</p>
+    
+    <div class="example">
+        <h4>CloudWatchアラームの作成</h4>
+        <pre><code>aws cloudwatch put-metric-alarm \
+    --alarm-name waf-blocked-requests-high \
+    --comparison-operator GreaterThanThreshold \
+    --evaluation-periods 1 \
+    --metric-name BlockedRequests \
+    --namespace AWS/WAFV2 \
+    --period 300 \
+    --statistic Sum \
+    --threshold 100 \
+    --alarm-actions arn:aws:sns:us-west-2:123456789012:my-topic \
+    --dimensions "Name=WebACL,Value=my-web-acl" "Name=Region,Value=us-west-2" "Name=Rule,Value=block-ip-rule"</code></pre>
+    </div>
+    
+    <h2>AWS WAFのユースケース</h2>
+    <p>AWS WAFは以下のようなユースケースに適しています：</p>
+    <ul>
+        <li><strong>ウェブアプリケーションの保護：</strong> SQLインジェクション、XSSなどの一般的なウェブの脆弱性からの保護</li>
+        <li><strong>APIの保護：</strong> REST APIやGraphQL APIの保護</li>
+        <li><strong>ボット対策：</strong> スクレイピング、クレデンシャルスタッフィング、アカウント乗っ取りなどの悪意のあるボット活動からの保護</li>
+        <li><strong>DDoS緩和：</strong> アプリケーション層のDDoS攻撃からの保護</li>
+        <li><strong>地理的制限：</strong> 特定の国や地域からのアクセスの制限</li>
+        <li><strong>レート制限：</strong> 短時間に多数のリクエストを送信するクライアントの制限</li>
+        <li><strong>コンプライアンス要件の満たす：</strong> PCI DSS、HIPAA、GDPRなどのコンプライアンス要件を満たすためのセキュリティコントロールの実装</li>
+    </ul>
+    
+    <h2>AWS WAFとの統合サービス</h2>
+    <p>AWS WAFは他のAWSサービスと統合して、より強力なセキュリティソリューションを構築できます：</p>
+    
+    <table>
+        <tr>
+            <th>サービス</th>
+            <th>統合の利点</th>
+        </tr>
+        <tr>
+            <td>Amazon CloudFront</td>
+            <td>エッジでのウェブアプリケーションの保護</td>
+        </tr>
+        <tr>
+            <td>Application Load Balancer</td>
+            <td>リージョンレベルでのウェブアプリケーションの保護</td>
+        </tr>
+        <tr>
+            <td>Amazon API Gateway</td>
+            <td>RESTおよびWebSocket APIの保護</td>
+        </tr>
+        <tr>
+            <td>AWS AppSync</td>
+            <td>GraphQL APIの保護</td>
+        </tr>
+        <tr>
+            <td>AWS Shield</td>
+            <td>DDoS攻撃からの保護</td>
+        </tr>
+        <tr>
+            <td>Amazon CloudWatch</td>
+            <td>メトリクスのモニタリングとアラート</td>
+        </tr>
+        <tr>
+            <td>Amazon S3</td>
+            <td>ログの保存と分析</td>
+        </tr>
+        <tr>
+            <td>Amazon Kinesis Data Firehose</td>
+            <td>リアルタイムログの処理と分析</td>
+        </tr>
+        <tr>
+            <td>AWS Lambda</td>
+            <td>カスタムレスポンスの生成とログの処理</td>
+        </tr>
+    </table>
+    
+    <h2>AWS WAFのベストプラクティス</h2>
+    <ul>
+        <li><strong>マネージドルールの使用：</strong> 基本的な保護として、AWSマネージドルールを使用</li>
+        <li><strong>カスタムルールの作成：</strong> アプリケーション固有の脅威に対応するためのカスタムルールを作成</li>
+        <li><strong>レート制限の設定：</strong> DDoS攻撃やブルートフォース攻撃からの保護のためにレートベースのルールを設定</li>
+        <li><strong>地理的制限の活用：</strong> ビジネスが運営されていない国からのトラフィックをブロック</li>
+        <li><strong>ログの有効化：</strong> トラフィックパターンの分析と潜在的な脅威の特定のためにログを有効化</li>
+        <li><strong>テストモードの使用：</strong> 新しいルールを本番環境に適用する前に、Countモードでテスト</li>
+        <li><strong>定期的なレビュー：</strong> ログとメトリクスを定期的にレビューして、ルールの有効性を評価</li>
+        <li><strong>多層防御の実装：</strong> AWS WAFを他のセキュリティサービスと組み合わせて、多層防御を実装</li>
+        <li><strong>自動化の活用：</strong> AWS CloudFormation、AWS CDK、Terraformなどのツールを使用して、WAF設定を自動化</li>
+    </ul>
+    
+    <h2>まとめ</h2>
+    <p>AWS WAF（Web Application Firewall）は、一般的なウェブの脆弱性やボットからウェブアプリケーションやAPIを保護するためのマネージドファイアウォールサービスです。AWS WAFを使用することで、SQLインジェクション、クロスサイトスクリプティング（XSS）などの攻撃からアプリケーションを保護し、特定のトラフィックパターンをフィルタリングすることができます。</p>
+    
+    <p>AWS WAFの主な利点は以下の通りです：</p>
+    <ul>
+        <li>一般的なウェブの脆弱性からの保護</li>
+        <li>カスタマイズ可能なルールとマネージドルールの組み合わせ</li>
+        <li>ボット対策機能</li>
+        <li>地理的制限とレート制限</li>
+        <li>CloudFront、ALB、API Gateway、AppSyncとの簡単な統合</li>
+        <li>リアルタイムメトリクスとログによる詳細なモニタリング</li>
+        <li>フルマネージドサービスによる運用オーバーヘッドの削減</li>
+    </ul>
+    
+    <p>AWS WAFを効果的に活用するには、マネージドルールとカスタムルールの適切な組み合わせ、レート制限と地理的制限の設定、ログの有効化と定期的なレビュー、他のセキュリティサービスとの統合が重要です。また、新しいルールを本番環境に適用する前にテストモードで評価し、定期的にルールの有効性を評価することをお勧めします。</p>
+</body>
+</html>
