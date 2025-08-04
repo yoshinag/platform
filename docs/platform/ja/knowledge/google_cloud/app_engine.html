@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>App Engine</title>
+    <link rel="stylesheet" href="../../../css/knowledge.css">
+</head>
+<body class="ja-knowledge">
+    <h1>App Engine</h1>
+    
+    <h2>App Engineとは</h2>
+    <p>App Engineは、Google Cloud Platform (GCP) が提供するフルマネージドのPaaS（Platform as a Service）サービスです。インフラストラクチャの管理なしに、高いスケーラビリティを持つWebアプリケーションやバックエンドサービスを開発・デプロイ・実行できます。App Engineは、自動スケーリング、高可用性、バージョン管理、トラフィック分割などの機能を提供し、開発者がアプリケーションのコードに集中できる環境を実現します。</p>
+    
+    <h2>App Engineの主な特徴</h2>
+    <ul>
+        <li><strong>フルマネージド環境：</strong> サーバー、インフラストラクチャの管理が不要で、アプリケーション開発に集中できる</li>
+        <li><strong>自動スケーリング：</strong> トラフィックに応じて自動的にスケールアップ・ダウン（ゼロインスタンスまで縮小可能）</li>
+        <li><strong>高可用性：</strong> 複数のリージョンにわたる冗長性と自動フェイルオーバー</li>
+        <li><strong>バージョン管理：</strong> 複数のバージョンを同時に実行し、トラフィックを分割可能</li>
+        <li><strong>複数の言語サポート：</strong> Java、Python、Node.js、Go、PHP、Rubyなど多様な言語をサポート</li>
+        <li><strong>組み込みサービス：</strong> メモリキャッシュ、タスクキュー、スケジュールされたタスクなどの組み込みサービス</li>
+        <li><strong>他のGCPサービスとの統合：</strong> Cloud SQL、Cloud Storage、Pub/Subなど他のGCPサービスとシームレスに連携</li>
+        <li><strong>セキュリティ機能：</strong> IAM、ファイアウォール、SSL/TLSなどのセキュリティ機能</li>
+    </ul>
+    
+    <h2>App Engineの環境</h2>
+    <p>App Engineは、2つの異なる環境を提供しています：</p>
+    
+    <table>
+        <tr>
+            <th>環境</th>
+            <th>特徴</th>
+            <th>最適な用途</th>
+        </tr>
+        <tr>
+            <td>スタンダード環境</td>
+            <td>
+                <ul>
+                    <li>サンドボックス化された環境</li>
+                    <li>迅速な起動時間</li>
+                    <li>無料枠あり</li>
+                    <li>特定のランタイムバージョンのみサポート</li>
+                </ul>
+            </td>
+            <td>シンプルなWebアプリケーション、APIサーバー、小規模なバックエンド</td>
+        </tr>
+        <tr>
+            <td>フレキシブル環境</td>
+            <td>
+                <ul>
+                    <li>Dockerコンテナベース</li>
+                    <li>より柔軟なランタイムとライブラリ</li>
+                    <li>バックグラウンドプロセスのサポート</li>
+                    <li>より長いリクエスト処理時間</li>
+                </ul>
+            </td>
+            <td>カスタムランタイム、長時間実行プロセス、メモリ集約型アプリケーション</td>
+        </tr>
+    </table>
+    
+    <h2>App Engineのアーキテクチャ</h2>
+    <p>App Engineは以下の主要コンポーネントで構成されています：</p>
+    
+    <table>
+        <tr>
+            <th>コンポーネント</th>
+            <th>説明</th>
+        </tr>
+        <tr>
+            <td>アプリケーションインスタンス</td>
+            <td>アプリケーションコードを実行するコンテナインスタンス。トラフィックに応じて自動的に作成・削除される</td>
+        </tr>
+        <tr>
+            <td>フロントエンド</td>
+            <td>HTTPリクエストを受け取り、適切なアプリケーションインスタンスにルーティングする</td>
+        </tr>
+        <tr>
+            <td>ロードバランサー</td>
+            <td>トラフィックを複数のインスタンスに分散する</td>
+        </tr>
+        <tr>
+            <td>バージョン管理</td>
+            <td>アプリケーションの複数のバージョンを管理し、トラフィックを制御する</td>
+        </tr>
+        <tr>
+            <td>組み込みサービス</td>
+            <td>Memcache、Task Queue、Cron Jobsなどのサービス</td>
+        </tr>
+    </table>
+    
+    <div class="note">
+        <h3>App Engine と他のコンピューティングサービスの違い</h3>
+        <p>Google Cloudには他のコンピューティングサービスもありますが、以下のような違いがあります：</p>
+        <ul>
+            <li><strong>App Engine：</strong> フルマネージドのPaaS。インフラストラクチャの管理が不要で、アプリケーション開発に集中できる</li>
+            <li><strong>Compute Engine：</strong> IaaS（Infrastructure as a Service）。仮想マシンの完全な制御が可能だが、管理の負担が大きい</li>
+            <li><strong>Google Kubernetes Engine：</strong> コンテナオーケストレーション。Kubernetesを使用したコンテナ化アプリケーションの管理</li>
+            <li><strong>Cloud Functions：</strong> サーバーレスの関数実行環境。イベント駆動型の小規模な処理に適している</li>
+            <li><strong>Cloud Run：</strong> コンテナベースのサーバーレス実行環境。コンテナの柔軟性とサーバーレスの利点を組み合わせる</li>
+        </ul>
+    </div>
+    
+    <h2>App Engineの使用方法</h2>
+    <p>App Engineは、Google Cloud Console、gcloud CLIツール、またはCloud Build/Cloud DeployなどのCI/CDツールを使用してデプロイできます。</p>
+    
+    <h3>アプリケーションの構造</h3>
+    <p>App Engineアプリケーションは、以下の要素で構成されます：</p>
+    <ul>
+        <li><strong>アプリケーションコード：</strong> 選択した言語で書かれたアプリケーションのソースコード</li>
+        <li><strong>構成ファイル：</strong> アプリケーションの設定を定義するYAMLファイル（app.yaml）</li>
+        <li><strong>静的ファイル：</strong> HTML、CSS、JavaScript、画像などの静的コンテンツ</li>
+        <li><strong>依存関係：</strong> アプリケーションが使用するライブラリや依存関係</li>
+    </ul>
+    
+    <div class="example">
+        <h4>app.yamlの例（Python）</h4>
+        <pre><code>runtime: python39
+service: default
+instance_class: F2
+automatic_scaling:
+  min_instances: 1
+  max_instances: 10
+  target_cpu_utilization: 0.65
+  target_throughput_utilization: 0.65
+  max_concurrent_requests: 50
+env_variables:
+  DEBUG: 'False'
+  DATABASE_URL: 'postgresql://user:password@host:port/database'
+handlers:
+- url: /static
+  static_dir: static
+- url: /.*
+  script: auto</code></pre>
+        
+        <h4>app.yamlの例（Node.js）</h4>
+        <pre><code>runtime: nodejs14
+service: api
+instance_class: F2
+automatic_scaling:
+  min_instances: 1
+  max_instances: 15
+  target_cpu_utilization: 0.7
+env_variables:
+  NODE_ENV: 'production'
+  API_KEY: 'your-api-key'</code></pre>
+    </div>
+    
+    <h3>デプロイ方法</h3>
+    <div class="example">
+        <h4>gcloud CLIを使用したデプロイ</h4>
+        <pre><code># アプリケーションのディレクトリに移動
+cd my-app
+
+# アプリケーションのデプロイ
+gcloud app deploy
+
+# 特定のバージョンとしてデプロイ
+gcloud app deploy --version=v1
+
+# トラフィックを分割してデプロイ
+gcloud app deploy --version=v2 --no-promote
+
+# 特定のサービスのデプロイ
+gcloud app deploy services/api/app.yaml</code></pre>
+    </div>
+    
+    <h2>App Engineの高度な機能</h2>
+    
+    <h3>トラフィック分割</h3>
+    <p>複数のバージョン間でトラフィックを分割して、A/Bテストやカナリアリリースを実現できます：</p>
+    <pre><code># トラフィックの分割
+gcloud app services set-traffic default --splits=v1=0.9,v2=0.1
+
+# IPベースの分割
+gcloud app services set-traffic default --splits=v1=0.9,v2=0.1 --split-by=ip
+
+# Cookieベースの分割
+gcloud app services set-traffic default --splits=v1=0.9,v2=0.1 --split-by=cookie</code></pre>
+    
+    <h3>カスタムドメインの設定</h3>
+    <p>App Engineアプリケーションにカスタムドメインを設定できます：</p>
+    <pre><code># カスタムドメインの追加
+gcloud app domain-mappings create example.com
+
+# SSLサーティフィケートの管理
+gcloud app ssl-certificates create --display-name="My Certificate" \
+  --certificate=cert.pem --private-key=key.pem</code></pre>
+    
+    <h3>Cron Jobsの設定</h3>
+    <p>定期的なタスクを実行するためのCron Jobsを設定できます：</p>
+    <div class="example">
+        <h4>cron.yamlの例</h4>
+        <pre><code>cron:
+- description: "Daily backup job"
+  url: /tasks/backup
+  schedule: every 24 hours
+  timezone: Asia/Tokyo
+  
+- description: "Weekly report generation"
+  url: /tasks/generate-report
+  schedule: every monday 09:00
+  timezone: Asia/Tokyo</code></pre>
+        
+        <h4>Cron Jobsのデプロイ</h4>
+        <pre><code>gcloud app deploy cron.yaml</code></pre>
+    </div>
+    
+    <h2>App Engineのセキュリティ</h2>
+    <p>App Engineは、アプリケーションのセキュリティを確保するための様々な機能を提供しています：</p>
+    
+    <h3>アクセス制御</h3>
+    <p>IAMを使用して、App Engineリソースへのアクセスを制御できます：</p>
+    <pre><code># App Engine管理者ロールの付与
+gcloud projects add-iam-policy-binding my-project \
+  --member=user:user@example.com \
+  --role=roles/appengine.appAdmin
+
+# App Engine閲覧者ロールの付与
+gcloud projects add-iam-policy-binding my-project \
+  --member=user:user@example.com \
+  --role=roles/appengine.viewer</code></pre>
+    
+    <h3>ファイアウォールルール</h3>
+    <p>App Engineファイアウォールルールを使用して、アプリケーションへのアクセスを制限できます：</p>
+    <pre><code># 特定のIPアドレスからのアクセスを許可
+gcloud app firewall-rules create --action=allow --source-range=192.168.1.0/24 --description="Allow office IPs"
+
+# 特定のIPアドレスからのアクセスを拒否
+gcloud app firewall-rules create --action=deny --source-range=1.2.3.4/32 --description="Block suspicious IP"</code></pre>
+    
+    <h3>シークレット管理</h3>
+    <p>Secret Managerと統合して、機密情報を安全に管理できます：</p>
+    <pre><code># Secret Managerからシークレットを取得するコード例（Python）
+from google.cloud import secretmanager
+
+def access_secret(project_id, secret_id, version_id="latest"):
+    client = secretmanager.SecretManagerServiceClient()
+    name = f"projects/{project_id}/secrets/{secret_id}/versions/{version_id}"
+    response = client.access_secret_version(request={"name": name})
+    return response.payload.data.decode("UTF-8")</code></pre>
+    
+    <h2>App Engineのモニタリングとロギング</h2>
+    <p>App EngineはGoogle Cloud Monitoringおよびロギングと統合されており、アプリケーションの健全性とパフォーマンスを監視できます：</p>
+    
+    <h3>主なモニタリング機能</h3>
+    <ul>
+        <li><strong>Cloud Monitoring：</strong> レイテンシ、リクエスト数、エラー率などのメトリクスを収集・表示</li>
+        <li><strong>Cloud Logging：</strong> アプリケーションログを収集・分析</li>
+        <li><strong>Cloud Trace：</strong> アプリケーションのパフォーマンスとレイテンシを分析</li>
+        <li><strong>Error Reporting：</strong> エラーの集約と通知</li>
+    </ul>
+    
+    <h3>ログの出力</h3>
+    <p>アプリケーション内でログを出力するには、言語に応じた標準的なロギング方法を使用します：</p>
+    <div class="example">
+        <h4>Pythonでのログ出力</h4>
+        <pre><code>import logging
+
+logging.info('This is an info message')
+logging.warning('This is a warning message')
+logging.error('This is an error message')</code></pre>
+        
+        <h4>Node.jsでのログ出力</h4>
+        <pre><code>console.log('This is a log message'); // 標準ログ
+console.info('This is an info message'); // 情報ログ
+console.warn('This is a warning message'); // 警告ログ
+console.error('This is an error message'); // エラーログ</code></pre>
+    </div>
+    
+    <h2>App Engineのコスト最適化</h2>
+    <p>App Engineのコストを最適化するためのベストプラクティス：</p>
+    <ul>
+        <li><strong>適切なインスタンスクラスの選択：</strong> アプリケーションの要件に合わせて最適なインスタンスクラスを選択</li>
+        <li><strong>自動スケーリングの設定：</strong> 最小・最大インスタンス数を適切に設定</li>
+        <li><strong>アイドルインスタンスの管理：</strong> 不要なアイドルインスタンスを削減</li>
+        <li><strong>キャッシングの活用：</strong> Memcacheを使用して頻繁にアクセスされるデータをキャッシュ</li>
+        <li><strong>静的コンテンツの最適化：</strong> 静的コンテンツをCloud Storageに保存し、Cloud CDNで配信</li>
+        <li><strong>不要なサービスの削除：</strong> 使用していないアプリケーションやバージョンを削除</li>
+    </ul>
+    
+    <div class="note">
+        <h3>コスト構造</h3>
+        <p>App Engineのコストは主に以下の要素で構成されています：</p>
+        <ul>
+            <li><strong>インスタンス時間：</strong> アプリケーションインスタンスの実行時間に基づく料金</li>
+            <li><strong>ネットワーク帯域幅：</strong> アプリケーションが送受信するデータ量に基づく料金</li>
+            <li><strong>ストレージ：</strong> アプリケーションデータとログのストレージに対する料金</li>
+            <li><strong>組み込みサービス：</strong> Memcache、Task Queue、Search APIなどの使用に対する料金</li>
+        </ul>
+    </div>
+    
+    <h2>App Engineのユースケース</h2>
+    <p>App Engineは以下のようなユースケースに適しています：</p>
+    <ul>
+        <li><strong>Webアプリケーション：</strong> 動的なWebサイトやWebアプリケーション</li>
+        <li><strong>APIバックエンド：</strong> モバイルアプリやフロントエンドアプリケーションのためのAPIサーバー</li>
+        <li><strong>マイクロサービス：</strong> 分散システムの一部として機能するマイクロサービス</li>
+        <li><strong>コンテンツ管理システム：</strong> ブログ、CMS、eコマースサイトなど</li>
+        <li><strong>バッチ処理：</strong> スケジュールされたバッチジョブやデータ処理タスク</li>
+        <li><strong>DevOps自動化：</strong> CI/CDパイプラインの一部として機能するツール</li>
+    </ul>
+    
+    <h2>App Engineとの統合サービス</h2>
+    <p>App Engineは他のGoogle Cloudサービスと統合して、より強力なソリューションを構築できます：</p>
+    
+    <table>
+        <tr>
+            <th>サービス</th>
+            <th>統合の利点</th>
+        </tr>
+        <tr>
+            <td><a href="cloud_sql.html">Cloud SQL</a></td>
+            <td>アプリケーションのデータを保存するためのマネージドリレーショナルデータベース</td>
+        </tr>
+        <tr>
+            <td><a href="cloud_storage.html">Cloud Storage</a></td>
+            <td>静的コンテンツやユーザーアップロードファイルの保存</td>
+        </tr>
+        <tr>
+            <td><a href="cloud_cdn.html">Cloud CDN</a></td>
+            <td>静的コンテンツの高速配信</td>
+        </tr>
+        <tr>
+            <td><a href="cloud_tasks.html">Cloud Tasks</a></td>
+            <td>非同期タスクの実行と管理</td>
+        </tr>
+        <tr>
+            <td><a href="pub_sub.html">Pub/Sub</a></td>
+            <td>イベント駆動型アーキテクチャの実装</td>
+        </tr>
+        <tr>
+            <td><a href="cloud_build.html">Cloud Build</a></td>
+            <td>継続的インテグレーションと継続的デリバリー（CI/CD）</td>
+        </tr>
+        <tr>
+            <td><a href="cloud_monitoring.html">Cloud Monitoring</a></td>
+            <td>アプリケーションのパフォーマンスと健全性の監視</td>
+        </tr>
+    </table>
+    
+    <h2>まとめ</h2>
+    <p>App Engine は、Google Cloud Platform上でのWebアプリケーションとバックエンドサービスの開発・デプロイ・実行を簡素化するフルマネージドのPaaSサービスです。インフラストラクチャの管理なしに、高いスケーラビリティと可用性を持つアプリケーションを構築できます。</p>
+    
+    <p>App Engineの主な利点は以下の通りです：</p>
+    <ul>
+        <li>インフラストラクチャ管理の負担軽減によるアプリケーション開発への集中</li>
+        <li>自動スケーリングによるトラフィック変動への対応</li>
+        <li>バージョン管理とトラフィック分割による安全なデプロイ</li>
+        <li>組み込みサービスによる開発の効率化</li>
+        <li>他のGoogle Cloudサービスとのシームレスな統合</li>
+        <li>スタンダード環境とフレキシブル環境の選択肢</li>
+    </ul>
+    
+    <p>App Engineを効果的に活用するには、アプリケーションの要件に基づいて適切な環境（スタンダードまたはフレキシブル）を選択し、自動スケーリングの設定を最適化し、組み込みサービスを活用することが重要です。また、他のGCPサービスと組み合わせることで、より強力なクラウドネイティブアプリケーションを構築することができます。</p>
+</body>
+</html>

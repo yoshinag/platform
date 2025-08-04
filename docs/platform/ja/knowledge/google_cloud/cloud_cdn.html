@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Cloud CDN</title>
+    <link rel="stylesheet" href="../../../css/knowledge.css">
+</head>
+<body class="ja-knowledge">
+    <h1>Cloud CDN</h1>
+    
+    <h2>Cloud CDNとは</h2>
+    <p>Cloud CDN (Content Delivery Network) は、Google Cloud Platform (GCP) が提供するコンテンツ配信ネットワークサービスです。ウェブサイト、動画、アプリケーション、APIなどのコンテンツを、世界中のGoogleのエッジロケーションから高速に配信することができます。Cloud CDNは、ユーザーに最も近いエッジロケーションからコンテンツを提供することで、レイテンシを低減し、ウェブサイトやアプリケーションのパフォーマンスを向上させます。</p>
+    
+    <h2>Cloud CDNの主な特徴</h2>
+    <ul>
+        <li><strong>グローバルエッジネットワーク：</strong> Googleの世界中に展開されたエッジロケーションを活用</li>
+        <li><strong>高速コンテンツ配信：</strong> ユーザーに最も近いエッジロケーションからコンテンツを配信</li>
+        <li><strong>自動キャッシュ最適化：</strong> コンテンツタイプに基づいて最適なキャッシュ設定を自動的に適用</li>
+        <li><strong>HTTPSサポート：</strong> SSL/TLS証明書の自動管理と安全なコンテンツ配信</li>
+        <li><strong>キャッシュ制御：</strong> キャッシュのTTL（Time To Live）やキャッシュキーの詳細な設定が可能</li>
+        <li><strong>キャッシュの無効化：</strong> コンテンツ更新時に特定のURLやパスのキャッシュを即座に無効化</li>
+        <li><strong>詳細な分析：</strong> キャッシュヒット率、レイテンシ、帯域幅使用量などの詳細なメトリクス</li>
+        <li><strong>Cloud Load Balancingとの統合：</strong> 既存のロードバランサーに簡単に追加可能</li>
+    </ul>
+    
+    <h2>Cloud CDNのアーキテクチャ</h2>
+    <p>Cloud CDNは以下の主要コンポーネントで構成されています：</p>
+    
+    <table>
+        <tr>
+            <th>コンポーネント</th>
+            <th>説明</th>
+        </tr>
+        <tr>
+            <td>エッジロケーション</td>
+            <td>世界中に分散配置されたGoogleのデータセンター。ユーザーに最も近いロケーションからコンテンツを配信</td>
+        </tr>
+        <tr>
+            <td>キャッシュ</td>
+            <td>エッジロケーションに保存されるコンテンツのコピー。頻繁にアクセスされるコンテンツをオリジンサーバーから取得せずに提供</td>
+        </tr>
+        <tr>
+            <td>オリジンサーバー</td>
+            <td>オリジナルのコンテンツを提供するサーバー。Cloud Storage、Compute Engine、GKE、App Engineなど</td>
+        </tr>
+        <tr>
+            <td>ロードバランサー</td>
+            <td>トラフィックを適切なエッジロケーションやオリジンサーバーに分散。Cloud Load Balancingと統合</td>
+        </tr>
+        <tr>
+            <td>SSL証明書</td>
+            <td>安全なHTTPS接続を提供するための証明書。Google管理またはカスタム証明書を使用可能</td>
+        </tr>
+    </table>
+    
+    <div class="note">
+        <h3>Cloud CDN と他のCDNサービスの違い</h3>
+        <p>Cloud CDNと他のCDNサービスには以下のような違いがあります：</p>
+        <ul>
+            <li><strong>Cloud CDN：</strong> GCPサービスとの緊密な統合。Googleのグローバルネットワークを活用。GCPのロードバランサーと連携</li>
+            <li><strong>他のCDNサービス：</strong> より多くの高度な機能を提供する場合がある。独自のエッジロケーションネットワークを持つ。クラウドプロバイダーに依存しない</li>
+        </ul>
+    </div>
+    
+    <h2>Cloud CDNの設定方法</h2>
+    <p>Cloud CDNは、Google Cloud Console、gcloud CLIツール、またはAPIを使用して設定できます。</p>
+    
+    <h3>Google Cloud Consoleを使用した設定</h3>
+    <ol>
+        <li>Google Cloud Consoleにログイン</li>
+        <li>「ネットワークサービス」→「Cloud CDN」に移動</li>
+        <li>「オリジンの作成」をクリック</li>
+        <li>ロードバランサーを選択または新規作成</li>
+        <li>バックエンドサービスを選択または新規作成</li>
+        <li>Cloud CDNを有効化</li>
+        <li>必要に応じてキャッシュ設定をカスタマイズ</li>
+        <li>「作成」をクリックして設定を完了</li>
+    </ol>
+    
+    <h3>gcloud CLIを使用した設定</h3>
+    <div class="example">
+        <h4>バックエンドサービスの作成とCloud CDNの有効化</h4>
+        <pre><code>gcloud compute backend-services create my-backend-service \
+    --global \
+    --enable-cdn \
+    --cache-mode=CACHE_ALL_STATIC</code></pre>
+        
+        <h4>既存のバックエンドサービスでCloud CDNを有効化</h4>
+        <pre><code>gcloud compute backend-services update my-backend-service \
+    --global \
+    --enable-cdn</code></pre>
+    </div>
+    
+    <h3>キャッシュ設定のカスタマイズ</h3>
+    <p>キャッシュモードやTTLなどのキャッシュ設定をカスタマイズできます：</p>
+    <pre><code>gcloud compute backend-services update my-backend-service \
+    --global \
+    --enable-cdn \
+    --cache-mode=CACHE_ALL_STATIC \
+    --default-ttl=3600</code></pre>
+    
+    <h2>Cloud CDNのキャッシュ制御</h2>
+    <p>Cloud CDNでは、様々な方法でキャッシュ動作を制御できます：</p>
+    
+    <h3>キャッシュモード</h3>
+    <ul>
+        <li><strong>USE_ORIGIN_HEADERS：</strong> オリジンサーバーのCache-Controlヘッダーに基づいてキャッシュ</li>
+        <li><strong>FORCE_CACHE_ALL：</strong> すべてのコンテンツをキャッシュ（Cache-Controlヘッダーを上書き）</li>
+        <li><strong>CACHE_ALL_STATIC：</strong> 静的コンテンツのみをキャッシュ</li>
+        <li><strong>BYPASS_CACHE：</strong> キャッシュを完全にバイパス</li>
+    </ul>
+    
+    <h3>Cache-Controlヘッダー</h3>
+    <p>オリジンサーバーからのレスポンスにCache-Controlヘッダーを設定することで、キャッシュ動作を細かく制御できます：</p>
+    <pre><code># 1時間キャッシュする
+Cache-Control: max-age=3600
+
+# キャッシュしない
+Cache-Control: no-store, no-cache, must-revalidate
+
+# プライベートキャッシュのみ許可（CDNではキャッシュしない）
+Cache-Control: private
+
+# パブリックキャッシュを許可（CDNでキャッシュする）
+Cache-Control: public, max-age=86400</code></pre>
+    
+    <h3>キャッシュキーのカスタマイズ</h3>
+    <p>キャッシュキーをカスタマイズして、特定のヘッダーやクエリパラメータに基づいてキャッシュを分割できます：</p>
+    <pre><code>gcloud compute backend-services update my-backend-service \
+    --global \
+    --cache-key-include-http-header=User-Agent \
+    --cache-key-include-query-string=true \
+    --cache-key-query-string-whitelist=language,version</code></pre>
+    
+    <h3>キャッシュの無効化</h3>
+    <p>コンテンツが更新された場合、特定のURLやパスのキャッシュを無効化できます：</p>
+    <pre><code># 特定のURLのキャッシュを無効化
+gcloud compute url-maps invalidate-cdn-cache my-url-map \
+    --path="/images/logo.png"
+
+# ワイルドカードを使用して複数のパスのキャッシュを無効化
+gcloud compute url-maps invalidate-cdn-cache my-url-map \
+    --path="/images/*"</code></pre>
+    
+    <h2>Cloud CDNのセキュリティ</h2>
+    <p>Cloud CDNは、コンテンツを安全に配信するための様々なセキュリティ機能を提供しています：</p>
+    
+    <h3>SSL/TLS証明書</h3>
+    <p>HTTPSを使用してコンテンツを安全に配信するための証明書を管理できます：</p>
+    <ul>
+        <li><strong>Google管理証明書：</strong> Googleが自動的に証明書を発行・更新</li>
+        <li><strong>自己管理証明書：</strong> 独自の証明書をアップロードして使用</li>
+    </ul>
+    <pre><code># Google管理証明書の作成
+gcloud compute ssl-certificates create my-cert \
+    --domains=example.com
+
+# 自己管理証明書のアップロード
+gcloud compute ssl-certificates create my-custom-cert \
+    --certificate=/path/to/certificate.crt \
+    --private-key=/path/to/private.key</code></pre>
+    
+    <h3>署名付きURL</h3>
+    <p>特定の期間のみ有効なURLを生成して、コンテンツへのアクセスを制限できます：</p>
+    <pre><code># 署名付きURLの生成
+gcloud compute sign-url "https://example.com/video.mp4" \
+    --key-name=my-key \
+    --key-file=/path/to/key.pem \
+    --expires-in=2h</code></pre>
+    
+    <h3>Cloud Armorとの統合</h3>
+    <p>Cloud ArmorセキュリティポリシーをCloud CDNと統合して、DDoS攻撃やウェブアプリケーション攻撃からコンテンツを保護できます：</p>
+    <pre><code># Cloud Armorセキュリティポリシーの作成
+gcloud compute security-policies create my-policy
+
+# ルールの追加
+gcloud compute security-policies rules create 1000 \
+    --security-policy=my-policy \
+    --description="Block XSS attacks" \
+    --expression="evaluatePreconfiguredExpr('xss-stable')" \
+    --action=deny-403
+
+# バックエンドサービスにポリシーを適用
+gcloud compute backend-services update my-backend-service \
+    --global \
+    --security-policy=my-policy</code></pre>
+    
+    <h2>Cloud CDNのモニタリングと分析</h2>
+    <p>Cloud CDNはGoogle Cloud Monitoringと統合されており、パフォーマンスと使用状況を監視できます：</p>
+    
+    <h3>主なモニタリングメトリクス</h3>
+    <ul>
+        <li><strong>キャッシュヒット率：</strong> キャッシュから提供されたリクエストの割合</li>
+        <li><strong>レイテンシ：</strong> リクエスト処理にかかった時間</li>
+        <li><strong>帯域幅使用量：</strong> 転送されたデータ量</li>
+        <li><strong>リクエスト数：</strong> 処理されたリクエストの総数</li>
+        <li><strong>レスポンスコード：</strong> HTTPステータスコードの分布</li>
+    </ul>
+    
+    <h3>ログの分析</h3>
+    <p>Cloud CDNのログを有効にして、詳細なアクセスログを分析できます：</p>
+    <pre><code># ロギングの有効化
+gcloud compute backend-services update my-backend-service \
+    --global \
+    --enable-logging</code></pre>
+    
+    <p>ログはCloud Loggingに保存され、以下のような情報が含まれます：</p>
+    <ul>
+        <li>クライアントのIPアドレス</li>
+        <li>リクエストされたURL</li>
+        <li>HTTPメソッド</li>
+        <li>レスポンスコード</li>
+        <li>レスポンスサイズ</li>
+        <li>キャッシュステータス（ヒット/ミス）</li>
+        <li>ユーザーエージェント</li>
+    </ul>
+    
+    <h2>Cloud CDNのコスト最適化</h2>
+    <p>Cloud CDNのコストを最適化するためのベストプラクティス：</p>
+    <ul>
+        <li><strong>適切なキャッシュ設定：</strong> キャッシュヒット率を高めるために適切なTTLを設定</li>
+        <li><strong>圧縮の有効化：</strong> 転送データ量を削減するためにコンテンツ圧縮を有効化</li>
+        <li><strong>不要なキャッシュの無効化：</strong> 頻繁に変更されるコンテンツや個人情報を含むコンテンツはキャッシュしない</li>
+        <li><strong>キャッシュキーの最適化：</strong> 必要なパラメータのみをキャッシュキーに含める</li>
+        <li><strong>コンテンツの最適化：</strong> 画像や動画を最適化してファイルサイズを削減</li>
+        <li><strong>地域別の設定：</strong> 特定の地域のみにサービスを提供する場合は、ロードバランサーの地域を限定</li>
+    </ul>
+    
+    <div class="note">
+        <h3>コスト構造</h3>
+        <p>Cloud CDNのコストは主に以下の要素で構成されています：</p>
+        <ul>
+            <li><strong>キャッシュの取得：</strong> オリジンからキャッシュへのデータ取得料金</li>
+            <li><strong>キャッシュの配信：</strong> キャッシュからユーザーへのデータ配信料金（地域によって異なる）</li>
+            <li><strong>キャッシュの無効化：</strong> キャッシュ無効化リクエストの料金（一定数まで無料）</li>
+            <li><strong>キャッシュルックアップ：</strong> リクエスト処理の料金</li>
+        </ul>
+    </div>
+    
+    <h2>Cloud CDNのユースケース</h2>
+    <p>Cloud CDNは以下のようなユースケースに適しています：</p>
+    <ul>
+        <li><strong>ウェブサイトの高速化：</strong> 静的コンテンツ（HTML、CSS、JavaScript、画像）の配信を高速化</li>
+        <li><strong>動画ストリーミング：</strong> 動画コンテンツをグローバルに低レイテンシで配信</li>
+        <li><strong>ソフトウェア配布：</strong> アプリケーションやアップデートファイルの高速ダウンロード</li>
+        <li><strong>APIの高速化：</strong> キャッシュ可能なAPI応答を高速に配信</li>
+        <li><strong>ゲームコンテンツ配信：</strong> ゲームアセットやアップデートの配信</li>
+        <li><strong>eコマースサイト：</strong> 商品画像やカタログの高速表示</li>
+        <li><strong>モバイルアプリケーション：</strong> モバイルアプリのコンテンツ配信の高速化</li>
+    </ul>
+    
+    <h2>Cloud CDNとの統合サービス</h2>
+    <p>Cloud CDNは他のGoogle Cloudサービスと統合して、より強力なコンテンツ配信ソリューションを構築できます：</p>
+    
+    <table>
+        <tr>
+            <th>サービス</th>
+            <th>統合の利点</th>
+        </tr>
+        <tr>
+            <td>Cloud Load Balancing</td>
+            <td>トラフィックの負荷分散とCDN機能を組み合わせて、高可用性と高速配信を実現</td>
+        </tr>
+        <tr>
+            <td>Cloud Storage</td>
+            <td>静的コンテンツをCloud Storageに保存し、Cloud CDNで配信することで、高速かつコスト効率の良いウェブサイトホスティングを実現</td>
+        </tr>
+        <tr>
+            <td>Compute Engine</td>
+            <td>動的コンテンツを生成するアプリケーションサーバーと組み合わせて、ハイブリッドな配信アーキテクチャを構築</td>
+        </tr>
+        <tr>
+            <td>Cloud Armor</td>
+            <td>DDoS保護とWAF（ウェブアプリケーションファイアウォール）機能を追加して、セキュアなコンテンツ配信を実現</td>
+        </tr>
+        <tr>
+            <td>Cloud Monitoring</td>
+            <td>CDNのパフォーマンスと使用状況を監視し、問題を早期に検出</td>
+        </tr>
+        <tr>
+            <td>Cloud Logging</td>
+            <td>詳細なアクセスログを収集・分析して、ユーザー行動やパフォーマンスの問題を把握</td>
+        </tr>
+        <tr>
+            <td>Media CDN</td>
+            <td>大規模な動画ストリーミングやライブ配信に特化したCDNサービスと連携</td>
+        </tr>
+    </table>
+    
+    <h3>Cloud StorageとCloud CDNの統合例</h3>
+    <pre><code># Cloud Storageバケットの作成
+gsutil mb -l us-central1 gs://my-cdn-bucket
+
+# コンテンツのアップロード
+gsutil cp -r ./website gs://my-cdn-bucket
+
+# バケットを公開
+gsutil iam ch allUsers:objectViewer gs://my-cdn-bucket
+
+# ロードバランサーとバックエンドの設定
+gcloud compute backend-buckets create my-backend-bucket \
+    --gcs-bucket-name=my-cdn-bucket \
+    --enable-cdn
+
+# URLマップの作成
+gcloud compute url-maps create my-url-map \
+    --default-backend-bucket=my-backend-bucket
+
+# HTTPSプロキシの作成
+gcloud compute target-https-proxies create my-https-proxy \
+    --url-map=my-url-map \
+    --ssl-certificates=my-cert
+
+# 転送ルールの作成
+gcloud compute forwarding-rules create my-forwarding-rule \
+    --global \
+    --target-https-proxy=my-https-proxy \
+    --ports=443</code></pre>
+    
+    <h2>Cloud CDNのベストプラクティス</h2>
+    <ul>
+        <li><strong>適切なキャッシュTTLの設定：</strong> コンテンツの更新頻度に合わせて適切なTTLを設定</li>
+        <li><strong>コンテンツのバージョニング：</strong> ファイル名にバージョン番号やハッシュを含めて、キャッシュの問題を回避</li>
+        <li><strong>圧縮の有効化：</strong> gzipやBrotli圧縮を有効にして転送データ量を削減</li>
+        <li><strong>プリロードとプリフェッチの活用：</strong> リンクのプリロードやプリフェッチを使用して、ユーザー体験を向上</li>
+        <li><strong>レスポンシブ画像の使用：</strong> 様々なデバイスに最適化された画像を提供</li>
+        <li><strong>HTTPSの使用：</strong> すべてのコンテンツをHTTPSで配信して安全性を確保</li>
+        <li><strong>キャッシュヒット率の監視：</strong> キャッシュヒット率を定期的に監視し、必要に応じて設定を調整</li>
+        <li><strong>オリジンシールドの検討：</strong> 大規模なトラフィックがある場合は、オリジンサーバーの負荷を軽減するためにオリジンシールドを検討</li>
+    </ul>
+    
+    <h2>まとめ</h2>
+    <p>Cloud CDN は、Google Cloud Platform上でのコンテンツ配信を高速化するためのフルマネージドサービスです。Googleのグローバルエッジネットワークを活用して、ウェブサイト、アプリケーション、APIなどのコンテンツをユーザーに最も近いロケーションから配信することで、レイテンシを低減し、ユーザー体験を向上させます。</p>
+    
+    <p>Cloud CDNの主な利点は以下の通りです：</p>
+    <ul>
+        <li>グローバルなエッジネットワークによる高速コンテンツ配信</li>
+        <li>自動キャッシュ最適化によるパフォーマンス向上</li>
+        <li>詳細なキャッシュ制御オプション</li>
+        <li>GCPサービスとのシームレスな統合</li>
+        <li>包括的なセキュリティ機能</li>
+        <li>詳細なモニタリングと分析</li>
+    </ul>
+    
+    <p>Cloud CDNを効果的に活用するには、適切なキャッシュ設定、コンテンツの最適化、セキュリティ対策の実装が重要です。また、他のGCPサービスと組み合わせることで、高性能で安全なコンテンツ配信ソリューションを構築することができます。</p>
+</body>
+</html>
