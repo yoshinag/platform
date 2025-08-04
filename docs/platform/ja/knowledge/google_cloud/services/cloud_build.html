@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Cloud Build</title>
+    <link rel="stylesheet" href="../../../../css/knowledge.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../../js/common/analytics.js"></script>
+<body class="ja-knowledge">
+    <h1>Cloud Build</h1>
+    
+    <h2>Cloud Buildとは</h2>
+    <p>Cloud Build は、Google Cloud Platform (GCP) が提供するフルマネージドの継続的インテグレーション/継続的デリバリー（CI/CD）プラットフォームです。ソースコードのビルド、テスト、デプロイを自動化し、コンテナイメージやその他のアーティファクトを作成できます。Cloud Buildは、ビルドステップを柔軟に定義でき、さまざまな言語やフレームワークに対応しています。</p>
+    
+    <h2>Cloud Buildの主な特徴</h2>
+    <ul>
+        <li><strong>フルマネージド：</strong> インフラストラクチャの管理が不要で、ビルドの実行に集中できる</li>
+        <li><strong>スケーラブル：</strong> 同時に複数のビルドを実行可能で、需要に応じて自動的にスケール</li>
+        <li><strong>柔軟なビルド構成：</strong> YAMLまたはJSONファイルでビルドステップを定義可能</li>
+        <li><strong>多様なソース統合：</strong> GitHub、Bitbucket、Cloud Source Repositories、Cloud Storageなどと連携</li>
+        <li><strong>コンテナ化されたビルド：</strong> Dockerコンテナを使用してビルド環境を標準化</li>
+        <li><strong>セキュリティ機能：</strong> プライベートプールでのビルド実行、Secret Managerとの統合など</li>
+        <li><strong>従量課金制：</strong> 使用したビルド時間に対してのみ課金</li>
+    </ul>
+    
+    <h2>Cloud Buildのアーキテクチャ</h2>
+    <p>Cloud Buildは以下の主要コンポーネントで構成されています：</p>
+    
+    <table>
+        <tr>
+            <th>コンポーネント</th>
+            <th>説明</th>
+        </tr>
+        <tr>
+            <td>ビルド構成ファイル</td>
+            <td>ビルドステップとパラメータを定義するYAMLまたはJSONファイル</td>
+        </tr>
+        <tr>
+            <td>ビルドステップ</td>
+            <td>ビルドプロセスの個々のタスク。各ステップは独自のコンテナで実行される</td>
+        </tr>
+        <tr>
+            <td>ビルドトリガー</td>
+            <td>特定のイベント（コミット、タグ作成など）に応じて自動的にビルドを開始する仕組み</td>
+        </tr>
+        <tr>
+            <td>ビルドワーカー</td>
+            <td>ビルドを実行する仮想マシン。デフォルトのプールまたはプライベートプールで実行可能</td>
+        </tr>
+        <tr>
+            <td>アーティファクト</td>
+            <td>ビルドの結果生成されるファイル（コンテナイメージ、バイナリなど）</td>
+        </tr>
+    </table>
+    
+    <div class="note">
+        <h3>Cloud Build と Jenkins の違い</h3>
+        <p>Cloud BuildとJenkinsはどちらもCI/CDツールですが、以下のような違いがあります：</p>
+        <ul>
+            <li><strong>Cloud Build：</strong> フルマネージドサービスでインフラ管理が不要。GCPサービスとの統合が優れている。構成がシンプル</li>
+            <li><strong>Jenkins：</strong> セルフホスト型で柔軟性が高いが、インフラ管理が必要。豊富なプラグインエコシステムを持つ。より複雑な構成が可能</li>
+        </ul>
+    </div>
+    
+    <h2>Cloud Buildの使用方法</h2>
+    <p>Cloud Buildは、Google Cloud Console、gcloud CLIツール、またはAPIを使用して利用できます。</p>
+    
+    <h3>ビルド構成ファイルの作成</h3>
+    <p>ビルド構成ファイル（cloudbuild.yaml）は、ビルドプロセスのステップを定義します：</p>
+    
+    <div class="example">
+        <h4>シンプルなビルド構成ファイルの例</h4>
+        <pre><code>steps:
+# Dockerイメージをビルド
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/myapp:$COMMIT_SHA', '.']
+
+# ビルドしたイメージをContainer Registryにプッシュ
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/myapp:$COMMIT_SHA']
+
+# GKEにデプロイ
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+  - 'set'
+  - 'image'
+  - 'deployment/myapp'
+  - 'myapp=gcr.io/$PROJECT_ID/myapp:$COMMIT_SHA'
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=asia-northeast1-a'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=my-cluster'
+
+# ビルド結果のイメージ
+images:
+- 'gcr.io/$PROJECT_ID/myapp:$COMMIT_SHA'
+
+# ビルドのタイムアウト設定
+timeout: '1800s'</code></pre>
+    </div>
+    
+    <h3>gcloud CLIを使用したビルドの実行</h3>
+    <div class="example">
+        <h4>ローカルソースからのビルド実行</h4>
+        <pre><code>gcloud builds submit --config=cloudbuild.yaml .</code></pre>
+        
+        <h4>特定のソースリポジトリからのビルド実行</h4>
+        <pre><code>gcloud builds submit --config=cloudbuild.yaml https://github.com/username/repo.git</code></pre>
+    </div>
+    
+    <h3>ビルドトリガーの設定</h3>
+    <p>ビルドトリガーを使用すると、リポジトリの変更に応じて自動的にビルドを実行できます：</p>
+    <ol>
+        <li>Google Cloud Consoleにログイン</li>
+        <li>Cloud Buildページに移動</li>
+        <li>「トリガー」タブを選択</li>
+        <li>「トリガーを作成」をクリック</li>
+        <li>ソースリポジトリを選択（GitHub、Bitbucket、Cloud Source Repositoriesなど）</li>
+        <li>トリガー条件（ブランチ、タグ、コミットなど）を設定</li>
+        <li>ビルド構成ファイルの場所を指定</li>
+        <li>「作成」をクリックしてトリガーを保存</li>
+    </ol>
+    
+    <h2>Cloud Buildの高度な機能</h2>
+    
+    <h3>カスタムビルダーの作成</h3>
+    <p>特定のビルドタスク用にカスタムビルダーを作成できます：</p>
+    <pre><code># Dockerfile for custom builder
+FROM alpine:3.14
+RUN apk add --no-cache python3 py3-pip
+RUN pip3 install awscli
+ENTRYPOINT ["aws"]</code></pre>
+    
+    <p>カスタムビルダーをビルドしてContainer Registryにプッシュ：</p>
+    <pre><code>gcloud builds submit --tag gcr.io/$PROJECT_ID/aws-cli .</code></pre>
+    
+    <p>カスタムビルダーをビルド構成で使用：</p>
+    <pre><code>steps:
+- name: 'gcr.io/$PROJECT_ID/aws-cli'
+  args: ['s3', 'cp', 'myfile.txt', 's3://my-bucket/']</code></pre>
+    
+    <h3>ビルド変数とサブスティテューション</h3>
+    <p>ビルド構成ファイルで変数を使用して柔軟性を高めることができます：</p>
+    <pre><code>steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/${_SERVICE_NAME}:${_VERSION}', '.']
+
+substitutions:
+  _SERVICE_NAME: myapp
+  _VERSION: 1.0.0
+
+options:
+  env:
+  - 'NODE_ENV=production'</code></pre>
+    
+    <p>コマンドラインから変数を上書き：</p>
+    <pre><code>gcloud builds submit --config=cloudbuild.yaml \
+  --substitutions=_SERVICE_NAME=newapp,_VERSION=2.0.0 .</code></pre>
+    
+    <h2>Cloud Buildのセキュリティベストプラクティス</h2>
+    <ul>
+        <li><strong>最小権限の原則：</strong> Cloud Buildサービスアカウントに必要最小限の権限のみを付与</li>
+        <li><strong>Secret Managerの使用：</strong> 機密情報をSecret Managerに保存し、ビルド時に安全に取得</li>
+        <li><strong>プライベートプールの使用：</strong> セキュリティ要件が厳しい場合はプライベートプールでビルドを実行</li>
+        <li><strong>コンテナイメージのスキャン：</strong> Artifact Registryの脆弱性スキャンを有効化</li>
+        <li><strong>ソースコードの検証：</strong> Binary Authorizationを使用して信頼できるビルドのみをデプロイ</li>
+        <li><strong>監査ログの有効化：</strong> ビルド操作の監査ログを有効にして監視</li>
+    </ul>
+    
+    <div class="example">
+        <h4>Secret Managerとの統合例</h4>
+        <pre><code>steps:
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    gcloud secrets versions access latest --secret=my-api-key > /workspace/api-key.txt
+    
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--build-arg', 'API_KEY=$(cat /workspace/api-key.txt)', '-t', 'gcr.io/$PROJECT_ID/myapp', '.']</code></pre>
+    </div>
+    
+    <h2>Cloud Buildのモニタリングとロギング</h2>
+    <p>Cloud BuildはGoogle Cloud Monitoringおよびロギングと統合されており、ビルドの状態とパフォーマンスを監視できます：</p>
+    
+    <h3>主なモニタリング機能</h3>
+    <ul>
+        <li><strong>ビルド履歴：</strong> 過去のビルド実行の詳細な履歴を表示</li>
+        <li><strong>ビルドログ：</strong> 各ビルドステップの詳細なログを確認</li>
+        <li><strong>ビルドステータス通知：</strong> Pub/Sub、Slack、メールなどでビルド結果を通知</li>
+        <li><strong>カスタムメトリクス：</strong> ビルド時間、成功率などのメトリクスを監視</li>
+    </ul>
+    
+    <h3>ビルド通知の設定</h3>
+    <p>Pub/Subを使用してビルド通知を設定できます：</p>
+    <pre><code>gcloud pubsub topics create cloud-builds
+
+gcloud pubsub subscriptions create cloud-builds-subscription --topic=cloud-builds
+
+gcloud services enable cloudbuild.googleapis.com
+
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member=serviceAccount:$PROJECT_NUMBER@cloudbuild.gserviceaccount.com \
+  --role=roles/pubsub.publisher</code></pre>
+    
+    <h2>Cloud Buildのコスト最適化</h2>
+    <p>Cloud Buildのコストを最適化するためのベストプラクティス：</p>
+    <ul>
+        <li><strong>ビルドステップの最適化：</strong> 不要なステップを削除し、ビルド時間を短縮</li>
+        <li><strong>キャッシュの活用：</strong> 依存関係やビルドアーティファクトをキャッシュして再利用</li>
+        <li><strong>並列ビルドステップ：</strong> 可能な場合はステップを並列実行して時間を短縮</li>
+        <li><strong>適切なマシンタイプの選択：</strong> ビルド要件に合わせて適切なマシンタイプを選択</li>
+        <li><strong>不要なファイルの除外：</strong> .gcloudignoreファイルを使用して不要なファイルをアップロードから除外</li>
+    </ul>
+    
+    <div class="note">
+        <h3>依存関係のキャッシュ例（Node.js）</h3>
+        <pre><code>steps:
+# キャッシュからnode_modulesを復元
+- name: 'gcr.io/cloud-builders/gsutil'
+  id: 'restore-cache'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    gsutil cp gs://$PROJECT_ID-cache/node-modules.tar.gz /tmp/ || exit 0
+    if [ -f /tmp/node-modules.tar.gz ]; then
+      tar -xzf /tmp/node-modules.tar.gz
+    fi
+
+# 依存関係をインストール
+- name: 'node:14'
+  id: 'install'
+  entrypoint: 'npm'
+  args: ['install']
+
+# node_modulesをキャッシュに保存
+- name: 'gcr.io/cloud-builders/gsutil'
+  id: 'save-cache'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    tar -czf /tmp/node-modules.tar.gz node_modules
+    gsutil cp /tmp/node-modules.tar.gz gs://$PROJECT_ID-cache/node-modules.tar.gz
+
+# ビルドを実行
+- name: 'node:14'
+  id: 'build'
+  entrypoint: 'npm'
+  args: ['run', 'build']</code></pre>
+    </div>
+    
+    <h2>Cloud Buildのユースケース</h2>
+    <p>Cloud Buildは以下のようなユースケースに適しています：</p>
+    <ul>
+        <li><strong>コンテナイメージのビルドとデプロイ：</strong> Dockerイメージをビルドし、GKE、Cloud Run、Artifact Registryにデプロイ</li>
+        <li><strong>継続的インテグレーション：</strong> コードの変更ごとにテストを自動実行</li>
+        <li><strong>継続的デリバリー：</strong> テスト済みのコードを自動的に本番環境にデプロイ</li>
+        <li><strong>マルチクラウドデプロイ：</strong> 複数のクラウド環境へのデプロイを自動化</li>
+        <li><strong>インフラストラクチャのプロビジョニング：</strong> Terraform、Ansible、Chefなどを使用したIaCの自動化</li>
+        <li><strong>静的サイト生成：</strong> 静的ウェブサイトのビルドとCloud Storageへのデプロイ</li>
+    </ul>
+    
+    <h2>Cloud Buildとの統合サービス</h2>
+    <p>Cloud Buildは他のGoogle Cloudサービスと統合して、より強力なCI/CDパイプラインを構築できます：</p>
+    
+    <table>
+        <tr>
+            <th>サービス</th>
+            <th>統合の利点</th>
+        </tr>
+        <tr>
+            <td>Artifact Registry</td>
+            <td>コンテナイメージ、言語パッケージ、その他のアーティファクトの安全な保存</td>
+        </tr>
+        <tr>
+            <td>Cloud Deploy</td>
+            <td>複数環境への段階的なデプロイの管理と自動化</td>
+        </tr>
+        <tr>
+            <td>GKE</td>
+            <td>Kubernetesクラスタへのコンテナアプリケーションのデプロイ</td>
+        </tr>
+        <tr>
+            <td>Cloud Run</td>
+            <td>サーバーレス環境へのコンテナのデプロイ</td>
+        </tr>
+        <tr>
+            <td>Cloud Source Repositories</td>
+            <td>プライベートGitリポジトリとの統合</td>
+        </tr>
+        <tr>
+            <td>Secret Manager</td>
+            <td>ビルドプロセスでの機密情報の安全な管理</td>
+        </tr>
+        <tr>
+            <td>Binary Authorization</td>
+            <td>信頼できるコンテナイメージのみをデプロイするポリシーの適用</td>
+        </tr>
+    </table>
+    
+    <h2>まとめ</h2>
+    <p>Cloud Build は、Google Cloud Platform上でのCI/CDパイプラインの構築と実行を簡素化するフルマネージドサービスです。柔軟なビルド構成、多様なソース統合、セキュリティ機能などにより、開発チームはインフラストラクチャの管理ではなく、アプリケーション開発に集中できます。</p>
+    
+    <p>Cloud Buildの主な利点は以下の通りです：</p>
+    <ul>
+        <li>インフラストラクチャ管理の負担軽減</li>
+        <li>柔軟なビルドパイプラインの定義</li>
+        <li>GCPサービスとのシームレスな統合</li>
+        <li>スケーラブルなビルド実行環境</li>
+        <li>セキュアなビルドプロセス</li>
+    </ul>
+    
+    <p>Cloud Buildを効果的に活用するには、ビルド構成の最適化、キャッシュの活用、適切なセキュリティ対策の実装が重要です。また、他のGCPサービスと組み合わせることで、エンドツーエンドの自動化されたデプロイパイプラインを構築することができます。</p>
+</body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Cloud Logging</title>
+    <link rel="stylesheet" href="../../../../css/knowledge.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../../js/common/analytics.js"></script>
+<body class="ja-knowledge">
+    <h1>Cloud Logging</h1>
+    
+    <h2>Cloud Loggingとは</h2>
+    <p>Cloud Loggingは、Google Cloud Platform (GCP) が提供するフルマネージドのログ管理サービスです。GCPリソース、オンプレミス環境、他のクラウドプロバイダーからのログデータを収集、保存、検索、分析、モニタリングするための統合プラットフォームを提供します。Cloud Loggingは、システムの可観測性を向上させ、問題のトラブルシューティングやセキュリティ監査、コンプライアンス要件の満たすための重要なツールです。</p>
+    
+    <h2>Cloud Loggingの主な特徴</h2>
+    <ul>
+        <li><strong>統合ログ管理：</strong> GCPサービス、カスタムアプリケーション、サードパーティシステムからのログを一元管理</li>
+        <li><strong>リアルタイムログ取り込み：</strong> ログデータをリアルタイムで取り込み、即座に検索可能</li>
+        <li><strong>強力な検索機能：</strong> 高度なクエリ言語を使用したログの検索とフィルタリング</li>
+        <li><strong>ログベースのメトリクス：</strong> ログデータからカスタムメトリクスを作成し、モニタリングに活用</li>
+        <li><strong>アラート機能：</strong> 特定のログパターンに基づいたアラートの設定</li>
+        <li><strong>ログエクスポート：</strong> 長期保存や詳細分析のためのログデータのエクスポート</li>
+        <li><strong>監査ログ：</strong> GCPリソースへのアクセスと操作の監査ログを自動的に収集</li>
+        <li><strong>エラー報告：</strong> アプリケーションエラーの自動検出と集約</li>
+        <li><strong>スケーラビリティ：</strong> ペタバイト規模のログデータを処理可能</li>
+    </ul>
+    
+    <h2>Cloud Loggingのアーキテクチャ</h2>
+    <p>Cloud Loggingは以下の主要コンポーネントで構成されています：</p>
+    
+    <table>
+        <tr>
+            <th>コンポーネント</th>
+            <th>説明</th>
+        </tr>
+        <tr>
+            <td>Logging API</td>
+            <td>ログエントリの書き込み、読み取り、管理のためのAPI</td>
+        </tr>
+        <tr>
+            <td>ログルーター</td>
+            <td>ログエントリを適切な宛先（ログバケット、Pub/Sub、BigQueryなど）にルーティング</td>
+        </tr>
+        <tr>
+            <td>ログバケット</td>
+            <td>ログデータを保存するためのストレージ単位</td>
+        </tr>
+        <tr>
+            <td>ログビューア</td>
+            <td>ログエントリを検索、フィルタリング、表示するためのインターフェース</td>
+        </tr>
+        <tr>
+            <td>ログベースのメトリクス</td>
+            <td>ログデータから生成されるカスタムメトリクス</td>
+        </tr>
+        <tr>
+            <td>ログシンク</td>
+            <td>ログデータを外部システム（BigQuery、Cloud Storage、Pub/Subなど）にエクスポートするための設定</td>
+        </tr>
+        <tr>
+            <td>Logging Agent</td>
+            <td>Compute EngineやKubernetesなどの環境からログを収集するエージェント</td>
+        </tr>
+    </table>
+    
+    <div class="note">
+        <h3>Cloud Logging と他のログ管理サービスの違い</h3>
+        <p>Cloud Loggingと他のログ管理サービスには以下のような違いがあります：</p>
+        <ul>
+            <li><strong>Cloud Logging：</strong> GCPに統合されたフルマネージドのログ管理サービス。GCPサービスとの連携が強力</li>
+            <li><strong>Elasticsearch/Kibana：</strong> オープンソースのログ管理スタック。より柔軟なカスタマイズが可能だが、管理の負担が大きい</li>
+            <li><strong>Splunk：</strong> エンタープライズ向けの高機能ログ管理プラットフォーム。多様なデータソースに対応するが、コストが高い</li>
+            <li><strong>AWS CloudWatch Logs：</strong> AWSのログ管理サービス。AWS環境に最適化されている</li>
+        </ul>
+    </div>
+    
+    <h2>Cloud Loggingの使用方法</h2>
+    <p>Cloud Loggingは、Google Cloud Console、gcloud CLIツール、クライアントライブラリ、またはRESTful APIを使用して利用できます。</p>
+    
+    <h3>ログの表示と検索</h3>
+    <p>Google Cloud Consoleのログエクスプローラーを使用して、ログを表示、検索、フィルタリングできます：</p>
+    <div class="example">
+        <h4>基本的なログクエリの例</h4>
+        <pre><code>resource.type="gce_instance"
+severity>=ERROR
+timestamp>"2023-01-01T00:00:00Z"</code></pre>
+        
+        <h4>高度なログクエリの例</h4>
+        <pre><code>resource.type="k8s_container"
+resource.labels.namespace_name="production"
+resource.labels.container_name="web-server"
+textPayload:"Exception"
+timestamp>="2023-01-15T00:00:00Z"
+timestamp<="2023-01-16T00:00:00Z"</code></pre>
+    </div>
+    
+    <h3>gcloud CLIを使用したログの表示</h3>
+    <div class="example">
+        <h4>基本的なログ読み取りコマンド</h4>
+        <pre><code>gcloud logging read "resource.type=gce_instance AND severity>=ERROR" \
+  --limit=10 \
+  --format=json</code></pre>
+        
+        <h4>時間範囲を指定したログの読み取り</h4>
+        <pre><code>gcloud logging read "timestamp>=\"2023-01-15T00:00:00Z\" AND timestamp<=\"2023-01-16T00:00:00Z\"" \
+  --limit=50 \
+  --order=asc</code></pre>
+    </div>
+    
+    <h3>アプリケーションからのログ出力</h3>
+    <p>アプリケーションからCloud Loggingにログを出力するには、各言語用のクライアントライブラリを使用します：</p>
+    <div class="example">
+        <h4>Node.jsでのログ出力例</h4>
+        <pre><code>const {Logging} = require('@google-cloud/logging');
+const logging = new Logging();
+const log = logging.log('my-log');
+
+async function writeLog() {
+  const text = 'Hello, Cloud Logging!';
+  const metadata = {
+    resource: {
+      type: 'global',
+    },
+    severity: 'INFO',
+  };
+  
+  const entry = log.entry(metadata, text);
+  await log.write(entry);
+  console.log(`Logged: ${text}`);
+}
+
+writeLog();</code></pre>
+        
+        <h4>Pythonでのログ出力例</h4>
+        <pre><code>import google.cloud.logging
+from google.cloud.logging.resource import Resource
+
+client = google.cloud.logging.Client()
+logger = client.logger('my-log')
+
+# 構造化ログの出力
+logger.log_struct(
+    {
+        'message': 'Hello, Cloud Logging!',
+        'user': 'user123',
+        'event': 'login'
+    },
+    resource=Resource(
+        type='global',
+        labels={}
+    ),
+    severity='INFO'
+)</code></pre>
+        
+        <h4>Javaでのログ出力例</h4>
+        <pre><code>import com.google.cloud.logging.LogEntry;
+import com.google.cloud.logging.Logging;
+import com.google.cloud.logging.LoggingOptions;
+import com.google.cloud.logging.Payload.StringPayload;
+import com.google.cloud.logging.Severity;
+
+public class LoggingExample {
+  public static void main(String[] args) {
+    LoggingOptions options = LoggingOptions.getDefaultInstance();
+    
+    try (Logging logging = options.getService()) {
+      LogEntry entry = LogEntry.newBuilder(StringPayload.of("Hello, Cloud Logging!"))
+          .setSeverity(Severity.INFO)
+          .setLogName("my-log")
+          .build();
+      
+      logging.write(Collections.singleton(entry));
+      System.out.println("Logged: Hello, Cloud Logging!");
+    } catch (Exception e) {
+      System.err.println("Error writing logs: " + e.getMessage());
+    }
+  }
+}</code></pre>
+    </div>
+    
+    <h3>ログシンクの設定</h3>
+    <p>ログデータを長期保存や詳細分析のために外部システムにエクスポートするためのログシンクを設定できます：</p>
+    <div class="example">
+        <h4>Cloud Storageへのログエクスポート</h4>
+        <pre><code>gcloud logging sinks create storage-sink \
+  storage.googleapis.com/my-logs-bucket \
+  --log-filter="resource.type=gce_instance AND severity>=WARNING"</code></pre>
+        
+        <h4>BigQueryへのログエクスポート</h4>
+        <pre><code>gcloud logging sinks create bigquery-sink \
+  bigquery.googleapis.com/projects/my-project/datasets/logs_dataset \
+  --log-filter="resource.type=k8s_container"</code></pre>
+        
+        <h4>Pub/Subへのログエクスポート</h4>
+        <pre><code>gcloud logging sinks create pubsub-sink \
+  pubsub.googleapis.com/projects/my-project/topics/logs-topic \
+  --log-filter="severity=ERROR OR severity=CRITICAL"</code></pre>
+    </div>
+    
+    <h2>ログの種類と構造</h2>
+    <p>Cloud Loggingでは、様々な種類のログが収集されます：</p>
+    
+    <h3>主なログの種類</h3>
+    <ul>
+        <li><strong>プラットフォームログ：</strong> GCPサービス（Compute Engine、GKE、App Engineなど）から自動的に収集されるログ</li>
+        <li><strong>アプリケーションログ：</strong> アプリケーションから出力されるカスタムログ</li>
+        <li><strong>監査ログ：</strong> GCPリソースへのアクセスと操作を記録する管理アクティビティ、データアクセス、システムイベントのログ</li>
+        <li><strong>セキュリティログ：</strong> Cloud Armor、VPC Flow Logs、Firewall Rulesなどのセキュリティ関連のログ</li>
+    </ul>
+    
+    <h3>ログエントリの構造</h3>
+    <p>ログエントリは以下の主要フィールドで構成されています：</p>
+    <ul>
+        <li><strong>logName：</strong> ログの名前（例：projects/my-project/logs/my-log）</li>
+        <li><strong>resource：</strong> ログを生成したリソースの情報（type、labelsなど）</li>
+        <li><strong>timestamp：</strong> ログエントリが生成された時刻</li>
+        <li><strong>severity：</strong> ログの重要度（DEBUG、INFO、WARNING、ERROR、CRITICALなど）</li>
+        <li><strong>textPayload/jsonPayload/protoPayload：</strong> ログメッセージの内容（テキスト、JSON、またはProtobuf形式）</li>
+        <li><strong>labels：</strong> ログエントリに関連付けられたキーと値のペア</li>
+        <li><strong>operation：</strong> 複数のログエントリにまたがる操作の情報</li>
+        <li><strong>trace：</strong> Cloud Traceとの統合のためのトレース情報</li>
+    </ul>
+    
+    <div class="example">
+        <h4>ログエントリのJSON表現例</h4>
+        <pre><code>{
+  "insertId": "s3f7d83jd93h",
+  "logName": "projects/my-project/logs/my-log",
+  "resource": {
+    "type": "gce_instance",
+    "labels": {
+      "instance_id": "1234567890123456789",
+      "zone": "us-central1-a"
+    }
+  },
+  "timestamp": "2023-01-15T12:34:56.789Z",
+  "severity": "ERROR",
+  "textPayload": "Application failed to start: database connection error",
+  "labels": {
+    "environment": "production",
+    "service": "api-server"
+  },
+  "trace": "projects/my-project/traces/1234567890abcdef"
+}</code></pre>
+    </div>
+    
+    <h2>ログベースのメトリクス</h2>
+    <p>ログデータからカスタムメトリクスを作成して、モニタリングとアラートに活用できます：</p>
+    <div class="example">
+        <h4>ログベースのカウンターメトリクスの作成</h4>
+        <pre><code>gcloud logging metrics create error-count \
+  --description="Count of error log entries" \
+  --filter="severity>=ERROR" \
+  --metric-descriptor-type=counter</code></pre>
+        
+        <h4>ログベースの分布メトリクスの作成</h4>
+        <pre><code>gcloud logging metrics create response-time-distribution \
+  --description="Distribution of API response times" \
+  --filter="resource.type=gae_app AND jsonPayload.responseTime>0" \
+  --metric-descriptor-type=distribution \
+  --value-extractor="EXTRACT(jsonPayload.responseTime)"</code></pre>
+    </div>
+    
+    <h2>ログベースのアラート</h2>
+    <p>特定のログパターンに基づいてアラートを設定できます：</p>
+    <div class="example">
+        <h4>ログベースのアラートポリシーの作成</h4>
+        <pre><code>gcloud alpha monitoring policies create \
+  --display-name="Critical Error Alert" \
+  --condition-filter="metric.type=\"logging.googleapis.com/log_entry_count\" AND resource.type=\"global\" AND metric.labels.severity=\"CRITICAL\"" \
+  --condition-threshold-value=1 \
+  --condition-threshold-duration=60s \
+  --notification-channels="projects/my-project/notificationChannels/1234567890"</code></pre>
+    </div>
+    
+    <h2>Cloud Loggingのセキュリティ</h2>
+    <p>Cloud Loggingでは、ログデータのセキュリティを確保するための様々な機能が提供されています：</p>
+    
+    <h3>アクセス制御</h3>
+    <p>IAMを使用して、ログデータへのアクセスを制御できます：</p>
+    <pre><code># ログ閲覧者ロールの付与
+gcloud projects add-iam-policy-binding my-project \
+  --member=user:user@example.com \
+  --role=roles/logging.viewer
+
+# ログ書き込み者ロールの付与
+gcloud projects add-iam-policy-binding my-project \
+  --member=serviceAccount:my-service-account@my-project.iam.gserviceaccount.com \
+  --role=roles/logging.logWriter</code></pre>
+    
+    <h3>ログの暗号化</h3>
+    <p>Cloud Loggingのデータは、保存時と転送時に自動的に暗号化されます。さらに、カスタマー管理の暗号化キー（CMEK）を使用することもできます：</p>
+    <pre><code># CMEKを使用したログバケットの作成
+gcloud logging buckets create my-cmek-bucket \
+  --location=global \
+  --cmek-kms-key-name=projects/my-project/locations/global/keyRings/my-keyring/cryptoKeys/my-key</code></pre>
+    
+    <h3>データアクセス監査ログ</h3>
+    <p>データアクセス監査ログを有効にして、機密データへのアクセスを監視できます：</p>
+    <pre><code>gcloud logging settings update \
+  --organization=ORGANIZATION_ID \
+  --enable-data-access</code></pre>
+    
+    <h2>Cloud Loggingのベストプラクティス</h2>
+    <p>Cloud Loggingを効果的に活用するためのベストプラクティス：</p>
+    
+    <h3>ログ設計のベストプラクティス</h3>
+    <ul>
+        <li><strong>構造化ログの使用：</strong> テキストログよりも構造化ログ（JSON）を使用して、検索と分析を容易にする</li>
+        <li><strong>適切なログレベルの使用：</strong> 情報の重要度に応じて適切なログレベル（DEBUG、INFO、WARNING、ERROR、CRITICAL）を使用</li>
+        <li><strong>コンテキスト情報の追加：</strong> トレースID、リクエストID、ユーザーIDなどのコンテキスト情報をログに含める</li>
+        <li><strong>機密情報の除外：</strong> パスワード、認証トークン、個人情報などの機密情報をログに含めない</li>
+        <li><strong>一貫したログ形式：</strong> アプリケーション全体で一貫したログ形式を使用</li>
+    </ul>
+    
+    <h3>運用のベストプラクティス</h3>
+    <ul>
+        <li><strong>ログフィルタの最適化：</strong> 効率的なログフィルタを作成して、必要なログのみを検索</li>
+        <li><strong>ログシンクの活用：</strong> 長期保存や詳細分析のためにログをエクスポート</li>
+        <li><strong>ログベースのメトリクスとアラートの設定：</strong> 重要なログパターンに基づいてアラートを設定</li>
+        <li><strong>ログ保持期間の最適化：</strong> コストとコンプライアンス要件に基づいてログ保持期間を設定</li>
+        <li><strong>サンプリングの活用：</strong> 高ボリュームのログでは、サンプリングを使用してコストを削減</li>
+    </ul>
+    
+    <div class="note">
+        <h3>コスト最適化のヒント</h3>
+        <ul>
+            <li>不要なログを除外するためのログ除外フィルタを設定</li>
+            <li>ログシンクを使用して、重要なログのみを長期保存</li>
+            <li>デバッグレベルのログは開発環境のみで有効化</li>
+            <li>ログベースのメトリクスを効率的に設計して、処理するログ量を削減</li>
+            <li>適切なログバケットの保持期間を設定</li>
+        </ul>
+    </div>
+    
+    <h2>Cloud Loggingのユースケース</h2>
+    <p>Cloud Loggingは以下のようなユースケースに適しています：</p>
+    <ul>
+        <li><strong>アプリケーションのトラブルシューティング：</strong> エラーや例外の特定と解決</li>
+        <li><strong>システムモニタリング：</strong> システムの健全性と動作状況の監視</li>
+        <li><strong>セキュリティ監査：</strong> 不審なアクティビティや不正アクセスの検出</li>
+        <li><strong>コンプライアンス：</strong> 規制要件に準拠したログの保持と管理</li>
+        <li><strong>パフォーマンス分析：</strong> システムのパフォーマンスボトルネックの特定</li>
+        <li><strong>ユーザー行動分析：</strong> ユーザーの行動パターンとアプリケーション使用状況の分析</li>
+        <li><strong>ビジネスインテリジェンス：</strong> ログデータからのビジネスインサイトの抽出</li>
+    </ul>
+    
+    <h3>ユースケース例：アプリケーションのトラブルシューティング</h3>
+    <div class="example">
+        <h4>エラーログの検索と分析</h4>
+        <pre><code># エラーログの検索
+gcloud logging read "resource.type=gae_app AND severity>=ERROR" \
+  --limit=10 \
+  --format=json
+
+# 特定のエラーパターンの検索
+gcloud logging read "resource.type=gae_app AND textPayload:\"database connection failed\"" \
+  --limit=10 \
+  --format=json
+
+# エラー発生前後のログの検索
+gcloud logging read "resource.type=gae_app AND resource.labels.module_id=\"api-server\"" \
+  --limit=50 \
+  --order=asc \
+  --freshness=1d</code></pre>
+    </div>
+    
+    <h2>Cloud Loggingとの統合サービス</h2>
+    <p>Cloud Loggingは他のGoogle Cloudサービスと統合して、より強力なソリューションを構築できます：</p>
+    
+    <table>
+        <tr>
+            <th>サービス</th>
+            <th>統合の利点</th>
+        </tr>
+        <tr>
+            <td><a href="cloud_monitoring.html">Cloud Monitoring</a></td>
+            <td>ログとメトリクスを組み合わせた総合的なモニタリング</td>
+        </tr>
+        <tr>
+            <td><a href="cloud_trace.html">Cloud Trace</a></td>
+            <td>分散トレーシングとログの関連付けによる詳細な問題診断</td>
+        </tr>
+        <tr>
+            <td><a href="error_reporting.html">Error Reporting</a></td>
+            <td>アプリケーションエラーの自動検出と集約</td>
+        </tr>
+        <tr>
+            <td><a href="bigquery.html">BigQuery</a></td>
+            <td>ログデータの高度な分析とクエリ</td>
+        </tr>
+        <tr>
+            <td><a href="pub_sub.html">Pub/Sub</a></td>
+            <td>ログイベントに基づいたリアルタイム処理</td>
+        </tr>
+        <tr>
+            <td><a href="cloud_storage.html">Cloud Storage</a></td>
+            <td>ログデータの長期保存とアーカイブ</td>
+        </tr>
+        <tr>
+            <td><a href="cloud_security_command_center.html">Cloud Security Command Center</a></td>
+            <td>セキュリティ関連のログの集約と分析</td>
+        </tr>
+    </table>
+    
+    <h3>Pub/Subとの統合例</h3>
+    <div class="example">
+        <h4>ログをPub/Subにエクスポートする</h4>
+        <pre><code># Pub/Subトピックの作成
+gcloud pubsub topics create log-events
+
+# ログシンクの作成
+gcloud logging sinks create pubsub-sink \
+  pubsub.googleapis.com/projects/my-project/topics/log-events \
+  --log-filter="severity>=WARNING"
+
+# サービスアカウントに発行者権限を付与
+gcloud pubsub topics add-iam-policy-binding log-events \
+  --member=serviceAccount:$(gcloud logging sinks describe pubsub-sink --format="value(writerIdentity)") \
+  --role=roles/pubsub.publisher</code></pre>
+    </div>
+    
+    <h2>まとめ</h2>
+    <p>Cloud Logging は、Google Cloud Platform上でのログ管理サービスとして、様々なソースからのログデータを収集、保存、検索、分析、モニタリングするための統合プラットフォームを提供します。システムの可観測性を向上させ、問題のトラブルシューティングやセキュリティ監査、コンプライアンス要件を満たすための重要なツールです。</p>
+    
+    <p>Cloud Loggingの主な利点は以下の通りです：</p>
+    <ul>
+        <li>GCPサービスとの統合による自動的なログ収集</li>
+        <li>強力な検索機能とフィルタリング機能によるログの分析</li>
+        <li>ログベースのメトリクスとアラートによるプロアクティブなモニタリング</li>
+        <li>外部システムへのログエクスポート機能による柔軟なログ管理</li>
+        <li>IAMによるきめ細かなアクセス制御</li>
+        <li>他のGoogle Cloudサービスとのシームレスな統合</li>
+    </ul>
+    
+    <p>Cloud Loggingを効果的に活用するには、構造化ログの使用、適切なログレベルの設定、コンテキスト情報の追加、効率的なログフィルタの作成、ログシンクの活用などのベストプラクティスを適用することが重要です。また、コスト最適化のために、不要なログの除外、サンプリングの活用、適切な保持期間の設定なども検討すべきです。</p>
+</body>
+</html>

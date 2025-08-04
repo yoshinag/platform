@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Cloud Armor</title>
+    <link rel="stylesheet" href="../../../../css/knowledge.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../../js/common/analytics.js"></script>
+<body class="ja-knowledge">
+    <h1>Cloud Armor</h1>
+    
+    <h2>Cloud Armorとは</h2>
+    <p>Cloud Armor は、Google Cloud Platform (GCP) が提供するウェブアプリケーションファイアウォール（WAF）およびDDoS（分散型サービス拒否攻撃）保護サービスです。Google Cloud Load Balancingと統合され、インターネットに公開されたアプリケーションやサービスを様々なサイバー攻撃から保護します。Cloud Armorは、Googleのグローバルインフラストラクチャとセキュリティの専門知識を活用して、アプリケーションの可用性、セキュリティ、パフォーマンスを確保します。</p>
+    
+    <h2>Cloud Armorの主な特徴</h2>
+    <ul>
+        <li><strong>DDoS保護：</strong> Googleのグローバルインフラストラクチャを活用した大規模DDoS攻撃からの保護</li>
+        <li><strong>ウェブアプリケーションファイアウォール（WAF）：</strong> SQLインジェクション、クロスサイトスクリプティング（XSS）などの一般的なウェブ攻撃からの保護</li>
+        <li><strong>事前構成ルール：</strong> OWASPトップ10などの一般的な脆弱性に対する事前構成されたルール</li>
+        <li><strong>カスタムルール：</strong> 特定のビジネスニーズに合わせたカスタムセキュリティルールの作成</li>
+        <li><strong>地理的制限：</strong> 特定の国や地域からのトラフィックを許可または拒否</li>
+        <li><strong>IPアドレスフィルタリング：</strong> 特定のIPアドレスまたはCIDRブロックからのトラフィックを許可または拒否</li>
+        <li><strong>レート制限：</strong> 特定のクライアントからのリクエスト数を制限してブルートフォース攻撃を防止</li>
+        <li><strong>名前付き永続的リソース：</strong> 再利用可能なIPアドレスリストやカスタムヘッダートランスフォーメーション</li>
+    </ul>
+    
+    <h2>Cloud Armorのアーキテクチャ</h2>
+    <p>Cloud Armorは以下の主要コンポーネントで構成されています：</p>
+    
+    <table>
+        <tr>
+            <th>コンポーネント</th>
+            <th>説明</th>
+        </tr>
+        <tr>
+            <td>セキュリティポリシー</td>
+            <td>セキュリティルールの集合。バックエンドサービスに適用される</td>
+        </tr>
+        <tr>
+            <td>セキュリティルール</td>
+            <td>トラフィックをフィルタリングするための条件と対応するアクション</td>
+        </tr>
+        <tr>
+            <td>エッジロケーション</td>
+            <td>世界中に分散配置されたGoogleのデータセンター。攻撃をGoogleのネットワークエッジで検出・緩和</td>
+        </tr>
+        <tr>
+            <td>ロードバランサー</td>
+            <td>Cloud Armorと統合されるGlobal External HTTP(S) Load BalancerまたはClassic Application Load Balancer</td>
+        </tr>
+        <tr>
+            <td>バックエンドサービス</td>
+            <td>保護対象のアプリケーションやサービス。Compute Engine、GKE、Cloud Run、App Engineなど</td>
+        </tr>
+    </table>
+    
+    <div class="note">
+        <h3>Cloud Armor と従来のWAF/DDoS保護の違い</h3>
+        <p>Cloud Armorと従来のWAF/DDoS保護ソリューションには以下のような違いがあります：</p>
+        <ul>
+            <li><strong>Cloud Armor：</strong> Googleのグローバルインフラストラクチャを活用。GCPサービスと緊密に統合。クラウドネイティブなアプローチ</li>
+            <li><strong>従来のWAF/DDoS保護：</strong> 専用ハードウェアやアプライアンスが必要な場合がある。クラウドサービスとの統合が限定的な場合がある。オンプレミス環境向けに最適化されている場合がある</li>
+        </ul>
+    </div>
+    
+    <h2>Cloud Armorの設定方法</h2>
+    <p>Cloud Armorは、Google Cloud Console、gcloud CLIツール、またはAPIを使用して設定できます。</p>
+    
+    <h3>Google Cloud Consoleを使用した設定</h3>
+    <ol>
+        <li>Google Cloud Consoleにログイン</li>
+        <li>「ネットワークセキュリティ」→「Cloud Armor」に移動</li>
+        <li>「セキュリティポリシーを作成」をクリック</li>
+        <li>ポリシー名と説明を入力</li>
+        <li>デフォルトルールのアクションを設定（通常は「許可」）</li>
+        <li>「ルールを追加」をクリックして、セキュリティルールを作成</li>
+        <li>ルールの優先度、一致条件、アクションを設定</li>
+        <li>「作成」をクリックしてポリシーを保存</li>
+        <li>作成したポリシーをバックエンドサービスに適用</li>
+    </ol>
+    
+    <h3>gcloud CLIを使用した設定</h3>
+    <div class="example">
+        <h4>セキュリティポリシーの作成</h4>
+        <pre><code>gcloud compute security-policies create my-policy \
+    --description="My security policy"</code></pre>
+        
+        <h4>IPアドレスフィルタリングルールの追加</h4>
+        <pre><code>gcloud compute security-policies rules create 1000 \
+    --security-policy=my-policy \
+    --description="Block specific IP ranges" \
+    --src-ip-ranges="192.0.2.0/24,198.51.100.0/24" \
+    --action=deny-403</code></pre>
+        
+        <h4>地理的制限ルールの追加</h4>
+        <pre><code>gcloud compute security-policies rules create 2000 \
+    --security-policy=my-policy \
+    --description="Allow traffic from Japan only" \
+    --expression="origin.region_code != 'JP'" \
+    --action=deny-403</code></pre>
+        
+        <h4>バックエンドサービスへのポリシーの適用</h4>
+        <pre><code>gcloud compute backend-services update my-backend-service \
+    --global \
+    --security-policy=my-policy</code></pre>
+    </div>
+    
+    <h2>Cloud Armorのセキュリティルール</h2>
+    <p>Cloud Armorでは、様々な種類のセキュリティルールを作成できます：</p>
+    
+    <h3>事前構成ルール</h3>
+    <p>一般的なウェブ攻撃に対する事前構成されたルールを使用できます：</p>
+    <pre><code># SQLインジェクション対策ルール
+gcloud compute security-policies rules create 1000 \
+    --security-policy=my-policy \
+    --description="Block SQL injection" \
+    --expression="evaluatePreconfiguredExpr('sqli-stable')" \
+    --action=deny-403
+
+# XSS対策ルール
+gcloud compute security-policies rules create 2000 \
+    --security-policy=my-policy \
+    --description="Block XSS attacks" \
+    --expression="evaluatePreconfiguredExpr('xss-stable')" \
+    --action=deny-403
+
+# リモートファイルインクルージョン対策ルール
+gcloud compute security-policies rules create 3000 \
+    --security-policy=my-policy \
+    --description="Block remote file inclusion" \
+    --expression="evaluatePreconfiguredExpr('rfi-stable')" \
+    --action=deny-403</code></pre>
+    
+    <h3>カスタムルール</h3>
+    <p>Common Expression Language (CEL)を使用して、カスタムルールを作成できます：</p>
+    <pre><code># 特定のUser-Agentをブロック
+gcloud compute security-policies rules create 4000 \
+    --security-policy=my-policy \
+    --description="Block bad bots" \
+    --expression="request.headers['user-agent'].contains('BadBot')" \
+    --action=deny-403
+
+# 特定のURLパスへのアクセスを制限
+gcloud compute security-policies rules create 5000 \
+    --security-policy=my-policy \
+    --description="Protect admin area" \
+    --expression="request.path.startsWith('/admin') && request.headers['cookie'].contains('admin=true') == false" \
+    --action=deny-403
+
+# 特定のHTTPメソッドのみを許可
+gcloud compute security-policies rules create 6000 \
+    --security-policy=my-policy \
+    --description="Allow only GET and POST methods" \
+    --expression="request.method != 'GET' && request.method != 'POST'" \
+    --action=deny-403</code></pre>
+    
+    <h3>レート制限</h3>
+    <p>特定のクライアントからのリクエスト数を制限できます：</p>
+    <pre><code>gcloud compute security-policies rules create 7000 \
+    --security-policy=my-policy \
+    --description="Rate limit by IP" \
+    --expression="true" \
+    --action=rate-based-ban \
+    --rate-limit-threshold-count=100 \
+    --rate-limit-threshold-interval-sec=60 \
+    --ban-duration-sec=300 \
+    --conform-action=allow \
+    --exceed-action=deny-403</code></pre>
+    
+    <h3>名前付き永続的リソース</h3>
+    <p>再利用可能なIPアドレスリストやカスタムヘッダートランスフォーメーションを作成できます：</p>
+    <pre><code># IPアドレスリストの作成
+gcloud compute security-policies add-custom-ip-list my-policy \
+    --name=trusted-ips \
+    --description="Trusted IP addresses" \
+    --ip-ranges="203.0.113.0/24,2001:db8::/32"
+
+# IPアドレスリストを使用したルール
+gcloud compute security-policies rules create 8000 \
+    --security-policy=my-policy \
+    --description="Allow trusted IPs" \
+    --expression="!inIpRange(origin.ip, resources.custom_ip_lists.trusted-ips)" \
+    --action=deny-403</code></pre>
+    
+    <h2>Cloud ArmorのDDoS保護</h2>
+    <p>Cloud Armorは、以下のようなDDoS攻撃からアプリケーションを保護します：</p>
+    
+    <h3>保護されるDDoS攻撃の種類</h3>
+    <ul>
+        <li><strong>SYNフラッド：</strong> TCPコネクションの確立プロセスを悪用した攻撃</li>
+        <li><strong>UDPフラッド：</strong> 大量のUDPパケットを送信する攻撃</li>
+        <li><strong>ICMPフラッド：</strong> 大量のICMPエコーリクエストを送信する攻撃</li>
+        <li><strong>HTTPフラッド：</strong> 大量のHTTPリクエストを送信する攻撃</li>
+        <li><strong>DNS増幅攻撃：</strong> DNSサーバーを悪用して攻撃トラフィックを増幅する攻撃</li>
+        <li><strong>NTPリフレクション攻撃：</strong> NTPサーバーを悪用して攻撃トラフィックを増幅する攻撃</li>
+        <li><strong>アプリケーション層攻撃：</strong> アプリケーションの脆弱性を悪用した攻撃</li>
+    </ul>
+    
+    <h3>DDoS保護の仕組み</h3>
+    <p>Cloud ArmorのDDoS保護は、以下の方法で機能します：</p>
+    <ul>
+        <li><strong>エッジでの防御：</strong> 攻撃トラフィックをGoogleのネットワークエッジで検出・緩和</li>
+        <li><strong>トラフィック分析：</strong> 機械学習アルゴリズムを使用して異常なトラフィックパターンを検出</li>
+        <li><strong>自動スケーリング：</strong> 攻撃時に自動的にリソースをスケールアップして可用性を維持</li>
+        <li><strong>グローバル分散：</strong> 攻撃トラフィックを世界中のエッジロケーションに分散</li>
+        <li><strong>プロトコル検証：</strong> 不正なプロトコルパケットをフィルタリング</li>
+    </ul>
+    
+    <h2>Cloud Armorのモニタリングとロギング</h2>
+    <p>Cloud ArmorはGoogle Cloud Monitoringおよびロギングと統合されており、セキュリティイベントを監視できます：</p>
+    
+    <h3>主なモニタリング機能</h3>
+    <ul>
+        <li><strong>セキュリティポリシーのログ：</strong> セキュリティポリシーによってブロックまたは許可されたリクエストのログ</li>
+        <li><strong>DDoS攻撃の検出：</strong> 検出されたDDoS攻撃のアラートと詳細</li>
+        <li><strong>リクエスト分析：</strong> 地理的分布、IPアドレス、ユーザーエージェントなどのリクエスト属性の分析</li>
+        <li><strong>カスタムダッシュボード：</strong> セキュリティメトリクスのカスタムダッシュボードの作成</li>
+    </ul>
+    
+    <h3>ログの分析</h3>
+    <p>Cloud Armorのログを分析して、セキュリティイベントを調査できます：</p>
+    <pre><code># Cloud Armorのログを表示
+gcloud logging read 'resource.type="http_load_balancer" AND jsonPayload.enforcedSecurityPolicy.name="my-policy"'
+
+# ブロックされたリクエストのログを表示
+gcloud logging read 'resource.type="http_load_balancer" AND jsonPayload.enforcedSecurityPolicy.outcome="DENY"'</code></pre>
+    
+    <h3>アラートの設定</h3>
+    <p>特定のセキュリティイベントに対するアラートを設定できます：</p>
+    <pre><code># ブロックされたリクエスト数が閾値を超えた場合のアラート
+gcloud alpha monitoring policies create \
+    --display-name="Cloud Armor Blocked Requests Alert" \
+    --condition-filter='resource.type="http_load_balancer" AND metric.type="compute.googleapis.com/http/request_count" AND metric.labels.response_code_class="400" AND metric.labels.security_policy_name="my-policy"' \
+    --condition-threshold-value=100 \
+    --condition-threshold-comparison=COMPARISON_GT \
+    --condition-aggregations-alignment-period=300s \
+    --condition-aggregations-per-series-aligner=ALIGN_RATE \
+    --condition-aggregations-cross-series-reducer=REDUCE_SUM \
+    --condition-trigger-count=1 \
+    --notification-channels=projects/my-project/notificationChannels/1234567890</code></pre>
+    
+    <h2>Cloud Armorの高度な機能</h2>
+    
+    <h3>アダプティブプロテクション</h3>
+    <p>機械学習を使用して、通常のトラフィックパターンを学習し、異常を検出します：</p>
+    <pre><code># アダプティブプロテクションの有効化
+gcloud compute security-policies update my-policy \
+    --adaptive-protection-config=enable=true</code></pre>
+    
+    <h3>reCAPTCHA Enterprise統合</h3>
+    <p>reCAPTCHA Enterpriseと統合して、ボット対策を強化できます：</p>
+    <pre><code># reCAPTCHA Actionの作成
+gcloud recaptcha keys create my-recaptcha-key \
+    --display-name="My reCAPTCHA Key" \
+    --web \
+    --domains=example.com \
+    --integration-type=SCORE
+
+# Cloud Armorとの統合
+gcloud compute security-policies rules create 9000 \
+    --security-policy=my-policy \
+    --description="reCAPTCHA integration" \
+    --expression="token.recaptcha_action.score < 0.5" \
+    --action=deny-403 \
+    --recaptcha-options=action-token-key=my-recaptcha-key</code></pre>
+    
+    <h3>Google Cloud Armorマネージドプロテクションプラス</h3>
+    <p>高度なDDoS保護と専門家によるサポートを提供する有料サービス：</p>
+    <ul>
+        <li><strong>24時間365日のDDoS対応サポート：</strong> 専門家によるDDoS攻撃対応のサポート</li>
+        <li><strong>カスタムルールの作成支援：</strong> セキュリティエキスパートによるカスタムルールの作成支援</li>
+        <li><strong>高度な脅威インテリジェンス：</strong> 最新の脅威情報に基づく保護</li>
+        <li><strong>SLA保証：</strong> サービスレベル契約による可用性保証</li>
+    </ul>
+    
+    <h2>Cloud Armorのユースケース</h2>
+    <p>Cloud Armorは以下のようなユースケースに適しています：</p>
+    <ul>
+        <li><strong>ウェブアプリケーションの保護：</strong> SQLインジェクション、XSSなどの一般的なウェブ攻撃からの保護</li>
+        <li><strong>APIの保護：</strong> 公開APIをDDoS攻撃や不正アクセスから保護</li>
+        <li><strong>eコマースサイトの保護：</strong> 顧客データや決済情報を保護し、サイトの可用性を確保</li>
+        <li><strong>コンテンツ配信の保護：</strong> CDNと組み合わせて、コンテンツ配信を保護</li>
+        <li><strong>マルチクラウド環境の保護：</strong> ハイブリッドクラウドやマルチクラウド環境のエントリーポイントを保護</li>
+        <li><strong>コンプライアンス要件の遵守：</strong> PCI DSS、HIPAA、GDPRなどのコンプライアンス要件を満たすためのセキュリティ対策</li>
+        <li><strong>ボット対策：</strong> 悪意のあるボットからウェブサイトやAPIを保護</li>
+    </ul>
+    
+    <h2>Cloud Armorとの統合サービス</h2>
+    <p>Cloud Armorは他のGoogle Cloudサービスと統合して、より強力なセキュリティソリューションを構築できます：</p>
+    
+    <table>
+        <tr>
+            <th>サービス</th>
+            <th>統合の利点</th>
+        </tr>
+        <tr>
+            <td>Cloud Load Balancing</td>
+            <td>ロードバランサーと統合してトラフィックを保護し、可用性を確保</td>
+        </tr>
+        <tr>
+            <td>Cloud CDN</td>
+            <td>コンテンツ配信ネットワークと統合して、高速かつ安全なコンテンツ配信を実現</td>
+        </tr>
+        <tr>
+            <td>GKE</td>
+            <td>Kubernetesクラスタで実行されるアプリケーションを保護</td>
+        </tr>
+        <tr>
+            <td>Cloud Run</td>
+            <td>サーバーレスアプリケーションを保護</td>
+        </tr>
+        <tr>
+            <td>reCAPTCHA Enterprise</td>
+            <td>ボット対策を強化し、不正アクセスを防止</td>
+        </tr>
+        <tr>
+            <td>Cloud Monitoring</td>
+            <td>セキュリティイベントを監視し、アラートを設定</td>
+        </tr>
+        <tr>
+            <td>Cloud Logging</td>
+            <td>セキュリティイベントのログを収集・分析</td>
+        </tr>
+    </table>
+    
+    <h3>GKEとの統合例</h3>
+    <pre><code># GKEクラスタの作成
+gcloud container clusters create my-cluster \
+    --zone=asia-northeast1-a \
+    --num-nodes=3
+
+# Ingressの作成
+gcloud container clusters get-credentials my-cluster --zone=asia-northeast1-a
+kubectl create deployment my-app --image=gcr.io/my-project/my-app:latest
+kubectl expose deployment my-app --port=80 --target-port=8080 --name=my-service
+kubectl create ingress my-ingress --rule="/*=my-service:80"
+
+# バックエンドサービスの取得
+BACKEND_SERVICE=$(gcloud compute backend-services list \
+    --filter="description~my-ingress" \
+    --format="value(name)")
+
+# Cloud Armorポリシーの適用
+gcloud compute backend-services update $BACKEND_SERVICE \
+    --global \
+    --security-policy=my-policy</code></pre>
+    
+    <h2>Cloud Armorのベストプラクティス</h2>
+    <ul>
+        <li><strong>多層防御の実装：</strong> 複数のセキュリティルールを組み合わせて、様々な種類の攻撃から保護</li>
+        <li><strong>最小権限の原則：</strong> 必要最小限のアクセスのみを許可し、それ以外をブロック</li>
+        <li><strong>ルールの優先順位の適切な設定：</strong> より具体的なルールに高い優先順位を設定</li>
+        <li><strong>ホワイトリストとブラックリストの併用：</strong> 信頼できるソースをホワイトリストに、既知の悪意あるソースをブラックリストに登録</li>
+        <li><strong>定期的なルールの見直し：</strong> セキュリティルールを定期的に見直し、最新の脅威に対応</li>
+        <li><strong>テストモードの活用：</strong> 新しいルールを本番環境に適用する前にテストモードで検証</li>
+        <li><strong>ログの監視と分析：</strong> セキュリティイベントのログを定期的に監視・分析して、攻撃パターンを把握</li>
+        <li><strong>インシデント対応計画の策定：</strong> セキュリティインシデント発生時の対応手順を事前に策定</li>
+    </ul>
+    
+    <div class="note">
+        <h3>テストモードの使用例</h3>
+        <pre><code># テストモードでルールを作成
+gcloud compute security-policies rules create 10000 \
+    --security-policy=my-policy \
+    --description="Test rule for XSS protection" \
+    --expression="evaluatePreconfiguredExpr('xss-stable')" \
+    --action=deny-403 \
+    --preview</code></pre>
+    </div>
+    
+    <h2>まとめ</h2>
+    <p>Cloud Armor は、Google Cloud Platform上でのウェブアプリケーションとサービスを保護するためのフルマネージドセキュリティサービスです。DDoS保護とウェブアプリケーションファイアウォール（WAF）機能を組み合わせて、様々なサイバー攻撃からアプリケーションを守ります。</p>
+    
+    <p>Cloud Armorの主な利点は以下の通りです：</p>
+    <ul>
+        <li>Googleのグローバルインフラストラクチャを活用したDDoS保護</li>
+        <li>一般的なウェブ攻撃に対する事前構成ルール</li>
+        <li>柔軟なカスタムルール作成機能</li>
+        <li>GCPサービスとのシームレスな統合</li>
+        <li>詳細なモニタリングとロギング</li>
+        <li>機械学習を活用したアダプティブプロテクション</li>
+    </ul>
+    
+    <p>Cloud Armorを効果的に活用するには、多層防御アプローチの採用、適切なルールの設定、定期的なモニタリングと分析が重要です。また、他のGCPセキュリティサービスと組み合わせることで、包括的なセキュリティ対策を実現することができます。</p>
+</body>
+</html>

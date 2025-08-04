@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Artifact Registry</title>
+    <link rel="stylesheet" href="../../../../css/knowledge.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../../js/common/analytics.js"></script>
+<body class="ja-knowledge">
+    <div style="margin-bottom: 20px;">
+        <a href="../google_cloud.html">Google Cloud Platformに戻る</a>
+    </div>
+    <h1>Artifact Registry</h1>
+    
+    <h2>Artifact Registryとは</h2>
+    <p>Artifact Registry は、Google Cloud Platform (GCP) が提供するフルマネージドのアーティファクトリポジトリサービスです。コンテナイメージ、言語パッケージ（npm、Maven、Python）、OS パッケージなどのソフトウェアアーティファクトを保存、管理、セキュア化するための統合リポジトリです。Artifact Registryは、CI/CDパイプラインとシームレスに統合され、ソフトウェア開発ライフサイクル全体をサポートします。</p>
+    
+    <h2>Artifact Registryの主な特徴</h2>
+    <ul>
+        <li><strong>統合リポジトリ：</strong> 複数の種類のアーティファクトを単一のサービスで管理</li>
+        <li><strong>地理的な分散：</strong> リージョンまたはマルチリージョンにリポジトリを配置可能</li>
+        <li><strong>きめ細かいアクセス制御：</strong> IAMを使用した詳細なアクセス権限の管理</li>
+        <li><strong>脆弱性スキャン：</strong> コンテナイメージの自動脆弱性スキャン</li>
+        <li><strong>GCPサービスとの統合：</strong> Cloud Build、GKE、Cloud Run などと緊密に連携</li>
+        <li><strong>標準ツールとの互換性：</strong> Docker、npm、Maven、Gradle などの標準ツールをサポート</li>
+        <li><strong>VPCサービスコントロール：</strong> セキュリティ境界内でのアーティファクトの管理</li>
+    </ul>
+    
+    <h2>Artifact Registryのアーキテクチャ</h2>
+    <p>Artifact Registryは以下の主要コンポーネントで構成されています：</p>
+    
+    <table>
+        <tr>
+            <th>コンポーネント</th>
+            <th>説明</th>
+        </tr>
+        <tr>
+            <td>リポジトリ</td>
+            <td>アーティファクトを保存する論理的なコンテナ。特定のフォーマット（Docker、npm など）に対応</td>
+        </tr>
+        <tr>
+            <td>アーティファクト</td>
+            <td>リポジトリに保存されるソフトウェアパッケージ（コンテナイメージ、npm パッケージなど）</td>
+        </tr>
+        <tr>
+            <td>バージョン</td>
+            <td>アーティファクトの特定のバージョン。タグやダイジェストで識別</td>
+        </tr>
+        <tr>
+            <td>ロケーション</td>
+            <td>リポジトリが配置される地理的な場所（リージョンまたはマルチリージョン）</td>
+        </tr>
+        <tr>
+            <td>IAMポリシー</td>
+            <td>リポジトリへのアクセスを制御するポリシー</td>
+        </tr>
+    </table>
+    
+    <div class="note">
+        <h3>Artifact Registry と Container Registry の違い</h3>
+        <p>Artifact RegistryはContainer Registryの後継サービスであり、以下のような違いがあります：</p>
+        <ul>
+            <li><strong>Artifact Registry：</strong> 複数の種類のアーティファクトをサポート。リポジトリレベルでのきめ細かいアクセス制御。リージョンまたはマルチリージョンに配置可能</li>
+            <li><strong>Container Registry：</strong> コンテナイメージのみをサポート。プロジェクトレベルのアクセス制御。マルチリージョンのみに配置</li>
+        </ul>
+    </div>
+    
+    <h2>Artifact Registryの使用方法</h2>
+    <p>Artifact Registryは、Google Cloud Console、gcloud CLIツール、またはAPIを使用して利用できます。</p>
+    
+    <h3>リポジトリの作成</h3>
+    <p>Google Cloud Consoleまたはgcloud CLIを使用してリポジトリを作成できます：</p>
+    
+    <div class="example">
+        <h4>gcloud CLIを使用したDockerリポジトリの作成</h4>
+        <pre><code>gcloud artifacts repositories create my-docker-repo \
+    --repository-format=docker \
+    --location=asia-northeast1 \
+    --description="Docker repository for my applications"</code></pre>
+        
+        <h4>gcloud CLIを使用したnpmリポジトリの作成</h4>
+        <pre><code>gcloud artifacts repositories create my-npm-repo \
+    --repository-format=npm \
+    --location=asia-northeast1 \
+    --description="npm repository for JavaScript packages"</code></pre>
+    </div>
+    
+    <h3>Dockerイメージの操作</h3>
+    <p>Artifact RegistryにDockerイメージをプッシュおよびプルする方法：</p>
+    
+    <div class="example">
+        <h4>認証の設定</h4>
+        <pre><code>gcloud auth configure-docker asia-northeast1-docker.pkg.dev</code></pre>
+        
+        <h4>イメージのタグ付け</h4>
+        <pre><code>docker tag my-image:latest asia-northeast1-docker.pkg.dev/my-project/my-docker-repo/my-image:latest</code></pre>
+        
+        <h4>イメージのプッシュ</h4>
+        <pre><code>docker push asia-northeast1-docker.pkg.dev/my-project/my-docker-repo/my-image:latest</code></pre>
+        
+        <h4>イメージのプル</h4>
+        <pre><code>docker pull asia-northeast1-docker.pkg.dev/my-project/my-docker-repo/my-image:latest</code></pre>
+    </div>
+    
+    <h3>npmパッケージの操作</h3>
+    <p>Artifact Registryにnpmパッケージを公開および使用する方法：</p>
+    
+    <div class="example">
+        <h4>認証の設定</h4>
+        <pre><code>npx google-artifactregistry-auth</code></pre>
+        
+        <h4>パッケージの公開</h4>
+        <pre><code># package.jsonの設定
+{
+  "name": "my-package",
+  "version": "1.0.0",
+  "publishConfig": {
+    "registry": "https://asia-northeast1-npm.pkg.dev/my-project/my-npm-repo/"
+  }
+}
+
+# パッケージの公開
+npm publish</code></pre>
+        
+        <h4>パッケージのインストール</h4>
+        <pre><code># .npmrcの設定
+@myorg:registry=https://asia-northeast1-npm.pkg.dev/my-project/my-npm-repo/
+
+# パッケージのインストール
+npm install @myorg/my-package</code></pre>
+    </div>
+    
+    <h2>Artifact Registryの高度な機能</h2>
+    
+    <h3>脆弱性スキャン</h3>
+    <p>Artifact Registryは、Container Analysis APIを使用してコンテナイメージの脆弱性を自動的にスキャンします：</p>
+    <pre><code># 脆弱性スキャンの有効化
+gcloud artifacts repositories update my-docker-repo \
+    --location=asia-northeast1 \
+    --enable-vulnerability-scanning</code></pre>
+    
+    <p>スキャン結果の確認：</p>
+    <pre><code>gcloud artifacts docker images list-vulnerabilities \
+    asia-northeast1-docker.pkg.dev/my-project/my-docker-repo/my-image:latest \
+    --location=asia-northeast1</code></pre>
+    
+    <h3>リポジトリのアップストリーム設定</h3>
+    <p>リポジトリにアップストリームを設定して、パッケージが見つからない場合に別のリポジトリから取得できます：</p>
+    <pre><code>gcloud artifacts repositories update my-npm-repo \
+    --location=asia-northeast1 \
+    --add-upstream-policies=repository=projects/my-project/locations/asia-northeast1/repositories/upstream-repo,priority=1</code></pre>
+    
+    <h2>Artifact Registryのセキュリティベストプラクティス</h2>
+    <ul>
+        <li><strong>最小権限の原則：</strong> リポジトリへのアクセスに必要最小限の権限のみを付与</li>
+        <li><strong>VPCサービスコントロール：</strong> セキュリティ境界を設定してデータの流出を防止</li>
+        <li><strong>脆弱性スキャンの有効化：</strong> すべてのコンテナリポジトリで脆弱性スキャンを有効化</li>
+        <li><strong>イメージの署名と検証：</strong> Binary Authorizationと連携して署名されたイメージのみをデプロイ</li>
+        <li><strong>イメージのライフサイクル管理：</strong> 古いイメージバージョンを自動的に削除するポリシーを設定</li>
+        <li><strong>監査ログの有効化：</strong> リポジトリ操作の監査ログを有効にして監視</li>
+    </ul>
+    
+    <div class="example">
+        <h4>IAMポリシーの設定例</h4>
+        <pre><code># 読み取り専用アクセスの付与
+gcloud artifacts repositories add-iam-policy-binding my-docker-repo \
+    --location=asia-northeast1 \
+    --member=serviceAccount:my-service-account@my-project.iam.gserviceaccount.com \
+    --role=roles/artifactregistry.reader
+
+# 書き込みアクセスの付与
+gcloud artifacts repositories add-iam-policy-binding my-docker-repo \
+    --location=asia-northeast1 \
+    --member=serviceAccount:ci-service-account@my-project.iam.gserviceaccount.com \
+    --role=roles/artifactregistry.writer</code></pre>
+    </div>
+    
+    <h2>Artifact Registryのモニタリングとロギング</h2>
+    <p>Artifact RegistryはGoogle Cloud Monitoringおよびロギングと統合されており、リポジトリの使用状況とアクティビティを監視できます：</p>
+    
+    <h3>主なモニタリング機能</h3>
+    <ul>
+        <li><strong>使用状況メトリクス：</strong> ストレージ使用量、ダウンロード量などのメトリクスを監視</li>
+        <li><strong>アクティビティログ：</strong> プッシュ、プル、削除などのアクティビティを記録</li>
+        <li><strong>アラート：</strong> 特定の条件（ストレージ使用量の閾値超過など）に基づいてアラートを設定</li>
+        <li><strong>監査ログ：</strong> 管理操作とデータアクセスの監査ログを記録</li>
+    </ul>
+    
+    <h3>監査ログの有効化</h3>
+    <p>Artifact Registryの監査ログを有効にするには：</p>
+    <pre><code>gcloud logging sinks create artifact-registry-logs \
+    storage.googleapis.com/my-project-logs \
+    --log-filter='resource.type="artifactregistry.googleapis.com/Repository"'</code></pre>
+    
+    <h2>Artifact Registryのコスト最適化</h2>
+    <p>Artifact Registryのコストを最適化するためのベストプラクティス：</p>
+    <ul>
+        <li><strong>不要なアーティファクトの削除：</strong> 古いバージョンや未使用のアーティファクトを定期的に削除</li>
+        <li><strong>ライフサイクルルールの設定：</strong> 古いアーティファクトを自動的に削除するルールを設定</li>
+        <li><strong>適切なロケーションの選択：</strong> アプリケーションの要件に合わせて最適なロケーションを選択</li>
+        <li><strong>リポジトリの統合：</strong> 類似のアーティファクトを同じリポジトリに保存して管理を簡素化</li>
+        <li><strong>転送コストの最適化：</strong> 同じリージョン内のGCPサービスからアクセスしてネットワーク転送コストを削減</li>
+    </ul>
+    
+    <div class="note">
+        <h3>ライフサイクルルールの設定例</h3>
+        <pre><code>gcloud artifacts repositories update my-docker-repo \
+    --location=asia-northeast1 \
+    --cleanup-policies="{
+      'name': 'delete-old-versions',
+      'action': 'DELETE',
+      'condition': {
+        'olderThan': '90d',
+        'tagState': 'TAGGED',
+        'tagPrefixes': ['dev-']
+      }
+    }"</code></pre>
+    </div>
+    
+    <h2>Artifact Registryのユースケース</h2>
+    <p>Artifact Registryは以下のようなユースケースに適しています：</p>
+    <ul>
+        <li><strong>コンテナイメージの管理：</strong> Dockerイメージを安全に保存し、GKEやCloud Runにデプロイ</li>
+        <li><strong>プライベートnpmレジストリ：</strong> 社内のJavaScriptパッケージを管理</li>
+        <li><strong>Mavenリポジトリ：</strong> Javaライブラリやアプリケーションの管理</li>
+        <li><strong>Pythonパッケージの管理：</strong> プライベートPyPIリポジトリとして使用</li>
+        <li><strong>CI/CDパイプラインの統合：</strong> ビルドアーティファクトの保存と配布</li>
+        <li><strong>マルチリージョンデプロイメント：</strong> 複数のリージョンにアーティファクトを配布</li>
+        <li><strong>コンプライアンス要件の遵守：</strong> 監査可能なアーティファクト管理システムの実装</li>
+    </ul>
+    
+    <h2>Artifact Registryとの統合サービス</h2>
+    <p>Artifact Registryは他のGoogle Cloudサービスと統合して、より強力なソフトウェア開発ワークフローを構築できます：</p>
+    
+    <table>
+        <tr>
+            <th>サービス</th>
+            <th>統合の利点</th>
+        </tr>
+        <tr>
+            <td>Cloud Build</td>
+            <td>ビルドプロセスで生成されたアーティファクトを自動的に保存</td>
+        </tr>
+        <tr>
+            <td>GKE</td>
+            <td>コンテナイメージをKubernetesクラスタにシームレスにデプロイ</td>
+        </tr>
+        <tr>
+            <td>Cloud Run</td>
+            <td>コンテナイメージをサーバーレス環境に直接デプロイ</td>
+        </tr>
+        <tr>
+            <td>Binary Authorization</td>
+            <td>署名されたコンテナイメージのみをデプロイするポリシーを適用</td>
+        </tr>
+        <tr>
+            <td>Container Analysis</td>
+            <td>コンテナイメージの脆弱性スキャンと分析</td>
+        </tr>
+        <tr>
+            <td>Cloud Deploy</td>
+            <td>複数環境へのアーティファクトの段階的なデプロイを管理</td>
+        </tr>
+        <tr>
+            <td>VPC Service Controls</td>
+            <td>セキュリティ境界内でのアーティファクトの管理</td>
+        </tr>
+    </table>
+    
+    <h2>まとめ</h2>
+    <p>Artifact Registry は、Google Cloud Platform上でのソフトウェアアーティファクトの管理を簡素化するフルマネージドサービスです。コンテナイメージ、言語パッケージ、OSパッケージなど、さまざまな種類のアーティファクトを単一のサービスで管理できます。</p>
+    
+    <p>Artifact Registryの主な利点は以下の通りです：</p>
+    <ul>
+        <li>複数の種類のアーティファクトを統合管理</li>
+        <li>きめ細かいアクセス制御によるセキュリティの強化</li>
+        <li>コンテナイメージの自動脆弱性スキャン</li>
+        <li>GCPサービスとのシームレスな統合</li>
+        <li>地理的な分散によるパフォーマンスと可用性の向上</li>
+    </ul>
+    
+    <p>Artifact Registryを効果的に活用するには、適切なリポジトリ構造の設計、セキュリティ対策の実装、ライフサイクル管理の自動化が重要です。また、他のGCPサービスと組み合わせることで、エンドツーエンドのソフトウェア開発ライフサイクルを効率化することができます。</p>
+</body>
+</html>

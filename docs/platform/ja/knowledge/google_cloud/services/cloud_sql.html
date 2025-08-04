@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Cloud SQL</title>
+    <link rel="stylesheet" href="../../../../css/knowledge.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../../js/common/analytics.js"></script>
+<body class="ja-knowledge">
+    <h1>Cloud SQL</h1>
+    
+    <h2>Cloud SQLとは</h2>
+    <p>Cloud SQL は、Google Cloud Platform (GCP) が提供するフルマネージドのリレーショナルデータベースサービスです。MySQL、PostgreSQL、SQL Serverなどの一般的なデータベースエンジンをクラウド環境で簡単に展開、管理、スケーリングできます。Cloud SQLはインフラストラクチャの管理、バックアップ、レプリケーション、パッチ適用などの運用タスクを自動化し、開発者がアプリケーション開発に集中できるようにします。</p>
+    
+    <h2>Cloud SQLの主な特徴</h2>
+    <ul>
+        <li><strong>フルマネージド：</strong> インフラストラクチャの管理、バックアップ、パッチ適用などを自動化</li>
+        <li><strong>高可用性：</strong> リージョン内の複数のゾーンにわたる高可用性構成をサポート</li>
+        <li><strong>自動バックアップ：</strong> 定期的な自動バックアップとポイントインタイムリカバリ</li>
+        <li><strong>スケーラビリティ：</strong> 垂直スケーリング（インスタンスサイズの変更）と読み取りレプリカによる水平スケーリング</li>
+        <li><strong>セキュリティ：</strong> データの暗号化（保存時および転送時）、ネットワークセキュリティ、IAMによるアクセス制御</li>
+        <li><strong>複数のデータベースエンジン：</strong> MySQL、PostgreSQL、SQL Serverをサポート</li>
+        <li><strong>GCPサービスとの統合：</strong> Cloud Run、GKE、App Engineなどと簡単に連携</li>
+    </ul>
+    
+    <h2>Cloud SQLのアーキテクチャ</h2>
+    <p>Cloud SQLは以下の主要コンポーネントで構成されています：</p>
+    
+    <table>
+        <tr>
+            <th>コンポーネント</th>
+            <th>説明</th>
+        </tr>
+        <tr>
+            <td>インスタンス</td>
+            <td>データベースサーバーを実行する仮想マシン。特定のリージョンとゾーンに配置される</td>
+        </tr>
+        <tr>
+            <td>データベース</td>
+            <td>インスタンス内に作成される個々のデータベース</td>
+        </tr>
+        <tr>
+            <td>ストレージ</td>
+            <td>データを保存する永続ディスク。自動的に拡張可能</td>
+        </tr>
+        <tr>
+            <td>バックアップ</td>
+            <td>データベースの定期的なスナップショット。自動バックアップとオンデマンドバックアップが可能</td>
+        </tr>
+        <tr>
+            <td>レプリカ</td>
+            <td>プライマリインスタンスのコピー。読み取りレプリカまたは高可用性用のスタンバイレプリカとして機能</td>
+        </tr>
+        <tr>
+            <td>ネットワーク</td>
+            <td>インスタンスへの接続を制御するファイアウォールルールとVPCネットワーク</td>
+        </tr>
+    </table>
+    
+    <div class="note">
+        <h3>Cloud SQL と自己管理型データベースの違い</h3>
+        <p>Cloud SQLと自己管理型データベースには以下のような違いがあります：</p>
+        <ul>
+            <li><strong>Cloud SQL：</strong> インフラストラクチャ管理、バックアップ、パッチ適用などが自動化。運用の負担が少ない。スケーリングが容易</li>
+            <li><strong>自己管理型データベース：</strong> すべての管理タスクを自分で行う必要がある。より高度なカスタマイズが可能。コスト管理の柔軟性が高い</li>
+        </ul>
+    </div>
+    
+    <h2>Cloud SQLインスタンスの作成と管理</h2>
+    <p>Cloud SQLインスタンスは、Google Cloud Console、gcloud CLIツール、またはAPIを使用して作成および管理できます。</p>
+    
+    <h3>Google Cloud Consoleを使用したインスタンス作成</h3>
+    <ol>
+        <li>Google Cloud Consoleにログイン</li>
+        <li>Cloud SQLページに移動</li>
+        <li>「インスタンスを作成」をクリック</li>
+        <li>データベースエンジン（MySQL、PostgreSQL、SQL Server）を選択</li>
+        <li>インスタンス名、パスワード、リージョン、ゾーンなどを設定</li>
+        <li>マシンタイプ、ストレージ容量、高可用性オプションなどを構成</li>
+        <li>「作成」をクリックしてインスタンスをプロビジョニング</li>
+    </ol>
+    
+    <h3>gcloud CLIを使用したインスタンス作成</h3>
+    <div class="example">
+        <h4>MySQLインスタンスの作成例</h4>
+        <pre><code>gcloud sql instances create my-mysql-instance \
+    --database-version=MYSQL_8_0 \
+    --tier=db-n1-standard-2 \
+    --region=asia-northeast1 \
+    --root-password=my-secure-password \
+    --storage-size=100 \
+    --storage-type=SSD \
+    --availability-type=REGIONAL</code></pre>
+        
+        <h4>PostgreSQLインスタンスの作成例</h4>
+        <pre><code>gcloud sql instances create my-postgres-instance \
+    --database-version=POSTGRES_14 \
+    --tier=db-n1-standard-2 \
+    --region=asia-northeast1 \
+    --root-password=my-secure-password \
+    --storage-size=100 \
+    --storage-type=SSD \
+    --availability-type=REGIONAL</code></pre>
+    </div>
+    
+    <h3>データベースの作成</h3>
+    <p>インスタンスを作成した後、データベースを作成できます：</p>
+    <pre><code>gcloud sql databases create my-database \
+    --instance=my-mysql-instance</code></pre>
+    
+    <h3>ユーザーの作成</h3>
+    <p>データベースにアクセスするためのユーザーを作成します：</p>
+    <pre><code>gcloud sql users create my-user \
+    --instance=my-mysql-instance \
+    --password=my-user-password</code></pre>
+    
+    <h2>Cloud SQLへの接続</h2>
+    <p>Cloud SQLインスタンスには複数の方法で接続できます：</p>
+    
+    <h3>Cloud SQL Proxyを使用した接続</h3>
+    <p>Cloud SQL Proxyは、暗号化されたセキュアな接続を提供する推奨の接続方法です：</p>
+    
+    <div class="example">
+        <h4>Cloud SQL Proxyのインストール</h4>
+        <pre><code># Linuxの場合
+curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.0.0/cloud-sql-proxy.linux.amd64
+chmod +x cloud-sql-proxy
+
+# macOSの場合
+curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.0.0/cloud-sql-proxy.darwin.amd64
+chmod +x cloud-sql-proxy</code></pre>
+        
+        <h4>Cloud SQL Proxyの実行</h4>
+        <pre><code>./cloud-sql-proxy --instances=my-project:asia-northeast1:my-mysql-instance=tcp:3306</code></pre>
+        
+        <h4>MySQLクライアントでの接続</h4>
+        <pre><code>mysql -u my-user -p -h 127.0.0.1</code></pre>
+        
+        <h4>PostgreSQLクライアントでの接続</h4>
+        <pre><code>psql -U my-user -h 127.0.0.1 -d my-database</code></pre>
+    </div>
+    
+    <h3>直接接続</h3>
+    <p>パブリックIPアドレスまたはプライベートIPアドレスを使用して直接接続することもできます：</p>
+    <pre><code># パブリックIPアドレスを使用した接続
+mysql -u my-user -p -h 35.189.203.xxx
+
+# プライベートIPアドレスを使用した接続（VPC内から）
+mysql -u my-user -p -h 10.0.0.xxx</code></pre>
+    
+    <h3>アプリケーションからの接続</h3>
+    <p>アプリケーションからCloud SQLに接続する例：</p>
+    
+    <div class="example">
+        <h4>Node.jsでのMySQL接続例</h4>
+        <pre><code>const mysql = require('mysql2/promise');
+
+async function connectToDatabase() {
+  const connection = await mysql.createConnection({
+    host: '127.0.0.1', // Cloud SQL Proxyを使用する場合
+    user: 'my-user',
+    password: 'my-user-password',
+    database: 'my-database'
+  });
+  
+  const [rows] = await connection.execute('SELECT * FROM users');
+  console.log(rows);
+  
+  await connection.end();
+}
+
+connectToDatabase();</code></pre>
+        
+        <h4>Javaでの接続例（PostgreSQL）</h4>
+        <pre><code>import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class CloudSqlExample {
+  public static void main(String[] args) {
+    try {
+      String url = "jdbc:postgresql://127.0.0.1:5432/my-database";
+      Connection conn = DriverManager.getConnection(url, "my-user", "my-user-password");
+      
+      Statement stmt = conn.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+      
+      while (rs.next()) {
+        System.out.println(rs.getString("name"));
+      }
+      
+      rs.close();
+      stmt.close();
+      conn.close();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}</code></pre>
+    </div>
+    
+    <h2>Cloud SQLの高度な機能</h2>
+    
+    <h3>高可用性構成</h3>
+    <p>高可用性（HA）構成では、プライマリインスタンスと同じリージョン内の別のゾーンにスタンバイレプリカが作成されます：</p>
+    <pre><code>gcloud sql instances create my-ha-instance \
+    --database-version=MYSQL_8_0 \
+    --tier=db-n1-standard-2 \
+    --region=asia-northeast1 \
+    --root-password=my-secure-password \
+    --availability-type=REGIONAL</code></pre>
+    
+    <p>既存のインスタンスを高可用性に変更：</p>
+    <pre><code>gcloud sql instances patch my-mysql-instance \
+    --availability-type=REGIONAL</code></pre>
+    
+    <h3>読み取りレプリカの作成</h3>
+    <p>読み取りレプリカを作成して読み取りワークロードを分散できます：</p>
+    <pre><code>gcloud sql instances create my-read-replica \
+    --master-instance-name=my-mysql-instance \
+    --region=asia-northeast1</code></pre>
+    
+    <p>クロスリージョンレプリカの作成：</p>
+    <pre><code>gcloud sql instances create my-cross-region-replica \
+    --master-instance-name=my-mysql-instance \
+    --region=asia-northeast2</code></pre>
+    
+    <h3>バックアップとリストア</h3>
+    <p>自動バックアップの構成：</p>
+    <pre><code>gcloud sql instances patch my-mysql-instance \
+    --backup-start-time=23:00 \
+    --backup-location=asia \
+    --retained-backups=7</code></pre>
+    
+    <p>オンデマンドバックアップの作成：</p>
+    <pre><code>gcloud sql backups create --instance=my-mysql-instance</code></pre>
+    
+    <p>バックアップからのリストア：</p>
+    <pre><code>gcloud sql instances restore my-mysql-instance \
+    --backup-id=1234567890</code></pre>
+    
+    <p>ポイントインタイムリカバリ：</p>
+    <pre><code>gcloud sql instances restore my-mysql-instance \
+    --restore-time=2023-08-01T12:00:00Z</code></pre>
+    
+    <h2>Cloud SQLのセキュリティベストプラクティス</h2>
+    <ul>
+        <li><strong>プライベートIPの使用：</strong> 可能な限りプライベートIPを使用してインターネット経由のアクセスを制限</li>
+        <li><strong>Cloud SQL Proxyの使用：</strong> 安全な接続のためにCloud SQL Proxyを使用</li>
+        <li><strong>SSL/TLSの強制：</strong> データベース接続にSSL/TLSを強制</li>
+        <li><strong>最小権限の原則：</strong> データベースユーザーに必要最小限の権限のみを付与</li>
+        <li><strong>IAMによるアクセス制御：</strong> Cloud SQLインスタンスへのアクセスをIAMで制御</li>
+        <li><strong>監査ログの有効化：</strong> データベース操作の監査ログを有効化</li>
+        <li><strong>データの暗号化：</strong> 保存データと転送中のデータの暗号化を確保</li>
+        <li><strong>定期的なパスワード更新：</strong> データベースユーザーのパスワードを定期的に更新</li>
+    </ul>
+    
+    <div class="example">
+        <h4>SSL/TLSの強制</h4>
+        <pre><code>gcloud sql instances patch my-mysql-instance \
+    --require-ssl</code></pre>
+        
+        <h4>監査ログの有効化（MySQL）</h4>
+        <pre><code>gcloud sql instances patch my-mysql-instance \
+    --database-flags=log_output=FILE,slow_query_log=on,general_log=on</code></pre>
+    </div>
+    
+    <h2>Cloud SQLのモニタリングとロギング</h2>
+    <p>Cloud SQLはGoogle Cloud Monitoringおよびロギングと統合されており、データベースの健全性とパフォーマンスを監視できます：</p>
+    
+    <h3>主なモニタリング機能</h3>
+    <ul>
+        <li><strong>メトリクスモニタリング：</strong> CPU使用率、メモリ使用率、ディスク使用量、接続数などのメトリクスを監視</li>
+        <li><strong>クエリインサイト：</strong> 実行時間の長いクエリや頻繁に実行されるクエリを特定</li>
+        <li><strong>アラート：</strong> 特定の条件（高CPU使用率、ディスク容量不足など）に基づいてアラートを設定</li>
+        <li><strong>ログ分析：</strong> エラーログ、スロークエリログ、一般ログなどを分析</li>
+    </ul>
+    
+    <h3>クエリインサイトの有効化</h3>
+    <p>クエリインサイトを有効にして、データベースのパフォーマンスを最適化できます：</p>
+    <pre><code>gcloud sql instances patch my-mysql-instance \
+    --insights-config-query-insights-enabled \
+    --insights-config-query-string-length=4096 \
+    --insights-config-query-plans-per-minute=20</code></pre>
+    
+    <h2>Cloud SQLのコスト最適化</h2>
+    <p>Cloud SQLのコストを最適化するためのベストプラクティス：</p>
+    <ul>
+        <li><strong>適切なインスタンスサイズの選択：</strong> ワークロードに合わせて適切なマシンタイプを選択</li>
+        <li><strong>自動ストレージ増加の設定：</strong> 必要に応じてストレージを自動的に増加させる設定を有効化</li>
+        <li><strong>コミットメント割引の活用：</strong> 長期的な使用が見込まれる場合はコミットメント割引を検討</li>
+        <li><strong>不要なインスタンスの停止：</strong> 開発環境や非本番環境のインスタンスを使用しない時間帯に停止</li>
+        <li><strong>読み取りレプリカの最適化：</strong> 必要な数の読み取りレプリカのみを維持</li>
+        <li><strong>バックアップ保持期間の最適化：</strong> 必要最小限のバックアップ保持期間を設定</li>
+        <li><strong>クエリの最適化：</strong> 非効率なクエリを最適化してリソース使用量を削減</li>
+    </ul>
+    
+    <div class="note">
+        <h3>インスタンスの停止と再開</h3>
+        <pre><code># インスタンスの停止
+gcloud sql instances patch my-mysql-instance --activation-policy=NEVER
+
+# インスタンスの再開
+gcloud sql instances patch my-mysql-instance --activation-policy=ALWAYS</code></pre>
+    </div>
+    
+    <h2>Cloud SQLのトラブルシューティング</h2>
+    <p>Cloud SQLで発生する一般的な問題とその解決方法：</p>
+    
+    <table>
+        <tr>
+            <th>問題</th>
+            <th>考えられる原因</th>
+            <th>解決策</th>
+        </tr>
+        <tr>
+            <td>接続エラー</td>
+            <td>ファイアウォールルール、認証情報の誤り、ネットワーク構成の問題</td>
+            <td>
+                ファイアウォールルールを確認<br>
+                認証情報を確認<br>
+                Cloud SQL Proxyを使用して接続
+            </td>
+        </tr>
+        <tr>
+            <td>パフォーマンスの低下</td>
+            <td>リソース不足、非効率なクエリ、インデックスの欠如</td>
+            <td>
+                クエリインサイトでスロークエリを特定<br>
+                インデックスを追加<br>
+                インスタンスサイズをアップグレード
+            </td>
+        </tr>
+        <tr>
+            <td>ディスク容量不足</td>
+            <td>データ増加、一時ファイル、ログファイル</td>
+            <td>
+                ストレージサイズを増加<br>
+                不要なデータを削除<br>
+                自動ストレージ増加を有効化
+            </td>
+        </tr>
+        <tr>
+            <td>レプリケーションの遅延</td>
+            <td>高負荷、ネットワーク問題、大きなトランザクション</td>
+            <td>
+                レプリカのマシンタイプをアップグレード<br>
+                大きなトランザクションを分割<br>
+                ネットワーク帯域幅を確認
+            </td>
+        </tr>
+    </table>
+    
+    <h3>診断クエリ集</h3>
+    <ul>
+        <li><strong>MySQL接続数の確認：</strong> <code>SHOW STATUS WHERE Variable_name = 'Threads_connected';</code></li>
+        <li><strong>実行中のクエリの確認：</strong> <code>SHOW PROCESSLIST;</code></li>
+        <li><strong>テーブルサイズの確認：</strong> <code>SELECT table_name, table_schema, (data_length + index_length) / 1024 / 1024 AS size_mb FROM information_schema.tables ORDER BY size_mb DESC;</code></li>
+        <li><strong>インデックスの使用状況：</strong> <code>SHOW INDEX FROM table_name;</code></li>
+        <li><strong>PostgreSQLの実行中のクエリ：</strong> <code>SELECT * FROM pg_stat_activity WHERE state = 'active';</code></li>
+    </ul>
+    
+    <h2>Cloud SQLのユースケース</h2>
+    <p>Cloud SQLは以下のようなユースケースに適しています：</p>
+    <ul>
+        <li><strong>ウェブアプリケーション：</strong> ユーザーデータ、コンテンツ、セッション情報などを保存</li>
+        <li><strong>eコマースプラットフォーム：</strong> 商品カタログ、注文履歴、顧客情報などを管理</li>
+        <li><strong>コンテンツ管理システム：</strong> 記事、メディア、ユーザーコメントなどを保存</li>
+        <li><strong>分析データベース：</strong> 集計データや分析結果を保存</li>
+        <li><strong>マイクロサービスのデータストア：</strong> サービス固有のデータを管理</li>
+        <li><strong>レガシーアプリケーションの移行：</strong> オンプレミスのデータベースをクラウドに移行</li>
+        <li><strong>開発・テスト環境：</strong> 本番環境のレプリカを作成して開発やテストに使用</li>
+    </ul>
+    
+    <h2>Cloud SQLとの統合サービス</h2>
+    <p>Cloud SQLは他のGoogle Cloudサービスと統合して、より強力なアプリケーションを構築できます：</p>
+    
+    <table>
+        <tr>
+            <th>サービス</th>
+            <th>統合の利点</th>
+        </tr>
+        <tr>
+            <td>Cloud Run</td>
+            <td>サーバーレスアプリケーションからデータベースに安全に接続</td>
+        </tr>
+        <tr>
+            <td>GKE</td>
+            <td>コンテナ化されたアプリケーションからデータベースにアクセス</td>
+        </tr>
+        <tr>
+            <td>App Engine</td>
+            <td>マネージドアプリケーションプラットフォームとデータベースの統合</td>
+        </tr>
+        <tr>
+            <td>Cloud Functions</td>
+            <td>サーバーレス関数からデータベース操作を実行</td>
+        </tr>
+        <tr>
+            <td>BigQuery</td>
+            <td>Cloud SQLのデータをBigQueryにエクスポートして分析</td>
+        </tr>
+        <tr>
+            <td>Dataflow</td>
+            <td>ETLパイプラインでCloud SQLのデータを処理</td>
+        </tr>
+        <tr>
+            <td>Cloud IAM</td>
+            <td>データベースアクセスの一元管理</td>
+        </tr>
+    </table>
+    
+    <h2>まとめ</h2>
+    <p>Cloud SQL は、Google Cloud Platform上でのリレーショナルデータベースの管理を簡素化するフルマネージドサービスです。MySQL、PostgreSQL、SQL Serverなどの一般的なデータベースエンジンをサポートし、運用タスクを自動化することで、開発者はアプリケーション開発に集中できます。</p>
+    
+    <p>Cloud SQLの主な利点は以下の通りです：</p>
+    <ul>
+        <li>インフラストラクチャ管理の負担軽減</li>
+        <li>高可用性と耐障害性の確保</li>
+        <li>自動バックアップとポイントインタイムリカバリ</li>
+        <li>垂直および水平スケーリングのオプション</li>
+        <li>包括的なセキュリティ機能</li>
+        <li>GCPサービスとのシームレスな統合</li>
+    </ul>
+    
+    <p>Cloud SQLを効果的に活用するには、適切なインスタンスサイズの選択、セキュリティ対策の実装、パフォーマンスの最適化、コスト管理が重要です。また、他のGCPサービスと組み合わせることで、スケーラブルで信頼性の高いアプリケーションを構築することができます。</p>
+</body>
+</html>
