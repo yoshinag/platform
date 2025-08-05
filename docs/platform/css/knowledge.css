@@ -84,6 +84,35 @@ body {
     background-color: #f2f2f2;
 }
 
+/* Topic List Styles */
+.topic-list {
+    list-style-type: none;
+    padding: 0;
+}
+.topic-list li {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.topic-list h3 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+.topic-list p {
+    margin-bottom: 10px;
+}
+.topic-list a {
+    display: inline-block;
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+}
+.topic-list a:hover {
+    text-decoration: underline;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
