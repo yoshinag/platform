@@ -1,0 +1,102 @@
+/* Table of Contents Sidebar Styles */
+
+/* Main content wrapper */
+.content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Main content area */
+.main-content {
+    flex: 3; /* Takes 3/4 of the available space */
+    min-width: 0; /* Prevents content from overflowing */
+}
+
+/* Table of Contents sidebar */
+.toc-sidebar {
+    flex: 1; /* Takes 1/4 of the available space */
+    position: sticky;
+    top: 20px; /* Sticks 20px from the top of the viewport */
+    align-self: flex-start;
+    max-height: calc(100vh - 40px); /* Full viewport height minus margins */
+    overflow-y: auto; /* Scrollable if content is too long */
+    padding: 20px;
+    border-left: 1px solid #e0e0e0;
+    margin-left: 20px;
+    font-size: 14px;
+}
+
+/* TOC header */
+.toc-header {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* TOC list */
+.toc-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+/* TOC list items */
+.toc-item {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* Indentation for different heading levels */
+.toc-h3 {
+    padding-left: 15px;
+}
+
+/* TOC links */
+.toc-item a {
+    color: #333;
+    text-decoration: none;
+    display: block;
+    padding: 3px 5px;
+    border-radius: 3px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.toc-item a:hover {
+    background-color: #f0f0f0;
+    color: #0066cc;
+}
+
+/* Style for active/current section in TOC */
+.toc-item a.active {
+    background-color: #e6f0fa;
+    color: #0066cc;
+    font-weight: bold;
+    border-left: 3px solid #0066cc;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column;
+    }
+    
+    .main-content {
+        order: 1; /* Display main content first on mobile */
+    }
+    
+    .toc-sidebar {
+        order: 2; /* Display TOC after main content on mobile */
+        position: static; /* Remove sticky positioning on mobile */
+        margin-top: 30px;
+        margin-left: 0;
+        border-left: none;
+        border-top: 1px solid #e0e0e0;
+        padding-top: 20px;
+    }
+}
