@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>GKEのPod（ポッド）</title>
+    <link rel="stylesheet" href="../../../../css/knowledge.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../../js/common/analytics.js"></script>
+<body class="ja-knowledge">
+    <div style="margin-bottom: 20px;">
+        <a href="../google_cloud.html">Google Cloud Platformに戻る</a> | 
+        <a href="gke.html">GKE (Google Kubernetes Engine)に戻る</a>
+    </div>
+    <h1>GKEのPod（ポッド）</h1>
+    
+    <h2>Podとは</h2>
+    <p>Pod（ポッド）は、Kubernetesにおける最小のデプロイ単位であり、Google Kubernetes Engine (GKE)でアプリケーションを実行する基本的な構成要素です。Podは1つ以上のコンテナをグループ化し、それらが同じ実行環境を共有できるようにします。これらのコンテナは同じノード上で実行され、同じネットワーク名前空間、IPアドレス、ポート空間を共有します。</p>
+    
+    <div class="note">
+        <h3>重要なポイント</h3>
+        <p>Podは一時的（エフェメラル）なリソースとして設計されています。ノードの障害、リソース不足、または他の理由でPodが終了した場合、Kubernetesは自動的に新しいPodを作成して置き換えることができます。このため、永続的なデータはPodの外部（例：永続ボリューム）に保存する必要があります。</p>
+    </div>
+    
+    <h2>Podの構造と構成要素</h2>
+    <p>Podは以下の主要な構成要素で構成されています：</p>
+    
+    <table>
+        <tr>
+            <th>構成要素</th>
+            <th>説明</th>
+        </tr>
+        <tr>
+            <td>コンテナ</td>
+            <td>Pod内で実行されるDockerなどのコンテナ。メインアプリケーションコンテナとサイドカーコンテナ（補助的な機能を提供）が含まれることがある</td>
+        </tr>
+        <tr>
+            <td>ボリューム</td>
+            <td>Pod内のコンテナ間でデータを共有するためのストレージ。Pod内のすべてのコンテナからアクセス可能</td>
+        </tr>
+        <tr>
+            <td>ネットワーク名前空間</td>
+            <td>Pod内のすべてのコンテナが共有するネットワーク設定。各Podには固有のIPアドレスが割り当てられる</td>
+        </tr>
+        <tr>
+            <td>リソース仕様</td>
+            <td>CPUやメモリなど、Podが要求または制限するリソースの量</td>
+        </tr>
+        <tr>
+            <td>ラベルとアノテーション</td>
+            <td>Podを識別・分類するためのメタデータ</td>
+        </tr>
+        <tr>
+            <td>セキュリティコンテキスト</td>
+            <td>Pod内のコンテナの実行権限や分離レベルを定義</td>
+        </tr>
+    </table>
+    
+    <h2>Podのライフサイクル</h2>
+    <p>Podは以下のライフサイクルフェーズを経ます：</p>
+    
+    <ol>
+        <li><strong>Pending（保留中）：</strong> Podが作成されたが、すべてのコンテナがまだ実行状態になっていない状態</li>
+        <li><strong>Running（実行中）：</strong> Podがノードにスケジュールされ、すべてのコンテナが作成され、少なくとも1つのコンテナが実行中または起動/再起動中</li>
+        <li><strong>Succeeded（成功）：</strong> Pod内のすべてのコンテナが正常に終了し、再起動されない状態</li>
+        <li><strong>Failed（失敗）：</strong> Pod内の少なくとも1つのコンテナが失敗して終了</li>
+        <li><strong>Unknown（不明）：</strong> 何らかの理由でPodの状態を取得できない状態</li>
+    </ol>
+    
+    <div class="example">
+        <h4>Podのライフサイクルを確認するコマンド</h4>
+        <pre><code>kubectl get pod my-pod -o wide
+kubectl describe pod my-pod</code></pre>
+    </div>
+    
+    <h3>Pod条件（Conditions）</h3>
+    <p>Podの状態をより詳細に表す条件フラグ：</p>
+    <ul>
+        <li><strong>PodScheduled：</strong> Podがノードにスケジュールされたかどうか</li>
+        <li><strong>ContainersReady：</strong> Pod内のすべてのコンテナが準備完了状態かどうか</li>
+        <li><strong>Initialized：</strong> すべての初期化コンテナが正常に完了したかどうか</li>
+        <li><strong>Ready：</strong> Podがリクエストを処理する準備ができているかどうか</li>
+    </ul>
+    
+    <h2>Podの作成と管理</h2>
+    <p>GKEでPodを作成・管理するには、通常以下の方法を使用します：</p>
+    
+    <h3>YAMLマニフェストを使用したPodの作成</h3>
+    <div class="example">
+        <h4>基本的なPodマニフェストの例</h4>
+        <pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  labels:
+    app: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.21
+    ports:
+    - containerPort: 80
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"</code></pre>
+    </div>
+    
+    <p>このマニフェストをapplyコマンドで適用します：</p>
+    <pre><code>kubectl apply -f nginx-pod.yaml</code></pre>
+    
+    <div class="note">
+        <h3>直接Podを作成する代わりに上位レベルのリソースを使用する</h3>
+        <p>実際の運用環境では、単独のPodを直接作成するよりも、Deployment、StatefulSet、DaemonSetなどの上位レベルのコントローラーを使用することが推奨されます。これらのコントローラーはPodの自動再起動、スケーリング、ローリングアップデートなどの機能を提供します。</p>
+    </div>
+    
+    <h3>マルチコンテナPod</h3>
+    <p>1つのPodに複数のコンテナを配置することで、密接に関連するプロセスを一緒に実行できます：</p>
+    
+    <div class="example">
+        <h4>マルチコンテナPodの例</h4>
+        <pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: web-app
+spec:
+  containers:
+  - name: web
+    image: nginx:1.21
+    ports:
+    - containerPort: 80
+  - name: log-collector
+    image: fluentd:v1.14
+    volumeMounts:
+    - name: log-volume
+      mountPath: /var/log/nginx
+  volumes:
+  - name: log-volume
+    emptyDir: {}</code></pre>
+    </div>
+    
+    <h3>一般的なPodパターン</h3>
+    <ul>
+        <li><strong>サイドカー：</strong> メインコンテナを拡張または強化する追加コンテナ（例：ログ収集、監視エージェント）</li>
+        <li><strong>アンバサダー：</strong> メインコンテナの代わりにネットワーク接続を処理するプロキシコンテナ</li>
+        <li><strong>アダプター：</strong> メインコンテナの出力を標準化または変換するコンテナ</li>
+    </ul>
+    
+    <h2>Podのリソース管理</h2>
+    <p>GKEでPodのリソースを効率的に管理するには、リソース要求（requests）と制限（limits）を適切に設定することが重要です：</p>
+    
+    <h3>リソース要求と制限</h3>
+    <ul>
+        <li><strong>リソース要求（requests）：</strong> Podが必要とする最小限のリソース量。スケジューリングの決定に使用される</li>
+        <li><strong>リソース制限（limits）：</strong> Podが使用できる最大リソース量。この値を超えるとコンテナが再起動される可能性がある</li>
+    </ul>
+    
+    <div class="example">
+        <h4>リソース要求と制限の設定例</h4>
+        <pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: resource-demo
+spec:
+  containers:
+  - name: app
+    image: nginx
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "500m"
+      limits:
+        memory: "256Mi"
+        cpu: "1000m"</code></pre>
+    </div>
+    
+    <div class="note">
+        <h3>リソース単位</h3>
+        <p>CPUリソースは「m」（ミリCPU）で指定され、1000mが1コアに相当します。メモリリソースはMi（メビバイト）やGi（ギビバイト）などの単位で指定されます。</p>
+    </div>
+    
+    <h3>QoS（Quality of Service）クラス</h3>
+    <p>Kubernetesは、リソース要求と制限の設定に基づいて、各Podに以下のQoSクラスを自動的に割り当てます：</p>
+    <ul>
+        <li><strong>Guaranteed：</strong> すべてのコンテナにリソース要求と制限が設定され、それらが等しい場合</li>
+        <li><strong>Burstable：</strong> 少なくとも1つのコンテナにリソース要求が設定されているが、Guaranteedの条件を満たさない場合</li>
+        <li><strong>BestEffort：</strong> どのコンテナにもリソース要求と制限が設定されていない場合</li>
+    </ul>
+    <p>リソース不足が発生した場合、Kubernetesは優先度の低いQoSクラス（BestEffort、次にBurstable）のPodから終了させます。</p>
+    
+    <h2>Podのネットワーキング</h2>
+    <p>GKEにおけるPodのネットワーキングの主な特徴：</p>
+    
+    <ul>
+        <li><strong>Pod IP：</strong> 各Podには、クラスタ内で一意のIPアドレスが割り当てられる</li>
+        <li><strong>コンテナ間通信：</strong> 同じPod内のコンテナは、localhostを介して相互に通信可能</li>
+        <li><strong>Pod間通信：</strong> 異なるPod間の通信は、Pod IPを使用して直接行われる</li>
+        <li><strong>サービスディスカバリ：</strong> Serviceリソースを使用して、動的に変化するPodの集合に安定したエンドポイントを提供</li>
+    </ul>
+    
+    <div class="example">
+        <h4>Pod IPの確認方法</h4>
+        <pre><code>kubectl get pod nginx-pod -o wide</code></pre>
+    </div>
+    
+    <h3>ネットワークポリシー</h3>
+    <p>GKEでは、NetworkPolicyリソースを使用してPod間の通信を制限できます：</p>
+    
+    <div class="example">
+        <h4>基本的なネットワークポリシーの例</h4>
+        <pre><code>apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-frontend-to-backend
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: frontend
+    ports:
+    - protocol: TCP
+      port: 8080</code></pre>
+    </div>
+    
+    <h2>Podのストレージ</h2>
+    <p>GKEのPodでデータを永続化するためのオプション：</p>
+    
+    <h3>ボリュームタイプ</h3>
+    <ul>
+        <li><strong>emptyDir：</strong> Pod内のコンテナ間でデータを共有するための一時的なストレージ。Podが削除されると内容も失われる</li>
+        <li><strong>hostPath：</strong> ノードのファイルシステムからのパスをマウント。ノードレベルのデータにアクセスするために使用</li>
+        <li><strong>PersistentVolume (PV) と PersistentVolumeClaim (PVC)：</strong> Podのライフサイクルとは独立した永続的なストレージ</li>
+        <li><strong>ConfigMap と Secret：</strong> 設定データと機密情報をPodにマウントするための特殊なボリューム</li>
+        <li><strong>CSI (Container Storage Interface)：</strong> サードパーティのストレージプロバイダを統合するためのインターフェース</li>
+    </ul>
+    
+    <div class="example">
+        <h4>PersistentVolumeClaimを使用したPodの例</h4>
+        <pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: database-pod
+spec:
+  containers:
+  - name: db
+    image: mysql:8.0
+    volumeMounts:
+    - name: data-volume
+      mountPath: /var/lib/mysql
+  volumes:
+  - name: data-volume
+    persistentVolumeClaim:
+      claimName: mysql-pvc</code></pre>
+    </div>
+    
+    <h2>Podのセキュリティ</h2>
+    <p>GKEでPodのセキュリティを確保するためのベストプラクティス：</p>
+    
+    <h3>セキュリティコンテキスト</h3>
+    <p>securityContextを使用して、Podまたはコンテナレベルでセキュリティ設定を構成できます：</p>
+    
+    <div class="example">
+        <h4>セキュリティコンテキストの例</h4>
+        <pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: security-context-demo
+spec:
+  securityContext:
+    runAsNonRoot: true
+    fsGroup: 1000
+  containers:
+  - name: app
+    image: nginx
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      readOnlyRootFilesystem: true</code></pre>
+    </div>
+    
+    <h3>その他のセキュリティベストプラクティス</h3>
+    <ul>
+        <li><strong>最小権限の原則：</strong> Podに必要最小限の権限のみを付与</li>
+        <li><strong>イメージの脆弱性スキャン：</strong> Artifact Registryの脆弱性スキャンを使用して、コンテナイメージの脆弱性を検出</li>
+        <li><strong>Binary Authorization：</strong> 承認されたイメージのみがデプロイされるようにポリシーを設定</li>
+        <li><strong>Workload Identity：</strong> GCPサービスアカウントとKubernetesサービスアカウントを安全に連携</li>
+        <li><strong>Pod Security Standards：</strong> Kubernetesの定義するセキュリティ標準に従ってPodを構成</li>
+    </ul>
+    
+    <h2>Podのヘルスチェックとプローブ</h2>
+    <p>GKEでは、以下の3種類のプローブを使用してPodの健全性を監視できます：</p>
+    
+    <ul>
+        <li><strong>Livenessプローブ：</strong> コンテナが動作しているかどうかを確認。失敗した場合、コンテナは再起動される</li>
+        <li><strong>Readinessプローブ：</strong> コンテナがリクエストを処理する準備ができているかどうかを確認。失敗した場合、Podはサービスのエンドポイントから削除される</li>
+        <li><strong>Startupプローブ：</strong> コンテナのアプリケーションが起動したかどうかを確認。起動中は他のプローブは無効化される</li>
+    </ul>
+    
+    <div class="example">
+        <h4>プローブの設定例</h4>
+        <pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: probe-demo
+spec:
+  containers:
+  - name: app
+    image: nginx
+    ports:
+    - containerPort: 80
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: 80
+      initialDelaySeconds: 15
+      periodSeconds: 10
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: 80
+      initialDelaySeconds: 5
+      periodSeconds: 5</code></pre>
+    </div>
+    
+    <h2>Podのデバッグとトラブルシューティング</h2>
+    <p>GKEでPodの問題をトラブルシューティングするための一般的なコマンドとテクニック：</p>
+    
+    <h3>Podの状態確認</h3>
+    <pre><code>kubectl get pods
+kubectl describe pod &lt;pod-name&gt;</code></pre>
+    
+    <h3>ログの確認</h3>
+    <pre><code>kubectl logs &lt;pod-name&gt;
+kubectl logs &lt;pod-name&gt; -c &lt;container-name&gt;  # マルチコンテナPodの場合</code></pre>
+    
+    <h3>Podへの接続</h3>
+    <pre><code>kubectl exec -it &lt;pod-name&gt; -- /bin/bash
+kubectl exec -it &lt;pod-name&gt; -c &lt;container-name&gt; -- /bin/bash  # マルチコンテナPodの場合</code></pre>
+    
+    <h3>一般的な問題と解決策</h3>
+    <table>
+        <tr>
+            <th>問題</th>
+            <th>考えられる原因</th>
+            <th>解決策</th>
+        </tr>
+        <tr>
+            <td>Podが「Pending」状態</td>
+            <td>リソース不足、PVCのプロビジョニング待ち</td>
+            <td>
+                <code>kubectl describe pod</code>でイベントを確認<br>
+                クラスタのリソース状況を確認
+            </td>
+        </tr>
+        <tr>
+            <td>Podが「CrashLoopBackOff」状態</td>
+            <td>コンテナの起動失敗、アプリケーションのクラッシュ</td>
+            <td>
+                <code>kubectl logs</code>でログを確認<br>
+                コンテナの設定とアプリケーションコードを確認
+            </td>
+        </tr>
+        <tr>
+            <td>Podが「ImagePullBackOff」状態</td>
+            <td>イメージが見つからない、プライベートレジストリの認証失敗</td>
+            <td>
+                イメージ名とタグを確認<br>
+                イメージプルシークレットを設定
+            </td>
+        </tr>
+        <tr>
+            <td>Podが「Error」または「Completed」状態</td>
+            <td>ジョブまたはバッチ処理の完了または失敗</td>
+            <td>
+                <code>kubectl logs</code>で実行結果を確認<br>
+                必要に応じてジョブ設定を調整
+            </td>
+        </tr>
+    </table>
+    
+    <h2>GKE Autopilotにおけるポッド</h2>
+    <p>GKE Autopilotモードでは、Podの管理方法に以下の特徴があります：</p>
+    
+    <ul>
+        <li><strong>リソース要求の必須化：</strong> Autopilotでは、すべてのコンテナにリソース要求を指定する必要がある</li>
+        <li><strong>自動ノードプロビジョニング：</strong> Podのリソース要求に基づいて、適切なノードが自動的にプロビジョニングされる</li>
+        <li><strong>Podの優先度：</strong> システムクリティカルなPodが優先的にスケジュールされる</li>
+        <li><strong>リソース制限の自動設定：</strong> リソース要求に基づいて、適切なリソース制限が自動的に設定される</li>
+    </ul>
+    
+    <div class="note">
+        <h3>Autopilotでのベストプラクティス</h3>
+        <p>Autopilotでは、アプリケーションの実際の要件に基づいて正確なリソース要求を設定することが特に重要です。過大な要求はコストの増加につながり、過小な要求はパフォーマンスの問題を引き起こす可能性があります。</p>
+    </div>
+    
+    <h2>まとめ</h2>
+    <p>Podは、GKEおよびKubernetesにおけるアプリケーション実行の基本単位です。効果的なPod設計と管理は、GKEでのアプリケーションの信頼性、スケーラビリティ、セキュリティを確保するために不可欠です。</p>
+    
+    <p>Podを効果的に活用するためのポイント：</p>
+    <ul>
+        <li>適切なコントローラー（Deployment、StatefulSetなど）を使用してPodのライフサイクルを管理する</li>
+        <li>リソース要求と制限を適切に設定してリソース効率を最適化する</li>
+        <li>ヘルスチェックとプローブを設定して自動復旧を確保する</li>
+        <li>セキュリティベストプラクティスに従ってPodを保護する</li>
+        <li>永続データには適切なストレージソリューションを使用する</li>
+        <li>マルチコンテナPodパターンを理解し、適切に活用する</li>
+    </ul>
+    
+    <p>これらの原則に従うことで、GKEでのコンテナ化アプリケーションの運用を効率化し、安定したサービス提供を実現できます。</p>
+</body>
+</html>
