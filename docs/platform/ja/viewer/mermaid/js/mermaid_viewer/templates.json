@@ -66,12 +66,6 @@
     "code": "mindmap\n  root((✨ 新規事業提案<br/>AI学習アシスタント))\n    )コンセプト(\n      [AIによる学習計画の個別最適化]\n      [ゲーミフィケーションで学習を習慣化]\n      [いつでも質問できるAIチューター]\n    )ターゲット顧客(\n      [資格取得を目指す社会人]\n      [学習意欲の高い大学生]\n      [生涯学習に関心を持つ全ての人]\n    )主要機能(\n      ))学習プラン自動生成((\n        - 目標設定から逆算\n        - 苦手分野を重点的に\n      ))進捗の可視化((\n        - 学習時間と達成度をグラフ表示\n        - モチベーション維持\n      ))AI質問応答((\n        - 24時間いつでも質問可能\n        - 分かりやすい解説を生成\n      ))復習リマインダー((\n        - 忘却曲線に基づき通知\n        - 知識の定着を促進\n    )収益モデル(\n      [基本機能無料（フリーミアム）]\n      )プレミアムプラン（月額）(\n        [広告の非表示]\n        [より高度な進捗分析]\n        [専門分野特化AIチューター]\n    )マーケティング戦略(\n      )SNS(\n        [学習記録のシェア機能]\n        [#タグキャンペーン]\n      )Web広告(\n        [学習系メディアへの出稿]\n      )インフルエンサー(\n        [教育系YouTuberとの連携]"
   },
   {
-    "id": "mermaid-vtuber-timeline",
-    "name": "Mermaid: VTuber Popularity Timeline - timeline",
-    "notation": "mermaid",
-    "code": "timeline\n    title VTuber人気ランキング推移 (2020-2024年)\n    2020年\n        : 1位 キズナアイ\n        : 2位 がうる・ぐら (Gawr Gura)\n        : 3位 輝夜月\n        : 4位 ミライアカリ\n        : 5位 白上フブキ\n    2021年\n        : 1位 がうる・ぐら (Gawr Gura)\n        : 2位 キズナアイ\n        : 3位 兎田ぺこら\n        : 4位 宝鐘マリン\n        : 5位 森カリオペ (Mori Calliope)\n    2022年\n        : 1位 がうる・ぐら (Gawr Gura)\n        : 2位 キズナアイ\n        : 3位 兎田ぺこら\n        : 4位 宝鐘マリン\n        : 5位 こぼ・かなえる (Kobo Kanaeru)\n    2023年\n        : 1位 がうる・ぐら (Gawr Gura)\n        : 2位 兎田ぺこら\n        : 3位 宝鐘マリン\n        : 4位 こぼ・かなえる (Kobo Kanaeru)\n        : 5位 白上フブキ\n    2024年\n        : 1位 がうる・ぐら (Gawr Gura)\n        : 2位 宝鐘マリン\n        : 3位 兎田ぺこら\n        : 4位 filian\n        : 5位 こぼ・かなえる (Kobo Kanaeru)"
-  },
-  {
     "id": "mermaid-ppm",
     "name": "Mermaid: PPM - quadrantChart",
     "notation": "mermaid",
