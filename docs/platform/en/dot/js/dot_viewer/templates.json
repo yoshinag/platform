@@ -66,12 +66,6 @@
     "code": "mindmap\n  root((✨ New Business Proposal<br/>AI Learning Assistant))\n    )Concept(\n      [Personalized learning plans optimized by AI]\n      [Gamification to make learning a habit]\n      [AI tutor available for questions anytime]\n    )Target Customers(\n      [Working professionals seeking certifications]\n      [Highly motivated university students]\n      [Anyone interested in lifelong learning]\n    )Key Features(\n      ))Automated Learning Plan Generation((\n        - Working backward from goals\n        - Focus on weak areas\n      ))Progress Visualization((\n        - Graph display of study time and achievement\n        - Motivation maintenance\n      ))AI Q&A System((\n        - 24/7 question availability\n        - Generation of easy-to-understand explanations\n      ))Review Reminders((\n        - Notifications based on forgetting curve\n        - Promoting knowledge retention\n    )Revenue Model(\n      [Basic features free (Freemium)]\n      )Premium Plan (Monthly)(\n        [Ad-free experience]\n        [Advanced progress analytics]\n        [Specialized AI tutors for specific fields]\n    )Marketing Strategy(\n      )Social Media(\n        [Learning record sharing feature]\n        [Hashtag campaigns]\n      )Web Advertising(\n        [Placements on educational media sites]\n      )Influencer Marketing(\n        [Partnerships with educational YouTubers]"
   },
   {
-    "id": "mermaid-vtuber-timeline",
-    "name": "Mermaid: VTuber Popularity Timeline - timeline",
-    "notation": "mermaid",
-    "code": "timeline\n    title VTuber Popularity Ranking Trends (2020-2024)\n    2020\n        : 1st Kizuna AI\n        : 2nd Gawr Gura\n        : 3rd Kaguya Luna\n        : 4th Mirai Akari\n        : 5th Shirakami Fubuki\n    2021\n        : 1st Gawr Gura\n        : 2nd Kizuna AI\n        : 3rd Usada Pekora\n        : 4th Houshou Marine\n        : 5th Mori Calliope\n    2022\n        : 1st Gawr Gura\n        : 2nd Kizuna AI\n        : 3rd Usada Pekora\n        : 4th Houshou Marine\n        : 5th Kobo Kanaeru\n    2023\n        : 1st Gawr Gura\n        : 2nd Usada Pekora\n        : 3rd Houshou Marine\n        : 4th Kobo Kanaeru\n        : 5th Shirakami Fubuki\n    2024\n        : 1st Gawr Gura\n        : 2nd Houshou Marine\n        : 3rd Usada Pekora\n        : 4th filian\n        : 5th Kobo Kanaeru"
-  },
-  {
     "id": "mermaid-ppm",
     "name": "Mermaid: PPM - quadrantChart",
     "notation": "mermaid",
