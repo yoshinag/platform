@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>駆動開発手法一覧</title>
+    <link rel="stylesheet" href="../../../css/knowledge.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<!-- Google Analytics -->
+<script src="../../../js/common/analytics.js"></script>
+<body class="ja-knowledge">
+    <div style="margin-bottom: 20px;">
+        <a href="../../index.html">トップページに戻る</a>
+    </div>
+    <h1>駆動開発手法一覧</h1>
+    
+    <h2>はじめに</h2>
+    <p>駆動開発（Driven Development）は、ソフトウェア開発において特定の側面や概念を中心に据えたアプローチです。これらの手法は、開発プロセスの効率化、品質向上、チームコラボレーションの改善などを目的としています。このページでは、主要な駆動開発手法について概要を説明し、詳細情報へのリンクを提供します。</p>
+    
+    <h2>主要な駆動開発手法</h2>
+    
+    <div class="category-description">
+        <h3 id="domain-driven-design">ドメイン駆動開発 (DDD: Domain-Driven Design)</h3>
+        <p>ドメイン駆動開発は、複雑なビジネスドメインに焦点を当て、ソフトウェアの構造とロジックをビジネスの概念と一致させることを目指す開発アプローチです。ユビキタス言語、境界づけられたコンテキスト、エンティティ、値オブジェクトなどの概念を活用して、ドメインモデルを構築します。</p>
+        <p><a href="domain_driven_design.html">ドメイン駆動開発の詳細を見る</a></p>
+    </div>
+    
+    <div class="category-description">
+        <h3 id="test-driven-development">テスト駆動開発 (TDD: Test-Driven Development)</h3>
+        <p>テスト駆動開発は、テストを先に書いてから実装を行うアプローチです。「レッド（失敗するテストを書く）」、「グリーン（テストが通るように最小限のコードを書く）」、「リファクタリング（コードを改善する）」のサイクルを繰り返すことで、高品質なコードを段階的に構築します。</p>
+        <p><a href="test_driven_development.html">テスト駆動開発の詳細を見る</a></p>
+    </div>
+    
+    <div class="category-description">
+        <h3 id="behavior-driven-development">ビハイビア駆動開発 (BDD: Behavior-Driven Development)</h3>
+        <p>ビハイビア駆動開発は、テスト駆動開発を拡張し、ソフトウェアの振る舞いに焦点を当てたアプローチです。「Given-When-Then」形式でシナリオを記述し、ビジネス関係者と開発者の間のコミュニケーションを改善します。</p>
+        <p><a href="behavior_driven_development.html">ビハイビア駆動開発の詳細を見る</a></p>
+    </div>
+    
+    <div class="category-description">
+        <h3 id="model-driven-development">モデル駆動開発 (MDD: Model-Driven Development)</h3>
+        <p>モデル駆動開発は、モデルを中心に据えたアプローチで、システムの抽象的なモデルを作成し、そのモデルから自動的にコードを生成します。高レベルのモデルから低レベルのモデルへの変換、そして最終的にはコードへの変換を自動化します。</p>
+        <p><a href="model_driven_development.html">モデル駆動開発の詳細を見る</a></p>
+    </div>
+    
+    <div class="category-description">
+        <h3 id="data-driven-development">データ駆動開発 (Data-Driven Development)</h3>
+        <p>データ駆動開発は、データを中心に据えたアプローチで、データの収集、分析、解釈に基づいて意思決定を行い、製品やサービスの開発方向を決定します。仮説を立て、実験を行い、データを収集して検証するサイクルを繰り返します。</p>
+        <p><a href="data_driven_development.html">データ駆動開発の詳細を見る</a></p>
+    </div>
+    
+    <div class="category-description">
+        <h3 id="ai-driven-development">AI駆動開発 (AI-Driven Development)</h3>
+        <p>AI駆動開発は、人工知能技術をソフトウェア開発プロセスに統合し、開発の効率化、品質向上、イノベーション促進を目指すアプローチです。AIがコード生成、バグ検出、テスト自動化、コードレビューなどの作業を支援します。</p>
+        <p><a href="ai_driven_development.html">AI駆動開発の詳細を見る</a></p>
+    </div>
+    
+    <h2>駆動開発手法の比較</h2>
+    
+    <table>
+        <tr>
+            <th>開発手法</th>
+            <th>焦点</th>
+            <th>主な目的</th>
+            <th>主要な概念/ツール</th>
+            <th>適している領域</th>
+        </tr>
+        <tr>
+            <td>ドメイン駆動開発 (DDD)</td>
+            <td>ビジネスドメイン</td>
+            <td>ビジネスとソフトウェアの整合性</td>
+            <td>ユビキタス言語、境界づけられたコンテキスト、エンティティ、値オブジェクト</td>
+            <td>複雑なビジネスドメインを持つプロジェクト</td>
+        </tr>
+        <tr>
+            <td>テスト駆動開発 (TDD)</td>
+            <td>テスト</td>
+            <td>コードの品質向上、バグの早期発見</td>
+            <td>レッド・グリーン・リファクタリングサイクル、ユニットテスト</td>
+            <td>品質が重視されるプロジェクト、長期的なメンテナンスが必要なプロジェクト</td>
+        </tr>
+        <tr>
+            <td>ビハイビア駆動開発 (BDD)</td>
+            <td>振る舞い</td>
+            <td>コミュニケーションの改善、共通の理解</td>
+            <td>Given-When-Then形式、Cucumber、SpecFlow</td>
+            <td>ビジネス要件が複雑で変化しやすいプロジェクト</td>
+        </tr>
+        <tr>
+            <td>モデル駆動開発 (MDD)</td>
+            <td>モデル</td>
+            <td>生産性向上、品質向上、保守性向上</td>
+            <td>UML、モデル変換、コード生成</td>
+            <td>エンタープライズアプリケーション、クロスプラットフォーム開発</td>
+        </tr>
+        <tr>
+            <td>データ駆動開発</td>
+            <td>データ</td>
+            <td>客観的な意思決定、ユーザーニーズへの適合</td>
+            <td>A/Bテスト、アナリティクス、実験</td>
+            <td>Webサイト、モバイルアプリ、Eコマース</td>
+        </tr>
+        <tr>
+            <td>AI駆動開発</td>
+            <td>AI技術</td>
+            <td>開発の効率化、品質向上、イノベーション促進</td>
+            <td>GitHub Copilot、AIコード解析ツール、AIテスト生成ツール</td>
+            <td>大規模プロジェクト、標準的なアプリケーション、反復的なコーディングタスク</td>
+        </tr>
+    </table>
+    
+    <h2>駆動開発手法の組み合わせ</h2>
+    <p>これらの駆動開発手法は互いに排他的ではなく、多くの場合、複数の手法を組み合わせて使用することで、より効果的な開発プロセスを実現できます。例えば：</p>
+    <ul>
+        <li><strong>DDD + TDD：</strong> ドメインモデルの設計にDDDを使用し、その実装にTDDを適用する</li>
+        <li><strong>BDD + TDD：</strong> BDDで高レベルの振る舞いを定義し、TDDでその実装の詳細を開発する</li>
+        <li><strong>MDD + DDD：</strong> DDDで設計したドメインモデルをMDDのアプローチで実装する</li>
+        <li><strong>データ駆動開発 + BDD：</strong> データ分析に基づいて優先順位を決定し、BDDで機能を実装する</li>
+        <li><strong>AI駆動開発 + TDD：</strong> AIがテストケースの生成を支援し、TDDのサイクルを効率化する</li>
+    </ul>
+    
+    <h2>まとめ</h2>
+    <p>駆動開発手法は、ソフトウェア開発の効率化、品質向上、チームコラボレーションの改善などを目的としたアプローチです。各手法には独自の焦点と強みがあり、プロジェクトの特性や目標に応じて適切な手法を選択することが重要です。また、複数の手法を組み合わせることで、より効果的な開発プロセスを実現できます。</p>
+    
+    <div class="note">
+        <h3>駆動開発手法の選択ポイント</h3>
+        <ul>
+            <li>プロジェクトの複雑さと規模を考慮する</li>
+            <li>チームのスキルセットと経験を評価する</li>
+            <li>ビジネス要件の安定性と変化の頻度を検討する</li>
+            <li>品質要件とパフォーマンス目標を明確にする</li>
+            <li>開発期間と予算の制約を考慮する</li>
+            <li>必要に応じて複数の手法を組み合わせる</li>
+        </ul>
+    </div>
+</body>
+</html>
