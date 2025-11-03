@@ -134,6 +134,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <tr><td>暗視</td><td>金のニンジン</td><td>3:00</td><td>—</td><td>8:00</td></tr>
                             <tr><td>俊敏</td><td>砂糖</td><td>3:00</td><td>1:30（II）</td><td>8:00</td></tr>
                             <tr><td>跳躍</td><td>ウサギの足</td><td>3:00</td><td>1:30（II）</td><td>8:00</td></tr>
                             <tr><td>耐火</td><td>マグマクリーム</td><td>3:00</td><td>—</td><td>8:00</td></tr>
@@ -143,7 +144,8 @@
                             <tr><td>治癒（即時）</td><td>きらめくスイカ</td><td>即時</td><td>即時（II）</td><td>—</td></tr>
                             <tr><td>低速落下</td><td>ファントムの皮膜</td><td>1:30</td><td>—</td><td>4:00</td></tr>
                             <tr><td>タートルマスター</td><td>カメの甲羅</td><td>0:20（I）</td><td>0:20（II）</td><td>0:40（I）</td></tr>
-                            <tr><td>毒</td><td>発酵したクモの目</td><td>0:45</td><td>0:22（II）</td><td>1:30</td></tr>
+                            <tr><td>毒</td><td>クモの目</td><td>0:45</td><td>0:22（II）</td><td>1:30</td></tr>
+                            <tr><td>虫食い</td><td>石</td><td>3:00（I）</td><td>—</td><td>—</td></tr>
                         </tbody>
                     </table>
 
@@ -169,15 +171,39 @@
                     <h3 id="quick-thick">濃厚（Thick）ベース</h3>
                     <p>用途ほぼなし。基本的にレシピには使いません。</p>
 
-                    <h3 id="quick-corrupt">変換参照</h3>
+                    <h3 id="quick-corrupt">変換（発酵したクモの目）</h3>
                     <ul>
+                        <li>暗視 → 透明化</li>
                         <li>俊敏 → 鈍化</li>
                         <li>跳躍 → 鈍化</li>
+                        <li>力 → 弱化</li>
                         <li>治癒 → 負傷（即時）</li>
+                        <li>毒 → 負傷（即時）</li>
                         <li>再生 → 毒</li>
                         <li>水 → 弱化</li>
-                        <li>耐火 / 水中呼吸 / 低速落下 → 変化なし（不可）</li>
+                        <li>耐火 / 水中呼吸 / 低速落下 / タートルマスター → 変化なし（不可）</li>
                     </ul>
+
+                    <!-- 変換で得られる代表ポーション（時間/強化の目安） -->
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>変換で得られるポーション</th>
+                                    <th>基本</th>
+                                    <th>強化</th>
+                                    <th>延長</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>透明化</td><td>3:00</td><td>—</td><td>8:00</td></tr>
+                                <tr><td>鈍化</td><td>1:30</td><td>0:20（II）</td><td>4:00</td></tr>
+                                <tr><td>負傷（即時）</td><td>即時</td><td>即時（II）</td><td>—</td></tr>
+                                <tr><td>弱化</td><td>1:30</td><td>—</td><td>4:00</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
                     <p class="note">注: スプラッシュ/残留にすると効果時間は短くなります（スプラッシュ ≒ 0.75x、残留はさらに減少）。</p>
                 </div>
             </section>
