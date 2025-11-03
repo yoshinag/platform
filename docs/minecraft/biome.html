@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>バイオーム一覧（Java 1.20 基準） | マインクラフト攻略・レシピ集</title>
+    <meta name="description" content="Minecraft Java 1.20 基準のバイオーム一覧。主世界/海洋/洞窟/ネザー/ジ・エンドを日本語名（英語名）で整理。温度・降雪、主な資源・植物、出現モブ、生成されやすい構造物を付記。">
+    <meta name="keywords" content="マインクラフト, Minecraft, バイオーム, 一覧, 主世界, ネザー, エンド, 海洋, 洞窟">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    <script>
+        // Apply saved theme early (same key as /src/minecraft/app.js)
+        (function () {
+            try {
+                var theme = localStorage.getItem('mc-theme') || 'system';
+                var root = document.documentElement;
+                if (theme === 'dark') {
+                    root.setAttribute('data-theme', 'dark');
+                } else if (theme === 'light') {
+                    root.setAttribute('data-theme', 'light');
+                } else {
+                    root.removeAttribute('data-theme');
+                }
+            } catch (e) {}
+        })();
+    </script>
+
+    <!-- Use hosted loaders (see template/guide/guide_sample.md) -->
+    <script src="https://iroirotool.github.io/libraries/iroiro.0.js" defer></script>
+    <script src="https://iroirotool.github.io/libraries/analytics.js" defer></script>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="canonical" href="./biome.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="バイオーム一覧（Java 1.20）">
+    <meta property="og:description" content="Java 1.20 基準のバイオームを日本語名（英語名）で見やすく整理。主世界/海洋/洞窟/ネザー/ジ・エンド。">
+    <meta property="og:url" content="./biome.html">
+    <meta property="og:image" content="https://static.mcer.assets.example/og-minecraft.png">
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "バイオーム一覧（Java 1.20）",
+            "about": ["Minecraft", "バイオーム", "一覧"],
+            "author": {"@type": "Organization", "name": "Minecraft Guide"},
+            "mainEntityOfPage": {"@type": "WebPage", "@id": "./biome.html"}
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        .page-container { max-width: 1100px; margin: 0 auto; padding: 16px; }
+        .hero { display: grid; gap: 12px; padding: 16px; border-radius: 12px; background: var(--md-sys-color-inverse-on-surface); }
+        .hero h1 { margin: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 8px; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; border: none; border-radius: 20px; padding: 8px 14px; cursor: pointer; color: var(--md-sys-color-on-primary); background: var(--md-sys-color-primary); text-decoration: none; }
+        .breadcrumbs { display:flex; align-items:center; gap:6px; padding:8px 0; color: var(--md-sys-color-outline); }
+        .breadcrumbs a { color: inherit; text-decoration: none; }
+        .section { margin-top: 24px; }
+
+        .page-layout { display: grid; grid-template-columns: 1fr 260px; gap: 24px; align-items: start; }
+        .article { min-width: 0; }
+        .toc { position: sticky; top: 72px; background: var(--md-sys-color-inverse-on-surface); border: 1px solid var(--md-sys-color-surface-variant); border-radius: 12px; padding: 12px; }
+        .toc h2 { margin: 0 0 8px; font-size: 1rem; display:flex; align-items:center; gap:6px; }
+        .toc ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+        .toc a { color: var(--md-sys-color-on-surface); text-decoration: none; display:block; padding:6px 8px; border-radius:8px; }
+        .toc a:hover { background: color-mix(in oklab, var(--md-sys-color-primary) 12%, transparent); }
+        .toc .lvl-3 { padding-left: 16px; font-size: .95em; opacity: .9; }
+        @media (max-width: 1023px) { .page-layout { grid-template-columns: 1fr; } .toc { display:none; } }
+
+        .ad-container { min-height: 250px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid var(--md-sys-color-surface-variant); padding: 6px 8px; vertical-align: top; }
+        thead th { background: var(--md-sys-color-inverse-on-surface); }
+        tbody tr:nth-child(even) { background: color-mix(in oklab, var(--md-sys-color-inverse-on-surface) 35%, transparent); }
+        .note { color: var(--md-sys-color-outline); font-size: .95em; }
+        .tag { display:inline-block; padding:2px 8px; border-radius:999px; background: color-mix(in oklab, var(--md-sys-color-primary) 18%, transparent); margin-right:6px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <nav class="breadcrumbs" aria-label="パンくず">
+        <a href="./index.html"><span class="material-icons-outlined" aria-hidden="true">home</span> ホーム</a>
+        <span class="sep">/</span>
+        <span>バイオーム一覧</span>
+    </nav>
+
+    <section class="hero">
+        <h1>
+            <span class="material-icons-outlined" aria-hidden="true">terrain</span>
+            バイオーム一覧（Java 1.20 基準）
+        </h1>
+        <p>ディメンション別に、公式日本語名（英語名）で掲載。温度・降雪、主な資源/植物、出現モブ、生成されやすい構造物を付記しています。</p>
+        <div>
+            <a class="btn" href="#overworld"><span class="material-icons-outlined" aria-hidden="true">public</span> 主世界</a>
+            <a class="btn" href="#ocean"><span class="material-icons-outlined" aria-hidden="true">water</span> 海洋</a>
+            <a class="btn" href="#cave"><span class="material-icons-outlined" aria-hidden="true">cabin</span> 洞窟</a>
+            <a class="btn" href="#nether"><span class="material-icons-outlined" aria-hidden="true">whatshot</span> ネザー</a>
+            <a class="btn" href="#end"><span class="material-icons-outlined" aria-hidden="true">blur_on</span> ジ・エンド</a>
+        </div>
+        <p class="note">注: バージョンやローカライズで名称が変わる場合があります。本ページは Java 1.20 系を基準にしています。</p>
+    </section>
+
+    <div class="section page-layout">
+        <article class="article">
+            <section id="overworld" class="section" aria-labelledby="overworldTitle">
+                <h2 id="overworldTitle">主世界（Overworld）</h2>
+                <div class="ad-container"></div>
+                <div class="section">
+                    <h3>地表バイオーム</h3>
+                    <table aria-label="主世界の地表バイオーム">
+                        <thead>
+                        <tr>
+                            <th style="width:28%">日本語名（英語名）</th>
+                            <th style="width:12%">温度/降雪</th>
+                            <th style="width:28%">主な資源・植物</th>
+                            <th style="width:16%">出現モブ</th>
+                            <th style="width:16%">構造物</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr><td>平原 (Plains)</td><td>温暖/降雪なし</td><td>草・花・村人の村</td><td>ウマ・ロバ・ハチ</td><td>村、略奪者の前哨基地</td></tr>
+                        <tr><td>ヒマワリ平原 (Sunflower Plains)</td><td>温暖/降雪なし</td><td>ヒマワリ、草</td><td>—</td><td>—</td></tr>
+                        <tr><td>草地 (Meadow)</td><td>涼しい/稀に降雪</td><td>多くの花、ミツバチ</td><td>ロバ</td><td>村（稀）、前哨基地</td></tr>
+                        <tr><td>花の森 (Flower Forest)</td><td>温暖/降雪なし</td><td>多種の花、ミツバチ</td><td>ハチ</td><td>—</td></tr>
+                        <tr><td>森 (Forest)</td><td>温暖/降雪なし</td><td>オーク、シラカバ</td><td>オオカミ</td><td>—</td></tr>
+                        <tr><td>白樺の森 (Birch Forest)</td><td>温暖/降雪なし</td><td>シラカバ</td><td>—</td><td>—</td></tr>
+                        <tr><td>沼地 (Swamp)</td><td>温暖/降雪なし</td><td>スイレン、粘土</td><td>スライム（満月）、カエル</td><td>魔女の小屋（稀）</td></tr>
+                        <tr><td>マングローブの沼地 (Mangrove Swamp)</td><td>温暖/湿潤</td><td>マングローブ、泥ブロック、マングローブの根</td><td>カエル</td><td>—</td></tr>
+                        <tr><td>原生の白樺の森 (Old Growth Birch Forest)</td><td>温暖</td><td>高いシラカバ</td><td>—</td><td>—</td></tr>
+                        <tr><td>薄暗い森 (Dark Forest)</td><td>温暖/降雪なし</td><td>ダークオーク、キノコ</td><td>—</td><td>森の洋館</td></tr>
+                        <tr><td>ジャングル (Jungle)</td><td>湿潤/降雪なし</td><td>ジャングル木、カカオ、竹（稀）</td><td>オウム、オセロット</td><td>ジャングル寺院</td></tr>
+                        <tr><td>疎らなジャングル (Sparse Jungle)</td><td>湿潤</td><td>ジャングル木が疎ら</td><td>—</td><td>—</td></tr>
+                        <tr><td>竹林 (Bamboo Jungle)</td><td>湿潤</td><td>竹、パンダ</td><td>パンダ</td><td>—</td></tr>
+                        <tr><td>タイガ (Taiga)</td><td>涼しい/稀に降雪</td><td>トウヒ、スイートベリー</td><td>オオカミ、キツネ</td><td>イグルー（稀）</td></tr>
+                        <tr><td>雪のタイガ (Snowy Taiga)</td><td>寒冷/降雪</td><td>トウヒ</td><td>ウサギ、オオカミ</td><td>イグルー</td></tr>
+                        <tr><td>原生の松のタイガ (Old Growth Pine Taiga)</td><td>涼しい</td><td>高木のマツ</td><td>—</td><td>—</td></tr>
+                        <tr><td>原生のトウヒのタイガ (Old Growth Spruce Taiga)</td><td>涼しい</td><td>高木のトウヒ</td><td>—</td><td>—</td></tr>
+                        <tr><td>サバンナ (Savanna)</td><td>乾燥/降雪なし</td><td>アカシア</td><td>ウマ</td><td>村</td></tr>
+                        <tr><td>風にさらされたサバンナ (Windswept Savanna)</td><td>乾燥</td><td>険しい地形</td><td>—</td><td>—</td></tr>
+                        <tr><td>砂漠 (Desert)</td><td>乾燥/降雪なし</td><td>サボテン、枯れ木</td><td>ウサギ、ハスク</td><td>村、砂漠の寺院、井戸</td></tr>
+                        <tr><td>悪地 (Badlands)</td><td>乾燥</td><td>テラコッタ、金鉱脈（露出多）</td><td>—</td><td>廃坑（地表付近）</td></tr>
+                        <tr><td>木が生えた悪地 (Wooded Badlands)</td><td>乾燥</td><td>オーク、テラコッタ</td><td>—</td><td>—</td></tr>
+                        <tr><td>侵食された悪地 (Eroded Badlands)</td><td>乾燥</td><td>尖塔状の地形</td><td>—</td><td>—</td></tr>
+                        <tr><td>キノコ島 (Mushroom Fields)</td><td>温暖/降雪なし</td><td>菌糸、巨大キノコ</td><td>ムーシュルーム</td><td>—</td></tr>
+                        <tr><td>吹雪の平原 (Snowy Plains)</td><td>寒冷/降雪</td><td>氷/雪</td><td>ウサギ、ストレイ</td><td>イグルー、村</td></tr>
+                        <tr><td>氷樹の平原 (Ice Spikes)</td><td>寒冷/降雪</td><td>氷塊・氷柱</td><td>—</td><td>—</td></tr>
+                        <tr><td>桜の園 (Cherry Grove)</td><td>涼しい</td><td>サクラ、サクラの花びら</td><td>ハチ</td><td>—</td></tr>
+                        <tr><td>針葉樹の林 (Grove)</td><td>寒冷/降雪</td><td>トウヒ</td><td>—</td><td>—</td></tr>
+                        <tr><td>雪の斜面 (Snowy Slopes)</td><td>寒冷/降雪</td><td>粉雪、氷</td><td>ヤギ</td><td>—</td></tr>
+                        <tr><td>ギザギザの山頂 (Jagged Peaks)</td><td>寒冷/降雪</td><td>雪、氷</td><td>ヤギ</td><td>—</td></tr>
+                        <tr><td>凍った山頂 (Frozen Peaks)</td><td>寒冷/降雪</td><td>雪、氷</td><td>—</td><td>—</td></tr>
+                        <tr><td>石だらけの山頂 (Stony Peaks)</td><td>涼しい</td><td>石、安山岩</td><td>—</td><td>—</td></tr>
+                        <tr><td>浜 (Beach)</td><td>温暖/降雪なし</td><td>砂、サトウキビ</td><td>カメ</td><td>難破船（沖合）</td></tr>
+                        <tr><td>雪の浜 (Snowy Beach)</td><td>寒冷/降雪</td><td>雪の砂浜</td><td>—</td><td>—</td></tr>
+                        <tr><td>石の岸辺 (Stony Shore)</td><td>涼しい</td><td>丸石/石が露出</td><td>—</td><td>—</td></tr>
+                        <tr><td>川 (River)</td><td>多様</td><td>砂利、粘土、サトウキビ</td><td>サーモン、タラ</td><td>—</td></tr>
+                        <tr><td>凍った川 (Frozen River)</td><td>寒冷/凍結</td><td>氷</td><td>—</td><td>—</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="ocean" class="section" aria-labelledby="oceanTitle">
+                <h2 id="oceanTitle">海洋（Oceans）</h2>
+                <table aria-label="海洋バイオーム">
+                    <thead>
+                    <tr>
+                        <th>日本語名（英語名）</th>
+                        <th>温度/特性</th>
+                        <th>主な資源・植物</th>
+                        <th>出現モブ</th>
+                        <th>構造物</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>温暖な海 (Warm Ocean)</td><td>暖かい/珊瑚礁</td><td>サンゴ、熱帯魚、海草</td><td>フグ、熱帯魚</td><td>難破船、海底遺跡（少）</td></tr>
+                    <tr><td>ぬるい海 (Lukewarm Ocean)</td><td>温暖</td><td>海草、コンブ</td><td>タラ、イルカ</td><td>難破船、海底遺跡</td></tr>
+                    <tr><td>深いぬるい海 (Deep Lukewarm Ocean)</td><td>温暖/深海</td><td>コンブ</td><td>ドラウンド（少）</td><td>海底渓谷</td></tr>
+                    <tr><td>海 (Ocean)</td><td>中間</td><td>海草、コンブ</td><td>タラ、イルカ</td><td>難破船、海底遺跡</td></tr>
+                    <tr><td>深海 (Deep Ocean)</td><td>中間/深海</td><td>—</td><td>ドラウンド</td><td>海底神殿（稀）</td></tr>
+                    <tr><td>冷たい海 (Cold Ocean)</td><td>冷たい</td><td>コンブ、氷山付近</td><td>サケ</td><td>難破船、海底遺跡</td></tr>
+                    <tr><td>深い冷たい海 (Deep Cold Ocean)</td><td>冷たい/深海</td><td>—</td><td>ドラウンド</td><td>—</td></tr>
+                    <tr><td>凍った海 (Frozen Ocean)</td><td>寒冷/氷</td><td>氷山、氷</td><td>イカ（下層）</td><td>—</td></tr>
+                    <tr><td>深い凍った海 (Deep Frozen Ocean)</td><td>寒冷/深海</td><td>氷</td><td>—</td><td>—</td></tr>
+                    
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="cave" class="section" aria-labelledby="caveTitle">
+                <h2 id="caveTitle">洞窟・地下（Caves/Underground）</h2>
+                <table aria-label="洞窟・地下バイオーム">
+                    <thead>
+                    <tr>
+                        <th>日本語名（英語名）</th>
+                        <th>環境</th>
+                        <th>主な資源・植物</th>
+                        <th>出現モブ</th>
+                        <th>構造物</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>繁茂した洞窟 (Lush Caves)</td><td>湿潤</td><td>グロウベリー、ツツジ、苔</td><td>ヒカリイカ、ウーパールーパー</td><td>—</td></tr>
+                    <tr><td>鍾乳洞 (Dripstone Caves)</td><td>乾燥</td><td>鍾乳石、石灰岩</td><td>—</td><td>—</td></tr>
+                    <tr><td>ディープダーク (Deep Dark)</td><td>暗闇/超低光</td><td>スカルク系ブロック</td><td>ウォーデン（ソナーで出現）</td><td>古代都市（Ancient City）</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="nether" class="section" aria-labelledby="netherTitle">
+                <h2 id="netherTitle">ネザー（Nether）</h2>
+                <table aria-label="ネザーバイオーム">
+                    <thead>
+                    <tr>
+                        <th>日本語名（英語名）</th>
+                        <th>環境</th>
+                        <th>主な資源・植物</th>
+                        <th>出現モブ</th>
+                        <th>構造物</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>歪んだ森 (Warped Forest)</td><td>比較的安全</td><td>歪んだ幹/菌糸、ネザー菌類</td><td>エンダーマン</td><td>—</td></tr>
+                    <tr><td>真紅の森 (Crimson Forest)</td><td>危険</td><td>真紅の幹/菌糸、クリムゾン菌類</td><td>ホグリン、ピグリン</td><td>—</td></tr>
+                    <tr><td>玄武岩デルタ (Basalt Deltas)</td><td>非常に険しい</td><td>玄武岩、黒曜石（稀）</td><td>マグマキューブ</td><td>—</td></tr>
+                    <tr><td>ネザーの荒地 (Nether Wastes)</td><td>標準</td><td>ネザーラック、クォーツ</td><td>ガスト、ゾンビピグリン</td><td>ネザー要塞、砦の遺跡（稀）</td></tr>
+                    <tr><td>ソウルサンドの谷 (Soul Sand Valley)</td><td>見通し良い</td><td>ソウルサンド、ソウルソイル、骨ブロック</td><td>ガスト、スケルトン</td><td>—</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="end" class="section" aria-labelledby="endTitle">
+                <h2 id="endTitle">ジ・エンド（The End）</h2>
+                <table aria-label="ジ・エンドのバイオーム">
+                    <thead>
+                    <tr>
+                        <th>日本語名（英語名）</th>
+                        <th>環境</th>
+                        <th>主な資源・植物</th>
+                        <th>出現モブ</th>
+                        <th>構造物</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>ジ・エンド (The End)</td><td>中央島</td><td>エンドストーン</td><td>エンダードラゴン、エンダーマン</td><td>出口ポータル</td></tr>
+                    <tr><td>エンド・ハイランド (End Highlands)</td><td>外周島の高地</td><td>コーラスプラント</td><td>エンダーマン</td><td>エンドシティ（稀）</td></tr>
+                    <tr><td>エンド・ミッドランド (End Midlands)</td><td>外周島の中地</td><td>エンドストーン</td><td>エンダーマン</td><td>—</td></tr>
+                    <tr><td>エンド・バラック (End Barrens)</td><td>外周の痩せ地</td><td>—</td><td>—</td><td>—</td></tr>
+                    <tr><td>スモールエンドアイランド (Small End Islands)</td><td>外周の小島</td><td>—</td><td>—</td><td>—</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <div class="note">用語・名前は Java 1.20 の公式日本語ローカライズを参考に作成していますが、環境やリソースの記述は簡略化しています。各バイオームの詳細はゲーム内または公式Wikiをご確認ください。</div>
+            </section>
+        </article>
+
+        <aside class="toc" aria-label="目次">
+            <h2><span class="material-icons-outlined" aria-hidden="true">menu_book</span> 目次</h2>
+            <ul>
+                <li><a href="#overworld">主世界</a></li>
+                <li class="lvl-3"><a href="#overworld">地表バイオーム</a></li>
+                <li><a href="#ocean">海洋</a></li>
+                <li><a href="#cave">洞窟・地下</a></li>
+                <li><a href="#nether">ネザー</a></li>
+                <li><a href="#end">ジ・エンド</a></li>
+            </ul>
+            <div class="ad-container"></div>
+        </aside>
+    </div>
+
+    <section class="section" aria-label="スポンサーリンク">
+        <div class="ad-container" style="min-height: 280px;"></div>
+    </section>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>醸造台レシピ一覧（Java版） | マインクラフト攻略・レシピ集</title>
+    <meta name="description" content="Minecraft(Java版)の醸造台で作れるポーション(錬金)のレシピを、基本の流れ・ベースポーション・代表レシピ・強化/延長・投擲/残留・クイック表・FAQまで簡潔に整理。1.20+ 基準。">
+    <meta name="keywords" content="マインクラフト, Minecraft, ポーション, 醸造台, レシピ, 俊敏, 跳躍, 耐火, 水中呼吸, 力, 再生, 治癒, 低速落下, 弱化, タートルマスター">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    <script>
+        // Apply saved theme early (same key as /src/minecraft/app.js)
+        (function () {
+            try {
+                var theme = localStorage.getItem('mc-theme') || 'system';
+                var root = document.documentElement;
+                if (theme === 'dark') {
+                    root.setAttribute('data-theme', 'dark');
+                } else if (theme === 'light') {
+                    root.setAttribute('data-theme', 'light');
+                } else {
+                    root.removeAttribute('data-theme');
+                }
+            } catch (e) {}
+        })();
+    </script>
+
+    <!-- Use hosted loaders (see template/guide/guide_sample.md) -->
+    <script src="https://iroirotool.github.io/libraries/iroiro.0.js" defer></script>
+    <script src="https://iroirotool.github.io/libraries/analytics.js" defer></script>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="canonical" href="./brewing_recipes.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="醸造台レシピ一覧（Java版）">
+    <meta property="og:description" content="Java版マインクラフトのポーション醸造レシピ早見表。基本の流れ、主要レシピ、強化/延長、スプラッシュ/残留、クイック表、FAQ。">
+    <meta property="og:url" content="./brewing_recipes.html">
+    <meta property="og:image" content="https://static.mcer.assets.example/og-minecraft.png">
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "醸造台レシピ一覧（Java版）",
+            "about": ["Minecraft", "醸造台", "ポーション", "レシピ"],
+            "author": {"@type": "Organization", "name": "Minecraft Guide"},
+            "mainEntityOfPage": {"@type": "WebPage", "@id": "./brewing_recipes.html"}
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        .page-container { max-width: 1100px; margin: 0 auto; padding: 16px; }
+        .hero { display: grid; gap: 12px; padding: 16px; border-radius: 12px; background: var(--md-sys-color-inverse-on-surface); }
+        .hero h1 { margin: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 8px; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; border: none; border-radius: 20px; padding: 8px 14px; cursor: pointer; color: var(--md-sys-color-on-primary); background: var(--md-sys-color-primary); text-decoration: none; }
+        .breadcrumbs { display:flex; align-items:center; gap:6px; padding:8px 0; color: var(--md-sys-color-outline); }
+        .breadcrumbs a { color: inherit; text-decoration: none; }
+        .section { margin-top: 24px; }
+
+        /* Layout with right TOC */
+        .page-layout { display: grid; grid-template-columns: 1fr 260px; gap: 24px; align-items: start; }
+        .article { min-width: 0; }
+        .toc { position: sticky; top: 72px; background: var(--md-sys-color-inverse-on-surface); border: 1px solid var(--md-sys-color-surface-variant); border-radius: 12px; padding: 12px; }
+        .toc h2 { margin: 0 0 8px; font-size: 1rem; display:flex; align-items:center; gap:6px; }
+        .toc ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+        .toc a { color: var(--md-sys-color-on-surface); text-decoration: none; display:block; padding:6px 8px; border-radius:8px; }
+        .toc a:hover { background: color-mix(in oklab, var(--md-sys-color-primary) 12%, transparent); }
+        .toc .lvl-3 { padding-left: 16px; font-size: .95em; opacity: .9; }
+        @media (max-width: 1023px) { .page-layout { grid-template-columns: 1fr; } .toc { display:none; } }
+
+        .ad-container { min-height: 250px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid var(--md-sys-color-surface-variant); padding: 6px 8px; }
+        thead th { background: var(--md-sys-color-inverse-on-surface); }
+
+        /* Callout (note) */
+        .callout { display:flex; gap:10px; align-items:flex-start; padding:10px 12px; border:1px solid var(--md-sys-color-surface-variant); border-radius:10px; background: color-mix(in oklab, var(--md-sys-color-inverse-on-surface) 60%, transparent); }
+        .callout__icon { color: var(--md-sys-color-primary); }
+        .callout__content { line-height: 1.6; }
+        .callout__title { margin: 0 0 2px; font-weight: 600; font-size: .98rem; }
+        .callout__text { margin: 0; color: var(--md-sys-color-on-surface); }
+        .callout--info { }
+        .callout a { color: var(--md-sys-color-primary); text-decoration: underline; text-underline-offset: 2px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <nav class="breadcrumbs" aria-label="パンくず">
+        <a href="./index.html"><span class="material-icons-outlined" aria-hidden="true">home</span> ホーム</a>
+        <span class="sep">/</span>
+        <span>醸造台レシピ</span>
+    </nav>
+
+    <section class="hero">
+        <h1>
+            <span class="material-icons-outlined" aria-hidden="true">science</span>
+            醸造台レシピ一覧（Java版）
+        </h1>
+        <p>Java 版マインクラフトの「醸造台」で作れるポーション（錬金）レシピの早見表。基本の流れから代表レシピ、強化/延長、スプラッシュ/残留、FAQ まで。</p>
+        <div>
+            <a class="btn" href="#quick"><span class="material-icons-outlined" aria-hidden="true">table_chart</span> クイックガイド</a>
+            <a class="btn" href="#flow"><span class="material-icons-outlined" aria-hidden="true">route</span> 基本の流れ</a>
+        </div>
+    </section>
+
+    <div class="page-layout">
+        <article class="article">
+            <section class="section" id="quick">
+                <h2>クイックガイド</h2>
+                <div class="callout callout--info" role="note" aria-label="クイックガイドの補足">
+                    <span class="material-icons-outlined callout__icon" aria-hidden="true">info</span>
+                    <div class="callout__content">
+                        <p class="callout__title">クイックガイドについて</p>
+                        <p class="callout__text">ベースとなるポーション別に整理しています。</p>
+                        <p class="callout__text">細かい手順は省略しているので、詳細は <a href="#flow">基本の流れ</a> を参照してください。</p>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <h3 id="quick-awkward">奇妙なポーション（Awkward）ベース</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ポーション</th>
+                                <th>素材</th>
+                                <th>基本</th>
+                                <th>強化</th>
+                                <th>延長</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>俊敏</td><td>砂糖</td><td>3:00</td><td>1:30（II）</td><td>8:00</td></tr>
+                            <tr><td>跳躍</td><td>ウサギの足</td><td>3:00</td><td>1:30（II）</td><td>8:00</td></tr>
+                            <tr><td>耐火</td><td>マグマクリーム</td><td>3:00</td><td>—</td><td>8:00</td></tr>
+                            <tr><td>水中呼吸</td><td>フグ</td><td>3:00</td><td>—</td><td>8:00</td></tr>
+                            <tr><td>力</td><td>ブレイズパウダー</td><td>3:00</td><td>1:30（II）</td><td>8:00</td></tr>
+                            <tr><td>再生</td><td>ガストの涙</td><td>0:45</td><td>0:22（II）</td><td>1:30</td></tr>
+                            <tr><td>治癒（即時）</td><td>きらめくスイカ</td><td>即時</td><td>即時（II）</td><td>—</td></tr>
+                            <tr><td>低速落下</td><td>ファントムの皮膜</td><td>1:30</td><td>—</td><td>4:00</td></tr>
+                            <tr><td>タートルマスター</td><td>カメの甲羅</td><td>0:20（I）</td><td>0:20（II）</td><td>0:40（I）</td></tr>
+                            <tr><td>毒</td><td>発酵したクモの目</td><td>0:45</td><td>0:22（II）</td><td>1:30</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3 id="quick-water">水の瓶（ネザーウォート不要）ベース</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ポーション</th>
+                                <th>素材</th>
+                                <th>基本</th>
+                                <th>強化</th>
+                                <th>延長</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>弱化</td><td>発酵したクモの目</td><td>1:30</td><td>—</td><td>4:00</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3 id="quick-mundane">むらさき（Mundane）ベース</h3>
+                    <p>用途ほぼなし。基本的にレシピには使いません。</p>
+
+                    <h3 id="quick-thick">濃厚（Thick）ベース</h3>
+                    <p>用途ほぼなし。基本的にレシピには使いません。</p>
+
+                    <h3 id="quick-corrupt">変換参照</h3>
+                    <ul>
+                        <li>俊敏 → 鈍化</li>
+                        <li>跳躍 → 鈍化</li>
+                        <li>治癒 → 負傷（即時）</li>
+                        <li>再生 → 毒</li>
+                        <li>水 → 弱化</li>
+                        <li>耐火 / 水中呼吸 / 低速落下 → 変化なし（不可）</li>
+                    </ul>
+                    <p class="note">注: スプラッシュ/残留にすると効果時間は短くなります（スプラッシュ ≒ 0.75x、残留はさらに減少）。</p>
+                </div>
+            </section>
+            <div class="ad-container" aria-label="スポンサーリンク">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-1932463298924191"
+                     data-ad-slot="1234567890"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+            </div>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <section class="section" id="flow">
+                <h2>基本の流れ</h2>
+                <ol>
+                    <li>燃料: ブレイズパウダー（醸造台左）</li>
+                    <li>素体: 水入り瓶（3 本まで同時醸造可）</li>
+                    <li>下準備: ネザーウォート → 奇妙なポーション等を作成</li>
+                    <li>仕上げ: 下準備で作成したポーションをベースに対象素材を投入して目的のポーションを醸造</li>
+                </ol>
+                <ul>
+                    <li>強化: 醸造したポーションにグロウストーンダストを調合する。</li>
+                    <li>延長: 醸造したポーションにレッドストーンを調合する。</li>
+                    <li>変換: いくつかの醸造したポーションに発酵したクモの目を調合する。</li>
+                    <li>投擲化（Splash: スプラッシュ）: 醸造したポーションに火薬を調合する。</li>
+                    <li>残留化（Lingering: リンガーリング）: 醸造したポーションにドラゴンの息を調合する。</li>
+                </ul>
+                <p><strong>補足:</strong></p>
+                <ul>
+                    <li>発酵したクモの目は既存ポーションをマイナス系統の効果に変換します。</li>
+                    <li>厚い/むらさき/奇妙でない素体（尋常/濁った等）は Java 現行では用途が限定/なしの場合があります。</li>
+                </ul>
+            </section>
+
+            <section class="section" id="base">
+                <h2>ベースポーション</h2>
+                <ul>
+                    <li>奇妙なポーション（Awkward）: 水入り瓶 + ネザーウォート</li>
+                    <li>むらさきのポーション（Mundane）: 水入り瓶 + 砂糖/きらめくスイカ/マグマクリーム 等（用途ほぼなし）</li>
+                    <li>濃厚なポーション（Thick）: 水入り瓶 + グロウストーンダスト（用途ほぼなし）</li>
+                </ul>
+            </section>
+
+            <section class="section" id="faq">
+                <h2>よくある質問（FAQ）</h2>
+                <ul>
+                    <li><strong>Q.</strong> ネザーウォートを忘れたら？<br><strong>A.</strong> 多くの目的ポーションは 奇妙なポーション が必要。まず 奇妙なポーション を作ってから素材を投入してください。</li>
+                    <li><strong>Q.</strong> どの順で後処理すべき？<br><strong>A.</strong> 強化/延長 → スプラッシュ → 残留 の順。スプラッシュ化後に強化/延長はできません。</li>
+                    <li><strong>Q.</strong> 統合版と違いは？<br><strong>A.</strong> 一部レシピや時間、効果範囲に差異があります。本表は Java 版基準です。</li>
+                </ul>
+            </section>
+
+            <section class="section" id="crafting-notes">
+                <h2>クラフト補足（素材の作り方）</h2>
+                <section>
+                    <h3 id="crafting-melon">きらめくスイカ（グリセリンメロン）</h3>
+                    <ul>
+                        <li>スイカの薄切り + 金塊 ×8</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3 id="crafting-fermented-eye">発酵したクモの目</h3>
+                    <ul>
+                        <li>クモの目 + 砂糖 + 茶色のキノコ</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3 id="crafting-turtle-shell">カメの甲羅</h3>
+                    <ul>
+                        <li>子ガメの抜け殻 ×5</li>
+                        <li>装備としても使用可（タートルマスターの素材）。</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3 id="crafting-dragon-breath">ドラゴンの息（入手方法）</h3>
+                    <ul>
+                        <li>エンドでエンダードラゴンが吐く紫色のブレスの雲に、ガラス瓶を使用して採取。</li>
+                        <li>またはドラゴンの火球で生じる残留の雲に対しても同様に採取可能。</li>
+                        <li>注意: ブレスはダメージ源。足場や避難経路を確保してから近づく。</li>
+                    </ul>
+                </section>
+            </section>
+        </article>
+
+        <aside class="toc" aria-label="目次">
+            <h2><span class="material-icons-outlined" aria-hidden="true">list</span> 目次</h2>
+            <ul>
+                <li><a href="#quick">クイックガイド（ベース別）</a></li>
+                <li class="lvl-3"><a href="#quick-awkward">└ Awkward ベース</a></li>
+                <li class="lvl-3"><a href="#quick-water">└ 水の瓶ベース</a></li>
+                <li class="lvl-3"><a href="#quick-mundane">└ むらさき（Mundane）</a></li>
+                <li class="lvl-3"><a href="#quick-thick">└ 濃厚（Thick）</a></li>
+                <li class="lvl-3"><a href="#quick-corrupt">└ 変換</a></li>
+                <li><a href="#flow">基本の流れ</a></li>
+                <li><a href="#base">ベースポーション</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#crafting-notes">素材レシピ</a></li>
+                <li class="lvl-3"><a href="#crafting-melon">└ きらめくスイカ</a></li>
+                <li class="lvl-3"><a href="#crafting-fermented-eye">└ 発酵したクモの目</a></li>
+                <li class="lvl-3"><a href="#crafting-turtle-shell">└ カメの甲羅</a></li>
+                <li class="lvl-3"><a href="#crafting-dragon-breath">└ ドラゴンの息</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <section class="section" aria-label="スポンサーリンク">
+        <div class="ad-container" style="min-height: 280px;">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1932463298924191"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </section>
+</div>
+
+</body>
+</html>
