@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>エンチャント一覧（Java版 1.20+） | マインクラフト攻略・レシピ集</title>
+    <meta name="description" content="Minecraft(Java版)のエンチャントを対象・最大レベル・効果・競合/非共存・入手方法とあわせて一覧化。装備/道具/武器/弓・クロスボウ/トライデント/釣り竿/本まで網羅。1.20+ 基準。">
+    <meta name="keywords" content="マインクラフト, Minecraft, エンチャント, 一覧, 効果, 競合, 修繕, 効率強化, ダメージ増加, 無限, 激流, 忍耐の海, 氷渡り, 装備, 道具, 武器, 弓, クロスボウ, トライデント, 釣り竿, 本">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    <script>
+        // Apply saved theme early (same key as /src/minecraft/app.js)
+        (function () {
+            try {
+                var theme = localStorage.getItem('mc-theme') || 'system';
+                var root = document.documentElement;
+                if (theme === 'dark') { root.setAttribute('data-theme', 'dark'); }
+                else if (theme === 'light') { root.setAttribute('data-theme', 'light'); }
+                else { root.removeAttribute('data-theme'); }
+            } catch (e) {}
+        })();
+    </script>
+
+    <!-- Use hosted loaders (see template/guide/guide_sample.md) -->
+    <script src="https://iroirotool.github.io/libraries/iroiro.0.js" defer></script>
+    <script src="https://iroirotool.github.io/libraries/analytics.js" defer></script>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="canonical" href="./enchantments.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="エンチャント一覧（Java版）">
+    <meta property="og:description" content="Java版マインクラフトのエンチャント早見表。対象・最大Lv・効果・競合・入手方法。">
+    <meta property="og:url" content="./enchantments.html">
+    <meta property="og:image" content="https://static.mcer.assets.example/og-minecraft.png">
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "エンチャント一覧（Java版）",
+            "about": ["Minecraft", "エンチャント", "装備", "武器", "道具"],
+            "author": {"@type": "Organization", "name": "Minecraft Guide"},
+            "mainEntityOfPage": {"@type": "WebPage", "@id": "./enchantments.html"}
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        .page-container { max-width: 1100px; margin: 0 auto; padding: 16px; }
+        .hero { display: grid; gap: 12px; padding: 16px; border-radius: 12px; background: var(--md-sys-color-inverse-on-surface); }
+        .hero h1 { margin: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 8px; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; border: none; border-radius: 20px; padding: 8px 14px; cursor: pointer; color: var(--md-sys-color-on-primary); background: var(--md-sys-color-primary); text-decoration: none; }
+        .breadcrumbs { display:flex; align-items:center; gap:6px; padding:8px 0; color: var(--md-sys-color-outline); }
+        .breadcrumbs a { color: inherit; text-decoration: none; }
+        .section { margin-top: 24px; }
+
+        /* Layout with right TOC */
+        .page-layout { display: grid; grid-template-columns: 1fr 260px; gap: 24px; align-items: start; }
+        .article { min-width: 0; }
+        .toc { position: sticky; top: 72px; background: var(--md-sys-color-inverse-on-surface); border: 1px solid var(--md-sys-color-surface-variant); border-radius: 12px; padding: 12px; }
+        .toc h2 { margin: 0 0 8px; font-size: 1rem; display:flex; align-items:center; gap:6px; }
+        .toc ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+        .toc a { color: var(--md-sys-color-on-surface); text-decoration: none; display:block; padding:6px 8px; border-radius:8px; }
+        .toc a:hover { background: color-mix(in oklab, var(--md-sys-color-primary) 12%, transparent); }
+        .toc .lvl-3 { padding-left: 16px; font-size: .95em; opacity: .9; }
+        @media (max-width: 1023px) { .page-layout { grid-template-columns: 1fr; } .toc { display:none; } }
+
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid var(--md-sys-color-surface-variant); padding: 6px 8px; }
+        thead th { background: var(--md-sys-color-inverse-on-surface); }
+        .note { color: var(--md-sys-color-outline); font-size: .95em; }
+
+        /* Callout */
+        .callout { display:flex; gap:10px; align-items:flex-start; padding:10px 12px; border:1px solid var(--md-sys-color-surface-variant); border-radius:10px; background: color-mix(in oklab, var(--md-sys-color-inverse-on-surface) 60%, transparent); }
+        .callout__icon { color: var(--md-sys-color-primary); }
+        .callout__title { margin: 0 0 2px; font-weight: 600; font-size: .98rem; }
+        .callout__text { margin: 0; color: var(--md-sys-color-on-surface); }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <nav class="breadcrumbs" aria-label="パンくず">
+        <a href="./index.html"><span class="material-icons-outlined" aria-hidden="true">home</span> ホーム</a>
+        <span class="sep">/</span>
+        <span>エンチャント一覧</span>
+    </nav>
+
+    <section class="hero">
+        <h1>
+            <span class="material-icons-outlined" aria-hidden="true">auto_fix_high</span>
+            エンチャント一覧（Java版 1.20+）
+        </h1>
+        <p>Minecraft(Java) のエンチャントを、最大Lv・効果・競合/非共存・入手とともに整理。装備/武器/道具/弓・クロスボウ/トライデント/釣り竿/本まで。</p>
+        <div>
+            <a class="btn" href="#armor"><span class="material-icons-outlined" aria-hidden="true">shield</span> 装備系へ</a>
+        </div>
+    </section>
+
+    <div class="page-layout">
+        <article class="article">
+            <div class="ad-container" aria-label="スポンサーリンク" style="min-height: 250px;">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-1932463298924191"
+                     data-ad-slot="1234567890"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+            </div>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+
+            <section id="armor" class="section">
+                <h2>防具</h2>
+
+                <h3 id="armor-helmet">ヘルメット</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>エンチャント</th><th>最大Lv</th><th>効果</th><th>競合/非共存</th><th>入手/備考</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>ダメージ軽減</td><td>IV</td><td>全ダメージを軽減（割合）</td><td>爆発/火炎/飛び道具</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>爆発耐性</td><td>IV</td><td>爆発ダメージを大きく軽減</td><td>ダメージ軽減/火炎/飛び道具</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>火炎耐性</td><td>IV</td><td>火炎/溶岩ダメージ軽減</td><td>ダメージ軽減/爆発/飛び道具</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>飛び道具耐性</td><td>IV</td><td>矢など飛び道具のダメージ軽減</td><td>ダメージ軽減/爆発/火炎</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>とげ</td><td>III</td><td>攻撃者へ反射ダメージ</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>耐久力</td><td>III</td><td>耐久消費を抑える</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>修繕</td><td>I</td><td>経験値で耐久回復</td><td>—</td><td>宝（釣り/チェスト/取引）</td></tr>
+                    <tr><td>水中呼吸</td><td>III</td><td>水中で息が長持ち</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>水中採掘</td><td>I</td><td>水中での採掘速度上昇</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 id="armor-chest">チェストプレート</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>エンチャント</th><th>最大Lv</th><th>効果</th><th>競合/非共存</th><th>入手/備考</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>ダメージ軽減</td><td>IV</td><td>全ダメージを軽減（割合）</td><td>爆発/火炎/飛び道具</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>爆発耐性</td><td>IV</td><td>爆発ダメージを大きく軽減</td><td>ダメージ軽減/火炎/飛び道具</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>火炎耐性</td><td>IV</td><td>火炎/溶岩ダメージ軽減</td><td>ダメージ軽減/爆発/飛び道具</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>飛び道具耐性</td><td>IV</td><td>矢など飛び道具のダメージ軽減</td><td>ダメージ軽減/爆発/火炎</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>とげ</td><td>III</td><td>攻撃者へ反射ダメージ</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>耐久力</td><td>III</td><td>耐久消費を抑える</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>修繕</td><td>I</td><td>経験値で耐久回復</td><td>—</td><td>宝（釣り/チェスト/取引）</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 id="armor-legs">レギンス</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>エンチャント</th><th>最大Lv</th><th>効果</th><th>競合/非共存</th><th>入手/備考</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>ダメージ軽減</td><td>IV</td><td>全ダメージを軽減（割合）</td><td>爆発/火炎/飛び道具</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>爆発耐性</td><td>IV</td><td>爆発ダメージを大きく軽減</td><td>ダメージ軽減/火炎/飛び道具</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>火炎耐性</td><td>IV</td><td>火炎/溶岩ダメージ軽減</td><td>ダメージ軽減/爆発/飛び道具</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>飛び道具耐性</td><td>IV</td><td>矢など飛び道具のダメージ軽減</td><td>ダメージ軽減/爆発/火炎</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>とげ</td><td>III</td><td>攻撃者へ反射ダメージ</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>耐久力</td><td>III</td><td>耐久消費を抑える</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>修繕</td><td>I</td><td>経験値で耐久回復</td><td>—</td><td>宝（釣り/チェスト/取引）</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 id="armor-boots">ブーツ</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>エンチャント</th><th>最大Lv</th><th>効果</th><th>競合/非共存</th><th>入手/備考</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>ダメージ軽減</td><td>IV</td><td>全ダメージを軽減（割合）</td><td>爆発/火炎/飛び道具</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>爆発耐性</td><td>IV</td><td>爆発ダメージを大きく軽減</td><td>ダメージ軽減/火炎/飛び道具</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>火炎耐性</td><td>IV</td><td>火炎/溶岩ダメージ軽減</td><td>ダメージ軽減/爆発/飛び道具</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>飛び道具耐性</td><td>IV</td><td>矢など飛び道具のダメージ軽減</td><td>ダメージ軽減/爆発/火炎</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>落下耐性</td><td>IV</td><td>落下ダメージを軽減</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>氷渡り</td><td>II</td><td>水面を氷で固めて歩行</td><td>ソウルスピード</td><td>宝（遺跡/要塞 など）</td></tr>
+                    <tr><td>ソウルスピード</td><td>III</td><td>ソウルサンド/ソウルソイル上で加速</td><td>氷渡り</td><td>ピグリンとの物々交換等</td></tr>
+                    <tr><td>耐久力</td><td>III</td><td>耐久消費を抑える</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>修繕</td><td>I</td><td>経験値で耐久回復</td><td>—</td><td>宝（釣り/チェスト/取引）</td></tr>
+                    </tbody>
+                </table>
+            </section>
+            <div class="ad-container" aria-label="スポンサーリンク" style="min-height: 250px;">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-1932463298924191"
+                     data-ad-slot="1234567890"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+            </div>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+
+            <section id="weapons" class="section">
+                <h2>武器</h2>
+                <h3 id="melee_common">近接武器共通</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>エンチャント</th><th>最大Lv</th><th>効果</th><th>競合/非共存</th><th>入手/備考</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>ダメージ増加</td><td>V</td><td>全てに追加ダメージ</td><td>他の特攻</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>アンデッド特効</td><td>V</td><td>アンデッドに特効</td><td>ダメージ増加/他の特攻</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>虫特効</td><td>V</td><td>虫（クモ等）に特効</td><td>ダメージ増加/他の特攻</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>火属性</td><td>II</td><td>対象に着火</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>耐久力</td><td>III</td><td>耐久消費を抑制</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>修繕</td><td>I</td><td>経験値で耐久回復</td><td>—</td><td>宝（釣り/チェスト/取引）</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 id="sword">剣</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>エンチャント</th><th>最大Lv</th><th>効果</th><th>競合/非共存</th><th>入手/備考</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>火属性</td><td>II</td><td>対象に着火</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>ドロップ増加</td><td>III</td><td>MOBドロップ率上昇</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>ノックバック</td><td>II</td><td>吹き飛ばし距離増加</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>範囲ダメージ増加</td><td>III</td><td>スイープ攻撃のダメージ増加</td><td>—</td><td>村人取引（鍛冶）等</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 id="trident">トライデント</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>エンチャント</th><th>最大Lv</th><th>効果</th><th>競合/非共存</th><th>入手/備考</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>水生特効</td><td>V</td><td>水生生物に特効</td><td>ダメージ増加/他の特攻</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>忠誠</td><td>III</td><td>投擲後に戻ってくる</td><td>激流</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>激流</td><td>III</td><td>雨天/水中で前進</td><td>忠誠/召雷</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>召雷</td><td>I</td><td>雷雨時に雷を落とす</td><td>激流</td><td>宝/本</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 id="mace">メイス</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>エンチャント</th><th>最大Lv</th><th>効果</th><th>競合/非共存</th><th>入手/備考</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>重撃（密度）</td><td>V</td><td>落下速度に応じて追加ダメージ</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>防具貫通（違反）</td><td>IV</td><td>相手の防具による軽減を一部無視</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>ウィンドバースト</td><td>III</td><td>落下攻撃時に衝撃波を発生</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <h3 id="bow">弓</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>エンチャント</th><th>最大Lv</th><th>効果</th><th>競合/非共存</th><th>入手/備考</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td>射撃ダメージ増加</td><td>V</td><td>矢のダメージ増加</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                <tr><td>パンチ</td><td>II</td><td>ノックバック付与</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                <tr><td>火炎</td><td>I</td><td>矢に着火効果</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                <tr><td>無限</td><td>I</td><td>矢を消費しない</td><td>修繕</td><td>エンチャ台/本/取引</td></tr>
+                </tbody>
+            </table>
+
+            <h3 id="crossbow">クロスボウ</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>エンチャント</th><th>最大Lv</th><th>効果</th><th>競合/非共存</th><th>入手/備考</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td>貫通</td><td>IV</td><td>複数の敵を貫通</td><td>連射/拡張</td><td>エンチャ台/本/取引</td></tr>
+                <tr><td>連射</td><td>III</td><td>リロード短縮・連射</td><td>貫通/拡張</td><td>エンチャ台/本/取引</td></tr>
+                <tr><td>拡散（マルチショット）</td><td>I</td><td>矢が分裂（広範囲）</td><td>貫通/連射</td><td>エンチャ台/本/取引</td></tr>
+                </tbody>
+            </table>
+
+            <div class="ad-container" aria-label="スポンサーリンク" style="min-height: 250px;">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-1932463298924191"
+                     data-ad-slot="1234567890"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+            </div>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+
+            <section id="tool" class="section">
+                <h2>道具</h2>
+
+                <h3 id="tool-pickaxe">ツルハシ</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>エンチャント</th><th>最大Lv</th><th>効果</th><th>競合/非共存</th><th>入手/備考</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>効率強化</td><td>V</td><td>採掘速度上昇</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>幸運</td><td>III</td><td>鉱石などのドロップ増加</td><td>シルクタッチ</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>シルクタッチ</td><td>I</td><td>ブロックそのまま回収</td><td>幸運</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>耐久力</td><td>III</td><td>耐久消費を抑制</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>修繕</td><td>I</td><td>経験値で耐久回復</td><td>—</td><td>宝（釣り/チェスト/取引）</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 id="tool-axe">斧</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>エンチャント</th><th>最大Lv</th><th>効果</th><th>競合/非共存</th><th>入手/備考</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>効率強化</td><td>V</td><td>伐採速度上昇</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>幸運</td><td>III</td><td>ドロップ増加（苗木/リンゴ等）</td><td>シルクタッチ</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>シルクタッチ</td><td>I</td><td>ブロックそのまま回収</td><td>幸運</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>耐久力</td><td>III</td><td>耐久消費を抑制</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>修繕</td><td>I</td><td>経験値で耐久回復</td><td>—</td><td>宝（釣り/チェスト/取引）</td></tr>
+                    <tr><td>ダメージ増加</td><td>V</td><td>全てに追加ダメージ</td><td>他の特攻</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>アンデッド特効</td><td>V</td><td>アンデッドに特効</td><td>ダメージ増加/他の特攻</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>虫特効</td><td>V</td><td>虫（クモ等）に特効</td><td>ダメージ増加/他の特攻</td><td>エンチャ台/本/取引</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 id="tool-shovel">シャベル</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>エンチャント</th><th>最大Lv</th><th>効果</th><th>競合/非共存</th><th>入手/備考</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>効率強化</td><td>V</td><td>採掘速度上昇</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>幸運</td><td>III</td><td>ドロップ増加（火打石など）</td><td>シルクタッチ</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>シルクタッチ</td><td>I</td><td>ブロックそのまま回収</td><td>幸運</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>耐久力</td><td>III</td><td>耐久消費を抑制</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>修繕</td><td>I</td><td>経験値で耐久回復</td><td>—</td><td>宝（釣り/チェスト/取引）</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 id="tool-hoe">クワ</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>エンチャント</th><th>最大Lv</th><th>効果</th><th>競合/非共存</th><th>入手/備考</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>効率強化</td><td>V</td><td>採掘/収穫速度上昇</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>幸運</td><td>III</td><td>ドロップ増加（作物/苗系）</td><td>シルクタッチ</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>シルクタッチ</td><td>I</td><td>ブロックそのまま回収</td><td>幸運</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>耐久力</td><td>III</td><td>耐久消費を抑制</td><td>—</td><td>エンチャ台/本/取引</td></tr>
+                    <tr><td>修繕</td><td>I</td><td>経験値で耐久回復</td><td>—</td><td>宝（釣り/チェスト/取引）</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 id="tool-fishing">釣り竿</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>エンチャント</th><th>最大Lv</th><th>効果</th><th>競合/非共存</th><th>入手/備考</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>入れ食い</td><td>III</td><td>釣れるまでが早くなる</td><td>—</td><td>エンチャ台/本/釣り</td></tr>
+                    <tr><td>宝釣り</td><td>III</td><td>宝の入手率上昇</td><td>—</td><td>エンチャ台/本/釣り</td></tr>
+                    <tr><td>耐久力</td><td>III</td><td>耐久消費を抑制</td><td>—</td><td>エンチャ台/本/釣り</td></tr>
+                    <tr><td>修繕</td><td>I</td><td>経験値で耐久回復</td><td>—</td><td>宝（釣り/チェスト/取引）</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 id="tool-elytra">エリトラ</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>エンチャント</th><th>最大Lv</th><th>効果</th><th>競合/非共存</th><th>入手/備考</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>耐久力</td><td>III</td><td>耐久消費を抑制</td><td>—</td><td>金床（本から）</td></tr>
+                    <tr><td>修繕</td><td>I</td><td>経験値で耐久回復</td><td>—</td><td>宝（釣り/チェスト/取引）</td></tr>
+                    </tbody>
+                </table>
+            </section>
+            <div class="ad-container" aria-label="スポンサーリンク" style="min-height: 250px;">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-1932463298924191"
+                     data-ad-slot="1234567890"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+            </div>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+
+
+
+
+            <section class="section">
+                <p><a class="btn" href="./index.html"><span class="material-icons-outlined" aria-hidden="true">arrow_back</span> マインクラフト目次へ戻る</a></p>
+            </section>
+        </article>
+
+        <aside class="toc" aria-label="目次">
+            <h2><span class="material-icons-outlined" aria-hidden="true">menu_book</span> 目次</h2>
+            <div class="ad-container" aria-label="スポンサーリンク" style="min-height: 200px; margin: 8px 0;">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-1932463298924191"
+                     data-ad-slot="1234567890"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+            </div>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <ul>
+                <li><a href="#armor">防具エンチャント</a></li>
+                <li><a href="#weapons">武器</a></li>
+                <li><a class="lvl-3" href="#sword">剣</a></li>
+                <li><a class="lvl-3" href="#trident">トライデント</a></li>
+                <li><a class="lvl-3" href="#mace">メイス</a></li>
+                <li><a class="lvl-3" href="#bow">弓</a></li>
+                <li><a class="lvl-3" href="#crossbow">クロスボウ</a></li>
+                <li><a href="#tool">道具</a></li>
+                <li><a class="lvl-3" href="#tool-pickaxe">ツルハシ</a></li>
+                <li><a class="lvl-3" href="#tool-axe">斧</a></li>
+                <li><a class="lvl-3" href="#tool-shovel">シャベル</a></li>
+                <li><a class="lvl-3" href="#tool-hoe">クワ</a></li>
+                <li><a class="lvl-3" href="#tool-fishing">釣り竿</a></li>
+                <li><a class="lvl-3" href="#tool-elytra">エリトラ</a></li>
+            </ul>
+            </aside>
+    </div>
+</div>
+
+<script src="app.js" defer></script>
+</body>
+</html>
