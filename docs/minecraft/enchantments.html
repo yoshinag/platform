@@ -29,6 +29,8 @@
     <!-- Use hosted loaders (see template/guide/guide_sample.md) -->
     <script src="https://iroirotool.github.io/libraries/iroiro.0.js" defer></script>
     <script src="https://iroirotool.com/platform/js/common/analytics.js" defer></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="style.css">
     <link rel="canonical" href="./enchantments.html">
@@ -53,9 +55,28 @@
     <style>
         html { scroll-behavior: smooth; }
         .page-container { max-width: 1100px; margin: 0 auto; padding: 16px; }
-        .hero { display: grid; gap: 12px; padding: 16px; border-radius: 12px; background: var(--md-sys-color-inverse-on-surface); }
+        .hero { display: grid; gap: 12px; padding: 16px; background: var(--md-sys-color-inverse-on-surface); border: var(--mc-border); position: relative; border-radius: var(--radius-s); }
+        .hero::after { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 2px solid rgba(255,255,255,0.2); pointer-events: none; }
         .hero h1 { margin: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 8px; }
-        .btn { display: inline-flex; align-items: center; gap: 6px; border: none; border-radius: 20px; padding: 8px 14px; cursor: pointer; color: var(--md-sys-color-on-primary); background: var(--md-sys-color-primary); text-decoration: none; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-top: 2px solid var(--mc-panel-light);
+            border-left: 2px solid var(--mc-panel-light);
+            border-bottom: 2px solid var(--mc-panel-shadow);
+            border-right: 2px solid var(--mc-panel-shadow);
+            padding: 8px 14px;
+            cursor: pointer;
+            color: #3d2b1f;
+            background: var(--mc-panel);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-radius: var(--radius-s);
+        }
+        .btn:hover { background: #d6d6d6; }
+        .btn:active { border-top: 2px solid var(--mc-panel-shadow); border-left: 2px solid var(--mc-panel-shadow); border-bottom: 2px solid var(--mc-panel-light); border-right: 2px solid var(--mc-panel-light); }
         .breadcrumbs { display:flex; align-items:center; gap:6px; padding:8px 0; color: var(--md-sys-color-outline); }
         .breadcrumbs a { color: inherit; text-decoration: none; }
         .section { margin-top: 24px; }
@@ -63,21 +84,21 @@
         /* Layout with right TOC */
         .page-layout { display: grid; grid-template-columns: 1fr 260px; gap: 24px; align-items: start; }
         .article { min-width: 0; }
-        .toc { position: sticky; top: 72px; background: var(--md-sys-color-inverse-on-surface); border: 1px solid var(--md-sys-color-surface-variant); border-radius: 12px; padding: 12px; }
+        .toc { position: sticky; top: 72px; background: var(--md-sys-color-inverse-on-surface); border: var(--mc-border); border-radius: var(--radius-s); padding: 12px; }
         .toc h2 { margin: 0 0 8px; font-size: 1rem; display:flex; align-items:center; gap:6px; }
-        .toc ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
-        .toc a { color: var(--md-sys-color-on-surface); text-decoration: none; display:block; padding:6px 8px; border-radius:8px; }
-        .toc a:hover { background: color-mix(in oklab, var(--md-sys-color-primary) 12%, transparent); }
+        .toc ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+        .toc a { color: var(--md-sys-color-on-surface); text-decoration: none; display:block; padding:6px 8px; border-radius: var(--radius-s); }
+        .toc a:hover { background: color-mix(in oklab, var(--md-sys-color-primary) 10%, transparent); }
         .toc .lvl-3 { padding-left: 16px; font-size: .95em; opacity: .9; }
         @media (max-width: 1023px) { .page-layout { grid-template-columns: 1fr; } .toc { display:none; } }
 
         table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid var(--md-sys-color-surface-variant); padding: 6px 8px; }
-        thead th { background: var(--md-sys-color-inverse-on-surface); }
+        th, td { border: 1px solid var(--md-sys-color-outline); padding: 6px 8px; }
+        thead th { background: var(--md-sys-color-surface-variant); }
         .note { color: var(--md-sys-color-outline); font-size: .95em; }
 
         /* Callout */
-        .callout { display:flex; gap:10px; align-items:flex-start; padding:10px 12px; border:1px solid var(--md-sys-color-surface-variant); border-radius:10px; background: color-mix(in oklab, var(--md-sys-color-inverse-on-surface) 60%, transparent); }
+        .callout { display:flex; gap:10px; align-items:flex-start; padding:10px 12px; border: var(--mc-border); border-radius: var(--radius-s); background: var(--md-sys-color-inverse-on-surface); }
         .callout__icon { color: var(--md-sys-color-primary); }
         .callout__title { margin: 0 0 2px; font-weight: 600; font-size: .98rem; }
         .callout__text { margin: 0; color: var(--md-sys-color-on-surface); }

@@ -87,14 +87,15 @@
             gap: 12px;
             padding: 16px;
             background: var(--md-sys-color-inverse-on-surface);
-            border: 3px solid #3d2b1f;
+            border: var(--mc-border);
             position: relative;
+            border-radius: var(--radius-s);
         }
         .hero::after {
             content: "";
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            border: 2px solid rgba(255,255,255,0.3);
+            border: 2px solid rgba(255,255,255,0.2);
             pointer-events: none;
         }
 
@@ -110,17 +111,18 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            border-top: 2px solid #ffffff;
-            border-left: 2px solid #ffffff;
-            border-bottom: 2px solid #555555;
-            border-right: 2px solid #555555;
+            border-top: 2px solid var(--mc-panel-light);
+            border-left: 2px solid var(--mc-panel-light);
+            border-bottom: 2px solid var(--mc-panel-shadow);
+            border-right: 2px solid var(--mc-panel-shadow);
             padding: 8px 14px;
             cursor: pointer;
             color: #3d2b1f;
-            background: #c6c6c6;
+            background: var(--mc-panel);
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: bold;
+            border-radius: var(--radius-s);
         }
 
         .btn:hover {
@@ -128,10 +130,10 @@
         }
 
         .btn:active {
-            border-top: 2px solid #555555;
-            border-left: 2px solid #555555;
-            border-bottom: 2px solid #ffffff;
-            border-right: 2px solid #ffffff;
+            border-top: 2px solid var(--mc-panel-shadow);
+            border-left: 2px solid var(--mc-panel-shadow);
+            border-bottom: 2px solid var(--mc-panel-light);
+            border-right: 2px solid var(--mc-panel-light);
         }
 
         .section {
@@ -153,8 +155,9 @@
             position: sticky;
             top: 72px;
             background: var(--md-sys-color-inverse-on-surface);
-            border: 3px solid #3d2b1f;
+            border: var(--mc-border);
             padding: 12px;
+            border-radius: var(--radius-s);
         }
 
         .toc h2 {
@@ -182,19 +185,19 @@
             text-decoration: none;
             display: block;
             padding: 6px 8px;
-            border-radius: 0px;
+            border-radius: var(--radius-s);
         }
 
         .toc a:hover {
-            background: #d6d6d6;
+            background: color-mix(in oklab, var(--md-sys-color-primary) 10%, transparent);
         }
 
         .toc a.active {
-            background: #c6c6c6;
-            border-top: 2px solid #555555;
-            border-left: 2px solid #555555;
-            border-bottom: 2px solid #ffffff;
-            border-right: 2px solid #ffffff;
+            background: var(--mc-panel);
+            border-top: 2px solid var(--mc-panel-shadow);
+            border-left: 2px solid var(--mc-panel-shadow);
+            border-bottom: 2px solid var(--mc-panel-light);
+            border-right: 2px solid var(--mc-panel-light);
         }
 
         .toc .lvl-3 {
@@ -215,6 +218,8 @@
     </style>
     <script src="https://iroirotool.github.io/libraries/iroiro.0.js" defer></script>
     <script src="https://iroirotool.com/platform/js/common/analytics.js" defer></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
 </head>
 <body>
 <header class="app-bar elevation-2">

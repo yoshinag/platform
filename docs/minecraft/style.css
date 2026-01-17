@@ -1,33 +1,33 @@
 /* Base: copied from template/styles.css with minor Minecraft accents */
 :root {
-  --md-sys-color-primary: #52a535;           /* Minecraft grass-like green */
+  --md-sys-color-primary: #4e8c31;           /* Slightly darker/softer green */
   --md-sys-color-on-primary: #ffffff;
-  --md-sys-color-surface: #f7f2e8;           /* Slightly warmer */
-  --md-sys-color-on-surface: #3d2b1f;        /* Dark brown instead of gray */
-  --md-sys-color-surface-variant: #e1d5c3;
-  --md-sys-color-outline: #8b7355;           /* Brownish outline */
-  --md-sys-color-inverse-surface: #3d2b1f;
-  --md-sys-color-inverse-on-surface: #f7f2e8;
-  --radius-s: 0px;                           /* Sharp corners like Minecraft */
-  --radius-m: 0px;
-  --mc-border: 4px solid #3d2b1f;
+  --md-sys-color-surface: #f5f0e6;           /* Softer parchment-like color */
+  --md-sys-color-on-surface: #4a3a2e;        /* Softer dark brown */
+  --md-sys-color-surface-variant: #e8dfd1;   /* Softer variant */
+  --md-sys-color-outline: #9e8a73;           /* Muted brownish outline */
+  --md-sys-color-inverse-surface: #4a3a2e;
+  --md-sys-color-inverse-on-surface: #f5f0e6;
+  --radius-s: 2px;                           /* Very slight rounding for softness */
+  --radius-m: 4px;
+  --mc-border: 3px solid #4a3a2e;            /* Thinner and softer border */
   --mc-panel: #c6c6c6;
-  --mc-panel-shadow: #555555;
+  --mc-panel-shadow: #777777;                /* Softer shadow */
   --mc-panel-light: #ffffff;
-  --elev-1: 2px 2px 0 rgba(0,0,0,.2);        /* Flat pixelated shadow */
-  --elev-2: 4px 4px 0 rgba(0,0,0,.2);
+  --elev-1: 2px 2px 0 rgba(74,58,46,0.15);   /* Softer pixel shadow */
+  --elev-2: 4px 4px 0 rgba(74,58,46,0.15);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --md-sys-color-primary: #52a535;
-    --md-sys-color-on-primary: #ffffff;
-    --md-sys-color-surface: #1e1e1e;
-    --md-sys-color-on-surface: #e0e0e0;
-    --md-sys-color-surface-variant: #333333;
-    --md-sys-color-outline: #777777;
-    --md-sys-color-inverse-surface: #f7f2e8;
-    --md-sys-color-inverse-on-surface: #3d2b1f;
+    --md-sys-color-primary: #6abf4a;           /* Brighter green for dark mode readability */
+    --md-sys-color-on-primary: #1e1e1e;
+    --md-sys-color-surface: #252423;           /* Warm dark gray, less harsh than pure #1e1e1e */
+    --md-sys-color-on-surface: #d6cfc7;        /* Softer light gray/parchment */
+    --md-sys-color-surface-variant: #3a3836;
+    --md-sys-color-outline: #8b7d70;
+    --md-sys-color-inverse-surface: #f5f0e6;
+    --md-sys-color-inverse-on-surface: #4a3a2e;
   }
 }
 
@@ -74,7 +74,7 @@ h1, h2, h3, h4, .mc-font {
 .nav-drawer {
   position: fixed; top: 56px; left: 0; bottom: 0; width: 280px;
   background: var(--md-sys-color-surface);
-  border-right: 4px solid #3d2b1f;
+  border-right: var(--mc-border);
   transform: translateX(0);
   transition: transform .2s ease;
 }
@@ -87,11 +87,11 @@ h1, h2, h3, h4, .mc-font {
 }
 .nav-item:hover { background: color-mix(in oklab, var(--md-sys-color-primary) 10%, transparent); }
 .nav-item.active { 
-  background: #c6c6c6; 
-  border-top: 2px solid #555555;
-  border-left: 2px solid #555555;
-  border-bottom: 2px solid #ffffff;
-  border-right: 2px solid #ffffff;
+  background: var(--mc-panel); 
+  border-top: 2px solid var(--mc-panel-shadow);
+  border-left: 2px solid var(--mc-panel-shadow);
+  border-bottom: 2px solid var(--mc-panel-light);
+  border-right: 2px solid var(--mc-panel-light);
 }
 
 /* Layout */
@@ -117,23 +117,24 @@ h1, h2, h3, h4, .mc-font {
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip { 
   display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; 
-  background: #c6c6c6; 
-  border-top: 2px solid #ffffff;
-  border-left: 2px solid #ffffff;
-  border-bottom: 2px solid #555555;
-  border-right: 2px solid #555555;
+  background: var(--mc-panel); 
+  border-top: 2px solid var(--mc-panel-light);
+  border-left: 2px solid var(--mc-panel-light);
+  border-bottom: 2px solid var(--mc-panel-shadow);
+  border-right: 2px solid var(--mc-panel-shadow);
   font-size: 12px; 
   color: #3d2b1f;
   text-decoration: none;
+  border-radius: var(--radius-s);
 }
 .chip[href]:hover {
   background: #d6d6d6;
 }
 .chip[href]:active {
-  border-top: 2px solid #555555;
-  border-left: 2px solid #555555;
-  border-bottom: 2px solid #ffffff;
-  border-right: 2px solid #ffffff;
+  border-top: 2px solid var(--mc-panel-shadow);
+  border-left: 2px solid var(--mc-panel-shadow);
+  border-bottom: 2px solid var(--mc-panel-light);
+  border-right: 2px solid var(--mc-panel-light);
 }
 .chip button { border: none; background: transparent; cursor: pointer; display: inline-grid; place-items: center; }
 
@@ -158,9 +159,10 @@ h1, h2, h3, h4, .mc-font {
 .kb-card {
   grid-column: span 12;
   background: var(--md-sys-color-inverse-on-surface);
-  border: 3px solid #3d2b1f;
+  border: var(--mc-border);
   padding: 16px; display: grid; gap: 8px;
   position: relative;
+  border-radius: var(--radius-s);
 }
 .kb-card::after {
   content: "";
@@ -192,24 +194,24 @@ h1, h2, h3, h4, .mc-font {
 
 /* Explicit light/dark override when set by JS */
 [data-theme="dark"] {
-  --md-sys-color-primary: #52a535;
-  --md-sys-color-on-primary: #ffffff;
-  --md-sys-color-surface: #1e1e1e;
-  --md-sys-color-on-surface: #e0e0e0;
-  --md-sys-color-surface-variant: #333333;
-  --md-sys-color-outline: #777777;
-  --md-sys-color-inverse-surface: #f7f2e8;
-  --md-sys-color-inverse-on-surface: #3d2b1f;
+  --md-sys-color-primary: #6abf4a;
+  --md-sys-color-on-primary: #1e1e1e;
+  --md-sys-color-surface: #252423;
+  --md-sys-color-on-surface: #d6cfc7;
+  --md-sys-color-surface-variant: #3a3836;
+  --md-sys-color-outline: #8b7d70;
+  --md-sys-color-inverse-surface: #f5f0e6;
+  --md-sys-color-inverse-on-surface: #4a3a2e;
 }
 [data-theme="light"] {
-  --md-sys-color-primary: #52a535;
+  --md-sys-color-primary: #4e8c31;
   --md-sys-color-on-primary: #ffffff;
-  --md-sys-color-surface: #f7f2e8;
-  --md-sys-color-on-surface: #3d2b1f;
-  --md-sys-color-surface-variant: #e1d5c3;
-  --md-sys-color-outline: #8b7355;
-  --md-sys-color-inverse-surface: #3d2b1f;
-  --md-sys-color-inverse-on-surface: #f7f2e8;
+  --md-sys-color-surface: #f5f0e6;
+  --md-sys-color-on-surface: #4a3a2e;
+  --md-sys-color-surface-variant: #e8dfd1;
+  --md-sys-color-outline: #9e8a73;
+  --md-sys-color-inverse-surface: #4a3a2e;
+  --md-sys-color-inverse-on-surface: #f5f0e6;
 }
 
 
@@ -231,10 +233,10 @@ h1, h2, h3, h4, .mc-font {
   display: grid;
   place-items: center;
   background: #8b8b8b;
-  border-top: 2px solid #373737;
-  border-left: 2px solid #373737;
-  border-bottom: 2px solid #ffffff;
-  border-right: 2px solid #ffffff;
+  border-top: 2px solid var(--mc-panel-shadow);
+  border-left: 2px solid var(--mc-panel-shadow);
+  border-bottom: 2px solid var(--mc-panel-light);
+  border-right: 2px solid var(--mc-panel-light);
   color: #3d2b1f;
   font-size: 11px;
   font-weight: bold;
