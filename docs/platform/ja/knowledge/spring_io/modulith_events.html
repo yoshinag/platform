@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <title>Spring Modulith - イベント発行</title>
     <link rel="stylesheet" href="../../../css/knowledge.css">
@@ -11,6 +15,7 @@
             gap: 20px;
             margin-top: 20px;
         }
+
         .service-card {
             border: 1px solid #e0e0e0;
             border-radius: 8px;
@@ -18,21 +23,26 @@
             background-color: #f9f9f9;
             transition: transform 0.2s, box-shadow 0.2s;
         }
+
         .service-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
+
         .service-card h3 {
             margin-top: 0;
             color: #000000;
         }
+
         .service-card h3 a {
             color: #1a73e8;
         }
+
         .service-card p {
             color: #5f6368;
             margin-bottom: 10px;
         }
+
         .service-category {
             margin-top: 30px;
         }
@@ -40,22 +50,25 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body class="ja-knowledge">
-    <div style="margin-bottom: 20px;">
-        <a href="../../index.html">メインページに戻る</a> | 
-        <a href="spring_io.html">Spring Framework & Spring Bootに戻る</a> |
-        <a href="modulith.html">Spring Modulithに戻る</a>
-    </div>
-    <h1>Spring Modulith - イベント発行</h1>
-    
-    <h2>Spring Modulithにおけるイベント発行とは</h2>
-    <p>Spring Modulithにおけるイベント発行は、モジュール間の疎結合な通信を実現するための重要な機能です。イベント駆動アーキテクチャを採用することで、モジュール間の直接的な依存関係を減らし、モジュールの独立性を高めることができます。Spring Modulithは、Spring Frameworkのアプリケーションイベント機能を拡張し、モジュラーアプリケーションに適したイベント処理機能を提供します。</p>
-    
-    <p>イベント発行を使用すると、あるモジュールで発生した重要な出来事（ドメインイベント）を他のモジュールに通知することができます。例えば、「注文」モジュールで注文が作成されたとき、「在庫」モジュールや「配送」モジュールにその事実を通知することができます。これにより、各モジュールは他のモジュールの内部実装に依存することなく、自律的に動作することができます。</p>
-    
-    <div style="text-align: center; margin: 20px 0;">
+<div style="margin-bottom: 20px;">
+    <a href="../../index.html">メインページに戻る</a> |
+    <a href="spring_io.html">Spring Framework & Spring Bootに戻る</a> |
+    <a href="modulith.html">Spring Modulithに戻る</a>
+</div>
+<h1>Spring Modulith - イベント発行</h1>
+
+<h2>Spring Modulithにおけるイベント発行とは</h2>
+<p>Spring
+    Modulithにおけるイベント発行は、モジュール間の疎結合な通信を実現するための重要な機能です。イベント駆動アーキテクチャを採用することで、モジュール間の直接的な依存関係を減らし、モジュールの独立性を高めることができます。Spring
+    Modulithは、Spring
+    Frameworkのアプリケーションイベント機能を拡張し、モジュラーアプリケーションに適したイベント処理機能を提供します。</p>
+
+<p>
+    イベント発行を使用すると、あるモジュールで発生した重要な出来事（ドメインイベント）を他のモジュールに通知することができます。例えば、「注文」モジュールで注文が作成されたとき、「在庫」モジュールや「配送」モジュールにその事実を通知することができます。これにより、各モジュールは他のモジュールの内部実装に依存することなく、自律的に動作することができます。</p>
+
+<div style="text-align: center; margin: 20px 0;">
         <pre style="text-align: left; display: inline-block; border: 1px solid #ddd; padding: 15px; border-radius: 4px; background-color: #f8f8f8; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
 +------------------------------------------+
 |           Spring Boot Application        |
@@ -85,16 +98,17 @@
 |        Spring Modulith Framework        |
 +------------------------------------------+
         </pre>
-        <p style="font-style: italic; margin-top: 10px;">図1: Spring Modulithにおけるイベント発行と購読の流れ</p>
-    </div>
-    
-    <h2>Spring Modulithのイベント発行機能</h2>
-    <p>Spring Modulithは、以下のイベント発行機能を提供しています：</p>
-    
-    <h3>1. 同期イベント処理</h3>
-    <p>同期イベント処理は、イベントが発行されたときに、すべてのイベントリスナーが同じトランザクション内で処理を完了するまで、イベント発行元の処理が待機する方式です。これにより、イベントの処理が確実に完了することが保証されますが、処理時間が長くなる可能性があります。</p>
-    
-    <pre><code>@Service
+    <p style="font-style: italic; margin-top: 10px;">図1: Spring Modulithにおけるイベント発行と購読の流れ</p>
+</div>
+
+<h2>Spring Modulithのイベント発行機能</h2>
+<p>Spring Modulithは、以下のイベント発行機能を提供しています：</p>
+
+<h3>1. 同期イベント処理</h3>
+<p>
+    同期イベント処理は、イベントが発行されたときに、すべてのイベントリスナーが同じトランザクション内で処理を完了するまで、イベント発行元の処理が待機する方式です。これにより、イベントの処理が確実に完了することが保証されますが、処理時間が長くなる可能性があります。</p>
+
+<pre><code>@Service
 class OrderService {
 
     private final ApplicationEventPublisher events;
@@ -114,11 +128,13 @@ class OrderService {
         return order;
     }
 }</code></pre>
-    
-    <h3>2. 非同期イベント処理</h3>
-    <p>非同期イベント処理は、イベントが発行されたときに、イベントリスナーの処理を別のスレッドで実行する方式です。これにより、イベント発行元の処理がイベントリスナーの処理を待つことなく、すぐに次の処理に進むことができます。非同期イベント処理を使用するには、<code>@Async</code>アノテーションをイベントリスナーメソッドに付加します。</p>
-    
-    <pre><code>@Service
+
+<h3>2. 非同期イベント処理</h3>
+<p>
+    非同期イベント処理は、イベントが発行されたときに、イベントリスナーの処理を別のスレッドで実行する方式です。これにより、イベント発行元の処理がイベントリスナーの処理を待つことなく、すぐに次の処理に進むことができます。非同期イベント処理を使用するには、<code>@Async</code>アノテーションをイベントリスナーメソッドに付加します。
+</p>
+
+<pre><code>@Service
 class InventoryService {
 
     @Async
@@ -129,11 +145,13 @@ class InventoryService {
         // ...
     }
 }</code></pre>
-    
-    <h3>3. トランザクショナルイベント処理</h3>
-    <p>トランザクショナルイベント処理は、トランザクションの特定のフェーズでイベントを発行する方式です。Spring Modulithは、<code>@TransactionalEventListener</code>アノテーションを使用して、トランザクションの開始前、コミット前、コミット後、ロールバック後などの特定のフェーズでイベントを処理することができます。</p>
-    
-    <pre><code>@Service
+
+<h3>3. トランザクショナルイベント処理</h3>
+<p>トランザクショナルイベント処理は、トランザクションの特定のフェーズでイベントを発行する方式です。Spring
+    Modulithは、<code>@TransactionalEventListener</code>アノテーションを使用して、トランザクションの開始前、コミット前、コミット後、ロールバック後などの特定のフェーズでイベントを処理することができます。
+</p>
+
+<pre><code>@Service
 class InventoryService {
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
@@ -142,26 +160,30 @@ class InventoryService {
         // ...
     }
 }</code></pre>
-    
-    <h3>4. イベントの永続化</h3>
-    <p>Spring Modulithは、イベントを永続化する機能を提供しています。イベントを永続化することで、システムの障害が発生した場合でも、イベントが失われることなく、システムの回復後に処理を再開することができます。イベントの永続化を使用するには、<code>spring-modulith-events-jpa</code>または<code>spring-modulith-events-mongodb</code>などの依存関係を追加し、設定を行います。</p>
-    
-    <pre><code>&lt;dependency&gt;
+
+<h3>4. イベントの永続化</h3>
+<p>Spring
+    Modulithは、イベントを永続化する機能を提供しています。イベントを永続化することで、システムの障害が発生した場合でも、イベントが失われることなく、システムの回復後に処理を再開することができます。イベントの永続化を使用するには、<code>spring-modulith-events-jpa</code>または<code>spring-modulith-events-mongodb</code>などの依存関係を追加し、設定を行います。
+</p>
+
+<pre><code>&lt;dependency&gt;
     &lt;groupId&gt;org.springframework.modulith&lt;/groupId&gt;
     &lt;artifactId&gt;spring-modulith-events-jpa&lt;/artifactId&gt;
     &lt;version&gt;1.1.0&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
-    
-    <pre><code># application.properties
+
+<pre><code># application.properties
 spring.modulith.events.persistence.enabled=true</code></pre>
-    
-    <h2>イベントの設計と実装</h2>
-    <p>Spring Modulithでイベントを効果的に活用するためには、適切なイベントの設計と実装が重要です。以下に、イベントの設計と実装のポイントを説明します。</p>
-    
-    <h3>1. イベントクラスの設計</h3>
-    <p>イベントクラスは、発生した出来事に関する情報を含むPOJO（Plain Old Java Object）として設計します。イベントクラスは、不変（イミュータブル）であることが望ましく、必要な情報のみを含めるべきです。</p>
-    
-    <pre><code>public class OrderCreatedEvent {
+
+<h2>イベントの設計と実装</h2>
+<p>Spring
+    Modulithでイベントを効果的に活用するためには、適切なイベントの設計と実装が重要です。以下に、イベントの設計と実装のポイントを説明します。</p>
+
+<h3>1. イベントクラスの設計</h3>
+<p>イベントクラスは、発生した出来事に関する情報を含むPOJO（Plain Old Java
+    Object）として設計します。イベントクラスは、不変（イミュータブル）であることが望ましく、必要な情報のみを含めるべきです。</p>
+
+<pre><code>public class OrderCreatedEvent {
 
     private final String orderId;
     private final String customerId;
@@ -192,11 +214,13 @@ spring.modulith.events.persistence.enabled=true</code></pre>
         return createdAt;
     }
 }</code></pre>
-    
-    <h3>2. イベント発行の実装</h3>
-    <p>イベントの発行は、<code>ApplicationEventPublisher</code>を使用して行います。<code>ApplicationEventPublisher</code>は、Spring Frameworkが提供するインターフェースで、Spring Modulithはこのインターフェースを拡張して、モジュラーアプリケーションに適したイベント発行機能を提供しています。</p>
-    
-    <pre><code>@Service
+
+<h3>2. イベント発行の実装</h3>
+<p>イベントの発行は、<code>ApplicationEventPublisher</code>を使用して行います。<code>ApplicationEventPublisher</code>は、Spring
+    Frameworkが提供するインターフェースで、Spring Modulithはこのインターフェースを拡張して、モジュラーアプリケーションに適したイベント発行機能を提供しています。
+</p>
+
+<pre><code>@Service
 class OrderService {
 
     private final ApplicationEventPublisher events;
@@ -216,11 +240,12 @@ class OrderService {
         return order;
     }
 }</code></pre>
-    
-    <h3>3. イベントリスナーの実装</h3>
-    <p>イベントリスナーは、<code>@EventListener</code>アノテーションを使用して実装します。イベントリスナーは、特定のイベントタイプを購読し、そのイベントが発行されたときに処理を実行します。</p>
-    
-    <pre><code>@Service
+
+<h3>3. イベントリスナーの実装</h3>
+<p>イベントリスナーは、<code>@EventListener</code>アノテーションを使用して実装します。イベントリスナーは、特定のイベントタイプを購読し、そのイベントが発行されたときに処理を実行します。
+</p>
+
+<pre><code>@Service
 class InventoryService {
 
     @EventListener
@@ -230,11 +255,12 @@ class InventoryService {
         // ...
     }
 }</code></pre>
-    
-    <h3>4. 条件付きイベントリスナー</h3>
-    <p>条件付きイベントリスナーは、特定の条件を満たす場合にのみイベントを処理するリスナーです。<code>@EventListener</code>アノテーションの<code>condition</code>属性を使用して、SpEL（Spring Expression Language）式で条件を指定することができます。</p>
-    
-    <pre><code>@Service
+
+<h3>4. 条件付きイベントリスナー</h3>
+<p>条件付きイベントリスナーは、特定の条件を満たす場合にのみイベントを処理するリスナーです。<code>@EventListener</code>アノテーションの<code>condition</code>属性を使用して、SpEL（Spring
+    Expression Language）式で条件を指定することができます。</p>
+
+<pre><code>@Service
 class InventoryService {
 
     @EventListener(condition = "#event.items.size() > 0")
@@ -244,14 +270,16 @@ class InventoryService {
         // ...
     }
 }</code></pre>
-    
-    <h2>イベント発行のユースケース</h2>
-    <p>Spring Modulithのイベント発行機能は、様々なユースケースで活用することができます。以下に、代表的なユースケースを紹介します。</p>
-    
-    <h3>1. ドメインイベントの通知</h3>
-    <p>ドメインイベントは、ドメインモデル内で発生した重要な出来事を表すイベントです。例えば、注文の作成、支払いの完了、商品の出荷などがドメインイベントに該当します。ドメインイベントを発行することで、他のモジュールにその出来事を通知し、適切な処理を行うことができます。</p>
-    
-    <pre><code>@Service
+
+<h2>イベント発行のユースケース</h2>
+<p>Spring
+    Modulithのイベント発行機能は、様々なユースケースで活用することができます。以下に、代表的なユースケースを紹介します。</p>
+
+<h3>1. ドメインイベントの通知</h3>
+<p>
+    ドメインイベントは、ドメインモデル内で発生した重要な出来事を表すイベントです。例えば、注文の作成、支払いの完了、商品の出荷などがドメインイベントに該当します。ドメインイベントを発行することで、他のモジュールにその出来事を通知し、適切な処理を行うことができます。</p>
+
+<pre><code>@Service
 class OrderService {
 
     private final ApplicationEventPublisher events;
@@ -271,11 +299,12 @@ class OrderService {
         return order;
     }
 }</code></pre>
-    
-    <h3>2. 副作用の処理</h3>
-    <p>副作用は、主要な処理の結果として発生する追加の処理です。例えば、注文が作成されたときに、在庫の更新、顧客への通知メールの送信、ポイントの付与などが副作用に該当します。イベント発行を使用することで、主要な処理と副作用を分離し、モジュールの責務を明確にすることができます。</p>
-    
-    <pre><code>@Service
+
+<h3>2. 副作用の処理</h3>
+<p>
+    副作用は、主要な処理の結果として発生する追加の処理です。例えば、注文が作成されたときに、在庫の更新、顧客への通知メールの送信、ポイントの付与などが副作用に該当します。イベント発行を使用することで、主要な処理と副作用を分離し、モジュールの責務を明確にすることができます。</p>
+
+<pre><code>@Service
 class NotificationService {
 
     @EventListener
@@ -295,11 +324,12 @@ class PointService {
         // ...
     }
 }</code></pre>
-    
-    <h3>3. 非同期処理</h3>
-    <p>非同期処理は、主要な処理の完了を待たずに、別のスレッドで実行される処理です。例えば、注文が作成されたときに、時間のかかる在庫の更新や配送の手配などを非同期で行うことができます。非同期イベント処理を使用することで、ユーザーの応答時間を短縮し、システムの応答性を向上させることができます。</p>
-    
-    <pre><code>@Service
+
+<h3>3. 非同期処理</h3>
+<p>
+    非同期処理は、主要な処理の完了を待たずに、別のスレッドで実行される処理です。例えば、注文が作成されたときに、時間のかかる在庫の更新や配送の手配などを非同期で行うことができます。非同期イベント処理を使用することで、ユーザーの応答時間を短縮し、システムの応答性を向上させることができます。</p>
+
+<pre><code>@Service
 class ShippingService {
 
     @Async
@@ -309,11 +339,12 @@ class ShippingService {
         // ...
     }
 }</code></pre>
-    
-    <h3>4. イベントソーシング</h3>
-    <p>イベントソーシングは、システムの状態変更をイベントとして記録し、それらのイベントを再生することでシステムの状態を再構築する手法です。Spring Modulithのイベント永続化機能を使用することで、イベントソーシングを実装することができます。</p>
-    
-    <pre><code>@Configuration
+
+<h3>4. イベントソーシング</h3>
+<p>イベントソーシングは、システムの状態変更をイベントとして記録し、それらのイベントを再生することでシステムの状態を再構築する手法です。Spring
+    Modulithのイベント永続化機能を使用することで、イベントソーシングを実装することができます。</p>
+
+<pre><code>@Configuration
 @EnableJpaRepositories
 class EventSourcingConfiguration {
 
@@ -331,26 +362,31 @@ class EventSourcingConfiguration {
         };
     }
 }</code></pre>
-    
-    <h2>イベント発行のベストプラクティス</h2>
-    <p>Spring Modulithでイベント発行を効果的に活用するためのベストプラクティスを紹介します。</p>
-    
-    <h3>1. 適切なイベント粒度の選択</h3>
-    <p>イベントの粒度は、システムの要件や設計方針に応じて適切に選択する必要があります。粒度が細かすぎると、イベントの数が増えてシステムの複雑性が増し、粒度が粗すぎると、イベントの汎用性が低下します。一般的には、ドメインモデルの変更を表す意味のある単位でイベントを設計することが望ましいです。</p>
-    
-    <h3>2. イベントの命名規則の統一</h3>
-    <p>イベントの命名規則を統一することで、イベントの意味や目的を明確にし、開発者間のコミュニケーションを円滑にすることができます。一般的には、「〜Created」「〜Updated」「〜Deleted」などの過去分詞形を使用して、発生した出来事を表現することが多いです。</p>
-    
-    <h3>3. イベントの不変性の確保</h3>
-    <p>イベントは、発生した出来事を表すものであり、その内容が変更されるべきではありません。イベントクラスは不変（イミュータブル）に設計し、すべてのフィールドをfinalにして、変更できないようにすることが望ましいです。</p>
-    
-    <h3>4. イベントの永続化の検討</h3>
-    <p>重要なイベントは、システムの障害が発生した場合でも失われないように、永続化することを検討すべきです。Spring Modulithは、JPA、MongoDB、Redisなど、様々なデータストアを使用したイベントの永続化をサポートしています。</p>
-    
-    <h3>5. イベントリスナーの例外処理</h3>
-    <p>イベントリスナーで例外が発生した場合の動作を明確にし、適切に処理する必要があります。同期イベント処理の場合、リスナーの例外はイベント発行元に伝播しますが、非同期イベント処理の場合は、例外を適切にキャッチして処理する必要があります。</p>
-    
-    <pre><code>@Service
+
+<h2>イベント発行のベストプラクティス</h2>
+<p>Spring Modulithでイベント発行を効果的に活用するためのベストプラクティスを紹介します。</p>
+
+<h3>1. 適切なイベント粒度の選択</h3>
+<p>
+    イベントの粒度は、システムの要件や設計方針に応じて適切に選択する必要があります。粒度が細かすぎると、イベントの数が増えてシステムの複雑性が増し、粒度が粗すぎると、イベントの汎用性が低下します。一般的には、ドメインモデルの変更を表す意味のある単位でイベントを設計することが望ましいです。</p>
+
+<h3>2. イベントの命名規則の統一</h3>
+<p>
+    イベントの命名規則を統一することで、イベントの意味や目的を明確にし、開発者間のコミュニケーションを円滑にすることができます。一般的には、「〜Created」「〜Updated」「〜Deleted」などの過去分詞形を使用して、発生した出来事を表現することが多いです。</p>
+
+<h3>3. イベントの不変性の確保</h3>
+<p>
+    イベントは、発生した出来事を表すものであり、その内容が変更されるべきではありません。イベントクラスは不変（イミュータブル）に設計し、すべてのフィールドをfinalにして、変更できないようにすることが望ましいです。</p>
+
+<h3>4. イベントの永続化の検討</h3>
+<p>重要なイベントは、システムの障害が発生した場合でも失われないように、永続化することを検討すべきです。Spring
+    Modulithは、JPA、MongoDB、Redisなど、様々なデータストアを使用したイベントの永続化をサポートしています。</p>
+
+<h3>5. イベントリスナーの例外処理</h3>
+<p>
+    イベントリスナーで例外が発生した場合の動作を明確にし、適切に処理する必要があります。同期イベント処理の場合、リスナーの例外はイベント発行元に伝播しますが、非同期イベント処理の場合は、例外を適切にキャッチして処理する必要があります。</p>
+
+<pre><code>@Service
 class InventoryService {
 
     @Async
@@ -367,11 +403,12 @@ class InventoryService {
         }
     }
 }</code></pre>
-    
-    <h3>6. イベントの順序の考慮</h3>
-    <p>イベントの処理順序が重要な場合は、<code>@Order</code>アノテーションを使用して、リスナーの実行順序を指定することができます。ただし、非同期イベント処理の場合は、実行順序が保証されないことに注意が必要です。</p>
-    
-    <pre><code>@Service
+
+<h3>6. イベントの順序の考慮</h3>
+<p>イベントの処理順序が重要な場合は、<code>@Order</code>アノテーションを使用して、リスナーの実行順序を指定することができます。ただし、非同期イベント処理の場合は、実行順序が保証されないことに注意が必要です。
+</p>
+
+<pre><code>@Service
 class InventoryService {
 
     @Order(1)
@@ -393,11 +430,12 @@ class NotificationService {
         // ...
     }
 }</code></pre>
-    
-    <h3>7. イベントの冪等性の確保</h3>
-    <p>イベントが重複して処理される可能性がある場合は、イベントリスナーの処理を冪等（何度実行しても同じ結果になる）にすることが重要です。これにより、システムの障害からの回復時などに、同じイベントが複数回処理されても問題が発生しないようにすることができます。</p>
-    
-    <pre><code>@Service
+
+<h3>7. イベントの冪等性の確保</h3>
+<p>
+    イベントが重複して処理される可能性がある場合は、イベントリスナーの処理を冪等（何度実行しても同じ結果になる）にすることが重要です。これにより、システムの障害からの回復時などに、同じイベントが複数回処理されても問題が発生しないようにすることができます。</p>
+
+<pre><code>@Service
 class InventoryService {
 
     @EventListener
@@ -415,12 +453,15 @@ class InventoryService {
         markEventAsProcessed(event.getOrderId());
     }
 }</code></pre>
-    
-    <h2>まとめ</h2>
-    <p>Spring Modulithのイベント発行機能は、モジュール間の疎結合な通信を実現するための強力なツールです。イベント駆動アーキテクチャを採用することで、モジュールの独立性を高め、システムの柔軟性と拡張性を向上させることができます。</p>
-    
-    <p>Spring Modulithは、同期イベント処理、非同期イベント処理、トランザクショナルイベント処理、イベントの永続化など、様々なイベント処理機能を提供しています。これらの機能を適切に活用することで、モジュラーアプリケーションの品質と保守性を向上させることができます。</p>
-    
-    <p>イベント発行を効果的に活用するためには、適切なイベントの設計と実装、ベストプラクティスの適用が重要です。イベントの粒度、命名規則、不変性、永続化、例外処理、順序、冪等性などを考慮して、イベント駆動アーキテクチャを設計・実装することで、モジュラーアプリケーションの成功に貢献することができます。</p>
+
+<h2>まとめ</h2>
+<p>Spring
+    Modulithのイベント発行機能は、モジュール間の疎結合な通信を実現するための強力なツールです。イベント駆動アーキテクチャを採用することで、モジュールの独立性を高め、システムの柔軟性と拡張性を向上させることができます。</p>
+
+<p>Spring
+    Modulithは、同期イベント処理、非同期イベント処理、トランザクショナルイベント処理、イベントの永続化など、様々なイベント処理機能を提供しています。これらの機能を適切に活用することで、モジュラーアプリケーションの品質と保守性を向上させることができます。</p>
+
+<p>
+    イベント発行を効果的に活用するためには、適切なイベントの設計と実装、ベストプラクティスの適用が重要です。イベントの粒度、命名規則、不変性、永続化、例外処理、順序、冪等性などを考慮して、イベント駆動アーキテクチャを設計・実装することで、モジュラーアプリケーションの成功に貢献することができます。</p>
 </body>
 </html>

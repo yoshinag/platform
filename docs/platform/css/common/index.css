@@ -24,7 +24,7 @@ body {
 .sidebar.collapsed {
     width: 0;
     padding: 0 0; /* Keep vertical padding if items are just hidden, or 0 if fully collapsed */
-    opacity: 0;   /* Fade out content */
+    opacity: 0; /* Fade out content */
     overflow: hidden; /* Hide content when collapsed */
 }
 
@@ -92,7 +92,7 @@ body {
     border-bottom-right-radius: 5px;
     font-size: 18px; /* Adjust for icon size */
     line-height: 1;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     transition: left 0.3s ease; /* Smooth transition when sidebar collapses */
 }
 
@@ -410,11 +410,11 @@ code {
         width: 100%;
         margin-bottom: 5px;
     }
-    
+
     .toc-list {
         flex-direction: column;
     }
-    
+
     .toc-list li {
         flex-basis: 100%;
         min-width: auto;

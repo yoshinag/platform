@@ -23,7 +23,7 @@
 }
 
 .upload-area input[type="file"]::file-selector-button {
-    display:none;
+    display: none;
 }
 
 .upload-area p {
@@ -57,9 +57,11 @@
 .controls .control-group label[for="borderRadiusSlider"] {
     min-width: 150px;
 }
+
 #borderRadiusSlider {
     width: 160px;
 }
+
 #radiusValueDisplay {
     min-width: 25px;
     text-align: left;
@@ -70,10 +72,12 @@
 .controls .control-group label[for^="baseCustom"] {
     min-width: 90px;
 }
+
 .controls .control-group select[id^="basePreset"] {
     min-width: 100px;
     margin-right: 5px; /* Reduced from 10px */
 }
+
 .controls .control-group input[type="number"][id^="baseCustom"] {
     width: 70px;
 }
@@ -82,14 +86,17 @@
 .controls .control-group label[for="imageLayerScalePercentage"] {
     min-width: 130px;
 }
+
 #imageLayerScalePercentage {
     width: 150px;
     margin: 0 5px;
 }
+
 #imageLayerScaleDisplay {
     min-width: 35px;
     text-align: left;
 }
+
 /* +/- ボタンのスタイル */
 .scale-btn {
     width: 30px;
@@ -106,16 +113,20 @@
     justify-content: center;
     padding: 0;
 }
+
 .scale-btn:hover:not(:disabled) {
     background-color: #d1d7dc;
 }
+
 .scale-btn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
 }
-.controls .control-group label[for^="imageLayerResize"]{
+
+.controls .control-group label[for^="imageLayerResize"] {
     min-width: 60px;
 }
+
 .controls .control-group input[type="number"][id^="imageLayerResize"] {
     width: 70px;
 }
@@ -124,4 +135,5 @@
     margin-left: 2px; /* Space between checkbox and its label */
     text-align: left;
 }
+
 /* --- END OF FILE css/controls.css --- */

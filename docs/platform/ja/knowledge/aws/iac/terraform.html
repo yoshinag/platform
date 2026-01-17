@@ -1,113 +1,125 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <title>Terraform</title>
     <link rel="stylesheet" href="../../../../css/knowledge.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../../../platform/js/common/analytics.js"></script>
+
 <body class="ja-knowledge">
-    <div style="margin-bottom: 20px;">
-        <a href="../aws.html">AWSに戻る</a>
-    </div>
-    <h1>Terraform</h1>
-    
-    <h2>Terraformとは</h2>
-    <p>Terraformは、HashiCorp社が開発したオープンソースのインフラストラクチャ as コード（IaC）ツールです。Terraformを使用すると、クラウドプロバイダー（AWS、Azure、GCPなど）やその他のサービスのインフラストラクチャをコードとして定義、プロビジョニング、管理することができます。Terraformは宣言的な構成ファイルを使用して、インフラストラクチャのあるべき状態を記述し、その状態に到達するために必要なアクションを自動的に計画して実行します。</p>
-    
-    <h2>Terraformの主な特徴</h2>
-    <ul>
-        <li><strong>プロバイダーエコシステム：</strong> AWS、Azure、GCPなど多数のクラウドプロバイダーとサードパーティサービスをサポート</li>
-        <li><strong>宣言的構文：</strong> HashiCorp Configuration Language（HCL）を使用した読みやすい宣言的な構文</li>
-        <li><strong>状態管理：</strong> インフラストラクチャの現在の状態を追跡するための状態ファイル</li>
-        <li><strong>計画と適用：</strong> 変更を適用する前に、変更の計画を確認可能</li>
-        <li><strong>リソースグラフ：</strong> リソース間の依存関係を自動的に解決</li>
-        <li><strong>モジュール化：</strong> 再利用可能なインフラストラクチャコンポーネントを作成</li>
-        <li><strong>イミュータブルインフラストラクチャ：</strong> 変更ではなく置き換えによるインフラストラクチャの更新</li>
-        <li><strong>バージョン管理：</strong> インフラストラクチャコードのバージョン管理と協調作業</li>
-        <li><strong>プロビジョナー：</strong> リソース作成後にスクリプトを実行するためのプロビジョナー</li>
-        <li><strong>ワークスペース：</strong> 同じコードで複数の環境を管理</li>
-    </ul>
-    
-    <h2>Terraformの仕組み</h2>
-    <p>Terraformの基本的な仕組みは以下の通りです：</p>
-    
-    <ol>
-        <li><strong>構成ファイルの作成：</strong> HCL（HashiCorp Configuration Language）またはJSON形式でインフラストラクチャリソースを定義します。</li>
-        <li><strong>初期化：</strong> <code>terraform init</code>コマンドを実行して、必要なプロバイダープラグインをダウンロードし、バックエンドを設定します。</li>
-        <li><strong>計画：</strong> <code>terraform plan</code>コマンドを実行して、現在の状態と目標の状態の差分を確認します。</li>
-        <li><strong>適用：</strong> <code>terraform apply</code>コマンドを実行して、計画された変更を実際のインフラストラクチャに適用します。</li>
-        <li><strong>状態管理：</strong> Terraformは適用された変更を状態ファイル（通常は<code>terraform.tfstate</code>）に記録します。</li>
-        <li><strong>破棄：</strong> 必要に応じて<code>terraform destroy</code>コマンドを実行して、作成したリソースを削除します。</li>
-    </ol>
-    
-    <div class="example">
-        <h3>Terraformのワークフロー</h3>
-        <pre>
+<div style="margin-bottom: 20px;">
+    <a href="../aws.html">AWSに戻る</a>
+</div>
+<h1>Terraform</h1>
+
+<h2>Terraformとは</h2>
+<p>Terraformは、HashiCorp社が開発したオープンソースのインフラストラクチャ as
+    コード（IaC）ツールです。Terraformを使用すると、クラウドプロバイダー（AWS、Azure、GCPなど）やその他のサービスのインフラストラクチャをコードとして定義、プロビジョニング、管理することができます。Terraformは宣言的な構成ファイルを使用して、インフラストラクチャのあるべき状態を記述し、その状態に到達するために必要なアクションを自動的に計画して実行します。</p>
+
+<h2>Terraformの主な特徴</h2>
+<ul>
+    <li><strong>プロバイダーエコシステム：</strong> AWS、Azure、GCPなど多数のクラウドプロバイダーとサードパーティサービスをサポート
+    </li>
+    <li><strong>宣言的構文：</strong> HashiCorp Configuration Language（HCL）を使用した読みやすい宣言的な構文</li>
+    <li><strong>状態管理：</strong> インフラストラクチャの現在の状態を追跡するための状態ファイル</li>
+    <li><strong>計画と適用：</strong> 変更を適用する前に、変更の計画を確認可能</li>
+    <li><strong>リソースグラフ：</strong> リソース間の依存関係を自動的に解決</li>
+    <li><strong>モジュール化：</strong> 再利用可能なインフラストラクチャコンポーネントを作成</li>
+    <li><strong>イミュータブルインフラストラクチャ：</strong> 変更ではなく置き換えによるインフラストラクチャの更新</li>
+    <li><strong>バージョン管理：</strong> インフラストラクチャコードのバージョン管理と協調作業</li>
+    <li><strong>プロビジョナー：</strong> リソース作成後にスクリプトを実行するためのプロビジョナー</li>
+    <li><strong>ワークスペース：</strong> 同じコードで複数の環境を管理</li>
+</ul>
+
+<h2>Terraformの仕組み</h2>
+<p>Terraformの基本的な仕組みは以下の通りです：</p>
+
+<ol>
+    <li><strong>構成ファイルの作成：</strong> HCL（HashiCorp Configuration Language）またはJSON形式でインフラストラクチャリソースを定義します。
+    </li>
+    <li><strong>初期化：</strong> <code>terraform init</code>コマンドを実行して、必要なプロバイダープラグインをダウンロードし、バックエンドを設定します。
+    </li>
+    <li><strong>計画：</strong> <code>terraform plan</code>コマンドを実行して、現在の状態と目標の状態の差分を確認します。
+    </li>
+    <li><strong>適用：</strong> <code>terraform apply</code>コマンドを実行して、計画された変更を実際のインフラストラクチャに適用します。
+    </li>
+    <li><strong>状態管理：</strong> Terraformは適用された変更を状態ファイル（通常は<code>terraform.tfstate</code>）に記録します。
+    </li>
+    <li><strong>破棄：</strong> 必要に応じて<code>terraform destroy</code>コマンドを実行して、作成したリソースを削除します。
+    </li>
+</ol>
+
+<div class="example">
+    <h3>Terraformのワークフロー</h3>
+    <pre>
 構成ファイル作成 → terraform init → terraform plan → terraform apply → インフラストラクチャ構築
                                                                       ↓
                                                 terraform destroy → インフラストラクチャ削除
         </pre>
-    </div>
-    
-    <h2>Terraformの構成ファイル</h2>
-    <p>Terraformの構成ファイルは、通常<code>.tf</code>拡張子を持つファイルで、HCL（HashiCorp Configuration Language）またはJSONで記述されます。基本的な構成要素は以下の通りです：</p>
-    
-    <table>
-        <tr>
-            <th>要素</th>
-            <th>説明</th>
-            <th>例</th>
-        </tr>
-        <tr>
-            <td>プロバイダー</td>
-            <td>使用するクラウドプロバイダーやサービスを定義</td>
-            <td><code>provider "aws" { region = "us-west-2" }</code></td>
-        </tr>
-        <tr>
-            <td>リソース</td>
-            <td>作成または管理するインフラストラクチャリソース</td>
-            <td><code>resource "aws_instance" "web" { ami = "ami-123456" }</code></td>
-        </tr>
-        <tr>
-            <td>データソース</td>
-            <td>既存のリソースからデータを取得</td>
-            <td><code>data "aws_ami" "ubuntu" { most_recent = true }</code></td>
-        </tr>
-        <tr>
-            <td>変数</td>
-            <td>構成で使用する入力変数</td>
-            <td><code>variable "instance_type" { default = "t2.micro" }</code></td>
-        </tr>
-        <tr>
-            <td>ローカル値</td>
-            <td>構成内で再利用する式や値</td>
-            <td><code>locals { common_tags = { Environment = "Dev" } }</code></td>
-        </tr>
-        <tr>
-            <td>出力値</td>
-            <td>他のモジュールや実行後に参照できる値</td>
-            <td><code>output "instance_ip" { value = aws_instance.web.public_ip }</code></td>
-        </tr>
-        <tr>
-            <td>モジュール</td>
-            <td>再利用可能なインフラストラクチャコンポーネント</td>
-            <td><code>module "vpc" { source = "./modules/vpc" }</code></td>
-        </tr>
-        <tr>
-            <td>バックエンド</td>
-            <td>状態ファイルの保存場所と方法</td>
-            <td><code>terraform { backend "s3" { bucket = "mybucket" } }</code></td>
-        </tr>
-    </table>
-    
-    <h2>Terraformの構成例</h2>
-    <div class="example">
-        <h3>AWSでEC2インスタンスを作成する基本的な例</h3>
-        <pre><code>provider "aws" {
+</div>
+
+<h2>Terraformの構成ファイル</h2>
+<p>Terraformの構成ファイルは、通常<code>.tf</code>拡張子を持つファイルで、HCL（HashiCorp Configuration
+    Language）またはJSONで記述されます。基本的な構成要素は以下の通りです：</p>
+
+<table>
+    <tr>
+        <th>要素</th>
+        <th>説明</th>
+        <th>例</th>
+    </tr>
+    <tr>
+        <td>プロバイダー</td>
+        <td>使用するクラウドプロバイダーやサービスを定義</td>
+        <td><code>provider "aws" { region = "us-west-2" }</code></td>
+    </tr>
+    <tr>
+        <td>リソース</td>
+        <td>作成または管理するインフラストラクチャリソース</td>
+        <td><code>resource "aws_instance" "web" { ami = "ami-123456" }</code></td>
+    </tr>
+    <tr>
+        <td>データソース</td>
+        <td>既存のリソースからデータを取得</td>
+        <td><code>data "aws_ami" "ubuntu" { most_recent = true }</code></td>
+    </tr>
+    <tr>
+        <td>変数</td>
+        <td>構成で使用する入力変数</td>
+        <td><code>variable "instance_type" { default = "t2.micro" }</code></td>
+    </tr>
+    <tr>
+        <td>ローカル値</td>
+        <td>構成内で再利用する式や値</td>
+        <td><code>locals { common_tags = { Environment = "Dev" } }</code></td>
+    </tr>
+    <tr>
+        <td>出力値</td>
+        <td>他のモジュールや実行後に参照できる値</td>
+        <td><code>output "instance_ip" { value = aws_instance.web.public_ip }</code></td>
+    </tr>
+    <tr>
+        <td>モジュール</td>
+        <td>再利用可能なインフラストラクチャコンポーネント</td>
+        <td><code>module "vpc" { source = "./modules/vpc" }</code></td>
+    </tr>
+    <tr>
+        <td>バックエンド</td>
+        <td>状態ファイルの保存場所と方法</td>
+        <td><code>terraform { backend "s3" { bucket = "mybucket" } }</code></td>
+    </tr>
+</table>
+
+<h2>Terraformの構成例</h2>
+<div class="example">
+    <h3>AWSでEC2インスタンスを作成する基本的な例</h3>
+    <pre><code>provider "aws" {
   region = "us-west-2"
 }
 
@@ -127,11 +139,11 @@ output "instance_id" {
 output "public_ip" {
   value = aws_instance.example.public_ip
 }</code></pre>
-    </div>
-    
-    <div class="example">
-        <h3>変数とモジュールを使用した例</h3>
-        <pre><code># variables.tf
+</div>
+
+<div class="example">
+    <h3>変数とモジュールを使用した例</h3>
+    <pre><code># variables.tf
 variable "region" {
   description = "AWS region"
   type        = string
@@ -185,65 +197,65 @@ output "instance_id" {
 output "public_ip" {
   value = aws_instance.web.public_ip
 }</code></pre>
-    </div>
-    
-    <h2>AWSでのTerraformの使用方法</h2>
-    <p>AWSでTerraformを使用するための基本的な手順は以下の通りです：</p>
-    
-    <h3>1. Terraformのインストール</h3>
-    <div class="example">
-        <h4>macOSでのインストール（Homebrew使用）</h4>
-        <pre><code>brew install terraform</code></pre>
-        
-        <h4>Linuxでのインストール</h4>
-        <pre><code>wget https://releases.hashicorp.com/terraform/1.5.7/terraform_1.5.7_linux_amd64.zip
+</div>
+
+<h2>AWSでのTerraformの使用方法</h2>
+<p>AWSでTerraformを使用するための基本的な手順は以下の通りです：</p>
+
+<h3>1. Terraformのインストール</h3>
+<div class="example">
+    <h4>macOSでのインストール（Homebrew使用）</h4>
+    <pre><code>brew install terraform</code></pre>
+
+    <h4>Linuxでのインストール</h4>
+    <pre><code>wget https://releases.hashicorp.com/terraform/1.5.7/terraform_1.5.7_linux_amd64.zip
 unzip terraform_1.5.7_linux_amd64.zip
 sudo mv terraform /usr/local/bin/</code></pre>
-        
-        <h4>Windowsでのインストール（Chocolatey使用）</h4>
-        <pre><code>choco install terraform</code></pre>
-    </div>
-    
-    <h3>2. AWS認証情報の設定</h3>
-    <div class="example">
-        <h4>AWS CLIを使用した認証情報の設定</h4>
-        <pre><code>aws configure</code></pre>
-        
-        <h4>環境変数を使用した認証情報の設定</h4>
-        <pre><code>export AWS_ACCESS_KEY_ID="your_access_key"
+
+    <h4>Windowsでのインストール（Chocolatey使用）</h4>
+    <pre><code>choco install terraform</code></pre>
+</div>
+
+<h3>2. AWS認証情報の設定</h3>
+<div class="example">
+    <h4>AWS CLIを使用した認証情報の設定</h4>
+    <pre><code>aws configure</code></pre>
+
+    <h4>環境変数を使用した認証情報の設定</h4>
+    <pre><code>export AWS_ACCESS_KEY_ID="your_access_key"
 export AWS_SECRET_ACCESS_KEY="your_secret_key"
 export AWS_DEFAULT_REGION="us-west-2"</code></pre>
-        
-        <h4>Terraform構成ファイルでの認証情報の設定（非推奨）</h4>
-        <pre><code>provider "aws" {
+
+    <h4>Terraform構成ファイルでの認証情報の設定（非推奨）</h4>
+    <pre><code>provider "aws" {
   region     = "us-west-2"
   access_key = "your_access_key"
   secret_key = "your_secret_key"
 }</code></pre>
-    </div>
-    
-    <h3>3. Terraformプロジェクトの初期化と実行</h3>
-    <div class="example">
-        <h4>プロジェクトの初期化</h4>
-        <pre><code>terraform init</code></pre>
-        
-        <h4>実行計画の作成</h4>
-        <pre><code>terraform plan</code></pre>
-        
-        <h4>変更の適用</h4>
-        <pre><code>terraform apply</code></pre>
-        
-        <h4>リソースの破棄</h4>
-        <pre><code>terraform destroy</code></pre>
-    </div>
-    
-    <h2>AWSリソースの管理</h2>
-    <p>Terraformを使用して管理できる主なAWSリソースの例：</p>
-    
-    <h3>コンピューティングリソース</h3>
-    <div class="example">
-        <h4>EC2インスタンス</h4>
-        <pre><code>resource "aws_instance" "web" {
+</div>
+
+<h3>3. Terraformプロジェクトの初期化と実行</h3>
+<div class="example">
+    <h4>プロジェクトの初期化</h4>
+    <pre><code>terraform init</code></pre>
+
+    <h4>実行計画の作成</h4>
+    <pre><code>terraform plan</code></pre>
+
+    <h4>変更の適用</h4>
+    <pre><code>terraform apply</code></pre>
+
+    <h4>リソースの破棄</h4>
+    <pre><code>terraform destroy</code></pre>
+</div>
+
+<h2>AWSリソースの管理</h2>
+<p>Terraformを使用して管理できる主なAWSリソースの例：</p>
+
+<h3>コンピューティングリソース</h3>
+<div class="example">
+    <h4>EC2インスタンス</h4>
+    <pre><code>resource "aws_instance" "web" {
   ami           = "ami-0c55b159cbfafe1f0"
   instance_type = "t2.micro"
   key_name      = "my-key"
@@ -255,9 +267,9 @@ export AWS_DEFAULT_REGION="us-west-2"</code></pre>
     Name = "web-server"
   }
 }</code></pre>
-        
-        <h4>Auto Scaling Group</h4>
-        <pre><code>resource "aws_launch_configuration" "web" {
+
+    <h4>Auto Scaling Group</h4>
+    <pre><code>resource "aws_launch_configuration" "web" {
   name_prefix     = "web-"
   image_id        = "ami-0c55b159cbfafe1f0"
   instance_type   = "t2.micro"
@@ -282,12 +294,12 @@ resource "aws_autoscaling_group" "web" {
     propagate_at_launch = true
   }
 }</code></pre>
-    </div>
-    
-    <h3>ネットワークリソース</h3>
-    <div class="example">
-        <h4>VPC</h4>
-        <pre><code>resource "aws_vpc" "main" {
+</div>
+
+<h3>ネットワークリソース</h3>
+<div class="example">
+    <h4>VPC</h4>
+    <pre><code>resource "aws_vpc" "main" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_support   = true
   enable_dns_hostnames = true
@@ -296,9 +308,9 @@ resource "aws_autoscaling_group" "web" {
     Name = "main-vpc"
   }
 }</code></pre>
-        
-        <h4>サブネット</h4>
-        <pre><code>resource "aws_subnet" "public" {
+
+    <h4>サブネット</h4>
+    <pre><code>resource "aws_subnet" "public" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.1.0/24"
   availability_zone       = "us-west-2a"
@@ -318,9 +330,9 @@ resource "aws_subnet" "private" {
     Name = "private-subnet"
   }
 }</code></pre>
-        
-        <h4>セキュリティグループ</h4>
-        <pre><code>resource "aws_security_group" "web" {
+
+    <h4>セキュリティグループ</h4>
+    <pre><code>resource "aws_security_group" "web" {
   name        = "web-sg"
   description = "Allow HTTP and SSH traffic"
   vpc_id      = aws_vpc.main.id
@@ -346,12 +358,12 @@ resource "aws_subnet" "private" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }</code></pre>
-    </div>
-    
-    <h3>ストレージリソース</h3>
-    <div class="example">
-        <h4>S3バケット</h4>
-        <pre><code>resource "aws_s3_bucket" "data" {
+</div>
+
+<h3>ストレージリソース</h3>
+<div class="example">
+    <h4>S3バケット</h4>
+    <pre><code>resource "aws_s3_bucket" "data" {
   bucket = "my-data-bucket"
   acl    = "private"
   
@@ -363,9 +375,9 @@ resource "aws_subnet" "private" {
     Name = "data-bucket"
   }
 }</code></pre>
-        
-        <h4>RDSインスタンス</h4>
-        <pre><code>resource "aws_db_instance" "default" {
+
+    <h4>RDSインスタンス</h4>
+    <pre><code>resource "aws_db_instance" "default" {
   allocated_storage    = 20
   storage_type         = "gp2"
   engine               = "mysql"
@@ -380,17 +392,19 @@ resource "aws_subnet" "private" {
   vpc_security_group_ids = [aws_security_group.db.id]
   db_subnet_group_name   = aws_db_subnet_group.default.name
 }</code></pre>
-    </div>
-    
-    <h2>Terraformの状態管理</h2>
-    <p>Terraformは、作成したリソースの状態を状態ファイル（通常は<code>terraform.tfstate</code>）に保存します。この状態ファイルは、Terraformがリソースの現在の状態を追跡し、変更を計画するために使用されます。</p>
-    
-    <h3>リモート状態の設定</h3>
-    <p>チーム開発やCI/CDパイプラインでは、状態ファイルをリモートで管理することが推奨されます。AWSでは、S3バケットとDynamoDBを使用して状態ファイルを管理することができます。</p>
-    
-    <div class="example">
-        <h4>S3バックエンドの設定</h4>
-        <pre><code>terraform {
+</div>
+
+<h2>Terraformの状態管理</h2>
+<p>Terraformは、作成したリソースの状態を状態ファイル（通常は<code>terraform.tfstate</code>）に保存します。この状態ファイルは、Terraformがリソースの現在の状態を追跡し、変更を計画するために使用されます。
+</p>
+
+<h3>リモート状態の設定</h3>
+<p>
+    チーム開発やCI/CDパイプラインでは、状態ファイルをリモートで管理することが推奨されます。AWSでは、S3バケットとDynamoDBを使用して状態ファイルを管理することができます。</p>
+
+<div class="example">
+    <h4>S3バックエンドの設定</h4>
+    <pre><code>terraform {
   backend "s3" {
     bucket         = "terraform-state-bucket"
     key            = "terraform.tfstate"
@@ -399,9 +413,9 @@ resource "aws_subnet" "private" {
     dynamodb_table = "terraform-locks"
   }
 }</code></pre>
-        
-        <h4>状態ロック用のDynamoDBテーブルの作成</h4>
-        <pre><code>resource "aws_dynamodb_table" "terraform_locks" {
+
+    <h4>状態ロック用のDynamoDBテーブルの作成</h4>
+    <pre><code>resource "aws_dynamodb_table" "terraform_locks" {
   name         = "terraform-locks"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
@@ -411,28 +425,29 @@ resource "aws_subnet" "private" {
     type = "S"
   }
 }</code></pre>
-    </div>
-    
-    <h3>状態の操作</h3>
-    <div class="example">
-        <h4>状態の一覧表示</h4>
-        <pre><code>terraform state list</code></pre>
-        
-        <h4>特定のリソースの状態を表示</h4>
-        <pre><code>terraform state show aws_instance.web</code></pre>
-        
-        <h4>リソースを状態から削除</h4>
-        <pre><code>terraform state rm aws_instance.web</code></pre>
-        
-        <h4>状態のインポート</h4>
-        <pre><code>terraform import aws_instance.web i-1234567890abcdef0</code></pre>
-    </div>
-    
-    <h2>Terraformのモジュール</h2>
-    <p>Terraformモジュールは、再利用可能なインフラストラクチャコンポーネントを作成するための仕組みです。モジュールを使用することで、コードの重複を減らし、ベストプラクティスを共有することができます。</p>
-    
-    <h3>モジュールの構造</h3>
-    <div class="example">
+</div>
+
+<h3>状態の操作</h3>
+<div class="example">
+    <h4>状態の一覧表示</h4>
+    <pre><code>terraform state list</code></pre>
+
+    <h4>特定のリソースの状態を表示</h4>
+    <pre><code>terraform state show aws_instance.web</code></pre>
+
+    <h4>リソースを状態から削除</h4>
+    <pre><code>terraform state rm aws_instance.web</code></pre>
+
+    <h4>状態のインポート</h4>
+    <pre><code>terraform import aws_instance.web i-1234567890abcdef0</code></pre>
+</div>
+
+<h2>Terraformのモジュール</h2>
+<p>
+    Terraformモジュールは、再利用可能なインフラストラクチャコンポーネントを作成するための仕組みです。モジュールを使用することで、コードの重複を減らし、ベストプラクティスを共有することができます。</p>
+
+<h3>モジュールの構造</h3>
+<div class="example">
         <pre><code>modules/
   ├── vpc/
   │   ├── main.tf
@@ -442,12 +457,12 @@ resource "aws_subnet" "private" {
       ├── main.tf
       ├── variables.tf
       └── outputs.tf</code></pre>
-    </div>
-    
-    <h3>モジュールの作成と使用</h3>
-    <div class="example">
-        <h4>VPCモジュールの例（modules/vpc/main.tf）</h4>
-        <pre><code>resource "aws_vpc" "this" {
+</div>
+
+<h3>モジュールの作成と使用</h3>
+<div class="example">
+    <h4>VPCモジュールの例（modules/vpc/main.tf）</h4>
+    <pre><code>resource "aws_vpc" "this" {
   cidr_block           = var.cidr_block
   enable_dns_support   = true
   enable_dns_hostnames = true
@@ -469,9 +484,9 @@ resource "aws_subnet" "public" {
     Environment = var.environment
   }
 }</code></pre>
-        
-        <h4>VPCモジュールの変数（modules/vpc/variables.tf）</h4>
-        <pre><code>variable "cidr_block" {
+
+    <h4>VPCモジュールの変数（modules/vpc/variables.tf）</h4>
+    <pre><code>variable "cidr_block" {
   description = "CIDR block for the VPC"
   type        = string
 }
@@ -490,9 +505,9 @@ variable "environment" {
   description = "Deployment environment"
   type        = string
 }</code></pre>
-        
-        <h4>VPCモジュールの出力（modules/vpc/outputs.tf）</h4>
-        <pre><code>output "vpc_id" {
+
+    <h4>VPCモジュールの出力（modules/vpc/outputs.tf）</h4>
+    <pre><code>output "vpc_id" {
   description = "The ID of the VPC"
   value       = aws_vpc.this.id
 }
@@ -501,9 +516,9 @@ output "public_subnet_id" {
   description = "The ID of the public subnet"
   value       = aws_subnet.public.id
 }</code></pre>
-        
-        <h4>モジュールの使用（main.tf）</h4>
-        <pre><code>module "vpc" {
+
+    <h4>モジュールの使用（main.tf）</h4>
+    <pre><code>module "vpc" {
   source = "./modules/vpc"
   
   cidr_block         = "10.0.0.0/16"
@@ -520,119 +535,124 @@ module "web_server" {
   instance_type     = "t2.micro"
   environment       = "dev"
 }</code></pre>
-    </div>
-    
-    <h2>Terraformのベストプラクティス</h2>
-    <ul>
-        <li><strong>バージョン管理：</strong> Terraformコードをバージョン管理システム（Git）で管理する</li>
-        <li><strong>モジュール化：</strong> 再利用可能なコンポーネントとしてモジュールを作成する</li>
-        <li><strong>変数の使用：</strong> ハードコードされた値ではなく変数を使用する</li>
-        <li><strong>リモート状態：</strong> 状態ファイルをS3などのリモートバックエンドで管理する</li>
-        <li><strong>状態のロック：</strong> DynamoDBなどを使用して状態ファイルのロックを実装する</li>
-        <li><strong>ワークスペース：</strong> 異なる環境（開発、ステージング、本番）に対してワークスペースを使用する</li>
-        <li><strong>セキュリティ：</strong> 機密情報を構成ファイルに直接記述しない</li>
-        <li><strong>計画の確認：</strong> 変更を適用する前に<code>terraform plan</code>の出力を確認する</li>
-        <li><strong>コード形式：</strong> <code>terraform fmt</code>を使用してコードを整形する</li>
-        <li><strong>検証：</strong> <code>terraform validate</code>を使用して構成を検証する</li>
-    </ul>
-    
-    <h2>TerraformとCloudFormationの比較</h2>
-    <p>TerraformとAWS CloudFormationは、どちらもインフラストラクチャ as コード（IaC）ツールですが、いくつかの重要な違いがあります。</p>
-    
-    <table>
-        <tr>
-            <th>特徴</th>
-            <th>Terraform</th>
-            <th>CloudFormation</th>
-        </tr>
-        <tr>
-            <td>プロバイダー</td>
-            <td>マルチクラウド（AWS、Azure、GCP、その他）</td>
-            <td>AWSのみ</td>
-        </tr>
-        <tr>
-            <td>言語</td>
-            <td>HCL（HashiCorp Configuration Language）</td>
-            <td>YAML/JSON</td>
-        </tr>
-        <tr>
-            <td>状態管理</td>
-            <td>状態ファイルを管理する必要あり</td>
-            <td>AWSが管理</td>
-        </tr>
-        <tr>
-            <td>変更検出</td>
-            <td>計画フェーズ（terraform plan）</td>
-            <td>ドリフト検出</td>
-        </tr>
-        <tr>
-            <td>リソースのサポート</td>
-            <td>多くのプロバイダーのリソースをサポート</td>
-            <td>AWSリソースの包括的なサポート</td>
-        </tr>
-        <tr>
-            <td>モジュール化</td>
-            <td>Terraformモジュール</td>
-            <td>ネスト化されたスタック</td>
-        </tr>
-        <tr>
-            <td>コミュニティ</td>
-            <td>幅広いオープンソースコミュニティ</td>
-            <td>AWSコミュニティ</td>
-        </tr>
-        <tr>
-            <td>統合</td>
-            <td>多くのサードパーティツールとの統合</td>
-            <td>AWSサービスとの緊密な統合</td>
-        </tr>
-        <tr>
-            <td>学習曲線</td>
-            <td>中程度</td>
-            <td>比較的緩やか</td>
-        </tr>
-        <tr>
-            <td>ロールバック</td>
-            <td>手動（状態を使用）</td>
-            <td>自動（エラー時）</td>
-        </tr>
-    </table>
-    
-    <h2>Terraformの制限事項</h2>
-    <ul>
-        <li><strong>状態管理の複雑さ：</strong> 状態ファイルの管理が必要</li>
-        <li><strong>並行実行の課題：</strong> 複数のユーザーが同時に変更を適用する場合の競合</li>
-        <li><strong>部分的な更新：</strong> エラーが発生した場合、一部のリソースだけが更新される可能性</li>
-        <li><strong>プロバイダーの制限：</strong> 一部のクラウドサービスやリソースタイプのサポートが限定的</li>
-        <li><strong>大規模環境での性能：</strong> 大量のリソースを管理する場合の性能低下</li>
-    </ul>
-    
-    <h2>Terraformエンタープライズ（Terraform Cloud/Enterprise）</h2>
-    <p>HashiCorpは、Terraformの商用版としてTerraform CloudとTerraform Enterpriseを提供しています。これらのサービスは、チームでのTerraformの使用を容易にするための追加機能を提供します。</p>
-    
-    <h3>主な機能</h3>
-    <ul>
-        <li><strong>リモート実行：</strong> Terraformの実行を一貫した環境で行う</li>
-        <li><strong>共有状態管理：</strong> 状態ファイルの共有と管理</li>
-        <li><strong>アクセス制御：</strong> ユーザーとチームのアクセス権限の管理</li>
-        <li><strong>ポリシー管理：</strong> Sentinel言語を使用したポリシーの適用</li>
-        <li><strong>VCS統合：</strong> GitHubなどのバージョン管理システムとの統合</li>
-        <li><strong>ワークフロー：</strong> 承認ベースのワークフロー</li>
-        <li><strong>コスト見積もり：</strong> インフラストラクチャの変更に伴うコスト見積もり</li>
-    </ul>
-    
-    <h2>まとめ</h2>
-    <p>Terraformは、AWSを含む多くのクラウドプロバイダーのインフラストラクチャをコードとして定義、プロビジョニング、管理するための強力なツールです。HCL（HashiCorp Configuration Language）を使用した宣言的な構文、多くのプロバイダーのサポート、モジュール化による再利用性など、多くの利点を提供します。</p>
-    
-    <p>Terraformの主な利点は以下の通りです：</p>
-    <ul>
-        <li>マルチクラウドサポートによる柔軟性</li>
-        <li>宣言的な構文による読みやすさと保守性</li>
-        <li>計画フェーズによる変更の事前確認</li>
-        <li>モジュール化による再利用性</li>
-        <li>活発なコミュニティとエコシステム</li>
-        <li>バージョン管理との統合</li>
-    </ul>
-    
-    <p>Terraformを効果的に活用するには、状態ファイルの適切な管理、モジュール化によるコードの再利用、変数の活用、セキュリティのベストプラクティスの適用などが重要です。また、プロジェクトの要件に応じて、CloudFormationなどの他のIaCツールと比較して、最適なツールを選択することも重要です。</p>
+</div>
+
+<h2>Terraformのベストプラクティス</h2>
+<ul>
+    <li><strong>バージョン管理：</strong> Terraformコードをバージョン管理システム（Git）で管理する</li>
+    <li><strong>モジュール化：</strong> 再利用可能なコンポーネントとしてモジュールを作成する</li>
+    <li><strong>変数の使用：</strong> ハードコードされた値ではなく変数を使用する</li>
+    <li><strong>リモート状態：</strong> 状態ファイルをS3などのリモートバックエンドで管理する</li>
+    <li><strong>状態のロック：</strong> DynamoDBなどを使用して状態ファイルのロックを実装する</li>
+    <li><strong>ワークスペース：</strong> 異なる環境（開発、ステージング、本番）に対してワークスペースを使用する</li>
+    <li><strong>セキュリティ：</strong> 機密情報を構成ファイルに直接記述しない</li>
+    <li><strong>計画の確認：</strong> 変更を適用する前に<code>terraform plan</code>の出力を確認する</li>
+    <li><strong>コード形式：</strong> <code>terraform fmt</code>を使用してコードを整形する</li>
+    <li><strong>検証：</strong> <code>terraform validate</code>を使用して構成を検証する</li>
+</ul>
+
+<h2>TerraformとCloudFormationの比較</h2>
+<p>TerraformとAWS CloudFormationは、どちらもインフラストラクチャ as
+    コード（IaC）ツールですが、いくつかの重要な違いがあります。</p>
+
+<table>
+    <tr>
+        <th>特徴</th>
+        <th>Terraform</th>
+        <th>CloudFormation</th>
+    </tr>
+    <tr>
+        <td>プロバイダー</td>
+        <td>マルチクラウド（AWS、Azure、GCP、その他）</td>
+        <td>AWSのみ</td>
+    </tr>
+    <tr>
+        <td>言語</td>
+        <td>HCL（HashiCorp Configuration Language）</td>
+        <td>YAML/JSON</td>
+    </tr>
+    <tr>
+        <td>状態管理</td>
+        <td>状態ファイルを管理する必要あり</td>
+        <td>AWSが管理</td>
+    </tr>
+    <tr>
+        <td>変更検出</td>
+        <td>計画フェーズ（terraform plan）</td>
+        <td>ドリフト検出</td>
+    </tr>
+    <tr>
+        <td>リソースのサポート</td>
+        <td>多くのプロバイダーのリソースをサポート</td>
+        <td>AWSリソースの包括的なサポート</td>
+    </tr>
+    <tr>
+        <td>モジュール化</td>
+        <td>Terraformモジュール</td>
+        <td>ネスト化されたスタック</td>
+    </tr>
+    <tr>
+        <td>コミュニティ</td>
+        <td>幅広いオープンソースコミュニティ</td>
+        <td>AWSコミュニティ</td>
+    </tr>
+    <tr>
+        <td>統合</td>
+        <td>多くのサードパーティツールとの統合</td>
+        <td>AWSサービスとの緊密な統合</td>
+    </tr>
+    <tr>
+        <td>学習曲線</td>
+        <td>中程度</td>
+        <td>比較的緩やか</td>
+    </tr>
+    <tr>
+        <td>ロールバック</td>
+        <td>手動（状態を使用）</td>
+        <td>自動（エラー時）</td>
+    </tr>
+</table>
+
+<h2>Terraformの制限事項</h2>
+<ul>
+    <li><strong>状態管理の複雑さ：</strong> 状態ファイルの管理が必要</li>
+    <li><strong>並行実行の課題：</strong> 複数のユーザーが同時に変更を適用する場合の競合</li>
+    <li><strong>部分的な更新：</strong> エラーが発生した場合、一部のリソースだけが更新される可能性</li>
+    <li><strong>プロバイダーの制限：</strong> 一部のクラウドサービスやリソースタイプのサポートが限定的</li>
+    <li><strong>大規模環境での性能：</strong> 大量のリソースを管理する場合の性能低下</li>
+</ul>
+
+<h2>Terraformエンタープライズ（Terraform Cloud/Enterprise）</h2>
+<p>HashiCorpは、Terraformの商用版としてTerraform CloudとTerraform
+    Enterpriseを提供しています。これらのサービスは、チームでのTerraformの使用を容易にするための追加機能を提供します。</p>
+
+<h3>主な機能</h3>
+<ul>
+    <li><strong>リモート実行：</strong> Terraformの実行を一貫した環境で行う</li>
+    <li><strong>共有状態管理：</strong> 状態ファイルの共有と管理</li>
+    <li><strong>アクセス制御：</strong> ユーザーとチームのアクセス権限の管理</li>
+    <li><strong>ポリシー管理：</strong> Sentinel言語を使用したポリシーの適用</li>
+    <li><strong>VCS統合：</strong> GitHubなどのバージョン管理システムとの統合</li>
+    <li><strong>ワークフロー：</strong> 承認ベースのワークフロー</li>
+    <li><strong>コスト見積もり：</strong> インフラストラクチャの変更に伴うコスト見積もり</li>
+</ul>
+
+<h2>まとめ</h2>
+<p>Terraformは、AWSを含む多くのクラウドプロバイダーのインフラストラクチャをコードとして定義、プロビジョニング、管理するための強力なツールです。HCL（HashiCorp
+    Configuration
+    Language）を使用した宣言的な構文、多くのプロバイダーのサポート、モジュール化による再利用性など、多くの利点を提供します。</p>
+
+<p>Terraformの主な利点は以下の通りです：</p>
+<ul>
+    <li>マルチクラウドサポートによる柔軟性</li>
+    <li>宣言的な構文による読みやすさと保守性</li>
+    <li>計画フェーズによる変更の事前確認</li>
+    <li>モジュール化による再利用性</li>
+    <li>活発なコミュニティとエコシステム</li>
+    <li>バージョン管理との統合</li>
+</ul>
+
+<p>
+    Terraformを効果的に活用するには、状態ファイルの適切な管理、モジュール化によるコードの再利用、変数の活用、セキュリティのベストプラクティスの適用などが重要です。また、プロジェクトの要件に応じて、CloudFormationなどの他のIaCツールと比較して、最適なツールを選択することも重要です。</p>
 </body>
 </html>

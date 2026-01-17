@@ -5,17 +5,17 @@ import {
     graphContainer, prevTabBtn, nextTabBtn, renderBtn
 } from './dom_elements.js';
 import * as state from './state.js';
-import { initializeVizInstance, initializeMermaid, renderGraph } from './graph_renderer.js';
-import { getSelectedNotation } from './graph_utils.js';
-import { setupCoreEventListeners } from './event_handlers.js';
+import {initializeVizInstance, initializeMermaid, renderGraph} from './graph_renderer.js';
+import {getSelectedNotation} from './graph_utils.js';
+import {setupCoreEventListeners} from './event_handlers.js';
 
-import { loadTemplatesFromFile, populateTemplateSelectWithOptions, applyTemplateToUI } from './template_manager.js';
+import {loadTemplatesFromFile, populateTemplateSelectWithOptions, applyTemplateToUI} from './template_manager.js';
 import {
     setupAllPanelsToggle, setupFullscreenToggle, setupClearCodeButton,
     setupCopyCodeButton, setupPasteCodeButton, setupPrevTabButton, setupNextTabButton,
     setupRenderButton
 } from './ui_interactions.js';
-import { updateActiveTabContent, updateActiveTabNotation } from './tab_manager.js';
+import {updateActiveTabContent, updateActiveTabNotation} from './tab_manager.js';
 
 
 export async function initializeApp() {
@@ -40,11 +40,11 @@ export async function initializeApp() {
         // Apply template if available
         if (state.allTemplates.length > 0 && templateSelect.value) {
             applyTemplateToUI(templateSelect.value, state.allTemplates, codeInput, notationRadios);
-            
+
             // Update the active tab with the template content and notation
             updateActiveTabContent(codeInput.value);
             updateActiveTabNotation(getSelectedNotation());
-            
+
             // Render the graph immediately when a template is loaded during initialization
             await renderGraph();
         }

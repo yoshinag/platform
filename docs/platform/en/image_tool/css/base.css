@@ -13,7 +13,7 @@ body {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     max-width: 600px; /* Max width for the entire tool */
     width: 90%;
@@ -70,12 +70,14 @@ input[type="number"] {
     border-radius: 4px;
     text-align: right;
 }
+
 /* Hide number input spinners */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
 input[type="number"] {
     -moz-appearance: textfield; /* Firefox */
 }
@@ -120,4 +122,5 @@ details ol, details ul {
     text-align: left;
     padding-left: 2em;
 }
+
 /* --- END OF FILE css/base.css --- */

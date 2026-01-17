@@ -207,22 +207,22 @@ ul {
     .container {
         padding: 10px;
     }
-    
+
     .tabs {
         flex-direction: column;
         border-bottom: none;
     }
-    
+
     .tab-btn {
         border-radius: 5px;
         margin-bottom: 5px;
         border: 1px solid #ddd;
     }
-    
+
     .buttons {
         flex-direction: column;
     }
-    
+
     .buttons button, #copyBtn {
         width: 100%;
         margin-bottom: 5px;

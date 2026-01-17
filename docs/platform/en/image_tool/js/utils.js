@@ -8,4 +8,5 @@ function getSafePositiveInt(value, defaultValue = 1) {
     const num = parseInt(value, 10);
     return isNaN(num) || num <= 0 ? defaultValue : num;
 }
+
 // --- END OF FILE utils.js ---

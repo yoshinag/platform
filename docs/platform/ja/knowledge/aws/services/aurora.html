@@ -1,99 +1,110 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <title>Amazon Aurora</title>
     <link rel="stylesheet" href="../../../../css/knowledge.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../../../platform/js/common/analytics.js"></script>
+
 <body class="ja-knowledge">
-    <div style="margin-bottom: 20px;">
-        <a href="../aws.html">AWSに戻る</a>
-    </div>
-    <h1>Amazon Aurora</h1>
-    
-    <h2>Amazon Auroraとは</h2>
-    <p>Amazon Auroraは、AWSが開発したクラウドネイティブのリレーショナルデータベースエンジンで、MySQLおよびPostgreSQLと互換性があります。従来のデータベースの速度と可用性を、オープンソースデータベースのシンプルさとコスト効率の良さと組み合わせるように設計されています。Auroraは、標準のMySQLより最大5倍、標準のPostgreSQLより最大3倍のスループットを提供し、商用データベースの信頼性と可用性を1/10のコストで実現します。</p>
-    
-    <h2>Amazon Auroraの主な特徴</h2>
-    <ul>
-        <li><strong>高性能：</strong> 標準のMySQLより最大5倍、PostgreSQLより最大3倍のスループット</li>
-        <li><strong>高可用性：</strong> データを3つのアベイラビリティゾーンにまたがる6つの場所に複製</li>
-        <li><strong>自動スケーリング：</strong> ストレージは10GBから最大128TBまで自動的に拡張</li>
-        <li><strong>高耐久性：</strong> 99.99%の可用性を実現する設計</li>
-        <li><strong>分散型アーキテクチャ：</strong> ストレージとコンピューティングを分離</li>
-        <li><strong>MySQLおよびPostgreSQLとの互換性：</strong> 既存のアプリケーションの移行が容易</li>
-        <li><strong>リードレプリカ：</strong> 最大15個のリードレプリカを低レイテンシー（通常100ミリ秒未満）で作成可能</li>
-        <li><strong>グローバルデータベース：</strong> 複数のAWSリージョンにまたがるデータベースをデプロイ</li>
-        <li><strong>Serverlessオプション：</strong> 需要に応じて自動的にスケールするデータベース</li>
-        <li><strong>バックトラック：</strong> 特定の時点にデータベースを「巻き戻す」機能</li>
-    </ul>
-    
-    <h2>Amazon Auroraのアーキテクチャ</h2>
-    <p>Amazon Auroraは、従来のデータベースとは異なる独自のアーキテクチャを採用しています：</p>
-    
-    <h3>ストレージアーキテクチャ</h3>
-    <ul>
-        <li><strong>分散ストレージ：</strong> データベースボリュームは、3つのアベイラビリティゾーンにまたがる6つの場所に複製されます。</li>
-        <li><strong>ストレージの自動修復：</strong> ディスクの障害を継続的に監視し、自動的に修復します。</li>
-        <li><strong>コピーオンライト：</strong> データベースのスナップショットを作成する際に、変更されたデータのみを保存します。</li>
-        <li><strong>ストレージとコンピューティングの分離：</strong> ストレージとコンピューティングリソースが分離されているため、それぞれを独立してスケールできます。</li>
-    </ul>
-    
-    <div class="example">
-        <h3>Auroraのストレージアーキテクチャ</h3>
-        <pre>
+<div style="margin-bottom: 20px;">
+    <a href="../aws.html">AWSに戻る</a>
+</div>
+<h1>Amazon Aurora</h1>
+
+<h2>Amazon Auroraとは</h2>
+<p>Amazon
+    Auroraは、AWSが開発したクラウドネイティブのリレーショナルデータベースエンジンで、MySQLおよびPostgreSQLと互換性があります。従来のデータベースの速度と可用性を、オープンソースデータベースのシンプルさとコスト効率の良さと組み合わせるように設計されています。Auroraは、標準のMySQLより最大5倍、標準のPostgreSQLより最大3倍のスループットを提供し、商用データベースの信頼性と可用性を1/10のコストで実現します。</p>
+
+<h2>Amazon Auroraの主な特徴</h2>
+<ul>
+    <li><strong>高性能：</strong> 標準のMySQLより最大5倍、PostgreSQLより最大3倍のスループット</li>
+    <li><strong>高可用性：</strong> データを3つのアベイラビリティゾーンにまたがる6つの場所に複製</li>
+    <li><strong>自動スケーリング：</strong> ストレージは10GBから最大128TBまで自動的に拡張</li>
+    <li><strong>高耐久性：</strong> 99.99%の可用性を実現する設計</li>
+    <li><strong>分散型アーキテクチャ：</strong> ストレージとコンピューティングを分離</li>
+    <li><strong>MySQLおよびPostgreSQLとの互換性：</strong> 既存のアプリケーションの移行が容易</li>
+    <li><strong>リードレプリカ：</strong> 最大15個のリードレプリカを低レイテンシー（通常100ミリ秒未満）で作成可能</li>
+    <li><strong>グローバルデータベース：</strong> 複数のAWSリージョンにまたがるデータベースをデプロイ</li>
+    <li><strong>Serverlessオプション：</strong> 需要に応じて自動的にスケールするデータベース</li>
+    <li><strong>バックトラック：</strong> 特定の時点にデータベースを「巻き戻す」機能</li>
+</ul>
+
+<h2>Amazon Auroraのアーキテクチャ</h2>
+<p>Amazon Auroraは、従来のデータベースとは異なる独自のアーキテクチャを採用しています：</p>
+
+<h3>ストレージアーキテクチャ</h3>
+<ul>
+    <li><strong>分散ストレージ：</strong> データベースボリュームは、3つのアベイラビリティゾーンにまたがる6つの場所に複製されます。
+    </li>
+    <li><strong>ストレージの自動修復：</strong> ディスクの障害を継続的に監視し、自動的に修復します。</li>
+    <li><strong>コピーオンライト：</strong> データベースのスナップショットを作成する際に、変更されたデータのみを保存します。
+    </li>
+    <li><strong>ストレージとコンピューティングの分離：</strong> ストレージとコンピューティングリソースが分離されているため、それぞれを独立してスケールできます。
+    </li>
+</ul>
+
+<div class="example">
+    <h3>Auroraのストレージアーキテクチャ</h3>
+    <pre>
 クライアント → Aurora DBインスタンス → 分散ストレージレイヤー
                                     ↓
                     AZ1、AZ2、AZ3にまたがる6つのストレージノード
         </pre>
-    </div>
-    
-    <h3>レプリケーションアーキテクチャ</h3>
-    <ul>
-        <li><strong>クォーラムベースのレプリケーション：</strong> 書き込みには4つのノードのクォーラム、読み取りには3つのノードのクォーラムが必要です。</li>
-        <li><strong>非同期レプリケーション：</strong> リードレプリカへのレプリケーションは非同期で行われ、通常は100ミリ秒未満のレイテンシーです。</li>
-        <li><strong>ログベースのレプリケーション：</strong> ストレージレイヤーでのレプリケーションにより、DBインスタンスの負荷を軽減します。</li>
-    </ul>
-    
-    <h2>Amazon Auroraの互換性</h2>
-    <p>Amazon Auroraは、以下の2つの主要なデータベースエンジンと互換性があります：</p>
-    
-    <table>
-        <tr>
-            <th>互換性</th>
-            <th>説明</th>
-            <th>ユースケース</th>
-        </tr>
-        <tr>
-            <td>Aurora MySQL</td>
-            <td>MySQL 5.7および8.0と互換性があり、標準のMySQLより最大5倍の性能を提供</td>
-            <td>MySQLを使用している既存のアプリケーション、高性能が必要なウェブアプリケーション</td>
-        </tr>
-        <tr>
-            <td>Aurora PostgreSQL</td>
-            <td>PostgreSQL 11、12、13、14と互換性があり、標準のPostgreSQLより最大3倍の性能を提供</td>
-            <td>PostgreSQLを使用している既存のアプリケーション、エンタープライズアプリケーション</td>
-        </tr>
-    </table>
-    
-    <div class="note">
-        <h3>互換性の注意点</h3>
-        <p>Aurora MySQLとAurora PostgreSQLは、それぞれのオープンソースエンジンと高い互換性を持っていますが、一部の機能や拡張機能には違いがあります。詳細はAWSのドキュメントを参照してください。</p>
-    </div>
-    
-    <h2>Amazon Auroraのデプロイオプション</h2>
-    <p>Amazon Auroraには、様々なユースケースに対応するための複数のデプロイオプションがあります：</p>
-    
-    <h3>プロビジョンドクラスター</h3>
-    <p>固定サイズのインスタンスを使用する従来のデプロイモデルです。予測可能なワークロードに適しています。</p>
-    
-    <div class="example">
-        <h4>プロビジョンドクラスターの作成（AWS CLI）</h4>
-        <pre><code>aws rds create-db-cluster \
+</div>
+
+<h3>レプリケーションアーキテクチャ</h3>
+<ul>
+    <li><strong>クォーラムベースのレプリケーション：</strong> 書き込みには4つのノードのクォーラム、読み取りには3つのノードのクォーラムが必要です。
+    </li>
+    <li><strong>非同期レプリケーション：</strong> リードレプリカへのレプリケーションは非同期で行われ、通常は100ミリ秒未満のレイテンシーです。
+    </li>
+    <li><strong>ログベースのレプリケーション：</strong> ストレージレイヤーでのレプリケーションにより、DBインスタンスの負荷を軽減します。
+    </li>
+</ul>
+
+<h2>Amazon Auroraの互換性</h2>
+<p>Amazon Auroraは、以下の2つの主要なデータベースエンジンと互換性があります：</p>
+
+<table>
+    <tr>
+        <th>互換性</th>
+        <th>説明</th>
+        <th>ユースケース</th>
+    </tr>
+    <tr>
+        <td>Aurora MySQL</td>
+        <td>MySQL 5.7および8.0と互換性があり、標準のMySQLより最大5倍の性能を提供</td>
+        <td>MySQLを使用している既存のアプリケーション、高性能が必要なウェブアプリケーション</td>
+    </tr>
+    <tr>
+        <td>Aurora PostgreSQL</td>
+        <td>PostgreSQL 11、12、13、14と互換性があり、標準のPostgreSQLより最大3倍の性能を提供</td>
+        <td>PostgreSQLを使用している既存のアプリケーション、エンタープライズアプリケーション</td>
+    </tr>
+</table>
+
+<div class="note">
+    <h3>互換性の注意点</h3>
+    <p>Aurora MySQLとAurora
+        PostgreSQLは、それぞれのオープンソースエンジンと高い互換性を持っていますが、一部の機能や拡張機能には違いがあります。詳細はAWSのドキュメントを参照してください。</p>
+</div>
+
+<h2>Amazon Auroraのデプロイオプション</h2>
+<p>Amazon Auroraには、様々なユースケースに対応するための複数のデプロイオプションがあります：</p>
+
+<h3>プロビジョンドクラスター</h3>
+<p>固定サイズのインスタンスを使用する従来のデプロイモデルです。予測可能なワークロードに適しています。</p>
+
+<div class="example">
+    <h4>プロビジョンドクラスターの作成（AWS CLI）</h4>
+    <pre><code>aws rds create-db-cluster \
     --db-cluster-identifier my-aurora-cluster \
     --engine aurora-mysql \
     --engine-version 5.7.mysql_aurora.2.10.2 \
@@ -101,28 +112,30 @@
     --master-user-password secret99 \
     --db-subnet-group-name my-db-subnet \
     --vpc-security-group-ids sg-0123456789abcdef0</code></pre>
-    </div>
-    
-    <h3>Aurora Serverless</h3>
-    <p>需要に応じて自動的にスケールするオンデマンドの自動スケーリングデプロイモデルです。変動するワークロードや予測が難しいワークロードに適しています。</p>
-    
-    <div class="example">
-        <h4>Serverlessクラスターの作成（AWS CLI）</h4>
-        <pre><code>aws rds create-db-cluster \
+</div>
+
+<h3>Aurora Serverless</h3>
+<p>
+    需要に応じて自動的にスケールするオンデマンドの自動スケーリングデプロイモデルです。変動するワークロードや予測が難しいワークロードに適しています。</p>
+
+<div class="example">
+    <h4>Serverlessクラスターの作成（AWS CLI）</h4>
+    <pre><code>aws rds create-db-cluster \
     --db-cluster-identifier my-serverless-cluster \
     --engine aurora-mysql \
     --engine-mode serverless \
     --master-username admin \
     --master-user-password secret99 \
     --scaling-configuration MinCapacity=1,MaxCapacity=16,AutoPause=true,SecondsUntilAutoPause=3600</code></pre>
-    </div>
-    
-    <h3>Aurora Global Database</h3>
-    <p>複数のAWSリージョンにまたがるデータベースをデプロイするためのオプションです。プライマリリージョンでの書き込みと、最大5つのセカンダリリージョンでの低レイテンシー読み取りを提供します。</p>
-    
-    <div class="example">
-        <h4>グローバルデータベースの作成（AWS CLI）</h4>
-        <pre><code># プライマリリージョンでクラスターを作成
+</div>
+
+<h3>Aurora Global Database</h3>
+<p>
+    複数のAWSリージョンにまたがるデータベースをデプロイするためのオプションです。プライマリリージョンでの書き込みと、最大5つのセカンダリリージョンでの低レイテンシー読み取りを提供します。</p>
+
+<div class="example">
+    <h4>グローバルデータベースの作成（AWS CLI）</h4>
+    <pre><code># プライマリリージョンでクラスターを作成
 aws rds create-global-cluster \
     --global-cluster-identifier my-global-cluster \
     --source-db-cluster-identifier arn:aws:rds:us-east-1:123456789012:cluster:my-aurora-cluster
@@ -133,122 +146,132 @@ aws rds create-db-cluster \
     --engine aurora-mysql \
     --global-cluster-identifier my-global-cluster \
     --region us-west-2</code></pre>
-    </div>
-    
-    <h3>Aurora Multi-Master</h3>
-    <p>複数のインスタンスが同時に書き込み操作を処理できるクラスター構成です。単一の書き込みインスタンスに障害が発生した場合でも、高可用性を確保します。</p>
-    
-    <h2>Amazon Auroraのインスタンスタイプ</h2>
-    <p>Aurora DBインスタンスには、様々なワークロードに対応するための複数のインスタンスタイプがあります：</p>
-    
-    <table>
-        <tr>
-            <th>インスタンスファミリー</th>
-            <th>説明</th>
-            <th>ユースケース</th>
-        </tr>
-        <tr>
-            <td>T（バーストパフォーマンス）</td>
-            <td>ベースラインパフォーマンスとバースト能力を提供する低コストインスタンス</td>
-            <td>開発/テスト環境、小規模アプリケーション</td>
-        </tr>
-        <tr>
-            <td>R（メモリ最適化）</td>
-            <td>メモリを多く使用するワークロード向けに最適化されたインスタンス</td>
-            <td>高性能データベース、インメモリデータベース</td>
-        </tr>
-        <tr>
-            <td>X（メモリ超最適化）</td>
-            <td>大規模なインメモリアプリケーション向けの高メモリインスタンス</td>
-            <td>大規模なインメモリデータベース、ビッグデータ処理</td>
-        </tr>
-        <tr>
-            <td>I（I/O最適化）</td>
-            <td>高速ストレージとI/Oパフォーマンスを提供するインスタンス</td>
-            <td>I/O集約型のワークロード</td>
-        </tr>
-    </table>
-    
-    <h2>Amazon Auroraの高可用性と耐障害性</h2>
-    <p>Auroraは、高可用性と耐障害性を実現するために以下の機能を提供しています：</p>
-    
-    <ul>
-        <li><strong>自動フェイルオーバー：</strong> プライマリインスタンスに障害が発生した場合、自動的にリードレプリカにフェイルオーバーします。</li>
-        <li><strong>データの複製：</strong> データは3つのアベイラビリティゾーンにまたがる6つの場所に複製されます。</li>
-        <li><strong>自動バックアップ：</strong> 自動バックアップを有効にして、最大35日間のバックアップを保持できます。</li>
-        <li><strong>特定の時点への復元：</strong> 5分前までの任意の時点にデータベースを復元できます。</li>
-        <li><strong>バックトラック：</strong> データベースを特定の時点に「巻き戻す」ことができます（Aurora MySQL互換のみ）。</li>
-    </ul>
-    
-    <h2>Amazon Auroraのパフォーマンス最適化</h2>
-    <p>Auroraのパフォーマンスを最適化するためのベストプラクティス：</p>
-    
-    <ul>
-        <li><strong>適切なインスタンスタイプの選択：</strong> ワークロードに適したインスタンスタイプとサイズを選択します。</li>
-        <li><strong>リードレプリカの使用：</strong> 読み取り負荷が高い場合は、リードレプリカを追加して負荷を分散します。</li>
-        <li><strong>接続プーリング：</strong> RDS Proxyを使用して、データベース接続を効率的に管理します。</li>
-        <li><strong>クエリの最適化：</strong> インデックスの作成、クエリの最適化、不要なクエリの削減を行います。</li>
-        <li><strong>パラメータグループの調整：</strong> ワークロードに合わせてデータベースパラメータを調整します。</li>
-        <li><strong>Performance Insightsの活用：</strong> パフォーマンスの問題を特定し、解決するためにPerformance Insightsを使用します。</li>
-    </ul>
-    
-    <h2>Amazon Auroraのセキュリティ</h2>
-    <p>Auroraは、データベースのセキュリティを確保するための多層防御アプローチを提供します：</p>
-    
-    <h3>ネットワークセキュリティ</h3>
-    <ul>
-        <li><strong>VPC：</strong> Auroraクラスターをプライベートサブネットにデプロイして、ネットワークレベルで分離します。</li>
-        <li><strong>セキュリティグループ：</strong> インバウンドおよびアウトバウンドトラフィックを制御します。</li>
-        <li><strong>プライベートサブネット：</strong> インターネットからの直接アクセスを防止します。</li>
-    </ul>
-    
-    <h3>アクセス管理</h3>
-    <ul>
-        <li><strong>IAM認証：</strong> データベースユーザーのIAM認証を有効化します。</li>
-        <li><strong>IAMポリシー：</strong> Auroraリソースへのアクセスを制御します。</li>
-        <li><strong>データベースユーザー管理：</strong> 最小権限の原則に基づいたユーザー権限を設定します。</li>
-    </ul>
-    
-    <h3>暗号化</h3>
-    <ul>
-        <li><strong>保存時の暗号化：</strong> AWS KMSを使用したデータベース、バックアップ、スナップショットの暗号化を行います。</li>
-        <li><strong>転送時の暗号化：</strong> SSL/TLS接続を強制します。</li>
-    </ul>
-    
-    <div class="example">
-        <h4>暗号化されたAuroraクラスターの作成</h4>
-        <pre><code>aws rds create-db-cluster \
+</div>
+
+<h3>Aurora Multi-Master</h3>
+<p>
+    複数のインスタンスが同時に書き込み操作を処理できるクラスター構成です。単一の書き込みインスタンスに障害が発生した場合でも、高可用性を確保します。</p>
+
+<h2>Amazon Auroraのインスタンスタイプ</h2>
+<p>Aurora DBインスタンスには、様々なワークロードに対応するための複数のインスタンスタイプがあります：</p>
+
+<table>
+    <tr>
+        <th>インスタンスファミリー</th>
+        <th>説明</th>
+        <th>ユースケース</th>
+    </tr>
+    <tr>
+        <td>T（バーストパフォーマンス）</td>
+        <td>ベースラインパフォーマンスとバースト能力を提供する低コストインスタンス</td>
+        <td>開発/テスト環境、小規模アプリケーション</td>
+    </tr>
+    <tr>
+        <td>R（メモリ最適化）</td>
+        <td>メモリを多く使用するワークロード向けに最適化されたインスタンス</td>
+        <td>高性能データベース、インメモリデータベース</td>
+    </tr>
+    <tr>
+        <td>X（メモリ超最適化）</td>
+        <td>大規模なインメモリアプリケーション向けの高メモリインスタンス</td>
+        <td>大規模なインメモリデータベース、ビッグデータ処理</td>
+    </tr>
+    <tr>
+        <td>I（I/O最適化）</td>
+        <td>高速ストレージとI/Oパフォーマンスを提供するインスタンス</td>
+        <td>I/O集約型のワークロード</td>
+    </tr>
+</table>
+
+<h2>Amazon Auroraの高可用性と耐障害性</h2>
+<p>Auroraは、高可用性と耐障害性を実現するために以下の機能を提供しています：</p>
+
+<ul>
+    <li><strong>自動フェイルオーバー：</strong> プライマリインスタンスに障害が発生した場合、自動的にリードレプリカにフェイルオーバーします。
+    </li>
+    <li><strong>データの複製：</strong> データは3つのアベイラビリティゾーンにまたがる6つの場所に複製されます。</li>
+    <li><strong>自動バックアップ：</strong> 自動バックアップを有効にして、最大35日間のバックアップを保持できます。</li>
+    <li><strong>特定の時点への復元：</strong> 5分前までの任意の時点にデータベースを復元できます。</li>
+    <li><strong>バックトラック：</strong> データベースを特定の時点に「巻き戻す」ことができます（Aurora MySQL互換のみ）。</li>
+</ul>
+
+<h2>Amazon Auroraのパフォーマンス最適化</h2>
+<p>Auroraのパフォーマンスを最適化するためのベストプラクティス：</p>
+
+<ul>
+    <li><strong>適切なインスタンスタイプの選択：</strong> ワークロードに適したインスタンスタイプとサイズを選択します。
+    </li>
+    <li><strong>リードレプリカの使用：</strong> 読み取り負荷が高い場合は、リードレプリカを追加して負荷を分散します。</li>
+    <li><strong>接続プーリング：</strong> RDS Proxyを使用して、データベース接続を効率的に管理します。</li>
+    <li><strong>クエリの最適化：</strong> インデックスの作成、クエリの最適化、不要なクエリの削減を行います。</li>
+    <li><strong>パラメータグループの調整：</strong> ワークロードに合わせてデータベースパラメータを調整します。</li>
+    <li><strong>Performance Insightsの活用：</strong> パフォーマンスの問題を特定し、解決するためにPerformance
+        Insightsを使用します。
+    </li>
+</ul>
+
+<h2>Amazon Auroraのセキュリティ</h2>
+<p>Auroraは、データベースのセキュリティを確保するための多層防御アプローチを提供します：</p>
+
+<h3>ネットワークセキュリティ</h3>
+<ul>
+    <li><strong>VPC：</strong> Auroraクラスターをプライベートサブネットにデプロイして、ネットワークレベルで分離します。
+    </li>
+    <li><strong>セキュリティグループ：</strong> インバウンドおよびアウトバウンドトラフィックを制御します。</li>
+    <li><strong>プライベートサブネット：</strong> インターネットからの直接アクセスを防止します。</li>
+</ul>
+
+<h3>アクセス管理</h3>
+<ul>
+    <li><strong>IAM認証：</strong> データベースユーザーのIAM認証を有効化します。</li>
+    <li><strong>IAMポリシー：</strong> Auroraリソースへのアクセスを制御します。</li>
+    <li><strong>データベースユーザー管理：</strong> 最小権限の原則に基づいたユーザー権限を設定します。</li>
+</ul>
+
+<h3>暗号化</h3>
+<ul>
+    <li><strong>保存時の暗号化：</strong> AWS KMSを使用したデータベース、バックアップ、スナップショットの暗号化を行います。
+    </li>
+    <li><strong>転送時の暗号化：</strong> SSL/TLS接続を強制します。</li>
+</ul>
+
+<div class="example">
+    <h4>暗号化されたAuroraクラスターの作成</h4>
+    <pre><code>aws rds create-db-cluster \
     --db-cluster-identifier my-encrypted-cluster \
     --engine aurora-mysql \
     --master-username admin \
     --master-user-password secret99 \
     --storage-encrypted \
     --kms-key-id arn:aws:kms:us-east-1:123456789012:key/abcd1234-ef56-gh78-ij90-klmn1234pqrs</code></pre>
-    </div>
-    
-    <h2>Amazon Auroraの料金モデル</h2>
-    <p>Auroraの料金は、以下の要素に基づいています：</p>
-    
-    <ul>
-        <li><strong>インスタンス時間：</strong> 実行中のDBインスタンスの時間に対して課金されます。</li>
-        <li><strong>ストレージ：</strong> 使用したストレージ容量に対して課金されます（10GBの増分）。</li>
-        <li><strong>I/O操作：</strong> Aurora Serverlessを除き、データベースに対するI/O操作に対して課金されます。</li>
-        <li><strong>データ転送：</strong> AWSリージョン間のデータ転送に対して課金されます。</li>
-        <li><strong>バックアップストレージ：</strong> 自動バックアップの保持期間を超えるバックアップストレージに対して課金されます。</li>
-    </ul>
-    
-    <div class="note">
-        <h3>Aurora Serverlessの料金</h3>
-        <p>Aurora Serverlessは、使用したACU（Aurora Capacity Unit）時間に基づいて課金されます。ACUは、コンピューティングとメモリの容量を表す単位です。データベースがアクティブでない場合は、自動的に一時停止し、ストレージに対してのみ課金されます。</p>
-    </div>
-    
-    <h2>Amazon Auroraの使用方法</h2>
-    <p>Auroraは、AWS Management Console、AWS CLI、AWS SDKs、またはインフラストラクチャ as コード（IaC）ツールを使用して利用できます。</p>
-    
-    <h3>Auroraクラスターの作成</h3>
-    <div class="example">
-        <h4>AWS CLIを使用したAurora MySQLクラスターの作成</h4>
-        <pre><code>aws rds create-db-cluster \
+</div>
+
+<h2>Amazon Auroraの料金モデル</h2>
+<p>Auroraの料金は、以下の要素に基づいています：</p>
+
+<ul>
+    <li><strong>インスタンス時間：</strong> 実行中のDBインスタンスの時間に対して課金されます。</li>
+    <li><strong>ストレージ：</strong> 使用したストレージ容量に対して課金されます（10GBの増分）。</li>
+    <li><strong>I/O操作：</strong> Aurora Serverlessを除き、データベースに対するI/O操作に対して課金されます。</li>
+    <li><strong>データ転送：</strong> AWSリージョン間のデータ転送に対して課金されます。</li>
+    <li><strong>バックアップストレージ：</strong> 自動バックアップの保持期間を超えるバックアップストレージに対して課金されます。
+    </li>
+</ul>
+
+<div class="note">
+    <h3>Aurora Serverlessの料金</h3>
+    <p>Aurora Serverlessは、使用したACU（Aurora Capacity
+        Unit）時間に基づいて課金されます。ACUは、コンピューティングとメモリの容量を表す単位です。データベースがアクティブでない場合は、自動的に一時停止し、ストレージに対してのみ課金されます。</p>
+</div>
+
+<h2>Amazon Auroraの使用方法</h2>
+<p>Auroraは、AWS Management Console、AWS CLI、AWS SDKs、またはインフラストラクチャ as
+    コード（IaC）ツールを使用して利用できます。</p>
+
+<h3>Auroraクラスターの作成</h3>
+<div class="example">
+    <h4>AWS CLIを使用したAurora MySQLクラスターの作成</h4>
+    <pre><code>aws rds create-db-cluster \
     --db-cluster-identifier my-aurora-cluster \
     --engine aurora-mysql \
     --engine-version 5.7.mysql_aurora.2.10.2 \
@@ -256,132 +279,137 @@ aws rds create-db-cluster \
     --master-user-password secret99 \
     --db-subnet-group-name my-db-subnet \
     --vpc-security-group-ids sg-0123456789abcdef0</code></pre>
-        
-        <h4>クラスター用のDBインスタンスの作成</h4>
-        <pre><code>aws rds create-db-instance \
+
+    <h4>クラスター用のDBインスタンスの作成</h4>
+    <pre><code>aws rds create-db-instance \
     --db-instance-identifier my-aurora-instance \
     --db-cluster-identifier my-aurora-cluster \
     --engine aurora-mysql \
     --db-instance-class db.r5.large</code></pre>
-    </div>
-    
-    <h3>リードレプリカの追加</h3>
-    <div class="example">
-        <h4>リードレプリカの作成</h4>
-        <pre><code>aws rds create-db-instance \
+</div>
+
+<h3>リードレプリカの追加</h3>
+<div class="example">
+    <h4>リードレプリカの作成</h4>
+    <pre><code>aws rds create-db-instance \
     --db-instance-identifier my-aurora-replica \
     --db-cluster-identifier my-aurora-cluster \
     --engine aurora-mysql \
     --db-instance-class db.r5.large</code></pre>
-    </div>
-    
-    <h3>バックトラックの使用</h3>
-    <div class="example">
-        <h4>バックトラック対応クラスターの作成</h4>
-        <pre><code>aws rds create-db-cluster \
+</div>
+
+<h3>バックトラックの使用</h3>
+<div class="example">
+    <h4>バックトラック対応クラスターの作成</h4>
+    <pre><code>aws rds create-db-cluster \
     --db-cluster-identifier my-backtrack-cluster \
     --engine aurora-mysql \
     --engine-version 5.7.mysql_aurora.2.10.2 \
     --master-username admin \
     --master-user-password secret99 \
     --backtrack-window 86400</code></pre>
-        
-        <h4>特定の時点へのバックトラック</h4>
-        <pre><code>aws rds backtrack-db-cluster \
+
+    <h4>特定の時点へのバックトラック</h4>
+    <pre><code>aws rds backtrack-db-cluster \
     --db-cluster-identifier my-backtrack-cluster \
     --backtrack-to 2023-01-15T00:00:00Z</code></pre>
-    </div>
-    
-    <h2>Amazon Auroraのユースケース</h2>
-    <p>Auroraは以下のようなユースケースに適しています：</p>
-    <ul>
-        <li><strong>高性能が必要なアプリケーション：</strong> eコマース、金融サービス、ゲーム</li>
-        <li><strong>高可用性が必要なミッションクリティカルなアプリケーション：</strong> 24時間365日の可用性が必要なサービス</li>
-        <li><strong>変動するワークロード：</strong> Aurora Serverlessを使用した季節的または予測不可能なワークロード</li>
-        <li><strong>グローバルアプリケーション：</strong> Aurora Global Databaseを使用した世界中のユーザーにサービスを提供するアプリケーション</li>
-        <li><strong>MySQLまたはPostgreSQLからの移行：</strong> 既存のMySQLまたはPostgreSQLアプリケーションの性能と可用性の向上</li>
-    </ul>
-    
-    <h2>Amazon Auroraと他のデータベースサービスの比較</h2>
-    <table>
-        <tr>
-            <th>サービス</th>
-            <th>特徴</th>
-            <th>ユースケース</th>
-        </tr>
-        <tr>
-            <td>Amazon Aurora</td>
-            <td>高性能、高可用性、自動スケーリング、MySQLおよびPostgreSQLとの互換性</td>
-            <td>高性能が必要なリレーショナルデータベースワークロード</td>
-        </tr>
-        <tr>
-            <td><a href="rds.html">Amazon RDS</a></td>
-            <td>複数のエンジン（MySQL、PostgreSQL、Oracle、SQL Server、MariaDB）をサポート、マネージドサービス</td>
-            <td>様々なリレーショナルデータベースエンジンを使用するアプリケーション</td>
-        </tr>
-        <tr>
-            <td><a href="dynamodb.html">Amazon DynamoDB</a></td>
-            <td>フルマネージドのNoSQLデータベース、無制限のスケーラビリティ</td>
-            <td>キーバリューおよびドキュメントデータモデル、高スケーラビリティが必要なアプリケーション</td>
-        </tr>
-        <tr>
-            <td>Amazon Redshift</td>
-            <td>ペタバイト規模のデータウェアハウス、列指向ストレージ</td>
-            <td>データウェアハウスとビジネスインテリジェンス</td>
-        </tr>
-    </table>
-    
-    <h2>Amazon Auroraのベストプラクティス</h2>
-    <ul>
-        <li><strong>高可用性：</strong>
-            <ul>
-                <li>複数のアベイラビリティゾーンにまたがるクラスターをデプロイ</li>
-                <li>自動バックアップを有効化し、適切な保持期間を設定</li>
-                <li>定期的に手動スナップショットを作成</li>
-                <li>障害復旧手順を定期的にテスト</li>
-            </ul>
-        </li>
-        <li><strong>パフォーマンス：</strong>
-            <ul>
-                <li>ワークロードに適したインスタンスタイプとサイズを選択</li>
-                <li>読み取り負荷が高い場合はリードレプリカを使用</li>
-                <li>Performance Insightsを有効化してパフォーマンスをモニタリング</li>
-                <li>適切なインデックスを作成し、クエリを最適化</li>
-            </ul>
-        </li>
-        <li><strong>セキュリティ：</strong>
-            <ul>
-                <li>VPC内のプライベートサブネットにデータベースをデプロイ</li>
-                <li>セキュリティグループを使用してアクセスを制限</li>
-                <li>保存時と転送時の暗号化を有効化</li>
-                <li>IAM認証を使用してデータベースアクセスを管理</li>
-                <li>最小権限の原則に従ってデータベースユーザー権限を設定</li>
-            </ul>
-        </li>
-        <li><strong>コスト最適化：</strong>
-            <ul>
-                <li>変動するワークロードにはAurora Serverlessを検討</li>
-                <li>リザーブドインスタンスを使用して長期的なコストを削減</li>
-                <li>不要なリードレプリカを削除</li>
-                <li>不要なバックアップを削除</li>
-            </ul>
-        </li>
-    </ul>
-    
-    <h2>まとめ</h2>
-    <p>Amazon Auroraは、AWSが開発したクラウドネイティブのリレーショナルデータベースエンジンで、MySQLおよびPostgreSQLと互換性があります。分散型のストレージアーキテクチャ、高性能、高可用性、自動スケーリングなどの特徴を持ち、従来のデータベースよりも優れたパフォーマンスと信頼性を提供します。</p>
-    
-    <p>Auroraの主な利点は以下の通りです：</p>
-    <ul>
-        <li>標準のMySQLより最大5倍、PostgreSQLより最大3倍のスループット</li>
-        <li>データを3つのアベイラビリティゾーンにまたがる6つの場所に複製することによる高可用性</li>
-        <li>ストレージの自動スケーリング（10GBから最大128TBまで）</li>
-        <li>最大15個のリードレプリカによる読み取りスケーラビリティの向上</li>
-        <li>Aurora Serverlessによる需要に応じた自動スケーリング</li>
-        <li>バックトラック機能による特定の時点へのデータベースの「巻き戻し」</li>
-        <li>グローバルデータベースによる複数のAWSリージョンにまたがるデプロイ</li>
-    </ul>
-    
-    <p>Auroraは、高性能が必要なアプリケーション、高可用性が必要なミッションクリティカルなアプリケーション、変動するワークロード、グローバルアプリケーション、MySQLまたはPostgreSQLからの移行など、様々なユースケースに適しています。適切なデプロイオプションとインスタンスタイプを選択し、ベストプラクティスを適用することで、Auroraの利点を最大限に活用することができます。</p>
+</div>
+
+<h2>Amazon Auroraのユースケース</h2>
+<p>Auroraは以下のようなユースケースに適しています：</p>
+<ul>
+    <li><strong>高性能が必要なアプリケーション：</strong> eコマース、金融サービス、ゲーム</li>
+    <li><strong>高可用性が必要なミッションクリティカルなアプリケーション：</strong> 24時間365日の可用性が必要なサービス
+    </li>
+    <li><strong>変動するワークロード：</strong> Aurora Serverlessを使用した季節的または予測不可能なワークロード</li>
+    <li><strong>グローバルアプリケーション：</strong> Aurora Global Databaseを使用した世界中のユーザーにサービスを提供するアプリケーション
+    </li>
+    <li><strong>MySQLまたはPostgreSQLからの移行：</strong> 既存のMySQLまたはPostgreSQLアプリケーションの性能と可用性の向上
+    </li>
+</ul>
+
+<h2>Amazon Auroraと他のデータベースサービスの比較</h2>
+<table>
+    <tr>
+        <th>サービス</th>
+        <th>特徴</th>
+        <th>ユースケース</th>
+    </tr>
+    <tr>
+        <td>Amazon Aurora</td>
+        <td>高性能、高可用性、自動スケーリング、MySQLおよびPostgreSQLとの互換性</td>
+        <td>高性能が必要なリレーショナルデータベースワークロード</td>
+    </tr>
+    <tr>
+        <td><a href="rds.html">Amazon RDS</a></td>
+        <td>複数のエンジン（MySQL、PostgreSQL、Oracle、SQL Server、MariaDB）をサポート、マネージドサービス</td>
+        <td>様々なリレーショナルデータベースエンジンを使用するアプリケーション</td>
+    </tr>
+    <tr>
+        <td><a href="dynamodb.html">Amazon DynamoDB</a></td>
+        <td>フルマネージドのNoSQLデータベース、無制限のスケーラビリティ</td>
+        <td>キーバリューおよびドキュメントデータモデル、高スケーラビリティが必要なアプリケーション</td>
+    </tr>
+    <tr>
+        <td>Amazon Redshift</td>
+        <td>ペタバイト規模のデータウェアハウス、列指向ストレージ</td>
+        <td>データウェアハウスとビジネスインテリジェンス</td>
+    </tr>
+</table>
+
+<h2>Amazon Auroraのベストプラクティス</h2>
+<ul>
+    <li><strong>高可用性：</strong>
+        <ul>
+            <li>複数のアベイラビリティゾーンにまたがるクラスターをデプロイ</li>
+            <li>自動バックアップを有効化し、適切な保持期間を設定</li>
+            <li>定期的に手動スナップショットを作成</li>
+            <li>障害復旧手順を定期的にテスト</li>
+        </ul>
+    </li>
+    <li><strong>パフォーマンス：</strong>
+        <ul>
+            <li>ワークロードに適したインスタンスタイプとサイズを選択</li>
+            <li>読み取り負荷が高い場合はリードレプリカを使用</li>
+            <li>Performance Insightsを有効化してパフォーマンスをモニタリング</li>
+            <li>適切なインデックスを作成し、クエリを最適化</li>
+        </ul>
+    </li>
+    <li><strong>セキュリティ：</strong>
+        <ul>
+            <li>VPC内のプライベートサブネットにデータベースをデプロイ</li>
+            <li>セキュリティグループを使用してアクセスを制限</li>
+            <li>保存時と転送時の暗号化を有効化</li>
+            <li>IAM認証を使用してデータベースアクセスを管理</li>
+            <li>最小権限の原則に従ってデータベースユーザー権限を設定</li>
+        </ul>
+    </li>
+    <li><strong>コスト最適化：</strong>
+        <ul>
+            <li>変動するワークロードにはAurora Serverlessを検討</li>
+            <li>リザーブドインスタンスを使用して長期的なコストを削減</li>
+            <li>不要なリードレプリカを削除</li>
+            <li>不要なバックアップを削除</li>
+        </ul>
+    </li>
+</ul>
+
+<h2>まとめ</h2>
+<p>Amazon
+    Auroraは、AWSが開発したクラウドネイティブのリレーショナルデータベースエンジンで、MySQLおよびPostgreSQLと互換性があります。分散型のストレージアーキテクチャ、高性能、高可用性、自動スケーリングなどの特徴を持ち、従来のデータベースよりも優れたパフォーマンスと信頼性を提供します。</p>
+
+<p>Auroraの主な利点は以下の通りです：</p>
+<ul>
+    <li>標準のMySQLより最大5倍、PostgreSQLより最大3倍のスループット</li>
+    <li>データを3つのアベイラビリティゾーンにまたがる6つの場所に複製することによる高可用性</li>
+    <li>ストレージの自動スケーリング（10GBから最大128TBまで）</li>
+    <li>最大15個のリードレプリカによる読み取りスケーラビリティの向上</li>
+    <li>Aurora Serverlessによる需要に応じた自動スケーリング</li>
+    <li>バックトラック機能による特定の時点へのデータベースの「巻き戻し」</li>
+    <li>グローバルデータベースによる複数のAWSリージョンにまたがるデプロイ</li>
+</ul>
+
+<p>
+    Auroraは、高性能が必要なアプリケーション、高可用性が必要なミッションクリティカルなアプリケーション、変動するワークロード、グローバルアプリケーション、MySQLまたはPostgreSQLからの移行など、様々なユースケースに適しています。適切なデプロイオプションとインスタンスタイプを選択し、ベストプラクティスを適用することで、Auroraの利点を最大限に活用することができます。</p>
 </body>
 </html>

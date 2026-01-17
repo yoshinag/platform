@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Basic Git Commands Guide</title>
@@ -8,8 +12,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
@@ -18,14 +21,14 @@
     </div>
 
     <h1>Basic Git Commands Guide</h1>
-    
+
     <section class="command-section">
         <h2>Basic Git Commands</h2>
-        
+
         <!-- git init command -->
         <h3>git init - Repository Initialization</h3>
         <p>Creates a new Git repository.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -40,7 +43,7 @@
                 <td>Uses templates from the specified template directory</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>git init</code> - Creates a new Git repository in the current directory<br>
@@ -51,7 +54,7 @@
         <!-- git clone command -->
         <h3>git clone - Repository Cloning</h3>
         <p>Copies an existing repository to your local machine.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -70,13 +73,16 @@
                 <td>Recursively clones submodules</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>git clone https://github.com/username/repository.git</code> - Clones a remote repository<br>
-            <code>git clone https://github.com/username/repository.git my_folder</code> - Clones to a specified folder<br>
-            <code>git clone --branch develop https://github.com/username/repository.git</code> - Clones a specific branch<br>
-            <code>git clone --depth 1 https://github.com/username/repository.git</code> - Clones only the latest commit (no history)
+            <code>git clone https://github.com/username/repository.git my_folder</code> - Clones to a specified
+            folder<br>
+            <code>git clone --branch develop https://github.com/username/repository.git</code> - Clones a specific
+            branch<br>
+            <code>git clone --depth 1 https://github.com/username/repository.git</code> - Clones only the latest commit
+            (no history)
         </div>
     </section>
 

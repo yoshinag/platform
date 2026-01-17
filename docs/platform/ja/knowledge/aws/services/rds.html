@@ -1,101 +1,111 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <title>Amazon RDS</title>
     <link rel="stylesheet" href="../../../../css/knowledge.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../../../platform/js/common/analytics.js"></script>
+
 <body class="ja-knowledge">
-    <div style="margin-bottom: 20px;">
-        <a href="../aws.html">AWSに戻る</a>
-    </div>
-    <h1>Amazon RDS (Relational Database Service)</h1>
-    
-    <h2>Amazon RDSとは</h2>
-    <p>Amazon Relational Database Service (Amazon RDS) は、クラウド内でリレーショナルデータベースを簡単に設定、運用、スケーリングできるマネージドサービスです。ハードウェアのプロビジョニング、データベースのセットアップ、パッチ適用、バックアップなどの時間のかかる管理タスクを自動化しながら、コスト効率の高いリサイズ可能な容量を提供します。これにより、アプリケーション開発に集中できるようになります。Amazon RDSは、Amazon Aurora、PostgreSQL、MySQL、MariaDB、Oracle Database、SQL Serverなど、6つの主要なデータベースエンジンから選択できます。</p>
-    
-    <h2>Amazon RDSの主な特徴</h2>
+<div style="margin-bottom: 20px;">
+    <a href="../aws.html">AWSに戻る</a>
+</div>
+<h1>Amazon RDS (Relational Database Service)</h1>
+
+<h2>Amazon RDSとは</h2>
+<p>Amazon Relational Database Service (Amazon RDS)
+    は、クラウド内でリレーショナルデータベースを簡単に設定、運用、スケーリングできるマネージドサービスです。ハードウェアのプロビジョニング、データベースのセットアップ、パッチ適用、バックアップなどの時間のかかる管理タスクを自動化しながら、コスト効率の高いリサイズ可能な容量を提供します。これにより、アプリケーション開発に集中できるようになります。Amazon
+    RDSは、Amazon Aurora、PostgreSQL、MySQL、MariaDB、Oracle Database、SQL
+    Serverなど、6つの主要なデータベースエンジンから選択できます。</p>
+
+<h2>Amazon RDSの主な特徴</h2>
+<ul>
+    <li><strong>マネージドサービス：</strong> バックアップ、ソフトウェアパッチ適用、自動障害検出、リカバリを自動化</li>
+    <li><strong>高可用性：</strong> マルチAZ配置によるデータベースの冗長性と信頼性</li>
+    <li><strong>スケーラビリティ：</strong> 垂直（インスタンスサイズの変更）および水平（リードレプリカ）スケーリング</li>
+    <li><strong>セキュリティ：</strong> ネットワーク分離、暗号化、リソースレベルのアクセス権限</li>
+    <li><strong>バックアップと復元：</strong> 自動バックアップ、手動スナップショット、特定の時点への復元</li>
+    <li><strong>モニタリング：</strong> CloudWatchとの統合によるリアルタイムのパフォーマンスメトリクス</li>
+    <li><strong>複数のデータベースエンジン：</strong> Aurora、MySQL、PostgreSQL、MariaDB、Oracle、SQL Serverをサポート</li>
+    <li><strong>コスト効率：</strong> オンデマンド料金、リザーブドインスタンス、Serverlessオプション</li>
+</ul>
+
+<h2>Amazon RDSのデータベースエンジン</h2>
+<p>Amazon RDSは以下のデータベースエンジンをサポートしています：</p>
+
+<table>
+    <tr>
+        <th>データベースエンジン</th>
+        <th>説明</th>
+        <th>ユースケース</th>
+    </tr>
+    <tr>
+        <td><a href="aurora.html">Amazon Aurora</a></td>
+        <td>
+            MySQLおよびPostgreSQLと互換性のあるAWS独自のリレーショナルデータベース。標準のMySQLより最大5倍、標準のPostgreSQLより最大3倍の性能を提供
+        </td>
+        <td>高性能が必要なエンタープライズアプリケーション、SaaS製品、ウェブアプリケーション</td>
+    </tr>
+    <tr>
+        <td><a href="https://www.mysql.com/" target="_blank">MySQL</a></td>
+        <td>世界で最も広く使用されているオープンソースリレーショナルデータベース</td>
+        <td>ウェブサイト、ブログ、eコマース、多様なアプリケーション</td>
+    </tr>
+    <tr>
+        <td><a href="https://www.postgresql.org/" target="_blank">PostgreSQL</a></td>
+        <td>高度な機能を持つ強力なオープンソースオブジェクトリレーショナルデータベース</td>
+        <td>複雑なクエリ、地理空間データ、NoSQLのようなJSON機能が必要なアプリケーション</td>
+    </tr>
+    <tr>
+        <td><a href="https://mariadb.org/" target="_blank">MariaDB</a></td>
+        <td>MySQLから派生したコミュニティ開発のリレーショナルデータベース</td>
+        <td>MySQLと互換性が必要なアプリケーション、より新しい機能が必要な場合</td>
+    </tr>
+    <tr>
+        <td><a href="https://www.oracle.com/database/" target="_blank">Oracle</a></td>
+        <td>エンタープライズグレードの商用リレーショナルデータベース</td>
+        <td>エンタープライズアプリケーション、ビジネスクリティカルなワークロード</td>
+    </tr>
+    <tr>
+        <td><a href="https://www.microsoft.com/sql-server/" target="_blank">Microsoft SQL Server</a></td>
+        <td>Microsoftの商用リレーショナルデータベース管理システム</td>
+        <td>Windowsベースのアプリケーション、.NETアプリケーション</td>
+    </tr>
+</table>
+
+<div class="note">
+    <h3>Amazon Auroraについて</h3>
+    <p>Amazon Auroraは、AWSが開発したクラウドネイティブのリレーショナルデータベースで、以下の特徴があります：</p>
     <ul>
-        <li><strong>マネージドサービス：</strong> バックアップ、ソフトウェアパッチ適用、自動障害検出、リカバリを自動化</li>
-        <li><strong>高可用性：</strong> マルチAZ配置によるデータベースの冗長性と信頼性</li>
-        <li><strong>スケーラビリティ：</strong> 垂直（インスタンスサイズの変更）および水平（リードレプリカ）スケーリング</li>
-        <li><strong>セキュリティ：</strong> ネットワーク分離、暗号化、リソースレベルのアクセス権限</li>
-        <li><strong>バックアップと復元：</strong> 自動バックアップ、手動スナップショット、特定の時点への復元</li>
-        <li><strong>モニタリング：</strong> CloudWatchとの統合によるリアルタイムのパフォーマンスメトリクス</li>
-        <li><strong>複数のデータベースエンジン：</strong> Aurora、MySQL、PostgreSQL、MariaDB、Oracle、SQL Serverをサポート</li>
-        <li><strong>コスト効率：</strong> オンデマンド料金、リザーブドインスタンス、Serverlessオプション</li>
+        <li>MySQLおよびPostgreSQLとの互換性</li>
+        <li>分散型のストレージアーキテクチャ（データを6箇所に複製）</li>
+        <li>自動スケーリングストレージ（最大128TB）</li>
+        <li>最大15のリードレプリカと100ミリ秒未満のレプリケーションラグ</li>
+        <li>高速なクラッシュリカバリ</li>
+        <li>Serverlessオプションによる自動スケーリング</li>
     </ul>
-    
-    <h2>Amazon RDSのデータベースエンジン</h2>
-    <p>Amazon RDSは以下のデータベースエンジンをサポートしています：</p>
-    
-    <table>
-        <tr>
-            <th>データベースエンジン</th>
-            <th>説明</th>
-            <th>ユースケース</th>
-        </tr>
-        <tr>
-            <td><a href="aurora.html">Amazon Aurora</a></td>
-            <td>MySQLおよびPostgreSQLと互換性のあるAWS独自のリレーショナルデータベース。標準のMySQLより最大5倍、標準のPostgreSQLより最大3倍の性能を提供</td>
-            <td>高性能が必要なエンタープライズアプリケーション、SaaS製品、ウェブアプリケーション</td>
-        </tr>
-        <tr>
-            <td><a href="https://www.mysql.com/" target="_blank">MySQL</a></td>
-            <td>世界で最も広く使用されているオープンソースリレーショナルデータベース</td>
-            <td>ウェブサイト、ブログ、eコマース、多様なアプリケーション</td>
-        </tr>
-        <tr>
-            <td><a href="https://www.postgresql.org/" target="_blank">PostgreSQL</a></td>
-            <td>高度な機能を持つ強力なオープンソースオブジェクトリレーショナルデータベース</td>
-            <td>複雑なクエリ、地理空間データ、NoSQLのようなJSON機能が必要なアプリケーション</td>
-        </tr>
-        <tr>
-            <td><a href="https://mariadb.org/" target="_blank">MariaDB</a></td>
-            <td>MySQLから派生したコミュニティ開発のリレーショナルデータベース</td>
-            <td>MySQLと互換性が必要なアプリケーション、より新しい機能が必要な場合</td>
-        </tr>
-        <tr>
-            <td><a href="https://www.oracle.com/database/" target="_blank">Oracle</a></td>
-            <td>エンタープライズグレードの商用リレーショナルデータベース</td>
-            <td>エンタープライズアプリケーション、ビジネスクリティカルなワークロード</td>
-        </tr>
-        <tr>
-            <td><a href="https://www.microsoft.com/sql-server/" target="_blank">Microsoft SQL Server</a></td>
-            <td>Microsoftの商用リレーショナルデータベース管理システム</td>
-            <td>Windowsベースのアプリケーション、.NETアプリケーション</td>
-        </tr>
-    </table>
-    
-    <div class="note">
-        <h3>Amazon Auroraについて</h3>
-        <p>Amazon Auroraは、AWSが開発したクラウドネイティブのリレーショナルデータベースで、以下の特徴があります：</p>
-        <ul>
-            <li>MySQLおよびPostgreSQLとの互換性</li>
-            <li>分散型のストレージアーキテクチャ（データを6箇所に複製）</li>
-            <li>自動スケーリングストレージ（最大128TB）</li>
-            <li>最大15のリードレプリカと100ミリ秒未満のレプリケーションラグ</li>
-            <li>高速なクラッシュリカバリ</li>
-            <li>Serverlessオプションによる自動スケーリング</li>
-        </ul>
-    </div>
-    
-    <h2>Amazon RDSのデプロイオプション</h2>
-    <p>Amazon RDSには複数のデプロイオプションがあります：</p>
-    
-    <h3>単一AZデプロイメント</h3>
-    <p>単一のアベイラビリティゾーン内にデータベースインスタンスをデプロイします。開発、テスト環境、または非クリティカルなワークロードに適しています。</p>
-    
-    <h3>マルチAZデプロイメント</h3>
-    <p>プライマリDBインスタンスと同期スタンバイレプリカを別のアベイラビリティゾーンにデプロイします。高可用性と耐障害性を提供し、本番環境に推奨されます。</p>
-    
-    <div class="example">
-        <h4>マルチAZデプロイメントの作成</h4>
-        <pre><code>aws rds create-db-instance \
+</div>
+
+<h2>Amazon RDSのデプロイオプション</h2>
+<p>Amazon RDSには複数のデプロイオプションがあります：</p>
+
+<h3>単一AZデプロイメント</h3>
+<p>
+    単一のアベイラビリティゾーン内にデータベースインスタンスをデプロイします。開発、テスト環境、または非クリティカルなワークロードに適しています。</p>
+
+<h3>マルチAZデプロイメント</h3>
+<p>
+    プライマリDBインスタンスと同期スタンバイレプリカを別のアベイラビリティゾーンにデプロイします。高可用性と耐障害性を提供し、本番環境に推奨されます。</p>
+
+<div class="example">
+    <h4>マルチAZデプロイメントの作成</h4>
+    <pre><code>aws rds create-db-instance \
     --db-instance-identifier mydbinstance \
     --db-instance-class db.m5.large \
     --engine mysql \
@@ -103,89 +113,92 @@
     --master-user-password secret99 \
     --allocated-storage 100 \
     --multi-az</code></pre>
-    </div>
-    
-    <h3>リードレプリカ</h3>
-    <p>プライマリDBインスタンスの読み取り専用コピーを作成します。読み取りトラフィックを分散させ、スケーラビリティを向上させます。最大15個のリードレプリカを作成できます。</p>
-    
-    <div class="example">
-        <h4>リードレプリカの作成</h4>
-        <pre><code>aws rds create-db-instance-read-replica \
+</div>
+
+<h3>リードレプリカ</h3>
+<p>
+    プライマリDBインスタンスの読み取り専用コピーを作成します。読み取りトラフィックを分散させ、スケーラビリティを向上させます。最大15個のリードレプリカを作成できます。</p>
+
+<div class="example">
+    <h4>リードレプリカの作成</h4>
+    <pre><code>aws rds create-db-instance-read-replica \
     --db-instance-identifier mydbinstance-replica \
     --source-db-instance-identifier mydbinstance</code></pre>
-    </div>
-    
-    <h3>グローバルデータベース</h3>
-    <p>複数のAWSリージョンにまたがるデータベースをデプロイします。プライマリリージョンでの書き込みと、最大5つのセカンダリリージョンでの低レイテンシー読み取りを提供します。</p>
-    
-    <h3>Amazon RDS Serverless</h3>
-    <p>Amazon Aurora Serverlessは、需要に応じて自動的にスケールするデータベースを提供します。アプリケーションの需要に基づいて容量を調整し、使用した分だけ支払います。</p>
-    
-    <h2>Amazon RDSのインスタンスタイプ</h2>
-    <p>Amazon RDSは様々なワークロードに対応するために複数のインスタンスタイプを提供しています：</p>
-    
-    <table>
-        <tr>
-            <th>インスタンスファミリー</th>
-            <th>説明</th>
-            <th>ユースケース</th>
-        </tr>
-        <tr>
-            <td>T（バーストパフォーマンス）</td>
-            <td>ベースラインパフォーマンスとバースト能力を提供する低コストインスタンス</td>
-            <td>開発/テスト環境、小規模アプリケーション、低トラフィックのブログやウェブサイト</td>
-        </tr>
-        <tr>
-            <td>M（汎用）</td>
-            <td>コンピューティング、メモリ、ネットワークリソースのバランスが取れたインスタンス</td>
-            <td>中小規模のデータベース、開発環境、テスト環境、本番環境</td>
-        </tr>
-        <tr>
-            <td>R（メモリ最適化）</td>
-            <td>メモリを多く使用するワークロード向けに最適化されたインスタンス</td>
-            <td>高性能データベース、インメモリデータベース、リアルタイム分析</td>
-        </tr>
-        <tr>
-            <td>X（メモリ超最適化）</td>
-            <td>大規模なインメモリアプリケーション向けの高メモリインスタンス</td>
-            <td>大規模なインメモリデータベース、SAP HANA、ビッグデータ処理エンジン</td>
-        </tr>
-        <tr>
-            <td>Z（メモリ最適化および高速ストレージ）</td>
-            <td>高周波数のIntel Xeonプロセッサと高速ローカルストレージを備えたインスタンス</td>
-            <td>高性能トランザクション処理、低レイテンシーが必要なアプリケーション</td>
-        </tr>
-    </table>
-    
-    <h2>Amazon RDSのストレージオプション</h2>
-    <p>Amazon RDSは3種類のストレージタイプを提供しています：</p>
-    
-    <table>
-        <tr>
-            <th>ストレージタイプ</th>
-            <th>説明</th>
-            <th>ユースケース</th>
-        </tr>
-        <tr>
-            <td>汎用SSD（gp2/gp3）</td>
-            <td>コスト効率の高いSSDストレージ。gp3はgp2の後継で、より柔軟なパフォーマンス設定が可能</td>
-            <td>開発/テスト環境、中小規模の本番データベース</td>
-        </tr>
-        <tr>
-            <td>プロビジョンドIOPS SSD（io1/io2）</td>
-            <td>高性能SSDストレージ。io2はio1の後継で、より高い耐久性を提供</td>
-            <td>I/O集約型のワークロード、高トランザクションのOLTPシステム</td>
-        </tr>
-        <tr>
-            <td>マグネティック（スタンダード）</td>
-            <td>レガシーストレージタイプ（新規デプロイメントには非推奨）</td>
-            <td>低コストが最優先の非クリティカルワークロード</td>
-        </tr>
-    </table>
-    
-    <div class="example">
-        <h4>プロビジョンドIOPSストレージを使用したDBインスタンスの作成</h4>
-        <pre><code>aws rds create-db-instance \
+</div>
+
+<h3>グローバルデータベース</h3>
+<p>
+    複数のAWSリージョンにまたがるデータベースをデプロイします。プライマリリージョンでの書き込みと、最大5つのセカンダリリージョンでの低レイテンシー読み取りを提供します。</p>
+
+<h3>Amazon RDS Serverless</h3>
+<p>Amazon Aurora
+    Serverlessは、需要に応じて自動的にスケールするデータベースを提供します。アプリケーションの需要に基づいて容量を調整し、使用した分だけ支払います。</p>
+
+<h2>Amazon RDSのインスタンスタイプ</h2>
+<p>Amazon RDSは様々なワークロードに対応するために複数のインスタンスタイプを提供しています：</p>
+
+<table>
+    <tr>
+        <th>インスタンスファミリー</th>
+        <th>説明</th>
+        <th>ユースケース</th>
+    </tr>
+    <tr>
+        <td>T（バーストパフォーマンス）</td>
+        <td>ベースラインパフォーマンスとバースト能力を提供する低コストインスタンス</td>
+        <td>開発/テスト環境、小規模アプリケーション、低トラフィックのブログやウェブサイト</td>
+    </tr>
+    <tr>
+        <td>M（汎用）</td>
+        <td>コンピューティング、メモリ、ネットワークリソースのバランスが取れたインスタンス</td>
+        <td>中小規模のデータベース、開発環境、テスト環境、本番環境</td>
+    </tr>
+    <tr>
+        <td>R（メモリ最適化）</td>
+        <td>メモリを多く使用するワークロード向けに最適化されたインスタンス</td>
+        <td>高性能データベース、インメモリデータベース、リアルタイム分析</td>
+    </tr>
+    <tr>
+        <td>X（メモリ超最適化）</td>
+        <td>大規模なインメモリアプリケーション向けの高メモリインスタンス</td>
+        <td>大規模なインメモリデータベース、SAP HANA、ビッグデータ処理エンジン</td>
+    </tr>
+    <tr>
+        <td>Z（メモリ最適化および高速ストレージ）</td>
+        <td>高周波数のIntel Xeonプロセッサと高速ローカルストレージを備えたインスタンス</td>
+        <td>高性能トランザクション処理、低レイテンシーが必要なアプリケーション</td>
+    </tr>
+</table>
+
+<h2>Amazon RDSのストレージオプション</h2>
+<p>Amazon RDSは3種類のストレージタイプを提供しています：</p>
+
+<table>
+    <tr>
+        <th>ストレージタイプ</th>
+        <th>説明</th>
+        <th>ユースケース</th>
+    </tr>
+    <tr>
+        <td>汎用SSD（gp2/gp3）</td>
+        <td>コスト効率の高いSSDストレージ。gp3はgp2の後継で、より柔軟なパフォーマンス設定が可能</td>
+        <td>開発/テスト環境、中小規模の本番データベース</td>
+    </tr>
+    <tr>
+        <td>プロビジョンドIOPS SSD（io1/io2）</td>
+        <td>高性能SSDストレージ。io2はio1の後継で、より高い耐久性を提供</td>
+        <td>I/O集約型のワークロード、高トランザクションのOLTPシステム</td>
+    </tr>
+    <tr>
+        <td>マグネティック（スタンダード）</td>
+        <td>レガシーストレージタイプ（新規デプロイメントには非推奨）</td>
+        <td>低コストが最優先の非クリティカルワークロード</td>
+    </tr>
+</table>
+
+<div class="example">
+    <h4>プロビジョンドIOPSストレージを使用したDBインスタンスの作成</h4>
+    <pre><code>aws rds create-db-instance \
     --db-instance-identifier mydbinstance \
     --db-instance-class db.m5.large \
     --engine mysql \
@@ -194,15 +207,16 @@
     --allocated-storage 100 \
     --storage-type io1 \
     --iops 3000</code></pre>
-    </div>
-    
-    <h2>Amazon RDSの使用方法</h2>
-    <p>Amazon RDSは、AWS Management Console、AWS CLI、AWS SDKs、またはインフラストラクチャ as コード（IaC）ツールを使用して利用できます。</p>
-    
-    <h3>データベースインスタンスの作成</h3>
-    <div class="example">
-        <h4>AWS CLIを使用したMySQLデータベースインスタンスの作成</h4>
-        <pre><code>aws rds create-db-instance \
+</div>
+
+<h2>Amazon RDSの使用方法</h2>
+<p>Amazon RDSは、AWS Management Console、AWS CLI、AWS SDKs、またはインフラストラクチャ as
+    コード（IaC）ツールを使用して利用できます。</p>
+
+<h3>データベースインスタンスの作成</h3>
+<div class="example">
+    <h4>AWS CLIを使用したMySQLデータベースインスタンスの作成</h4>
+    <pre><code>aws rds create-db-instance \
     --db-instance-identifier mydbinstance \
     --db-instance-class db.t3.micro \
     --engine mysql \
@@ -218,64 +232,64 @@
     --multi-az \
     --publicly-accessible \
     --tags Key=Environment,Value=Production</code></pre>
-    </div>
-    
-    <h3>データベースへの接続</h3>
-    <div class="example">
-        <h4>MySQLデータベースへの接続</h4>
-        <pre><code>mysql -h mydbinstance.abcdefghijkl.us-east-1.rds.amazonaws.com -P 3306 -u admin -p</code></pre>
-        
-        <h4>PostgreSQLデータベースへの接続</h4>
-        <pre><code>psql -h mydbinstance.abcdefghijkl.us-east-1.rds.amazonaws.com -p 5432 -U admin -d postgres</code></pre>
-    </div>
-    
-    <h3>バックアップと復元</h3>
-    <div class="example">
-        <h4>手動スナップショットの作成</h4>
-        <pre><code>aws rds create-db-snapshot \
+</div>
+
+<h3>データベースへの接続</h3>
+<div class="example">
+    <h4>MySQLデータベースへの接続</h4>
+    <pre><code>mysql -h mydbinstance.abcdefghijkl.us-east-1.rds.amazonaws.com -P 3306 -u admin -p</code></pre>
+
+    <h4>PostgreSQLデータベースへの接続</h4>
+    <pre><code>psql -h mydbinstance.abcdefghijkl.us-east-1.rds.amazonaws.com -p 5432 -U admin -d postgres</code></pre>
+</div>
+
+<h3>バックアップと復元</h3>
+<div class="example">
+    <h4>手動スナップショットの作成</h4>
+    <pre><code>aws rds create-db-snapshot \
     --db-instance-identifier mydbinstance \
     --db-snapshot-identifier mydbsnapshot</code></pre>
-        
-        <h4>スナップショットからのデータベースの復元</h4>
-        <pre><code>aws rds restore-db-instance-from-db-snapshot \
+
+    <h4>スナップショットからのデータベースの復元</h4>
+    <pre><code>aws rds restore-db-instance-from-db-snapshot \
     --db-instance-identifier mynewdbinstance \
     --db-snapshot-identifier mydbsnapshot</code></pre>
-        
-        <h4>特定の時点への復元</h4>
-        <pre><code>aws rds restore-db-instance-to-point-in-time \
+
+    <h4>特定の時点への復元</h4>
+    <pre><code>aws rds restore-db-instance-to-point-in-time \
     --source-db-instance-identifier mydbinstance \
     --target-db-instance-identifier mynewdbinstance \
     --restore-time 2023-01-15T00:00:00Z</code></pre>
-    </div>
-    
-    <h3>パラメータグループの管理</h3>
-    <div class="example">
-        <h4>DBパラメータグループの作成</h4>
-        <pre><code>aws rds create-db-parameter-group \
+</div>
+
+<h3>パラメータグループの管理</h3>
+<div class="example">
+    <h4>DBパラメータグループの作成</h4>
+    <pre><code>aws rds create-db-parameter-group \
     --db-parameter-group-name myparametergroup \
     --db-parameter-group-family mysql8.0 \
     --description "My custom parameter group"</code></pre>
-        
-        <h4>パラメータの変更</h4>
-        <pre><code>aws rds modify-db-parameter-group \
+
+    <h4>パラメータの変更</h4>
+    <pre><code>aws rds modify-db-parameter-group \
     --db-parameter-group-name myparametergroup \
     --parameters "ParameterName=max_connections,ParameterValue=1000,ApplyMethod=immediate"</code></pre>
-    </div>
-    
-    <h2>Amazon RDSのセキュリティ</h2>
-    <p>Amazon RDSは、データベースのセキュリティを確保するための多層防御アプローチを提供します：</p>
-    
-    <h3>ネットワークセキュリティ</h3>
-    <ul>
-        <li><strong>VPC：</strong> RDSインスタンスをVPC内にデプロイして、ネットワークレベルで分離</li>
-        <li><strong>セキュリティグループ：</strong> インバウンドおよびアウトバウンドトラフィックを制御</li>
-        <li><strong>プライベートサブネット：</strong> インターネットからの直接アクセスを防止</li>
-        <li><strong>Network ACLs：</strong> サブネットレベルでのトラフィック制御</li>
-    </ul>
-    
-    <div class="example">
-        <h4>セキュリティグループの設定</h4>
-        <pre><code># セキュリティグループの作成
+</div>
+
+<h2>Amazon RDSのセキュリティ</h2>
+<p>Amazon RDSは、データベースのセキュリティを確保するための多層防御アプローチを提供します：</p>
+
+<h3>ネットワークセキュリティ</h3>
+<ul>
+    <li><strong>VPC：</strong> RDSインスタンスをVPC内にデプロイして、ネットワークレベルで分離</li>
+    <li><strong>セキュリティグループ：</strong> インバウンドおよびアウトバウンドトラフィックを制御</li>
+    <li><strong>プライベートサブネット：</strong> インターネットからの直接アクセスを防止</li>
+    <li><strong>Network ACLs：</strong> サブネットレベルでのトラフィック制御</li>
+</ul>
+
+<div class="example">
+    <h4>セキュリティグループの設定</h4>
+    <pre><code># セキュリティグループの作成
 aws ec2 create-security-group \
     --group-name rds-security-group \
     --description "Security group for RDS" \
@@ -287,31 +301,31 @@ aws ec2 authorize-security-group-ingress \
     --protocol tcp \
     --port 3306 \
     --cidr 203.0.113.0/24</code></pre>
-    </div>
-    
-    <h3>アクセス管理</h3>
-    <ul>
-        <li><strong>IAM認証：</strong> データベースユーザーのIAM認証を有効化</li>
-        <li><strong>IAMポリシー：</strong> RDSリソースへのアクセスを制御</li>
-        <li><strong>データベースユーザー管理：</strong> 最小権限の原則に基づいたユーザー権限</li>
-    </ul>
-    
-    <div class="example">
-        <h4>IAM認証の有効化</h4>
-        <pre><code>aws rds modify-db-instance \
+</div>
+
+<h3>アクセス管理</h3>
+<ul>
+    <li><strong>IAM認証：</strong> データベースユーザーのIAM認証を有効化</li>
+    <li><strong>IAMポリシー：</strong> RDSリソースへのアクセスを制御</li>
+    <li><strong>データベースユーザー管理：</strong> 最小権限の原則に基づいたユーザー権限</li>
+</ul>
+
+<div class="example">
+    <h4>IAM認証の有効化</h4>
+    <pre><code>aws rds modify-db-instance \
     --db-instance-identifier mydbinstance \
     --enable-iam-database-authentication</code></pre>
-    </div>
-    
-    <h3>暗号化</h3>
-    <ul>
-        <li><strong>保存時の暗号化：</strong> AWS KMSを使用したデータベース、バックアップ、スナップショットの暗号化</li>
-        <li><strong>転送時の暗号化：</strong> SSL/TLS接続の強制</li>
-    </ul>
-    
-    <div class="example">
-        <h4>暗号化されたデータベースインスタンスの作成</h4>
-        <pre><code>aws rds create-db-instance \
+</div>
+
+<h3>暗号化</h3>
+<ul>
+    <li><strong>保存時の暗号化：</strong> AWS KMSを使用したデータベース、バックアップ、スナップショットの暗号化</li>
+    <li><strong>転送時の暗号化：</strong> SSL/TLS接続の強制</li>
+</ul>
+
+<div class="example">
+    <h4>暗号化されたデータベースインスタンスの作成</h4>
+    <pre><code>aws rds create-db-instance \
     --db-instance-identifier mydbinstance \
     --db-instance-class db.t3.micro \
     --engine mysql \
@@ -320,25 +334,26 @@ aws ec2 authorize-security-group-ingress \
     --allocated-storage 20 \
     --storage-encrypted \
     --kms-key-id arn:aws:kms:us-east-1:123456789012:key/abcd1234-ef56-gh78-ij90-klmn1234pqrs</code></pre>
-    </div>
-    
-    <h3>監査とモニタリング</h3>
-    <ul>
-        <li><strong>CloudTrail：</strong> RDS API呼び出しのログ記録</li>
-        <li><strong>CloudWatch：</strong> パフォーマンスメトリクスとアラーム</li>
-        <li><strong>データベース監査：</strong> エンジン固有の監査機能</li>
-        <li><strong>イベント通知：</strong> RDSイベントに基づく通知</li>
-    </ul>
-    
-    <h2>Amazon RDSのモニタリングと可観測性</h2>
-    <p>Amazon RDSは、データベースのパフォーマンスと健全性を監視するための様々なツールを提供します：</p>
-    
-    <h3>Amazon CloudWatch</h3>
-    <p>CloudWatchは、RDSインスタンスのメトリクス（CPU使用率、メモリ使用率、ディスクI/O、接続数など）を収集し、アラームを設定して自動アクションをトリガーすることができます。</p>
-    
-    <div class="example">
-        <h4>CloudWatchアラームの作成</h4>
-        <pre><code>aws cloudwatch put-metric-alarm \
+</div>
+
+<h3>監査とモニタリング</h3>
+<ul>
+    <li><strong>CloudTrail：</strong> RDS API呼び出しのログ記録</li>
+    <li><strong>CloudWatch：</strong> パフォーマンスメトリクスとアラーム</li>
+    <li><strong>データベース監査：</strong> エンジン固有の監査機能</li>
+    <li><strong>イベント通知：</strong> RDSイベントに基づく通知</li>
+</ul>
+
+<h2>Amazon RDSのモニタリングと可観測性</h2>
+<p>Amazon RDSは、データベースのパフォーマンスと健全性を監視するための様々なツールを提供します：</p>
+
+<h3>Amazon CloudWatch</h3>
+<p>
+    CloudWatchは、RDSインスタンスのメトリクス（CPU使用率、メモリ使用率、ディスクI/O、接続数など）を収集し、アラームを設定して自動アクションをトリガーすることができます。</p>
+
+<div class="example">
+    <h4>CloudWatchアラームの作成</h4>
+    <pre><code>aws cloudwatch put-metric-alarm \
     --alarm-name HighCPUUtilization \
     --comparison-operator GreaterThanThreshold \
     --evaluation-periods 2 \
@@ -349,54 +364,60 @@ aws ec2 authorize-security-group-ingress \
     --threshold 80 \
     --alarm-actions arn:aws:sns:us-east-1:123456789012:my-topic \
     --dimensions "Name=DBInstanceIdentifier,Value=mydbinstance"</code></pre>
-    </div>
-    
-    <h3>拡張モニタリング</h3>
-    <p>拡張モニタリングは、RDSインスタンスのオペレーティングシステムのメトリクスをリアルタイムで提供します。これにより、データベースのパフォーマンスに影響を与える可能性のあるプロセスやスレッドを特定できます。</p>
-    
-    <div class="example">
-        <h4>拡張モニタリングの有効化</h4>
-        <pre><code>aws rds modify-db-instance \
+</div>
+
+<h3>拡張モニタリング</h3>
+<p>
+    拡張モニタリングは、RDSインスタンスのオペレーティングシステムのメトリクスをリアルタイムで提供します。これにより、データベースのパフォーマンスに影響を与える可能性のあるプロセスやスレッドを特定できます。</p>
+
+<div class="example">
+    <h4>拡張モニタリングの有効化</h4>
+    <pre><code>aws rds modify-db-instance \
     --db-instance-identifier mydbinstance \
     --monitoring-interval 30 \
     --monitoring-role-arn arn:aws:iam::123456789012:role/rds-monitoring-role</code></pre>
-    </div>
-    
-    <h3>Performance Insights</h3>
-    <p>Performance Insightsは、データベースのパフォーマンスを簡単に可視化し、パフォーマンスの問題を特定するためのツールです。データベースの負荷を分析し、待機イベント、SQLステートメント、ホスト、ユーザーによるフィルタリングが可能です。</p>
-    
-    <div class="example">
-        <h4>Performance Insightsの有効化</h4>
-        <pre><code>aws rds modify-db-instance \
+</div>
+
+<h3>Performance Insights</h3>
+<p>Performance
+    Insightsは、データベースのパフォーマンスを簡単に可視化し、パフォーマンスの問題を特定するためのツールです。データベースの負荷を分析し、待機イベント、SQLステートメント、ホスト、ユーザーによるフィルタリングが可能です。</p>
+
+<div class="example">
+    <h4>Performance Insightsの有効化</h4>
+    <pre><code>aws rds modify-db-instance \
     --db-instance-identifier mydbinstance \
     --enable-performance-insights \
     --performance-insights-retention-period 7</code></pre>
-    </div>
-    
-    <h3>データベースログ</h3>
-    <p>RDSは、データベースエンジンのログをCloudWatch Logsにエクスポートする機能を提供しています。これにより、ログの集中管理、検索、分析が可能になります。</p>
-    
-    <div class="example">
-        <h4>ログのエクスポートの有効化</h4>
-        <pre><code>aws rds modify-db-instance \
+</div>
+
+<h3>データベースログ</h3>
+<p>RDSは、データベースエンジンのログをCloudWatch
+    Logsにエクスポートする機能を提供しています。これにより、ログの集中管理、検索、分析が可能になります。</p>
+
+<div class="example">
+    <h4>ログのエクスポートの有効化</h4>
+    <pre><code>aws rds modify-db-instance \
     --db-instance-identifier mydbinstance \
     --cloudwatch-logs-export-configuration '{"EnableLogTypes":["error","general","slowquery"]}'</code></pre>
-    </div>
-    
-    <h2>Amazon RDSの高度な機能</h2>
-    
-    <h3>ブルー/グリーンデプロイメント</h3>
-    <p>ブルー/グリーンデプロイメントは、本番環境（ブルー環境）のコピーを作成し、新しい環境（グリーン環境）でアップグレードやスキーマ変更をテストした後、最小限のダウンタイムで切り替えることができる機能です。</p>
-    
-    <h3>マルチAZクラスター</h3>
-    <p>マルチAZクラスターは、3つのアベイラビリティゾーンにわたるリードレプリカを持つ高可用性クラスターデプロイメントです。書き込みノードに障害が発生した場合、自動的にフェイルオーバーが行われます。</p>
-    
-    <h3>RDSプロキシ</h3>
-    <p>RDSプロキシは、データベース接続をプールし、共有し、安全に維持するフルマネージドの高可用性データベースプロキシです。アプリケーションのスケーラビリティを向上させ、データベースの障害に対する回復力を高めます。</p>
-    
-    <div class="example">
-        <h4>RDSプロキシの作成</h4>
-        <pre><code>aws rds create-db-proxy \
+</div>
+
+<h2>Amazon RDSの高度な機能</h2>
+
+<h3>ブルー/グリーンデプロイメント</h3>
+<p>
+    ブルー/グリーンデプロイメントは、本番環境（ブルー環境）のコピーを作成し、新しい環境（グリーン環境）でアップグレードやスキーマ変更をテストした後、最小限のダウンタイムで切り替えることができる機能です。</p>
+
+<h3>マルチAZクラスター</h3>
+<p>
+    マルチAZクラスターは、3つのアベイラビリティゾーンにわたるリードレプリカを持つ高可用性クラスターデプロイメントです。書き込みノードに障害が発生した場合、自動的にフェイルオーバーが行われます。</p>
+
+<h3>RDSプロキシ</h3>
+<p>
+    RDSプロキシは、データベース接続をプールし、共有し、安全に維持するフルマネージドの高可用性データベースプロキシです。アプリケーションのスケーラビリティを向上させ、データベースの障害に対する回復力を高めます。</p>
+
+<div class="example">
+    <h4>RDSプロキシの作成</h4>
+    <pre><code>aws rds create-db-proxy \
     --db-proxy-name mydbproxy \
     --engine-family MYSQL \
     --auth '{
@@ -407,78 +428,79 @@ aws ec2 authorize-security-group-ingress \
     --role-arn arn:aws:iam::123456789012:role/rds-proxy-role \
     --vpc-subnet-ids subnet-0123456789abcdef0 subnet-0123456789abcdef1 \
     --vpc-security-group-ids sg-0123456789abcdef0</code></pre>
-    </div>
-    
-    <h3>RDSカスタム</h3>
-    <p>RDSカスタムは、基盤となるデータベースとオペレーティングシステムへのアクセスを提供するマネージドデータベースサービスです。これにより、レガシーアプリケーションやカスタムアプリケーションに必要なカスタマイズが可能になります。</p>
-    
-    <h2>Amazon RDSのコスト最適化</h2>
-    <p>Amazon RDSのコストを最適化するための戦略：</p>
-    
-    <ul>
-        <li><strong>適切なインスタンスサイズの選択：</strong> ワークロードに適したインスタンスタイプとサイズを選択</li>
-        <li><strong>リザーブドインスタンス：</strong> 1年または3年の期間で予約することで大幅な割引</li>
-        <li><strong>Serverlessオプション：</strong> 変動するワークロードにはAurora Serverlessを検討</li>
-        <li><strong>ストレージの最適化：</strong> 必要なストレージ量とIOPSを適切に設定</li>
-        <li><strong>マルチAZの選択的使用：</strong> 本番環境には推奨、開発/テスト環境では不要な場合も</li>
-        <li><strong>バックアップ保持期間の最適化：</strong> 必要な期間のみバックアップを保持</li>
-        <li><strong>リードレプリカの戦略的使用：</strong> 読み取りトラフィックが多い場合のみ使用</li>
-    </ul>
-    
-    <h2>Amazon RDSのユースケース</h2>
-    <p>Amazon RDSは以下のようなユースケースに適しています：</p>
-    <ul>
-        <li><strong>ウェブアプリケーション：</strong> コンテンツ管理システム、eコマースプラットフォーム</li>
-        <li><strong>モバイルアプリケーション：</strong> ユーザーデータ、アプリケーション状態の保存</li>
-        <li><strong>エンタープライズアプリケーション：</strong> ERP、CRM、HRシステム</li>
-        <li><strong>SaaSアプリケーション：</strong> マルチテナントアプリケーション</li>
-        <li><strong>ゲームアプリケーション：</strong> プレイヤーデータ、ゲーム状態の保存</li>
-        <li><strong>分析アプリケーション：</strong> データウェアハウス、ビジネスインテリジェンス</li>
-        <li><strong>IoTアプリケーション：</strong> デバイスデータの保存と分析</li>
-    </ul>
-    
-    <h2>Amazon RDSとの統合サービス</h2>
-    <p>Amazon RDSは他のAWSサービスと統合して、より強力なソリューションを構築できます：</p>
-    
-    <table>
-        <tr>
-            <th>サービス</th>
-            <th>統合の利点</th>
-        </tr>
-        <tr>
-            <td>Amazon EC2</td>
-            <td>アプリケーションサーバーとデータベースの統合</td>
-        </tr>
-        <tr>
-            <td>AWS Lambda</td>
-            <td>サーバーレスアプリケーションからのデータベースアクセス</td>
-        </tr>
-        <tr>
-            <td>Amazon S3</td>
-            <td>データのインポート/エクスポート、バックアップの保存</td>
-        </tr>
-        <tr>
-            <td>AWS DMS</td>
-            <td>データベース移行とレプリケーション</td>
-        </tr>
-        <tr>
-            <td>Amazon CloudWatch</td>
-            <td>モニタリング、アラート、ログ管理</td>
-        </tr>
-        <tr>
-            <td>AWS Secrets Manager</td>
-            <td>データベース認証情報の安全な管理</td>
-        </tr>
-        <tr>
-            <td>AWS Backup</td>
-            <td>一元管理されたバックアップソリューション</td>
-        </tr>
-    </table>
-    
-    <h3>AWS DMSとの統合例</h3>
-    <div class="example">
-        <h4>データベース移行タスクの作成</h4>
-        <pre><code>aws dms create-replication-task \
+</div>
+
+<h3>RDSカスタム</h3>
+<p>
+    RDSカスタムは、基盤となるデータベースとオペレーティングシステムへのアクセスを提供するマネージドデータベースサービスです。これにより、レガシーアプリケーションやカスタムアプリケーションに必要なカスタマイズが可能になります。</p>
+
+<h2>Amazon RDSのコスト最適化</h2>
+<p>Amazon RDSのコストを最適化するための戦略：</p>
+
+<ul>
+    <li><strong>適切なインスタンスサイズの選択：</strong> ワークロードに適したインスタンスタイプとサイズを選択</li>
+    <li><strong>リザーブドインスタンス：</strong> 1年または3年の期間で予約することで大幅な割引</li>
+    <li><strong>Serverlessオプション：</strong> 変動するワークロードにはAurora Serverlessを検討</li>
+    <li><strong>ストレージの最適化：</strong> 必要なストレージ量とIOPSを適切に設定</li>
+    <li><strong>マルチAZの選択的使用：</strong> 本番環境には推奨、開発/テスト環境では不要な場合も</li>
+    <li><strong>バックアップ保持期間の最適化：</strong> 必要な期間のみバックアップを保持</li>
+    <li><strong>リードレプリカの戦略的使用：</strong> 読み取りトラフィックが多い場合のみ使用</li>
+</ul>
+
+<h2>Amazon RDSのユースケース</h2>
+<p>Amazon RDSは以下のようなユースケースに適しています：</p>
+<ul>
+    <li><strong>ウェブアプリケーション：</strong> コンテンツ管理システム、eコマースプラットフォーム</li>
+    <li><strong>モバイルアプリケーション：</strong> ユーザーデータ、アプリケーション状態の保存</li>
+    <li><strong>エンタープライズアプリケーション：</strong> ERP、CRM、HRシステム</li>
+    <li><strong>SaaSアプリケーション：</strong> マルチテナントアプリケーション</li>
+    <li><strong>ゲームアプリケーション：</strong> プレイヤーデータ、ゲーム状態の保存</li>
+    <li><strong>分析アプリケーション：</strong> データウェアハウス、ビジネスインテリジェンス</li>
+    <li><strong>IoTアプリケーション：</strong> デバイスデータの保存と分析</li>
+</ul>
+
+<h2>Amazon RDSとの統合サービス</h2>
+<p>Amazon RDSは他のAWSサービスと統合して、より強力なソリューションを構築できます：</p>
+
+<table>
+    <tr>
+        <th>サービス</th>
+        <th>統合の利点</th>
+    </tr>
+    <tr>
+        <td>Amazon EC2</td>
+        <td>アプリケーションサーバーとデータベースの統合</td>
+    </tr>
+    <tr>
+        <td>AWS Lambda</td>
+        <td>サーバーレスアプリケーションからのデータベースアクセス</td>
+    </tr>
+    <tr>
+        <td>Amazon S3</td>
+        <td>データのインポート/エクスポート、バックアップの保存</td>
+    </tr>
+    <tr>
+        <td>AWS DMS</td>
+        <td>データベース移行とレプリケーション</td>
+    </tr>
+    <tr>
+        <td>Amazon CloudWatch</td>
+        <td>モニタリング、アラート、ログ管理</td>
+    </tr>
+    <tr>
+        <td>AWS Secrets Manager</td>
+        <td>データベース認証情報の安全な管理</td>
+    </tr>
+    <tr>
+        <td>AWS Backup</td>
+        <td>一元管理されたバックアップソリューション</td>
+    </tr>
+</table>
+
+<h3>AWS DMSとの統合例</h3>
+<div class="example">
+    <h4>データベース移行タスクの作成</h4>
+    <pre><code>aws dms create-replication-task \
     --replication-task-identifier my-migration-task \
     --source-endpoint-arn arn:aws:dms:us-east-1:123456789012:endpoint:ABCDEFGHIJKLMNOPQRSTUVWXYZ \
     --target-endpoint-arn arn:aws:dms:us-east-1:123456789012:endpoint:ZYXWVUTSRQPONMLKJIHGFEDCBA \
@@ -486,78 +508,80 @@ aws ec2 authorize-security-group-ingress \
     --migration-type full-load-and-cdc \
     --table-mappings file://table-mappings.json \
     --replication-task-settings file://task-settings.json</code></pre>
-    </div>
-    
-    <h2>Amazon RDSのベストプラクティス</h2>
-    <ul>
-        <li><strong>高可用性：</strong>
-            <ul>
-                <li>本番環境ではマルチAZデプロイメントを使用</li>
-                <li>自動バックアップを有効化し、適切な保持期間を設定</li>
-                <li>定期的に手動スナップショットを作成</li>
-                <li>障害復旧手順を定期的にテスト</li>
-            </ul>
-        </li>
-        <li><strong>パフォーマンス：</strong>
-            <ul>
-                <li>ワークロードに適したインスタンスタイプとストレージタイプを選択</li>
-                <li>読み取り負荷が高い場合はリードレプリカを使用</li>
-                <li>Performance Insightsを有効化してパフォーマンスをモニタリング</li>
-                <li>適切なインデックスを作成し、クエリを最適化</li>
-            </ul>
-        </li>
-        <li><strong>セキュリティ：</strong>
-            <ul>
-                <li>VPC内のプライベートサブネットにデータベースをデプロイ</li>
-                <li>セキュリティグループを使用してアクセスを制限</li>
-                <li>保存時と転送時の暗号化を有効化</li>
-                <li>IAM認証を使用してデータベースアクセスを管理</li>
-                <li>最小権限の原則に従ってデータベースユーザー権限を設定</li>
-            </ul>
-        </li>
-        <li><strong>運用：</strong>
-            <ul>
-                <li>自動マイナーバージョンアップグレードを有効化</li>
-                <li>メンテナンスウィンドウを適切に設定</li>
-                <li>CloudWatchアラームを設定して問題を早期に検出</li>
-                <li>パラメータグループを使用してデータベース設定をカスタマイズ</li>
-                <li>タグを使用してリソースを整理し、コストを追跡</li>
-            </ul>
-        </li>
-    </ul>
-    
-    <div class="note">
-        <h3>RDSのセキュリティチェックリスト</h3>
-        <p>RDSインスタンスのセキュリティを確保するためのチェックリスト：</p>
+</div>
+
+<h2>Amazon RDSのベストプラクティス</h2>
+<ul>
+    <li><strong>高可用性：</strong>
         <ul>
-            <li>VPC内のプライベートサブネットにデプロイ</li>
-            <li>セキュリティグループを使用して必要なトラフィックのみを許可</li>
-            <li>パブリックアクセスを無効化</li>
-            <li>保存時の暗号化を有効化</li>
-            <li>SSL/TLS接続を強制</li>
-            <li>IAM認証を有効化</li>
-            <li>強力なパスワードポリシーを実装</li>
-            <li>定期的にデータベースユーザーとアクセス権限を監査</li>
-            <li>CloudTrailを有効化してAPIアクティビティを監視</li>
-            <li>データベースログを有効化して監視</li>
+            <li>本番環境ではマルチAZデプロイメントを使用</li>
+            <li>自動バックアップを有効化し、適切な保持期間を設定</li>
+            <li>定期的に手動スナップショットを作成</li>
+            <li>障害復旧手順を定期的にテスト</li>
         </ul>
-    </div>
-    
-    <h2>まとめ</h2>
-    <p>Amazon RDSは、クラウド内でリレーショナルデータベースを簡単に設定、運用、スケーリングできるマネージドサービスです。複数のデータベースエンジンをサポートし、バックアップ、パッチ適用、スケーリング、高可用性などの時間のかかる管理タスクを自動化します。</p>
-    
-    <p>Amazon RDSの主な利点は以下の通りです：</p>
+    </li>
+    <li><strong>パフォーマンス：</strong>
+        <ul>
+            <li>ワークロードに適したインスタンスタイプとストレージタイプを選択</li>
+            <li>読み取り負荷が高い場合はリードレプリカを使用</li>
+            <li>Performance Insightsを有効化してパフォーマンスをモニタリング</li>
+            <li>適切なインデックスを作成し、クエリを最適化</li>
+        </ul>
+    </li>
+    <li><strong>セキュリティ：</strong>
+        <ul>
+            <li>VPC内のプライベートサブネットにデータベースをデプロイ</li>
+            <li>セキュリティグループを使用してアクセスを制限</li>
+            <li>保存時と転送時の暗号化を有効化</li>
+            <li>IAM認証を使用してデータベースアクセスを管理</li>
+            <li>最小権限の原則に従ってデータベースユーザー権限を設定</li>
+        </ul>
+    </li>
+    <li><strong>運用：</strong>
+        <ul>
+            <li>自動マイナーバージョンアップグレードを有効化</li>
+            <li>メンテナンスウィンドウを適切に設定</li>
+            <li>CloudWatchアラームを設定して問題を早期に検出</li>
+            <li>パラメータグループを使用してデータベース設定をカスタマイズ</li>
+            <li>タグを使用してリソースを整理し、コストを追跡</li>
+        </ul>
+    </li>
+</ul>
+
+<div class="note">
+    <h3>RDSのセキュリティチェックリスト</h3>
+    <p>RDSインスタンスのセキュリティを確保するためのチェックリスト：</p>
     <ul>
-        <li>データベース管理タスクの自動化による運用負荷の軽減</li>
-        <li>マルチAZデプロイメントによる高可用性と耐障害性</li>
-        <li>リードレプリカによる読み取りスケーラビリティの向上</li>
-        <li>自動バックアップと特定の時点への復元機能</li>
-        <li>包括的なセキュリティ機能と暗号化オプション</li>
-        <li>CloudWatchとの統合によるモニタリングと可観測性</li>
-        <li>Performance Insightsによるパフォーマンス分析</li>
-        <li>コスト効率の高いデプロイオプションと料金モデル</li>
+        <li>VPC内のプライベートサブネットにデプロイ</li>
+        <li>セキュリティグループを使用して必要なトラフィックのみを許可</li>
+        <li>パブリックアクセスを無効化</li>
+        <li>保存時の暗号化を有効化</li>
+        <li>SSL/TLS接続を強制</li>
+        <li>IAM認証を有効化</li>
+        <li>強力なパスワードポリシーを実装</li>
+        <li>定期的にデータベースユーザーとアクセス権限を監査</li>
+        <li>CloudTrailを有効化してAPIアクティビティを監視</li>
+        <li>データベースログを有効化して監視</li>
     </ul>
-    
-    <p>Amazon RDSを効果的に活用するには、適切なデータベースエンジンとインスタンスタイプの選択、高可用性の確保、セキュリティベストプラクティスの適用、パフォーマンスの最適化、コスト管理の最適化が重要です。また、他のAWSサービスと組み合わせることで、より強力で柔軟なクラウドソリューションを構築することができます。</p>
+</div>
+
+<h2>まとめ</h2>
+<p>Amazon
+    RDSは、クラウド内でリレーショナルデータベースを簡単に設定、運用、スケーリングできるマネージドサービスです。複数のデータベースエンジンをサポートし、バックアップ、パッチ適用、スケーリング、高可用性などの時間のかかる管理タスクを自動化します。</p>
+
+<p>Amazon RDSの主な利点は以下の通りです：</p>
+<ul>
+    <li>データベース管理タスクの自動化による運用負荷の軽減</li>
+    <li>マルチAZデプロイメントによる高可用性と耐障害性</li>
+    <li>リードレプリカによる読み取りスケーラビリティの向上</li>
+    <li>自動バックアップと特定の時点への復元機能</li>
+    <li>包括的なセキュリティ機能と暗号化オプション</li>
+    <li>CloudWatchとの統合によるモニタリングと可観測性</li>
+    <li>Performance Insightsによるパフォーマンス分析</li>
+    <li>コスト効率の高いデプロイオプションと料金モデル</li>
+</ul>
+
+<p>Amazon
+    RDSを効果的に活用するには、適切なデータベースエンジンとインスタンスタイプの選択、高可用性の確保、セキュリティベストプラクティスの適用、パフォーマンスの最適化、コスト管理の最適化が重要です。また、他のAWSサービスと組み合わせることで、より強力で柔軟なクラウドソリューションを構築することができます。</p>
 </body>
 </html>

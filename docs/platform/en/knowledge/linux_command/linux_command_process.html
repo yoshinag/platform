@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Linux Process Management Commands Guide</title>
@@ -8,8 +12,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
@@ -19,16 +22,16 @@
     </div>
 
     <h1>Linux Process Management Commands Guide</h1>
-    
+
     <!-- Process Management Commands -->
     <section id="process" class="command-section">
         <h2>Process Management Commands</h2>
         <p>Commands for displaying, monitoring, and controlling processes.</p>
-        
+
         <!-- ps command -->
         <h3>ps - Display Processes</h3>
         <p>Displays running processes.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -63,7 +66,7 @@
                 <td>Customize output format</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>ps</code> - Display processes for current terminal<br>
@@ -81,7 +84,7 @@
         <!-- top command -->
         <h3>top - Monitor Processes in Real-time</h3>
         <p>Monitors system processes in real-time.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option/Key</th>
@@ -120,7 +123,7 @@
                 <td>Quit top (press q while running)</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>top</code> - Monitor processes in real-time<br>
@@ -128,7 +131,8 @@
             <code>top -n 10</code> - Update 10 times then exit<br>
             <code>top -u username</code> - Display only processes for specific user<br>
             <code>top -b -n 1 > top_output.txt</code> - Run once in batch mode and save output to file<br>
-            <code>top -b -n 1 | grep "firefox"</code> - Extract information for specific process (firefox in this case)<br>
+            <code>top -b -n 1 | grep "firefox"</code> - Extract information for specific process (firefox in this
+            case)<br>
             <code>top -c</code> - Show full command path<br>
             <code>top -o %MEM</code> - Sort by memory usage<br>
             <code>top -i</code> - Hide idle processes
@@ -137,7 +141,7 @@
         <!-- htop command -->
         <h3>htop - Enhanced Process Viewer</h3>
         <p>An enhanced version of top with a more user-friendly interface.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Key</th>
@@ -168,7 +172,7 @@
                 <td>Show setup menu</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>htop</code> - Launch htop<br>
@@ -184,7 +188,7 @@
         <!-- kill command -->
         <h3>kill - Terminate Processes</h3>
         <p>Sends signals to processes with specified process IDs.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option/Signal</th>
@@ -211,7 +215,7 @@
                 <td>TERM signal - default signal, requests normal termination</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>kill 1234</code> - Send termination signal (TERM) to process ID 1234<br>
@@ -227,7 +231,7 @@
         <!-- killall command -->
         <h3>killall - Terminate Processes by Name</h3>
         <p>Sends signals to all processes matching the specified name.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -254,7 +258,7 @@
                 <td>Report if the signal was successfully sent</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>killall firefox</code> - Terminate all firefox processes<br>
@@ -262,15 +266,18 @@
             <code>killall -u username firefox</code> - Terminate firefox processes for specific user<br>
             <code>killall -i chrome</code> - Ask for confirmation before killing each process<br>
             <code>killall -w firefox</code> - Wait for processes to die<br>
-            <code>killall -r "fire.*"</code> - Kill processes matching regular expression (firefox, firefox-esr, etc.)<br>
+            <code>killall -r "fire.*"</code> - Kill processes matching regular expression (firefox, firefox-esr,
+            etc.)<br>
             <code>killall -o 15m bash</code> - Kill bash processes running for more than 15 minutes<br>
-            <code>killall -y 10m -o 1h bash</code> - Kill bash processes running for more than 1 hour but not accessed in the last 10 minutes
+            <code>killall -y 10m -o 1h bash</code> - Kill bash processes running for more than 1 hour but not accessed
+            in the last 10 minutes
         </div>
 
         <!-- nice/renice command -->
         <h3>nice/renice - Set/Change Process Priority</h3>
-        <p>Set or change the priority (nice value) of processes. Nice values range from -20 (highest priority) to 19 (lowest priority), with 0 as default.</p>
-        
+        <p>Set or change the priority (nice value) of processes. Nice values range from -20 (highest priority) to 19
+            (lowest priority), with 0 as default.</p>
+
         <table class="command-table">
             <tr>
                 <th>Command/Option</th>
@@ -289,7 +296,7 @@
                 <td>Change priority of all processes owned by specified user</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>nice -n 10 ./script.sh</code> - Run script with low priority (10)<br>
@@ -306,7 +313,7 @@
         <!-- nohup command -->
         <h3>nohup - Run Process Immune to Hangups</h3>
         <p>Runs a command that continues running after you log out or close the terminal.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Syntax</th>
@@ -317,16 +324,18 @@
                 <td>Run command in background, continue running after terminal closes</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>nohup ./long_running_script.sh &</code> - Run script in background, continue after logout<br>
-            <code>nohup wget https://example.com/large-file.iso &</code> - Download file in background, continue after terminal closes<br>
+            <code>nohup wget https://example.com/large-file.iso &</code> - Download file in background, continue after
+            terminal closes<br>
             <code>nohup ./script.sh > custom_output.log 2>&1 &</code> - Redirect stdout and stderr to specified file<br>
             <code>nohup ./script.sh > /dev/null 2>&1 &</code> - Discard output (when logs aren't needed)<br>
             <code>nohup nice -n 19 ./backup.sh &</code> - Run in background with low priority<br>
             <code>echo 'nohup ./script.sh &' | at midnight</code> - Schedule nohup command to run at specified time<br>
-            <code>nohup bash -c "for i in {1..10}; do ./task.sh; sleep 60; done" &</code> - Run multiple commands with nohup
+            <code>nohup bash -c "for i in {1..10}; do ./task.sh; sleep 60; done" &</code> - Run multiple commands with
+            nohup
         </div>
         <div class="note">
             <p>Output is normally redirected to a file called "nohup.out" in the current directory.</p>
@@ -335,7 +344,7 @@
         <!-- bg/fg command -->
         <h3>bg/fg - Background/Foreground Job Control</h3>
         <p>Control jobs running in background or foreground.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Command</th>
@@ -370,7 +379,7 @@
                 <td>List background jobs</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>./long_script.sh &</code> - Run script in background<br>
@@ -387,8 +396,8 @@
     </section>
 
     <div class="navigation-links">
-        <a href="linux_command_network.html">Previous Category: Networking</a> | 
-        <a href="linux_command.html">Back to Main Page</a> | 
+        <a href="linux_command_network.html">Previous Category: Networking</a> |
+        <a href="linux_command.html">Back to Main Page</a> |
         <a href="linux_command_permission.html">Next Category: Permission Management</a>
     </div>
 

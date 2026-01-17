@@ -62,14 +62,14 @@ export function setActiveTabNotation(notation) {
 export function addTab(title = null) {
     const id = 'tab-' + (tabs.length + 1);
     const newTitle = title || `タブ ${tabs.length + 1}`;
-    
+
     tabs.push({
         id,
         title: newTitle,
         content: '',
         notation: 'mermaid' // Default notation
     });
-    
+
     return tabs.length - 1; // Return the index of the new tab
 }
 
@@ -77,18 +77,18 @@ export function removeTab(index) {
     if (tabs.length <= 1) {
         return false; // Don't remove the last tab
     }
-    
+
     if (index >= 0 && index < tabs.length) {
         tabs.splice(index, 1);
-        
+
         // Adjust activeTabIndex if needed
         if (activeTabIndex >= tabs.length) {
             activeTabIndex = tabs.length - 1;
         }
-        
+
         return true;
     }
-    
+
     return false;
 }
 

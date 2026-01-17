@@ -1,5 +1,5 @@
 // js/mermaid_viewer/modules/ui_interactions.js
-import { setUploadedFileName, activeTabIndex, renameTab } from './state.js';
+import {setUploadedFileName, activeTabIndex, renameTab} from './state.js';
 
 /**
  * Shows a temporary notification message
@@ -15,25 +15,25 @@ export function showNotification(message, type = 'info', duration = 3000) {
         notificationContainer.id = 'notification-container';
         document.body.appendChild(notificationContainer);
     }
-    
+
     // Create notification element
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
     notification.textContent = message;
-    
+
     // Add to container
     notificationContainer.appendChild(notification);
-    
+
     // Trigger animation
     setTimeout(() => {
         notification.classList.add('show');
     }, 10);
-    
+
     // Remove after duration
     setTimeout(() => {
         notification.classList.remove('show');
         notification.classList.add('hide');
-        
+
         // Remove from DOM after animation completes
         setTimeout(() => {
             if (notification.parentNode) {
@@ -65,7 +65,7 @@ export function setupAllPanelsToggle(buttonElement, settingsPanelElement, codePa
         console.warn("One or more elements for panel toggle not found.");
         return;
     }
-    buttonElement.addEventListener('click', function() {
+    buttonElement.addEventListener('click', function () {
         const SPHidden = settingsPanelElement.classList.contains('hidden');
         const CPHidden = codePanelElement.classList.contains('hidden');
         if (SPHidden || CPHidden) {
@@ -90,16 +90,18 @@ export function setupFullscreenToggle(buttonElement, bodyElement) {
         console.warn("Button element or body element for fullscreen toggle not found.");
         return;
     }
+
     function updateFullscreenButtonState(isFullscreenActive) {
         buttonElement.innerHTML = isFullscreenActive ? SVG_ICON_FULLSCREEN_EXIT : SVG_ICON_FULLSCREEN;
         buttonElement.title = isFullscreenActive ? '通常表示に戻す' : '全画面表示 (ビュー)';
     }
+
     updateFullscreenButtonState(bodyElement.classList.contains('graph-view-fullscreen'));
-    buttonElement.addEventListener('click', function() {
+    buttonElement.addEventListener('click', function () {
         bodyElement.classList.toggle('graph-view-fullscreen');
         updateFullscreenButtonState(bodyElement.classList.contains('graph-view-fullscreen'));
     });
-    document.addEventListener('keydown', function(event) {
+    document.addEventListener('keydown', function (event) {
         if (event.key === 'Escape' && bodyElement.classList.contains('graph-view-fullscreen')) {
             bodyElement.classList.remove('graph-view-fullscreen');
             updateFullscreenButtonState(false);
@@ -183,13 +185,15 @@ export function setupPasteCodeButton(pasteButton, codeInputElement, afterPasteCa
         if (!navigator.clipboard || !navigator.clipboard.readText) {
             alert('このブラウザではクリップボードの読み取りがサポートされていません。');
             pasteButton.title = 'ペースト失敗';
-            setTimeout(() => { pasteButton.title = originalPasteTitle; }, 2000);
+            setTimeout(() => {
+                pasteButton.title = originalPasteTitle;
+            }, 2000);
             return;
         }
-        
+
         // Store the original content to check if it changes
         const originalContent = codeInputElement.value;
-        
+
         try {
             const text = await navigator.clipboard.readText();
             codeInputElement.value = text; // Replace current content
@@ -197,7 +201,7 @@ export function setupPasteCodeButton(pasteButton, codeInputElement, afterPasteCa
 
             pasteButton.innerHTML = SVG_ICON_PASTE_SUCCESS;
             pasteButton.title = 'ペーストしました!';
-            
+
             // Call the callback if the content has changed
             if (typeof afterPasteCallback === 'function' && originalContent !== codeInputElement.value) {
                 afterPasteCallback();
@@ -210,7 +214,7 @@ export function setupPasteCodeButton(pasteButton, codeInputElement, afterPasteCa
                 alert('クリップボードからのペーストに失敗しました。');
             }
             pasteButton.title = 'ペースト失敗';
-            
+
             // Call the callback if the content has changed, even if there was an error
             if (typeof afterPasteCallback === 'function' && originalContent !== codeInputElement.value) {
                 afterPasteCallback();
@@ -228,7 +232,7 @@ export function setupDownloadButton(downloadButton) {
         console.warn("Download button not found for setup.");
         return;
     }
-    
+
     downloadButton.innerHTML = SVG_ICON_DOWNLOAD;
     downloadButton.title = "グラフをダウンロード";
 }
@@ -238,10 +242,10 @@ export function setupDownloadCodeButton(downloadCodeButton, codeInputElement) {
         console.warn("Download code button or code input not found for setup.");
         return;
     }
-    
+
     downloadCodeButton.innerHTML = SVG_ICON_DOWNLOAD;
     downloadCodeButton.title = "コードをダウンロード";
-    
+
     downloadCodeButton.addEventListener('click', () => {
         if (codeInputElement.value.trim() === '') {
             downloadCodeButton.title = 'ダウンロードするコードがありません';
@@ -250,7 +254,7 @@ export function setupDownloadCodeButton(downloadCodeButton, codeInputElement) {
             }, 1500);
             return;
         }
-        
+
         try {
             // Import is done dynamically to avoid circular dependencies
             import('./download_utils.js').then(module => {
@@ -282,27 +286,27 @@ export function setupPrevTabButton(prevTabButton) {
         console.warn("Previous tab button not found for setup.");
         return;
     }
-    
+
     // Set the button's icon and title
     prevTabButton.innerHTML = SVG_ICON_PREV_TAB;
     prevTabButton.title = "前のタブへ移動";
-    
+
     // Initially hide the button (it will only be shown in fullscreen mode via CSS)
     prevTabButton.style.display = 'none';
-    
+
     prevTabButton.addEventListener('click', async () => {
         try {
             // Import tab_manager.js dynamically to avoid circular dependencies
             const tabManager = await import('./tab_manager.js');
             const state = await import('./state.js');
-            
+
             // Calculate the previous tab index (cycle to the last tab if at the first tab)
             const currentIndex = state.activeTabIndex;
             const prevIndex = (currentIndex - 1 + state.tabs.length) % state.tabs.length;
-            
+
             // Switch to the previous tab
             tabManager.switchTab(prevIndex);
-            
+
             // Show a brief success indicator
             prevTabButton.title = `タブ ${prevIndex + 1} に移動しました`;
             setTimeout(() => {
@@ -327,27 +331,27 @@ export function setupNextTabButton(nextTabButton) {
         console.warn("Next tab button not found for setup.");
         return;
     }
-    
+
     // Set the button's icon and title
     nextTabButton.innerHTML = SVG_ICON_NEXT_TAB;
     nextTabButton.title = "次のタブへ移動";
-    
+
     // Initially hide the button (it will only be shown in fullscreen mode via CSS)
     nextTabButton.style.display = 'none';
-    
+
     nextTabButton.addEventListener('click', async () => {
         try {
             // Import tab_manager.js dynamically to avoid circular dependencies
             const tabManager = await import('./tab_manager.js');
             const state = await import('./state.js');
-            
+
             // Calculate the next tab index (cycle back to 0 if at the last tab)
             const currentIndex = state.activeTabIndex;
             const nextIndex = (currentIndex + 1) % state.tabs.length;
-            
+
             // Switch to the next tab
             tabManager.switchTab(nextIndex);
-            
+
             // Show a brief success indicator
             nextTabButton.title = `タブ ${nextIndex + 1} に移動しました`;
             setTimeout(() => {
@@ -373,23 +377,23 @@ export function setupRenderButton(renderButton, renderGraphCallback) {
         console.warn("Render button not found for setup.");
         return;
     }
-    
+
     // Set the button's icon and title
     renderButton.innerHTML = SVG_ICON_RENDER;
     renderButton.title = "グラフを描画";
-    
+
     renderButton.addEventListener('click', () => {
         if (typeof renderGraphCallback === 'function') {
             // Show a brief loading indicator
             renderButton.title = "描画中...";
-            
+
             // Call the render function
             renderGraphCallback();
-            
+
             // Show a brief success indicator
             setTimeout(() => {
                 renderButton.title = "描画完了";
-                
+
                 // Reset the title after a delay
                 setTimeout(() => {
                     renderButton.title = "グラフを描画";
@@ -404,17 +408,17 @@ export function setupClearFileButton(clearFileButton, fileInputElement, afterCle
         console.warn("Clear file button or file input not found for setup.");
         return;
     }
-    
+
     clearFileButton.innerHTML = SVG_ICON_TRASH;
     clearFileButton.title = "アップロードファイル情報をクリア";
-    
+
     clearFileButton.addEventListener('click', () => {
         // Clear the file input by resetting its value
         fileInputElement.value = '';
-        
+
         // Clear the uploaded filename state
         setUploadedFileName(null);
-        
+
         if (typeof afterClearCallback === 'function') {
             afterClearCallback();
         }
@@ -436,7 +440,7 @@ export function setupFileUpload(fileInputElement, afterUploadCallback) {
             const file = files[i];
             handleFileUpload(file, afterUploadCallback);
         }
-        
+
         // Show notification if multiple files were uploaded
         if (files.length > 1) {
             showNotification(`${files.length}個のファイルをアップロードしました。`, 'success');
@@ -446,11 +450,11 @@ export function setupFileUpload(fileInputElement, afterUploadCallback) {
 
 /**
  * Helper function to handle file upload (used by both file input and drag & drop)
- * 
+ *
  * This function processes uploaded files, with special handling for Markdown files:
  * - For Markdown files: Extracts code blocks and creates a tab for each block
  * - For regular files: Detects the language and updates the active tab
- * 
+ *
  * @param {File} file - The uploaded file
  * @param {Function} afterUploadCallback - Callback function to call after processing
  */
@@ -464,46 +468,51 @@ function handleFileUpload(file, afterUploadCallback) {
 
         try {
             // Check if the file is a Markdown file
-            const { isMarkdownFile, parseMarkdown, generateTabTitle } = await import('./markdown_parser.js');
-            
+            const {isMarkdownFile, parseMarkdown, generateTabTitle} = await import('./markdown_parser.js');
+
             if (isMarkdownFile(file)) {
                 // ===== MARKDOWN FILE PROCESSING =====
                 console.log(`Processing Markdown file: ${file.name}`);
-                
+
                 // Extract code blocks from the Markdown content
                 const codeBlocks = parseMarkdown(content);
-                
+
                 // Handle case where no code blocks are found
                 if (codeBlocks.length === 0) {
                     showNotification('Markdownファイルにコードブロックが見つかりませんでした。', 'warning');
                     return;
                 }
-                
+
                 // Import tab management functions
-                const { addTab, updateActiveTabContent, updateActiveTabNotation, switchTab } = await import('./tab_manager.js');
-                
+                const {
+                    addTab,
+                    updateActiveTabContent,
+                    updateActiveTabNotation,
+                    switchTab
+                } = await import('./tab_manager.js');
+
                 // Create a tab for each code block found in the Markdown
                 let firstTabIndex = null;
-                
+
                 for (let i = 0; i < codeBlocks.length; i++) {
                     const block = codeBlocks[i];
-                    
+
                     // Generate a meaningful tab title based on file name and language
                     const tabTitle = generateTabTitle(file.name, block.language, i);
                     console.log(`Creating tab: ${tabTitle}`);
-                    
+
                     // Create a new tab and get its index
                     const tabIndex = addTab(tabTitle);
-                    
+
                     // Remember the first tab's index so we can switch back to it later
                     if (i === 0) {
                         firstTabIndex = tabIndex;
                     }
-                    
+
                     // Set the tab's content and notation (language)
                     updateActiveTabContent(block.content);
                     updateActiveTabNotation(block.notation);
-                    
+
                     // Update the radio button to match the notation
                     const radioButtons = document.getElementsByName('notation');
                     for (const radio of radioButtons) {
@@ -511,14 +520,14 @@ function handleFileUpload(file, afterUploadCallback) {
                             radio.checked = true;
                         }
                     }
-                    
+
                     // For code blocks without explicit language, try to detect it
                     if (!block.language) {
                         try {
-                            const { detectLanguage } = await import('./language_detector.js');
+                            const {detectLanguage} = await import('./language_detector.js');
                             const detectedLanguage = detectLanguage(block.content);
                             updateActiveTabNotation(detectedLanguage);
-                            
+
                             // Update the radio button to match the detected language
                             for (const radio of radioButtons) {
                                 if (radio.value === detectedLanguage) {
@@ -530,15 +539,15 @@ function handleFileUpload(file, afterUploadCallback) {
                         }
                     }
                 }
-                
+
                 // Switch back to the first tab after creating all tabs
                 if (firstTabIndex !== null) {
                     switchTab(firstTabIndex);
                 }
-                
+
                 // Show success notification with the number of code blocks extracted
                 showNotification(`Markdownファイルから${codeBlocks.length}個のコードブロックを抽出しました。`, 'success');
-                
+
                 // Call the callback with the first code block's content
                 if (typeof afterUploadCallback === 'function') {
                     afterUploadCallback(file, codeBlocks[0].content);
@@ -546,32 +555,37 @@ function handleFileUpload(file, afterUploadCallback) {
             } else {
                 // ===== REGULAR FILE PROCESSING =====
                 console.log(`Processing regular file: ${file.name}`);
-                
+
                 // Import tab management functions
-                const { addTab, updateActiveTabContent, updateActiveTabNotation, switchTab } = await import('./tab_manager.js');
-                
+                const {
+                    addTab,
+                    updateActiveTabContent,
+                    updateActiveTabNotation,
+                    switchTab
+                } = await import('./tab_manager.js');
+
                 // Get the file name without extension to use as tab title
                 const baseName = file.name.replace(/\.[^/.]+$/, '');
-                
+
                 // Create a new tab with the file name as the title
                 const newTabIndex = addTab(baseName);
-                
+
                 // Update the new tab's content
                 updateActiveTabContent(content);
-                
+
                 // Auto-detect language and set the appropriate radio button
                 try {
                     // Import is done dynamically to avoid circular dependencies
-                    const { detectLanguage } = await import('./language_detector.js');
+                    const {detectLanguage} = await import('./language_detector.js');
                     const detectedLanguage = detectLanguage(content);
-                    
+
                     // Update the tab's notation
                     updateActiveTabNotation(detectedLanguage);
-                    
+
                     // Set the appropriate radio button
                     const radioButtons = document.getElementsByName('notation');
                     let previouslySelected = null;
-                    
+
                     for (const radio of radioButtons) {
                         if (radio.checked) {
                             previouslySelected = radio.value;
@@ -580,7 +594,7 @@ function handleFileUpload(file, afterUploadCallback) {
                             radio.checked = true;
                         }
                     }
-                    
+
                     // Show notification only if the selection changed
                     if (previouslySelected !== detectedLanguage) {
                         const languageName = detectedLanguage === 'dot' ? 'DOT' : 'Mermaid';
@@ -603,17 +617,16 @@ function handleFileUpload(file, afterUploadCallback) {
             showNotification('ファイル処理中にエラーが発生しました。', 'error');
         }
     };
-    
+
     // Handle file reading errors
     reader.onerror = (e) => {
         console.error('File reading failed:', e);
         alert('ファイルの読み込みに失敗しました。');
     };
-    
+
     // Start reading the file as text
     reader.readAsText(file);
 }
-
 
 
 export function setupDragAndDrop(codeInputElement, afterUploadCallback) {
@@ -662,7 +675,7 @@ export function setupDragAndDrop(codeInputElement, afterUploadCallback) {
                 const file = files[i];
                 handleFileUpload(file, afterUploadCallback);
             }
-            
+
             // Show notification if multiple files were dropped
             if (files.length > 1) {
                 showNotification(`${files.length}個のファイルをアップロードしました。`, 'success');

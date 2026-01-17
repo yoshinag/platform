@@ -85,11 +85,11 @@
     .content-wrapper {
         flex-direction: column;
     }
-    
+
     .main-content {
         order: 1; /* Display main content first on mobile */
     }
-    
+
     .toc-sidebar {
         order: 2; /* Display TOC after main content on mobile */
         position: static; /* Remove sticky positioning on mobile */

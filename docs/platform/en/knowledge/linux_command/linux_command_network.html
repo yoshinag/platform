@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Linux Network Commands Guide</title>
@@ -8,8 +12,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
@@ -19,16 +22,16 @@
     </div>
 
     <h1>Linux Network Commands Guide</h1>
-    
+
     <!-- Network Commands -->
     <section id="network" class="command-section">
         <h2>Network Commands</h2>
         <p>Commands for checking, configuring, and diagnosing network connections.</p>
-        
+
         <!-- ping command -->
         <h3>ping - Check Network Connectivity</h3>
         <p>Checks connectivity with a specified host.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -55,18 +58,23 @@
                 <td>Set timeout to N seconds</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>ping google.com</code> - Continuously ping Google's servers<br>
             <code>ping -c 5 192.168.1.1</code> - Send 5 pings to the specified IP address<br>
             <code>ping -i 2 -c 10 example.com</code> - Send 10 pings at 2-second intervals<br>
             <code>ping -c 5 google.com | grep "time="</code> - Display only response times<br>
-            <code>ping -c 10 google.com | grep "time=" | awk '{print $7}' | cut -d "=" -f 2</code> - Extract only the response time values<br>
-            <code>ping -c 5 google.com | tail -1 | awk '{print $4}' | cut -d '/' -f 2</code> - Extract the average response time<br>
-            <code>for ip in 192.168.1.{1..10}; do ping -c 1 -W 1 $ip | grep "from" && echo "$ip is up"; done</code> - Ping multiple IP addresses<br>
-            <code>ping -c 5 -q google.com | grep "packet loss" | awk '{print $6}'</code> - Extract packet loss percentage<br>
-            <code>ping -c 1 -W 1 google.com > /dev/null 2>&1 && echo "Internet is up" || echo "Internet is down"</code> - Check internet connectivity<br>
+            <code>ping -c 10 google.com | grep "time=" | awk '{print $7}' | cut -d "=" -f 2</code> - Extract only the
+            response time values<br>
+            <code>ping -c 5 google.com | tail -1 | awk '{print $4}' | cut -d '/' -f 2</code> - Extract the average
+            response time<br>
+            <code>for ip in 192.168.1.{1..10}; do ping -c 1 -W 1 $ip | grep "from" && echo "$ip is up"; done</code> -
+            Ping multiple IP addresses<br>
+            <code>ping -c 5 -q google.com | grep "packet loss" | awk '{print $6}'</code> - Extract packet loss
+            percentage<br>
+            <code>ping -c 1 -W 1 google.com > /dev/null 2>&1 && echo "Internet is up" || echo "Internet is down"</code>
+            - Check internet connectivity<br>
             <code>ping -c 5 -s 1500 google.com</code> - Check MTU with large packet size<br>
             <code>ping -c 5 google.com | tee ping_results.txt</code> - Save results to a file while displaying them
         </div>
@@ -75,7 +83,7 @@
         <h3>ifconfig - Configure Network Interfaces</h3>
         <p>Displays or configures network interface information.</p>
         <p>Note: The <code>ip</code> command is recommended in recent Linux distributions.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Syntax/Option</th>
@@ -102,26 +110,33 @@
                 <td>Set IP address and netmask</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>ifconfig</code> - Display information for all active network interfaces<br>
             <code>ifconfig eth0</code> - Display information for the eth0 interface<br>
-            <code>sudo ifconfig eth0 192.168.1.100 netmask 255.255.255.0</code> - Set IP address and netmask for eth0<br>
+            <code>sudo ifconfig eth0 192.168.1.100 netmask 255.255.255.0</code> - Set IP address and netmask for
+            eth0<br>
             <code>ifconfig | grep -A 1 "inet "</code> - Display IPv4 addresses for all interfaces<br>
-            <code>ifconfig | grep -o -E 'inet ([0-9]{1,3}\.){3}[0-9]{1,3}' | cut -d' ' -f2</code> - Extract only IP addresses<br>
+            <code>ifconfig | grep -o -E 'inet ([0-9]{1,3}\.){3}[0-9]{1,3}' | cut -d' ' -f2</code> - Extract only IP
+            addresses<br>
             <code>ifconfig | grep "ether" | awk '{print $2}'</code> - Extract MAC addresses for all interfaces<br>
-            <code>ifconfig eth0 | grep "RX packets" | awk '{print "Received: " $3 " packets, " $5 " bytes"}'</code> - Format received packet and byte counts<br>
-            <code>ifconfig eth0 | grep "TX packets" | awk '{print "Transmitted: " $3 " packets, " $5 " bytes"}'</code> - Format transmitted packet and byte counts<br>
-            <code>for i in $(ifconfig | grep -o '^[a-zA-Z0-9]*:' | sed 's/://'); do echo "===$i==="; ifconfig $i | grep "inet "; done</code> - Format IP addresses for each interface<br>
-            <code>ifconfig | grep "mtu" | awk '{print $1, "MTU:", $NF}'</code> - Display MTU values for each interface<br>
-            <code>ifconfig eth0 | grep "errors" | awk '{print "RX errors: " $3 ", TX errors: " $7}'</code> - Display receive and transmit error counts
+            <code>ifconfig eth0 | grep "RX packets" | awk '{print "Received: " $3 " packets, " $5 " bytes"}'</code> -
+            Format received packet and byte counts<br>
+            <code>ifconfig eth0 | grep "TX packets" | awk '{print "Transmitted: " $3 " packets, " $5 " bytes"}'</code> -
+            Format transmitted packet and byte counts<br>
+            <code>for i in $(ifconfig | grep -o '^[a-zA-Z0-9]*:' | sed 's/://'); do echo "===$i==="; ifconfig $i | grep
+                "inet "; done</code> - Format IP addresses for each interface<br>
+            <code>ifconfig | grep "mtu" | awk '{print $1, "MTU:", $NF}'</code> - Display MTU values for each
+            interface<br>
+            <code>ifconfig eth0 | grep "errors" | awk '{print "RX errors: " $3 ", TX errors: " $7}'</code> - Display
+            receive and transmit error counts
         </div>
 
         <!-- ip command -->
         <h3>ip - Configure IP Networking</h3>
         <p>Configures and manages IP addresses, routing, network devices, etc.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Subcommand</th>
@@ -148,7 +163,7 @@
                 <td>Display/configure tunnels</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>ip addr show</code> - Display IP address information for all interfaces<br>
@@ -161,7 +176,7 @@
         <h3>netstat - Display Network Connections, Routing Tables, Interface Statistics</h3>
         <p>Displays network connections, routing tables, interface statistics, etc.</p>
         <p>Note: The <code>ss</code> command is recommended in recent Linux distributions.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -196,7 +211,7 @@
                 <td>Display network interface statistics</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>netstat -tuln</code> - Display listening TCP and UDP ports numerically<br>
@@ -207,7 +222,7 @@
         <!-- ss command -->
         <h3>ss - Display Socket Statistics</h3>
         <p>Displays socket statistics. Used as a replacement for netstat.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -242,7 +257,7 @@
                 <td>Display internal TCP information</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>ss -tuln</code> - Display listening TCP and UDP ports numerically<br>
@@ -253,7 +268,7 @@
         <!-- wget command -->
         <h3>wget - Download Files from Network</h3>
         <p>Downloads files using HTTP, HTTPS, FTP, and other protocols.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -284,7 +299,7 @@
                 <td>Limit download speed (e.g., 200k)</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>wget https://example.com/file.zip</code> - Download a file<br>
@@ -295,7 +310,7 @@
         <!-- curl command -->
         <h3>curl - Data Transfer Tool</h3>
         <p>Transfers data using various protocols.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -330,28 +345,34 @@
                 <td>Specify HTTP header</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>curl https://example.com</code> - Display webpage content<br>
             <code>curl -o page.html https://example.com</code> - Save webpage to specified file<br>
             <code>curl -I https://example.com</code> - Fetch HTTP headers only<br>
             <code>curl -X POST -d "name=value" https://example.com/api</code> - Send POST request<br>
-            <code>curl -s https://example.com | grep "title" | sed 's/<[^>]*>//g'</code> - Extract title from webpage and remove HTML tags<br>
-            <code>curl -s https://api.github.com/users/username | jq '.name, .location'</code> - Fetch JSON data from GitHub API and extract specific fields<br>
+            <code>curl -s https://example.com | grep "title" | sed 's/<[^>]*>//g'</code> - Extract title from webpage
+            and remove HTML tags<br>
+            <code>curl -s https://api.github.com/users/username | jq '.name, .location'</code> - Fetch JSON data from
+            GitHub API and extract specific fields<br>
             <code>curl -u username:password https://example.com/protected</code> - Access using Basic authentication<br>
-            <code>curl -H "Authorization: Bearer token123" https://api.example.com</code> - Access API using Bearer token<br>
+            <code>curl -H "Authorization: Bearer token123" https://api.example.com</code> - Access API using Bearer
+            token<br>
             <code>curl -F "file=@document.pdf" https://example.com/upload</code> - Upload file (multipart/form-data)<br>
-            <code>curl -s -w "\nHTTP Status: %{http_code}\nTotal time: %{time_total}s\n" https://example.com -o /dev/null</code> - Display performance statistics<br>
-            <code>curl --limit-rate 200K https://example.com/large-file.iso -o large-file.iso</code> - Limit download speed<br>
-            <code>for i in {1..5}; do curl -s -o /dev/null -w "%{http_code}\n" https://example.com; done</code> - Send multiple requests and check HTTP status codes<br>
+            <code>curl -s -w "\nHTTP Status: %{http_code}\nTotal time: %{time_total}s\n" https://example.com -o
+                /dev/null</code> - Display performance statistics<br>
+            <code>curl --limit-rate 200K https://example.com/large-file.iso -o large-file.iso</code> - Limit download
+            speed<br>
+            <code>for i in {1..5}; do curl -s -o /dev/null -w "%{http_code}\n" https://example.com; done</code> - Send
+            multiple requests and check HTTP status codes<br>
             <code>curl -s -L https://bit.ly/shorturl</code> - Follow redirects to get final destination of a short URL
         </div>
 
         <!-- traceroute command -->
         <h3>traceroute - Trace Packet Route</h3>
         <p>Displays the route packets take to reach a destination.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -374,7 +395,7 @@
                 <td>Specify port number to use</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>traceroute google.com</code> - Trace route to Google servers<br>
@@ -386,15 +407,18 @@
             <code>traceroute -w 1 example.com</code> - Set response wait time to 1 second (faster)<br>
             <code>traceroute example.com | grep -v "\*\*\*"</code> - Exclude timed-out hops<br>
             <code>traceroute example.com | awk '{print $2}'</code> - Extract only hop IP addresses or hostnames<br>
-            <code>traceroute -q 1 example.com | grep -v "\*" | awk '{print $2}' | xargs -n 1 whois | grep "Country"</code> - Display country information for IPs in route<br>
-            <code>for ip in 8.8.8.8 1.1.1.1; do echo "=== $ip ==="; traceroute -n -w 1 $ip | tail -n +2 | head -n 5; done</code> - Compare first 5 hops to multiple destinations<br>
-            <code>traceroute example.com 2>&1 | tee traceroute_$(date +%Y%m%d_%H%M%S).log</code> - Save traceroute results to timestamped log file
+            <code>traceroute -q 1 example.com | grep -v "\*" | awk '{print $2}' | xargs -n 1 whois | grep
+                "Country"</code> - Display country information for IPs in route<br>
+            <code>for ip in 8.8.8.8 1.1.1.1; do echo "=== $ip ==="; traceroute -n -w 1 $ip | tail -n +2 | head -n 5;
+                done</code> - Compare first 5 hops to multiple destinations<br>
+            <code>traceroute example.com 2>&1 | tee traceroute_$(date +%Y%m%d_%H%M%S).log</code> - Save traceroute
+            results to timestamped log file
         </div>
 
         <!-- nslookup/dig command -->
         <h3>nslookup/dig - Perform DNS Queries</h3>
         <p>Queries DNS information for domain names or IP addresses.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Command/Option</th>
@@ -421,7 +445,7 @@
                 <td>Display concise results only</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>nslookup google.com</code> - Get Google's IP address<br>
@@ -433,8 +457,8 @@
     </section>
 
     <div class="navigation-links">
-        <a href="linux_command_system.html">Previous Category: System Information</a> | 
-        <a href="linux_command.html">Back to Main Page</a> | 
+        <a href="linux_command_system.html">Previous Category: System Information</a> |
+        <a href="linux_command.html">Back to Main Page</a> |
         <a href="linux_command_process.html">Next Category: Process Management</a>
     </div>
 

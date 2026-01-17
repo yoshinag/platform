@@ -23,14 +23,15 @@
 
 .global-controls button svg {
     display: block;
-    width: 1em;     /* Relative to button font-size */
-    height: 1em;    /* Relative to button font-size */
+    width: 1em; /* Relative to button font-size */
+    height: 1em; /* Relative to button font-size */
     fill: currentColor;
 }
 
 #toggle-all-panels-btn {
     background-color: #6c757d;
 }
+
 #toggle-all-panels-btn:hover {
     background-color: #5a6268;
 }
@@ -39,6 +40,7 @@
     background-color: #007bff;
     margin-left: 10px; /* Space from the other button */
 }
+
 #toggle-fullscreen-btn:hover {
     background-color: #0056b3;
 }

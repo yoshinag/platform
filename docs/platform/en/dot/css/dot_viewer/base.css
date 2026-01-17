@@ -57,6 +57,7 @@ textarea { /* Basic textarea reset/defaults */
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
 }
+
 #download-btn:hover {
     background-color: #4cae4c;
 }

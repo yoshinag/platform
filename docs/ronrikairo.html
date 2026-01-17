@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>論理回路図示ツール</title>
@@ -9,6 +13,7 @@
             font-family: sans-serif;
             margin-bottom: 50px;
         }
+
         #circuitDefinition {
             width: 95%;
             height: 200px;
@@ -18,6 +23,7 @@
             font-family: monospace;
             font-size: 14px;
         }
+
         #svgContainer {
             border: 1px solid #ccc;
             background-color: #f9f9f9;
@@ -26,6 +32,7 @@
             overflow: auto;
             margin-bottom: 10px;
         }
+
         svg {
             display: block;
         }
@@ -35,9 +42,11 @@
             stroke-width: 1;
             fill: lightblue;
         }
+
         .gate-not-circle {
             fill: black;
         }
+
         .gate-text {
             font-family: sans-serif;
             font-size: 12px;
@@ -46,34 +55,41 @@
             user-select: none;
             pointer-events: none;
         }
+
         .connection {
             stroke: black;
             stroke-width: 1;
             fill: none;
         }
+
         .pin-line {
             stroke: black;
             stroke-width: 1;
         }
+
         .section-title {
             margin-top: 30px;
             border-bottom: 1px solid #eee;
             padding-bottom: 5px;
         }
+
         .logic-symbols-list {
             list-style: none;
             padding: 0;
         }
+
         .logic-symbols-list li {
             margin-bottom: 15px;
             border: 1px solid #eee;
             padding: 10px;
             border-radius: 5px;
         }
+
         .logic-symbols-list li strong {
             display: inline-block;
             min-width: 80px;
         }
+
         .download-controls {
             margin-bottom: 20px;
         }
@@ -84,17 +100,21 @@
             padding: 10px;
             border-radius: 5px;
         }
+
         summary {
             font-weight: bold;
             cursor: pointer;
             padding: 5px 0;
         }
+
         summary::marker, summary::-webkit-details-marker {
             margin-right: 5px;
         }
+
         details > p, details > ul, details > pre {
             margin-top: 10px;
         }
+
         details .json-code {
             background-color: #f0f0f0;
             padding: 10px;
@@ -103,10 +123,12 @@
             white-space: pre-wrap;
             word-wrap: break-word;
         }
+
         details .property-list {
             list-style: disc;
             margin-left: 20px;
         }
+
         details .property-list li {
             border: none;
             padding: 0;
@@ -120,25 +142,19 @@
             min-width: 150px;
             text-align: center;
         }
+
         .truth-table th, .truth-table td {
             border: 1px solid #ddd;
             padding: 8px;
         }
+
         .truth-table th {
             background-color: #f2f2f2;
             font-weight: bold;
         }
     </style>
 </head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-W6YKJ74672"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
 
-    gtag('config', 'G-W6YKJ74672');
-</script>
 <body>
 
 <h1>論理回路図示ツール (簡易版)</h1>
@@ -181,7 +197,8 @@
 
 <details>
     <summary>回路定義の書式について</summary>
-    <p>テキストエリアには、回路構造をJavaScriptのオブジェクトリテラル形式（JSON形式でも可）で記述します。全体の構造は以下のようになります。</p>
+    <p>
+        テキストエリアには、回路構造をJavaScriptのオブジェクトリテラル形式（JSON形式でも可）で記述します。全体の構造は以下のようになります。</p>
     <pre class="json-code">{
     "gates": [
         { /* ゲート1の定義 */ },
@@ -189,15 +206,18 @@
         // ...
     ]
 }</pre>
-    <p><code>"gates"</code> 配列の各要素が、回路を構成する一つの要素（論理ゲートや入力）を定義するオブジェクトです。各ゲート定義オブジェクトは、通常以下のプロパティを持ちます。</p>
+    <p><code>"gates"</code> 配列の各要素が、回路を構成する一つの要素（論理ゲートや入力）を定義するオブジェクトです。各ゲート定義オブジェクトは、通常以下のプロパティを持ちます。
+    </p>
     <ul class="property-list">
         <li>
             <strong><code>"id"</code></strong> (必須):
-            そのゲートを回路内で一意に識別するための文字列です（例: `"G1"`, `"in_A"`）。主に内部処理や、INPUTゲートの図に表示するために使われます。接続は信号名で行います。
+            そのゲートを回路内で一意に識別するための文字列です（例: `"G1"`,
+            `"in_A"`）。主に内部処理や、INPUTゲートの図に表示するために使われます。接続は信号名で行います。
         </li>
         <li>
             <strong><code>"type"</code></strong> (必須):
-            その要素の種類を指定します。現在サポートされているのは <code>"INPUT"</code>, <code>"AND"</code>, <code>"OR"</code>, <code>"NOT"</code>, <code>"XOR"</code> です。
+            その要素の種類を指定します。現在サポートされているのは <code>"INPUT"</code>, <code>"AND"</code>,
+            <code>"OR"</code>, <code>"NOT"</code>, <code>"XOR"</code> です。
         </li>
         <li>
             <strong><code>"pos"</code></strong> (必須):
@@ -208,7 +228,8 @@
             <strong><code>"inputs"</code></strong> (<code>"INPUT"</code> タイプ以外で必須):
             そのゲートへの入力となる信号名の配列です。<br>
             書式: <code>["信号名1", "信号名2", ...]</code> （例: <code>["A", "B"]</code>）。<br>
-            配列の要素は、他のゲートの <code>"output"</code> で定義された信号名である必要があります。NOTゲートの場合は配列に1つの信号名を指定します。INPUTタイプには不要です。
+            配列の要素は、他のゲートの <code>"output"</code>
+            で定義された信号名である必要があります。NOTゲートの場合は配列に1つの信号名を指定します。INPUTタイプには不要です。
         </li>
         <li>
             <strong><code>"output"</code></strong> (<code>"INPUT"</code> タイプ、および後続に接続があるゲートで必須):
@@ -231,13 +252,33 @@
         複数の入力がすべて「1」の場合に限り、出力が「1」となります。
         <table class="truth-table">
             <thead>
-            <tr><th>A</th><th>B</th><th>Y</th></tr>
+            <tr>
+                <th>A</th>
+                <th>B</th>
+                <th>Y</th>
+            </tr>
             </thead>
             <tbody>
-            <tr><td>0</td><td>0</td><td>0</td></tr>
-            <tr><td>0</td><td>1</td><td>0</td></tr>
-            <tr><td>1</td><td>0</td><td>0</td></tr>
-            <tr><td>1</td><td>1</td><td>1</td></tr>
+            <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>1</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
             </tbody>
         </table>
     </li>
@@ -246,13 +287,33 @@
         複数の入力のうち、少なくとも一つが「1」の場合に、出力が「1」となります。
         <table class="truth-table">
             <thead>
-            <tr><th>A</th><th>B</th><th>Y</th></tr>
+            <tr>
+                <th>A</th>
+                <th>B</th>
+                <th>Y</th>
+            </tr>
             </thead>
             <tbody>
-            <tr><td>0</td><td>0</td><td>0</td></tr>
-            <tr><td>0</td><td>1</td><td>1</td></tr>
-            <tr><td>1</td><td>0</td><td>1</td></tr>
-            <tr><td>1</td><td>1</td><td>1</td></tr>
+            <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
             </tbody>
         </table>
     </li>
@@ -261,13 +322,33 @@
         複数の入力のうち、奇数個だけが「1」の場合に、出力が「1」となります。2入力の場合は、入力が異なる値（0と1）のときに限り出力が「1」になります。
         <table class="truth-table">
             <thead>
-            <tr><th>A</th><th>B</th><th>Y</th></tr>
+            <tr>
+                <th>A</th>
+                <th>B</th>
+                <th>Y</th>
+            </tr>
             </thead>
             <tbody>
-            <tr><td>0</td><td>0</td><td>0</td></tr>
-            <tr><td>0</td><td>1</td><td>1</td></tr>
-            <tr><td>1</td><td>0</td><td>1</td></tr>
-            <tr><td>1</td><td>1</td><td>0</td></tr>
+            <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>1</td>
+                <td>0</td>
+            </tr>
             </tbody>
         </table>
         ※ 一般的な回路図では、ORゲートに似た記号で、入力側に弧が追加されます。このツールでは単純な矩形にテキスト表示しています。
@@ -277,11 +358,20 @@
         入力が「1」ならば出力は「0」、入力が「0」ならば出力は「1」となる演算です。入力は常に1つです。
         <table class="truth-table">
             <thead>
-            <tr><th>A</th><th>Y</th></tr>
+            <tr>
+                <th>A</th>
+                <th>Y</th>
+            </tr>
             </thead>
             <tbody>
-            <tr><td>0</td><td>1</td></tr>
-            <tr><td>1</td><td>0</td></tr>
+            <tr>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>0</td>
+            </tr>
             </tbody>
         </table>
         ※ NOTゲートは出力側に小さな丸（バブル）が付きます。これは反転機能を示します。
@@ -305,11 +395,32 @@
     const downloadButton = document.getElementById('downloadButton');
 
     const gateSpecs = {
-        AND: { width: 60, height: 40, pinOffset: { input: [{ x: 0, y: 10 }, { x: 0, y: 30 }], output: { x: 60, y: 20 } }, text: 'AND' },
-        OR: { width: 60, height: 40, pinOffset: { input: [{ x: 0, y: 10 }, { x: 0, y: 30 }], output: { x: 60, y: 20 } }, text: 'OR' },
-        XOR: { width: 60, height: 40, pinOffset: { input: [{ x: 0, y: 10 }, { x: 0, y: 30 }], output: { x: 60, y: 20 } }, text: 'XOR' },
-        NOT: { width: 40, height: 40, pinOffset: { input: [{ x: 0, y: 20 }], output: { x: 40, y: 20 } }, text: 'NOT', hasBubble: true },
-        INPUT: { width: 30, height: 30, pinOffset: { input: [], output: { x: 30, y: 15 } }, text: 'IN' }
+        AND: {
+            width: 60,
+            height: 40,
+            pinOffset: {input: [{x: 0, y: 10}, {x: 0, y: 30}], output: {x: 60, y: 20}},
+            text: 'AND'
+        },
+        OR: {
+            width: 60,
+            height: 40,
+            pinOffset: {input: [{x: 0, y: 10}, {x: 0, y: 30}], output: {x: 60, y: 20}},
+            text: 'OR'
+        },
+        XOR: {
+            width: 60,
+            height: 40,
+            pinOffset: {input: [{x: 0, y: 10}, {x: 0, y: 30}], output: {x: 60, y: 20}},
+            text: 'XOR'
+        },
+        NOT: {
+            width: 40,
+            height: 40,
+            pinOffset: {input: [{x: 0, y: 20}], output: {x: 40, y: 20}},
+            text: 'NOT',
+            hasBubble: true
+        },
+        INPUT: {width: 30, height: 30, pinOffset: {input: [], output: {x: 30, y: 15}}, text: 'IN'}
     };
 
     function drawGate(svg, gate, spec) {
@@ -438,7 +549,7 @@
                 element: gateElement,
                 gate: gate,
                 spec: spec,
-                absPos: { x: absX, y: absY }
+                absPos: {x: absX, y: absY}
             };
         }
 
@@ -455,7 +566,7 @@
                     const sourceSpec = sourceGateInfo.spec;
                     const sourceAbsPos = sourceGateInfo.absPos;
                     const sourceOutputPinOffset = sourceSpec.hasBubble
-                        ? { x: sourceSpec.pinOffset.output.x + 10, y: sourceSpec.pinOffset.output.y }
+                        ? {x: sourceSpec.pinOffset.output.x + 10, y: sourceSpec.pinOffset.output.y}
                         : sourceSpec.pinOffset.output;
                     const startPos = {
                         x: sourceAbsPos.x + sourceOutputPinOffset.x,
@@ -492,7 +603,7 @@
 
     function downloadSVG(svg, format = 'svg') {
         const svgData = new XMLSerializer().serializeToString(svg);
-        const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+        const svgBlob = new Blob([svgData], {type: 'image/svg+xml;charset=utf-8'});
 
         const downloadLink = document.createElement('a');
         downloadLink.download = 'circuit.' + format;
@@ -515,18 +626,18 @@
             const img = new Image();
             const svgUrl = URL.createObjectURL(svgBlob);
 
-            img.onload = function() {
+            img.onload = function () {
                 ctx.drawImage(img, 0, 0);
                 URL.revokeObjectURL(svgUrl);
 
-                canvas.toBlob(function(blob) {
+                canvas.toBlob(function (blob) {
                     downloadLink.href = URL.createObjectURL(blob);
                     downloadLink.click();
                     URL.revokeObjectURL(downloadLink.href);
                 }, 'image/' + format, 0.9);
             };
 
-            img.onerror = function(err) {
+            img.onerror = function (err) {
                 console.error("Failed to load SVG as image for Canvas:", err);
                 alert("画像変換に失敗しました。");
                 URL.revokeObjectURL(svgUrl);

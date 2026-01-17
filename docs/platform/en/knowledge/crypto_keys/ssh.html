@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>About SSH Connections</title>
@@ -86,8 +90,10 @@
             It is widely used for secure logins to remote servers, file transfers, and remote command execution.
         </p>
         <p>
-            This page provides a detailed explanation from the basic mechanics of SSH, to how to generate SSH keys, and finally to a practical application example of linking a local PC with GitHub.
-            By acquiring this knowledge, you will be able to perform more secure and efficient remote operations and version control.
+            This page provides a detailed explanation from the basic mechanics of SSH, to how to generate SSH keys, and
+            finally to a practical application example of linking a local PC with GitHub.
+            By acquiring this knowledge, you will be able to perform more secure and efficient remote operations and
+            version control.
         </p>
     </section>
 
@@ -98,20 +104,31 @@
             <h3>What is SSH?</h3>
             <p>
                 SSH (Secure Shell) is a protocol for securely conducting data communication over a network.
-                It was developed in 1995 by Finnish researcher Tatu Ylönen and became popular as a replacement for insecure protocols that were widely used at the time (such as Telnet, rlogin, and rsh).
+                It was developed in 1995 by Finnish researcher Tatu Ylönen and became popular as a replacement for
+                insecure protocols that were widely used at the time (such as Telnet, rlogin, and rsh).
             </p>
             <p>
                 Main features of SSH:
             </p>
             <ul>
-                <li><strong>Encrypted Communication</strong>: All communication data is encrypted, which prevents eavesdropping by third parties.</li>
-                <li><strong>Strong Authentication</strong>: It supports not only password authentication but also authentication using public-key cryptography.</li>
-                <li><strong>Data Integrity</strong>: It can verify that data has not been tampered with during transit.</li>
-                <li><strong>Port Forwarding</strong>: It supports local port forwarding, remote port forwarding, and dynamic port forwarding.</li>
-                <li><strong>Diverse Applications</strong>: It can be used for various purposes such as remote login, file transfer (SCP, SFTP), and remote command execution.</li>
+                <li><strong>Encrypted Communication</strong>: All communication data is encrypted, which prevents
+                    eavesdropping by third parties.
+                </li>
+                <li><strong>Strong Authentication</strong>: It supports not only password authentication but also
+                    authentication using public-key cryptography.
+                </li>
+                <li><strong>Data Integrity</strong>: It can verify that data has not been tampered with during transit.
+                </li>
+                <li><strong>Port Forwarding</strong>: It supports local port forwarding, remote port forwarding, and
+                    dynamic port forwarding.
+                </li>
+                <li><strong>Diverse Applications</strong>: It can be used for various purposes such as remote login,
+                    file transfer (SCP, SFTP), and remote command execution.
+                </li>
             </ul>
             <p>
-                Currently, SSH is an indispensable tool in many situations, including server management, cloud services, and version control systems (Git).
+                Currently, SSH is an indispensable tool in many situations, including server management, cloud services,
+                and version control systems (Git).
             </p>
         </section>
 
@@ -121,22 +138,31 @@
                 SSH primarily uses the following two authentication methods:
             </p>
             <ol>
-                <li><strong>Password Authentication</strong>: The traditional authentication method using a username and password.</li>
-                <li><strong>Public Key Authentication</strong>: A more secure authentication method using public-key cryptography.</li>
+                <li><strong>Password Authentication</strong>: The traditional authentication method using a username and
+                    password.
+                </li>
+                <li><strong>Public Key Authentication</strong>: A more secure authentication method using public-key
+                    cryptography.
+                </li>
             </ol>
             <p>
-                Public key authentication is recommended in many situations because it is superior in terms of both security and convenience.
+                Public key authentication is recommended in many situations because it is superior in terms of both
+                security and convenience.
                 In this authentication method, the process is as follows:
             </p>
             <ol>
                 <li>The user generates a private key and a public key pair.</li>
-                <li>The public key is registered in the <code>~/.ssh/authorized_keys</code> file on the remote server.</li>
+                <li>The public key is registered in the <code>~/.ssh/authorized_keys</code> file on the remote server.
+                </li>
                 <li>During connection, the SSH client makes an authentication request using the private key.</li>
-                <li>The server uses the registered public key to verify that the client truly possesses the corresponding private key.</li>
+                <li>The server uses the registered public key to verify that the client truly possesses the
+                    corresponding private key.
+                </li>
                 <li>If the verification is successful, the connection is established.</li>
             </ol>
             <p>
-                The main advantages of this method are that there is no need to send a password over the network, and since the private key is stored on the local machine,
+                The main advantages of this method are that there is no need to send a password over the network, and
+                since the private key is stored on the local machine,
                 authentication information will not be leaked even if the server-side database is compromised.
             </p>
         </section>
@@ -147,10 +173,16 @@
                 There are several types of SSH keys, depending on the cryptographic algorithm used:
             </p>
             <ul>
-                <li><strong>RSA Key</strong>: The most widely used key type, with high compatibility. A key length of 2048 bits or more is recommended.</li>
+                <li><strong>RSA Key</strong>: The most widely used key type, with high compatibility. A key length of
+                    2048 bits or more is recommended.
+                </li>
                 <li><strong>DSA Key</strong>: An older key type, now deprecated due to security concerns.</li>
-                <li><strong>ECDSA Key</strong>: A key using elliptic curve cryptography, which requires a shorter key length than RSA for an equivalent level of security.</li>
-                <li><strong>Ed25519 Key</strong>: A relatively new key type that offers high security and excellent performance. It is currently one of the most recommended types.</li>
+                <li><strong>ECDSA Key</strong>: A key using elliptic curve cryptography, which requires a shorter key
+                    length than RSA for an equivalent level of security.
+                </li>
+                <li><strong>Ed25519 Key</strong>: A relatively new key type that offers high security and excellent
+                    performance. It is currently one of the most recommended types.
+                </li>
             </ul>
             <p>
                 For new systems, using Ed25519 or RSA (4096 bits) is generally recommended.
@@ -183,7 +215,8 @@ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
                 After executing the command, the following prompts will appear:
             </p>
             <ol>
-                <li>Key file save location (default is <code>~/.ssh/id_ed25519</code> or <code>~/.ssh/id_rsa</code>)</li>
+                <li>Key file save location (default is <code>~/.ssh/id_ed25519</code> or <code>~/.ssh/id_rsa</code>)
+                </li>
                 <li>Passphrase (optional, but recommended for improved security)</li>
             </ol>
             <h4>Windows (Git Bash/WSL)</h4>
@@ -215,7 +248,9 @@ ls -la ~/.ssh
             </p>
             <ul>
                 <li><code>id_ed25519</code> or <code>id_rsa</code>: Private key (NEVER share this)</li>
-                <li><code>id_ed25519.pub</code> or <code>id_rsa.pub</code>: Public key (register this on the remote server)</li>
+                <li><code>id_ed25519.pub</code> or <code>id_rsa.pub</code>: Public key (register this on the remote
+                    server)
+                </li>
             </ul>
         </section>
 
@@ -225,15 +260,26 @@ ls -la ~/.ssh
                 Best practices for securely managing SSH keys:
             </p>
             <ul>
-                <li><strong>Protect the Private Key</strong>: Never share your private key with anyone and protect it with appropriate permissions (600).</li>
-                <li><strong>Use a Passphrase</strong>: By setting a passphrase for your private key, you can prevent unauthorized use even if the key is leaked.</li>
-                <li><strong>SSH-Agent</strong>: If you set a passphrase, using an SSH-Agent can save you the trouble of entering the passphrase every time.</li>
-                <li><strong>Back Up Your Keys</strong>: Backing up your private key in a secure location ensures you don't lose access in case of device loss or failure.</li>
-                <li><strong>Regularly Update Keys</strong>: Consider updating your keys periodically to maintain security.</li>
+                <li><strong>Protect the Private Key</strong>: Never share your private key with anyone and protect it
+                    with appropriate permissions (600).
+                </li>
+                <li><strong>Use a Passphrase</strong>: By setting a passphrase for your private key, you can prevent
+                    unauthorized use even if the key is leaked.
+                </li>
+                <li><strong>SSH-Agent</strong>: If you set a passphrase, using an SSH-Agent can save you the trouble of
+                    entering the passphrase every time.
+                </li>
+                <li><strong>Back Up Your Keys</strong>: Backing up your private key in a secure location ensures you
+                    don't lose access in case of device loss or failure.
+                </li>
+                <li><strong>Regularly Update Keys</strong>: Consider updating your keys periodically to maintain
+                    security.
+                </li>
             </ul>
             <h4>Using SSH-Agent</h4>
             <p>
-                Using an SSH-Agent allows you to enter your passphrase once, and subsequent connections will be authenticated automatically:
+                Using an SSH-Agent allows you to enter your passphrase once, and subsequent connections will be
+                authenticated automatically:
             </p>
             <pre>
 # Start the SSH-Agent
@@ -261,7 +307,8 @@ Host *
         <section id="ssh-setup-process" class="crypto-subsection">
             <h3>SSH Setup Flow</h3>
             <p>
-                To establish an SSH connection, you need to perform the appropriate setup on both the client PC and the remote server.
+                To establish an SSH connection, you need to perform the appropriate setup on both the client PC and the
+                remote server.
                 Here, we will explain the procedure for setting up an SSH connection using public key authentication.
             </p>
             <p>
@@ -282,13 +329,21 @@ Host *
                 First, perform the following steps on the client PC (local machine):
             </p>
             <ol>
-                <li><strong>Generate SSH Key Pair</strong>: As explained in the "SSH Key Generation" section, generate a private and public key pair using the <code>ssh-keygen</code> command.</li>
-                <li><strong>Store the Private Key</strong>: The generated private key (e.g., <code>id_ed25519</code> or <code>id_rsa</code>) is saved in the <code>~/.ssh/</code> directory and protected with appropriate permissions (600).</li>
-                <li><strong>Prepare the Public Key</strong>: The generated public key (e.g., <code>id_ed25519.pub</code> or <code>id_rsa.pub</code>) is prepared for transfer to the remote server.</li>
+                <li><strong>Generate SSH Key Pair</strong>: As explained in the "SSH Key Generation" section, generate a
+                    private and public key pair using the <code>ssh-keygen</code> command.
+                </li>
+                <li><strong>Store the Private Key</strong>: The generated private key (e.g., <code>id_ed25519</code> or
+                    <code>id_rsa</code>) is saved in the <code>~/.ssh/</code> directory and protected with appropriate
+                    permissions (600).
+                </li>
+                <li><strong>Prepare the Public Key</strong>: The generated public key (e.g., <code>id_ed25519.pub</code>
+                    or <code>id_rsa.pub</code>) is prepared for transfer to the remote server.
+                </li>
             </ol>
             <h4>Registering the Public Key on the Remote Server</h4>
             <p>
-                Next, register the generated public key on the remote server. There are mainly the following methods for this:
+                Next, register the generated public key on the remote server. There are mainly the following methods for
+                this:
             </p>
             <h5>1. Using the ssh-copy-id command (Recommended)</h5>
             <p>
@@ -302,12 +357,15 @@ ssh-copy-id username@remote-server
 ssh-copy-id -i ~/.ssh/id_ed25519.pub username@remote-server
             </pre>
             <p>
-                This command adds the specified public key to the <code>~/.ssh/authorized_keys</code> file on the remote server.
-                Password authentication is required for the initial connection, but once set up, you can connect without a password thereafter.
+                This command adds the specified public key to the <code>~/.ssh/authorized_keys</code> file on the remote
+                server.
+                Password authentication is required for the initial connection, but once set up, you can connect without
+                a password thereafter.
             </p>
             <h5>2. Manually Transferring and Registering the Public Key</h5>
             <p>
-                In environments where <code>ssh-copy-id</code> is not available, you can perform a manual setup with the following steps:
+                In environments where <code>ssh-copy-id</code> is not available, you can perform a manual setup with the
+                following steps:
             </p>
             <pre>
 # Display and copy the public key content
@@ -349,7 +407,8 @@ ssh username@remote-server
             </pre>
             <p>
                 If you can connect without being prompted for a password, the setup is successful.
-                If you have trouble connecting, you can use the <code>-v</code> option to see detailed debug information:
+                If you have trouble connecting, you can use the <code>-v</code> option to see detailed debug
+                information:
             </p>
             <pre>
 ssh -v username@remote-server
@@ -359,7 +418,8 @@ ssh -v username@remote-server
         <section id="ssh-authentication-process" class="crypto-subsection">
             <h3>Details of the SSH Authentication Process</h3>
             <p>
-                When an SSH connection is established, a complex authentication process takes place between the client and the server.
+                When an SSH connection is established, a complex authentication process takes place between the client
+                and the server.
                 Here, we will explain the detailed process of an SSH connection using public key authentication.
             </p>
             <p>
@@ -370,20 +430,38 @@ ssh -v username@remote-server
             </div>
             <h4>Detailed Steps of SSH Connection and Authentication</h4>
             <ol>
-                <li><strong>Connection Request</strong>: The client sends a connection request to the server's SSH port (usually 22).</li>
-                <li><strong>Server Public Key Transmission</strong>: The server sends its host public key to the client.</li>
-                <li><strong>Host Key Verification</strong>: The client verifies the server's public key by checking it against the <code>~/.ssh/known_hosts</code> file. On the first connection, a prompt is displayed to confirm the key's fingerprint.</li>
-                <li><strong>Session Key Exchange</strong>: The client and server use the Diffie-Hellman key exchange algorithm to establish an encrypted session key.</li>
-                <li><strong>Public Key Authentication Request</strong>: The client requests public key authentication from the server.</li>
-                <li><strong>Challenge Transmission</strong>: The server generates random data (a challenge) and sends it to the client.</li>
-                <li><strong>Signing the Challenge</strong>: The client signs the challenge using its own private key.</li>
+                <li><strong>Connection Request</strong>: The client sends a connection request to the server's SSH port
+                    (usually 22).
+                </li>
+                <li><strong>Server Public Key Transmission</strong>: The server sends its host public key to the client.
+                </li>
+                <li><strong>Host Key Verification</strong>: The client verifies the server's public key by checking it
+                    against the <code>~/.ssh/known_hosts</code> file. On the first connection, a prompt is displayed to
+                    confirm the key's fingerprint.
+                </li>
+                <li><strong>Session Key Exchange</strong>: The client and server use the Diffie-Hellman key exchange
+                    algorithm to establish an encrypted session key.
+                </li>
+                <li><strong>Public Key Authentication Request</strong>: The client requests public key authentication
+                    from the server.
+                </li>
+                <li><strong>Challenge Transmission</strong>: The server generates random data (a challenge) and sends it
+                    to the client.
+                </li>
+                <li><strong>Signing the Challenge</strong>: The client signs the challenge using its own private key.
+                </li>
                 <li><strong>Transmission of Signed Data</strong>: The client sends the signed data to the server.</li>
-                <li><strong>Signature Verification</strong>: The server verifies the signature using the public key registered in <code>~/.ssh/authorized_keys</code>.</li>
-                <li><strong>Authentication Result</strong>: If the verification is successful, authentication is complete, and a shell session begins. If it fails, the connection is closed.</li>
+                <li><strong>Signature Verification</strong>: The server verifies the signature using the public key
+                    registered in <code>~/.ssh/authorized_keys</code>.
+                </li>
+                <li><strong>Authentication Result</strong>: If the verification is successful, authentication is
+                    complete, and a shell session begins. If it fails, the connection is closed.
+                </li>
             </ol>
             <h4>Communication After Successful Authentication</h4>
             <p>
-                Once authentication is successful, all communication between the client and server is encrypted using the established session key.
+                Once authentication is successful, all communication between the client and server is encrypted using
+                the established session key.
                 This protects the communication content from eavesdropping or tampering by third parties.
             </p>
             <h4>Security Considerations</h4>
@@ -391,22 +469,38 @@ ssh -v username@remote-server
                 Points to enhance the security of the SSH authentication process:
             </p>
             <ul>
-                <li><strong>Host Key Verification</strong>: Always verify the host key fingerprint displayed on the first connection to prevent "Man-in-the-Middle" attacks.</li>
-                <li><strong>Private Key Protection</strong>: Protect the private key with appropriate permissions and it is recommended to set a passphrase.</li>
-                <li><strong>Server-side Configuration</strong>: On the server side, you can strengthen security by disabling password authentication and restricting root login in the <code>/etc/ssh/sshd_config</code> file.</li>
-                <li><strong>Key Type and Length</strong>: Use highly secure Ed25519 keys or RSA keys with sufficient length (4096 bits or more).</li>
+                <li><strong>Host Key Verification</strong>: Always verify the host key fingerprint displayed on the
+                    first connection to prevent "Man-in-the-Middle" attacks.
+                </li>
+                <li><strong>Private Key Protection</strong>: Protect the private key with appropriate permissions and it
+                    is recommended to set a passphrase.
+                </li>
+                <li><strong>Server-side Configuration</strong>: On the server side, you can strengthen security by
+                    disabling password authentication and restricting root login in the
+                    <code>/etc/ssh/sshd_config</code> file.
+                </li>
+                <li><strong>Key Type and Length</strong>: Use highly secure Ed25519 keys or RSA keys with sufficient
+                    length (4096 bits or more).
+                </li>
             </ul>
 
             <h4>Managing the known_hosts File</h4>
             <p>
-                The <code>known_hosts</code> file is a crucial file used by the SSH client to verify the identity of remote servers.
+                The <code>known_hosts</code> file is a crucial file used by the SSH client to verify the identity of
+                remote servers.
                 Here are some additional information and tips for managing the <code>known_hosts</code> file.
             </p>
             <h5>known_hosts File Basics</h5>
             <ul>
-                <li><strong>Location</strong>: Usually stored in <code>~/.ssh/known_hosts</code> (user-specific) or <code>/etc/ssh/ssh_known_hosts</code> (system-wide).</li>
-                <li><strong>Format</strong>: Each line records server information in the format "hostname key-type public-key".</li>
-                <li><strong>Purpose</strong>: To record and verify the public keys of destination servers to prevent Man-in-the-Middle attacks.</li>
+                <li><strong>Location</strong>: Usually stored in <code>~/.ssh/known_hosts</code> (user-specific) or
+                    <code>/etc/ssh/ssh_known_hosts</code> (system-wide).
+                </li>
+                <li><strong>Format</strong>: Each line records server information in the format "hostname key-type
+                    public-key".
+                </li>
+                <li><strong>Purpose</strong>: To record and verify the public keys of destination servers to prevent
+                    Man-in-the-Middle attacks.
+                </li>
             </ul>
             <h5>Common Operations and Commands</h5>
             <p>
@@ -430,16 +524,34 @@ ssh-keygen -H -f ~/.ssh/known_hosts
                 Common issues and solutions related to the <code>known_hosts</code> file:
             </p>
             <ul>
-                <li><strong>"WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!" Error</strong>: Displayed when the server's key has changed. If the server was legitimately reinstalled, remove the old key with <code>ssh-keygen -R hostname</code> and then reconnect.</li>
-                <li><strong>"Someone could be eavesdropping on you right now" Warning</strong>: This could be a Man-in-the-Middle attack. Contact the server administrator to confirm if the key change was legitimate.</li>
-                <li><strong>Setting up Automatic Responses</strong>: To automate the confirmation on the first connection, you can set <code>StrictHostKeyChecking=no</code> in <code>~/.ssh/config</code>, but this is not recommended in production environments due to security risks.</li>
+                <li><strong>"WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!" Error</strong>: Displayed when the
+                    server's key has changed. If the server was legitimately reinstalled, remove the old key with <code>ssh-keygen
+                        -R hostname</code> and then reconnect.
+                </li>
+                <li><strong>"Someone could be eavesdropping on you right now" Warning</strong>: This could be a
+                    Man-in-the-Middle attack. Contact the server administrator to confirm if the key change was
+                    legitimate.
+                </li>
+                <li><strong>Setting up Automatic Responses</strong>: To automate the confirmation on the first
+                    connection, you can set <code>StrictHostKeyChecking=no</code> in <code>~/.ssh/config</code>, but
+                    this is not recommended in production environments due to security risks.
+                </li>
             </ul>
             <h5>Security Best Practices</h5>
             <ul>
-                <li><strong>Key Verification</strong>: Ideally, on the first connection, obtain the key fingerprint from the server administrator through another secure channel (phone, encrypted message, etc.) and verify it.</li>
-                <li><strong>Regular Backups</strong>: Regularly back up the <code>known_hosts</code> file to prepare for accidental deletion.</li>
-                <li><strong>Use Hashing</strong>: Set <code>HashKnownHosts yes</code> in <code>~/.ssh/config</code> to hash hostnames and reduce the risk of information leakage.</li>
-                <li><strong>System-wide Configuration</strong>: On shared servers, add keys of trusted hosts to <code>/etc/ssh/ssh_known_hosts</code> so that all users can connect securely.</li>
+                <li><strong>Key Verification</strong>: Ideally, on the first connection, obtain the key fingerprint from
+                    the server administrator through another secure channel (phone, encrypted message, etc.) and verify
+                    it.
+                </li>
+                <li><strong>Regular Backups</strong>: Regularly back up the <code>known_hosts</code> file to prepare for
+                    accidental deletion.
+                </li>
+                <li><strong>Use Hashing</strong>: Set <code>HashKnownHosts yes</code> in <code>~/.ssh/config</code> to
+                    hash hostnames and reduce the risk of information leakage.
+                </li>
+                <li><strong>System-wide Configuration</strong>: On shared servers, add keys of trusted hosts to <code>/etc/ssh/ssh_known_hosts</code>
+                    so that all users can connect securely.
+                </li>
             </ul>
             <h5>Advanced Configuration Options</h5>
             <p>
@@ -486,9 +598,13 @@ Host example.com
             </p>
             <ul>
                 <li><strong>Encrypted Communication</strong>: All data transfer is encrypted by the SSH protocol.</li>
-                <li><strong>Authentication</strong>: Uses the same authentication mechanisms as SSH (password or public key authentication).</li>
-                <li><strong>Simple Operation</strong>: A simple command structure specialized for basic copy operations.</li>
-                <li><strong>Efficiency</strong>: Efficient for transferring single files or a small number of files.</li>
+                <li><strong>Authentication</strong>: Uses the same authentication mechanisms as SSH (password or public
+                    key authentication).
+                </li>
+                <li><strong>Simple Operation</strong>: A simple command structure specialized for basic copy operations.
+                </li>
+                <li><strong>Efficiency</strong>: Efficient for transferring single files or a small number of files.
+                </li>
             </ul>
             <h4>What is SFTP?</h4>
             <p>
@@ -502,19 +618,31 @@ Host example.com
             <ul>
                 <li><strong>Encrypted Communication</strong>: All data transfer is encrypted by the SSH protocol.</li>
                 <li><strong>Authentication</strong>: Uses the same authentication mechanisms as SSH.</li>
-                <li><strong>Feature-rich</strong>: In addition to file uploads/downloads, it also allows for remote file operations (renaming, deleting, changing permissions, etc.).</li>
+                <li><strong>Feature-rich</strong>: In addition to file uploads/downloads, it also allows for remote file
+                    operations (renaming, deleting, changing permissions, etc.).
+                </li>
                 <li><strong>Resume Functionality</strong>: Has a feature to resume interrupted transfers.</li>
-                <li><strong>Interactive Operation</strong>: Provides an interactive shell, allowing for consecutive file operations.</li>
+                <li><strong>Interactive Operation</strong>: Provides an interactive shell, allowing for consecutive file
+                    operations.
+                </li>
             </ul>
             <h4>Differences Between SCP and SFTP</h4>
             <p>
                 The main differences are as follows:
             </p>
             <ul>
-                <li><strong>Functionality</strong>: SFTP is more feature-rich than SCP and allows for remote file operations.</li>
-                <li><strong>Protocol</strong>: SCP is a simple copy protocol, while SFTP is a more complex file transfer protocol.</li>
-                <li><strong>Usage Scenario</strong>: SCP is suitable for simple file copying, while SFTP is suitable for complex file management tasks.</li>
-                <li><strong>Transfer Resume</strong>: SFTP can resume interrupted transfers, but SCP does not have this feature.</li>
+                <li><strong>Functionality</strong>: SFTP is more feature-rich than SCP and allows for remote file
+                    operations.
+                </li>
+                <li><strong>Protocol</strong>: SCP is a simple copy protocol, while SFTP is a more complex file transfer
+                    protocol.
+                </li>
+                <li><strong>Usage Scenario</strong>: SCP is suitable for simple file copying, while SFTP is suitable for
+                    complex file management tasks.
+                </li>
+                <li><strong>Transfer Resume</strong>: SFTP can resume interrupted transfers, but SCP does not have this
+                    feature.
+                </li>
                 <li><strong>Scripting</strong>: SCP is simpler, making it easier for automation in scripts.</li>
             </ul>
         </section>
@@ -568,7 +696,8 @@ scp username1@server1:/path/to/file.txt username2@server2:/path/to/destination/
             <h4>Frequently Used Options</h4>
             <ul>
                 <li><code>-r</code>: Recursively copy directories.</li>
-                <li><code>-p</code>: Preserves modification times, access times, and permissions from the original file.</li>
+                <li><code>-p</code>: Preserves modification times, access times, and permissions from the original file.
+                </li>
                 <li><code>-P port</code>: Specifies the port to connect to on the remote host (default is 22).</li>
                 <li><code>-C</code>: Enables compression.</li>
                 <li><code>-l limit</code>: Limits the used bandwidth, specified in Kbit/s.</li>
@@ -727,38 +856,55 @@ sftp -b sftp_commands.txt username@remote_server
             </p>
             <h4>Security Best Practices</h4>
             <ul>
-                <li><strong>Use Public Key Authentication</strong>: Using public key authentication instead of password authentication improves security.</li>
+                <li><strong>Use Public Key Authentication</strong>: Using public key authentication instead of password
+                    authentication improves security.
+                </li>
                 <li><strong>Strong Passphrase</strong>: Set a strong passphrase to protect your private key.</li>
-                <li><strong>Use the Latest Versions</strong>: Always use the latest versions of SSH/SCP/SFTP clients and servers to avoid known vulnerabilities.</li>
-                <li><strong>Firewall Configuration</strong>: Open only necessary ports and restrict unnecessary access.</li>
+                <li><strong>Use the Latest Versions</strong>: Always use the latest versions of SSH/SCP/SFTP clients and
+                    servers to avoid known vulnerabilities.
+                </li>
+                <li><strong>Firewall Configuration</strong>: Open only necessary ports and restrict unnecessary access.
+                </li>
                 <li><strong>Access Control</strong>: Restrict SCP/SFTP access to only necessary users.</li>
             </ul>
             <h4>SCP Limitations and Precautions</h4>
             <ul>
-                <li><strong>Protocol Limitations</strong>: SCP only supports basic file transfer and does not allow for advanced file operations.</li>
-                <li><strong>Error Handling</strong>: SCP has limited error handling, which can cause problems during large file transfers.</li>
+                <li><strong>Protocol Limitations</strong>: SCP only supports basic file transfer and does not allow for
+                    advanced file operations.
+                </li>
+                <li><strong>Error Handling</strong>: SCP has limited error handling, which can cause problems during
+                    large file transfers.
+                </li>
                 <li><strong>Transfer Resume</strong>: It cannot resume interrupted transfers.</li>
-                <li><strong>Security Concerns</strong>: Older SCP protocols have known security issues, and it is recommended to use SFTP if possible.</li>
+                <li><strong>Security Concerns</strong>: Older SCP protocols have known security issues, and it is
+                    recommended to use SFTP if possible.
+                </li>
             </ul>
             <h4>SFTP Precautions</h4>
             <ul>
-                <li><strong>Performance</strong>: For simple file transfers, it may have slightly more overhead than SCP.</li>
+                <li><strong>Performance</strong>: For simple file transfers, it may have slightly more overhead than
+                    SCP.
+                </li>
                 <li><strong>Compatibility</strong>: Some older systems may not support SFTP.</li>
-                <li><strong>Configuration Complexity</strong>: Because it has more features, configuration can be more complex.</li>
+                <li><strong>Configuration Complexity</strong>: Because it has more features, configuration can be more
+                    complex.
+                </li>
             </ul>
             <h4>Alternatives</h4>
             <p>
                 Besides SCP and SFTP, there are other alternatives for secure file transfer:
             </p>
             <ul>
-                <li><strong>rsync over SSH</strong>: Provides efficient differential transfer and resume capabilities.</li>
+                <li><strong>rsync over SSH</strong>: Provides efficient differential transfer and resume capabilities.
+                </li>
                 <li><strong>FTPS</strong>: FTP using SSL/TLS (different from SFTP).</li>
                 <li><strong>WebDAV over HTTPS</strong>: A web-based file transfer protocol.</li>
                 <li><strong>Cloud Storage Services</strong>: Dropbox, Google Drive, OneDrive, etc.</li>
             </ul>
             <h4>Deprecation and Future of SCP</h4>
             <p>
-                The developers of OpenSSH are gradually deprecating the use of SCP due to known security issues in the SCP protocol
+                The developers of OpenSSH are gradually deprecating the use of SCP due to known security issues in the
+                SCP protocol
                 and recommend using SFTP instead. In future OpenSSH versions, the SCP command may
                 be changed to use the SFTP protocol internally.
             </p>
@@ -774,8 +920,10 @@ sftp -b sftp_commands.txt username@remote_server
                 To set up an SSH connection with GitHub, follow these steps:
             </p>
             <ol>
-                <li><strong>Generate an SSH Key</strong>: Generate an SSH key pair using the method described earlier.</li>
-                <li><strong>Copy the Public Key</strong>: Copy the contents of the public key to your clipboard with the following command:
+                <li><strong>Generate an SSH Key</strong>: Generate an SSH key pair using the method described earlier.
+                </li>
+                <li><strong>Copy the Public Key</strong>: Copy the contents of the public key to your clipboard with the
+                    following command:
                     <pre>
 # macOS
 cat ~/.ssh/id_ed25519.pub | pbcopy
@@ -801,7 +949,8 @@ cat ~/.ssh/id_ed25519.pub | xclip -selection clipboard
                     <pre>
 ssh -T git@github.com
                     </pre>
-                    On the first connection, a message will appear to confirm the server's fingerprint. Type "yes" to continue.
+                    On the first connection, a message will appear to confirm the server's fingerprint. Type "yes" to
+                    continue.
                     If the connection is successful, a message like the following will be displayed:
                     <pre>
 Hi username! You've successfully authenticated, but GitHub does not provide shell access.
@@ -839,7 +988,8 @@ git remote -v
             </pre>
             <h4>Push and Pull</h4>
             <p>
-                With the SSH connection configured, you can push and pull with the usual Git commands without entering a password:
+                With the SSH connection configured, you can push and pull with the usual Git commands without entering a
+                password:
             </p>
             <pre>
 # Push changes
@@ -860,9 +1010,13 @@ git pull origin main
                 If the <code>ssh -T git@github.com</code> command fails:
             </p>
             <ul>
-                <li><strong>Test in Debug Mode</strong>: Run <code>ssh -vT git@github.com</code> to see detailed information.</li>
+                <li><strong>Test in Debug Mode</strong>: Run <code>ssh -vT git@github.com</code> to see detailed
+                    information.
+                </li>
                 <li><strong>Check the Keys</strong>: Check the currently loaded keys with <code>ssh-add -l</code>.</li>
-                <li><strong>Key Permissions</strong>: Check if the private key permissions are correct (<code>chmod 600 ~/.ssh/id_ed25519</code>).</li>
+                <li><strong>Key Permissions</strong>: Check if the private key permissions are correct (<code>chmod 600
+                    ~/.ssh/id_ed25519</code>).
+                </li>
                 <li><strong>~/.ssh/config</strong>: Check if the configuration file is correct.</li>
             </ul>
             <h4>Authentication Error</h4>
@@ -870,15 +1024,23 @@ git pull origin main
                 If you see a "Permission denied (publickey)" error:
             </p>
             <ul>
-                <li><strong>Check Public Key Registration</strong>: Verify that the public key is correctly registered on your GitHub settings page.</li>
-                <li><strong>Specify the Key to Use</strong>: Test by specifying a particular key with <code>ssh -i ~/.ssh/id_ed25519 -T git@github.com</code>.</li>
-                <li><strong>Check the SSH-Agent</strong>: Check if the key has been added to the agent with <code>ssh-add -l</code>.</li>
+                <li><strong>Check Public Key Registration</strong>: Verify that the public key is correctly registered
+                    on your GitHub settings page.
+                </li>
+                <li><strong>Specify the Key to Use</strong>: Test by specifying a particular key with <code>ssh -i
+                    ~/.ssh/id_ed25519 -T git@github.com</code>.
+                </li>
+                <li><strong>Check the SSH-Agent</strong>: Check if the key has been added to the agent with <code>ssh-add
+                    -l</code>.
+                </li>
             </ul>
             <h4>Other Issues</h4>
             <ul>
                 <li><strong>Firewall</strong>: Check if port 22 (SSH) is open.</li>
                 <li><strong>Proxy</strong>: In a proxy environment, you may need to adjust your SSH settings.</li>
-                <li><strong>Regenerate Keys</strong>: If the problem persists, consider generating a new key pair and setting it up again.</li>
+                <li><strong>Regenerate Keys</strong>: If the problem persists, consider generating a new key pair and
+                    setting it up again.
+                </li>
             </ul>
         </section>
     </section>
@@ -889,12 +1051,14 @@ git pull origin main
         <section id="x11-basics" class="crypto-subsection">
             <h3>X11 Forwarding Basics</h3>
             <p>
-                X11 Forwarding is a feature of SSH that allows you to forward the display of graphical applications running on a remote server
+                X11 Forwarding is a feature of SSH that allows you to forward the display of graphical applications
+                running on a remote server
                 to your local machine. This makes it possible to operate GUI applications on a remote server
                 on your local machine's screen.
             </p>
             <p>
-                X11 refers to protocol version 11 of the X Window System, a windowing system widely used in Unix-like systems.
+                X11 refers to protocol version 11 of the X Window System, a windowing system widely used in Unix-like
+                systems.
                 This protocol adopts a client-server model to provide a graphical user interface (GUI).
             </p>
             <p>
@@ -903,7 +1067,9 @@ git pull origin main
             <ol>
                 <li>Log in to the remote server from the local machine (client) with an SSH connection.</li>
                 <li>Launch a graphical application on the remote server.</li>
-                <li>The application's display data is encrypted and transferred to the local machine through the SSH connection.</li>
+                <li>The application's display data is encrypted and transferred to the local machine through the SSH
+                    connection.
+                </li>
                 <li>The X server on the local machine receives this data and displays it on the screen.</li>
             </ol>
             <p>
@@ -919,7 +1085,8 @@ git pull origin main
             </p>
             <h4>Server-side Configuration</h4>
             <p>
-                Enable X11 forwarding in the SSH server (sshd) configuration file (usually <code>/etc/ssh/sshd_config</code>):
+                Enable X11 forwarding in the SSH server (sshd) configuration file (usually
+                <code>/etc/ssh/sshd_config</code>):
             </p>
             <pre>
 X11Forwarding yes
@@ -996,19 +1163,29 @@ gedit
             <h4>Practical Use Scenarios</h4>
             <ul>
                 <li><strong>Remote Development</strong>: Developing using an IDE or text editor on a remote server.</li>
-                <li><strong>Data Analysis</strong>: Using data visualization tools (Matplotlib, R, etc.) on a remote server.</li>
+                <li><strong>Data Analysis</strong>: Using data visualization tools (Matplotlib, R, etc.) on a remote
+                    server.
+                </li>
                 <li><strong>System Administration</strong>: Using graphical management tools on a remote server.</li>
                 <li><strong>Browser Testing</strong>: Testing using a web browser on a remote server.</li>
             </ul>
             <h4>Performance Optimization</h4>
             <p>
-                X11 forwarding is convenient, but it can consume a lot of network bandwidth. Tips for improving performance:
+                X11 forwarding is convenient, but it can consume a lot of network bandwidth. Tips for improving
+                performance:
             </p>
             <ul>
-                <li><strong>Enable Compression</strong>: <code>ssh -XC username@remote-server</code> (the <code>-C</code> option enables compression).</li>
-                <li><strong>Use Lightweight Applications</strong>: Choose lightweight applications over complex GUIs.</li>
-                <li><strong>Use on a Local Network</strong>: Recommended for use within a local network rather than over the internet.</li>
-                <li><strong>Consider VNC</strong>: For complex graphical work, VNC may be more suitable than X11 forwarding.</li>
+                <li><strong>Enable Compression</strong>: <code>ssh -XC username@remote-server</code> (the
+                    <code>-C</code> option enables compression).
+                </li>
+                <li><strong>Use Lightweight Applications</strong>: Choose lightweight applications over complex GUIs.
+                </li>
+                <li><strong>Use on a Local Network</strong>: Recommended for use within a local network rather than over
+                    the internet.
+                </li>
+                <li><strong>Consider VNC</strong>: For complex graphical work, VNC may be more suitable than X11
+                    forwarding.
+                </li>
             </ul>
         </section>
 
@@ -1019,18 +1196,30 @@ gedit
             </p>
             <h4>Potential Risks</h4>
             <ul>
-                <li><strong>X11 Protocol Vulnerabilities</strong>: The X11 protocol itself has limited security features.</li>
+                <li><strong>X11 Protocol Vulnerabilities</strong>: The X11 protocol itself has limited security
+                    features.
+                </li>
                 <li><strong>Keylogging Risk</strong>: A malicious program could intercept key inputs through X11.</li>
                 <li><strong>Screen Capture</strong>: A remote application could capture the entire screen.</li>
-                <li><strong>Risk of Trusted X11 Forwarding (-Y)</strong>: The <code>-Y</code> option relaxes security restrictions and should only be used with trusted servers.</li>
+                <li><strong>Risk of Trusted X11 Forwarding (-Y)</strong>: The <code>-Y</code> option relaxes security
+                    restrictions and should only be used with trusted servers.
+                </li>
             </ul>
             <h4>Security Measures</h4>
             <ul>
-                <li><strong>Use Only with Trusted Servers</strong>: Enable X11 forwarding only with servers you trust.</li>
-                <li><strong>Enable Only When Needed</strong>: Use X11 forwarding only when necessary, rather than having it always enabled.</li>
-                <li><strong>Use the -X Option</strong>: Use the <code>-X</code> option instead of <code>-Y</code> whenever possible.</li>
-                <li><strong>Use the Latest SSH Version</strong>: Always use SSH clients and servers with the latest security patches applied.</li>
-                <li><strong>Firewall Configuration</strong>: Open only necessary ports and restrict unnecessary access.</li>
+                <li><strong>Use Only with Trusted Servers</strong>: Enable X11 forwarding only with servers you trust.
+                </li>
+                <li><strong>Enable Only When Needed</strong>: Use X11 forwarding only when necessary, rather than having
+                    it always enabled.
+                </li>
+                <li><strong>Use the -X Option</strong>: Use the <code>-X</code> option instead of <code>-Y</code>
+                    whenever possible.
+                </li>
+                <li><strong>Use the Latest SSH Version</strong>: Always use SSH clients and servers with the latest
+                    security patches applied.
+                </li>
+                <li><strong>Firewall Configuration</strong>: Open only necessary ports and restrict unnecessary access.
+                </li>
             </ul>
             <h4>Alternatives</h4>
             <p>
@@ -1040,7 +1229,9 @@ gedit
                 <li><strong>VNC</strong>: VNC is suitable if you need to access the entire remote desktop.</li>
                 <li><strong>RDP</strong>: In a Windows environment, RDP (Remote Desktop Protocol) is an option.</li>
                 <li><strong>Web-based Interfaces</strong>: Many applications provide web interfaces.</li>
-                <li><strong>Port Forwarding</strong>: You can also consider forwarding only the port of a specific application.</li>
+                <li><strong>Port Forwarding</strong>: You can also consider forwarding only the port of a specific
+                    application.
+                </li>
             </ul>
         </section>
     </section>
@@ -1051,20 +1242,31 @@ gedit
         <section id="tunneling-basics" class="crypto-subsection">
             <h3>Port Forwarding Basics</h3>
             <p>
-                Port forwarding (also called SSH tunneling) is a technique that uses the SSH protocol to transfer data through an encrypted tunnel.
-                This allows for secure access to resources that are normally inaccessible and communication that bypasses firewalls.
+                Port forwarding (also called SSH tunneling) is a technique that uses the SSH protocol to transfer data
+                through an encrypted tunnel.
+                This allows for secure access to resources that are normally inaccessible and communication that
+                bypasses firewalls.
             </p>
             <p>
                 Main advantages of Port Forwarding:
             </p>
             <ul>
-                <li><strong>Encrypted Communication</strong>: All traffic is encrypted by the SSH protocol, so you can protect confidential data even over insecure communication channels.</li>
-                <li><strong>Firewall Bypass</strong>: Even in environments where specific ports or protocols are blocked, communication is possible through an allowed SSH connection.</li>
-                <li><strong>Privacy Protection</strong>: You can avoid monitoring from your Internet Service Provider (ISP) or middlemen.</li>
-                <li><strong>Access to Remote Resources</strong>: It allows you to access services from the outside that are normally only accessible within a local network.</li>
+                <li><strong>Encrypted Communication</strong>: All traffic is encrypted by the SSH protocol, so you can
+                    protect confidential data even over insecure communication channels.
+                </li>
+                <li><strong>Firewall Bypass</strong>: Even in environments where specific ports or protocols are
+                    blocked, communication is possible through an allowed SSH connection.
+                </li>
+                <li><strong>Privacy Protection</strong>: You can avoid monitoring from your Internet Service Provider
+                    (ISP) or middlemen.
+                </li>
+                <li><strong>Access to Remote Resources</strong>: It allows you to access services from the outside that
+                    are normally only accessible within a local network.
+                </li>
             </ul>
             <p>
-                Port forwarding is utilized for various purposes, such as database management, remote desktop connections, and private web Browse.
+                Port forwarding is utilized for various purposes, such as database management, remote desktop
+                connections, and private web Browse.
             </p>
         </section>
 
@@ -1076,7 +1278,8 @@ gedit
             <h4>1. Local Port Forwarding</h4>
             <p>
                 Local port forwarding forwards a port on the local machine to a port on the remote server.
-                When you connect to the specified port on the local machine, that connection is forwarded through the SSH tunnel to the specified port on the remote server.
+                When you connect to the specified port on the local machine, that connection is forwarded through the
+                SSH tunnel to the specified port on the remote server.
             </p>
             <p>
                 Common syntax:
@@ -1092,7 +1295,8 @@ ssh -L local_port:destination_host:destination_port username@ssh_server
 ssh -L 3307:localhost:3306 username@remote-server
             </pre>
             <p>
-                After this setup, connecting to <code>localhost:3307</code> on the local machine will forward the connection to <code>localhost:3306</code> on the remote server.
+                After this setup, connecting to <code>localhost:3307</code> on the local machine will forward the
+                connection to <code>localhost:3306</code> on the remote server.
             </p>
             <div class="diagram-container">
                 <img src="image/local_port_forwarding.png" alt="How Local Port Forwarding Works" class="crypto-diagram">
@@ -1101,7 +1305,8 @@ ssh -L 3307:localhost:3306 username@remote-server
             <h4>2. Remote Port Forwarding</h4>
             <p>
                 Remote port forwarding forwards a port on the remote server to a port on the local machine.
-                This is the reverse of local port forwarding and is used, for example, to access a service on a local machine from the internet.
+                This is the reverse of local port forwarding and is used, for example, to access a service on a local
+                machine from the internet.
             </p>
             <p>
                 Common syntax:
@@ -1117,15 +1322,18 @@ ssh -R remote_port:destination_host:destination_port username@ssh_server
 ssh -R 8080:localhost:3000 username@remote-server
             </pre>
             <p>
-                After this setup, connecting to <code>localhost:8080</code> on the remote server will forward the connection to <code>localhost:80</code> on the local machine.
+                After this setup, connecting to <code>localhost:8080</code> on the remote server will forward the
+                connection to <code>localhost:80</code> on the local machine.
             </p>
             <div class="diagram-container">
-                <img src="image/remote_port_forwarding.png" alt="How Remote Port Forwarding Works" class="crypto-diagram">
+                <img src="image/remote_port_forwarding.png" alt="How Remote Port Forwarding Works"
+                     class="crypto-diagram">
             </div>
 
             <h4>3. Dynamic Port Forwarding</h4>
             <p>
-                Dynamic port forwarding sets up a SOCKS proxy and forwards traffic to multiple destinations through an SSH tunnel.
+                Dynamic port forwarding sets up a SOCKS proxy and forwards traffic to multiple destinations through an
+                SSH tunnel.
                 This is useful for tunneling all traffic from web Browse or other applications.
             </p>
             <p>
@@ -1142,34 +1350,52 @@ ssh -D local_port username@ssh_server
 ssh -D 1080 username@remote-server
             </pre>
             <p>
-                After this setup, if you specify <code>localhost:1080</code> as the SOCKS proxy in your browser or other applications,
+                After this setup, if you specify <code>localhost:1080</code> as the SOCKS proxy in your browser or other
+                applications,
                 all traffic will be sent from the remote server through the SSH tunnel.
             </p>
             <div class="diagram-container">
-                <img src="image/dynamic_port_forwarding.png" alt="How Dynamic Port Forwarding Works" class="crypto-diagram">
+                <img src="image/dynamic_port_forwarding.png" alt="How Dynamic Port Forwarding Works"
+                     class="crypto-diagram">
             </div>
         </section>
 
         <section id="tunneling-security" class="crypto-subsection">
             <h3>Security Considerations</h3>
             <p>
-                Port forwarding is a secure means of communication, but if not properly configured and managed, it can pose security risks:
+                Port forwarding is a secure means of communication, but if not properly configured and managed, it can
+                pose security risks:
             </p>
             <h4>Potential Risks</h4>
             <ul>
-                <li><strong>Improper Binding</strong>: Binding port forwarding to <code>0.0.0.0</code> (all interfaces) instead of <code>localhost</code> can allow unintended access.</li>
-                <li><strong>Authentication Bypass</strong>: Tunneling can allow access to services that are normally access-restricted without authentication.</li>
-                <li><strong>Violation of Organizational Policies</strong>: It may violate the network policies of a company or organization.</li>
+                <li><strong>Improper Binding</strong>: Binding port forwarding to <code>0.0.0.0</code> (all interfaces)
+                    instead of <code>localhost</code> can allow unintended access.
+                </li>
+                <li><strong>Authentication Bypass</strong>: Tunneling can allow access to services that are normally
+                    access-restricted without authentication.
+                </li>
+                <li><strong>Violation of Organizational Policies</strong>: It may violate the network policies of a
+                    company or organization.
+                </li>
                 <li><strong>Resource Consumption</strong>: Long-running tunnels can consume server resources.</li>
             </ul>
 
             <h4>Security Measures</h4>
             <ul>
-                <li><strong>Proper Binding</strong>: Unless absolutely necessary, bind port forwarding only to <code>localhost</code>.</li>
-                <li><strong>Strong Authentication</strong>: Use public key authentication on the SSH server and set a strong passphrase.</li>
-                <li><strong>Tunnel Restriction</strong>: In the SSH server configuration, allow only necessary port forwarding.</li>
-                <li><strong>Idle Timeout</strong>: Configure tunnels that have been unused for a long time to close automatically.</li>
-                <li><strong>Log Monitoring</strong>: Regularly check the SSH server logs and monitor for suspicious tunneling activity.</li>
+                <li><strong>Proper Binding</strong>: Unless absolutely necessary, bind port forwarding only to <code>localhost</code>.
+                </li>
+                <li><strong>Strong Authentication</strong>: Use public key authentication on the SSH server and set a
+                    strong passphrase.
+                </li>
+                <li><strong>Tunnel Restriction</strong>: In the SSH server configuration, allow only necessary port
+                    forwarding.
+                </li>
+                <li><strong>Idle Timeout</strong>: Configure tunnels that have been unused for a long time to close
+                    automatically.
+                </li>
+                <li><strong>Log Monitoring</strong>: Regularly check the SSH server logs and monitor for suspicious
+                    tunneling activity.
+                </li>
             </ul>
 
             <h4>Server-side Configuration</h4>
@@ -1208,13 +1434,19 @@ Match User username
             <ul>
                 <li><strong>Use Strong Key Types and Lengths</strong>: Use Ed25519 or RSA (4096 bits).</li>
                 <li><strong>Set a Passphrase</strong>: Set a strong passphrase for your private key.</li>
-                <li><strong>Disable Password Authentication</strong>: Configure to use only public key authentication.</li>
-                <li><strong>Restrict Root Login</strong>: Prohibit direct root login and use a regular user with sudo privileges.</li>
+                <li><strong>Disable Password Authentication</strong>: Configure to use only public key authentication.
+                </li>
+                <li><strong>Restrict Root Login</strong>: Prohibit direct root login and use a regular user with sudo
+                    privileges.
+                </li>
                 <li><strong>Change the SSH Port</strong>: Change from the default port 22 to avoid automated scans.</li>
                 <li><strong>Firewall Configuration</strong>: Allow SSH connections only from trusted IP addresses.</li>
-                <li><strong>Limit Failed Login Attempts</strong>: Use tools like Fail2ban to prevent brute-force attacks.</li>
+                <li><strong>Limit Failed Login Attempts</strong>: Use tools like Fail2ban to prevent brute-force
+                    attacks.
+                </li>
                 <li><strong>Regular Updates</strong>: Keep the SSH server and client at their latest versions.</li>
-                <li><strong>Monitor Logs</strong>: Regularly check SSH connection logs to detect suspicious activity.</li>
+                <li><strong>Monitor Logs</strong>: Regularly check SSH connection logs to detect suspicious activity.
+                </li>
             </ul>
         </section>
 
@@ -1225,20 +1457,36 @@ Match User username
             </p>
             <h4>Connection Issues</h4>
             <ul>
-                <li><strong>Connection Timeout</strong>: Check firewall settings, network connection, and the status of the SSH server.</li>
-                <li><strong>Host Key Changed</strong>: If the host key has changed due to a server reinstallation, remove the corresponding entry from the <code>~/.ssh/known_hosts</code> file.</li>
-                <li><strong>Connection Drops Frequently</strong>: Set <code>ServerAliveInterval</code> and <code>ServerAliveCountMax</code> in <code>~/.ssh/config</code>.</li>
+                <li><strong>Connection Timeout</strong>: Check firewall settings, network connection, and the status of
+                    the SSH server.
+                </li>
+                <li><strong>Host Key Changed</strong>: If the host key has changed due to a server reinstallation,
+                    remove the corresponding entry from the <code>~/.ssh/known_hosts</code> file.
+                </li>
+                <li><strong>Connection Drops Frequently</strong>: Set <code>ServerAliveInterval</code> and <code>ServerAliveCountMax</code>
+                    in <code>~/.ssh/config</code>.
+                </li>
             </ul>
             <h4>Authentication Issues</h4>
             <ul>
-                <li><strong>Permission Errors</strong>: Check the permissions of the <code>~/.ssh</code> directory and key files (directory should be 700, private key 600).</li>
-                <li><strong>Forgot Passphrase</strong>: If you forget the passphrase for your private key, you must generate a new key pair.</li>
-                <li><strong>Managing Multiple Keys</strong>: In the <code>~/.ssh/config</code> file, specify which key to use for each host.</li>
+                <li><strong>Permission Errors</strong>: Check the permissions of the <code>~/.ssh</code> directory and
+                    key files (directory should be 700, private key 600).
+                </li>
+                <li><strong>Forgot Passphrase</strong>: If you forget the passphrase for your private key, you must
+                    generate a new key pair.
+                </li>
+                <li><strong>Managing Multiple Keys</strong>: In the <code>~/.ssh/config</code> file, specify which key
+                    to use for each host.
+                </li>
             </ul>
             <h4>Performance Issues</h4>
             <ul>
-                <li><strong>Slow Connection</strong>: Measures such as disabling DNS reverse lookup, enabling compression, and using faster encryption algorithms.</li>
-                <li><strong>X11 Forwarding Issues</strong>: If X11 forwarding is needed, use the <code>-X</code> or <code>-Y</code> option and ensure the necessary packages are installed.</li>
+                <li><strong>Slow Connection</strong>: Measures such as disabling DNS reverse lookup, enabling
+                    compression, and using faster encryption algorithms.
+                </li>
+                <li><strong>X11 Forwarding Issues</strong>: If X11 forwarding is needed, use the <code>-X</code> or
+                    <code>-Y</code> option and ensure the necessary packages are installed.
+                </li>
             </ul>
         </section>
     </section>

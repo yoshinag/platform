@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Gitブランチ関連のコマンド解説</title>
@@ -8,8 +12,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
@@ -19,14 +22,14 @@
     </div>
 
     <h1>Gitブランチ関連のコマンド解説</h1>
-    
+
     <section class="command-section">
         <h2>ブランチ関連のコマンド</h2>
-        
+
         <!-- git branch コマンド -->
         <h3>git branch - ブランチの管理</h3>
         <p>ブランチの作成、一覧表示、削除などを行います。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -53,7 +56,7 @@
                 <td>各ブランチの最新コミットも表示</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>git branch</code> - ローカルブランチの一覧を表示<br>
@@ -67,7 +70,7 @@
         <!-- git checkout コマンド -->
         <h3>git checkout - ブランチの切り替えとファイルの復元</h3>
         <p>ブランチを切り替えたり、作業ディレクトリのファイルを復元したりします。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -90,7 +93,7 @@
                 <td>ファイルパスとブランチ名を区別するための区切り</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>git checkout develop</code> - developブランチに切り替え<br>
@@ -103,7 +106,7 @@
         <!-- git switch コマンド -->
         <h3>git switch - ブランチの切り替え（Git 2.23以降）</h3>
         <p>ブランチを切り替えるための専用コマンドです（checkoutの機能を分割）。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -126,7 +129,7 @@
                 <td>未コミットの変更を破棄して切り替え</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>git switch main</code> - mainブランチに切り替え<br>
@@ -139,7 +142,7 @@
 
     <div class="navigation-links">
         <a href="git_command.html">メインページに戻る</a> |
-        <a href="git_command_commit.html">前のカテゴリ: コミット関連のコマンド</a> | 
+        <a href="git_command_commit.html">前のカテゴリ: コミット関連のコマンド</a> |
         <a href="git_command_remote.html">次のカテゴリ: リモートリポジトリ操作</a>
     </div>
 

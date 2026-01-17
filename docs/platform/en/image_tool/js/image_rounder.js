@@ -56,8 +56,14 @@ class ImageRounderApp {
             });
         }
         if (this.dropZone) {
-            this.dropZone.addEventListener('dragover', (event) => { event.preventDefault(); this.dropZone.classList.add('dragover'); });
-            this.dropZone.addEventListener('dragleave', (event) => { event.preventDefault(); this.dropZone.classList.remove('dragover'); });
+            this.dropZone.addEventListener('dragover', (event) => {
+                event.preventDefault();
+                this.dropZone.classList.add('dragover');
+            });
+            this.dropZone.addEventListener('dragleave', (event) => {
+                event.preventDefault();
+                this.dropZone.classList.remove('dragover');
+            });
             this.dropZone.addEventListener('drop', (event) => {
                 event.preventDefault();
                 this.dropZone.classList.remove('dragover');
@@ -94,7 +100,9 @@ class ImageRounderApp {
             this.originalImage = new Image();
             this.originalImage.onload = () => {
                 if (this.originalImage.naturalWidth === 0 || this.originalImage.naturalHeight === 0) {
-                    alert("画像の幅または高さが0です。有効な画像を選択してください。"); this.resetApp(); return;
+                    alert("画像の幅または高さが0です。有効な画像を選択してください。");
+                    this.resetApp();
+                    return;
                 }
                 const imgNatW = this.originalImage.naturalWidth;
                 const imgNatH = this.originalImage.naturalHeight;
@@ -111,10 +119,16 @@ class ImageRounderApp {
                 this.updatePreview();
                 this._enableElements(true);
             };
-            this.originalImage.onerror = () => { alert("画像の読み込みに失敗しました。"); this.resetApp(); };
+            this.originalImage.onerror = () => {
+                alert("画像の読み込みに失敗しました。");
+                this.resetApp();
+            };
             this.originalImage.src = this.originalImageDataBase64;
         };
-        reader.onerror = () => { alert("ファイルの読み込みに失敗しました。"); this.resetApp(); };
+        reader.onerror = () => {
+            alert("ファイルの読み込みに失敗しました。");
+            this.resetApp();
+        };
         reader.readAsDataURL(file);
     }
 
@@ -133,7 +147,7 @@ class ImageRounderApp {
 
     _updateBorderRadiusSliderMax() {
         if (!this.imageLayerManager || !this.borderRadiusSlider) return;
-        const { width: imgW, height: imgH } = this.imageLayerManager.getDimensions();
+        const {width: imgW, height: imgH} = this.imageLayerManager.getDimensions();
         const imgLayerShortSide = Math.min(imgW, imgH);
         const maxRadius = imgLayerShortSide > 0 ? Math.floor(imgLayerShortSide / 2) : 0;
 
@@ -170,8 +184,8 @@ class ImageRounderApp {
 
     updatePreview() {
         if (!this.originalImage || !this.previewCtx) return;
-        const { width: baseW, height: baseH } = this.baseLayerManager.getDimensions();
-        const { width: imgW, height: imgH } = this.imageLayerManager.getDimensions();
+        const {width: baseW, height: baseH} = this.baseLayerManager.getDimensions();
+        const {width: imgW, height: imgH} = this.imageLayerManager.getDimensions();
 
         this.previewCanvas.width = baseW > 0 ? baseW : 300;
         this.previewCanvas.height = baseH > 0 ? baseH : 150;
@@ -193,23 +207,33 @@ class ImageRounderApp {
     _downloadURI(uri, name) {
         const link = document.createElement('a');
         link.download = name;
-        link.href = uri; document.body.appendChild(link); link.click(); document.body.removeChild(link);
+        link.href = uri;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
         if (uri.startsWith('blob:')) URL.revokeObjectURL(uri);
     }
-    _getCleanFileName() { return this.originalFileName; }
+
+    _getCleanFileName() {
+        return this.originalFileName;
+    }
 
     _prepareDownloadCanvas(fill, fillColor = '#ffffff') {
         if (!this.originalImage) return null;
-        const { width: baseW, height: baseH } = this.baseLayerManager.getDimensions();
-        const { width: imgW, height: imgH } = this.imageLayerManager.getDimensions();
+        const {width: baseW, height: baseH} = this.baseLayerManager.getDimensions();
+        const {width: imgW, height: imgH} = this.imageLayerManager.getDimensions();
 
         if (baseW <= 0 || baseH <= 0) return null;
 
         const tempCanvas = document.createElement('canvas');
         const tempCtx = tempCanvas.getContext('2d');
-        tempCanvas.width = baseW; tempCanvas.height = baseH;
+        tempCanvas.width = baseW;
+        tempCanvas.height = baseH;
 
-        if (fill) { tempCtx.fillStyle = fillColor; tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height); }
+        if (fill) {
+            tempCtx.fillStyle = fillColor;
+            tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+        }
 
         if (imgW > 0 && imgH > 0) {
             const imageX = (tempCanvas.width - imgW) / 2;
@@ -226,56 +250,60 @@ class ImageRounderApp {
 
     _downloadSvg() {
         if (!this.originalImage || !this.originalImageDataBase64) return;
-        const { width: baseW, height: baseH } = this.baseLayerManager.getDimensions();
-        const { width: imgW, height: imgH } = this.imageLayerManager.getDimensions();
+        const {width: baseW, height: baseH} = this.baseLayerManager.getDimensions();
+        const {width: imgW, height: imgH} = this.imageLayerManager.getDimensions();
         if (baseW <= 0 || baseH <= 0) return;
 
         const radius = getSafeInt(this.borderRadiusSlider.value);
-        const imageX = (baseW - imgW) / 2; const imageY = (baseH - imgH) / 2;
+        const imageX = (baseW - imgW) / 2;
+        const imageY = (baseH - imgH) / 2;
         const effectiveRadius = Math.max(0, Math.min(radius, imgW / 2, imgH / 2));
         const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="${baseW}" height="${baseH}" viewBox="0 0 ${baseW} ${baseH}"><defs><clipPath id="rounded-corners-clip"><rect x="${imageX}" y="${imageY}" width="${imgW}" height="${imgH}" rx="${effectiveRadius}" ry="${effectiveRadius}"/></clipPath></defs>${(imgW > 0 && imgH > 0) ? `<image href="${this.originalImageDataBase64}" x="${imageX}" y="${imageY}" width="${imgW}" height="${imgH}" clip-path="url(#rounded-corners-clip)"/>` : ''}</svg>`;
         const blob = new Blob([svgContent.trim()], {type: 'image/svg+xml;charset=utf-8'});
         this._downloadURI(URL.createObjectURL(blob), `${this._getCleanFileName()}_b${baseW}x${baseH}_i${imgW}x${imgH}_rounded.svg`);
     }
+
     _downloadJpeg() {
         if (!this.originalImage) return;
         const bgColor = this.colorManager.getRgbColor();
         const canvas = this._prepareDownloadCanvas(true, bgColor);
         if (canvas) {
             const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
-            const { width: baseW, height: baseH } = this.baseLayerManager.getDimensions();
-            const { width: imgW, height: imgH } = this.imageLayerManager.getDimensions();
-            this._downloadURI(dataUrl, `${this._getCleanFileName()}_b${baseW}x${baseH}_i${imgW}x${imgH}_rounded_bg_${bgColor.replace('#','')}.jpg`);
+            const {width: baseW, height: baseH} = this.baseLayerManager.getDimensions();
+            const {width: imgW, height: imgH} = this.imageLayerManager.getDimensions();
+            this._downloadURI(dataUrl, `${this._getCleanFileName()}_b${baseW}x${baseH}_i${imgW}x${imgH}_rounded_bg_${bgColor.replace('#', '')}.jpg`);
         }
     }
+
     _downloadPngTransparent() {
         if (!this.originalImage) return;
         const canvas = this._prepareDownloadCanvas(false);
         if (canvas) {
             const dataUrl = canvas.toDataURL('image/png');
-            const { width: baseW, height: baseH } = this.baseLayerManager.getDimensions();
-            const { width: imgW, height: imgH } = this.imageLayerManager.getDimensions();
+            const {width: baseW, height: baseH} = this.baseLayerManager.getDimensions();
+            const {width: imgW, height: imgH} = this.imageLayerManager.getDimensions();
             this._downloadURI(dataUrl, `${this._getCleanFileName()}_b${baseW}x${baseH}_i${imgW}x${imgH}_rounded_transparent.png`);
         }
     }
+
     _downloadPngWithBackground() {
         if (!this.originalImage) return;
         const bgColor = this.colorManager.getRgbColor();
         const canvas = this._prepareDownloadCanvas(true, bgColor);
         if (canvas) {
             const dataUrl = canvas.toDataURL('image/png');
-            const { width: baseW, height: baseH } = this.baseLayerManager.getDimensions();
-            const { width: imgW, height: imgH } = this.imageLayerManager.getDimensions();
-            this._downloadURI(dataUrl, `${this._getCleanFileName()}_b${baseW}x${baseH}_i${imgW}x${imgH}_rounded_bg_${bgColor.replace('#','')}.png`);
+            const {width: baseW, height: baseH} = this.baseLayerManager.getDimensions();
+            const {width: imgW, height: imgH} = this.imageLayerManager.getDimensions();
+            this._downloadURI(dataUrl, `${this._getCleanFileName()}_b${baseW}x${baseH}_i${imgW}x${imgH}_rounded_bg_${bgColor.replace('#', '')}.png`);
         }
     }
 
     _enableElements(enabled) {
-        if(this.borderRadiusSlider) this.borderRadiusSlider.disabled = !enabled;
-        if(this.downloadSvgBtn) this.downloadSvgBtn.disabled = !enabled;
-        if(this.downloadPngTransparentBtn) this.downloadPngTransparentBtn.disabled = !enabled;
-        if(this.downloadPngBgColorBtn) this.downloadPngBgColorBtn.disabled = !enabled;
-        if(this.downloadJpegBtn) this.downloadJpegBtn.disabled = !enabled;
+        if (this.borderRadiusSlider) this.borderRadiusSlider.disabled = !enabled;
+        if (this.downloadSvgBtn) this.downloadSvgBtn.disabled = !enabled;
+        if (this.downloadPngTransparentBtn) this.downloadPngTransparentBtn.disabled = !enabled;
+        if (this.downloadPngBgColorBtn) this.downloadPngBgColorBtn.disabled = !enabled;
+        if (this.downloadJpegBtn) this.downloadJpegBtn.disabled = !enabled;
 
         this.colorManager.disable(!enabled);
         this.baseLayerManager.disable(!enabled);
@@ -283,18 +311,27 @@ class ImageRounderApp {
     }
 
     resetApp() {
-        if(this.previewCtx) { this.previewCtx.clearRect(0,0,this.previewCanvas.width,this.previewCanvas.height); this.previewCanvas.width=300; this.previewCanvas.height=150; }
-        this.originalImage = null; this.originalImageDataBase64 = null; this.originalFileName = 'rounded_image';
+        if (this.previewCtx) {
+            this.previewCtx.clearRect(0, 0, this.previewCanvas.width, this.previewCanvas.height);
+            this.previewCanvas.width = 300;
+            this.previewCanvas.height = 150;
+        }
+        this.originalImage = null;
+        this.originalImageDataBase64 = null;
+        this.originalFileName = 'rounded_image';
 
-        if(this.borderRadiusSlider) { this.borderRadiusSlider.value = 20; this.borderRadiusSlider.max = 100;}
-        if(this.radiusValueDisplay) this.radiusValueDisplay.textContent = '20';
+        if (this.borderRadiusSlider) {
+            this.borderRadiusSlider.value = 20;
+            this.borderRadiusSlider.max = 100;
+        }
+        if (this.radiusValueDisplay) this.radiusValueDisplay.textContent = '20';
 
         this.colorManager.reset();
         this.baseLayerManager.reset(); // Resets to empty/default, not based on image
         this.imageLayerManager.reset(); // Resets to empty/default
 
-        if(this.imageUpload) this.imageUpload.value = '';
-        if(this.dropZone) this.dropZone.classList.remove('dragover');
+        if (this.imageUpload) this.imageUpload.value = '';
+        if (this.dropZone) this.dropZone.classList.remove('dragover');
         this._enableElements(false);
     }
 }

@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <title>Amazon Web Services</title>
     <link rel="stylesheet" href="../../../css/knowledge.css">
@@ -11,6 +15,7 @@
             gap: 20px;
             margin-top: 20px;
         }
+
         .service-card {
             border: 1px solid #e0e0e0;
             border-radius: 8px;
@@ -18,21 +23,26 @@
             background-color: #f9f9f9;
             transition: transform 0.2s, box-shadow 0.2s;
         }
+
         .service-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
+
         .service-card h3 {
             margin-top: 0;
             color: #000000;
         }
+
         .service-card h3 a {
             color: #1a73e8;
         }
+
         .service-card p {
             color: #5f6368;
             margin-bottom: 10px;
         }
+
         .service-category {
             margin-top: 30px;
         }
@@ -40,377 +50,380 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../../platform/js/common/analytics.js"></script>
-<body class="ja-knowledge">
-    <div style="margin-bottom: 20px;">
-        <a href="../../index.html">メインページに戻る</a>
-    </div>
-    <h1>Amazon Web Services (AWS)</h1>
-    
-    <h2>Amazon Web Servicesとは</h2>
-    <p>Amazon Web Services（AWS）は、Amazonが提供するクラウドコンピューティングサービスのスイートです。コンピューティング、ストレージ、データベース、機械学習、ネットワーキング、セキュリティなど、200以上のサービスを提供しています。AWSを使用することで、企業や開発者は、インフラストラクチャの管理に時間を費やすことなく、革新的なアプリケーションやサービスを構築、デプロイ、スケーリングすることができます。</p>
-    
-    <h2>Amazon Web Servicesの主な特徴</h2>
-    <ul>
-        <li><strong>グローバルインフラストラクチャ：</strong> 世界中の複数のリージョンとアベイラビリティゾーンにわたるデータセンターネットワーク</li>
-        <li><strong>高可用性と耐障害性：</strong> 99.9%以上の高可用性SLAを提供する設計</li>
-        <li><strong>スケーラビリティ：</strong> 需要に応じて自動的にリソースをスケールアップ/ダウン</li>
-        <li><strong>セキュリティ：</strong> 多層防御アプローチによる包括的なセキュリティ</li>
-        <li><strong>データ分析と機械学習：</strong> 高度なデータ分析と機械学習機能</li>
-        <li><strong>オープンソースとの互換性：</strong> 多様なオープンソース技術との統合</li>
-        <li><strong>ハイブリッドクラウド：</strong> オンプレミス環境とクラウド環境の統合</li>
-        <li><strong>従量課金制：</strong> 使用したリソースに対してのみ料金が発生</li>
-    </ul>
-    
-    <h2>Amazon Web Servicesのサービス</h2>
-    
-    <h3 class="service-category">コンピューティング</h3>
-    <div class="service-grid">
-        <div class="service-card">
-            <h3><a href="services/ec2.html">Amazon EC2</a></h3>
-            <p>仮想サーバーを提供するIaaSサービス</p>
-        </div>
-        <div class="service-card">
-            <h3><a href="services/ecs.html">Amazon ECS</a></h3>
-            <p>コンテナオーケストレーションサービス</p>
-        </div>
-        <div class="service-card">
-            <h3>Amazon EKS</h3>
-            <p>マネージドKubernetesサービス</p>
-        </div>
-        <div class="service-card">
-            <h3><a href="services/lambda.html">AWS Lambda</a></h3>
-            <p>サーバーレスのイベント駆動型コンピューティング</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS Fargate</h3>
-            <p>サーバーレスコンテナ実行環境</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS Elastic Beanstalk</h3>
-            <p>アプリケーションのデプロイと管理を簡素化するPaaSサービス</p>
-        </div>
-    </div>
-    
-    <h3 class="service-category">ストレージとデータベース</h3>
-    <div class="service-grid">
-        <div class="service-card">
-            <h3><a href="services/s3.html">Amazon S3</a></h3>
-            <p>スケーラブルなオブジェクトストレージサービス</p>
-        </div>
-        <div class="service-card">
-            <h3><a href="services/rds.html">Amazon RDS</a></h3>
-            <p>フルマネージドのリレーショナルデータベースサービス</p>
-        </div>
-        <div class="service-card">
-            <h3><a href="services/aurora.html">Amazon Aurora</a></h3>
-            <p>高性能のクラウドネイティブリレーショナルデータベース</p>
-        </div>
-        <div class="service-card">
-            <h3><a href="services/dynamodb.html">Amazon DynamoDB</a></h3>
-            <p>フルマネージドのNoSQLデータベースサービス</p>
-        </div>
-        <div class="service-card">
-            <h3>Amazon Redshift</h3>
-            <p>データウェアハウスサービス</p>
-        </div>
-        <div class="service-card">
-            <h3><a href="services/elasticache.html">Amazon ElastiCache</a></h3>
-            <p>インメモリキャッシュサービス</p>
-        </div>
-        <div class="service-card">
-            <h3>Amazon EFS</h3>
-            <p>スケーラブルなファイルストレージサービス</p>
-        </div>
-    </div>
-    
-    <h3 class="service-category">ネットワーキング</h3>
-    <div class="service-grid">
-        <div class="service-card">
-            <h3>Amazon VPC</h3>
-            <p>仮想プライベートクラウドネットワーク</p>
-        </div>
-        <div class="service-card">
-            <h3><a href="services/cloudfront.html">Amazon CloudFront</a></h3>
-            <p>グローバルコンテンツ配信ネットワーク（CDN）</p>
-        </div>
-        <div class="service-card">
-            <h3>Elastic Load Balancing</h3>
-            <p>トラフィック分散サービス</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS Direct Connect</h3>
-            <p>AWSへの専用ネットワーク接続</p>
-        </div>
-        <div class="service-card">
-            <h3>Amazon Route 53</h3>
-            <p>スケーラブルなDNSサービス</p>
-        </div>
-    </div>
-    
-    <h3 class="service-category">データ処理と分析</h3>
-    <div class="service-grid">
-        <div class="service-card">
-            <h3>Amazon EMR</h3>
-            <p>マネージドHadoopフレームワーク</p>
-        </div>
-        <div class="service-card">
-            <h3>Amazon Kinesis</h3>
-            <p>リアルタイムデータストリーミング処理</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS Glue</h3>
-            <p>フルマネージドのETLサービス</p>
-        </div>
-        <div class="service-card">
-            <h3>Amazon Athena</h3>
-            <p>S3に対するサーバーレスクエリサービス</p>
-        </div>
-        <div class="service-card">
-            <h3>Amazon QuickSight</h3>
-            <p>ビジネスインテリジェンスサービス</p>
-        </div>
-    </div>
-    
-    <h3 class="service-category">機械学習と人工知能</h3>
-    <div class="service-grid">
-        <div class="service-card">
-            <h3>Amazon SageMaker</h3>
-            <p>機械学習モデルの構築、トレーニング、デプロイのためのサービス</p>
-        </div>
-        <div class="service-card">
-            <h3>Amazon Rekognition</h3>
-            <p>画像・動画分析サービス</p>
-        </div>
-        <div class="service-card">
-            <h3>Amazon Transcribe</h3>
-            <p>音声認識サービス</p>
-        </div>
-        <div class="service-card">
-            <h3>Amazon Comprehend</h3>
-            <p>自然言語処理サービス</p>
-        </div>
-        <div class="service-card">
-            <h3>Amazon Lex</h3>
-            <p>会話型インターフェース構築サービス</p>
-        </div>
-    </div>
-    
-    <h3 class="service-category">DevOpsとCI/CD</h3>
-    <div class="service-grid">
-        <div class="service-card">
-            <h3>AWS CodePipeline</h3>
-            <p>継続的デリバリーサービス</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS CodeBuild</h3>
-            <p>フルマネージドのビルドサービス</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS CodeDeploy</h3>
-            <p>自動デプロイサービス</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS CodeCommit</h3>
-            <p>プライベートGitリポジトリサービス</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS Cloud9</h3>
-            <p>クラウドベースのIDE</p>
-        </div>
-    </div>
-    
-    <h3 class="service-category">セキュリティと管理</h3>
-    <div class="service-grid">
-        <div class="service-card">
-            <h3>AWS Identity and Access Management (IAM)</h3>
-            <p>アクセス管理サービス</p>
-        </div>
-        <div class="service-card">
-            <h3><a href="services/cognito.html">Amazon Cognito</a></h3>
-            <p>ユーザー認証、認可、ユーザー管理サービス</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS Shield</h3>
-            <p>DDoS保護サービス</p>
-        </div>
-        <div class="service-card">
-            <h3><a href="services/waf.html">AWS WAF</a></h3>
-            <p>Webアプリケーションファイアウォール</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS Secrets Manager</h3>
-            <p>シークレット管理サービス</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS Security Hub</h3>
-            <p>セキュリティとコンプライアンスの管理サービス</p>
-        </div>
-    </div>
-    
-    <h3 class="service-category">モニタリングと可観測性</h3>
-    <div class="service-grid">
-        <div class="service-card">
-            <h3><a href="services/cloudwatch.html">Amazon CloudWatch</a></h3>
-            <p>モニタリングとオブザーバビリティサービス</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS CloudTrail</h3>
-            <p>AWSアカウントのアクティビティ追跡サービス</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS X-Ray</h3>
-            <p>分散アプリケーションの分析とデバッグサービス</p>
-        </div>
-    </div>
-    
-    <h3 class="service-category">データストレージの拡張</h3>
-    <div class="service-grid">
-        <div class="service-card">
-            <h3>Amazon Glacier</h3>
-            <p>低コストのアーカイブストレージ</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS Storage Gateway</h3>
-            <p>ハイブリッドストレージサービス</p>
-        </div>
-        <div class="service-card">
-            <h3>Amazon FSx</h3>
-            <p>マネージドファイルシステムサービス</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS Backup</h3>
-            <p>一元化されたバックアップサービス</p>
-        </div>
-    </div>
-    
-    <h3 class="service-category">APIとサービス管理</h3>
-    <div class="service-grid">
-        <div class="service-card">
-            <h3>Amazon API Gateway</h3>
-            <p>APIの作成、公開、管理、モニタリングサービス</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS AppSync</h3>
-            <p>GraphQL APIサービス</p>
-        </div>
-    </div>
-    
-    <h3 class="service-category">ハイブリッドとマルチクラウド</h3>
-    <div class="service-grid">
-        <div class="service-card">
-            <h3>AWS Outposts</h3>
-            <p>オンプレミス環境へのAWSインフラストラクチャとサービスの拡張</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS Storage Gateway</h3>
-            <p>オンプレミスアプリケーションとクラウドストレージの統合</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS Snow Family</h3>
-            <p>エッジコンピューティングとデータ転送デバイス</p>
-        </div>
-    </div>
-    
-    <h3 class="service-category">IoTとエッジコンピューティング</h3>
-    <div class="service-grid">
-        <div class="service-card">
-            <h3>AWS IoT Core</h3>
-            <p>IoTデバイスの接続と管理のためのサービス</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS IoT Greengrass</h3>
-            <p>エッジデバイス向けのローカル処理、メッセージング、データキャッシングサービス</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS IoT Analytics</h3>
-            <p>IoTデータの分析サービス</p>
-        </div>
-        <div class="service-card">
-            <h3><a href="services/shadow.html">AWS IoT Device Shadow</a></h3>
-            <p>IoTデバイスの状態を保存・管理するサービス</p>
-        </div>
-    </div>
-    
-    <h3 class="service-category">ゲームサービス</h3>
-    <div class="service-grid">
-        <div class="service-card">
-            <h3>Amazon GameLift</h3>
-            <p>ゲームサーバーのデプロイと管理のためのサービス</p>
-        </div>
-        <div class="service-card">
-            <h3>Amazon Lumberyard</h3>
-            <p>クロスプラットフォームの3Dゲームエンジン</p>
-        </div>
-    </div>
-    
-    <h3 class="service-category">ミッションクリティカルサービス</h3>
-    <div class="service-grid">
-        <div class="service-card">
-            <h3>AWS HealthLake</h3>
-            <p>医療データの保存、変換、分析のためのサービス</p>
-        </div>
-        <div class="service-card">
-            <h3>Amazon HealthOmics</h3>
-            <p>生命科学データの保存、分析のためのサービス</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS for Industrial</h3>
-            <p>産業向けのIoTとデータ分析サービス</p>
-        </div>
-        <div class="service-card">
-            <h3>AWS for Automotive</h3>
-            <p>自動車産業向けのクラウドサービス</p>
-        </div>
-    </div>
-    
-    <h2>AWS開発ツール</h2>
-    <div class="service-grid">
-        <div class="service-card">
-            <h3><a href="tools/cli.html">AWS CLI</a></h3>
-            <p>コマンドラインからAWSサービスを操作するためのツール</p>
-        </div>
-        <div class="service-card">
-            <h3><a href="tools/sdks.html">AWS SDKs</a></h3>
-            <p>各種プログラミング言語からAWSサービスを利用するための開発キット</p>
-        </div>
-        <div class="service-card">
-            <h3><a href="tools/cdk.html">AWS CDK</a></h3>
-            <p>プログラミング言語を使用してAWSリソースを定義するためのフレームワーク</p>
-        </div>
-    </div>
-    
-    <h2>インフラストラクチャ as コード（IaC）</h2>
-    <div class="service-grid">
-        <div class="service-card">
-            <h3><a href="iac/cloudformation.html">AWS CloudFormation</a></h3>
-            <p>AWSリソースをコードとして定義し、プロビジョニングするためのサービス</p>
-        </div>
-        <div class="service-card">
-            <h3><a href="iac/terraform.html">Terraform</a></h3>
-            <p>マルチクラウド対応のインフラストラクチャ as コードツール</p>
-        </div>
-        <div class="service-card">
-            <h3><a href="iac/comparison.html">CloudFormationとTerraformの比較</a></h3>
-            <p>両IaCツールの特徴、違い、使用シナリオの詳細な比較</p>
-        </div>
-    </div>
 
-    <h2>まとめ</h2>
-    <p>Amazon Web Services は、企業や開発者に幅広いクラウドサービスを提供し、革新的なアプリケーションやサービスの構築、デプロイ、スケーリングを支援します。コンピューティング、ストレージ、データベース、機械学習、ネットワーキング、セキュリティなど、多様なサービスを組み合わせることで、ビジネスニーズに最適なクラウドソリューションを構築することができます。</p>
-    
-    <p>AWSの主な利点は以下の通りです：</p>
-    <ul>
-        <li>グローバルインフラストラクチャによる高可用性と低レイテンシー</li>
-        <li>需要に応じた自動スケーリングによるコスト効率の向上</li>
-        <li>多層防御アプローチによる包括的なセキュリティ</li>
-        <li>高度なデータ分析と機械学習機能によるイノベーションの促進</li>
-        <li>多様なサービスによる柔軟なアーキテクチャ設計</li>
-        <li>ハイブリッドクラウド機能によるオンプレミス環境との統合</li>
-        <li>従量課金制による柔軟なコスト管理</li>
-    </ul>
-    
-    <p>AWSを効果的に活用するには、ビジネス要件に基づいて適切なサービスを選択し、アーキテクチャを設計することが重要です。また、セキュリティのベストプラクティスを適用し、コスト最適化戦略を導入することで、クラウド環境の効率と安全性を向上させることができます。</p>
+<body class="ja-knowledge">
+<div style="margin-bottom: 20px;">
+    <a href="../../index.html">メインページに戻る</a>
+</div>
+<h1>Amazon Web Services (AWS)</h1>
+
+<h2>Amazon Web Servicesとは</h2>
+<p>Amazon Web
+    Services（AWS）は、Amazonが提供するクラウドコンピューティングサービスのスイートです。コンピューティング、ストレージ、データベース、機械学習、ネットワーキング、セキュリティなど、200以上のサービスを提供しています。AWSを使用することで、企業や開発者は、インフラストラクチャの管理に時間を費やすことなく、革新的なアプリケーションやサービスを構築、デプロイ、スケーリングすることができます。</p>
+
+<h2>Amazon Web Servicesの主な特徴</h2>
+<ul>
+    <li><strong>グローバルインフラストラクチャ：</strong> 世界中の複数のリージョンとアベイラビリティゾーンにわたるデータセンターネットワーク
+    </li>
+    <li><strong>高可用性と耐障害性：</strong> 99.9%以上の高可用性SLAを提供する設計</li>
+    <li><strong>スケーラビリティ：</strong> 需要に応じて自動的にリソースをスケールアップ/ダウン</li>
+    <li><strong>セキュリティ：</strong> 多層防御アプローチによる包括的なセキュリティ</li>
+    <li><strong>データ分析と機械学習：</strong> 高度なデータ分析と機械学習機能</li>
+    <li><strong>オープンソースとの互換性：</strong> 多様なオープンソース技術との統合</li>
+    <li><strong>ハイブリッドクラウド：</strong> オンプレミス環境とクラウド環境の統合</li>
+    <li><strong>従量課金制：</strong> 使用したリソースに対してのみ料金が発生</li>
+</ul>
+
+<h2>Amazon Web Servicesのサービス</h2>
+
+<h3 class="service-category">コンピューティング</h3>
+<div class="service-grid">
+    <div class="service-card">
+        <h3><a href="services/ec2.html">Amazon EC2</a></h3>
+        <p>仮想サーバーを提供するIaaSサービス</p>
+    </div>
+    <div class="service-card">
+        <h3><a href="services/ecs.html">Amazon ECS</a></h3>
+        <p>コンテナオーケストレーションサービス</p>
+    </div>
+    <div class="service-card">
+        <h3>Amazon EKS</h3>
+        <p>マネージドKubernetesサービス</p>
+    </div>
+    <div class="service-card">
+        <h3><a href="services/lambda.html">AWS Lambda</a></h3>
+        <p>サーバーレスのイベント駆動型コンピューティング</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS Fargate</h3>
+        <p>サーバーレスコンテナ実行環境</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS Elastic Beanstalk</h3>
+        <p>アプリケーションのデプロイと管理を簡素化するPaaSサービス</p>
+    </div>
+</div>
+
+<h3 class="service-category">ストレージとデータベース</h3>
+<div class="service-grid">
+    <div class="service-card">
+        <h3><a href="services/s3.html">Amazon S3</a></h3>
+        <p>スケーラブルなオブジェクトストレージサービス</p>
+    </div>
+    <div class="service-card">
+        <h3><a href="services/rds.html">Amazon RDS</a></h3>
+        <p>フルマネージドのリレーショナルデータベースサービス</p>
+    </div>
+    <div class="service-card">
+        <h3><a href="services/aurora.html">Amazon Aurora</a></h3>
+        <p>高性能のクラウドネイティブリレーショナルデータベース</p>
+    </div>
+    <div class="service-card">
+        <h3><a href="services/dynamodb.html">Amazon DynamoDB</a></h3>
+        <p>フルマネージドのNoSQLデータベースサービス</p>
+    </div>
+    <div class="service-card">
+        <h3>Amazon Redshift</h3>
+        <p>データウェアハウスサービス</p>
+    </div>
+    <div class="service-card">
+        <h3><a href="services/elasticache.html">Amazon ElastiCache</a></h3>
+        <p>インメモリキャッシュサービス</p>
+    </div>
+    <div class="service-card">
+        <h3>Amazon EFS</h3>
+        <p>スケーラブルなファイルストレージサービス</p>
+    </div>
+</div>
+
+<h3 class="service-category">ネットワーキング</h3>
+<div class="service-grid">
+    <div class="service-card">
+        <h3>Amazon VPC</h3>
+        <p>仮想プライベートクラウドネットワーク</p>
+    </div>
+    <div class="service-card">
+        <h3><a href="services/cloudfront.html">Amazon CloudFront</a></h3>
+        <p>グローバルコンテンツ配信ネットワーク（CDN）</p>
+    </div>
+    <div class="service-card">
+        <h3>Elastic Load Balancing</h3>
+        <p>トラフィック分散サービス</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS Direct Connect</h3>
+        <p>AWSへの専用ネットワーク接続</p>
+    </div>
+    <div class="service-card">
+        <h3>Amazon Route 53</h3>
+        <p>スケーラブルなDNSサービス</p>
+    </div>
+</div>
+
+<h3 class="service-category">データ処理と分析</h3>
+<div class="service-grid">
+    <div class="service-card">
+        <h3>Amazon EMR</h3>
+        <p>マネージドHadoopフレームワーク</p>
+    </div>
+    <div class="service-card">
+        <h3>Amazon Kinesis</h3>
+        <p>リアルタイムデータストリーミング処理</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS Glue</h3>
+        <p>フルマネージドのETLサービス</p>
+    </div>
+    <div class="service-card">
+        <h3>Amazon Athena</h3>
+        <p>S3に対するサーバーレスクエリサービス</p>
+    </div>
+    <div class="service-card">
+        <h3>Amazon QuickSight</h3>
+        <p>ビジネスインテリジェンスサービス</p>
+    </div>
+</div>
+
+<h3 class="service-category">機械学習と人工知能</h3>
+<div class="service-grid">
+    <div class="service-card">
+        <h3>Amazon SageMaker</h3>
+        <p>機械学習モデルの構築、トレーニング、デプロイのためのサービス</p>
+    </div>
+    <div class="service-card">
+        <h3>Amazon Rekognition</h3>
+        <p>画像・動画分析サービス</p>
+    </div>
+    <div class="service-card">
+        <h3>Amazon Transcribe</h3>
+        <p>音声認識サービス</p>
+    </div>
+    <div class="service-card">
+        <h3>Amazon Comprehend</h3>
+        <p>自然言語処理サービス</p>
+    </div>
+    <div class="service-card">
+        <h3>Amazon Lex</h3>
+        <p>会話型インターフェース構築サービス</p>
+    </div>
+</div>
+
+<h3 class="service-category">DevOpsとCI/CD</h3>
+<div class="service-grid">
+    <div class="service-card">
+        <h3>AWS CodePipeline</h3>
+        <p>継続的デリバリーサービス</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS CodeBuild</h3>
+        <p>フルマネージドのビルドサービス</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS CodeDeploy</h3>
+        <p>自動デプロイサービス</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS CodeCommit</h3>
+        <p>プライベートGitリポジトリサービス</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS Cloud9</h3>
+        <p>クラウドベースのIDE</p>
+    </div>
+</div>
+
+<h3 class="service-category">セキュリティと管理</h3>
+<div class="service-grid">
+    <div class="service-card">
+        <h3>AWS Identity and Access Management (IAM)</h3>
+        <p>アクセス管理サービス</p>
+    </div>
+    <div class="service-card">
+        <h3><a href="services/cognito.html">Amazon Cognito</a></h3>
+        <p>ユーザー認証、認可、ユーザー管理サービス</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS Shield</h3>
+        <p>DDoS保護サービス</p>
+    </div>
+    <div class="service-card">
+        <h3><a href="services/waf.html">AWS WAF</a></h3>
+        <p>Webアプリケーションファイアウォール</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS Secrets Manager</h3>
+        <p>シークレット管理サービス</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS Security Hub</h3>
+        <p>セキュリティとコンプライアンスの管理サービス</p>
+    </div>
+</div>
+
+<h3 class="service-category">モニタリングと可観測性</h3>
+<div class="service-grid">
+    <div class="service-card">
+        <h3><a href="services/cloudwatch.html">Amazon CloudWatch</a></h3>
+        <p>モニタリングとオブザーバビリティサービス</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS CloudTrail</h3>
+        <p>AWSアカウントのアクティビティ追跡サービス</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS X-Ray</h3>
+        <p>分散アプリケーションの分析とデバッグサービス</p>
+    </div>
+</div>
+
+<h3 class="service-category">データストレージの拡張</h3>
+<div class="service-grid">
+    <div class="service-card">
+        <h3>Amazon Glacier</h3>
+        <p>低コストのアーカイブストレージ</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS Storage Gateway</h3>
+        <p>ハイブリッドストレージサービス</p>
+    </div>
+    <div class="service-card">
+        <h3>Amazon FSx</h3>
+        <p>マネージドファイルシステムサービス</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS Backup</h3>
+        <p>一元化されたバックアップサービス</p>
+    </div>
+</div>
+
+<h3 class="service-category">APIとサービス管理</h3>
+<div class="service-grid">
+    <div class="service-card">
+        <h3>Amazon API Gateway</h3>
+        <p>APIの作成、公開、管理、モニタリングサービス</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS AppSync</h3>
+        <p>GraphQL APIサービス</p>
+    </div>
+</div>
+
+<h3 class="service-category">ハイブリッドとマルチクラウド</h3>
+<div class="service-grid">
+    <div class="service-card">
+        <h3>AWS Outposts</h3>
+        <p>オンプレミス環境へのAWSインフラストラクチャとサービスの拡張</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS Storage Gateway</h3>
+        <p>オンプレミスアプリケーションとクラウドストレージの統合</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS Snow Family</h3>
+        <p>エッジコンピューティングとデータ転送デバイス</p>
+    </div>
+</div>
+
+<h3 class="service-category">IoTとエッジコンピューティング</h3>
+<div class="service-grid">
+    <div class="service-card">
+        <h3>AWS IoT Core</h3>
+        <p>IoTデバイスの接続と管理のためのサービス</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS IoT Greengrass</h3>
+        <p>エッジデバイス向けのローカル処理、メッセージング、データキャッシングサービス</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS IoT Analytics</h3>
+        <p>IoTデータの分析サービス</p>
+    </div>
+    <div class="service-card">
+        <h3><a href="services/shadow.html">AWS IoT Device Shadow</a></h3>
+        <p>IoTデバイスの状態を保存・管理するサービス</p>
+    </div>
+</div>
+
+<h3 class="service-category">ゲームサービス</h3>
+<div class="service-grid">
+    <div class="service-card">
+        <h3>Amazon GameLift</h3>
+        <p>ゲームサーバーのデプロイと管理のためのサービス</p>
+    </div>
+    <div class="service-card">
+        <h3>Amazon Lumberyard</h3>
+        <p>クロスプラットフォームの3Dゲームエンジン</p>
+    </div>
+</div>
+
+<h3 class="service-category">ミッションクリティカルサービス</h3>
+<div class="service-grid">
+    <div class="service-card">
+        <h3>AWS HealthLake</h3>
+        <p>医療データの保存、変換、分析のためのサービス</p>
+    </div>
+    <div class="service-card">
+        <h3>Amazon HealthOmics</h3>
+        <p>生命科学データの保存、分析のためのサービス</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS for Industrial</h3>
+        <p>産業向けのIoTとデータ分析サービス</p>
+    </div>
+    <div class="service-card">
+        <h3>AWS for Automotive</h3>
+        <p>自動車産業向けのクラウドサービス</p>
+    </div>
+</div>
+
+<h2>AWS開発ツール</h2>
+<div class="service-grid">
+    <div class="service-card">
+        <h3><a href="tools/cli.html">AWS CLI</a></h3>
+        <p>コマンドラインからAWSサービスを操作するためのツール</p>
+    </div>
+    <div class="service-card">
+        <h3><a href="tools/sdks.html">AWS SDKs</a></h3>
+        <p>各種プログラミング言語からAWSサービスを利用するための開発キット</p>
+    </div>
+    <div class="service-card">
+        <h3><a href="tools/cdk.html">AWS CDK</a></h3>
+        <p>プログラミング言語を使用してAWSリソースを定義するためのフレームワーク</p>
+    </div>
+</div>
+
+<h2>インフラストラクチャ as コード（IaC）</h2>
+<div class="service-grid">
+    <div class="service-card">
+        <h3><a href="iac/cloudformation.html">AWS CloudFormation</a></h3>
+        <p>AWSリソースをコードとして定義し、プロビジョニングするためのサービス</p>
+    </div>
+    <div class="service-card">
+        <h3><a href="iac/terraform.html">Terraform</a></h3>
+        <p>マルチクラウド対応のインフラストラクチャ as コードツール</p>
+    </div>
+    <div class="service-card">
+        <h3><a href="iac/comparison.html">CloudFormationとTerraformの比較</a></h3>
+        <p>両IaCツールの特徴、違い、使用シナリオの詳細な比較</p>
+    </div>
+</div>
+
+<h2>まとめ</h2>
+<p>Amazon Web Services
+    は、企業や開発者に幅広いクラウドサービスを提供し、革新的なアプリケーションやサービスの構築、デプロイ、スケーリングを支援します。コンピューティング、ストレージ、データベース、機械学習、ネットワーキング、セキュリティなど、多様なサービスを組み合わせることで、ビジネスニーズに最適なクラウドソリューションを構築することができます。</p>
+
+<p>AWSの主な利点は以下の通りです：</p>
+<ul>
+    <li>グローバルインフラストラクチャによる高可用性と低レイテンシー</li>
+    <li>需要に応じた自動スケーリングによるコスト効率の向上</li>
+    <li>多層防御アプローチによる包括的なセキュリティ</li>
+    <li>高度なデータ分析と機械学習機能によるイノベーションの促進</li>
+    <li>多様なサービスによる柔軟なアーキテクチャ設計</li>
+    <li>ハイブリッドクラウド機能によるオンプレミス環境との統合</li>
+    <li>従量課金制による柔軟なコスト管理</li>
+</ul>
+
+<p>
+    AWSを効果的に活用するには、ビジネス要件に基づいて適切なサービスを選択し、アーキテクチャを設計することが重要です。また、セキュリティのベストプラクティスを適用し、コスト最適化戦略を導入することで、クラウド環境の効率と安全性を向上させることができます。</p>
 </body>
 </html>

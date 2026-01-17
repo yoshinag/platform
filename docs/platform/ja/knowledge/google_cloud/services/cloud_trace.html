@@ -1,92 +1,101 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <title>Cloud Trace</title>
     <link rel="stylesheet" href="../../../../css/knowledge.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../../js/common/analytics.js"></script>
+
 <body class="ja-knowledge">
-    <div style="margin-bottom: 20px;">
-        <a href="../google_cloud.html">Google Cloud Platformに戻る</a>
-    </div>
-    <h1>Cloud Trace</h1>
-    
-    <h2>Cloud Traceとは</h2>
-    <p>Cloud Traceは、Google Cloud Platform (GCP) が提供する分散トレーシングシステムです。マイクロサービスアーキテクチャやクラウドネイティブアプリケーションにおいて、リクエストがシステム全体をどのように通過するかを追跡し、パフォーマンスのボトルネックを特定するためのツールです。Cloud Traceを使用することで、アプリケーションのレイテンシを分析し、パフォーマンスの問題を迅速に特定して解決することができます。</p>
-    
-    <h2>Cloud Traceの主な特徴</h2>
+<div style="margin-bottom: 20px;">
+    <a href="../google_cloud.html">Google Cloud Platformに戻る</a>
+</div>
+<h1>Cloud Trace</h1>
+
+<h2>Cloud Traceとは</h2>
+<p>Cloud Traceは、Google Cloud Platform (GCP)
+    が提供する分散トレーシングシステムです。マイクロサービスアーキテクチャやクラウドネイティブアプリケーションにおいて、リクエストがシステム全体をどのように通過するかを追跡し、パフォーマンスのボトルネックを特定するためのツールです。Cloud
+    Traceを使用することで、アプリケーションのレイテンシを分析し、パフォーマンスの問題を迅速に特定して解決することができます。</p>
+
+<h2>Cloud Traceの主な特徴</h2>
+<ul>
+    <li><strong>分散トレーシング：</strong> マイクロサービス間のリクエストの流れを追跡</li>
+    <li><strong>自動トレース収集：</strong> App Engine、Cloud Run、GKEなどのGCPサービスからのトレースを自動的に収集</li>
+    <li><strong>カスタムトレース：</strong> アプリケーションコードからのカスタムトレースの収集</li>
+    <li><strong>レイテンシ分析：</strong> リクエスト処理の各ステップにかかる時間を詳細に分析</li>
+    <li><strong>パフォーマンスインサイト：</strong> アプリケーションのパフォーマンスに関する洞察を提供</li>
+    <li><strong>トレースの可視化：</strong> ウォーターフォールチャートによるトレースの視覚化</li>
+    <li><strong>サンプリング制御：</strong> トレースのサンプリングレートを柔軟に設定可能</li>
+    <li><strong>OpenTelemetry対応：</strong> 業界標準のOpenTelemetryプロトコルをサポート</li>
+    <li><strong>他のGCPサービスとの統合：</strong> Cloud Logging、Cloud Monitoringなどと連携</li>
+</ul>
+
+<h2>Cloud Traceのアーキテクチャ</h2>
+<p>Cloud Traceは以下の主要コンポーネントで構成されています：</p>
+
+<table>
+    <tr>
+        <th>コンポーネント</th>
+        <th>説明</th>
+    </tr>
+    <tr>
+        <td>Trace API</td>
+        <td>トレースデータの送信、取得、管理のためのAPI</td>
+    </tr>
+    <tr>
+        <td>トレースコレクター</td>
+        <td>アプリケーションからトレースデータを収集するコンポーネント</td>
+    </tr>
+    <tr>
+        <td>トレースストア</td>
+        <td>トレースデータを保存するためのデータベース</td>
+    </tr>
+    <tr>
+        <td>トレースビューア</td>
+        <td>トレースデータを視覚化するためのインターフェース</td>
+    </tr>
+    <tr>
+        <td>分析エンジン</td>
+        <td>トレースデータを分析してパフォーマンスインサイトを生成</td>
+    </tr>
+</table>
+
+<div class="note">
+    <h3>Cloud Trace と他のトレーシングサービスの違い</h3>
+    <p>Cloud Traceと他のトレーシングサービスには以下のような違いがあります：</p>
     <ul>
-        <li><strong>分散トレーシング：</strong> マイクロサービス間のリクエストの流れを追跡</li>
-        <li><strong>自動トレース収集：</strong> App Engine、Cloud Run、GKEなどのGCPサービスからのトレースを自動的に収集</li>
-        <li><strong>カスタムトレース：</strong> アプリケーションコードからのカスタムトレースの収集</li>
-        <li><strong>レイテンシ分析：</strong> リクエスト処理の各ステップにかかる時間を詳細に分析</li>
-        <li><strong>パフォーマンスインサイト：</strong> アプリケーションのパフォーマンスに関する洞察を提供</li>
-        <li><strong>トレースの可視化：</strong> ウォーターフォールチャートによるトレースの視覚化</li>
-        <li><strong>サンプリング制御：</strong> トレースのサンプリングレートを柔軟に設定可能</li>
-        <li><strong>OpenTelemetry対応：</strong> 業界標準のOpenTelemetryプロトコルをサポート</li>
-        <li><strong>他のGCPサービスとの統合：</strong> Cloud Logging、Cloud Monitoringなどと連携</li>
+        <li><strong>Cloud Trace：</strong> GCPに統合されたフルマネージドの分散トレーシングサービス。GCPサービスとの連携が強力
+        </li>
+        <li><strong>Jaeger：</strong> オープンソースの分散トレーシングシステム。より柔軟なカスタマイズが可能だが、管理の負担が大きい
+        </li>
+        <li><strong>Zipkin：</strong> Twitterが開発したオープンソースの分散トレーシングシステム。シンプルなアーキテクチャが特徴
+        </li>
+        <li><strong>AWS X-Ray：</strong> AWSの分散トレーシングサービス。AWS環境に最適化されている</li>
     </ul>
-    
-    <h2>Cloud Traceのアーキテクチャ</h2>
-    <p>Cloud Traceは以下の主要コンポーネントで構成されています：</p>
-    
-    <table>
-        <tr>
-            <th>コンポーネント</th>
-            <th>説明</th>
-        </tr>
-        <tr>
-            <td>Trace API</td>
-            <td>トレースデータの送信、取得、管理のためのAPI</td>
-        </tr>
-        <tr>
-            <td>トレースコレクター</td>
-            <td>アプリケーションからトレースデータを収集するコンポーネント</td>
-        </tr>
-        <tr>
-            <td>トレースストア</td>
-            <td>トレースデータを保存するためのデータベース</td>
-        </tr>
-        <tr>
-            <td>トレースビューア</td>
-            <td>トレースデータを視覚化するためのインターフェース</td>
-        </tr>
-        <tr>
-            <td>分析エンジン</td>
-            <td>トレースデータを分析してパフォーマンスインサイトを生成</td>
-        </tr>
-    </table>
-    
-    <div class="note">
-        <h3>Cloud Trace と他のトレーシングサービスの違い</h3>
-        <p>Cloud Traceと他のトレーシングサービスには以下のような違いがあります：</p>
-        <ul>
-            <li><strong>Cloud Trace：</strong> GCPに統合されたフルマネージドの分散トレーシングサービス。GCPサービスとの連携が強力</li>
-            <li><strong>Jaeger：</strong> オープンソースの分散トレーシングシステム。より柔軟なカスタマイズが可能だが、管理の負担が大きい</li>
-            <li><strong>Zipkin：</strong> Twitterが開発したオープンソースの分散トレーシングシステム。シンプルなアーキテクチャが特徴</li>
-            <li><strong>AWS X-Ray：</strong> AWSの分散トレーシングサービス。AWS環境に最適化されている</li>
-        </ul>
-    </div>
-    
-    <h2>トレースの基本概念</h2>
-    <p>Cloud Traceでは、以下の基本概念が重要です：</p>
-    
-    <h3>トレースとスパン</h3>
-    <ul>
-        <li><strong>トレース：</strong> 単一のリクエストがシステム全体を通過する際の一連の操作を表す。トレースIDで識別される</li>
-        <li><strong>スパン：</strong> トレース内の個々の操作単位。開始時間、終了時間、属性などの情報を持つ</li>
-        <li><strong>親子関係：</strong> スパン間の階層関係。親スパンが子スパンを含む形で表現される</li>
-        <li><strong>スパン属性：</strong> スパンに関連付けられたキーと値のペア。コンテキスト情報を提供</li>
-        <li><strong>アノテーション：</strong> スパン内の特定の時点に関連付けられたイベント</li>
-    </ul>
-    
-    <div class="example">
-        <h4>トレースとスパンの関係図</h4>
-        <pre>
+</div>
+
+<h2>トレースの基本概念</h2>
+<p>Cloud Traceでは、以下の基本概念が重要です：</p>
+
+<h3>トレースとスパン</h3>
+<ul>
+    <li><strong>トレース：</strong> 単一のリクエストがシステム全体を通過する際の一連の操作を表す。トレースIDで識別される
+    </li>
+    <li><strong>スパン：</strong> トレース内の個々の操作単位。開始時間、終了時間、属性などの情報を持つ</li>
+    <li><strong>親子関係：</strong> スパン間の階層関係。親スパンが子スパンを含む形で表現される</li>
+    <li><strong>スパン属性：</strong> スパンに関連付けられたキーと値のペア。コンテキスト情報を提供</li>
+    <li><strong>アノテーション：</strong> スパン内の特定の時点に関連付けられたイベント</li>
+</ul>
+
+<div class="example">
+    <h4>トレースとスパンの関係図</h4>
+    <pre>
 トレース
 |
 |-- スパンA (フロントエンド)
@@ -101,26 +110,26 @@
     |
     |-- スパンF (外部APIコール)
 </pre>
-    </div>
-    
-    <h2>Cloud Traceの使用方法</h2>
-    <p>Cloud Traceは、Google Cloud Console、クライアントライブラリ、またはRESTful APIを使用して利用できます。</p>
-    
-    <h3>自動トレース収集</h3>
-    <p>以下のGCPサービスでは、トレースが自動的に収集されます：</p>
-    <ul>
-        <li>App Engine</li>
-        <li>Cloud Run</li>
-        <li>Google Kubernetes Engine (GKE)</li>
-        <li>Compute Engine (エージェントをインストールした場合)</li>
-        <li>Cloud Functions</li>
-    </ul>
-    
-    <h3>アプリケーションからのトレース出力</h3>
-    <p>アプリケーションからCloud Traceにトレースを出力するには、各言語用のクライアントライブラリを使用します：</p>
-    <div class="example">
-        <h4>Node.jsでのトレース出力例</h4>
-        <pre><code>const { TraceExporter } = require('@google-cloud/opentelemetry-cloud-trace-exporter');
+</div>
+
+<h2>Cloud Traceの使用方法</h2>
+<p>Cloud Traceは、Google Cloud Console、クライアントライブラリ、またはRESTful APIを使用して利用できます。</p>
+
+<h3>自動トレース収集</h3>
+<p>以下のGCPサービスでは、トレースが自動的に収集されます：</p>
+<ul>
+    <li>App Engine</li>
+    <li>Cloud Run</li>
+    <li>Google Kubernetes Engine (GKE)</li>
+    <li>Compute Engine (エージェントをインストールした場合)</li>
+    <li>Cloud Functions</li>
+</ul>
+
+<h3>アプリケーションからのトレース出力</h3>
+<p>アプリケーションからCloud Traceにトレースを出力するには、各言語用のクライアントライブラリを使用します：</p>
+<div class="example">
+    <h4>Node.jsでのトレース出力例</h4>
+    <pre><code>const { TraceExporter } = require('@google-cloud/opentelemetry-cloud-trace-exporter');
 const { NodeTracerProvider } = require('@opentelemetry/sdk-trace-node');
 const { SimpleSpanProcessor } = require('@opentelemetry/sdk-trace-base');
 const { trace } = require('@opentelemetry/api');
@@ -168,9 +177,9 @@ async function performOperation() {
 }
 
 performOperation();</code></pre>
-        
-        <h4>Pythonでのトレース出力例</h4>
-        <pre><code>from opentelemetry import trace
+
+    <h4>Pythonでのトレース出力例</h4>
+    <pre><code>from opentelemetry import trace
 from opentelemetry.exporter.cloud_trace import CloudTraceSpanExporter
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
@@ -199,9 +208,9 @@ def perform_operation():
             })
 
 perform_operation()</code></pre>
-        
-        <h4>Javaでのトレース出力例</h4>
-        <pre><code>import io.opentelemetry.api.OpenTelemetry;
+
+    <h4>Javaでのトレース出力例</h4>
+    <pre><code>import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.api.trace.StatusCode;
@@ -264,13 +273,13 @@ public class TraceExample {
         }
     }
 }</code></pre>
-    </div>
-    
-    <h3>トレースの表示と分析</h3>
-    <p>Google Cloud Consoleのトレースエクスプローラーを使用して、トレースを表示、分析できます：</p>
-    <div class="example">
-        <h4>トレースの検索</h4>
-        <pre><code>// トレースIDによる検索
+</div>
+
+<h3>トレースの表示と分析</h3>
+<p>Google Cloud Consoleのトレースエクスプローラーを使用して、トレースを表示、分析できます：</p>
+<div class="example">
+    <h4>トレースの検索</h4>
+    <pre><code>// トレースIDによる検索
 traceId:6aa74edf3077381279ba9eb291e7b8f8
 
 // サービス名による検索
@@ -284,13 +293,14 @@ latency:>100ms
 
 // 複合検索
 service:frontend latency:>100ms start_time:2023-01-15T00:00:00Z</code></pre>
-    </div>
-    
-    <h2>トレースのサンプリング</h2>
-    <p>すべてのリクエストをトレースするとオーバーヘッドが大きくなるため、サンプリングを使用して一部のリクエストのみをトレースすることが一般的です：</p>
-    <div class="example">
-        <h4>サンプリング設定の例</h4>
-        <pre><code>// Node.jsでのサンプリング設定
+</div>
+
+<h2>トレースのサンプリング</h2>
+<p>
+    すべてのリクエストをトレースするとオーバーヘッドが大きくなるため、サンプリングを使用して一部のリクエストのみをトレースすることが一般的です：</p>
+<div class="example">
+    <h4>サンプリング設定の例</h4>
+    <pre><code>// Node.jsでのサンプリング設定
 const { TraceExporter } = require('@google-cloud/opentelemetry-cloud-trace-exporter');
 const { NodeTracerProvider } = require('@opentelemetry/sdk-trace-node');
 const { SimpleSpanProcessor } = require('@opentelemetry/sdk-trace-base');
@@ -307,56 +317,57 @@ const provider = new NodeTracerProvider({
 const exporter = new TraceExporter();
 provider.addSpanProcessor(new SimpleSpanProcessor(exporter));
 provider.register();</code></pre>
-    </div>
-    
-    <h2>Cloud Traceのベストプラクティス</h2>
-    <p>Cloud Traceを効果的に活用するためのベストプラクティス：</p>
-    
-    <h3>トレース設計のベストプラクティス</h3>
+</div>
+
+<h2>Cloud Traceのベストプラクティス</h2>
+<p>Cloud Traceを効果的に活用するためのベストプラクティス：</p>
+
+<h3>トレース設計のベストプラクティス</h3>
+<ul>
+    <li><strong>重要な操作のトレース：</strong> すべての操作ではなく、重要な操作や時間のかかる操作に焦点を当てる</li>
+    <li><strong>適切なスパン粒度：</strong> スパンの粒度を適切に設定し、細かすぎず粗すぎないようにする</li>
+    <li><strong>コンテキスト情報の追加：</strong> スパンに有用な属性やアノテーションを追加して、トラブルシューティングを容易にする
+    </li>
+    <li><strong>エラー情報の記録：</strong> エラーが発生した場合は、スパンにエラー情報を記録する</li>
+    <li><strong>一貫したネーミング：</strong> スパン名やサービス名に一貫した命名規則を使用する</li>
+</ul>
+
+<h3>運用のベストプラクティス</h3>
+<ul>
+    <li><strong>適切なサンプリングレート：</strong> トラフィック量に応じて適切なサンプリングレートを設定</li>
+    <li><strong>トレースとログの関連付け：</strong> トレースIDをログに含めて、トレースとログを関連付ける</li>
+    <li><strong>パフォーマンス目標の設定：</strong> 重要な操作のレイテンシ目標を設定し、モニタリング</li>
+    <li><strong>定期的なパフォーマンスレビュー：</strong> トレースデータを定期的に分析し、パフォーマンスの傾向を把握</li>
+    <li><strong>自動化されたアラート：</strong> レイテンシが閾値を超えた場合のアラートを設定</li>
+</ul>
+
+<div class="note">
+    <h3>コスト最適化のヒント</h3>
     <ul>
-        <li><strong>重要な操作のトレース：</strong> すべての操作ではなく、重要な操作や時間のかかる操作に焦点を当てる</li>
-        <li><strong>適切なスパン粒度：</strong> スパンの粒度を適切に設定し、細かすぎず粗すぎないようにする</li>
-        <li><strong>コンテキスト情報の追加：</strong> スパンに有用な属性やアノテーションを追加して、トラブルシューティングを容易にする</li>
-        <li><strong>エラー情報の記録：</strong> エラーが発生した場合は、スパンにエラー情報を記録する</li>
-        <li><strong>一貫したネーミング：</strong> スパン名やサービス名に一貫した命名規則を使用する</li>
+        <li>適切なサンプリングレートを設定してトレース量を制御</li>
+        <li>重要なリクエストのみをトレースするカスタムサンプリング戦略の実装</li>
+        <li>不要な属性やアノテーションを削減</li>
+        <li>トレースの保持期間を適切に設定</li>
     </ul>
-    
-    <h3>運用のベストプラクティス</h3>
-    <ul>
-        <li><strong>適切なサンプリングレート：</strong> トラフィック量に応じて適切なサンプリングレートを設定</li>
-        <li><strong>トレースとログの関連付け：</strong> トレースIDをログに含めて、トレースとログを関連付ける</li>
-        <li><strong>パフォーマンス目標の設定：</strong> 重要な操作のレイテンシ目標を設定し、モニタリング</li>
-        <li><strong>定期的なパフォーマンスレビュー：</strong> トレースデータを定期的に分析し、パフォーマンスの傾向を把握</li>
-        <li><strong>自動化されたアラート：</strong> レイテンシが閾値を超えた場合のアラートを設定</li>
-    </ul>
-    
-    <div class="note">
-        <h3>コスト最適化のヒント</h3>
-        <ul>
-            <li>適切なサンプリングレートを設定してトレース量を制御</li>
-            <li>重要なリクエストのみをトレースするカスタムサンプリング戦略の実装</li>
-            <li>不要な属性やアノテーションを削減</li>
-            <li>トレースの保持期間を適切に設定</li>
-        </ul>
-    </div>
-    
-    <h2>Cloud Traceのユースケース</h2>
-    <p>Cloud Traceは以下のようなユースケースに適しています：</p>
-    <ul>
-        <li><strong>パフォーマンスのボトルネック特定：</strong> システム内のパフォーマンスボトルネックを特定して解決</li>
-        <li><strong>マイクロサービスのデバッグ：</strong> 複雑なマイクロサービスアーキテクチャでの問題のデバッグ</li>
-        <li><strong>レイテンシの最適化：</strong> エンドツーエンドのレイテンシを最適化</li>
-        <li><strong>サービス間の依存関係の可視化：</strong> サービス間の呼び出しパターンと依存関係を可視化</li>
-        <li><strong>異常検出：</strong> 通常とは異なるレイテンシパターンを検出</li>
-        <li><strong>SLO監視：</strong> サービスレベル目標（SLO）に対するパフォーマンスの監視</li>
-        <li><strong>ユーザー体験の改善：</strong> エンドユーザー体験に影響するパフォーマンス問題の特定と解決</li>
-    </ul>
-    
-    <h3>ユースケース例：マイクロサービスのパフォーマンス分析</h3>
-    <div class="example">
-        <h4>マイクロサービスアーキテクチャのトレース分析</h4>
-        <p>eコマースアプリケーションの注文処理フローにおけるパフォーマンス分析：</p>
-        <pre>
+</div>
+
+<h2>Cloud Traceのユースケース</h2>
+<p>Cloud Traceは以下のようなユースケースに適しています：</p>
+<ul>
+    <li><strong>パフォーマンスのボトルネック特定：</strong> システム内のパフォーマンスボトルネックを特定して解決</li>
+    <li><strong>マイクロサービスのデバッグ：</strong> 複雑なマイクロサービスアーキテクチャでの問題のデバッグ</li>
+    <li><strong>レイテンシの最適化：</strong> エンドツーエンドのレイテンシを最適化</li>
+    <li><strong>サービス間の依存関係の可視化：</strong> サービス間の呼び出しパターンと依存関係を可視化</li>
+    <li><strong>異常検出：</strong> 通常とは異なるレイテンシパターンを検出</li>
+    <li><strong>SLO監視：</strong> サービスレベル目標（SLO）に対するパフォーマンスの監視</li>
+    <li><strong>ユーザー体験の改善：</strong> エンドユーザー体験に影響するパフォーマンス問題の特定と解決</li>
+</ul>
+
+<h3>ユースケース例：マイクロサービスのパフォーマンス分析</h3>
+<div class="example">
+    <h4>マイクロサービスアーキテクチャのトレース分析</h4>
+    <p>eコマースアプリケーションの注文処理フローにおけるパフォーマンス分析：</p>
+    <pre>
 1. フロントエンドサービス (200ms)
    |
    |-- 認証サービス (50ms)
@@ -375,43 +386,44 @@ provider.register();</code></pre>
        |
        |-- 配送サービス (30ms)
 </pre>
-        <p>このトレース分析から、外部決済APIの呼び出しが全体のレイテンシの大部分を占めていることがわかります。この情報を基に、決済処理の最適化や非同期処理の導入などの改善策を検討できます。</p>
-    </div>
-    
-    <h2>Cloud Traceとの統合サービス</h2>
-    <p>Cloud Traceは他のGoogle Cloudサービスと統合して、より強力なソリューションを構築できます：</p>
-    
-    <table>
-        <tr>
-            <th>サービス</th>
-            <th>統合の利点</th>
-        </tr>
-        <tr>
-            <td><a href="cloud_logging.html">Cloud Logging</a></td>
-            <td>トレースとログを関連付けて、詳細なコンテキスト情報を提供</td>
-        </tr>
-        <tr>
-            <td><a href="cloud_monitoring.html">Cloud Monitoring</a></td>
-            <td>トレースデータに基づいたメトリクスとアラートの設定</td>
-        </tr>
-        <tr>
-            <td><a href="error_reporting.html">Error Reporting</a></td>
-            <td>エラーとトレースを関連付けて、エラーの根本原因を特定</td>
-        </tr>
-        <tr>
-            <td>Cloud Profiler</td>
-            <td>コードレベルのパフォーマンスボトルネックの特定</td>
-        </tr>
-        <tr>
-            <td>Cloud Debugger</td>
-            <td>本番環境でのコードのデバッグ</td>
-        </tr>
-    </table>
-    
-    <h3>Cloud Loggingとの統合例</h3>
-    <div class="example">
-        <h4>トレースIDをログに含める</h4>
-        <pre><code>// Node.jsでのトレースIDをログに含める例
+    <p>
+        このトレース分析から、外部決済APIの呼び出しが全体のレイテンシの大部分を占めていることがわかります。この情報を基に、決済処理の最適化や非同期処理の導入などの改善策を検討できます。</p>
+</div>
+
+<h2>Cloud Traceとの統合サービス</h2>
+<p>Cloud Traceは他のGoogle Cloudサービスと統合して、より強力なソリューションを構築できます：</p>
+
+<table>
+    <tr>
+        <th>サービス</th>
+        <th>統合の利点</th>
+    </tr>
+    <tr>
+        <td><a href="cloud_logging.html">Cloud Logging</a></td>
+        <td>トレースとログを関連付けて、詳細なコンテキスト情報を提供</td>
+    </tr>
+    <tr>
+        <td><a href="cloud_monitoring.html">Cloud Monitoring</a></td>
+        <td>トレースデータに基づいたメトリクスとアラートの設定</td>
+    </tr>
+    <tr>
+        <td><a href="error_reporting.html">Error Reporting</a></td>
+        <td>エラーとトレースを関連付けて、エラーの根本原因を特定</td>
+    </tr>
+    <tr>
+        <td>Cloud Profiler</td>
+        <td>コードレベルのパフォーマンスボトルネックの特定</td>
+    </tr>
+    <tr>
+        <td>Cloud Debugger</td>
+        <td>本番環境でのコードのデバッグ</td>
+    </tr>
+</table>
+
+<h3>Cloud Loggingとの統合例</h3>
+<div class="example">
+    <h4>トレースIDをログに含める</h4>
+    <pre><code>// Node.jsでのトレースIDをログに含める例
 const { trace } = require('@opentelemetry/api');
 
 function logWithTraceId(message) {
@@ -423,21 +435,23 @@ function logWithTraceId(message) {
 
 // 使用例
 logWithTraceId('ユーザー認証を開始');</code></pre>
-    </div>
-    
-    <h2>まとめ</h2>
-    <p>Cloud Trace は、Google Cloud Platform上での分散トレーシングサービスとして、マイクロサービスアーキテクチャやクラウドネイティブアプリケーションのパフォーマンス分析と最適化を支援します。リクエストがシステム全体をどのように通過するかを追跡し、パフォーマンスのボトルネックを特定するための強力なツールです。</p>
-    
-    <p>Cloud Traceの主な利点は以下の通りです：</p>
-    <ul>
-        <li>GCPサービスとの統合による自動的なトレース収集</li>
-        <li>エンドツーエンドのリクエスト追跡によるパフォーマンスボトルネックの特定</li>
-        <li>ウォーターフォールチャートによるトレースの視覚化</li>
-        <li>OpenTelemetry対応による標準的なトレーシング手法のサポート</li>
-        <li>他のGoogle Cloudサービス（Cloud Logging、Cloud Monitoringなど）との統合</li>
-        <li>柔軟なサンプリング制御によるオーバーヘッドの管理</li>
-    </ul>
-    
-    <p>Cloud Traceを効果的に活用するには、重要な操作のトレース、適切なスパン粒度の設定、コンテキスト情報の追加、適切なサンプリングレートの設定などのベストプラクティスを適用することが重要です。また、トレースとログの関連付けや定期的なパフォーマンスレビューを行うことで、システムの可観測性を向上させることができます。</p>
+</div>
+
+<h2>まとめ</h2>
+<p>Cloud Trace は、Google Cloud
+    Platform上での分散トレーシングサービスとして、マイクロサービスアーキテクチャやクラウドネイティブアプリケーションのパフォーマンス分析と最適化を支援します。リクエストがシステム全体をどのように通過するかを追跡し、パフォーマンスのボトルネックを特定するための強力なツールです。</p>
+
+<p>Cloud Traceの主な利点は以下の通りです：</p>
+<ul>
+    <li>GCPサービスとの統合による自動的なトレース収集</li>
+    <li>エンドツーエンドのリクエスト追跡によるパフォーマンスボトルネックの特定</li>
+    <li>ウォーターフォールチャートによるトレースの視覚化</li>
+    <li>OpenTelemetry対応による標準的なトレーシング手法のサポート</li>
+    <li>他のGoogle Cloudサービス（Cloud Logging、Cloud Monitoringなど）との統合</li>
+    <li>柔軟なサンプリング制御によるオーバーヘッドの管理</li>
+</ul>
+
+<p>Cloud
+    Traceを効果的に活用するには、重要な操作のトレース、適切なスパン粒度の設定、コンテキスト情報の追加、適切なサンプリングレートの設定などのベストプラクティスを適用することが重要です。また、トレースとログの関連付けや定期的なパフォーマンスレビューを行うことで、システムの可観測性を向上させることができます。</p>
 </body>
 </html>

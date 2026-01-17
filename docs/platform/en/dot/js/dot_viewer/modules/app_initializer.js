@@ -5,11 +5,11 @@ import {
     graphContainer
 } from './dom_elements.js';
 import * as state from './state.js';
-import { initializeVizInstance, initializeMermaid, renderGraph } from './graph_renderer.js';
-import { getSelectedNotation } from './graph_utils.js';
-import { setupCoreEventListeners } from './event_handlers.js';
+import {initializeVizInstance, initializeMermaid, renderGraph} from './graph_renderer.js';
+import {getSelectedNotation} from './graph_utils.js';
+import {setupCoreEventListeners} from './event_handlers.js';
 
-import { loadTemplatesFromFile, populateTemplateSelectWithOptions, applyTemplateToUI } from './template_manager.js';
+import {loadTemplatesFromFile, populateTemplateSelectWithOptions, applyTemplateToUI} from './template_manager.js';
 import {
     setupAllPanelsToggle, setupFullscreenToggle, setupClearCodeButton,
     setupCopyCodeButton, setupPasteCodeButton // Added setupPasteCodeButton

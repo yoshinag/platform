@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Linuxネットワークコマンド解説</title>
@@ -8,8 +12,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
@@ -19,16 +22,16 @@
     </div>
 
     <h1>Linuxネットワークコマンド解説</h1>
-    
+
     <!-- ネットワークコマンド -->
     <section id="network" class="command-section">
         <h2>ネットワークコマンド</h2>
         <p>ネットワーク接続の確認、設定、診断などを行うコマンドです。</p>
-        
+
         <!-- ping コマンド -->
         <h3>ping - ネットワーク接続の確認</h3>
         <p>指定したホストとの接続を確認します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -55,7 +58,7 @@
                 <td>タイムアウト時間をN秒に設定</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>ping google.com</code> - Googleのサーバーに継続的にpingを送信<br>
@@ -64,9 +67,11 @@
             <code>ping -c 5 google.com | grep "time="</code> - 応答時間のみを表示<br>
             <code>ping -c 10 google.com | grep "time=" | awk '{print $7}' | cut -d "=" -f 2</code> - 応答時間の数値のみを抽出<br>
             <code>ping -c 5 google.com | tail -1 | awk '{print $4}' | cut -d '/' -f 2</code> - 平均応答時間を抽出<br>
-            <code>for ip in 192.168.1.{1..10}; do ping -c 1 -W 1 $ip | grep "from" && echo "$ip is up"; done</code> - 複数のIPアドレスに対してpingを実行<br>
+            <code>for ip in 192.168.1.{1..10}; do ping -c 1 -W 1 $ip | grep "from" && echo "$ip is up"; done</code> -
+            複数のIPアドレスに対してpingを実行<br>
             <code>ping -c 5 -q google.com | grep "packet loss" | awk '{print $6}'</code> - パケットロス率を抽出<br>
-            <code>ping -c 1 -W 1 google.com > /dev/null 2>&1 && echo "Internet is up" || echo "Internet is down"</code> - インターネット接続を確認<br>
+            <code>ping -c 1 -W 1 google.com > /dev/null 2>&1 && echo "Internet is up" || echo "Internet is down"</code>
+            - インターネット接続を確認<br>
             <code>ping -c 5 -s 1500 google.com</code> - 大きなパケットサイズでMTUを確認<br>
             <code>ping -c 5 google.com | tee ping_results.txt</code> - 結果をファイルに保存しながら表示
         </div>
@@ -75,7 +80,7 @@
         <h3>ifconfig - ネットワークインターフェースの設定・表示</h3>
         <p>ネットワークインターフェースの情報を表示したり、設定したりします。</p>
         <p>注: 最近のLinuxディストリビューションでは<code>ip</code>コマンドが推奨されています。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>構文/オプション</th>
@@ -102,18 +107,22 @@
                 <td>IPアドレスとネットマスクを設定</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>ifconfig</code> - すべてのアクティブなネットワークインターフェースの情報を表示<br>
             <code>ifconfig eth0</code> - eth0インターフェースの情報を表示<br>
-            <code>sudo ifconfig eth0 192.168.1.100 netmask 255.255.255.0</code> - eth0にIPアドレスとネットマスクを設定<br>
+            <code>sudo ifconfig eth0 192.168.1.100 netmask 255.255.255.0</code> -
+            eth0にIPアドレスとネットマスクを設定<br>
             <code>ifconfig | grep -A 1 "inet "</code> - すべてのインターフェースのIPv4アドレスを表示<br>
             <code>ifconfig | grep -o -E 'inet ([0-9]{1,3}\.){3}[0-9]{1,3}' | cut -d' ' -f2</code> - IPアドレスのみを抽出<br>
             <code>ifconfig | grep "ether" | awk '{print $2}'</code> - すべてのインターフェースのMACアドレスを抽出<br>
-            <code>ifconfig eth0 | grep "RX packets" | awk '{print "Received: " $3 " packets, " $5 " bytes"}'</code> - 受信パケット数とバイト数を整形して表示<br>
-            <code>ifconfig eth0 | grep "TX packets" | awk '{print "Transmitted: " $3 " packets, " $5 " bytes"}'</code> - 送信パケット数とバイト数を整形して表示<br>
-            <code>for i in $(ifconfig | grep -o '^[a-zA-Z0-9]*:' | sed 's/://'); do echo "===$i==="; ifconfig $i | grep "inet "; done</code> - 各インターフェースのIPアドレスを整形して表示<br>
+            <code>ifconfig eth0 | grep "RX packets" | awk '{print "Received: " $3 " packets, " $5 " bytes"}'</code> -
+            受信パケット数とバイト数を整形して表示<br>
+            <code>ifconfig eth0 | grep "TX packets" | awk '{print "Transmitted: " $3 " packets, " $5 " bytes"}'</code> -
+            送信パケット数とバイト数を整形して表示<br>
+            <code>for i in $(ifconfig | grep -o '^[a-zA-Z0-9]*:' | sed 's/://'); do echo "===$i==="; ifconfig $i | grep
+                "inet "; done</code> - 各インターフェースのIPアドレスを整形して表示<br>
             <code>ifconfig | grep "mtu" | awk '{print $1, "MTU:", $NF}'</code> - 各インターフェースのMTU値を表示<br>
             <code>ifconfig eth0 | grep "errors" | awk '{print "RX errors: " $3 ", TX errors: " $7}'</code> - 送受信エラー数を表示
         </div>
@@ -121,7 +130,7 @@
         <!-- ip コマンド -->
         <h3>ip - IPネットワークの設定</h3>
         <p>IPアドレス、ルーティング、ネットワークデバイスなどを設定・管理します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>サブコマンド</th>
@@ -148,7 +157,7 @@
                 <td>トンネルの表示・設定</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>ip addr show</code> - すべてのインターフェースのIPアドレス情報を表示<br>
@@ -161,7 +170,7 @@
         <h3>netstat - ネットワーク接続・ルーティングテーブル・インターフェース統計の表示</h3>
         <p>ネットワーク接続、ルーティングテーブル、インターフェース統計などを表示します。</p>
         <p>注: 最近のLinuxディストリビューションでは<code>ss</code>コマンドが推奨されています。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -196,7 +205,7 @@
                 <td>ネットワークインターフェースの統計を表示</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>netstat -tuln</code> - リッスン中のTCPとUDPポートを数値で表示<br>
@@ -207,7 +216,7 @@
         <!-- ss コマンド -->
         <h3>ss - ソケット統計の表示</h3>
         <p>ソケット統計を表示します。netstatの代替として使用されます。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -242,7 +251,7 @@
                 <td>内部TCPの情報を表示</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>ss -tuln</code> - リッスン中のTCPとUDPポートを数値で表示<br>
@@ -253,7 +262,7 @@
         <!-- wget コマンド -->
         <h3>wget - ネットワークからのファイルダウンロード</h3>
         <p>HTTPやFTPなどのプロトコルを使用してファイルをダウンロードします。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -284,7 +293,7 @@
                 <td>ダウンロード速度を制限（例: 200k）</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>wget https://example.com/file.zip</code> - ファイルをダウンロード<br>
@@ -295,7 +304,7 @@
         <!-- curl コマンド -->
         <h3>curl - データ転送ツール</h3>
         <p>様々なプロトコルを使用してデータを送受信します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -330,7 +339,7 @@
                 <td>HTTPヘッダーを指定</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>curl https://example.com</code> - ウェブページの内容を表示<br>
@@ -338,20 +347,23 @@
             <code>curl -I https://example.com</code> - HTTPヘッダーのみを取得<br>
             <code>curl -X POST -d "name=value" https://example.com/api</code> - POSTリクエストを送信<br>
             <code>curl -s https://example.com | grep "title" | sed 's/<[^>]*>//g'</code> - ウェブページからタイトルを抽出してHTMLタグを削除<br>
-            <code>curl -s https://api.github.com/users/username | jq '.name, .location'</code> - GitHub APIからJSONデータを取得して特定のフィールドを抽出<br>
+            <code>curl -s https://api.github.com/users/username | jq '.name, .location'</code> - GitHub
+            APIからJSONデータを取得して特定のフィールドを抽出<br>
             <code>curl -u username:password https://example.com/protected</code> - Basic認証を使用してアクセス<br>
             <code>curl -H "Authorization: Bearer token123" https://api.example.com</code> - Bearer認証トークンを使用してAPIにアクセス<br>
             <code>curl -F "file=@document.pdf" https://example.com/upload</code> - ファイルをアップロード（multipart/form-data）<br>
-            <code>curl -s -w "\nHTTP Status: %{http_code}\nTotal time: %{time_total}s\n" https://example.com -o /dev/null</code> - パフォーマンス統計を表示<br>
+            <code>curl -s -w "\nHTTP Status: %{http_code}\nTotal time: %{time_total}s\n" https://example.com -o
+                /dev/null</code> - パフォーマンス統計を表示<br>
             <code>curl --limit-rate 200K https://example.com/large-file.iso -o large-file.iso</code> - ダウンロード速度を制限<br>
-            <code>for i in {1..5}; do curl -s -o /dev/null -w "%{http_code}\n" https://example.com; done</code> - 複数回リクエストを送信してHTTPステータスコードを確認<br>
+            <code>for i in {1..5}; do curl -s -o /dev/null -w "%{http_code}\n" https://example.com; done</code> -
+            複数回リクエストを送信してHTTPステータスコードを確認<br>
             <code>curl -s -L https://bit.ly/shorturl</code> - リダイレクトに従ってショートURLの最終的な宛先を取得
         </div>
 
         <!-- traceroute コマンド -->
         <h3>traceroute - パケットの経路追跡</h3>
         <p>パケットが目的地に到達するまでの経路を表示します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -374,7 +386,7 @@
                 <td>使用するポート番号を指定</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>traceroute google.com</code> - Googleサーバーまでの経路を表示<br>
@@ -386,15 +398,18 @@
             <code>traceroute -w 1 example.com</code> - 応答待ち時間を1秒に設定（高速化）<br>
             <code>traceroute example.com | grep -v "\*\*\*"</code> - タイムアウトしたホップを除外<br>
             <code>traceroute example.com | awk '{print $2}'</code> - ホップのIPアドレスまたはホスト名のみを抽出<br>
-            <code>traceroute -q 1 example.com | grep -v "\*" | awk '{print $2}' | xargs -n 1 whois | grep "Country"</code> - 経路上のIPアドレスの国情報を表示<br>
-            <code>for ip in 8.8.8.8 1.1.1.1; do echo "=== $ip ==="; traceroute -n -w 1 $ip | tail -n +2 | head -n 5; done</code> - 複数の宛先への最初の5ホップを比較<br>
-            <code>traceroute example.com 2>&1 | tee traceroute_$(date +%Y%m%d_%H%M%S).log</code> - トレースルート結果をタイムスタンプ付きのログファイルに保存
+            <code>traceroute -q 1 example.com | grep -v "\*" | awk '{print $2}' | xargs -n 1 whois | grep
+                "Country"</code> - 経路上のIPアドレスの国情報を表示<br>
+            <code>for ip in 8.8.8.8 1.1.1.1; do echo "=== $ip ==="; traceroute -n -w 1 $ip | tail -n +2 | head -n 5;
+                done</code> - 複数の宛先への最初の5ホップを比較<br>
+            <code>traceroute example.com 2>&1 | tee traceroute_$(date +%Y%m%d_%H%M%S).log</code> -
+            トレースルート結果をタイムスタンプ付きのログファイルに保存
         </div>
 
         <!-- nslookup/dig コマンド -->
         <h3>nslookup/dig - DNSクエリの実行</h3>
         <p>ドメイン名やIPアドレスのDNS情報を取得します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>コマンド/オプション</th>
@@ -421,7 +436,7 @@
                 <td>簡潔な結果のみを表示</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>nslookup google.com</code> - GoogleのIPアドレスを取得<br>
@@ -433,8 +448,8 @@
     </section>
 
     <div class="navigation-links">
-        <a href="linux_command_system.html">前のカテゴリ: システム情報</a> | 
-        <a href="linux_command.html">メインページに戻る</a> | 
+        <a href="linux_command_system.html">前のカテゴリ: システム情報</a> |
+        <a href="linux_command.html">メインページに戻る</a> |
         <a href="linux_command_process.html">次のカテゴリ: プロセス管理</a>
     </div>
 

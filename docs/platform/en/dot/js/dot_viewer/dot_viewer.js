@@ -1,5 +1,5 @@
 // js/dot_viewer/dot_viewer.js
-import { initializeApp } from './modules/app_initializer.js';
+import {initializeApp} from './modules/app_initializer.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     initializeApp().catch(err => {

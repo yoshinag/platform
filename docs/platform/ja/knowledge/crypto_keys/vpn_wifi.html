@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>セキュアな通信: VPN、ワイヤレス通信（WPA2/WPA3）</title>
@@ -8,15 +12,14 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
         <a href="crypto_keys.html">暗号化鍵の解説に戻る</a>
     </div>
     <h1>セキュアな通信: VPN、ワイヤレス通信（WPA2/WPA3）</h1>
-    
+
     <section id="table-of-contents" class="crypto-section">
         <h2>目次</h2>
         <ul>
@@ -40,7 +43,7 @@
             </li>
         </ul>
     </section>
-    
+
     <section id="introduction" class="crypto-section">
         <h2>はじめに</h2>
         <p>
@@ -52,7 +55,7 @@
 
     <section id="vpn" class="crypto-section">
         <h2>VPN（仮想プライベートネットワーク）</h2>
-        
+
         <section id="vpn-intro" class="crypto-section">
             <h3>VPNとは</h3>
             <p>
@@ -204,7 +207,7 @@
 
     <section id="wireless-security" class="crypto-section">
         <h2>ワイヤレス通信のセキュリティ</h2>
-        
+
         <section id="wifi-security-evolution" class="crypto-section">
             <h3>Wi-Fiセキュリティの進化</h3>
             <p>
@@ -248,7 +251,8 @@
 
             <h4>AES-CCMP暗号化</h4>
             <p>
-                WPA2はAES（Advanced Encryption Standard）とCCMP（Counter Mode with Cipher Block Chaining Message Authentication Code Protocol）
+                WPA2はAES（Advanced Encryption Standard）とCCMP（Counter Mode with Cipher Block Chaining Message
+                Authentication Code Protocol）
                 を使用しています。これにより、WEPやWPAのTKIPよりも強力な暗号化が実現されています。
             </p>
 
@@ -272,9 +276,15 @@
                 WPA2にもいくつかの脆弱性が発見されています：
             </p>
             <ul>
-                <li>KRACK（Key Reinstallation Attack）: 2017年に発見された脆弱性で、攻撃者がWPA2のハンドシェイクプロセスを悪用して通信を傍受する可能性があります。</li>
-                <li>辞書攻撃: 弱いパスフレーズを使用している場合、総当たり攻撃や辞書攻撃によってパスフレーズが解読される可能性があります。</li>
-                <li>WPS（Wi-Fi Protected Setup）の脆弱性: WPSが有効になっている場合、PINコードを総当たりで試すことでネットワークにアクセスできる可能性があります。</li>
+                <li>KRACK（Key Reinstallation Attack）:
+                    2017年に発見された脆弱性で、攻撃者がWPA2のハンドシェイクプロセスを悪用して通信を傍受する可能性があります。
+                </li>
+                <li>辞書攻撃:
+                    弱いパスフレーズを使用している場合、総当たり攻撃や辞書攻撃によってパスフレーズが解読される可能性があります。
+                </li>
+                <li>WPS（Wi-Fi Protected Setup）の脆弱性:
+                    WPSが有効になっている場合、PINコードを総当たりで試すことでネットワークにアクセスできる可能性があります。
+                </li>
             </ul>
         </section>
 

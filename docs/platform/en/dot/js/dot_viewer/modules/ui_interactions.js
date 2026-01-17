@@ -17,7 +17,7 @@ export function setupAllPanelsToggle(buttonElement, settingsPanelElement, codePa
         console.warn("One or more elements for panel toggle not found.");
         return;
     }
-    buttonElement.addEventListener('click', function() {
+    buttonElement.addEventListener('click', function () {
         const SPHidden = settingsPanelElement.classList.contains('hidden');
         const CPHidden = codePanelElement.classList.contains('hidden');
         if (SPHidden || CPHidden) {
@@ -42,16 +42,18 @@ export function setupFullscreenToggle(buttonElement, bodyElement) {
         console.warn("Button element or body element for fullscreen toggle not found.");
         return;
     }
+
     function updateFullscreenButtonState(isFullscreenActive) {
         buttonElement.innerHTML = isFullscreenActive ? SVG_ICON_FULLSCREEN_EXIT : SVG_ICON_FULLSCREEN;
         buttonElement.title = isFullscreenActive ? 'Exit fullscreen' : 'Fullscreen view';
     }
+
     updateFullscreenButtonState(bodyElement.classList.contains('graph-view-fullscreen'));
-    buttonElement.addEventListener('click', function() {
+    buttonElement.addEventListener('click', function () {
         bodyElement.classList.toggle('graph-view-fullscreen');
         updateFullscreenButtonState(bodyElement.classList.contains('graph-view-fullscreen'));
     });
-    document.addEventListener('keydown', function(event) {
+    document.addEventListener('keydown', function (event) {
         if (event.key === 'Escape' && bodyElement.classList.contains('graph-view-fullscreen')) {
             bodyElement.classList.remove('graph-view-fullscreen');
             updateFullscreenButtonState(false);
@@ -135,7 +137,9 @@ export function setupPasteCodeButton(pasteButton, codeInputElement, afterPasteCa
         if (!navigator.clipboard || !navigator.clipboard.readText) {
             alert('Clipboard reading is not supported in this browser.');
             pasteButton.title = 'Paste failed';
-            setTimeout(() => { pasteButton.title = originalPasteTitle; }, 2000);
+            setTimeout(() => {
+                pasteButton.title = originalPasteTitle;
+            }, 2000);
             return;
         }
         try {

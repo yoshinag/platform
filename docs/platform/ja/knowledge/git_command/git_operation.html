@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Git運用解説</title>
@@ -8,8 +12,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
@@ -53,13 +56,13 @@
             <h3>Git Flowの主要ブランチ</h3>
             <h4>メインブランチ</h4>
             <p>Git Flowでは、2つの主要なブランチが常に存在します：</p>
-            
+
             <h4>master（main）ブランチ</h4>
             <p>
                 プロダクションレディなコードを含むブランチです。このブランチのコードは常に本番環境にデプロイ可能な状態であるべきです。
                 masterブランチへのコミットは通常、新しいバージョンのリリース時やホットフィックス適用時にのみ行われます。
             </p>
-            
+
             <h4>developブランチ</h4>
             <p>
                 開発の最新状態を反映するブランチです。次のリリースに向けた開発作業はこのブランチから派生し、
@@ -67,11 +70,11 @@
                 releaseブランチを作成してリリース準備を行います。
             </p>
         </div>
-        
+
         <div class="category-description">
             <h3>サポートブランチ</h3>
             <p>Git Flowでは、以下の3種類のサポートブランチを使用します：</p>
-            
+
             <h4>featureブランチ</h4>
             <p>
                 新機能の開発に使用されるブランチです。常にdevelopブランチから分岐し、開発完了後はdevelopブランチにマージされます。
@@ -79,7 +82,7 @@
             </p>
             <p>作成方法: <code>git checkout -b feature/new-feature develop</code></p>
             <p>マージ方法: <code>git checkout develop</code> → <code>git merge --no-ff feature/new-feature</code></p>
-            
+
             <h4>releaseブランチ</h4>
             <p>
                 リリース準備のためのブランチです。developブランチから分岐し、リリース準備が完了したらmasterとdevelopの両方にマージされます。
@@ -88,9 +91,10 @@
             </p>
             <p>作成方法: <code>git checkout -b release/1.0.0 develop</code></p>
             <p>マージ方法:</p>
-            <p><code>git checkout master</code> → <code>git merge --no-ff release/1.0.0</code> → <code>git tag -a 1.0.0</code></p>
+            <p><code>git checkout master</code> → <code>git merge --no-ff release/1.0.0</code> → <code>git tag -a
+                1.0.0</code></p>
             <p><code>git checkout develop</code> → <code>git merge --no-ff release/1.0.0</code></p>
-            
+
             <h4>hotfixブランチ</h4>
             <p>
                 本番環境で発見された緊急のバグ修正に使用されるブランチです。masterブランチから分岐し、
@@ -99,7 +103,8 @@
             </p>
             <p>作成方法: <code>git checkout -b hotfix/1.0.1 master</code></p>
             <p>マージ方法:</p>
-            <p><code>git checkout master</code> → <code>git merge --no-ff hotfix/1.0.1</code> → <code>git tag -a 1.0.1</code></p>
+            <p><code>git checkout master</code> → <code>git merge --no-ff hotfix/1.0.1</code> → <code>git tag -a
+                1.0.1</code></p>
             <p><code>git checkout develop</code> → <code>git merge --no-ff hotfix/1.0.1</code></p>
         </div>
 
@@ -110,12 +115,12 @@
                 Git Flowを実装するためのコマンドラインツール「git-flow」があります。
                 このツールを使用すると、Git Flowのワークフローに沿ったブランチ操作を簡単に行うことができます。
             </p>
-            
+
             <h4>インストール方法</h4>
             <p>macOS (Homebrew): <code>brew install git-flow-avh</code></p>
             <p>Ubuntu/Debian: <code>apt-get install git-flow</code></p>
             <p>Windows (Git for Windows): デフォルトで含まれています</p>
-            
+
             <h4>基本的な使い方</h4>
             <p>リポジトリの初期化: <code>git flow init</code></p>
             <p>機能開発の開始: <code>git flow feature start 機能名</code></p>
@@ -136,7 +141,7 @@
                 <li>本番環境のコード（master）が常に安定した状態を保てる</li>
                 <li>緊急のバグ修正（hotfix）のためのプロセスが明確に定義されている</li>
             </ul>
-            
+
             <h4>デメリット</h4>
             <ul>
                 <li>小規模なプロジェクトや頻繁なデプロイを行うプロジェクトでは複雑すぎる場合がある</li>
@@ -154,14 +159,14 @@
                 masterブランチから機能ブランチを作成し、開発完了後にプルリクエストを通じてmasterにマージするという
                 シンプルな流れが特徴です。
             </p>
-            
+
             <h4>GitLab Flow</h4>
             <p>
                 GitLab Flowは、Git FlowとGitHub Flowの中間的な位置づけのワークフローです。
                 環境ブランチ（production, staging, pre-productionなど）を導入し、
                 機能ブランチからmasterへ、そして環境ブランチへと段階的にマージしていく流れが特徴です。
             </p>
-            
+
             <h4>Trunk Based Development</h4>
             <p>
                 Trunk Based Developmentは、すべての開発者が単一のブランチ（trunk/master）に
@@ -198,31 +203,31 @@
 
         <div class="category-description">
             <h3>CircleCIの主な特徴</h3>
-            
+
             <h4>クラウドベースのCI/CDプラットフォーム</h4>
             <p>
                 CircleCIはクラウドベースのサービスであり、インフラストラクチャの管理が不要です。
                 また、セルフホスト型のランナーも提供されており、プライベート環境でのジョブ実行も可能です。
             </p>
-            
+
             <h4>GitHubやBitbucketとの連携</h4>
             <p>
                 GitHubやBitbucketなどの主要なGitリポジトリホスティングサービスと簡単に連携できます。
                 リポジトリへのプッシュやプルリクエストなどのイベントをトリガーにして、自動的にワークフローを実行します。
             </p>
-            
+
             <h4>並列実行とキャッシュ機能</h4>
             <p>
                 テストを並列実行することで、ビルドとテストの時間を短縮できます。
                 また、依存関係やビルド結果をキャッシュすることで、繰り返し実行される処理を高速化します。
             </p>
-            
+
             <h4>豊富なインテグレーション</h4>
             <p>
                 Slack、JIRA、AWS、Google Cloud、Dockerなど、多くのサードパーティサービスとの連携が可能です。
                 これにより、開発ワークフローを既存のツールチェーンに統合することができます。
             </p>
-            
+
             <h4>柔軟な設定</h4>
             <p>
                 YAMLベースの設定ファイルを使用して、ビルド、テスト、デプロイのプロセスをカスタマイズできます。
@@ -232,7 +237,7 @@
 
         <div class="category-description">
             <h3>CircleCIの基本的な使い方</h3>
-            
+
             <h4>アカウント作成と連携</h4>
             <p>
                 1. CircleCIのウェブサイト（<a href="https://circleci.com/" target="_blank">https://circleci.com/</a>）にアクセスします。
@@ -243,7 +248,7 @@
             <p>
                 3. 連携したいリポジトリを選択し、「Set Up Project」をクリックします。
             </p>
-            
+
             <h4>設定ファイルの作成</h4>
             <p>
                 CircleCIを使用するには、プロジェクトのルートディレクトリに <code>.circleci</code> ディレクトリを作成し、
@@ -266,7 +271,7 @@ jobs:
           name: "テストの実行"
           command: npm test
 </code></pre>
-            
+
             <h4>ワークフローの設定</h4>
             <p>
                 複数のジョブを順番に、または並列に実行するワークフローを設定することができます。
@@ -320,19 +325,19 @@ workflows:
 
         <div class="category-description">
             <h3>CircleCIの主要な概念</h3>
-            
+
             <h4>ジョブ（Jobs）</h4>
             <p>
                 ジョブは、一連のステップ（コマンド）を実行する作業単位です。
                 各ジョブは独自の実行環境（Executor）で実行されます。
             </p>
-            
+
             <h4>ステップ（Steps）</h4>
             <p>
                 ステップは、ジョブ内で実行される個々のアクション（コマンドやスクリプト）です。
                 例えば、コードのチェックアウト、依存関係のインストール、テストの実行などがステップになります。
             </p>
-            
+
             <h4>エグゼキューター（Executors）</h4>
             <p>
                 エグゼキューターは、ジョブを実行する環境を定義します。CircleCIでは、以下の3種類のエグゼキューターが提供されています：
@@ -342,13 +347,13 @@ workflows:
                 <li>Machine: 完全な仮想マシン環境を提供します。</li>
                 <li>macOS: macOS環境でジョブを実行します（iOSアプリのビルドなどに使用）。</li>
             </ul>
-            
+
             <h4>ワークフロー（Workflows）</h4>
             <p>
                 ワークフローは、複数のジョブの実行順序や条件を定義します。
                 ジョブを並列に実行したり、特定のジョブが完了した後に別のジョブを実行したりすることができます。
             </p>
-            
+
             <h4>オーブ（Orbs）</h4>
             <p>
                 オーブは、再利用可能な設定パッケージです。
@@ -374,13 +379,13 @@ jobs:
 
         <div class="category-description">
             <h3>CircleCIの高度な機能</h3>
-            
+
             <h4>環境変数とコンテキスト</h4>
             <p>
                 機密情報（APIキーやパスワードなど）は、CircleCIのウェブインターフェースで環境変数として設定できます。
                 また、複数のプロジェクトで共有する環境変数は「コンテキスト」として管理できます。
             </p>
-            
+
             <h4>キャッシュと依存関係の管理</h4>
             <p>
                 依存関係のインストールなど、時間のかかる処理の結果をキャッシュすることで、
@@ -398,7 +403,7 @@ jobs:
         - node_modules
       key: v1-dependencies-{{ checksum "package.json" }}
 </code></pre>
-            
+
             <h4>並列テスト実行</h4>
             <p>
                 テストを複数のコンテナに分散して並列実行することで、テスト時間を短縮できます。
@@ -414,7 +419,7 @@ jobs:
             TESTFILES=$(circleci tests glob "test/**/*.js" | circleci tests split --split-by=timings)
             npm test -- $TESTFILES
 </code></pre>
-            
+
             <h4>承認ジョブ</h4>
             <p>
                 ワークフロー内に手動承認ステップを追加することで、
@@ -440,7 +445,7 @@ jobs:
 
         <div class="category-description">
             <h3>CircleCIとGitの連携</h3>
-            
+
             <h4>ブランチとタグに基づく実行</h4>
             <p>
                 特定のブランチやタグに対してのみジョブを実行するように設定できます。
@@ -463,7 +468,7 @@ jobs:
             tags:
               only: /^v.*/
 </code></pre>
-            
+
             <h4>プルリクエストとの連携</h4>
             <p>
                 CircleCIはGitHubやBitbucketのプルリクエストと連携し、
@@ -474,7 +479,7 @@ jobs:
 
         <div class="category-description">
             <h3>CircleCIのベストプラクティス</h3>
-            
+
             <h4>設定ファイルの検証</h4>
             <p>
                 CircleCIの設定ファイルをコミットする前に、CircleCIのCLIツールを使用して構文を検証することをお勧めします。
@@ -482,7 +487,7 @@ jobs:
             <p>
                 <code>circleci config validate</code>
             </p>
-            
+
             <h4>ローカルでのテスト実行</h4>
             <p>
                 CircleCIのCLIツールを使用して、ジョブをローカルで実行し、設定をテストすることができます。
@@ -490,7 +495,7 @@ jobs:
             <p>
                 <code>circleci local execute</code>
             </p>
-            
+
             <h4>ビルド時間の最適化</h4>
             <p>
                 以下の方法でビルド時間を短縮することができます：
@@ -501,7 +506,7 @@ jobs:
                 <li>必要なジョブのみを実行するようにワークフローを設計する</li>
                 <li>軽量なDockerイメージを使用する</li>
             </ul>
-            
+
             <h4>セキュリティの考慮事項</h4>
             <p>
                 機密情報（APIキー、パスワードなど）は環境変数として設定し、設定ファイルに直接記述しないようにしましょう。
@@ -540,33 +545,33 @@ jobs:
 
         <div class="category-description">
             <h3>GitHub Actionsの主な特徴</h3>
-            
+
             <h4>GitHubとの完全な統合</h4>
             <p>
                 GitHub Actionsは、GitHubプラットフォームに完全に統合されています。
                 リポジトリのコード、プルリクエスト、イシューなどと直接連携し、
                 開発ワークフローをシームレスに自動化することができます。
             </p>
-            
+
             <h4>マルチプラットフォーム対応</h4>
             <p>
                 GitHub Actionsは、Linux、Windows、macOSなど、複数のオペレーティングシステム上でワークフローを実行できます。
                 これにより、異なるプラットフォーム向けのアプリケーションのビルドとテストが容易になります。
             </p>
-            
+
             <h4>再利用可能なアクション</h4>
             <p>
                 GitHub Actionsでは、特定のタスクを実行するための再利用可能なコンポーネント（アクション）を作成し、
                 共有することができます。GitHub Marketplaceには、コミュニティによって作成された多数のアクションが
                 公開されており、これらを組み合わせることで効率的にワークフローを構築できます。
             </p>
-            
+
             <h4>マトリックスビルド</h4>
             <p>
                 複数の構成（異なるOSやランタイムバージョンなど）でジョブを並列実行するマトリックスビルドをサポートしています。
                 これにより、異なる環境での互換性テストを効率的に行うことができます。
             </p>
-            
+
             <h4>セルフホストランナー</h4>
             <p>
                 GitHub提供のホストランナーに加えて、独自のマシン（セルフホストランナー）でワークフローを実行することもできます。
@@ -576,7 +581,7 @@ jobs:
 
         <div class="category-description">
             <h3>GitHub Actionsの基本的な使い方</h3>
-            
+
             <h4>ワークフローファイルの作成</h4>
             <p>
                 GitHub Actionsを使用するには、リポジトリの <code>.github/workflows</code> ディレクトリに
@@ -611,7 +616,7 @@ jobs:
     - name: Run tests
       run: npm test
 </code></pre>
-            
+
             <h4>ワークフローの主要コンポーネント</h4>
             <p>
                 GitHub Actionsのワークフローは、以下の主要コンポーネントで構成されています：
@@ -630,7 +635,7 @@ jobs:
 
         <div class="category-description">
             <h3>GitHub Actionsのトリガーイベント</h3>
-            
+
             <h4>プッシュとプルリクエスト</h4>
             <p>
                 最も一般的なトリガーは、特定のブランチへのプッシュやプルリクエストです。
@@ -645,7 +650,7 @@ jobs:
   pull_request:
     branches: [ main ]
 </code></pre>
-            
+
             <h4>スケジュール実行</h4>
             <p>
                 cron構文を使用して、定期的にワークフローを実行することができます。
@@ -656,7 +661,7 @@ jobs:
     # 毎日午前3時（UTC）に実行
     - cron: '0 3 * * *'
 </code></pre>
-            
+
             <h4>手動トリガー</h4>
             <p>
                 <code>workflow_dispatch</code> イベントを使用すると、GitHubのウェブインターフェースから
@@ -674,7 +679,7 @@ jobs:
           - staging
           - production
 </code></pre>
-            
+
             <h4>その他のイベント</h4>
             <p>
                 GitHub Actionsは、リリースの作成、イシューの作成/更新、ディスカッションの作成など、
@@ -690,7 +695,7 @@ jobs:
 
         <div class="category-description">
             <h3>ジョブとステップ</h3>
-            
+
             <h4>ジョブの定義</h4>
             <p>
                 ワークフロー内の各ジョブは独立した実行環境で実行されます。
@@ -714,7 +719,7 @@ jobs:
     steps:
       # デプロイステップ...
 </code></pre>
-            
+
             <h4>マトリックスビルド</h4>
             <p>
                 マトリックス戦略を使用すると、異なる構成（OSやランタイムバージョンなど）で
@@ -736,7 +741,7 @@ jobs:
       - run: npm install
       - run: npm test
 </code></pre>
-            
+
             <h4>ジョブ間のデータ共有</h4>
             <p>
                 アーティファクトを使用して、ジョブ間でファイルを共有することができます。
@@ -768,7 +773,7 @@ jobs:
 
         <div class="category-description">
             <h3>アクションの使用</h3>
-            
+
             <h4>公開アクションの使用</h4>
             <p>
                 GitHub Marketplaceには、多くの公開アクションが登録されています。
@@ -787,7 +792,7 @@ jobs:
       path: ~/.npm
       key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 </code></pre>
-            
+
             <h4>カスタムアクションの作成</h4>
             <p>
                 特定のニーズに合わせて、独自のカスタムアクションを作成することもできます。
@@ -831,7 +836,7 @@ try {
 
         <div class="category-description">
             <h3>環境変数とシークレット</h3>
-            
+
             <h4>環境変数の使用</h4>
             <p>
                 ワークフロー内で環境変数を定義し、ステップ間で共有することができます。
@@ -850,7 +855,7 @@ try {
           DEBUG: true
         run: echo "DEBUG is $DEBUG"
 </code></pre>
-            
+
             <h4>シークレットの管理</h4>
             <p>
                 APIキーやパスワードなどの機密情報は、GitHubのリポジトリシークレットとして保存し、
@@ -884,7 +889,7 @@ try {
 
         <div class="category-description">
             <h3>条件付き実行</h3>
-            
+
             <h4>if条件式</h4>
             <p>
                 <code>if</code> 条件式を使用して、特定の条件が満たされた場合にのみジョブやステップを実行することができます。
@@ -907,7 +912,7 @@ try {
         if: failure()
         run: ./notify-failure.sh
 </code></pre>
-            
+
             <h4>式と関数</h4>
             <p>
                 GitHub Actionsでは、条件式や値の生成に使用できる多くの関数と演算子が提供されています。
@@ -927,7 +932,7 @@ try {
 
         <div class="category-description">
             <h3>GitHub Actionsの高度な使用例</h3>
-            
+
             <h4>複雑なCI/CDパイプライン</h4>
             <p>
                 複数のジョブを組み合わせて、ビルド、テスト、デプロイを含む完全なCI/CDパイプラインを構築できます。
@@ -1006,7 +1011,7 @@ jobs:
 
         <div class="category-description">
             <h3>GitHub Actionsのベストプラクティス</h3>
-            
+
             <h4>ワークフローの最適化</h4>
             <ul>
                 <li>依存関係をキャッシュして、ビルド時間を短縮する</li>
@@ -1014,7 +1019,7 @@ jobs:
                 <li>大きなワークフローは複数の小さなワークフローに分割する</li>
                 <li>マトリックスビルドを活用して、テストを並列化する</li>
             </ul>
-            
+
             <h4>セキュリティ対策</h4>
             <ul>
                 <li>機密情報はシークレットとして保存し、直接ワークフローファイルに記述しない</li>
@@ -1022,7 +1027,7 @@ jobs:
                 <li>プルリクエストからのワークフローでは、機密情報へのアクセスを制限する</li>
                 <li>GITHUB_TOKENの権限を必要最小限に設定する</li>
             </ul>
-            
+
             <h4>メンテナンス性の向上</h4>
             <ul>
                 <li>複雑なコマンドはスクリプトファイルに分離する</li>
@@ -1066,21 +1071,23 @@ jobs:
 
         <div class="category-description">
             <h3>フォークの基本概念</h3>
-            
+
             <h4>フォークとクローンの違い</h4>
             <p>
                 Git用語において、「フォーク」と「クローン」は似ているようで異なる概念です：
             </p>
             <ul>
                 <li><strong>フォーク（Fork）</strong>：サーバー側の操作で、他のユーザーのリポジトリのコピーを自分のアカウントに作成します。
-                フォークは主にGitHubやGitLabなどのGitホスティングサービス上の機能です。</li>
+                    フォークは主にGitHubやGitLabなどのGitホスティングサービス上の機能です。
+                </li>
                 <li><strong>クローン（Clone）</strong>：リモートリポジトリのコピーをローカルマシンに作成する操作です。
-                <code>git clone</code>コマンドを使用して行います。</li>
+                    <code>git clone</code>コマンドを使用して行います。
+                </li>
             </ul>
             <p>
                 通常のワークフローでは、まずリポジトリをフォークし、次にフォークしたリポジトリをローカルにクローンします。
             </p>
-            
+
             <h4>フォークの主な用途</h4>
             <p>
                 フォークは主に以下の目的で使用されます：
@@ -1095,7 +1102,7 @@ jobs:
 
         <div class="category-description">
             <h3>リポジトリのフォーク方法</h3>
-            
+
             <h4>GitHubでのフォーク</h4>
             <p>
                 GitHubでリポジトリをフォークする手順は非常に簡単です：
@@ -1110,7 +1117,7 @@ jobs:
                 フォークが完了すると、自分のアカウントに元のリポジトリのコピーが作成されます。
                 このリポジトリのURLは通常 <code>https://github.com/あなたのユーザー名/リポジトリ名</code> となります。
             </p>
-            
+
             <h4>GitLabでのフォーク</h4>
             <p>
                 GitLabでリポジトリをフォークする手順も同様です：
@@ -1126,7 +1133,7 @@ jobs:
 
         <div class="category-description">
             <h3>フォークしたリポジトリの操作</h3>
-            
+
             <h4>フォークのクローンとリモートの設定</h4>
             <p>
                 フォークしたリポジトリをローカルで作業するには、まずクローンを作成します：
@@ -1148,7 +1155,7 @@ cd リポジトリ名</code></pre>
 origin    https://github.com/あなたのユーザー名/リポジトリ名.git (push)
 upstream  https://github.com/元の所有者/リポジトリ名.git (fetch)
 upstream  https://github.com/元の所有者/リポジトリ名.git (push)</code></pre>
-            
+
             <h4>上流リポジトリとの同期</h4>
             <p>
                 元のリポジトリ（上流リポジトリ）の変更を自分のフォークに取り込むには、以下の手順を実行します：
@@ -1167,7 +1174,7 @@ git push origin main</code></pre>
             <p>
                 これにより、フォークが元のリポジトリと同期され、最新の状態が維持されます。
             </p>
-            
+
             <h4>変更の作成と提案</h4>
             <p>
                 フォークしたリポジトリで変更を行い、元のリポジトリに提案する一般的なワークフローは以下の通りです：
@@ -1175,19 +1182,21 @@ git push origin main</code></pre>
             <ol>
                 <li>フォークを最新の状態に同期します。</li>
                 <li>新しい機能ブランチを作成します：<br>
-                <code>git checkout -b feature/新機能名</code></li>
+                    <code>git checkout -b feature/新機能名</code></li>
                 <li>変更を加え、コミットします：<br>
-                <code>git add .</code><br>
-                <code>git commit -m "変更の説明"</code></li>
+                    <code>git add .</code><br>
+                    <code>git commit -m "変更の説明"</code></li>
                 <li>変更をフォークにプッシュします：<br>
-                <code>git push origin feature/新機能名</code></li>
-                <li>GitHubまたはGitLabのウェブインターフェースで、元のリポジトリに対してプルリクエスト（またはマージリクエスト）を作成します。</li>
+                    <code>git push origin feature/新機能名</code></li>
+                <li>
+                    GitHubまたはGitLabのウェブインターフェースで、元のリポジトリに対してプルリクエスト（またはマージリクエスト）を作成します。
+                </li>
             </ol>
         </div>
 
         <div class="category-description">
             <h3>プルリクエストの作成と管理</h3>
-            
+
             <h4>GitHubでのプルリクエスト作成</h4>
             <p>
                 GitHubでプルリクエストを作成する手順は以下の通りです：
@@ -1201,19 +1210,23 @@ git push origin main</code></pre>
                 <li>プルリクエストのタイトルと説明を入力します。</li>
                 <li>「Create pull request」ボタンをクリックして完了します。</li>
             </ol>
-            
+
             <h4>プルリクエストのベストプラクティス</h4>
             <p>
                 効果的なプルリクエストを作成するためのベストプラクティスは以下の通りです：
             </p>
             <ul>
-                <li><strong>明確なタイトルと説明</strong>：変更内容を簡潔に説明し、なぜその変更が必要なのかを記述します。</li>
-                <li><strong>小さな変更に分割</strong>：大きな変更は複数の小さなプルリクエストに分割すると、レビューが容易になります。</li>
+                <li><strong>明確なタイトルと説明</strong>：変更内容を簡潔に説明し、なぜその変更が必要なのかを記述します。
+                </li>
+                <li><strong>小さな変更に分割</strong>：大きな変更は複数の小さなプルリクエストに分割すると、レビューが容易になります。
+                </li>
                 <li><strong>テストの追加</strong>：可能であれば、変更に対応するテストを追加します。</li>
-                <li><strong>コーディング規約の遵守</strong>：プロジェクトのコーディング規約やスタイルガイドに従います。</li>
-                <li><strong>レビューコメントへの対応</strong>：レビュアーからのフィードバックに対して迅速かつ丁寧に対応します。</li>
+                <li><strong>コーディング規約の遵守</strong>：プロジェクトのコーディング規約やスタイルガイドに従います。
+                </li>
+                <li><strong>レビューコメントへの対応</strong>：レビュアーからのフィードバックに対して迅速かつ丁寧に対応します。
+                </li>
             </ul>
-            
+
             <h4>プルリクエスト後の変更</h4>
             <p>
                 プルリクエスト後に追加の変更が必要な場合は、同じブランチに変更をコミットしてプッシュするだけです：
@@ -1228,7 +1241,7 @@ git push origin feature/新機能名</code></pre>
 
         <div class="category-description">
             <h3>フォークの管理とメンテナンス</h3>
-            
+
             <h4>フォークの定期的な同期</h4>
             <p>
                 長期間にわたってフォークを使用する場合は、定期的に上流リポジトリと同期することが重要です。
@@ -1238,21 +1251,24 @@ git push origin feature/新機能名</code></pre>
                 同期の頻度は、上流リポジトリの活発さによって異なりますが、新しい変更を加える前に
                 必ず同期することをお勧めします。
             </p>
-            
+
             <h4>不要になったフォークの処理</h4>
             <p>
                 プロジェクトへの貢献が完了し、フォークが不要になった場合は、以下の選択肢があります：
             </p>
             <ul>
-                <li><strong>保持</strong>：将来的に再び貢献する可能性がある場合は、フォークを保持しておくことができます。</li>
-                <li><strong>アーカイブ</strong>：GitHubやGitLabでは、リポジトリをアーカイブして読み取り専用にすることができます。</li>
-                <li><strong>削除</strong>：完全に不要な場合は、フォークを削除することもできます。ただし、この操作は元に戻せないので注意が必要です。</li>
+                <li><strong>保持</strong>：将来的に再び貢献する可能性がある場合は、フォークを保持しておくことができます。
+                </li>
+                <li><strong>アーカイブ</strong>：GitHubやGitLabでは、リポジトリをアーカイブして読み取り専用にすることができます。
+                </li>
+                <li><strong>削除</strong>：完全に不要な場合は、フォークを削除することもできます。ただし、この操作は元に戻せないので注意が必要です。
+                </li>
             </ul>
         </div>
 
         <div class="category-description">
             <h3>フォークの高度な使用法</h3>
-            
+
             <h4>フォークからフォークへの貢献</h4>
             <p>
                 他の人のフォークに対して貢献することも可能です。これは、複数の開発者が協力して
@@ -1266,7 +1282,7 @@ git fetch collaborator
 git checkout -b feature/協力機能 collaborator/feature/協力機能
 # 変更を加える
 git push collaborator feature/協力機能</code></pre>
-            
+
             <h4>フォークを使った実験</h4>
             <p>
                 フォークは、元のプロジェクトに影響を与えることなく実験的な変更を試すのに最適です。
@@ -1280,7 +1296,7 @@ git push collaborator feature/協力機能</code></pre>
 
         <div class="category-description">
             <h3>フォークに関する一般的な問題と解決策</h3>
-            
+
             <h4>マージコンフリクトの解決</h4>
             <p>
                 上流リポジトリと同期する際や、プルリクエストを作成する際にマージコンフリクトが発生することがあります。
@@ -1291,14 +1307,15 @@ git push collaborator feature/協力機能</code></pre>
             </p>
             <ol>
                 <li>コンフリクトが発生しているファイルを開きます。</li>
-                <li>コンフリクトマーカー（<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>）を探します。</li>
+                <li>コンフリクトマーカー（<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>）を探します。
+                </li>
                 <li>コードを適切に編集して、両方の変更を統合するか、どちらかを選択します。</li>
                 <li>コンフリクトマーカーを削除します。</li>
                 <li>変更をステージングし、コミットします：<br>
-                <code>git add .</code><br>
-                <code>git commit -m "マージコンフリクトを解決"</code></li>
+                    <code>git add .</code><br>
+                    <code>git commit -m "マージコンフリクトを解決"</code></li>
             </ol>
-            
+
             <h4>フォークが古くなった場合</h4>
             <p>
                 長期間同期していないフォークは、上流リポジトリから大きく遅れてしまうことがあります。
@@ -1306,9 +1323,10 @@ git push collaborator feature/協力機能</code></pre>
             </p>
             <ul>
                 <li><strong>リベース</strong>：上流の変更に対して自分の変更をリベースします。<br>
-                <code>git fetch upstream</code><br>
-                <code>git rebase upstream/main</code></li>
-                <li><strong>フォークの再作成</strong>：極端に古い場合は、フォークを削除して新しく作成し直す方が簡単な場合もあります。</li>
+                    <code>git fetch upstream</code><br>
+                    <code>git rebase upstream/main</code></li>
+                <li><strong>フォークの再作成</strong>：極端に古い場合は、フォークを削除して新しく作成し直す方が簡単な場合もあります。
+                </li>
             </ul>
         </div>
 

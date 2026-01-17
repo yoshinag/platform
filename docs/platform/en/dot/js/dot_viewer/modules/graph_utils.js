@@ -1,5 +1,5 @@
 // js/dot_viewer/modules/graph_utils.js
-import { notationRadios } from './dom_elements.js';
+import {notationRadios} from './dom_elements.js';
 
 export function getSelectedNotation() {
     for (const radio of notationRadios) {

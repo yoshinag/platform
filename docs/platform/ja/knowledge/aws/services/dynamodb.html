@@ -1,118 +1,125 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <title>Amazon DynamoDB</title>
     <link rel="stylesheet" href="../../../../css/knowledge.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../../../platform/js/common/analytics.js"></script>
+
 <body class="ja-knowledge">
-    <div style="margin-bottom: 20px;">
-        <a href="../aws.html">AWSに戻る</a>
-    </div>
-    <h1>Amazon DynamoDB</h1>
-    
-    <h2>Amazon DynamoDBとは</h2>
-    <p>Amazon DynamoDBは、AWSが提供するフルマネージドのNoSQLデータベースサービスです。あらゆる規模で一貫した1桁ミリ秒のパフォーマンスを提供し、インターネット規模のアプリケーションに対応するシームレスなスケーラビリティを備えています。DynamoDBはサーバーレスで、プロビジョニング、パッチ適用、ハードウェアプロビジョニング、セットアップ、構成、レプリケーション、ソフトウェアパッチ適用、クラスタースケーリングなどの管理タスクを自動化します。また、組み込みのセキュリティ、継続的バックアップ、マルチリージョンレプリケーション、インメモリキャッシュなどの機能を提供します。</p>
-    
-    <h2>Amazon DynamoDBの主な特徴</h2>
+<div style="margin-bottom: 20px;">
+    <a href="../aws.html">AWSに戻る</a>
+</div>
+<h1>Amazon DynamoDB</h1>
+
+<h2>Amazon DynamoDBとは</h2>
+<p>Amazon
+    DynamoDBは、AWSが提供するフルマネージドのNoSQLデータベースサービスです。あらゆる規模で一貫した1桁ミリ秒のパフォーマンスを提供し、インターネット規模のアプリケーションに対応するシームレスなスケーラビリティを備えています。DynamoDBはサーバーレスで、プロビジョニング、パッチ適用、ハードウェアプロビジョニング、セットアップ、構成、レプリケーション、ソフトウェアパッチ適用、クラスタースケーリングなどの管理タスクを自動化します。また、組み込みのセキュリティ、継続的バックアップ、マルチリージョンレプリケーション、インメモリキャッシュなどの機能を提供します。</p>
+
+<h2>Amazon DynamoDBの主な特徴</h2>
+<ul>
+    <li><strong>高性能：</strong> 一貫した1桁ミリ秒のレイテンシーを提供</li>
+    <li><strong>フルマネージド：</strong> サーバーレスアーキテクチャで管理作業が不要</li>
+    <li><strong>スケーラブル：</strong> 自動的にスケールアップ/ダウンし、どんなトラフィック量にも対応</li>
+    <li><strong>高可用性と耐久性：</strong> 複数のアベイラビリティゾーンにデータを自動的にレプリケート</li>
+    <li><strong>セキュリティ：</strong> 保存時と転送時の暗号化、きめ細かなアクセス制御</li>
+    <li><strong>グローバルテーブル：</strong> マルチリージョンのレプリケーションによるグローバル分散アプリケーションのサポート
+    </li>
+    <li><strong>バックアップと復元：</strong> オンデマンドバックアップと特定の時点への復元</li>
+    <li><strong>トランザクション：</strong> 複数の項目にまたがるACID（原子性、一貫性、分離性、耐久性）トランザクション</li>
+    <li><strong>TTL（Time to Live）：</strong> 期限切れの項目を自動的に削除</li>
+    <li><strong>ストリーミング：</strong> DynamoDB Streamsを使用したリアルタイムのデータ変更キャプチャ</li>
+</ul>
+
+<h2>Amazon DynamoDBの基本概念</h2>
+<p>DynamoDBの基本的な概念は以下の通りです：</p>
+
+<table>
+    <tr>
+        <th>概念</th>
+        <th>説明</th>
+    </tr>
+    <tr>
+        <td>テーブル</td>
+        <td>項目（行）のコレクション。DynamoDBのデータは全てテーブルに保存される</td>
+    </tr>
+    <tr>
+        <td>項目（Item）</td>
+        <td>テーブル内の1つのデータエントリ。リレーショナルデータベースの「行」に相当</td>
+    </tr>
+    <tr>
+        <td>属性</td>
+        <td>項目内の基本的なデータ要素。リレーショナルデータベースの「列」に相当</td>
+    </tr>
+    <tr>
+        <td>プライマリキー</td>
+        <td>
+            テーブル内の各項目を一意に識別するキー。パーティションキーのみ、またはパーティションキーとソートキーの組み合わせ
+        </td>
+    </tr>
+    <tr>
+        <td>パーティションキー</td>
+        <td>項目のデータをどのパーティションに保存するかを決定するプライマリキーの一部</td>
+    </tr>
+    <tr>
+        <td>ソートキー</td>
+        <td>同じパーティションキーを持つ項目をソートするために使用される、プライマリキーのオプション部分</td>
+    </tr>
+    <tr>
+        <td>セカンダリインデックス</td>
+        <td>代替キーを使用してテーブルのデータにアクセスするための追加のデータ構造</td>
+    </tr>
+    <tr>
+        <td>読み取り/書き込み容量</td>
+        <td>テーブルが処理できる読み取りと書き込みの量を定義するスループット設定</td>
+    </tr>
+</table>
+
+<div class="note">
+    <h3>DynamoDBのデータモデル</h3>
+    <p>DynamoDBはスキーマレスなデータベースですが、各項目には以下のデータ型を持つ属性を含めることができます：</p>
     <ul>
-        <li><strong>高性能：</strong> 一貫した1桁ミリ秒のレイテンシーを提供</li>
-        <li><strong>フルマネージド：</strong> サーバーレスアーキテクチャで管理作業が不要</li>
-        <li><strong>スケーラブル：</strong> 自動的にスケールアップ/ダウンし、どんなトラフィック量にも対応</li>
-        <li><strong>高可用性と耐久性：</strong> 複数のアベイラビリティゾーンにデータを自動的にレプリケート</li>
-        <li><strong>セキュリティ：</strong> 保存時と転送時の暗号化、きめ細かなアクセス制御</li>
-        <li><strong>グローバルテーブル：</strong> マルチリージョンのレプリケーションによるグローバル分散アプリケーションのサポート</li>
-        <li><strong>バックアップと復元：</strong> オンデマンドバックアップと特定の時点への復元</li>
-        <li><strong>トランザクション：</strong> 複数の項目にまたがるACID（原子性、一貫性、分離性、耐久性）トランザクション</li>
-        <li><strong>TTL（Time to Live）：</strong> 期限切れの項目を自動的に削除</li>
-        <li><strong>ストリーミング：</strong> DynamoDB Streamsを使用したリアルタイムのデータ変更キャプチャ</li>
+        <li><strong>スカラー型：</strong> 数値、文字列、バイナリ、ブール値、null</li>
+        <li><strong>ドキュメント型：</strong> リスト、マップ</li>
+        <li><strong>セット型：</strong> 文字列セット、数値セット、バイナリセット</li>
     </ul>
-    
-    <h2>Amazon DynamoDBの基本概念</h2>
-    <p>DynamoDBの基本的な概念は以下の通りです：</p>
-    
-    <table>
-        <tr>
-            <th>概念</th>
-            <th>説明</th>
-        </tr>
-        <tr>
-            <td>テーブル</td>
-            <td>項目（行）のコレクション。DynamoDBのデータは全てテーブルに保存される</td>
-        </tr>
-        <tr>
-            <td>項目（Item）</td>
-            <td>テーブル内の1つのデータエントリ。リレーショナルデータベースの「行」に相当</td>
-        </tr>
-        <tr>
-            <td>属性</td>
-            <td>項目内の基本的なデータ要素。リレーショナルデータベースの「列」に相当</td>
-        </tr>
-        <tr>
-            <td>プライマリキー</td>
-            <td>テーブル内の各項目を一意に識別するキー。パーティションキーのみ、またはパーティションキーとソートキーの組み合わせ</td>
-        </tr>
-        <tr>
-            <td>パーティションキー</td>
-            <td>項目のデータをどのパーティションに保存するかを決定するプライマリキーの一部</td>
-        </tr>
-        <tr>
-            <td>ソートキー</td>
-            <td>同じパーティションキーを持つ項目をソートするために使用される、プライマリキーのオプション部分</td>
-        </tr>
-        <tr>
-            <td>セカンダリインデックス</td>
-            <td>代替キーを使用してテーブルのデータにアクセスするための追加のデータ構造</td>
-        </tr>
-        <tr>
-            <td>読み取り/書き込み容量</td>
-            <td>テーブルが処理できる読み取りと書き込みの量を定義するスループット設定</td>
-        </tr>
-    </table>
-    
-    <div class="note">
-        <h3>DynamoDBのデータモデル</h3>
-        <p>DynamoDBはスキーマレスなデータベースですが、各項目には以下のデータ型を持つ属性を含めることができます：</p>
-        <ul>
-            <li><strong>スカラー型：</strong> 数値、文字列、バイナリ、ブール値、null</li>
-            <li><strong>ドキュメント型：</strong> リスト、マップ</li>
-            <li><strong>セット型：</strong> 文字列セット、数値セット、バイナリセット</li>
-        </ul>
-        <p>各項目のサイズは最大400KBまでです。</p>
-    </div>
-    
-    <h2>Amazon DynamoDBのキャパシティモード</h2>
-    <p>DynamoDBには2つのキャパシティモードがあり、読み取りと書き込みのスループットの課金方法と管理方法が異なります：</p>
-    
-    <table>
-        <tr>
-            <th>キャパシティモード</th>
-            <th>説明</th>
-            <th>ユースケース</th>
-        </tr>
-        <tr>
-            <td>プロビジョンドモード</td>
-            <td>テーブルの読み取りと書き込みのキャパシティユニットを事前に指定。Auto Scalingを使用して自動的に調整可能</td>
-            <td>予測可能なトラフィックパターン、コスト管理が重要なアプリケーション</td>
-        </tr>
-        <tr>
-            <td>オンデマンドモード</td>
-            <td>使用した分だけ支払う従量課金制。キャパシティの計画が不要</td>
-            <td>予測不可能なトラフィックパターン、変動の激しいワークロード、新しいアプリケーション</td>
-        </tr>
-    </table>
-    
-    <h2>Amazon DynamoDBの使用方法</h2>
-    <p>DynamoDBは、AWS Management Console、AWS CLI、AWS SDKs、またはNoSQLワークベンチを使用して利用できます。</p>
-    
-    <h3>テーブルの作成と管理</h3>
-    <div class="example">
-        <h4>AWS CLIを使用したテーブルの作成</h4>
-        <pre><code>aws dynamodb create-table \
+    <p>各項目のサイズは最大400KBまでです。</p>
+</div>
+
+<h2>Amazon DynamoDBのキャパシティモード</h2>
+<p>DynamoDBには2つのキャパシティモードがあり、読み取りと書き込みのスループットの課金方法と管理方法が異なります：</p>
+
+<table>
+    <tr>
+        <th>キャパシティモード</th>
+        <th>説明</th>
+        <th>ユースケース</th>
+    </tr>
+    <tr>
+        <td>プロビジョンドモード</td>
+        <td>テーブルの読み取りと書き込みのキャパシティユニットを事前に指定。Auto Scalingを使用して自動的に調整可能</td>
+        <td>予測可能なトラフィックパターン、コスト管理が重要なアプリケーション</td>
+    </tr>
+    <tr>
+        <td>オンデマンドモード</td>
+        <td>使用した分だけ支払う従量課金制。キャパシティの計画が不要</td>
+        <td>予測不可能なトラフィックパターン、変動の激しいワークロード、新しいアプリケーション</td>
+    </tr>
+</table>
+
+<h2>Amazon DynamoDBの使用方法</h2>
+<p>DynamoDBは、AWS Management Console、AWS CLI、AWS SDKs、またはNoSQLワークベンチを使用して利用できます。</p>
+
+<h3>テーブルの作成と管理</h3>
+<div class="example">
+    <h4>AWS CLIを使用したテーブルの作成</h4>
+    <pre><code>aws dynamodb create-table \
     --table-name Users \
     --attribute-definitions \
         AttributeName=UserId,AttributeType=S \
@@ -120,9 +127,9 @@
         AttributeName=UserId,KeyType=HASH \
     --provisioned-throughput \
         ReadCapacityUnits=5,WriteCapacityUnits=5</code></pre>
-        
-        <h4>複合プライマリキーを持つテーブルの作成</h4>
-        <pre><code>aws dynamodb create-table \
+
+    <h4>複合プライマリキーを持つテーブルの作成</h4>
+    <pre><code>aws dynamodb create-table \
     --table-name UserPosts \
     --attribute-definitions \
         AttributeName=UserId,AttributeType=S \
@@ -132,9 +139,9 @@
         AttributeName=PostId,KeyType=RANGE \
     --provisioned-throughput \
         ReadCapacityUnits=5,WriteCapacityUnits=5</code></pre>
-        
-        <h4>グローバルセカンダリインデックスの追加</h4>
-        <pre><code>aws dynamodb update-table \
+
+    <h4>グローバルセカンダリインデックスの追加</h4>
+    <pre><code>aws dynamodb update-table \
     --table-name UserPosts \
     --attribute-definitions \
         AttributeName=PostType,AttributeType=S \
@@ -158,68 +165,68 @@
                 }
             }
         ]"</code></pre>
-    </div>
-    
-    <h3>データの操作</h3>
-    <div class="example">
-        <h4>項目の追加</h4>
-        <pre><code>aws dynamodb put-item \
+</div>
+
+<h3>データの操作</h3>
+<div class="example">
+    <h4>項目の追加</h4>
+    <pre><code>aws dynamodb put-item \
     --table-name Users \
     --item \
         '{"UserId": {"S": "user123"}, "Name": {"S": "John Doe"}, "Email": {"S": "john@example.com"}, "Age": {"N": "30"}}'</code></pre>
-        
-        <h4>項目の取得</h4>
-        <pre><code>aws dynamodb get-item \
+
+    <h4>項目の取得</h4>
+    <pre><code>aws dynamodb get-item \
     --table-name Users \
     --key '{"UserId": {"S": "user123"}}'</code></pre>
-        
-        <h4>項目の更新</h4>
-        <pre><code>aws dynamodb update-item \
+
+    <h4>項目の更新</h4>
+    <pre><code>aws dynamodb update-item \
     --table-name Users \
     --key '{"UserId": {"S": "user123"}}' \
     --update-expression "SET Age = :newage, UpdatedAt = :time" \
     --expression-attribute-values '{":newage": {"N": "31"}, ":time": {"S": "2023-01-15T00:00:00Z"}}' \
     --return-values ALL_NEW</code></pre>
-        
-        <h4>項目の削除</h4>
-        <pre><code>aws dynamodb delete-item \
+
+    <h4>項目の削除</h4>
+    <pre><code>aws dynamodb delete-item \
     --table-name Users \
     --key '{"UserId": {"S": "user123"}}'</code></pre>
-    </div>
-    
-    <h3>クエリとスキャン</h3>
-    <div class="example">
-        <h4>テーブルのクエリ</h4>
-        <pre><code>aws dynamodb query \
+</div>
+
+<h3>クエリとスキャン</h3>
+<div class="example">
+    <h4>テーブルのクエリ</h4>
+    <pre><code>aws dynamodb query \
     --table-name UserPosts \
     --key-condition-expression "UserId = :uid" \
     --expression-attribute-values '{":uid": {"S": "user123"}}'</code></pre>
-        
-        <h4>フィルター式を使用したクエリ</h4>
-        <pre><code>aws dynamodb query \
+
+    <h4>フィルター式を使用したクエリ</h4>
+    <pre><code>aws dynamodb query \
     --table-name UserPosts \
     --key-condition-expression "UserId = :uid" \
     --filter-expression "PostStatus = :status" \
     --expression-attribute-values '{":uid": {"S": "user123"}, ":status": {"S": "published"}}'</code></pre>
-        
-        <h4>インデックスのクエリ</h4>
-        <pre><code>aws dynamodb query \
+
+    <h4>インデックスのクエリ</h4>
+    <pre><code>aws dynamodb query \
     --table-name UserPosts \
     --index-name PostTypeIndex \
     --key-condition-expression "PostType = :type AND PostDate > :date" \
     --expression-attribute-values '{":type": {"S": "blog"}, ":date": {"S": "2023-01-01"}}'</code></pre>
-        
-        <h4>テーブルのスキャン</h4>
-        <pre><code>aws dynamodb scan \
+
+    <h4>テーブルのスキャン</h4>
+    <pre><code>aws dynamodb scan \
     --table-name Users \
     --filter-expression "Age > :age" \
     --expression-attribute-values '{":age": {"N": "30"}}'</code></pre>
-    </div>
-    
-    <h3>バッチ操作</h3>
-    <div class="example">
-        <h4>バッチ書き込み</h4>
-        <pre><code>aws dynamodb batch-write-item \
+</div>
+
+<h3>バッチ操作</h3>
+<div class="example">
+    <h4>バッチ書き込み</h4>
+    <pre><code>aws dynamodb batch-write-item \
     --request-items '{
         "Users": [
             {
@@ -244,9 +251,9 @@
             }
         ]
     }'</code></pre>
-        
-        <h4>バッチ取得</h4>
-        <pre><code>aws dynamodb batch-get-item \
+
+    <h4>バッチ取得</h4>
+    <pre><code>aws dynamodb batch-get-item \
     --request-items '{
         "Users": {
             "Keys": [
@@ -256,12 +263,12 @@
             ]
         }
     }'</code></pre>
-    </div>
-    
-    <h3>トランザクション操作</h3>
-    <div class="example">
-        <h4>トランザクション書き込み</h4>
-        <pre><code>aws dynamodb transact-write-items \
+</div>
+
+<h3>トランザクション操作</h3>
+<div class="example">
+    <h4>トランザクション書き込み</h4>
+    <pre><code>aws dynamodb transact-write-items \
     --transact-items '[
         {
             "Put": {
@@ -283,9 +290,9 @@
             }
         }
     ]'</code></pre>
-        
-        <h4>トランザクション取得</h4>
-        <pre><code>aws dynamodb transact-get-items \
+
+    <h4>トランザクション取得</h4>
+    <pre><code>aws dynamodb transact-get-items \
     --transact-items '[
         {
             "Get": {
@@ -300,21 +307,21 @@
             }
         }
     ]'</code></pre>
-    </div>
-    
-    <h2>Amazon DynamoDBのセキュリティ</h2>
-    <p>DynamoDBは、データを保護するための多層防御アプローチを提供します：</p>
-    
-    <h3>アクセス管理</h3>
-    <ul>
-        <li><strong>IAMポリシー：</strong> テーブルやオペレーションへのきめ細かなアクセス制御</li>
-        <li><strong>IAMロール：</strong> アプリケーションやサービスにDynamoDBへのアクセス権を付与</li>
-        <li><strong>VPCエンドポイント：</strong> プライベートVPC内からDynamoDBへの安全なアクセス</li>
-    </ul>
-    
-    <div class="example">
-        <h4>IAMポリシーの例</h4>
-        <pre><code>{
+</div>
+
+<h2>Amazon DynamoDBのセキュリティ</h2>
+<p>DynamoDBは、データを保護するための多層防御アプローチを提供します：</p>
+
+<h3>アクセス管理</h3>
+<ul>
+    <li><strong>IAMポリシー：</strong> テーブルやオペレーションへのきめ細かなアクセス制御</li>
+    <li><strong>IAMロール：</strong> アプリケーションやサービスにDynamoDBへのアクセス権を付与</li>
+    <li><strong>VPCエンドポイント：</strong> プライベートVPC内からDynamoDBへの安全なアクセス</li>
+</ul>
+
+<div class="example">
+    <h4>IAMポリシーの例</h4>
+    <pre><code>{
     "Version": "2012-10-17",
     "Statement": [
         {
@@ -332,17 +339,17 @@
         }
     ]
 }</code></pre>
-    </div>
-    
-    <h3>暗号化</h3>
-    <ul>
-        <li><strong>保存時の暗号化：</strong> AWS KMSを使用したテーブルデータの暗号化</li>
-        <li><strong>転送時の暗号化：</strong> HTTPS/TLSを使用した通信の暗号化</li>
-    </ul>
-    
-    <div class="example">
-        <h4>暗号化されたテーブルの作成</h4>
-        <pre><code>aws dynamodb create-table \
+</div>
+
+<h3>暗号化</h3>
+<ul>
+    <li><strong>保存時の暗号化：</strong> AWS KMSを使用したテーブルデータの暗号化</li>
+    <li><strong>転送時の暗号化：</strong> HTTPS/TLSを使用した通信の暗号化</li>
+</ul>
+
+<div class="example">
+    <h4>暗号化されたテーブルの作成</h4>
+    <pre><code>aws dynamodb create-table \
     --table-name EncryptedUsers \
     --attribute-definitions \
         AttributeName=UserId,AttributeType=S \
@@ -352,27 +359,29 @@
         ReadCapacityUnits=5,WriteCapacityUnits=5 \
     --sse-specification \
         Enabled=true,SSEType=KMS,KMSMasterKeyId=alias/aws/dynamodb</code></pre>
-    </div>
-    
-    <h2>Amazon DynamoDBの高度な機能</h2>
-    
-    <h3>DynamoDB Streams</h3>
-    <p>DynamoDB Streamsは、DynamoDBテーブルのデータ変更をリアルタイムでキャプチャし、これらの変更を時系列で保存します。これにより、イベント駆動型アーキテクチャの構築、データの同期、監査ログの作成などが可能になります。</p>
-    
-    <div class="example">
-        <h4>DynamoDB Streamsの有効化</h4>
-        <pre><code>aws dynamodb update-table \
+</div>
+
+<h2>Amazon DynamoDBの高度な機能</h2>
+
+<h3>DynamoDB Streams</h3>
+<p>DynamoDB
+    Streamsは、DynamoDBテーブルのデータ変更をリアルタイムでキャプチャし、これらの変更を時系列で保存します。これにより、イベント駆動型アーキテクチャの構築、データの同期、監査ログの作成などが可能になります。</p>
+
+<div class="example">
+    <h4>DynamoDB Streamsの有効化</h4>
+    <pre><code>aws dynamodb update-table \
     --table-name Users \
     --stream-specification \
         StreamEnabled=true,StreamViewType=NEW_AND_OLD_IMAGES</code></pre>
-    </div>
-    
-    <h3>グローバルテーブル</h3>
-    <p>DynamoDBグローバルテーブルは、複数のAWSリージョンにまたがるマルチリージョンのレプリケーションを提供します。これにより、グローバルに分散したユーザーに低レイテンシーのデータアクセスを提供し、リージョン障害に対する耐性を高めることができます。</p>
-    
-    <div class="example">
-        <h4>グローバルテーブルの作成</h4>
-        <pre><code># 最初のリージョンでテーブルを作成
+</div>
+
+<h3>グローバルテーブル</h3>
+<p>
+    DynamoDBグローバルテーブルは、複数のAWSリージョンにまたがるマルチリージョンのレプリケーションを提供します。これにより、グローバルに分散したユーザーに低レイテンシーのデータアクセスを提供し、リージョン障害に対する耐性を高めることができます。</p>
+
+<div class="example">
+    <h4>グローバルテーブルの作成</h4>
+    <pre><code># 最初のリージョンでテーブルを作成
 aws dynamodb create-table \
     --table-name GlobalUsers \
     --attribute-definitions \
@@ -390,233 +399,239 @@ aws dynamodb create-global-table \
         RegionName=us-east-1 \
         RegionName=us-west-2 \
         RegionName=eu-west-1</code></pre>
-    </div>
-    
-    <h3>Time to Live (TTL)</h3>
-    <p>TTLを使用すると、項目の有効期限を定義し、期限切れになった項目を自動的に削除できます。これは、セッションデータ、ログデータ、一時的なデータなどに役立ちます。</p>
-    
-    <div class="example">
-        <h4>TTLの有効化</h4>
-        <pre><code>aws dynamodb update-time-to-live \
+</div>
+
+<h3>Time to Live (TTL)</h3>
+<p>
+    TTLを使用すると、項目の有効期限を定義し、期限切れになった項目を自動的に削除できます。これは、セッションデータ、ログデータ、一時的なデータなどに役立ちます。</p>
+
+<div class="example">
+    <h4>TTLの有効化</h4>
+    <pre><code>aws dynamodb update-time-to-live \
     --table-name Sessions \
     --time-to-live-specification \
         Enabled=true,AttributeName=ExpirationTime</code></pre>
-    </div>
-    
-    <h3>DynamoDB Accelerator (DAX)</h3>
-    <p>DAXは、DynamoDB用のフルマネージドのインメモリキャッシュです。読み取り集約型のワークロードのパフォーマンスを最大10倍に向上させ、マイクロ秒単位のレイテンシーを実現します。</p>
-    
-    <h3>PartiQL</h3>
-    <p>PartiQLは、SQLと互換性のあるクエリ言語で、DynamoDBを含む複数のデータストアに対して一貫したクエリを実行できます。</p>
-    
-    <div class="example">
-        <h4>PartiQLクエリの実行</h4>
-        <pre><code>aws dynamodb execute-statement \
+</div>
+
+<h3>DynamoDB Accelerator (DAX)</h3>
+<p>
+    DAXは、DynamoDB用のフルマネージドのインメモリキャッシュです。読み取り集約型のワークロードのパフォーマンスを最大10倍に向上させ、マイクロ秒単位のレイテンシーを実現します。</p>
+
+<h3>PartiQL</h3>
+<p>PartiQLは、SQLと互換性のあるクエリ言語で、DynamoDBを含む複数のデータストアに対して一貫したクエリを実行できます。</p>
+
+<div class="example">
+    <h4>PartiQLクエリの実行</h4>
+    <pre><code>aws dynamodb execute-statement \
     --statement "SELECT * FROM Users WHERE UserId = 'user123'"</code></pre>
-    </div>
-    
-    <h2>Amazon DynamoDBのパフォーマンス最適化</h2>
-    <p>DynamoDBのパフォーマンスを最適化するためのベストプラクティス：</p>
-    
-    <ul>
-        <li><strong>キー設計：</strong>
-            <ul>
-                <li>ワークロードに適したパーティションキーを選択し、ホットパーティションを避ける</li>
-                <li>複合キー（パーティションキー + ソートキー）を使用して関連データをグループ化</li>
-                <li>ソートキーを使用して範囲クエリを効率化</li>
-            </ul>
-        </li>
-        <li><strong>セカンダリインデックス：</strong>
-            <ul>
-                <li>必要なクエリパターンをサポートするインデックスを作成</li>
-                <li>プロジェクションを最適化して、必要な属性のみを含める</li>
-                <li>インデックスの数を最小限に抑える</li>
-            </ul>
-        </li>
-        <li><strong>キャパシティ管理：</strong>
-            <ul>
-                <li>Auto Scalingを使用して需要に応じてキャパシティを調整</li>
-                <li>予測不可能なワークロードにはオンデマンドモードを使用</li>
-                <li>リザーブドキャパシティを購入して定常的なワークロードのコストを削減</li>
-            </ul>
-        </li>
-        <li><strong>アクセスパターン：</strong>
-            <ul>
-                <li>バッチ操作を使用して複数の項目を一度に処理</li>
-                <li>スキャン操作を最小限に抑え、代わりにクエリを使用</li>
-                <li>並列スキャンを使用して大規模なテーブルをスキャン</li>
-            </ul>
-        </li>
-    </ul>
-    
-    <div class="note">
-        <h3>効率的なパーティションキーの特性</h3>
-        <p>効果的なパーティションキーは以下の特性を持ちます：</p>
+</div>
+
+<h2>Amazon DynamoDBのパフォーマンス最適化</h2>
+<p>DynamoDBのパフォーマンスを最適化するためのベストプラクティス：</p>
+
+<ul>
+    <li><strong>キー設計：</strong>
         <ul>
-            <li>高いカーディナリティ（多数の異なる値）</li>
-            <li>均一な分布（特定の値に偏らない）</li>
-            <li>アプリケーションの主要なアクセスパターンをサポート</li>
+            <li>ワークロードに適したパーティションキーを選択し、ホットパーティションを避ける</li>
+            <li>複合キー（パーティションキー + ソートキー）を使用して関連データをグループ化</li>
+            <li>ソートキーを使用して範囲クエリを効率化</li>
         </ul>
-        <p>例えば、ユーザーIDは通常良いパーティションキーですが、性別や国などの低カーディナリティの属性は避けるべきです。</p>
-    </div>
-    
-    <h2>Amazon DynamoDBのコスト最適化</h2>
-    <p>DynamoDBのコストを最適化するための戦略：</p>
-    
+    </li>
+    <li><strong>セカンダリインデックス：</strong>
+        <ul>
+            <li>必要なクエリパターンをサポートするインデックスを作成</li>
+            <li>プロジェクションを最適化して、必要な属性のみを含める</li>
+            <li>インデックスの数を最小限に抑える</li>
+        </ul>
+    </li>
+    <li><strong>キャパシティ管理：</strong>
+        <ul>
+            <li>Auto Scalingを使用して需要に応じてキャパシティを調整</li>
+            <li>予測不可能なワークロードにはオンデマンドモードを使用</li>
+            <li>リザーブドキャパシティを購入して定常的なワークロードのコストを削減</li>
+        </ul>
+    </li>
+    <li><strong>アクセスパターン：</strong>
+        <ul>
+            <li>バッチ操作を使用して複数の項目を一度に処理</li>
+            <li>スキャン操作を最小限に抑え、代わりにクエリを使用</li>
+            <li>並列スキャンを使用して大規模なテーブルをスキャン</li>
+        </ul>
+    </li>
+</ul>
+
+<div class="note">
+    <h3>効率的なパーティションキーの特性</h3>
+    <p>効果的なパーティションキーは以下の特性を持ちます：</p>
     <ul>
-        <li><strong>キャパシティモードの選択：</strong>
-            <ul>
-                <li>予測可能なワークロードにはプロビジョンドモードを使用</li>
-                <li>変動の激しいワークロードにはオンデマンドモードを使用</li>
-                <li>リザーブドキャパシティを購入して長期的なコストを削減</li>
-            </ul>
-        </li>
-        <li><strong>データモデリング：</strong>
-            <ul>
-                <li>必要な属性のみを保存し、項目サイズを最小化</li>
-                <li>大きなオブジェクトはS3に保存し、DynamoDBには参照を保存</li>
-                <li>複数のテーブルに分散させるのではなく、単一テーブルデザインを検討</li>
-            </ul>
-        </li>
-        <li><strong>インデックス最適化：</strong>
-            <ul>
-                <li>必要なインデックスのみを作成</li>
-                <li>プロジェクションを最適化して、必要な属性のみを含める</li>
-                <li>使用されていないインデックスを削除</li>
-            </ul>
-        </li>
-        <li><strong>キャッシング：</strong>
-            <ul>
-                <li>DAXを使用して読み取りコストを削減</li>
-                <li>アプリケーションレベルのキャッシングを実装</li>
-            </ul>
-        </li>
+        <li>高いカーディナリティ（多数の異なる値）</li>
+        <li>均一な分布（特定の値に偏らない）</li>
+        <li>アプリケーションの主要なアクセスパターンをサポート</li>
     </ul>
-    
-    <h2>Amazon DynamoDBのユースケース</h2>
-    <p>DynamoDBは以下のようなユースケースに適しています：</p>
-    <ul>
-        <li><strong>モバイルアプリケーション：</strong> ユーザープロファイル、ゲーム状態、設定の保存</li>
-        <li><strong>ウェブアプリケーション：</strong> セッション管理、ユーザー設定、ショッピングカート</li>
-        <li><strong>ゲーム：</strong> プレイヤーデータ、リーダーボード、ゲーム状態</li>
-        <li><strong>IoT：</strong> デバイスデータの保存、センサーデータの収集</li>
-        <li><strong>リアルタイム分析：</strong> クリックストリーム分析、ログデータの処理</li>
-        <li><strong>マイクロサービス：</strong> サービス間のデータ共有、イベント駆動型アーキテクチャ</li>
-        <li><strong>コンテンツ管理：</strong> メタデータの保存、コンテンツカタログ</li>
-        <li><strong>時系列データ：</strong> イベントログ、監視データ、時系列メトリクス</li>
-    </ul>
-    
-    <h2>Amazon DynamoDBとの統合サービス</h2>
-    <p>DynamoDBは他のAWSサービスと統合して、より強力なソリューションを構築できます：</p>
-    
-    <table>
-        <tr>
-            <th>サービス</th>
-            <th>統合の利点</th>
-        </tr>
-        <tr>
-            <td>AWS Lambda</td>
-            <td>DynamoDB Streamsのイベントに応じてコードを実行、サーバーレスアプリケーションの構築</td>
-        </tr>
-        <tr>
-            <td>Amazon S3</td>
-            <td>大きなオブジェクトの保存、DynamoDBエクスポートの保存先</td>
-        </tr>
-        <tr>
-            <td>Amazon EMR</td>
-            <td>DynamoDBデータの大規模な分析処理</td>
-        </tr>
-        <tr>
-            <td>AWS Glue</td>
-            <td>DynamoDBデータのETL処理、データカタログ化</td>
-        </tr>
-        <tr>
-            <td>Amazon Kinesis</td>
-            <td>DynamoDB Streamsとの統合によるリアルタイムデータ処理</td>
-        </tr>
-        <tr>
-            <td>AWS AppSync</td>
-            <td>DynamoDBをバックエンドとするGraphQL APIの構築</td>
-        </tr>
-        <tr>
-            <td>Amazon Cognito</td>
-            <td>ユーザー認証と、DynamoDBへのきめ細かなアクセス制御</td>
-        </tr>
-    </table>
-    
-    <h3>Lambda関数との統合例</h3>
-    <div class="example">
-        <h4>DynamoDB Streamsをトリガーとするラムダ関数の設定</h4>
-        <pre><code>aws lambda create-event-source-mapping \
+    <p>例えば、ユーザーIDは通常良いパーティションキーですが、性別や国などの低カーディナリティの属性は避けるべきです。</p>
+</div>
+
+<h2>Amazon DynamoDBのコスト最適化</h2>
+<p>DynamoDBのコストを最適化するための戦略：</p>
+
+<ul>
+    <li><strong>キャパシティモードの選択：</strong>
+        <ul>
+            <li>予測可能なワークロードにはプロビジョンドモードを使用</li>
+            <li>変動の激しいワークロードにはオンデマンドモードを使用</li>
+            <li>リザーブドキャパシティを購入して長期的なコストを削減</li>
+        </ul>
+    </li>
+    <li><strong>データモデリング：</strong>
+        <ul>
+            <li>必要な属性のみを保存し、項目サイズを最小化</li>
+            <li>大きなオブジェクトはS3に保存し、DynamoDBには参照を保存</li>
+            <li>複数のテーブルに分散させるのではなく、単一テーブルデザインを検討</li>
+        </ul>
+    </li>
+    <li><strong>インデックス最適化：</strong>
+        <ul>
+            <li>必要なインデックスのみを作成</li>
+            <li>プロジェクションを最適化して、必要な属性のみを含める</li>
+            <li>使用されていないインデックスを削除</li>
+        </ul>
+    </li>
+    <li><strong>キャッシング：</strong>
+        <ul>
+            <li>DAXを使用して読み取りコストを削減</li>
+            <li>アプリケーションレベルのキャッシングを実装</li>
+        </ul>
+    </li>
+</ul>
+
+<h2>Amazon DynamoDBのユースケース</h2>
+<p>DynamoDBは以下のようなユースケースに適しています：</p>
+<ul>
+    <li><strong>モバイルアプリケーション：</strong> ユーザープロファイル、ゲーム状態、設定の保存</li>
+    <li><strong>ウェブアプリケーション：</strong> セッション管理、ユーザー設定、ショッピングカート</li>
+    <li><strong>ゲーム：</strong> プレイヤーデータ、リーダーボード、ゲーム状態</li>
+    <li><strong>IoT：</strong> デバイスデータの保存、センサーデータの収集</li>
+    <li><strong>リアルタイム分析：</strong> クリックストリーム分析、ログデータの処理</li>
+    <li><strong>マイクロサービス：</strong> サービス間のデータ共有、イベント駆動型アーキテクチャ</li>
+    <li><strong>コンテンツ管理：</strong> メタデータの保存、コンテンツカタログ</li>
+    <li><strong>時系列データ：</strong> イベントログ、監視データ、時系列メトリクス</li>
+</ul>
+
+<h2>Amazon DynamoDBとの統合サービス</h2>
+<p>DynamoDBは他のAWSサービスと統合して、より強力なソリューションを構築できます：</p>
+
+<table>
+    <tr>
+        <th>サービス</th>
+        <th>統合の利点</th>
+    </tr>
+    <tr>
+        <td>AWS Lambda</td>
+        <td>DynamoDB Streamsのイベントに応じてコードを実行、サーバーレスアプリケーションの構築</td>
+    </tr>
+    <tr>
+        <td>Amazon S3</td>
+        <td>大きなオブジェクトの保存、DynamoDBエクスポートの保存先</td>
+    </tr>
+    <tr>
+        <td>Amazon EMR</td>
+        <td>DynamoDBデータの大規模な分析処理</td>
+    </tr>
+    <tr>
+        <td>AWS Glue</td>
+        <td>DynamoDBデータのETL処理、データカタログ化</td>
+    </tr>
+    <tr>
+        <td>Amazon Kinesis</td>
+        <td>DynamoDB Streamsとの統合によるリアルタイムデータ処理</td>
+    </tr>
+    <tr>
+        <td>AWS AppSync</td>
+        <td>DynamoDBをバックエンドとするGraphQL APIの構築</td>
+    </tr>
+    <tr>
+        <td>Amazon Cognito</td>
+        <td>ユーザー認証と、DynamoDBへのきめ細かなアクセス制御</td>
+    </tr>
+</table>
+
+<h3>Lambda関数との統合例</h3>
+<div class="example">
+    <h4>DynamoDB Streamsをトリガーとするラムダ関数の設定</h4>
+    <pre><code>aws lambda create-event-source-mapping \
     --function-name ProcessUserUpdates \
     --event-source-arn arn:aws:dynamodb:us-east-1:123456789012:table/Users/stream/2023-01-15T00:00:00.000 \
     --batch-size 100 \
     --starting-position LATEST</code></pre>
-    </div>
-    
-    <h2>Amazon DynamoDBのベストプラクティス</h2>
-    <ul>
-        <li><strong>データモデリング：</strong>
-            <ul>
-                <li>アクセスパターンを先に特定し、それに基づいてデータモデルを設計</li>
-                <li>関連データを一緒に保存し、1回のクエリで取得できるようにする</li>
-                <li>複合ソートキーを使用して階層的なデータを表現</li>
-                <li>項目コレクションを使用して1対多の関係をモデル化</li>
-            </ul>
-        </li>
-        <li><strong>パフォーマンス：</strong>
-            <ul>
-                <li>ホットパーティションを避けるために、高カーディナリティのパーティションキーを使用</li>
-                <li>スキャン操作を避け、代わりにクエリを使用</li>
-                <li>プロジェクション式を使用して必要な属性のみを取得</li>
-                <li>大きなデータセットにはページ分割を使用</li>
-            </ul>
-        </li>
-        <li><strong>セキュリティ：</strong>
-            <ul>
-                <li>IAMポリシーを使用してきめ細かなアクセス制御を実装</li>
-                <li>保存時と転送時の暗号化を有効化</li>
-                <li>VPCエンドポイントを使用してプライベートネットワーク内からアクセス</li>
-                <li>CloudTrailを使用してAPIコールを監査</li>
-            </ul>
-        </li>
-        <li><strong>運用：</strong>
-            <ul>
-                <li>Auto Scalingを使用してキャパシティを自動的に調整</li>
-                <li>CloudWatchアラームを設定してスロットリングを監視</li>
-                <li>定期的にバックアップを作成</li>
-                <li>TTLを使用して古いデータを自動的に削除</li>
-            </ul>
-        </li>
-    </ul>
-    
-    <div class="note">
-        <h3>単一テーブルデザイン</h3>
-        <p>DynamoDBでは、複数のエンティティタイプを単一のテーブルに保存する「単一テーブルデザイン」が一般的です。このアプローチの利点：</p>
+</div>
+
+<h2>Amazon DynamoDBのベストプラクティス</h2>
+<ul>
+    <li><strong>データモデリング：</strong>
         <ul>
-            <li>関連データを1回のクエリで取得可能</li>
-            <li>トランザクションの範囲を単一のテーブルに限定できる</li>
-            <li>管理するテーブルの数が少なくなる</li>
-            <li>コストの最適化（テーブルごとの最小キャパシティユニット）</li>
+            <li>アクセスパターンを先に特定し、それに基づいてデータモデルを設計</li>
+            <li>関連データを一緒に保存し、1回のクエリで取得できるようにする</li>
+            <li>複合ソートキーを使用して階層的なデータを表現</li>
+            <li>項目コレクションを使用して1対多の関係をモデル化</li>
         </ul>
-        <p>このパターンを実装するには、通常、エンティティタイプを示すプレフィックスをパーティションキーやソートキーに含めます。</p>
-    </div>
-    
-    <h2>まとめ</h2>
-    <p>Amazon DynamoDBは、あらゆる規模で一貫した1桁ミリ秒のパフォーマンスを提供するフルマネージドのNoSQLデータベースサービスです。スケーラビリティ、高可用性、セキュリティを備え、様々なユースケースに対応します。</p>
-    
-    <p>Amazon DynamoDBの主な利点は以下の通りです：</p>
+    </li>
+    <li><strong>パフォーマンス：</strong>
+        <ul>
+            <li>ホットパーティションを避けるために、高カーディナリティのパーティションキーを使用</li>
+            <li>スキャン操作を避け、代わりにクエリを使用</li>
+            <li>プロジェクション式を使用して必要な属性のみを取得</li>
+            <li>大きなデータセットにはページ分割を使用</li>
+        </ul>
+    </li>
+    <li><strong>セキュリティ：</strong>
+        <ul>
+            <li>IAMポリシーを使用してきめ細かなアクセス制御を実装</li>
+            <li>保存時と転送時の暗号化を有効化</li>
+            <li>VPCエンドポイントを使用してプライベートネットワーク内からアクセス</li>
+            <li>CloudTrailを使用してAPIコールを監査</li>
+        </ul>
+    </li>
+    <li><strong>運用：</strong>
+        <ul>
+            <li>Auto Scalingを使用してキャパシティを自動的に調整</li>
+            <li>CloudWatchアラームを設定してスロットリングを監視</li>
+            <li>定期的にバックアップを作成</li>
+            <li>TTLを使用して古いデータを自動的に削除</li>
+        </ul>
+    </li>
+</ul>
+
+<div class="note">
+    <h3>単一テーブルデザイン</h3>
+    <p>
+        DynamoDBでは、複数のエンティティタイプを単一のテーブルに保存する「単一テーブルデザイン」が一般的です。このアプローチの利点：</p>
     <ul>
-        <li>サーバーレスアーキテクチャによる管理作業の軽減</li>
-        <li>自動スケーリングによる需要の変化への対応</li>
-        <li>一貫した低レイテンシーによる高性能アプリケーションの構築</li>
-        <li>グローバルテーブルによるグローバル分散アプリケーションのサポート</li>
-        <li>包括的なセキュリティ機能と暗号化オプション</li>
-        <li>トランザクションサポートによるデータの整合性の確保</li>
-        <li>DynamoDB Streamsによるイベント駆動型アーキテクチャの構築</li>
-        <li>DAXによる読み取りパフォーマンスの向上</li>
+        <li>関連データを1回のクエリで取得可能</li>
+        <li>トランザクションの範囲を単一のテーブルに限定できる</li>
+        <li>管理するテーブルの数が少なくなる</li>
+        <li>コストの最適化（テーブルごとの最小キャパシティユニット）</li>
     </ul>
-    
-    <p>DynamoDBを効果的に活用するには、アクセスパターンに基づいたデータモデリング、適切なパーティションキーの選択、セカンダリインデックスの最適化、キャパシティ管理の最適化が重要です。また、他のAWSサービスと組み合わせることで、より強力で柔軟なクラウドソリューションを構築することができます。</p>
+    <p>
+        このパターンを実装するには、通常、エンティティタイプを示すプレフィックスをパーティションキーやソートキーに含めます。</p>
+</div>
+
+<h2>まとめ</h2>
+<p>Amazon
+    DynamoDBは、あらゆる規模で一貫した1桁ミリ秒のパフォーマンスを提供するフルマネージドのNoSQLデータベースサービスです。スケーラビリティ、高可用性、セキュリティを備え、様々なユースケースに対応します。</p>
+
+<p>Amazon DynamoDBの主な利点は以下の通りです：</p>
+<ul>
+    <li>サーバーレスアーキテクチャによる管理作業の軽減</li>
+    <li>自動スケーリングによる需要の変化への対応</li>
+    <li>一貫した低レイテンシーによる高性能アプリケーションの構築</li>
+    <li>グローバルテーブルによるグローバル分散アプリケーションのサポート</li>
+    <li>包括的なセキュリティ機能と暗号化オプション</li>
+    <li>トランザクションサポートによるデータの整合性の確保</li>
+    <li>DynamoDB Streamsによるイベント駆動型アーキテクチャの構築</li>
+    <li>DAXによる読み取りパフォーマンスの向上</li>
+</ul>
+
+<p>
+    DynamoDBを効果的に活用するには、アクセスパターンに基づいたデータモデリング、適切なパーティションキーの選択、セカンダリインデックスの最適化、キャパシティ管理の最適化が重要です。また、他のAWSサービスと組み合わせることで、より強力で柔軟なクラウドソリューションを構築することができます。</p>
 </body>
 </html>

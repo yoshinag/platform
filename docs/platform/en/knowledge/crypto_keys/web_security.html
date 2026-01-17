@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Web Security: HTTPS and SSL/TLS Certificates</title>
@@ -58,19 +62,24 @@
     <section id="introduction" class="crypto-section">
         <h2>Introduction</h2>
         <p>
-            In modern society, where the internet has become indispensable for daily life and business, the importance of web security is ever-increasing.
-            In particular, HTTPS communication and SSL/TLS certificates have become fundamental technologies for achieving secure information exchange on the web.
+            In modern society, where the internet has become indispensable for daily life and business, the importance
+            of web security is ever-increasing.
+            In particular, HTTPS communication and SSL/TLS certificates have become fundamental technologies for
+            achieving secure information exchange on the web.
         </p>
         <p>
-            This page provides a detailed explanation of how HTTPS communication works and the role of SSL/TLS certificates.
-            You will be able to understand how these technologies protect web communications and ensure user privacy and data integrity.
+            This page provides a detailed explanation of how HTTPS communication works and the role of SSL/TLS
+            certificates.
+            You will be able to understand how these technologies protect web communications and ensure user privacy and
+            data integrity.
         </p>
     </section>
 
     <section id="http-basics" class="crypto-section">
         <h2>HTTP Basics</h2>
         <p>
-            HTTP (Hypertext Transfer Protocol) is the fundamental protocol for transferring data between web browsers and web servers.
+            HTTP (Hypertext Transfer Protocol) is the fundamental protocol for transferring data between web browsers
+            and web servers.
             HTTP was developed by Tim Berners-Lee in 1989 and is the foundation of the World Wide Web.
         </p>
         <p>
@@ -86,15 +95,24 @@
         <section id="http-vulnerabilities" class="crypto-section">
             <h3>HTTP Vulnerabilities</h3>
             <p>
-                HTTP was not originally designed with secure data transfer in mind. Therefore, it has the following security vulnerabilities:
+                HTTP was not originally designed with secure data transfer in mind. Therefore, it has the following
+                security vulnerabilities:
             </p>
             <ul>
-                <li><strong>Plaintext Communication</strong>: In HTTP, all data is sent in plaintext without encryption. This allows a third party on the communication path to intercept and read the data (eavesdropping attack).</li>
-                <li><strong>Lack of Integrity</strong>: There is no mechanism to verify whether the data has been tampered with, making Man-in-the-Middle attacks possible.</li>
-                <li><strong>Lack of Authentication</strong>: There is no mechanism to confirm that the communication partner is indeed the intended party.</li>
+                <li><strong>Plaintext Communication</strong>: In HTTP, all data is sent in plaintext without encryption.
+                    This allows a third party on the communication path to intercept and read the data (eavesdropping
+                    attack).
+                </li>
+                <li><strong>Lack of Integrity</strong>: There is no mechanism to verify whether the data has been
+                    tampered with, making Man-in-the-Middle attacks possible.
+                </li>
+                <li><strong>Lack of Authentication</strong>: There is no mechanism to confirm that the communication
+                    partner is indeed the intended party.
+                </li>
             </ul>
             <p>
-                These vulnerabilities pose a significant risk, especially when handling sensitive information (passwords, credit card information, personal data, etc.).
+                These vulnerabilities pose a significant risk, especially when handling sensitive information
+                (passwords, credit card information, personal data, etc.).
                 HTTPS was developed to solve these problems.
             </p>
         </section>
@@ -106,12 +124,15 @@
         <section id="https-intro" class="crypto-section">
             <h3>What is HTTPS?</h3>
             <p>
-                HTTPS (HTTP Secure) is a protocol that adds an encryption layer using TLS (Transport Layer Security) or its predecessor, SSL (Secure Sockets Layer), to HTTP.
-                HTTPS provides data confidentiality, integrity, and authentication by encrypting the communication between a web browser and a web server.
+                HTTPS (HTTP Secure) is a protocol that adds an encryption layer using TLS (Transport Layer Security) or
+                its predecessor, SSL (Secure Sockets Layer), to HTTP.
+                HTTPS provides data confidentiality, integrity, and authentication by encrypting the communication
+                between a web browser and a web server.
             </p>
             <p>
                 HTTPS typically uses TCP port 443, and the URL begins with "https://".
-                In modern web browsers, when you access a website protected by HTTPS, a lock icon is displayed in the address bar.
+                In modern web browsers, when you access a website protected by HTTPS, a lock icon is displayed in the
+                address bar.
             </p>
         </section>
 
@@ -121,9 +142,16 @@
                 HTTPS achieves secure communication by combining the following technologies:
             </p>
             <ol>
-                <li><strong>Encryption</strong>: It encrypts all data between the client and server using the TLS/SSL protocol. This prevents third parties from reading the content even if they intercept the data on the communication path.</li>
-                <li><strong>Data Integrity</strong>: It uses a Message Authentication Code (MAC) to verify that the data has not been tampered with during transit.</li>
-                <li><strong>Authentication</strong>: It uses a digital certificate to verify that the server you are connecting to is authentic. This protects users from attacks such as phishing.</li>
+                <li><strong>Encryption</strong>: It encrypts all data between the client and server using the TLS/SSL
+                    protocol. This prevents third parties from reading the content even if they intercept the data on
+                    the communication path.
+                </li>
+                <li><strong>Data Integrity</strong>: It uses a Message Authentication Code (MAC) to verify that the data
+                    has not been tampered with during transit.
+                </li>
+                <li><strong>Authentication</strong>: It uses a digital certificate to verify that the server you are
+                    connecting to is authentic. This protects users from attacks such as phishing.
+                </li>
             </ol>
             <p>
                 HTTPS communication proceeds in the following steps:
@@ -143,12 +171,23 @@
                 Using HTTPS provides the following benefits:
             </p>
             <ul>
-                <li><strong>Data Confidentiality</strong>: Since the communication content is encrypted, it prevents eavesdropping by third parties.</li>
-                <li><strong>Data Integrity</strong>: You can verify that the data has not been tampered with during transit.</li>
-                <li><strong>Authentication</strong>: You can verify that the server you are connecting to is authentic.</li>
-                <li><strong>SEO Advantage</strong>: Search engines like Google tend to prioritize websites that use HTTPS in their search results.</li>
-                <li><strong>User Trust</strong>: As a security-conscious website, you can more easily gain the trust of users.</li>
-                <li><strong>Use of New Features</strong>: Many modern web technologies, such as Service Workers and HTTP/2, are only available over HTTPS.</li>
+                <li><strong>Data Confidentiality</strong>: Since the communication content is encrypted, it prevents
+                    eavesdropping by third parties.
+                </li>
+                <li><strong>Data Integrity</strong>: You can verify that the data has not been tampered with during
+                    transit.
+                </li>
+                <li><strong>Authentication</strong>: You can verify that the server you are connecting to is authentic.
+                </li>
+                <li><strong>SEO Advantage</strong>: Search engines like Google tend to prioritize websites that use
+                    HTTPS in their search results.
+                </li>
+                <li><strong>User Trust</strong>: As a security-conscious website, you can more easily gain the trust of
+                    users.
+                </li>
+                <li><strong>Use of New Features</strong>: Many modern web technologies, such as Service Workers and
+                    HTTP/2, are only available over HTTPS.
+                </li>
             </ul>
         </section>
     </section>
@@ -159,7 +198,8 @@
         <section id="ssl-tls-intro" class="crypto-section">
             <h3>What are SSL/TLS?</h3>
             <p>
-                SSL (Secure Sockets Layer) and TLS (Transport Layer Security) are cryptographic protocols for achieving secure communication over the internet.
+                SSL (Secure Sockets Layer) and TLS (Transport Layer Security) are cryptographic protocols for achieving
+                secure communication over the internet.
                 TLS is the successor to SSL, and today the term SSL is often used as a general term that includes TLS.
             </p>
             <p>
@@ -168,14 +208,19 @@
             <ul>
                 <li>SSL 1.0: Developed by Netscape in 1994 but was never publicly released.</li>
                 <li>SSL 2.0: Released in 1995 but security flaws were discovered.</li>
-                <li>SSL 3.0: Released in 1996, but vulnerabilities like the POODLE attack were discovered, and it is now deprecated.</li>
+                <li>SSL 3.0: Released in 1996, but vulnerabilities like the POODLE attack were discovered, and it is now
+                    deprecated.
+                </li>
                 <li>TLS 1.0: Standardized by the IETF in 1999 (an improvement on SSL 3.0).</li>
                 <li>TLS 1.1: Released in 2006.</li>
                 <li>TLS 1.2: Released in 2008 and is still widely used today.</li>
-                <li>TLS 1.3: The latest version, released in 2018, with significant improvements in security and performance.</li>
+                <li>TLS 1.3: The latest version, released in 2018, with significant improvements in security and
+                    performance.
+                </li>
             </ul>
             <p>
-                Currently, SSL 2.0, SSL 3.0, TLS 1.0, and TLS 1.1 are considered insecure, and support for them has been discontinued in many browsers and servers.
+                Currently, SSL 2.0, SSL 3.0, TLS 1.0, and TLS 1.1 are considered insecure, and support for them has been
+                discontinued in many browsers and servers.
                 To ensure security, it is recommended to use TLS 1.2 or higher.
             </p>
         </section>
@@ -204,9 +249,15 @@
                 <li><strong>Extended Validation (EV) Certificate</strong>:
                     <ul>
                         <li>A certificate issued after the most stringent validation process.</li>
-                        <li>It verifies in detail the legal existence of the organization, its physical location, domain ownership, etc.</li>
-                        <li>Some browsers display the organization's name in green in the address bar (the display method varies by browser).</li>
-                        <li>Suitable for websites requiring high security, such as banks, e-commerce sites, and government agencies.</li>
+                        <li>It verifies in detail the legal existence of the organization, its physical location, domain
+                            ownership, etc.
+                        </li>
+                        <li>Some browsers display the organization's name in green in the address bar (the display
+                            method varies by browser).
+                        </li>
+                        <li>Suitable for websites requiring high security, such as banks, e-commerce sites, and
+                            government agencies.
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -214,7 +265,9 @@
             <h4>Classification by Use</h4>
             <ul>
                 <li><strong>Single Domain Certificate</strong>: Covers only one domain (e.g., example.com).</li>
-                <li><strong>Wildcard Certificate</strong>: Covers a main domain and all its subdomains (e.g., *.example.com).</li>
+                <li><strong>Wildcard Certificate</strong>: Covers a main domain and all its subdomains (e.g.,
+                    *.example.com).
+                </li>
                 <li><strong>Multi-Domain Certificate (SAN Certificate)</strong>: Covers multiple different domains.</li>
             </ul>
         </section>
@@ -225,11 +278,21 @@
                 When a browser validates a website's SSL/TLS certificate, the following process takes place:
             </p>
             <ol>
-                <li><strong>Check Certificate Expiration</strong>: Verifies that the certificate is within its validity period.</li>
-                <li><strong>Check Issuer</strong>: Verifies that the certificate was issued by a trusted Certificate Authority (CA).</li>
-                <li><strong>Check Certificate Revocation</strong>: Uses a Certificate Revocation List (CRL) or Online Certificate Status Protocol (OCSP) to check that the certificate has not been revoked.</li>
-                <li><strong>Check Domain Name</strong>: Verifies that the domain name listed in the certificate matches the domain name of the website being accessed.</li>
-                <li><strong>Validate Certificate Chain</strong>: Verifies that the certificate chain (chain of trust) from the root certificate to the target certificate is correct.</li>
+                <li><strong>Check Certificate Expiration</strong>: Verifies that the certificate is within its validity
+                    period.
+                </li>
+                <li><strong>Check Issuer</strong>: Verifies that the certificate was issued by a trusted Certificate
+                    Authority (CA).
+                </li>
+                <li><strong>Check Certificate Revocation</strong>: Uses a Certificate Revocation List (CRL) or Online
+                    Certificate Status Protocol (OCSP) to check that the certificate has not been revoked.
+                </li>
+                <li><strong>Check Domain Name</strong>: Verifies that the domain name listed in the certificate matches
+                    the domain name of the website being accessed.
+                </li>
+                <li><strong>Validate Certificate Chain</strong>: Verifies that the certificate chain (chain of trust)
+                    from the root certificate to the target certificate is correct.
+                </li>
             </ol>
             <p>
                 If any of these validation processes fail, the browser will display a warning to alert the user.
@@ -243,14 +306,23 @@
                 The main roles of a CA are as follows:
             </p>
             <ul>
-                <li><strong>Certificate Issuance</strong>: Verifies the identity of the applicant and issues a digital certificate.</li>
-                <li><strong>Certificate Management</strong>: Manages a database of issued certificates and revokes certificates when necessary.</li>
-                <li><strong>Publication of Certificate Revocation Lists (CRLs)</strong>: Publishes a list of revoked certificates so that clients like browsers can check the validity of a certificate.</li>
-                <li><strong>Root Certificate Management</strong>: Securely manages the root certificate, which is the starting point of trust.</li>
+                <li><strong>Certificate Issuance</strong>: Verifies the identity of the applicant and issues a digital
+                    certificate.
+                </li>
+                <li><strong>Certificate Management</strong>: Manages a database of issued certificates and revokes
+                    certificates when necessary.
+                </li>
+                <li><strong>Publication of Certificate Revocation Lists (CRLs)</strong>: Publishes a list of revoked
+                    certificates so that clients like browsers can check the validity of a certificate.
+                </li>
+                <li><strong>Root Certificate Management</strong>: Securely manages the root certificate, which is the
+                    starting point of trust.
+                </li>
             </ul>
             <p>
                 Major Certificate Authorities include DigiCert, Comodo (Sectigo), GlobalSign, and Let's Encrypt.
-                Let's Encrypt, in particular, has greatly contributed to the spread of HTTPS by providing a free and automated certificate issuance service.
+                Let's Encrypt, in particular, has greatly contributed to the spread of HTTPS by providing a free and
+                automated certificate issuance service.
             </p>
         </section>
     </section>
@@ -258,24 +330,41 @@
     <section id="tls-handshake" class="crypto-section">
         <h2>TLS Handshake</h2>
         <p>
-            The TLS handshake is the process for establishing a secure communication channel between a client and a server.
-            In this process, an agreement on the encryption algorithms to be used, authentication of the server, and establishment of a shared secret key are performed.
+            The TLS handshake is the process for establishing a secure communication channel between a client and a
+            server.
+            In this process, an agreement on the encryption algorithms to be used, authentication of the server, and
+            establishment of a shared secret key are performed.
         </p>
         <p>
             TLS 1.2 Handshake Process (simplified):
         </p>
         <ol>
-            <li><strong>ClientHello</strong>: The client initiates a connection to the server and sends its supported cipher suites (combinations of encryption algorithms), TLS version, random data, etc.</li>
-            <li><strong>ServerHello</strong>: The server responds to the client's request, selects the cipher suite and TLS version to be used, and sends its random data.</li>
+            <li><strong>ClientHello</strong>: The client initiates a connection to the server and sends its supported
+                cipher suites (combinations of encryption algorithms), TLS version, random data, etc.
+            </li>
+            <li><strong>ServerHello</strong>: The server responds to the client's request, selects the cipher suite and
+                TLS version to be used, and sends its random data.
+            </li>
             <li><strong>Certificate</strong>: The server sends its SSL/TLS certificate to the client.</li>
-            <li><strong>ServerKeyExchange</strong>: If necessary, the server sends additional information required for the key exchange.</li>
-            <li><strong>ServerHelloDone</strong>: The server indicates that it has completed the first phase of the handshake.</li>
-            <li><strong>ClientKeyExchange</strong>: The client sends key exchange information. This includes the pre-master secret encrypted with the server's public key.</li>
-            <li><strong>ChangeCipherSpec</strong>: Both the client and server notify that they will use encryption for subsequent communication.</li>
-            <li><strong>Finished</strong>: Both the client and server send a message confirming that the handshake was successful.</li>
+            <li><strong>ServerKeyExchange</strong>: If necessary, the server sends additional information required for
+                the key exchange.
+            </li>
+            <li><strong>ServerHelloDone</strong>: The server indicates that it has completed the first phase of the
+                handshake.
+            </li>
+            <li><strong>ClientKeyExchange</strong>: The client sends key exchange information. This includes the
+                pre-master secret encrypted with the server's public key.
+            </li>
+            <li><strong>ChangeCipherSpec</strong>: Both the client and server notify that they will use encryption for
+                subsequent communication.
+            </li>
+            <li><strong>Finished</strong>: Both the client and server send a message confirming that the handshake was
+                successful.
+            </li>
         </ol>
         <p>
-            In TLS 1.3, the handshake process has been simplified and can now be completed in one round-trip (1-RTT) or, in some cases, zero round-trips (0-RTT).
+            In TLS 1.3, the handshake process has been simplified and can now be completed in one round-trip (1-RTT) or,
+            in some cases, zero round-trips (0-RTT).
             This reduces connection establishment latency and improves website loading speed.
         </p>
     </section>
@@ -283,7 +372,8 @@
     <section id="dev-environment" class="crypto-section">
         <h2>HTTPS in Development Environments</h2>
         <p>
-            Using HTTPS in a development environment is important for testing applications under the same conditions as the production environment.
+            Using HTTPS in a development environment is important for testing applications under the same conditions as
+            the production environment.
             In particular, features like secure cookies, CORS, and HTTP/2 only work correctly over HTTPS.
             Here, we introduce various methods for setting up HTTPS in local development or testing environments.
         </p>
@@ -292,7 +382,8 @@
             <h3>Self-Signed Certificates</h3>
             <p>
                 A self-signed certificate is a certificate signed by yourself, not by a Certificate Authority (CA).
-                They are widely used in development and testing environments because they can be created easily and at no cost.
+                They are widely used in development and testing environments because they can be created easily and at
+                no cost.
                 However, browsers will display a warning for certificates not signed by a trusted CA.
             </p>
             <h4>How to create a self-signed certificate using OpenSSL</h4>
@@ -319,8 +410,10 @@ openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
             </ul>
             <p>
                 The generated certificate and private key can be used in your web server configuration.
-                However, because certificates created this way are not trusted by browsers, a warning will be displayed upon access.
-                It is recommended to use them only in development environments and to obtain a certificate from a trusted CA for production environments.
+                However, because certificates created this way are not trusted by browsers, a warning will be displayed
+                upon access.
+                It is recommended to use them only in development environments and to obtain a certificate from a
+                trusted CA for production environments.
             </p>
         </section>
 
@@ -328,7 +421,8 @@ openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
             <h3>Using mkcert</h3>
             <p>
                 mkcert is a tool for easily creating trusted certificates in a local development environment.
-                mkcert automatically installs a root certificate in the local trust store, allowing you to use HTTPS without browser warnings.
+                mkcert automatically installs a root certificate in the local trust store, allowing you to use HTTPS
+                without browser warnings.
             </p>
             <h4>How to install mkcert</h4>
             <p>
@@ -348,7 +442,8 @@ choco install mkcert
 brew install mkcert
             </pre>
             <p>
-                Alternatively, you can download it directly from <a href="https://github.com/FiloSottile/mkcert/releases" target="_blank">GitHub Releases</a>.
+                Alternatively, you can download it directly from <a
+                    href="https://github.com/FiloSottile/mkcert/releases" target="_blank">GitHub Releases</a>.
             </p>
             <h4>How to use mkcert</h4>
             <p>
@@ -360,19 +455,23 @@ brew install mkcert
                 </li>
                 <li>Create a certificate:
                     <pre>mkcert localhost 127.0.0.1 ::1 example.test *.example.test</pre>
-                    This command creates a valid certificate for the specified domains (localhost, 127.0.0.1, ::1, example.test, *.example.test).
+                    This command creates a valid certificate for the specified domains (localhost, 127.0.0.1, ::1,
+                    example.test, *.example.test).
                 </li>
             </ol>
             <p>
-                The created certificate and private key can be used in the configuration of your web server or application.
-                Certificates created with mkcert are trusted by the browser on the local machine, so you can use HTTPS without warnings.
+                The created certificate and private key can be used in the configuration of your web server or
+                application.
+                Certificates created with mkcert are trusted by the browser on the local machine, so you can use HTTPS
+                without warnings.
             </p>
         </section>
 
         <section id="dev-tools" class="crypto-section">
             <h3>Features of Development Tools and Frameworks</h3>
             <p>
-                Many development tools and frameworks have built-in features to easily set up HTTPS in a local development environment.
+                Many development tools and frameworks have built-in features to easily set up HTTPS in a local
+                development environment.
                 Below, we introduce how to configure HTTPS in major tools and frameworks.
             </p>
             <h4>Node.js (Express)</h4>
@@ -396,7 +495,8 @@ https.createServer(options, app).listen(443, () => {
             </pre>
             <h4>React (Create React App)</h4>
             <p>
-                In Create React App, simply setting <code>HTTPS=true</code> in the <code>.env</code> file will make the development server use HTTPS:
+                In Create React App, simply setting <code>HTTPS=true</code> in the <code>.env</code> file will make the
+                development server use HTTPS:
             </p>
             <pre>
 # .env file
@@ -452,7 +552,8 @@ module.exports = {
             </pre>
             <h4>Django</h4>
             <p>
-                In Django, you can specify the <code>--cert-file</code> and <code>--key-file</code> options with the <code>runserver</code> command:
+                In Django, you can specify the <code>--cert-file</code> and <code>--key-file</code> options with the
+                <code>runserver</code> command:
             </p>
             <pre>
 python manage.py runserver --cert-file path/to/cert.pem --key-file path/to/key.pem
@@ -473,14 +574,17 @@ ssl_bind '0.0.0.0', '3000', {
         <section id="lets-encrypt" class="crypto-section">
             <h3>Using Let's Encrypt</h3>
             <p>
-                Let's Encrypt is a Certificate Authority that provides a free and automated certificate issuance service.
-                Even in development and staging environments, if you have a server with an actual domain name, you can use Let's Encrypt to obtain a valid certificate.
+                Let's Encrypt is a Certificate Authority that provides a free and automated certificate issuance
+                service.
+                Even in development and staging environments, if you have a server with an actual domain name, you can
+                use Let's Encrypt to obtain a valid certificate.
             </p>
             <h4>Let's Encrypt's Staging Environment</h4>
             <p>
                 Let's Encrypt has a staging environment separate from the production environment.
                 The staging environment has more lenient rate limits, making it suitable for testing and development.
-                However, certificates issued by the staging environment are not trusted by browsers, so a warning will be displayed.
+                However, certificates issued by the staging environment are not trusted by browsers, so a warning will
+                be displayed.
             </p>
             <h4>Obtaining a Let's Encrypt certificate using Certbot</h4>
             <p>
@@ -527,7 +631,8 @@ sudo certbot --staging --nginx -d example.com -d www.example.com
             </pre>
             <h4>DNS Validation in Development Environments</h4>
             <p>
-                For a local development environment that is not accessible from the internet, you can obtain a Let's Encrypt certificate using DNS validation.
+                For a local development environment that is not accessible from the internet, you can obtain a Let's
+                Encrypt certificate using DNS validation.
                 This method proves domain ownership by adding a DNS record.
             </p>
             <pre>
@@ -565,13 +670,27 @@ echo "0 0,12 * * * root python -c 'import random; import time; time.sleep(random
             Here are the best practices for strengthening the security of your website or web application:
         </p>
         <ul>
-            <li><strong>Comprehensive adoption of HTTPS</strong>: Use HTTPS across the entire website and automatically redirect HTTP connections to HTTPS.</li>
-            <li><strong>Use of the latest TLS versions</strong>: Use TLS 1.2 or higher and disable older versions (SSL 2.0, SSL 3.0, TLS 1.0, TLS 1.1).</li>
-            <li><strong>Use of strong cipher suites</strong>: Disable insecure cryptographic algorithms and prioritize strong cipher suites.</li>
-            <li><strong>Implementation of HSTS (HTTP Strict Transport Security)</strong>: Instruct browsers to always access the site via HTTPS.</li>
-            <li><strong>Proper certificate management</strong>: Monitor certificate expiration dates and renew them in a timely manner.</li>
-            <li><strong>Configuration of security headers</strong>: Set security headers such as Content-Security-Policy, X-XSS-Protection, and X-Frame-Options.</li>
-            <li><strong>Regular security audits</strong>: Regularly assess the security of your website to identify and fix vulnerabilities.</li>
+            <li><strong>Comprehensive adoption of HTTPS</strong>: Use HTTPS across the entire website and automatically
+                redirect HTTP connections to HTTPS.
+            </li>
+            <li><strong>Use of the latest TLS versions</strong>: Use TLS 1.2 or higher and disable older versions (SSL
+                2.0, SSL 3.0, TLS 1.0, TLS 1.1).
+            </li>
+            <li><strong>Use of strong cipher suites</strong>: Disable insecure cryptographic algorithms and prioritize
+                strong cipher suites.
+            </li>
+            <li><strong>Implementation of HSTS (HTTP Strict Transport Security)</strong>: Instruct browsers to always
+                access the site via HTTPS.
+            </li>
+            <li><strong>Proper certificate management</strong>: Monitor certificate expiration dates and renew them in a
+                timely manner.
+            </li>
+            <li><strong>Configuration of security headers</strong>: Set security headers such as
+                Content-Security-Policy, X-XSS-Protection, and X-Frame-Options.
+            </li>
+            <li><strong>Regular security audits</strong>: Regularly assess the security of your website to identify and
+                fix vulnerabilities.
+            </li>
         </ul>
     </section>
 
@@ -579,23 +698,44 @@ echo "0 0,12 * * * root python -c 'import random; import time; time.sleep(random
         <h2>Common Issues and Solutions</h2>
         <h3>Certificate Issues</h3>
         <ul>
-            <li><strong>Certificate Mismatch Error</strong>: Occurs when the domain name in the certificate does not match the domain name being accessed. You need to reissue the certificate with the correct domain name.</li>
-            <li><strong>Self-Signed Certificate Warning</strong>: When using a certificate not issued by a trusted CA, the browser will display a warning. It is recommended to obtain a certificate from a trusted CA for anything other than a development environment.</li>
-            <li><strong>Expired Certificate</strong>: When a certificate's validity period expires, the browser will display a warning. It is important to renew certificates regularly.</li>
-            <li><strong>Missing Intermediate Certificate</strong>: If the certificate chain is incomplete, a certificate error may occur in some browsers. You need to install the complete certificate chain on the server.</li>
+            <li><strong>Certificate Mismatch Error</strong>: Occurs when the domain name in the certificate does not
+                match the domain name being accessed. You need to reissue the certificate with the correct domain name.
+            </li>
+            <li><strong>Self-Signed Certificate Warning</strong>: When using a certificate not issued by a trusted CA,
+                the browser will display a warning. It is recommended to obtain a certificate from a trusted CA for
+                anything other than a development environment.
+            </li>
+            <li><strong>Expired Certificate</strong>: When a certificate's validity period expires, the browser will
+                display a warning. It is important to renew certificates regularly.
+            </li>
+            <li><strong>Missing Intermediate Certificate</strong>: If the certificate chain is incomplete, a certificate
+                error may occur in some browsers. You need to install the complete certificate chain on the server.
+            </li>
         </ul>
 
         <h3>Configuration Issues</h3>
         <ul>
-            <li><strong>Mixed Content</strong>: When loading HTTP resources (images, scripts, stylesheets, etc.) on an HTTPS page, the browser may display a warning or block the content. Make sure to serve all resources over HTTPS.</li>
-            <li><strong>Old TLS Versions</strong>: Old TLS versions have known vulnerabilities. Update your server configuration to use only TLS 1.2 or higher.</li>
-            <li><strong>Weak Cipher Suites</strong>: Using insecure cryptographic algorithms can put your communications at risk. Enable only strong cipher suites.</li>
+            <li><strong>Mixed Content</strong>: When loading HTTP resources (images, scripts, stylesheets, etc.) on an
+                HTTPS page, the browser may display a warning or block the content. Make sure to serve all resources
+                over HTTPS.
+            </li>
+            <li><strong>Old TLS Versions</strong>: Old TLS versions have known vulnerabilities. Update your server
+                configuration to use only TLS 1.2 or higher.
+            </li>
+            <li><strong>Weak Cipher Suites</strong>: Using insecure cryptographic algorithms can put your communications
+                at risk. Enable only strong cipher suites.
+            </li>
         </ul>
 
         <h3>Performance Issues</h3>
         <ul>
-            <li><strong>TLS Handshake Latency</strong>: The TLS handshake can affect website loading times. You can improve performance by using features like TLS 1.3, OCSP stapling, and session resumption.</li>
-            <li><strong>Certificate Size</strong>: If the certificate chain is long, the amount of data transferred during the initial connection increases. Optimize the certificate chain to remove unnecessary intermediate certificates.</li>
+            <li><strong>TLS Handshake Latency</strong>: The TLS handshake can affect website loading times. You can
+                improve performance by using features like TLS 1.3, OCSP stapling, and session resumption.
+            </li>
+            <li><strong>Certificate Size</strong>: If the certificate chain is long, the amount of data transferred
+                during the initial connection increases. Optimize the certificate chain to remove unnecessary
+                intermediate certificates.
+            </li>
         </ul>
     </section>
 

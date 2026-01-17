@@ -1,328 +1,340 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <title>AWS CLI</title>
     <link rel="stylesheet" href="../../../../css/knowledge.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../../../platform/js/common/analytics.js"></script>
+
 <body class="ja-knowledge">
-    <div style="margin-bottom: 20px;">
-        <a href="../aws.html">AWSに戻る</a>
-    </div>
-    <h1>AWS CLI (Command Line Interface)</h1>
-    
-    <h2>AWS CLIとは</h2>
-    <p>AWS CLI（Command Line Interface）は、コマンドラインシェルでコマンドを使用してAWSサービスとやり取りするためのオープンソースツールです。最小限の設定で、コマンドラインからAWSサービスを制御したり、スクリプトを通じてAWSリソースを自動化したりすることができます。AWS CLIを使用すると、AWS Management Consoleで提供されるものと同等の機能にアクセスできます。</p>
-    
-    <h2>AWS CLIの主な特徴</h2>
+<div style="margin-bottom: 20px;">
+    <a href="../aws.html">AWSに戻る</a>
+</div>
+<h1>AWS CLI (Command Line Interface)</h1>
+
+<h2>AWS CLIとは</h2>
+<p>AWS CLI（Command Line
+    Interface）は、コマンドラインシェルでコマンドを使用してAWSサービスとやり取りするためのオープンソースツールです。最小限の設定で、コマンドラインからAWSサービスを制御したり、スクリプトを通じてAWSリソースを自動化したりすることができます。AWS
+    CLIを使用すると、AWS Management Consoleで提供されるものと同等の機能にアクセスできます。</p>
+
+<h2>AWS CLIの主な特徴</h2>
+<ul>
+    <li><strong>クロスプラットフォーム：</strong> Windows、macOS、Linuxで利用可能</li>
+    <li><strong>自動化：</strong> シェルスクリプトでAWSリソースを自動化</li>
+    <li><strong>一貫したインターフェース：</strong> すべてのAWSサービスに対して一貫したコマンド構造</li>
+    <li><strong>最新機能：</strong> 新しいAWSサービスと機能のサポートを迅速に追加</li>
+    <li><strong>オープンソース：</strong> GitHubでソースコードが公開され、コミュニティによる貢献が可能</li>
+    <li><strong>多言語サポート：</strong> 複数の言語でのドキュメントとサポート</li>
+    <li><strong>IAM統合：</strong> IAMの認証情報とロールを使用したセキュアなアクセス</li>
+    <li><strong>プロファイル：</strong> 複数のAWSアカウントと認証情報の管理</li>
+    <li><strong>出力形式：</strong> JSON、テキスト、テーブル形式での出力</li>
+    <li><strong>ページネーション：</strong> 大量のデータを扱うための自動ページネーション</li>
+</ul>
+
+<h2>AWS CLIのバージョン</h2>
+<p>AWS CLIには、現在2つの主要バージョンがあります：</p>
+
+<table>
+    <tr>
+        <th>バージョン</th>
+        <th>特徴</th>
+        <th>推奨される使用場面</th>
+    </tr>
+    <tr>
+        <td>AWS CLI バージョン 1</td>
+        <td>
+            <ul>
+                <li>Python 2.7以上で動作</li>
+                <li>pip、パッケージマネージャー、インストーラーでインストール可能</li>
+                <li>広範なドキュメントとコミュニティサポート</li>
+            </ul>
+        </td>
+        <td>レガシーシステムやPython 2.7環境での使用</td>
+    </tr>
+    <tr>
+        <td>AWS CLI バージョン 2</td>
+        <td>
+            <ul>
+                <li>インストーラーのみでインストール（依存関係が含まれる）</li>
+                <li>改善されたパフォーマンスとユーザビリティ</li>
+                <li>新機能（自動プロンプト、AWS IAM Identity Centerとの統合など）</li>
+                <li>セキュリティの強化</li>
+            </ul>
+        </td>
+        <td>新規インストールや最新機能が必要な場合（推奨）</td>
+    </tr>
+</table>
+
+<div class="note">
+    <h3>AWS CLIバージョン2の主な改善点</h3>
     <ul>
-        <li><strong>クロスプラットフォーム：</strong> Windows、macOS、Linuxで利用可能</li>
-        <li><strong>自動化：</strong> シェルスクリプトでAWSリソースを自動化</li>
-        <li><strong>一貫したインターフェース：</strong> すべてのAWSサービスに対して一貫したコマンド構造</li>
-        <li><strong>最新機能：</strong> 新しいAWSサービスと機能のサポートを迅速に追加</li>
-        <li><strong>オープンソース：</strong> GitHubでソースコードが公開され、コミュニティによる貢献が可能</li>
-        <li><strong>多言語サポート：</strong> 複数の言語でのドキュメントとサポート</li>
-        <li><strong>IAM統合：</strong> IAMの認証情報とロールを使用したセキュアなアクセス</li>
-        <li><strong>プロファイル：</strong> 複数のAWSアカウントと認証情報の管理</li>
-        <li><strong>出力形式：</strong> JSON、テキスト、テーブル形式での出力</li>
-        <li><strong>ページネーション：</strong> 大量のデータを扱うための自動ページネーション</li>
+        <li><strong>自動プロンプト：</strong> コマンドパラメータの入力支援</li>
+        <li><strong>ページャーサポート：</strong> 大量の出力を見やすく表示</li>
+        <li><strong>AWS IAM Identity Center統合：</strong> シングルサインオンのサポート</li>
+        <li><strong>クライアント側のページネーション：</strong> 大量のデータを効率的に処理</li>
+        <li><strong>S3/S3 Compatibleコマンド：</strong> S3操作の高度な機能</li>
+        <li><strong>依存関係の内包：</strong> Pythonなどの依存関係を含むスタンドアロンインストーラー</li>
     </ul>
-    
-    <h2>AWS CLIのバージョン</h2>
-    <p>AWS CLIには、現在2つの主要バージョンがあります：</p>
-    
-    <table>
-        <tr>
-            <th>バージョン</th>
-            <th>特徴</th>
-            <th>推奨される使用場面</th>
-        </tr>
-        <tr>
-            <td>AWS CLI バージョン 1</td>
-            <td>
-                <ul>
-                    <li>Python 2.7以上で動作</li>
-                    <li>pip、パッケージマネージャー、インストーラーでインストール可能</li>
-                    <li>広範なドキュメントとコミュニティサポート</li>
-                </ul>
-            </td>
-            <td>レガシーシステムやPython 2.7環境での使用</td>
-        </tr>
-        <tr>
-            <td>AWS CLI バージョン 2</td>
-            <td>
-                <ul>
-                    <li>インストーラーのみでインストール（依存関係が含まれる）</li>
-                    <li>改善されたパフォーマンスとユーザビリティ</li>
-                    <li>新機能（自動プロンプト、AWS IAM Identity Centerとの統合など）</li>
-                    <li>セキュリティの強化</li>
-                </ul>
-            </td>
-            <td>新規インストールや最新機能が必要な場合（推奨）</td>
-        </tr>
-    </table>
-    
-    <div class="note">
-        <h3>AWS CLIバージョン2の主な改善点</h3>
-        <ul>
-            <li><strong>自動プロンプト：</strong> コマンドパラメータの入力支援</li>
-            <li><strong>ページャーサポート：</strong> 大量の出力を見やすく表示</li>
-            <li><strong>AWS IAM Identity Center統合：</strong> シングルサインオンのサポート</li>
-            <li><strong>クライアント側のページネーション：</strong> 大量のデータを効率的に処理</li>
-            <li><strong>S3/S3 Compatibleコマンド：</strong> S3操作の高度な機能</li>
-            <li><strong>依存関係の内包：</strong> Pythonなどの依存関係を含むスタンドアロンインストーラー</li>
-        </ul>
-    </div>
-    
-    <h2>AWS CLIのインストール</h2>
-    <p>AWS CLIは、主要なオペレーティングシステムにインストールできます。以下は、AWS CLI バージョン2のインストール方法です。</p>
-    
-    <h3>Windows</h3>
-    <div class="example">
-        <h4>インストール手順</h4>
-        <ol>
-            <li>AWS CLI MSIインストーラーをダウンロード：
-                <ul>
-                    <li>64ビット: <a href="https://awscli.amazonaws.com/AWSCLIV2.msi" target="_blank">https://awscli.amazonaws.com/AWSCLIV2.msi</a></li>
-                </ul>
-            </li>
-            <li>ダウンロードしたMSIインストーラーを実行</li>
-            <li>インストールウィザードの指示に従う</li>
-            <li>インストールを確認：
-                <pre><code>aws --version</code></pre>
-            </li>
-        </ol>
-    </div>
-    
-    <h3>macOS</h3>
-    <div class="example">
-        <h4>インストール手順</h4>
-        <ol>
-            <li>macOSのインストーラーをダウンロード：
-                <pre><code>curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"</code></pre>
-            </li>
-            <li>インストーラーを実行：
-                <pre><code>sudo installer -pkg AWSCLIV2.pkg -target /</code></pre>
-            </li>
-            <li>インストールを確認：
-                <pre><code>aws --version</code></pre>
-            </li>
-        </ol>
-    </div>
-    
-    <h3>Linux</h3>
-    <div class="example">
-        <h4>インストール手順</h4>
-        <ol>
-            <li>インストーラーをダウンロード：
-                <pre><code>curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"</code></pre>
-            </li>
-            <li>ファイルを解凍：
-                <pre><code>unzip awscliv2.zip</code></pre>
-            </li>
-            <li>インストールスクリプトを実行：
-                <pre><code>sudo ./aws/install</code></pre>
-            </li>
-            <li>インストールを確認：
-                <pre><code>aws --version</code></pre>
-            </li>
-        </ol>
-    </div>
-    
-    <h2>AWS CLIの設定</h2>
-    <p>AWS CLIを使用するには、AWSアカウントの認証情報を設定する必要があります。以下は、AWS CLIの設定方法です。</p>
-    
-    <h3>認証情報の設定</h3>
-    <div class="example">
-        <h4>aws configureコマンドを使用した設定</h4>
-        <pre><code>aws configure</code></pre>
-        <p>プロンプトに従って、以下の情報を入力します：</p>
-        <pre><code>AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+</div>
+
+<h2>AWS CLIのインストール</h2>
+<p>AWS CLIは、主要なオペレーティングシステムにインストールできます。以下は、AWS CLI バージョン2のインストール方法です。</p>
+
+<h3>Windows</h3>
+<div class="example">
+    <h4>インストール手順</h4>
+    <ol>
+        <li>AWS CLI MSIインストーラーをダウンロード：
+            <ul>
+                <li>64ビット: <a href="https://awscli.amazonaws.com/AWSCLIV2.msi" target="_blank">https://awscli.amazonaws.com/AWSCLIV2.msi</a>
+                </li>
+            </ul>
+        </li>
+        <li>ダウンロードしたMSIインストーラーを実行</li>
+        <li>インストールウィザードの指示に従う</li>
+        <li>インストールを確認：
+            <pre><code>aws --version</code></pre>
+        </li>
+    </ol>
+</div>
+
+<h3>macOS</h3>
+<div class="example">
+    <h4>インストール手順</h4>
+    <ol>
+        <li>macOSのインストーラーをダウンロード：
+            <pre><code>curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"</code></pre>
+        </li>
+        <li>インストーラーを実行：
+            <pre><code>sudo installer -pkg AWSCLIV2.pkg -target /</code></pre>
+        </li>
+        <li>インストールを確認：
+            <pre><code>aws --version</code></pre>
+        </li>
+    </ol>
+</div>
+
+<h3>Linux</h3>
+<div class="example">
+    <h4>インストール手順</h4>
+    <ol>
+        <li>インストーラーをダウンロード：
+            <pre><code>curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"</code></pre>
+        </li>
+        <li>ファイルを解凍：
+            <pre><code>unzip awscliv2.zip</code></pre>
+        </li>
+        <li>インストールスクリプトを実行：
+            <pre><code>sudo ./aws/install</code></pre>
+        </li>
+        <li>インストールを確認：
+            <pre><code>aws --version</code></pre>
+        </li>
+    </ol>
+</div>
+
+<h2>AWS CLIの設定</h2>
+<p>AWS CLIを使用するには、AWSアカウントの認証情報を設定する必要があります。以下は、AWS CLIの設定方法です。</p>
+
+<h3>認証情報の設定</h3>
+<div class="example">
+    <h4>aws configureコマンドを使用した設定</h4>
+    <pre><code>aws configure</code></pre>
+    <p>プロンプトに従って、以下の情報を入力します：</p>
+    <pre><code>AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
 AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 Default region name [None]: ap-northeast-1
 Default output format [None]: json</code></pre>
-    </div>
-    
-    <h3>複数のプロファイルの設定</h3>
-    <div class="example">
-        <h4>名前付きプロファイルの作成</h4>
-        <pre><code>aws configure --profile produser</code></pre>
-        <p>プロンプトに従って、プロファイル固有の認証情報を入力します。</p>
-        
-        <h4>名前付きプロファイルの使用</h4>
-        <pre><code>aws s3 ls --profile produser</code></pre>
-    </div>
-    
-    <h3>環境変数を使用した設定</h3>
-    <div class="example">
-        <h4>Linux/macOS</h4>
-        <pre><code>export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+</div>
+
+<h3>複数のプロファイルの設定</h3>
+<div class="example">
+    <h4>名前付きプロファイルの作成</h4>
+    <pre><code>aws configure --profile produser</code></pre>
+    <p>プロンプトに従って、プロファイル固有の認証情報を入力します。</p>
+
+    <h4>名前付きプロファイルの使用</h4>
+    <pre><code>aws s3 ls --profile produser</code></pre>
+</div>
+
+<h3>環境変数を使用した設定</h3>
+<div class="example">
+    <h4>Linux/macOS</h4>
+    <pre><code>export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
 export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 export AWS_DEFAULT_REGION=ap-northeast-1</code></pre>
-        
-        <h4>Windows (Command Prompt)</h4>
-        <pre><code>set AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+
+    <h4>Windows (Command Prompt)</h4>
+    <pre><code>set AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
 set AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 set AWS_DEFAULT_REGION=ap-northeast-1</code></pre>
-        
-        <h4>Windows (PowerShell)</h4>
-        <pre><code>$env:AWS_ACCESS_KEY_ID="AKIAIOSFODNN7EXAMPLE"
+
+    <h4>Windows (PowerShell)</h4>
+    <pre><code>$env:AWS_ACCESS_KEY_ID="AKIAIOSFODNN7EXAMPLE"
 $env:AWS_SECRET_ACCESS_KEY="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
 $env:AWS_DEFAULT_REGION="ap-northeast-1"</code></pre>
-    </div>
-    
-    <h3>設定ファイル</h3>
-    <p>AWS CLIの設定は、以下の2つのファイルに保存されます：</p>
-    <ul>
-        <li><strong>~/.aws/credentials</strong>（Windows: %USERPROFILE%\.aws\credentials）：アクセスキーなどの認証情報</li>
-        <li><strong>~/.aws/config</strong>（Windows: %USERPROFILE%\.aws\config）：リージョンや出力形式などの設定</li>
-    </ul>
-    
-    <div class="example">
-        <h4>credentialsファイルの例</h4>
-        <pre><code>[default]
+</div>
+
+<h3>設定ファイル</h3>
+<p>AWS CLIの設定は、以下の2つのファイルに保存されます：</p>
+<ul>
+    <li><strong>~/.aws/credentials</strong>（Windows: %USERPROFILE%\.aws\credentials）：アクセスキーなどの認証情報</li>
+    <li><strong>~/.aws/config</strong>（Windows: %USERPROFILE%\.aws\config）：リージョンや出力形式などの設定</li>
+</ul>
+
+<div class="example">
+    <h4>credentialsファイルの例</h4>
+    <pre><code>[default]
 aws_access_key_id = AKIAIOSFODNN7EXAMPLE
 aws_secret_access_key = wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 
 [produser]
 aws_access_key_id = AKIAI44QH8DHBEXAMPLE
 aws_secret_access_key = je7MtGbClwBF/2Zp9Utk/h3yCo8nvbEXAMPLEKEY</code></pre>
-        
-        <h4>configファイルの例</h4>
-        <pre><code>[default]
+
+    <h4>configファイルの例</h4>
+    <pre><code>[default]
 region = ap-northeast-1
 output = json
 
 [profile produser]
 region = us-west-2
 output = text</code></pre>
-    </div>
-    
-    <h2>AWS CLIの基本的な使用方法</h2>
-    <p>AWS CLIのコマンド構造は、一般的に以下の形式に従います：</p>
-    
-    <pre><code>aws &lt;サービス&gt; &lt;コマンド&gt; &lt;サブコマンド&gt; [オプション] [引数]</code></pre>
-    
-    <h3>基本的なコマンド例</h3>
-    <div class="example">
-        <h4>S3バケットの一覧表示</h4>
-        <pre><code>aws s3 ls</code></pre>
-        
-        <h4>EC2インスタンスの一覧表示</h4>
-        <pre><code>aws ec2 describe-instances</code></pre>
-        
-        <h4>特定のEC2インスタンスの詳細表示</h4>
-        <pre><code>aws ec2 describe-instances --instance-ids i-1234567890abcdef0</code></pre>
-        
-        <h4>新しいEC2インスタンスの起動</h4>
-        <pre><code>aws ec2 run-instances \
+</div>
+
+<h2>AWS CLIの基本的な使用方法</h2>
+<p>AWS CLIのコマンド構造は、一般的に以下の形式に従います：</p>
+
+<pre><code>aws &lt;サービス&gt; &lt;コマンド&gt; &lt;サブコマンド&gt; [オプション] [引数]</code></pre>
+
+<h3>基本的なコマンド例</h3>
+<div class="example">
+    <h4>S3バケットの一覧表示</h4>
+    <pre><code>aws s3 ls</code></pre>
+
+    <h4>EC2インスタンスの一覧表示</h4>
+    <pre><code>aws ec2 describe-instances</code></pre>
+
+    <h4>特定のEC2インスタンスの詳細表示</h4>
+    <pre><code>aws ec2 describe-instances --instance-ids i-1234567890abcdef0</code></pre>
+
+    <h4>新しいEC2インスタンスの起動</h4>
+    <pre><code>aws ec2 run-instances \
     --image-id ami-0abcdef1234567890 \
     --instance-type t2.micro \
     --key-name MyKeyPair \
     --security-group-ids sg-0123456789abcdef0 \
     --subnet-id subnet-0123456789abcdef0</code></pre>
-    </div>
-    
-    <h3>出力形式</h3>
-    <p>AWS CLIは、以下の出力形式をサポートしています：</p>
-    
-    <table>
-        <tr>
-            <th>形式</th>
-            <th>説明</th>
-            <th>例</th>
-        </tr>
-        <tr>
-            <td>json</td>
-            <td>JSON形式の出力（デフォルト）</td>
-            <td><pre><code>aws ec2 describe-instances --output json</code></pre></td>
-        </tr>
-        <tr>
-            <td>text</td>
-            <td>タブ区切りのテキスト形式</td>
-            <td><pre><code>aws ec2 describe-instances --output text</code></pre></td>
-        </tr>
-        <tr>
-            <td>table</td>
-            <td>テーブル形式（人間が読みやすい）</td>
-            <td><pre><code>aws ec2 describe-instances --output table</code></pre></td>
-        </tr>
-    </table>
-    
-    <h3>フィルタリング</h3>
-    <p>AWS CLIでは、出力をフィルタリングするための2つの主要な方法があります：</p>
-    
-    <h4>サーバーサイドフィルタリング</h4>
-    <div class="example">
-        <p>多くのAWSサービスは、--filterパラメータを使用したサーバーサイドフィルタリングをサポートしています：</p>
-        <pre><code>aws ec2 describe-instances \
+</div>
+
+<h3>出力形式</h3>
+<p>AWS CLIは、以下の出力形式をサポートしています：</p>
+
+<table>
+    <tr>
+        <th>形式</th>
+        <th>説明</th>
+        <th>例</th>
+    </tr>
+    <tr>
+        <td>json</td>
+        <td>JSON形式の出力（デフォルト）</td>
+        <td>
+            <pre><code>aws ec2 describe-instances --output json</code></pre>
+        </td>
+    </tr>
+    <tr>
+        <td>text</td>
+        <td>タブ区切りのテキスト形式</td>
+        <td>
+            <pre><code>aws ec2 describe-instances --output text</code></pre>
+        </td>
+    </tr>
+    <tr>
+        <td>table</td>
+        <td>テーブル形式（人間が読みやすい）</td>
+        <td>
+            <pre><code>aws ec2 describe-instances --output table</code></pre>
+        </td>
+    </tr>
+</table>
+
+<h3>フィルタリング</h3>
+<p>AWS CLIでは、出力をフィルタリングするための2つの主要な方法があります：</p>
+
+<h4>サーバーサイドフィルタリング</h4>
+<div class="example">
+    <p>多くのAWSサービスは、--filterパラメータを使用したサーバーサイドフィルタリングをサポートしています：</p>
+    <pre><code>aws ec2 describe-instances \
     --filters "Name=instance-type,Values=t2.micro" "Name=instance-state-name,Values=running"</code></pre>
-    </div>
-    
-    <h4>クライアントサイドフィルタリング（JMESPath）</h4>
-    <div class="example">
-        <p>--queryパラメータを使用して、JMESPath式で出力をフィルタリングできます：</p>
-        <pre><code>aws ec2 describe-instances \
+</div>
+
+<h4>クライアントサイドフィルタリング（JMESPath）</h4>
+<div class="example">
+    <p>--queryパラメータを使用して、JMESPath式で出力をフィルタリングできます：</p>
+    <pre><code>aws ec2 describe-instances \
     --query "Reservations[*].Instances[*].[InstanceId,InstanceType,State.Name]"</code></pre>
-        
-        <p>特定の条件に一致するインスタンスのみをフィルタリング：</p>
-        <pre><code>aws ec2 describe-instances \
+
+    <p>特定の条件に一致するインスタンスのみをフィルタリング：</p>
+    <pre><code>aws ec2 describe-instances \
     --query "Reservations[*].Instances[?InstanceType=='t2.micro'].[InstanceId,State.Name]"</code></pre>
-    </div>
-    
-    <h2>AWS CLIの高度な機能</h2>
-    
-    <h3>ドライランモード</h3>
-    <p>--dry-runオプションを使用すると、実際にリソースを変更せずにコマンドをテストできます：</p>
-    <div class="example">
-        <pre><code>aws ec2 stop-instances --instance-ids i-1234567890abcdef0 --dry-run</code></pre>
-    </div>
-    
-    <h3>ページネーション</h3>
-    <p>大量のデータを扱う場合、AWS CLIは自動的にページネーションを行います。手動でページネーションを制御するには：</p>
-    <div class="example">
+</div>
+
+<h2>AWS CLIの高度な機能</h2>
+
+<h3>ドライランモード</h3>
+<p>--dry-runオプションを使用すると、実際にリソースを変更せずにコマンドをテストできます：</p>
+<div class="example">
+    <pre><code>aws ec2 stop-instances --instance-ids i-1234567890abcdef0 --dry-run</code></pre>
+</div>
+
+<h3>ページネーション</h3>
+<p>大量のデータを扱う場合、AWS CLIは自動的にページネーションを行います。手動でページネーションを制御するには：</p>
+<div class="example">
         <pre><code>aws s3api list-objects \
     --bucket my-bucket \
     --max-items 100 \
     --starting-token eyJNYXJrZXIiOiBudWxsLCAiYm90b190cnVuY2F0ZV9hbW91bnQiOiAxfQ==</code></pre>
-    </div>
-    
-    <h3>ウェイター</h3>
-    <p>ウェイターを使用すると、特定の状態になるまで待機できます：</p>
-    <div class="example">
-        <pre><code>aws ec2 wait instance-running --instance-ids i-1234567890abcdef0</code></pre>
-    </div>
-    
-    <h3>自動プロンプト（AWS CLI v2）</h3>
-    <p>AWS CLI v2では、--cliコマンドを使用して自動プロンプトを有効にできます：</p>
-    <div class="example">
-        <pre><code>aws ec2 run-instances --cli-auto-prompt</code></pre>
-    </div>
-    
-    <h3>S3コマンド</h3>
-    <p>AWS CLIには、S3バケットとオブジェクトを操作するための高レベルコマンドが用意されています：</p>
-    <div class="example">
-        <h4>ファイルのアップロード</h4>
-        <pre><code>aws s3 cp myfile.txt s3://my-bucket/</code></pre>
-        
-        <h4>ディレクトリの同期</h4>
-        <pre><code>aws s3 sync my-local-directory s3://my-bucket/my-directory</code></pre>
-        
-        <h4>バケット内のすべてのオブジェクトを削除</h4>
-        <pre><code>aws s3 rm s3://my-bucket --recursive</code></pre>
-    </div>
-    
-    <h2>AWS CLIのスクリプティングと自動化</h2>
-    <p>AWS CLIは、シェルスクリプトやバッチファイルで使用して、AWSリソースの管理を自動化できます。</p>
-    
-    <h3>シェルスクリプトの例</h3>
-    <div class="example">
-        <h4>すべての停止中のEC2インスタンスを起動するスクリプト</h4>
-        <pre><code>#!/bin/bash
+</div>
+
+<h3>ウェイター</h3>
+<p>ウェイターを使用すると、特定の状態になるまで待機できます：</p>
+<div class="example">
+    <pre><code>aws ec2 wait instance-running --instance-ids i-1234567890abcdef0</code></pre>
+</div>
+
+<h3>自動プロンプト（AWS CLI v2）</h3>
+<p>AWS CLI v2では、--cliコマンドを使用して自動プロンプトを有効にできます：</p>
+<div class="example">
+    <pre><code>aws ec2 run-instances --cli-auto-prompt</code></pre>
+</div>
+
+<h3>S3コマンド</h3>
+<p>AWS CLIには、S3バケットとオブジェクトを操作するための高レベルコマンドが用意されています：</p>
+<div class="example">
+    <h4>ファイルのアップロード</h4>
+    <pre><code>aws s3 cp myfile.txt s3://my-bucket/</code></pre>
+
+    <h4>ディレクトリの同期</h4>
+    <pre><code>aws s3 sync my-local-directory s3://my-bucket/my-directory</code></pre>
+
+    <h4>バケット内のすべてのオブジェクトを削除</h4>
+    <pre><code>aws s3 rm s3://my-bucket --recursive</code></pre>
+</div>
+
+<h2>AWS CLIのスクリプティングと自動化</h2>
+<p>AWS CLIは、シェルスクリプトやバッチファイルで使用して、AWSリソースの管理を自動化できます。</p>
+
+<h3>シェルスクリプトの例</h3>
+<div class="example">
+    <h4>すべての停止中のEC2インスタンスを起動するスクリプト</h4>
+    <pre><code>#!/bin/bash
 # 停止中のインスタンスIDを取得
 instance_ids=$(aws ec2 describe-instances \
     --filters "Name=instance-state-name,Values=stopped" \
@@ -334,9 +346,9 @@ for id in $instance_ids; do
     echo "Starting instance $id"
     aws ec2 start-instances --instance-ids $id
 done</code></pre>
-        
-        <h4>特定のタグを持つEC2インスタンスをバックアップするスクリプト</h4>
-        <pre><code>#!/bin/bash
+
+    <h4>特定のタグを持つEC2インスタンスをバックアップするスクリプト</h4>
+    <pre><code>#!/bin/bash
 # Backup タグが true のインスタンスを検索
 instance_ids=$(aws ec2 describe-instances \
     --filters "Name=tag:Backup,Values=true" "Name=instance-state-name,Values=running" \
@@ -363,13 +375,13 @@ for id in $instance_ids; do
             --tag-specifications "ResourceType=snapshot,Tags=[{Key=InstanceId,Value=$id},{Key=CreatedBy,Value=AutomatedBackup},{Key=Timestamp,Value=$timestamp}]"
     done
 done</code></pre>
-    </div>
-    
-    <h3>AWS CLIとJSONの使用</h3>
-    <div class="example">
-        <h4>JSONファイルを使用したEC2インスタンスの起動</h4>
-        <p>ec2-instance-params.json:</p>
-        <pre><code>{
+</div>
+
+<h3>AWS CLIとJSONの使用</h3>
+<div class="example">
+    <h4>JSONファイルを使用したEC2インスタンスの起動</h4>
+    <p>ec2-instance-params.json:</p>
+    <pre><code>{
   "ImageId": "ami-0abcdef1234567890",
   "InstanceType": "t2.micro",
   "KeyName": "MyKeyPair",
@@ -391,135 +403,139 @@ done</code></pre>
     }
   ]
 }</code></pre>
-        
-        <p>コマンド:</p>
-        <pre><code>aws ec2 run-instances --cli-input-json file://ec2-instance-params.json</code></pre>
-    </div>
-    
-    <h2>AWS CLIのセキュリティのベストプラクティス</h2>
-    <ul>
-        <li><strong>IAMユーザーの最小権限：</strong> CLIで使用するIAMユーザーには、必要最小限の権限のみを付与</li>
-        <li><strong>アクセスキーのローテーション：</strong> 定期的にアクセスキーをローテーション</li>
-        <li><strong>認証情報の保護：</strong> アクセスキーをソースコードやバージョン管理システムにコミットしない</li>
-        <li><strong>IAMロールの使用：</strong> EC2インスタンスやLambda関数ではIAMロールを使用</li>
-        <li><strong>MFAの有効化：</strong> CLIで使用するIAMユーザーにMFAを有効化</li>
-        <li><strong>AWS IAM Identity Centerの使用：</strong> AWS CLI v2では、IAM Identity Centerを使用して一時的な認証情報を取得</li>
-        <li><strong>認証情報の暗号化：</strong> ~/.aws/credentialsファイルの暗号化を検討</li>
-        <li><strong>ネットワークセキュリティ：</strong> 特定のIPアドレスからのみAWS APIへのアクセスを許可</li>
-    </ul>
-    
-    <h2>AWS CLIのトラブルシューティング</h2>
-    
-    <h3>一般的な問題と解決策</h3>
-    <table>
-        <tr>
-            <th>問題</th>
-            <th>解決策</th>
-        </tr>
-        <tr>
-            <td>認証情報エラー</td>
-            <td>
-                <ul>
-                    <li>aws configureで認証情報が正しく設定されているか確認</li>
-                    <li>環境変数が正しく設定されているか確認</li>
-                    <li>IAMユーザーに必要な権限があるか確認</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>コマンドが見つからない</td>
-            <td>
-                <ul>
-                    <li>AWS CLIが正しくインストールされているか確認</li>
-                    <li>PATHにAWS CLIのインストールディレクトリが含まれているか確認</li>
-                    <li>aws --versionでインストールを確認</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>リージョンエラー</td>
-            <td>
-                <ul>
-                    <li>--regionオプションでリージョンを指定</li>
-                    <li>AWS_DEFAULT_REGION環境変数を設定</li>
-                    <li>aws configureでデフォルトリージョンを設定</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>パラメータエラー</td>
-            <td>
-                <ul>
-                    <li>aws help &lt;サービス&gt; &lt;コマンド&gt;でコマンドのヘルプを表示</li>
-                    <li>パラメータの形式が正しいか確認</li>
-                    <li>必須パラメータがすべて指定されているか確認</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>タイムアウトエラー</td>
-            <td>
-                <ul>
-                    <li>ネットワーク接続を確認</li>
-                    <li>--cli-connect-timeoutと--cli-read-timeoutオプションを使用してタイムアウト値を増やす</li>
-                </ul>
-            </td>
-        </tr>
-    </table>
-    
-    <h3>デバッグモード</h3>
-    <p>--debugオプションを使用すると、詳細なデバッグ情報が表示されます：</p>
-    <div class="example">
-        <pre><code>aws s3 ls --debug</code></pre>
-    </div>
-    
-    <h2>AWS CLIとの統合サービス</h2>
-    <p>AWS CLIは、他のツールやサービスと統合して、より強力な自動化ソリューションを構築できます：</p>
-    
-    <table>
-        <tr>
-            <th>ツール/サービス</th>
-            <th>統合の利点</th>
-        </tr>
-        <tr>
-            <td>AWS CloudFormation</td>
-            <td>CLIを使用してCloudFormationスタックを作成、更新、削除</td>
-        </tr>
-        <tr>
-            <td>AWS Systems Manager</td>
-            <td>CLIを使用してSystems Managerのオートメーションを実行</td>
-        </tr>
-        <tr>
-            <td>AWS Lambda</td>
-            <td>CLIを使用してLambda関数をデプロイと呼び出し</td>
-        </tr>
-        <tr>
-            <td>CI/CDパイプライン</td>
-            <td>Jenkins、GitLab CI、GitHub Actionsなどのパイプラインでの自動化</td>
-        </tr>
-        <tr>
-            <td>シェルスクリプト</td>
-            <td>複雑な自動化タスクのためのスクリプト作成</td>
-        </tr>
-        <tr>
-            <td>AWS SDKs</td>
-            <td>CLIとSDKを組み合わせた高度なアプリケーション開発</td>
-        </tr>
-    </table>
-    
-    <h2>まとめ</h2>
-    <p>AWS CLIは、AWSリソースを管理するための強力なコマンドラインツールです。コマンドラインからAWSサービスを制御したり、スクリプトを通じてAWSリソースを自動化したりすることができます。AWS CLIを使用することで、AWS Management Consoleで提供されるものと同等の機能にアクセスでき、より効率的にAWSリソースを管理できます。</p>
-    
-    <p>AWS CLIの主な利点は以下の通りです：</p>
-    <ul>
-        <li>コマンドラインからAWSリソースを簡単に管理</li>
-        <li>スクリプトによるAWSリソースの自動化</li>
-        <li>すべてのAWSサービスに対する一貫したインターフェース</li>
-        <li>クロスプラットフォーム対応（Windows、macOS、Linux）</li>
-        <li>複数のAWSアカウントと認証情報の管理</li>
-        <li>強力なフィルタリングと出力形式のオプション</li>
-    </ul>
-    
-    <p>AWS CLIを効果的に活用するには、適切な認証情報の設定、セキュリティのベストプラクティスの適用、スクリプトによる自動化の実装が重要です。また、AWS CLIの高度な機能（フィルタリング、ページネーション、ウェイターなど）を活用することで、より効率的にAWSリソースを管理できます。</p>
+
+    <p>コマンド:</p>
+    <pre><code>aws ec2 run-instances --cli-input-json file://ec2-instance-params.json</code></pre>
+</div>
+
+<h2>AWS CLIのセキュリティのベストプラクティス</h2>
+<ul>
+    <li><strong>IAMユーザーの最小権限：</strong> CLIで使用するIAMユーザーには、必要最小限の権限のみを付与</li>
+    <li><strong>アクセスキーのローテーション：</strong> 定期的にアクセスキーをローテーション</li>
+    <li><strong>認証情報の保護：</strong> アクセスキーをソースコードやバージョン管理システムにコミットしない</li>
+    <li><strong>IAMロールの使用：</strong> EC2インスタンスやLambda関数ではIAMロールを使用</li>
+    <li><strong>MFAの有効化：</strong> CLIで使用するIAMユーザーにMFAを有効化</li>
+    <li><strong>AWS IAM Identity Centerの使用：</strong> AWS CLI v2では、IAM Identity Centerを使用して一時的な認証情報を取得
+    </li>
+    <li><strong>認証情報の暗号化：</strong> ~/.aws/credentialsファイルの暗号化を検討</li>
+    <li><strong>ネットワークセキュリティ：</strong> 特定のIPアドレスからのみAWS APIへのアクセスを許可</li>
+</ul>
+
+<h2>AWS CLIのトラブルシューティング</h2>
+
+<h3>一般的な問題と解決策</h3>
+<table>
+    <tr>
+        <th>問題</th>
+        <th>解決策</th>
+    </tr>
+    <tr>
+        <td>認証情報エラー</td>
+        <td>
+            <ul>
+                <li>aws configureで認証情報が正しく設定されているか確認</li>
+                <li>環境変数が正しく設定されているか確認</li>
+                <li>IAMユーザーに必要な権限があるか確認</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>コマンドが見つからない</td>
+        <td>
+            <ul>
+                <li>AWS CLIが正しくインストールされているか確認</li>
+                <li>PATHにAWS CLIのインストールディレクトリが含まれているか確認</li>
+                <li>aws --versionでインストールを確認</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>リージョンエラー</td>
+        <td>
+            <ul>
+                <li>--regionオプションでリージョンを指定</li>
+                <li>AWS_DEFAULT_REGION環境変数を設定</li>
+                <li>aws configureでデフォルトリージョンを設定</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>パラメータエラー</td>
+        <td>
+            <ul>
+                <li>aws help &lt;サービス&gt; &lt;コマンド&gt;でコマンドのヘルプを表示</li>
+                <li>パラメータの形式が正しいか確認</li>
+                <li>必須パラメータがすべて指定されているか確認</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>タイムアウトエラー</td>
+        <td>
+            <ul>
+                <li>ネットワーク接続を確認</li>
+                <li>--cli-connect-timeoutと--cli-read-timeoutオプションを使用してタイムアウト値を増やす</li>
+            </ul>
+        </td>
+    </tr>
+</table>
+
+<h3>デバッグモード</h3>
+<p>--debugオプションを使用すると、詳細なデバッグ情報が表示されます：</p>
+<div class="example">
+    <pre><code>aws s3 ls --debug</code></pre>
+</div>
+
+<h2>AWS CLIとの統合サービス</h2>
+<p>AWS CLIは、他のツールやサービスと統合して、より強力な自動化ソリューションを構築できます：</p>
+
+<table>
+    <tr>
+        <th>ツール/サービス</th>
+        <th>統合の利点</th>
+    </tr>
+    <tr>
+        <td>AWS CloudFormation</td>
+        <td>CLIを使用してCloudFormationスタックを作成、更新、削除</td>
+    </tr>
+    <tr>
+        <td>AWS Systems Manager</td>
+        <td>CLIを使用してSystems Managerのオートメーションを実行</td>
+    </tr>
+    <tr>
+        <td>AWS Lambda</td>
+        <td>CLIを使用してLambda関数をデプロイと呼び出し</td>
+    </tr>
+    <tr>
+        <td>CI/CDパイプライン</td>
+        <td>Jenkins、GitLab CI、GitHub Actionsなどのパイプラインでの自動化</td>
+    </tr>
+    <tr>
+        <td>シェルスクリプト</td>
+        <td>複雑な自動化タスクのためのスクリプト作成</td>
+    </tr>
+    <tr>
+        <td>AWS SDKs</td>
+        <td>CLIとSDKを組み合わせた高度なアプリケーション開発</td>
+    </tr>
+</table>
+
+<h2>まとめ</h2>
+<p>AWS CLIは、AWSリソースを管理するための強力なコマンドラインツールです。コマンドラインからAWSサービスを制御したり、スクリプトを通じてAWSリソースを自動化したりすることができます。AWS
+    CLIを使用することで、AWS Management
+    Consoleで提供されるものと同等の機能にアクセスでき、より効率的にAWSリソースを管理できます。</p>
+
+<p>AWS CLIの主な利点は以下の通りです：</p>
+<ul>
+    <li>コマンドラインからAWSリソースを簡単に管理</li>
+    <li>スクリプトによるAWSリソースの自動化</li>
+    <li>すべてのAWSサービスに対する一貫したインターフェース</li>
+    <li>クロスプラットフォーム対応（Windows、macOS、Linux）</li>
+    <li>複数のAWSアカウントと認証情報の管理</li>
+    <li>強力なフィルタリングと出力形式のオプション</li>
+</ul>
+
+<p>AWS CLIを効果的に活用するには、適切な認証情報の設定、セキュリティのベストプラクティスの適用、スクリプトによる自動化の実装が重要です。また、AWS
+    CLIの高度な機能（フィルタリング、ページネーション、ウェイターなど）を活用することで、より効率的にAWSリソースを管理できます。</p>
 </body>
 </html>

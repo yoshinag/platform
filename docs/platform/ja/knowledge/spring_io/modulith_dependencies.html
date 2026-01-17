@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <title>Spring Modulith - モジュール間の依存関係</title>
     <link rel="stylesheet" href="../../../css/knowledge.css">
@@ -11,6 +15,7 @@
             gap: 20px;
             margin-top: 20px;
         }
+
         .service-card {
             border: 1px solid #e0e0e0;
             border-radius: 8px;
@@ -18,21 +23,26 @@
             background-color: #f9f9f9;
             transition: transform 0.2s, box-shadow 0.2s;
         }
+
         .service-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
+
         .service-card h3 {
             margin-top: 0;
             color: #000000;
         }
+
         .service-card h3 a {
             color: #1a73e8;
         }
+
         .service-card p {
             color: #5f6368;
             margin-bottom: 10px;
         }
+
         .service-category {
             margin-top: 30px;
         }
@@ -40,22 +50,23 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body class="ja-knowledge">
-    <div style="margin-bottom: 20px;">
-        <a href="../../index.html">メインページに戻る</a> | 
-        <a href="spring_io.html">Spring Framework & Spring Bootに戻る</a> |
-        <a href="modulith.html">Spring Modulithに戻る</a>
-    </div>
-    <h1>Spring Modulith - モジュール間の依存関係</h1>
-    
-    <h2>モジュール間の依存関係とは</h2>
-    <p>Spring Modulithにおけるモジュール間の依存関係は、アプリケーションのモジュール構造を明確に定義し、アーキテクチャの整合性を確保するための重要な概念です。モジュール間の依存関係を適切に管理することで、モジュールの独立性を高め、変更の影響範囲を限定し、アプリケーションの保守性と拡張性を向上させることができます。</p>
-    
-    <p>Spring Modulithは、モジュール間の依存関係を制御するための強力な機能を提供します。デフォルトでは、モジュールは他のモジュールの内部実装に依存することはできず、明示的に公開されたAPIを通じてのみ依存関係を持つことができます。これにより、モジュールの内部実装の詳細が他のモジュールに漏れることを防ぎ、モジュールの独立性を確保します。</p>
-    
-    <div style="text-align: center; margin: 20px 0;">
+<div style="margin-bottom: 20px;">
+    <a href="../../index.html">メインページに戻る</a> |
+    <a href="spring_io.html">Spring Framework & Spring Bootに戻る</a> |
+    <a href="modulith.html">Spring Modulithに戻る</a>
+</div>
+<h1>Spring Modulith - モジュール間の依存関係</h1>
+
+<h2>モジュール間の依存関係とは</h2>
+<p>Spring
+    Modulithにおけるモジュール間の依存関係は、アプリケーションのモジュール構造を明確に定義し、アーキテクチャの整合性を確保するための重要な概念です。モジュール間の依存関係を適切に管理することで、モジュールの独立性を高め、変更の影響範囲を限定し、アプリケーションの保守性と拡張性を向上させることができます。</p>
+
+<p>Spring
+    Modulithは、モジュール間の依存関係を制御するための強力な機能を提供します。デフォルトでは、モジュールは他のモジュールの内部実装に依存することはできず、明示的に公開されたAPIを通じてのみ依存関係を持つことができます。これにより、モジュールの内部実装の詳細が他のモジュールに漏れることを防ぎ、モジュールの独立性を確保します。</p>
+
+<div style="text-align: center; margin: 20px 0;">
         <pre style="text-align: left; display: inline-block; border: 1px solid #ddd; padding: 15px; border-radius: 4px; background-color: #f8f8f8; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
 +------------------------------------------+
 |           Spring Boot Application        |
@@ -81,16 +92,19 @@
 |        Spring Modulith Framework        |
 +------------------------------------------+
         </pre>
-        <p style="font-style: italic; margin-top: 10px;">図1: Spring Modulithにおけるモジュール間の依存関係 - モジュールは公開APIを通じてのみ依存関係を持つ</p>
-    </div>
-    
-    <h2>モジュール間の依存関係の管理方法</h2>
-    <p>Spring Modulithでは、モジュール間の依存関係を管理するために、以下の機能を提供しています：</p>
-    
-    <h3>1. 公開APIの定義</h3>
-    <p>モジュールの公開APIは、他のモジュールが依存することができるインターフェースやクラスを定義します。Spring Modulithでは、<code>@org.springframework.modulith.ApplicationModule.API</code>アノテーションを使用して、公開APIを明示的に定義することができます。</p>
-    
-    <pre><code>package com.example.application.orders.api;
+    <p style="font-style: italic; margin-top: 10px;">図1: Spring Modulithにおけるモジュール間の依存関係 -
+        モジュールは公開APIを通じてのみ依存関係を持つ</p>
+</div>
+
+<h2>モジュール間の依存関係の管理方法</h2>
+<p>Spring Modulithでは、モジュール間の依存関係を管理するために、以下の機能を提供しています：</p>
+
+<h3>1. 公開APIの定義</h3>
+<p>モジュールの公開APIは、他のモジュールが依存することができるインターフェースやクラスを定義します。Spring
+    Modulithでは、<code>@org.springframework.modulith.ApplicationModule.API</code>アノテーションを使用して、公開APIを明示的に定義することができます。
+</p>
+
+<pre><code>package com.example.application.orders.api;
 
 import org.springframework.modulith.ApplicationModule;
 
@@ -101,35 +115,42 @@ public interface OrderService {
     Order getOrder(String orderId);
     List&lt;Order&gt; getOrdersByCustomer(String customerId);
 }</code></pre>
-    
-    <p>このアノテーションを付けたクラスやインターフェースは、他のモジュールからアクセス可能な公開APIとして扱われます。公開APIは、モジュールの境界を越えて他のモジュールに提供される機能を明確に定義し、モジュールの内部実装の詳細を隠蔽します。</p>
-    
-    <h3>2. 名前付きインターフェースの定義</h3>
-    <p>より細かい粒度でモジュールの公開APIを定義するために、<code>@org.springframework.modulith.NamedInterface</code>アノテーションを使用することができます。このアノテーションを使用すると、特定のパッケージを名前付きインターフェースとして定義し、他のモジュールがそのインターフェースに依存することを許可できます。</p>
-    
-    <pre><code>@org.springframework.modulith.NamedInterface("api")
+
+<p>
+    このアノテーションを付けたクラスやインターフェースは、他のモジュールからアクセス可能な公開APIとして扱われます。公開APIは、モジュールの境界を越えて他のモジュールに提供される機能を明確に定義し、モジュールの内部実装の詳細を隠蔽します。</p>
+
+<h3>2. 名前付きインターフェースの定義</h3>
+<p>より細かい粒度でモジュールの公開APIを定義するために、<code>@org.springframework.modulith.NamedInterface</code>アノテーションを使用することができます。このアノテーションを使用すると、特定のパッケージを名前付きインターフェースとして定義し、他のモジュールがそのインターフェースに依存することを許可できます。
+</p>
+
+<pre><code>@org.springframework.modulith.NamedInterface("api")
 package com.example.application.orders.api;
 
 import org.springframework.modulith.NamedInterface;</code></pre>
-    
-    <p>この例では、<code>com.example.application.orders.api</code>パッケージを「api」という名前のインターフェースとして定義しています。他のモジュールは、このインターフェースに依存することができます。</p>
-    
-    <h3>3. 依存関係の制約の定義</h3>
-    <p>モジュール間の依存関係に制約を設けるために、<code>@org.springframework.modulith.ApplicationModule</code>アノテーションの<code>allowedDependencies</code>属性を使用することができます。この属性を使用すると、モジュールが依存することができる他のモジュールを明示的に指定できます。</p>
-    
-    <pre><code>@org.springframework.modulith.ApplicationModule(
+
+<p>この例では、<code>com.example.application.orders.api</code>パッケージを「api」という名前のインターフェースとして定義しています。他のモジュールは、このインターフェースに依存することができます。
+</p>
+
+<h3>3. 依存関係の制約の定義</h3>
+<p>モジュール間の依存関係に制約を設けるために、<code>@org.springframework.modulith.ApplicationModule</code>アノテーションの<code>allowedDependencies</code>属性を使用することができます。この属性を使用すると、モジュールが依存することができる他のモジュールを明示的に指定できます。
+</p>
+
+<pre><code>@org.springframework.modulith.ApplicationModule(
     allowedDependencies = { "inventory", "customers" }
 )
 package com.example.application.orders;
 
 import org.springframework.modulith.ApplicationModule;</code></pre>
-    
-    <p>この例では、「orders」モジュールが「inventory」モジュールと「customers」モジュールにのみ依存することを許可しています。他のモジュールへの依存は禁止されます。</p>
-    
-    <h3>4. 依存関係の検証</h3>
-    <p>Spring Modulithは、モジュール間の依存関係を検証するための機能を提供します。<code>Modulith</code>クラスの<code>verify()</code>メソッドを使用すると、アプリケーションのモジュール構造を検証し、不正な依存関係がないかをチェックできます。</p>
-    
-    <pre><code>@Test
+
+<p>
+    この例では、「orders」モジュールが「inventory」モジュールと「customers」モジュールにのみ依存することを許可しています。他のモジュールへの依存は禁止されます。</p>
+
+<h3>4. 依存関係の検証</h3>
+<p>Spring
+    Modulithは、モジュール間の依存関係を検証するための機能を提供します。<code>Modulith</code>クラスの<code>verify()</code>メソッドを使用すると、アプリケーションのモジュール構造を検証し、不正な依存関係がないかをチェックできます。
+</p>
+
+<pre><code>@Test
 void verifyModuleDependencies() {
     
     // モジュール間の依存関係の検証
@@ -137,16 +158,18 @@ void verifyModuleDependencies() {
         .verify()
         .assertThatDependenciesAreValid();
 }</code></pre>
-    
-    <p>このテストは、アプリケーションのモジュール構造を検証し、不正な依存関係がある場合にテストが失敗します。これにより、モジュール間の依存関係の整合性を継続的に確保することができます。</p>
-    
-    <h2>モジュール間の依存関係のパターン</h2>
-    <p>Spring Modulithでは、モジュール間の依存関係を管理するために、以下のパターンを活用することができます：</p>
-    
-    <h3>1. 直接依存パターン</h3>
-    <p>直接依存パターンでは、モジュールAがモジュールBの公開APIに直接依存します。このパターンは、モジュール間の関係が明確で、直接的な依存関係が必要な場合に適しています。</p>
-    
-    <pre><code>// モジュールA内のコード
+
+<p>
+    このテストは、アプリケーションのモジュール構造を検証し、不正な依存関係がある場合にテストが失敗します。これにより、モジュール間の依存関係の整合性を継続的に確保することができます。</p>
+
+<h2>モジュール間の依存関係のパターン</h2>
+<p>Spring Modulithでは、モジュール間の依存関係を管理するために、以下のパターンを活用することができます：</p>
+
+<h3>1. 直接依存パターン</h3>
+<p>
+    直接依存パターンでは、モジュールAがモジュールBの公開APIに直接依存します。このパターンは、モジュール間の関係が明確で、直接的な依存関係が必要な場合に適しています。</p>
+
+<pre><code>// モジュールA内のコード
 @Service
 class OrderService {
 
@@ -171,13 +194,15 @@ class OrderService {
         return order;
     }
 }</code></pre>
-    
-    <p>この例では、「orders」モジュール内の<code>OrderService</code>が「inventory」モジュールの<code>InventoryService</code>に直接依存しています。</p>
-    
-    <h3>2. イベント駆動パターン</h3>
-    <p>イベント駆動パターンでは、モジュール間の直接的な依存関係を避け、イベントを通じて通信します。このパターンは、モジュール間の疎結合性を高め、モジュールの独立性を確保するために適しています。</p>
-    
-    <pre><code>// モジュールA内のコード
+
+<p>この例では、「orders」モジュール内の<code>OrderService</code>が「inventory」モジュールの<code>InventoryService</code>に直接依存しています。
+</p>
+
+<h3>2. イベント駆動パターン</h3>
+<p>
+    イベント駆動パターンでは、モジュール間の直接的な依存関係を避け、イベントを通じて通信します。このパターンは、モジュール間の疎結合性を高め、モジュールの独立性を確保するために適しています。</p>
+
+<pre><code>// モジュールA内のコード
 @Service
 class OrderService {
 
@@ -210,13 +235,15 @@ class InventoryService {
         // ...
     }
 }</code></pre>
-    
-    <p>この例では、「orders」モジュール内の<code>OrderService</code>が<code>OrderCreatedEvent</code>を発行し、「inventory」モジュール内の<code>InventoryService</code>がそのイベントを購読しています。これにより、「orders」モジュールは「inventory」モジュールに直接依存することなく、通信することができます。</p>
-    
-    <h3>3. 共有カーネルパターン</h3>
-    <p>共有カーネルパターンでは、複数のモジュールが共有するドメインモデルやユーティリティを定義します。このパターンは、モジュール間で共通の概念や機能を共有する必要がある場合に適しています。</p>
-    
-    <pre><code>// 共有カーネルモジュール内のコード
+
+<p>この例では、「orders」モジュール内の<code>OrderService</code>が<code>OrderCreatedEvent</code>を発行し、「inventory」モジュール内の<code>InventoryService</code>がそのイベントを購読しています。これにより、「orders」モジュールは「inventory」モジュールに直接依存することなく、通信することができます。
+</p>
+
+<h3>3. 共有カーネルパターン</h3>
+<p>
+    共有カーネルパターンでは、複数のモジュールが共有するドメインモデルやユーティリティを定義します。このパターンは、モジュール間で共通の概念や機能を共有する必要がある場合に適しています。</p>
+
+<pre><code>// 共有カーネルモジュール内のコード
 package com.example.application.shared;
 
 public class Money {
@@ -258,13 +285,15 @@ class PaymentService {
         return payment;
     }
 }</code></pre>
-    
-    <p>この例では、「shared」モジュール内の<code>Money</code>クラスが「orders」モジュールと「payments」モジュールで共有されています。</p>
-    
-    <h2>モジュール間の依存関係の可視化</h2>
-    <p>Spring Modulithは、モジュール間の依存関係を可視化するための機能を提供します。<code>Modulith</code>クラスの<code>toModuleModel()</code>メソッドを使用すると、アプリケーションのモジュール構造をモデル化し、そのモデルを使用して依存関係を可視化できます。</p>
-    
-    <pre><code>@Test
+
+<p>この例では、「shared」モジュール内の<code>Money</code>クラスが「orders」モジュールと「payments」モジュールで共有されています。
+</p>
+
+<h2>モジュール間の依存関係の可視化</h2>
+<p>Spring Modulithは、モジュール間の依存関係を可視化するための機能を提供します。<code>Modulith</code>クラスの<code>toModuleModel()</code>メソッドを使用すると、アプリケーションのモジュール構造をモデル化し、そのモデルを使用して依存関係を可視化できます。
+</p>
+
+<pre><code>@Test
 void createModulithDiagram() {
     
     // モジュール構造のモデル化
@@ -276,13 +305,15 @@ void createModulithDiagram() {
     // AsciiDoc図の生成
     new AsciiDocModuleWriter().write(model, Paths.get("modulith-diagram.adoc"));
 }</code></pre>
-    
-    <p>このコードは、アプリケーションのモジュール構造をPlantUML図とAsciiDoc図として生成します。これらの図を使用して、モジュール間の依存関係を視覚的に理解することができます。</p>
-    
-    <h2>モジュール間の依存関係のテスト</h2>
-    <p>Spring Modulithは、モジュール間の依存関係をテストするための機能を提供します。<code>@ModuleTest</code>アノテーションを使用すると、特定のモジュールとその依存モジュールのみをロードしてテストを実行できます。</p>
-    
-    <pre><code>@SpringBootTest
+
+<p>
+    このコードは、アプリケーションのモジュール構造をPlantUML図とAsciiDoc図として生成します。これらの図を使用して、モジュール間の依存関係を視覚的に理解することができます。</p>
+
+<h2>モジュール間の依存関係のテスト</h2>
+<p>Spring Modulithは、モジュール間の依存関係をテストするための機能を提供します。<code>@ModuleTest</code>アノテーションを使用すると、特定のモジュールとその依存モジュールのみをロードしてテストを実行できます。
+</p>
+
+<pre><code>@SpringBootTest
 @ModuleTest(value = "orders")
 class OrderModuleTests {
 
@@ -294,34 +325,55 @@ class OrderModuleTests {
         // ...
     }
 }</code></pre>
-    
-    <p>このテストは、「orders」モジュールとその依存モジュールのみをロードしてテストを実行します。これにより、モジュール間の依存関係が適切に定義されていることを確認できます。</p>
-    
-    <h2>モジュール間の依存関係のベストプラクティス</h2>
-    <ol>
-        <li><strong>明確な公開APIの定義</strong>: モジュールの公開APIを明確に定義し、内部実装の詳細を隠蔽します。公開APIは、モジュールが提供する機能を明確に表現し、他のモジュールが依存するためのインターフェースを提供します。</li>
-        <li><strong>最小限の公開API</strong>: モジュールの公開APIは最小限に保ち、必要な機能のみを公開します。不必要な機能を公開すると、モジュール間の結合度が高まり、変更の影響範囲が広がります。</li>
-        <li><strong>依存関係の方向性の管理</strong>: モジュール間の依存関係の方向性を管理し、循環依存を避けます。依存関係は一方向であるべきで、上位レベルのモジュールが下位レベルのモジュールに依存するようにします。</li>
-        <li><strong>イベント駆動通信の活用</strong>: モジュール間の直接的な依存関係を減らすために、イベント駆動通信を活用します。イベントを通じて通信することで、モジュール間の疎結合性を高めることができます。</li>
-        <li><strong>共有カーネルの適切な使用</strong>: 共有カーネルは、複数のモジュールで共有される概念や機能を定義するために使用します。共有カーネルは最小限に保ち、モジュール間の結合度を低く保ちます。</li>
-        <li><strong>依存関係の検証の自動化</strong>: モジュール間の依存関係の検証を自動化し、継続的インテグレーションパイプラインに組み込みます。これにより、不正な依存関係が導入されることを防ぎます。</li>
-        <li><strong>依存関係の可視化</strong>: モジュール間の依存関係を定期的に可視化し、アーキテクチャの整合性を確認します。依存関係の可視化により、アーキテクチャの理解と保守が容易になります。</li>
-    </ol>
-    
-    <h3>アンチパターン</h3>
-    <ul>
-        <li><strong>循環依存</strong>: モジュール間の循環依存は、アーキテクチャの複雑さを増し、変更の影響範囲を広げます。循環依存は避け、依存関係は一方向であるべきです。</li>
-        <li><strong>過度な公開API</strong>: モジュールの内部実装の詳細を過度に公開すると、モジュール間の結合度が高まり、モジュールの独立性が損なわれます。公開APIは最小限に保つべきです。</li>
-        <li><strong>共有カーネルの肥大化</strong>: 共有カーネルが肥大化すると、モジュール間の結合度が高まり、変更の影響範囲が広がります。共有カーネルは最小限に保つべきです。</li>
-        <li><strong>依存関係の無視</strong>: モジュール間の依存関係を無視すると、アーキテクチャの整合性が損なわれ、変更の影響範囲が予測不能になります。依存関係は明示的に定義し、検証すべきです。</li>
-        <li><strong>過度な直接依存</strong>: モジュール間の直接依存が過度になると、モジュールの独立性が損なわれ、変更の影響範囲が広がります。イベント駆動通信などを活用して、直接依存を減らすべきです。</li>
-    </ul>
-    
-    <h2>まとめ</h2>
-    <p>Spring Modulithにおけるモジュール間の依存関係の管理は、モジュラーアプリケーションの成功に不可欠な要素です。適切な依存関係の管理により、モジュールの独立性を高め、変更の影響範囲を限定し、アプリケーションの保守性と拡張性を向上させることができます。</p>
-    
-    <p>Spring Modulithは、モジュール間の依存関係を管理するための強力な機能を提供します。公開APIの定義、名前付きインターフェースの定義、依存関係の制約の定義、依存関係の検証など、様々な機能を活用することで、アーキテクチャの整合性を確保しながら、モジュール間の適切な依存関係を構築することができます。</p>
-    
-    <p>モジュール間の依存関係を適切に管理するためには、明確な公開APIの定義、最小限の公開API、依存関係の方向性の管理、イベント駆動通信の活用、共有カーネルの適切な使用、依存関係の検証の自動化、依存関係の可視化などのベストプラクティスを実践することが重要です。これらのプラクティスを実践することで、モジュラーアプリケーションの品質と持続可能性を向上させることができます。</p>
+
+<p>
+    このテストは、「orders」モジュールとその依存モジュールのみをロードしてテストを実行します。これにより、モジュール間の依存関係が適切に定義されていることを確認できます。</p>
+
+<h2>モジュール間の依存関係のベストプラクティス</h2>
+<ol>
+    <li><strong>明確な公開APIの定義</strong>:
+        モジュールの公開APIを明確に定義し、内部実装の詳細を隠蔽します。公開APIは、モジュールが提供する機能を明確に表現し、他のモジュールが依存するためのインターフェースを提供します。
+    </li>
+    <li><strong>最小限の公開API</strong>: モジュールの公開APIは最小限に保ち、必要な機能のみを公開します。不必要な機能を公開すると、モジュール間の結合度が高まり、変更の影響範囲が広がります。
+    </li>
+    <li><strong>依存関係の方向性の管理</strong>:
+        モジュール間の依存関係の方向性を管理し、循環依存を避けます。依存関係は一方向であるべきで、上位レベルのモジュールが下位レベルのモジュールに依存するようにします。
+    </li>
+    <li><strong>イベント駆動通信の活用</strong>:
+        モジュール間の直接的な依存関係を減らすために、イベント駆動通信を活用します。イベントを通じて通信することで、モジュール間の疎結合性を高めることができます。
+    </li>
+    <li><strong>共有カーネルの適切な使用</strong>:
+        共有カーネルは、複数のモジュールで共有される概念や機能を定義するために使用します。共有カーネルは最小限に保ち、モジュール間の結合度を低く保ちます。
+    </li>
+    <li><strong>依存関係の検証の自動化</strong>:
+        モジュール間の依存関係の検証を自動化し、継続的インテグレーションパイプラインに組み込みます。これにより、不正な依存関係が導入されることを防ぎます。
+    </li>
+    <li><strong>依存関係の可視化</strong>: モジュール間の依存関係を定期的に可視化し、アーキテクチャの整合性を確認します。依存関係の可視化により、アーキテクチャの理解と保守が容易になります。
+    </li>
+</ol>
+
+<h3>アンチパターン</h3>
+<ul>
+    <li><strong>循環依存</strong>: モジュール間の循環依存は、アーキテクチャの複雑さを増し、変更の影響範囲を広げます。循環依存は避け、依存関係は一方向であるべきです。
+    </li>
+    <li><strong>過度な公開API</strong>: モジュールの内部実装の詳細を過度に公開すると、モジュール間の結合度が高まり、モジュールの独立性が損なわれます。公開APIは最小限に保つべきです。
+    </li>
+    <li><strong>共有カーネルの肥大化</strong>: 共有カーネルが肥大化すると、モジュール間の結合度が高まり、変更の影響範囲が広がります。共有カーネルは最小限に保つべきです。
+    </li>
+    <li><strong>依存関係の無視</strong>: モジュール間の依存関係を無視すると、アーキテクチャの整合性が損なわれ、変更の影響範囲が予測不能になります。依存関係は明示的に定義し、検証すべきです。
+    </li>
+    <li><strong>過度な直接依存</strong>: モジュール間の直接依存が過度になると、モジュールの独立性が損なわれ、変更の影響範囲が広がります。イベント駆動通信などを活用して、直接依存を減らすべきです。
+    </li>
+</ul>
+
+<h2>まとめ</h2>
+<p>Spring
+    Modulithにおけるモジュール間の依存関係の管理は、モジュラーアプリケーションの成功に不可欠な要素です。適切な依存関係の管理により、モジュールの独立性を高め、変更の影響範囲を限定し、アプリケーションの保守性と拡張性を向上させることができます。</p>
+
+<p>Spring
+    Modulithは、モジュール間の依存関係を管理するための強力な機能を提供します。公開APIの定義、名前付きインターフェースの定義、依存関係の制約の定義、依存関係の検証など、様々な機能を活用することで、アーキテクチャの整合性を確保しながら、モジュール間の適切な依存関係を構築することができます。</p>
+
+<p>
+    モジュール間の依存関係を適切に管理するためには、明確な公開APIの定義、最小限の公開API、依存関係の方向性の管理、イベント駆動通信の活用、共有カーネルの適切な使用、依存関係の検証の自動化、依存関係の可視化などのベストプラクティスを実践することが重要です。これらのプラクティスを実践することで、モジュラーアプリケーションの品質と持続可能性を向上させることができます。</p>
 </body>
 </html>

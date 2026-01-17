@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>基本的なGitコマンド解説</title>
@@ -8,8 +12,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
@@ -18,14 +21,14 @@
     </div>
 
     <h1>基本的なGitコマンド解説</h1>
-    
+
     <section class="command-section">
         <h2>基本的なGitコマンド</h2>
-        
+
         <!-- git init コマンド -->
         <h3>git init - リポジトリの初期化</h3>
         <p>新しいGitリポジトリを作成します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -40,7 +43,7 @@
                 <td>指定したテンプレートディレクトリからテンプレートを使用</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>git init</code> - カレントディレクトリに新しいGitリポジトリを作成<br>
@@ -51,7 +54,7 @@
         <!-- git clone コマンド -->
         <h3>git clone - リポジトリのクローン</h3>
         <p>既存のリポジトリをローカルにコピーします。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -70,7 +73,7 @@
                 <td>サブモジュールも含めて再帰的にクローン</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>git clone https://github.com/username/repository.git</code> - リモートリポジトリをクローン<br>

@@ -14,24 +14,22 @@ const copyOutputBtn = document.getElementById('copy-output-btn');
 const pasteOutputBtn = document.getElementById('paste-output-btn');
 const clearOutputBtn = document.getElementById('clear-output-btn');
 
-function formatJSON(){
+function formatJSON() {
     const inputText = jsonInput.value;
-    try{
+    try {
         const parsedJson = JSON.parse(inputText);
         jsonOutput.textContent = JSON.stringify(parsedJson, null, 2);
-    }
-    catch(e){
+    } catch (e) {
         jsonOutput.textContent = "無効なJSON形式です。\n" + e;
     }
 }
 
-function minifyJSON(){
+function minifyJSON() {
     const outputText = jsonOutput.textContent;
-    try{
+    try {
         const parsedJson = JSON.parse(outputText);
         jsonInput.value = JSON.stringify(parsedJson);
-    }
-    catch(e){
+    } catch (e) {
         jsonInput.value = "無効な整形済みJSONです。\n" + e;
     }
 }
@@ -102,7 +100,9 @@ function setupPasteButton(pasteButton, element, isTextarea = true, afterPasteCal
         if (!navigator.clipboard || !navigator.clipboard.readText) {
             alert('このブラウザではクリップボードの読み取りがサポートされていません。');
             pasteButton.title = 'ペースト失敗';
-            setTimeout(() => { pasteButton.title = originalTitle; }, 2000);
+            setTimeout(() => {
+                pasteButton.title = originalTitle;
+            }, 2000);
             return;
         }
 

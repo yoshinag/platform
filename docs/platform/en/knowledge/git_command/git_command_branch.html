@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Git Branch-Related Commands Guide</title>
@@ -8,8 +12,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
@@ -19,14 +22,14 @@
     </div>
 
     <h1>Git Branch-Related Commands Guide</h1>
-    
+
     <section class="command-section">
         <h2>Branch-Related Commands</h2>
-        
+
         <!-- git branch command -->
         <h3>git branch - Branch Management</h3>
         <p>Creates, lists, and deletes branches.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -53,7 +56,7 @@
                 <td>Display the latest commit for each branch</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>git branch</code> - List local branches<br>
@@ -67,7 +70,7 @@
         <!-- git checkout command -->
         <h3>git checkout - Switch Branches and Restore Files</h3>
         <p>Switches branches or restores files in the working directory.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -90,12 +93,13 @@
                 <td>Separator to distinguish between file paths and branch names</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>git checkout develop</code> - Switch to the develop branch<br>
             <code>git checkout -b feature</code> - Create a new feature branch and switch to it<br>
-            <code>git checkout -- file.txt</code> - Discard changes to file.txt (restore to the state of the last commit)<br>
+            <code>git checkout -- file.txt</code> - Discard changes to file.txt (restore to the state of the last
+            commit)<br>
             <code>git checkout HEAD~1 file.txt</code> - Restore file.txt to the state from one commit before<br>
             <code>git checkout origin/main</code> - Switch to the state of the remote main branch
         </div>
@@ -103,7 +107,7 @@
         <!-- git switch command -->
         <h3>git switch - Switch Branches (Git 2.23 and later)</h3>
         <p>A dedicated command for switching branches (splits functionality from checkout).</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -126,12 +130,13 @@
                 <td>Discard uncommitted changes when switching</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>git switch main</code> - Switch to the main branch<br>
             <code>git switch -c feature</code> - Create a new feature branch and switch to it<br>
-            <code>git switch -C feature</code> - Create a new feature branch if it doesn't exist, or reset it if it exists, then switch to it<br>
+            <code>git switch -C feature</code> - Create a new feature branch if it doesn't exist, or reset it if it
+            exists, then switch to it<br>
             <code>git switch -d HEAD~3</code> - Switch to the commit three commits before HEAD (detached HEAD state)<br>
             <code>git switch -</code> - Return to the previous branch
         </div>
@@ -139,7 +144,7 @@
 
     <div class="navigation-links">
         <a href="git_command.html">Return to Main Page</a> |
-        <a href="git_command_commit.html">Previous Category: Commit-Related Commands</a> | 
+        <a href="git_command_commit.html">Previous Category: Commit-Related Commands</a> |
         <a href="git_command_remote.html">Next Category: Remote Repository Operations</a>
     </div>
 

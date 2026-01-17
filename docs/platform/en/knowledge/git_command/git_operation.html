@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Git Operations Guide</title>
@@ -8,8 +12,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
@@ -22,7 +25,8 @@
     <section id="introduction" class="command-section">
         <h2>Introduction</h2>
         <p>
-            Git is a version control system and a powerful tool for tracking the change history of software development projects.
+            Git is a version control system and a powerful tool for tracking the change history of software development
+            projects.
             This page explains Git operational methods and integration with CI/CD tools.
         </p>
     </section>
@@ -41,11 +45,13 @@
         <h2>Git Flow</h2>
         <p>
             Git Flow is one of the methodologies for branch management using Git, proposed by Vincent Driessen in 2010.
-            This workflow provides a systematic approach to efficiently advance development while maintaining code quality,
+            This workflow provides a systematic approach to efficiently advance development while maintaining code
+            quality,
             especially in large-scale projects where multiple developers work simultaneously.
         </p>
         <p>
-            Git Flow uses multiple branches with specific roles, each representing different stages of the development process.
+            Git Flow uses multiple branches with specific roles, each representing different stages of the development
+            process.
             This model enables organized release management, feature development, and bug fixes.
         </p>
 
@@ -53,53 +59,62 @@
             <h3>Main Branches in Git Flow</h3>
             <h4>Main Branches</h4>
             <p>In Git Flow, there are always two main branches:</p>
-            
+
             <h4>master (main) branch</h4>
             <p>
-                This branch contains production-ready code. The code in this branch should always be in a deployable state for the production environment.
-                Commits to the master branch are typically made only during new version releases or when applying hotfixes.
+                This branch contains production-ready code. The code in this branch should always be in a deployable
+                state for the production environment.
+                Commits to the master branch are typically made only during new version releases or when applying
+                hotfixes.
             </p>
-            
+
             <h4>develop branch</h4>
             <p>
-                This branch reflects the latest state of development. Development work for the next release branches off from this branch,
+                This branch reflects the latest state of development. Development work for the next release branches off
+                from this branch,
                 and completed features are merged back into it. When the develop branch is stable and ready for release,
                 a release branch is created to prepare for the release.
             </p>
         </div>
-        
+
         <div class="category-description">
             <h3>Supporting Branches</h3>
             <p>Git Flow uses the following three types of supporting branches:</p>
-            
+
             <h4>feature branches</h4>
             <p>
-                These branches are used for developing new features. They always branch off from the develop branch and are merged back into the develop branch when development is complete.
+                These branches are used for developing new features. They always branch off from the develop branch and
+                are merged back into the develop branch when development is complete.
                 The naming convention is typically <code>feature/feature-name</code>.
             </p>
             <p>Creation method: <code>git checkout -b feature/new-feature develop</code></p>
             <p>Merge method: <code>git checkout develop</code> → <code>git merge --no-ff feature/new-feature</code></p>
-            
+
             <h4>release branches</h4>
             <p>
-                These branches are for release preparation. They branch off from the develop branch, and when release preparation is complete, they are merged into both master and develop.
-                Only bug fixes and small changes related to the release are made on this branch; no new features are added.
+                These branches are for release preparation. They branch off from the develop branch, and when release
+                preparation is complete, they are merged into both master and develop.
+                Only bug fixes and small changes related to the release are made on this branch; no new features are
+                added.
                 The naming convention is typically <code>release/version-number</code>.
             </p>
             <p>Creation method: <code>git checkout -b release/1.0.0 develop</code></p>
             <p>Merge method:</p>
-            <p><code>git checkout master</code> → <code>git merge --no-ff release/1.0.0</code> → <code>git tag -a 1.0.0</code></p>
+            <p><code>git checkout master</code> → <code>git merge --no-ff release/1.0.0</code> → <code>git tag -a
+                1.0.0</code></p>
             <p><code>git checkout develop</code> → <code>git merge --no-ff release/1.0.0</code></p>
-            
+
             <h4>hotfix branches</h4>
             <p>
-                These branches are used for urgent bug fixes discovered in the production environment. They branch off from the master branch,
+                These branches are used for urgent bug fixes discovered in the production environment. They branch off
+                from the master branch,
                 and after the fix is complete, they are merged into both master and develop.
                 The naming convention is typically <code>hotfix/version-number</code>.
             </p>
             <p>Creation method: <code>git checkout -b hotfix/1.0.1 master</code></p>
             <p>Merge method:</p>
-            <p><code>git checkout master</code> → <code>git merge --no-ff hotfix/1.0.1</code> → <code>git tag -a 1.0.1</code></p>
+            <p><code>git checkout master</code> → <code>git merge --no-ff hotfix/1.0.1</code> → <code>git tag -a
+                1.0.1</code></p>
             <p><code>git checkout develop</code> → <code>git merge --no-ff hotfix/1.0.1</code></p>
         </div>
 
@@ -110,12 +125,12 @@
                 There is a command-line tool called "git-flow" for implementing Git Flow.
                 Using this tool makes it easy to perform branch operations according to the Git Flow workflow.
             </p>
-            
+
             <h4>Installation Methods</h4>
             <p>macOS (Homebrew): <code>brew install git-flow-avh</code></p>
             <p>Ubuntu/Debian: <code>apt-get install git-flow</code></p>
             <p>Windows (Git for Windows): Included by default</p>
-            
+
             <h4>Basic Usage</h4>
             <p>Repository initialization: <code>git flow init</code></p>
             <p>Start feature development: <code>git flow feature start feature-name</code></p>
@@ -136,7 +151,7 @@
                 <li>Production code (master) is always maintained in a stable state</li>
                 <li>Clearly defined process for urgent bug fixes (hotfixes)</li>
             </ul>
-            
+
             <h4>Disadvantages</h4>
             <ul>
                 <li>May be too complex for small projects or projects with frequent deployments</li>
@@ -154,17 +169,19 @@
                 It is characterized by a simple flow of creating feature branches from the master branch
                 and merging them back into master through pull requests after development is complete.
             </p>
-            
+
             <h4>GitLab Flow</h4>
             <p>
                 GitLab Flow is a workflow positioned between Git Flow and GitHub Flow.
                 It introduces environment branches (production, staging, pre-production, etc.),
-                and is characterized by a gradual merging flow from feature branches to master, and then to environment branches.
+                and is characterized by a gradual merging flow from feature branches to master, and then to environment
+                branches.
             </p>
-            
+
             <h4>Trunk Based Development</h4>
             <p>
-                Trunk Based Development is a simple workflow where all developers either commit directly to a single branch (trunk/master)
+                Trunk Based Development is a simple workflow where all developers either commit directly to a single
+                branch (trunk/master)
                 or use short-lived feature branches.
                 It is suitable for teams that emphasize continuous integration (CI).
             </p>
@@ -173,12 +190,14 @@
         <div class="category-description">
             <h3>Summary</h3>
             <p>
-                Git Flow is a branch management strategy particularly suited for large-scale projects or projects with clear release cycles.
+                Git Flow is a branch management strategy particularly suited for large-scale projects or projects with
+                clear release cycles.
                 However, it is not suitable for all projects, and it is important to select an appropriate Git workflow
                 based on the size and requirements of your project.
             </p>
             <p>
-                When adopting Git Flow, the key to success is for the entire team to understand and consistently apply its rules and procedures.
+                When adopting Git Flow, the key to success is for the entire team to understand and consistently apply
+                its rules and procedures.
                 Additionally, using the git-flow tool can simplify complex branch operations.
             </p>
         </div>
@@ -188,7 +207,8 @@
         <h2>CircleCI</h2>
         <p>
             CircleCI is a cloud-based platform for implementing continuous integration/continuous delivery (CI/CD).
-            It integrates with Git repositories such as GitHub and Bitbucket, automatically performing builds, tests, and deployments whenever code changes occur.
+            It integrates with Git repositories such as GitHub and Bitbucket, automatically performing builds, tests,
+            and deployments whenever code changes occur.
         </p>
         <p>
             By using CircleCI, development teams can automate manual testing and deployment tasks,
@@ -198,31 +218,32 @@
 
         <div class="category-description">
             <h3>Main Features of CircleCI</h3>
-            
+
             <h4>Cloud-based CI/CD Platform</h4>
             <p>
                 CircleCI is a cloud-based service, eliminating the need for infrastructure management.
                 It also offers self-hosted runners, enabling job execution in private environments.
             </p>
-            
+
             <h4>Integration with GitHub and Bitbucket</h4>
             <p>
                 CircleCI easily integrates with major Git repository hosting services such as GitHub and Bitbucket.
                 It automatically executes workflows triggered by events like pushes to repositories or pull requests.
             </p>
-            
+
             <h4>Parallel Execution and Caching</h4>
             <p>
                 By running tests in parallel, CircleCI reduces build and test times.
                 It also accelerates repetitive processes by caching dependencies and build results.
             </p>
-            
+
             <h4>Rich Integrations</h4>
             <p>
-                CircleCI can integrate with many third-party services including Slack, JIRA, AWS, Google Cloud, and Docker.
+                CircleCI can integrate with many third-party services including Slack, JIRA, AWS, Google Cloud, and
+                Docker.
                 This allows you to integrate development workflows into your existing toolchain.
             </p>
-            
+
             <h4>Flexible Configuration</h4>
             <p>
                 Using YAML-based configuration files, you can customize build, test, and deployment processes.
@@ -232,10 +253,11 @@
 
         <div class="category-description">
             <h3>Basic Usage of CircleCI</h3>
-            
+
             <h4>Account Creation and Integration</h4>
             <p>
-                1. Access the CircleCI website (<a href="https://circleci.com/" target="_blank">https://circleci.com/</a>).
+                1. Access the CircleCI website (<a href="https://circleci.com/"
+                                                   target="_blank">https://circleci.com/</a>).
             </p>
             <p>
                 2. Sign up with your GitHub or Bitbucket account.
@@ -243,7 +265,7 @@
             <p>
                 3. Select the repository you want to integrate and click "Set Up Project".
             </p>
-            
+
             <h4>Creating a Configuration File</h4>
             <p>
                 To use CircleCI, you need to create a <code>.circleci</code> directory in your project's root directory,
@@ -266,7 +288,7 @@ jobs:
           name: "Run tests"
           command: npm test
 </code></pre>
-            
+
             <h4>Setting Up Workflows</h4>
             <p>
                 You can set up workflows to run multiple jobs sequentially or in parallel.
@@ -320,19 +342,19 @@ workflows:
 
         <div class="category-description">
             <h3>Key Concepts of CircleCI</h3>
-            
+
             <h4>Jobs</h4>
             <p>
                 A job is a unit of work that executes a series of steps (commands).
                 Each job runs in its own execution environment (Executor).
             </p>
-            
+
             <h4>Steps</h4>
             <p>
                 Steps are individual actions (commands or scripts) that are executed within a job.
                 For example, checking out code, installing dependencies, and running tests are all steps.
             </p>
-            
+
             <h4>Executors</h4>
             <p>
                 Executors define the environment in which jobs are run. CircleCI provides three types of executors:
@@ -342,13 +364,13 @@ workflows:
                 <li>Machine: Provides a complete virtual machine environment.</li>
                 <li>macOS: Runs jobs in a macOS environment (used for building iOS apps, etc.).</li>
             </ul>
-            
+
             <h4>Workflows</h4>
             <p>
                 Workflows define the execution order and conditions for multiple jobs.
                 You can run jobs in parallel or execute certain jobs after other specific jobs have completed.
             </p>
-            
+
             <h4>Orbs</h4>
             <p>
                 Orbs are reusable configuration packages.
@@ -374,13 +396,15 @@ jobs:
 
         <div class="category-description">
             <h3>Advanced Features of CircleCI</h3>
-            
+
             <h4>Environment Variables and Contexts</h4>
             <p>
-                Sensitive information (such as API keys and passwords) can be set as environment variables in the CircleCI web interface.
-                Additionally, environment variables that are shared across multiple projects can be managed as "contexts".
+                Sensitive information (such as API keys and passwords) can be set as environment variables in the
+                CircleCI web interface.
+                Additionally, environment variables that are shared across multiple projects can be managed as
+                "contexts".
             </p>
-            
+
             <h4>Caching and Dependency Management</h4>
             <p>
                 By caching the results of time-consuming processes, such as installing dependencies,
@@ -398,7 +422,7 @@ jobs:
         - node_modules
       key: v1-dependencies-{{ checksum "package.json" }}
 </code></pre>
-            
+
             <h4>Parallel Test Execution</h4>
             <p>
                 By distributing tests across multiple containers for parallel execution, you can reduce testing time.
@@ -414,11 +438,12 @@ jobs:
             TESTFILES=$(circleci tests glob "test/**/*.js" | circleci tests split --split-by=timings)
             npm test -- $TESTFILES
 </code></pre>
-            
+
             <h4>Approval Jobs</h4>
             <p>
                 By adding a manual approval step to a workflow,
-                you can require human approval before executing certain jobs (e.g., deploying to a production environment).
+                you can require human approval before executing certain jobs (e.g., deploying to a production
+                environment).
             </p>
             <pre><code>workflows:
   version: 2
@@ -440,11 +465,12 @@ jobs:
 
         <div class="category-description">
             <h3>CircleCI and Git Integration</h3>
-            
+
             <h4>Execution Based on Branches and Tags</h4>
             <p>
                 You can configure jobs to run only for specific branches or tags.
-                For example, you can set up deployments to production to only execute when pushing to the <code>main</code> branch.
+                For example, you can set up deployments to production to only execute when pushing to the
+                <code>main</code> branch.
             </p>
             <pre><code>workflows:
   version: 2
@@ -463,7 +489,7 @@ jobs:
             tags:
               only: /^v.*/
 </code></pre>
-            
+
             <h4>Integration with Pull Requests</h4>
             <p>
                 CircleCI integrates with pull requests on GitHub and Bitbucket,
@@ -474,15 +500,16 @@ jobs:
 
         <div class="category-description">
             <h3>CircleCI Best Practices</h3>
-            
+
             <h4>Configuration File Validation</h4>
             <p>
-                Before committing your CircleCI configuration file, it's recommended to validate its syntax using the CircleCI CLI tool.
+                Before committing your CircleCI configuration file, it's recommended to validate its syntax using the
+                CircleCI CLI tool.
             </p>
             <p>
                 <code>circleci config validate</code>
             </p>
-            
+
             <h4>Local Test Execution</h4>
             <p>
                 You can use the CircleCI CLI tool to run jobs locally and test your configuration.
@@ -490,7 +517,7 @@ jobs:
             <p>
                 <code>circleci local execute</code>
             </p>
-            
+
             <h4>Build Time Optimization</h4>
             <p>
                 You can reduce build times using the following methods:
@@ -501,11 +528,13 @@ jobs:
                 <li>Design workflows to only execute necessary jobs</li>
                 <li>Use lightweight Docker images</li>
             </ul>
-            
+
             <h4>Security Considerations</h4>
             <p>
-                Sensitive information (API keys, passwords, etc.) should be set as environment variables and not written directly in configuration files.
-                It's also recommended to utilize security-related features such as permission management and audit log review.
+                Sensitive information (API keys, passwords, etc.) should be set as environment variables and not written
+                directly in configuration files.
+                It's also recommended to utilize security-related features such as permission management and audit log
+                review.
             </p>
         </div>
 
@@ -513,13 +542,16 @@ jobs:
             <h3>Summary</h3>
             <p>
                 CircleCI is a powerful platform for implementing continuous integration/continuous delivery (CI/CD).
-                By integrating Git repositories with CircleCI, you can automatically build, test, and deploy whenever code changes occur,
+                By integrating Git repositories with CircleCI, you can automatically build, test, and deploy whenever
+                code changes occur,
                 streamlining the software development process.
             </p>
             <p>
                 By defining flexible workflows using YAML-based configuration files and
-                leveraging parallel execution and caching features, you can improve your development team's productivity.
-                CircleCI also integrates with many third-party services, making it easy to incorporate into existing development workflows.
+                leveraging parallel execution and caching features, you can improve your development team's
+                productivity.
+                CircleCI also integrates with many third-party services, making it easy to incorporate into existing
+                development workflows.
             </p>
         </div>
     </section>
@@ -539,46 +571,51 @@ jobs:
 
         <div class="category-description">
             <h3>Main Features of GitHub Actions</h3>
-            
+
             <h4>Complete Integration with GitHub</h4>
             <p>
                 GitHub Actions is fully integrated with the GitHub platform.
                 It directly connects with repository code, pull requests, issues, and more,
                 allowing you to seamlessly automate development workflows.
             </p>
-            
+
             <h4>Multi-platform Support</h4>
             <p>
                 GitHub Actions can run workflows on multiple operating systems including Linux, Windows, and macOS.
                 This makes it easier to build and test applications for different platforms.
             </p>
-            
+
             <h4>Reusable Actions</h4>
             <p>
-                With GitHub Actions, you can create and share reusable components (actions) for performing specific tasks.
+                With GitHub Actions, you can create and share reusable components (actions) for performing specific
+                tasks.
                 The GitHub Marketplace hosts numerous actions created by the community,
                 which you can combine to efficiently build your workflows.
             </p>
-            
+
             <h4>Matrix Builds</h4>
             <p>
-                GitHub Actions supports matrix builds, which allow you to run jobs in parallel with multiple configurations (different OS or runtime versions, etc.).
+                GitHub Actions supports matrix builds, which allow you to run jobs in parallel with multiple
+                configurations (different OS or runtime versions, etc.).
                 This enables efficient compatibility testing across different environments.
             </p>
-            
+
             <h4>Self-hosted Runners</h4>
             <p>
-                In addition to GitHub-provided hosted runners, you can run workflows on your own machines (self-hosted runners).
-                This provides flexibility when you have special hardware requirements or need access to internal networks.
+                In addition to GitHub-provided hosted runners, you can run workflows on your own machines (self-hosted
+                runners).
+                This provides flexibility when you have special hardware requirements or need access to internal
+                networks.
             </p>
         </div>
 
         <div class="category-description">
             <h3>Basic Usage of GitHub Actions</h3>
-            
+
             <h4>Creating Workflow Files</h4>
             <p>
-                To use GitHub Actions, you create a YAML file (e.g., <code>ci.yml</code>) in the <code>.github/workflows</code> directory
+                To use GitHub Actions, you create a YAML file (e.g., <code>ci.yml</code>) in the
+                <code>.github/workflows</code> directory
                 of your repository. This file contains the workflow configuration.
             </p>
             <p>
@@ -610,7 +647,7 @@ jobs:
     - name: Run tests
       run: npm test
 </code></pre>
-            
+
             <h4>Key Components of Workflows</h4>
             <p>
                 GitHub Actions workflows consist of the following key components:
@@ -619,7 +656,9 @@ jobs:
                 <li><strong>name</strong>: The name of the workflow</li>
                 <li><strong>on</strong>: Events that trigger the workflow (push, pull_request, schedule, etc.)</li>
                 <li><strong>jobs</strong>: A set of jobs to execute</li>
-                <li><strong>runs-on</strong>: The environment to run the job on (ubuntu-latest, windows-latest, macos-latest, etc.)</li>
+                <li><strong>runs-on</strong>: The environment to run the job on (ubuntu-latest, windows-latest,
+                    macos-latest, etc.)
+                </li>
                 <li><strong>steps</strong>: A sequence of steps to execute within a job</li>
                 <li><strong>uses</strong>: The action to use</li>
                 <li><strong>with</strong>: Parameters to pass to the action</li>
@@ -629,7 +668,7 @@ jobs:
 
         <div class="category-description">
             <h3>Trigger Events for GitHub Actions</h3>
-            
+
             <h4>Pushes and Pull Requests</h4>
             <p>
                 The most common triggers are pushes to specific branches or pull requests.
@@ -644,7 +683,7 @@ jobs:
   pull_request:
     branches: [ main ]
 </code></pre>
-            
+
             <h4>Scheduled Execution</h4>
             <p>
                 You can use cron syntax to run workflows on a regular schedule.
@@ -655,7 +694,7 @@ jobs:
     # Run at 3 AM (UTC) every day
     - cron: '0 3 * * *'
 </code></pre>
-            
+
             <h4>Manual Triggers</h4>
             <p>
                 Using the <code>workflow_dispatch</code> event, you can manually run workflows
@@ -673,7 +712,7 @@ jobs:
           - staging
           - production
 </code></pre>
-            
+
             <h4>Other Events</h4>
             <p>
                 GitHub Actions supports many GitHub events as triggers, including release creation,
@@ -689,7 +728,7 @@ jobs:
 
         <div class="category-description">
             <h3>Jobs and Steps</h3>
-            
+
             <h4>Defining Jobs</h4>
             <p>
                 Each job in a workflow runs in an independent execution environment.
@@ -713,7 +752,7 @@ jobs:
     steps:
       # Deploy steps...
 </code></pre>
-            
+
             <h4>Matrix Builds</h4>
             <p>
                 Using a matrix strategy, you can run the same job multiple times
@@ -735,7 +774,7 @@ jobs:
       - run: npm install
       - run: npm test
 </code></pre>
-            
+
             <h4>Sharing Data Between Jobs</h4>
             <p>
                 You can use artifacts to share files between jobs.
@@ -767,7 +806,7 @@ jobs:
 
         <div class="category-description">
             <h3>Using Actions</h3>
-            
+
             <h4>Using Published Actions</h4>
             <p>
                 Many published actions are registered in the GitHub Marketplace.
@@ -786,7 +825,7 @@ jobs:
       path: ~/.npm
       key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 </code></pre>
-            
+
             <h4>Creating Custom Actions</h4>
             <p>
                 You can create your own custom actions to meet specific needs.
@@ -830,7 +869,7 @@ try {
 
         <div class="category-description">
             <h3>Environment Variables and Secrets</h3>
-            
+
             <h4>Using Environment Variables</h4>
             <p>
                 You can define environment variables in your workflow and share them between steps.
@@ -849,7 +888,7 @@ try {
           DEBUG: true
         run: echo "DEBUG is $DEBUG"
 </code></pre>
-            
+
             <h4>Managing Secrets</h4>
             <p>
                 Sensitive information such as API keys and passwords can be stored as GitHub repository secrets
@@ -883,7 +922,7 @@ try {
 
         <div class="category-description">
             <h3>Conditional Execution</h3>
-            
+
             <h4>If Conditions</h4>
             <p>
                 You can use <code>if</code> conditions to run jobs or steps only when specific conditions are met.
@@ -906,10 +945,11 @@ try {
         if: failure()
         run: ./notify-failure.sh
 </code></pre>
-            
+
             <h4>Expressions and Functions</h4>
             <p>
-                GitHub Actions provides many functions and operators that can be used in conditional expressions or for generating values.
+                GitHub Actions provides many functions and operators that can be used in conditional expressions or for
+                generating values.
             </p>
             <pre><code>steps:
   - name: Process based on branch name
@@ -926,10 +966,11 @@ try {
 
         <div class="category-description">
             <h3>Advanced Usage Examples of GitHub Actions</h3>
-            
+
             <h4>Complex CI/CD Pipeline</h4>
             <p>
-                You can build a complete CI/CD pipeline including build, test, and deployment by combining multiple jobs.
+                You can build a complete CI/CD pipeline including build, test, and deployment by combining multiple
+                jobs.
             </p>
             <pre><code>name: CI/CD Pipeline
 
@@ -1005,7 +1046,7 @@ jobs:
 
         <div class="category-description">
             <h3>GitHub Actions Best Practices</h3>
-            
+
             <h4>Workflow Optimization</h4>
             <ul>
                 <li>Cache dependencies to reduce build time</li>
@@ -1013,7 +1054,7 @@ jobs:
                 <li>Split large workflows into multiple smaller workflows</li>
                 <li>Utilize matrix builds to parallelize tests</li>
             </ul>
-            
+
             <h4>Security Measures</h4>
             <ul>
                 <li>Store sensitive information as secrets and don't write them directly in workflow files</li>
@@ -1021,7 +1062,7 @@ jobs:
                 <li>Limit access to sensitive information in workflows triggered by pull requests</li>
                 <li>Set GITHUB_TOKEN permissions to the minimum necessary</li>
             </ul>
-            
+
             <h4>Improving Maintainability</h4>
             <ul>
                 <li>Separate complex commands into script files</li>
@@ -1055,7 +1096,8 @@ jobs:
         <p>
             Git Fork is the process of creating a copy of another developer's repository in your own account.
             By forking, you can make changes to a project freely without affecting the original repository.
-            This is an essential feature for contributing to open-source projects and collaborative development within organizations.
+            This is an essential feature for contributing to open-source projects and collaborative development within
+            organizations.
         </p>
         <p>
             After making changes to a forked repository, you can propose those changes to the original repository
@@ -1065,21 +1107,25 @@ jobs:
 
         <div class="category-description">
             <h3>Basic Concepts of Forking</h3>
-            
+
             <h4>Difference Between Fork and Clone</h4>
             <p>
                 In Git terminology, "fork" and "clone" are similar but distinct concepts:
             </p>
             <ul>
-                <li><strong>Fork</strong>: A server-side operation that creates a copy of another user's repository in your account.
-                Forking is primarily a feature of Git hosting services like GitHub and GitLab.</li>
-                <li><strong>Clone</strong>: An operation that creates a copy of a remote repository on your local machine.
-                This is done using the <code>git clone</code> command.</li>
+                <li><strong>Fork</strong>: A server-side operation that creates a copy of another user's repository in
+                    your account.
+                    Forking is primarily a feature of Git hosting services like GitHub and GitLab.
+                </li>
+                <li><strong>Clone</strong>: An operation that creates a copy of a remote repository on your local
+                    machine.
+                    This is done using the <code>git clone</code> command.
+                </li>
             </ul>
             <p>
                 In a typical workflow, you first fork a repository and then clone your fork to work on it locally.
             </p>
-            
+
             <h4>Main Uses of Forks</h4>
             <p>
                 Forks are primarily used for the following purposes:
@@ -1087,14 +1133,15 @@ jobs:
             <ul>
                 <li>Contributing to open-source projects</li>
                 <li>Starting new projects based on existing ones</li>
-                <li>Collaborative development within organizations (especially when access permissions are restricted)</li>
+                <li>Collaborative development within organizations (especially when access permissions are restricted)
+                </li>
                 <li>Developing experimental changes or features</li>
             </ul>
         </div>
 
         <div class="category-description">
             <h3>How to Fork Repositories</h3>
-            
+
             <h4>Forking on GitHub</h4>
             <p>
                 The process of forking a repository on GitHub is very simple:
@@ -1107,9 +1154,10 @@ jobs:
             </ol>
             <p>
                 Once the fork is complete, a copy of the original repository will be created in your account.
-                The URL of this repository will typically be <code>https://github.com/your-username/repository-name</code>.
+                The URL of this repository will typically be
+                <code>https://github.com/your-username/repository-name</code>.
             </p>
-            
+
             <h4>Forking on GitLab</h4>
             <p>
                 The process for forking a repository on GitLab is similar:
@@ -1125,7 +1173,7 @@ jobs:
 
         <div class="category-description">
             <h3>Working with Forked Repositories</h3>
-            
+
             <h4>Cloning Your Fork and Setting Up Remotes</h4>
             <p>
                 To work with your forked repository locally, first create a clone:
@@ -1133,7 +1181,8 @@ jobs:
             <pre><code>git clone https://github.com/your-username/repository-name.git
 cd repository-name</code></pre>
             <p>
-                To make it easier to sync with the original repository (upstream repository), it's recommended to add an "upstream" remote:
+                To make it easier to sync with the original repository (upstream repository), it's recommended to add an
+                "upstream" remote:
             </p>
             <pre><code>git remote add upstream https://github.com/original-owner/repository-name.git</code></pre>
             <p>
@@ -1147,10 +1196,11 @@ cd repository-name</code></pre>
 origin    https://github.com/your-username/repository-name.git (push)
 upstream  https://github.com/original-owner/repository-name.git (fetch)
 upstream  https://github.com/original-owner/repository-name.git (push)</code></pre>
-            
+
             <h4>Syncing with the Upstream Repository</h4>
             <p>
-                To incorporate changes from the original repository (upstream repository) into your fork, follow these steps:
+                To incorporate changes from the original repository (upstream repository) into your fork, follow these
+                steps:
             </p>
             <pre><code># Fetch the latest changes from the upstream repository
 git fetch upstream
@@ -1166,27 +1216,30 @@ git push origin main</code></pre>
             <p>
                 This keeps your fork synchronized with the original repository and up to date.
             </p>
-            
+
             <h4>Creating and Proposing Changes</h4>
             <p>
-                The typical workflow for making changes in a forked repository and proposing them to the original repository is:
+                The typical workflow for making changes in a forked repository and proposing them to the original
+                repository is:
             </p>
             <ol>
                 <li>Sync your fork with the upstream repository.</li>
                 <li>Create a new feature branch:<br>
-                <code>git checkout -b feature/new-feature-name</code></li>
+                    <code>git checkout -b feature/new-feature-name</code></li>
                 <li>Make changes and commit them:<br>
-                <code>git add .</code><br>
-                <code>git commit -m "Description of changes"</code></li>
+                    <code>git add .</code><br>
+                    <code>git commit -m "Description of changes"</code></li>
                 <li>Push the changes to your fork:<br>
-                <code>git push origin feature/new-feature-name</code></li>
-                <li>Create a pull request (or merge request) to the original repository using the GitHub or GitLab web interface.</li>
+                    <code>git push origin feature/new-feature-name</code></li>
+                <li>Create a pull request (or merge request) to the original repository using the GitHub or GitLab web
+                    interface.
+                </li>
             </ol>
         </div>
 
         <div class="category-description">
             <h3>Creating and Managing Pull Requests</h3>
-            
+
             <h4>Creating a Pull Request on GitHub</h4>
             <p>
                 The steps to create a pull request on GitHub are:
@@ -1195,27 +1248,38 @@ git push origin main</code></pre>
                 <li>Navigate to your forked repository page.</li>
                 <li>Click the "Pull requests" tab.</li>
                 <li>Click the "New pull request" button.</li>
-                <li>Select the base repository (original repository) and branch, and the compare repository (your fork) and branch.</li>
+                <li>Select the base repository (original repository) and branch, and the compare repository (your fork)
+                    and branch.
+                </li>
                 <li>Review the changes and click the "Create pull request" button.</li>
                 <li>Enter a title and description for your pull request.</li>
                 <li>Click the "Create pull request" button to finalize.</li>
             </ol>
-            
+
             <h4>Pull Request Best Practices</h4>
             <p>
                 Best practices for creating effective pull requests include:
             </p>
             <ul>
-                <li><strong>Clear title and description</strong>: Concisely explain what changes you've made and why they're necessary.</li>
-                <li><strong>Break down large changes</strong>: Divide large changes into multiple smaller pull requests to make review easier.</li>
+                <li><strong>Clear title and description</strong>: Concisely explain what changes you've made and why
+                    they're necessary.
+                </li>
+                <li><strong>Break down large changes</strong>: Divide large changes into multiple smaller pull requests
+                    to make review easier.
+                </li>
                 <li><strong>Add tests</strong>: When possible, include tests for your changes.</li>
-                <li><strong>Follow coding conventions</strong>: Adhere to the project's coding conventions and style guides.</li>
-                <li><strong>Respond to review comments</strong>: Respond promptly and courteously to feedback from reviewers.</li>
+                <li><strong>Follow coding conventions</strong>: Adhere to the project's coding conventions and style
+                    guides.
+                </li>
+                <li><strong>Respond to review comments</strong>: Respond promptly and courteously to feedback from
+                    reviewers.
+                </li>
             </ul>
-            
+
             <h4>Making Changes After a Pull Request</h4>
             <p>
-                If additional changes are needed after submitting a pull request, simply commit and push to the same branch:
+                If additional changes are needed after submitting a pull request, simply commit and push to the same
+                branch:
             </p>
             <pre><code>git add .
 git commit -m "Address review feedback"
@@ -1227,31 +1291,37 @@ git push origin feature/new-feature-name</code></pre>
 
         <div class="category-description">
             <h3>Managing and Maintaining Forks</h3>
-            
+
             <h4>Regular Synchronization with Upstream</h4>
             <p>
-                When using a fork over an extended period, it's important to synchronize regularly with the upstream repository.
+                When using a fork over an extended period, it's important to synchronize regularly with the upstream
+                repository.
                 This minimizes conflicts and allows you to incorporate the latest features and bug fixes.
             </p>
             <p>
                 The frequency of synchronization depends on how active the upstream repository is, but it's recommended
                 to always sync before making new changes.
             </p>
-            
+
             <h4>Handling Forks That Are No Longer Needed</h4>
             <p>
-                When you've completed your contributions to a project and no longer need the fork, you have several options:
+                When you've completed your contributions to a project and no longer need the fork, you have several
+                options:
             </p>
             <ul>
                 <li><strong>Keep it</strong>: You can retain the fork if you might contribute again in the future.</li>
-                <li><strong>Archive it</strong>: On GitHub and GitLab, you can archive a repository to make it read-only.</li>
-                <li><strong>Delete it</strong>: If completely unnecessary, you can delete the fork. Note that this action cannot be undone.</li>
+                <li><strong>Archive it</strong>: On GitHub and GitLab, you can archive a repository to make it
+                    read-only.
+                </li>
+                <li><strong>Delete it</strong>: If completely unnecessary, you can delete the fork. Note that this
+                    action cannot be undone.
+                </li>
             </ul>
         </div>
 
         <div class="category-description">
             <h3>Advanced Usage of Forks</h3>
-            
+
             <h4>Contributing to Other Forks</h4>
             <p>
                 It's also possible to contribute to someone else's fork. This is useful when multiple developers
@@ -1265,7 +1335,7 @@ git fetch collaborator
 git checkout -b feature/collaborative-feature collaborator/feature/collaborative-feature
 # Make changes
 git push collaborator feature/collaborative-feature</code></pre>
-            
+
             <h4>Using Forks for Experimentation</h4>
             <p>
                 Forks are ideal for trying experimental changes without affecting the original project.
@@ -1279,7 +1349,7 @@ git push collaborator feature/collaborative-feature</code></pre>
 
         <div class="category-description">
             <h3>Common Problems and Solutions</h3>
-            
+
             <h4>Resolving Merge Conflicts</h4>
             <p>
                 Merge conflicts can occur when syncing with the upstream repository or when creating a pull request.
@@ -1290,24 +1360,28 @@ git push collaborator feature/collaborative-feature</code></pre>
             </p>
             <ol>
                 <li>Open the files with conflicts.</li>
-                <li>Look for conflict markers (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>).</li>
+                <li>Look for conflict markers (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>).
+                </li>
                 <li>Edit the code appropriately to integrate both changes or choose one over the other.</li>
                 <li>Remove the conflict markers.</li>
                 <li>Stage and commit the changes:<br>
-                <code>git add .</code><br>
-                <code>git commit -m "Resolve merge conflicts"</code></li>
+                    <code>git add .</code><br>
+                    <code>git commit -m "Resolve merge conflicts"</code></li>
             </ol>
-            
+
             <h4>When a Fork Becomes Outdated</h4>
             <p>
-                Forks that haven't been synchronized for a long time can fall significantly behind the upstream repository.
+                Forks that haven't been synchronized for a long time can fall significantly behind the upstream
+                repository.
                 In this case, you can:
             </p>
             <ul>
                 <li><strong>Rebase</strong>: Rebase your changes on top of the upstream changes.<br>
-                <code>git fetch upstream</code><br>
-                <code>git rebase upstream/main</code></li>
-                <li><strong>Re-create the fork</strong>: In extreme cases, it might be easier to delete the fork and create a new one.</li>
+                    <code>git fetch upstream</code><br>
+                    <code>git rebase upstream/main</code></li>
+                <li><strong>Re-create the fork</strong>: In extreme cases, it might be easier to delete the fork and
+                    create a new one.
+                </li>
             </ul>
         </div>
 
@@ -1319,13 +1393,17 @@ git push collaborator feature/collaborative-feature</code></pre>
                 or start new projects based on existing code.
             </p>
             <p>
-                Effective use of forks involves regular synchronization with the upstream repository, proper branch management,
-                and creating clear pull requests. By following these practices, you can enable smooth collaborative development
+                Effective use of forks involves regular synchronization with the upstream repository, proper branch
+                management,
+                and creating clear pull requests. By following these practices, you can enable smooth collaborative
+                development
                 and effectively contribute to open-source communities and team development.
             </p>
             <p>
-                Forking is not just a technical feature but also a social tool that enables distributed collaborative development.
-                It allows developers from around the world to collaborate beyond geographical constraints and create better software together.
+                Forking is not just a technical feature but also a social tool that enables distributed collaborative
+                development.
+                It allows developers from around the world to collaborate beyond geographical constraints and create
+                better software together.
             </p>
         </div>
     </section>

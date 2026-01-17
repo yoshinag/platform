@@ -1,5 +1,5 @@
 // js/mermaid_viewer/modules/download_utils.js
-import { getUploadedFileName, getActiveTab, activeTabIndex } from './state.js';
+import {getUploadedFileName, getActiveTab, activeTabIndex} from './state.js';
 
 // Helper function to generate filename based on tab name or uploaded file
 function generateFilename(extension, prefix = 'graph') {
@@ -8,7 +8,7 @@ function generateFilename(extension, prefix = 'graph') {
     if (activeTab && activeTab.title && activeTab.title !== `タブ ${activeTabIndex + 1}`) {
         return `${activeTab.title}.${extension}`;
     }
-    
+
     // If no tab title is available, fall back to the uploaded file name
     const uploadedFileName = getUploadedFileName();
     if (uploadedFileName) {
@@ -16,7 +16,7 @@ function generateFilename(extension, prefix = 'graph') {
         const baseName = uploadedFileName.replace(/\.[^/.]+$/, '');
         return `${baseName}.${extension}`;
     }
-    
+
     // If neither is available, use the default prefix
     return `${prefix}.${extension}`;
 }
@@ -46,7 +46,7 @@ export async function downloadSVG(svgElement, graphContainer) { // graphContaine
         svgString = svgString.replace(/^<\?xml[^>]*encoding="[^"]*"[^>]*\?>/i,
             '<?xml version="1.0" encoding="UTF-8" standalone="no"?>');
     }
-    const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+    const blob = new Blob([svgString], {type: 'image/svg+xml;charset=utf-8'});
     const url = URL.createObjectURL(blob);
     triggerDownload(url, generateFilename('svg'));
 }
@@ -89,10 +89,12 @@ export async function downloadPNG(svgElement, graphContainer) { // graphContaine
                 const bbox = svgElement.getBBox();
                 width = bbox.width;
                 height = bbox.height;
-            } catch (e) { /* ignore */ }
+            } catch (e) { /* ignore */
+            }
         }
         if (!width || !height || width === 0 || height === 0) {
-            width = 800; height = 600;
+            width = 800;
+            height = 600;
         }
         canvas.width = Math.max(1, Math.ceil(width));
         canvas.height = Math.max(1, Math.ceil(height));
@@ -120,12 +122,12 @@ export function downloadCode(codeContent) {
         alert('ダウンロードするコードがありません。');
         return;
     }
-    
+
     // Determine the file extension based on the notation
     // This could be enhanced to detect the actual language
     const extension = 'txt';
-    
-    const blob = new Blob([codeContent], { type: 'text/plain;charset=utf-8' });
+
+    const blob = new Blob([codeContent], {type: 'text/plain;charset=utf-8'});
     const url = URL.createObjectURL(blob);
     triggerDownload(url, generateFilename(extension));
 }

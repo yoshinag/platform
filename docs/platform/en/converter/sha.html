@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- Google Analytics -->
+    <script src="../../../platform/js/common/analytics.js"></script>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>SHA Hash Generation Tool</title>
     <link rel="stylesheet" href="css/converter.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../platform/js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
@@ -39,15 +42,18 @@
         <h3>What is SHA?</h3>
         <p>
             SHA (Secure Hash Algorithm) is a series of hash functions designed by the US National Security Agency (NSA).
-            SHA-1 generates a 160-bit (20-byte) hash value, SHA-256 generates a 256-bit (32-byte) hash value, and SHA-512 generates a 512-bit (64-byte) hash value.
+            SHA-1 generates a 160-bit (20-byte) hash value, SHA-256 generates a 256-bit (32-byte) hash value, and
+            SHA-512 generates a 512-bit (64-byte) hash value.
         </p>
         <p>
-            SHA hash functions always produce the same hash value for the same input. However, for slightly different inputs,
+            SHA hash functions always produce the same hash value for the same input. However, for slightly different
+            inputs,
             they generate a completely different hash value. This is a characteristic called the "avalanche effect".
         </p>
         <p>
             From a security perspective, SHA-1 is now deprecated, but SHA-256 and SHA-512 are still considered secure.
-            They are used in various security applications such as digital signatures, message authentication codes, and password hashing.
+            They are used in various security applications such as digital signatures, message authentication codes, and
+            password hashing.
         </p>
         <p>
             For example, the SHA-256 hash value for the string "Hello, World!" is
@@ -77,7 +83,8 @@
             <br>
             <code>echo -n "Hello, World!" | sha512sum</code>
             <br>
-            Result: <code>374d794a95cdcfd8b35993185fef9ba368f160d8daf432d08ba9f1ed1e5abe6cc69291e0fa2fe0006a52570ef18c19def4e617c33ce52ef0a6e5fbe318cb0387 -</code>
+            Result: <code>374d794a95cdcfd8b35993185fef9ba368f160d8daf432d08ba9f1ed1e5abe6cc69291e0fa2fe0006a52570ef18c19def4e617c33ce52ef0a6e5fbe318cb0387
+            -</code>
         </p>
         <p>
             Example of generating an SHA-256 hash of a file:

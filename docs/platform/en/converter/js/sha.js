@@ -15,18 +15,18 @@ async function generateSHA1Hash() {
             outputText.value = '';
             return;
         }
-        
+
         // Convert string to ArrayBuffer
         const encoder = new TextEncoder();
         const data = encoder.encode(input);
-        
+
         // Use SubtleCrypto API to generate SHA-1 hash
         const hashBuffer = await crypto.subtle.digest('SHA-1', data);
-        
+
         // Convert ArrayBuffer to hex string
         const hashArray = Array.from(new Uint8Array(hashBuffer));
         const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        
+
         outputText.value = hashHex;
     } catch (error) {
         outputText.value = 'Error: ' + error.message;
@@ -41,18 +41,18 @@ async function generateSHA256Hash() {
             outputText.value = '';
             return;
         }
-        
+
         // Convert string to ArrayBuffer
         const encoder = new TextEncoder();
         const data = encoder.encode(input);
-        
+
         // Use SubtleCrypto API to generate SHA-256 hash
         const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-        
+
         // Convert ArrayBuffer to hex string
         const hashArray = Array.from(new Uint8Array(hashBuffer));
         const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        
+
         outputText.value = hashHex;
     } catch (error) {
         outputText.value = 'Error: ' + error.message;
@@ -67,18 +67,18 @@ async function generateSHA512Hash() {
             outputText.value = '';
             return;
         }
-        
+
         // Convert string to ArrayBuffer
         const encoder = new TextEncoder();
         const data = encoder.encode(input);
-        
+
         // Use SubtleCrypto API to generate SHA-512 hash
         const hashBuffer = await crypto.subtle.digest('SHA-512', data);
-        
+
         // Convert ArrayBuffer to hex string
         const hashArray = Array.from(new Uint8Array(hashBuffer));
         const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        
+
         outputText.value = hashHex;
     } catch (error) {
         outputText.value = 'Error: ' + error.message;
@@ -95,10 +95,10 @@ function clearText() {
 // Function to copy output to clipboard
 function copyToClipboard() {
     if (!outputText.value) return;
-    
+
     outputText.select();
     document.execCommand('copy');
-    
+
     // Show temporary "Copied!" message
     const originalText = copyBtn.textContent;
     copyBtn.textContent = 'Copied!';

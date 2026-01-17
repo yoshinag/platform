@@ -58,14 +58,14 @@ function isMermaid(fullContent, firstLines) {
         /^quadrantChart/i,
         /^flowchart\s+[A-Za-z]+/i    // flowchart TD, flowchart LR, etc.
     ];
-    
+
     // Check if content starts with any of the Mermaid patterns
     for (const pattern of mermaidStartPatterns) {
         if (pattern.test(firstLines)) {
             return true;
         }
     }
-    
+
     // Check for other Mermaid-specific syntax
     const mermaidSyntaxPatterns = [
         /-->/,                       // Arrow in flowcharts
@@ -87,7 +87,7 @@ function isMermaid(fullContent, firstLines) {
         /\s*par\s+/,                 // Parallel in sequence diagrams
         /\s*section\s+/              // Section in gantt charts
     ];
-    
+
     // Count how many Mermaid-specific patterns are found
     let mermaidPatternCount = 0;
     for (const pattern of mermaidSyntaxPatterns) {
@@ -99,7 +99,7 @@ function isMermaid(fullContent, firstLines) {
             }
         }
     }
-    
+
     return false;
 }
 
@@ -117,14 +117,14 @@ function isDot(fullContent, firstLines) {
         /^strict\s+digraph\s+\w+\s*{/i, // Strict directed graph
         /^strict\s+graph\s+\w+\s*{/i    // Strict undirected graph
     ];
-    
+
     // Check if content starts with any of the DOT patterns
     for (const pattern of dotStartPatterns) {
         if (pattern.test(firstLines)) {
             return true;
         }
     }
-    
+
     // Check for other DOT-specific syntax
     const dotSyntaxPatterns = [
         /\s*->\s*/,                  // Directed edge
@@ -146,7 +146,7 @@ function isDot(fullContent, firstLines) {
         /\s*arrowhead\s*=\s*/,       // Arrow head attribute
         /\s*arrowtail\s*=\s*/        // Arrow tail attribute
     ];
-    
+
     // Count how many DOT-specific patterns are found
     let dotPatternCount = 0;
     for (const pattern of dotSyntaxPatterns) {
@@ -158,7 +158,7 @@ function isDot(fullContent, firstLines) {
             }
         }
     }
-    
+
     return false;
 }
 
@@ -171,10 +171,10 @@ function guessByHeuristics(content) {
     // Count occurrences of certain patterns
     const dotPatterns = ['->', '--', '[', ']', ';'];
     const mermaidPatterns = ['-->', '---', '===', '%%', 'subgraph', 'end'];
-    
+
     let dotScore = 0;
     let mermaidScore = 0;
-    
+
     // Check for DOT patterns
     for (const pattern of dotPatterns) {
         const matches = content.match(new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'));
@@ -182,7 +182,7 @@ function guessByHeuristics(content) {
             dotScore += matches.length;
         }
     }
-    
+
     // Check for Mermaid patterns
     for (const pattern of mermaidPatterns) {
         const matches = content.match(new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'));
@@ -190,13 +190,13 @@ function guessByHeuristics(content) {
             mermaidScore += matches.length;
         }
     }
-    
+
     // Check for curly braces (more common in DOT)
     const curlyBraces = content.match(/{|}/g);
     if (curlyBraces) {
         dotScore += curlyBraces.length * 0.5; // Weight less than other patterns
     }
-    
+
     // Check for file extension in the content (sometimes people include the original syntax in comments)
     if (content.includes('.dot') || content.includes('.gv')) {
         dotScore += 5;
@@ -204,7 +204,7 @@ function guessByHeuristics(content) {
     if (content.includes('.mmd') || content.includes('.mermaid')) {
         mermaidScore += 5;
     }
-    
+
     // Prioritize Mermaid unless DOT is significantly more likely (20% threshold)
     // This implements the requirement to prefer Mermaid when it's difficult to determine
     return dotScore > mermaidScore * 1.2 ? 'dot' : 'mermaid';

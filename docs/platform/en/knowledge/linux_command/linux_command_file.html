@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Linux File Operation Commands Guide</title>
@@ -8,8 +12,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
@@ -18,16 +21,16 @@
     </div>
 
     <h1>Linux File Operation Commands Guide</h1>
-    
+
     <!-- File Operation Commands -->
     <section id="file-operations" class="command-section">
         <h2>File Operation Commands</h2>
         <p>Commands for creating, deleting, moving, and copying files and directories.</p>
-        
+
         <!-- ls command -->
         <h3>ls - List Files and Directories</h3>
         <p>Displays the contents of a directory.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -54,7 +57,7 @@
                 <td>Reverse the sort order</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>ls -la</code> - List all files including hidden files with detailed information<br>
@@ -66,11 +69,11 @@
             <code>ls -la --color=auto</code> - List files with colors based on file type<br>
             <code>ls -R</code> - List files recursively including subdirectories
         </div>
-        
+
         <!-- tree command -->
         <h3>tree - Display Directory Structure in Tree Format</h3>
         <p>Displays directory and file hierarchy in a visual tree format.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -117,7 +120,7 @@
                 <td>Show disk usage for each directory</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>tree</code> - Display the current directory structure in tree format<br>
@@ -135,7 +138,7 @@
         <!-- cd command -->
         <h3>cd - Change Directory</h3>
         <p>Changes the current working directory.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Argument/Option</th>
@@ -158,7 +161,7 @@
                 <td>Change to previous directory</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>cd /usr/local/bin</code> - Change to specified directory<br>
@@ -166,15 +169,17 @@
             <code>cd ..</code> - Move up one level to parent directory<br>
             <code>cd -</code> - Return to previous directory<br>
             <code>cd $(find . -name "target" -type d | head -1)</code> - Change to first directory named "target"<br>
-            <code>cd "$(dirname "$(find . -name "*.conf" | head -1)")"</code> - Change to directory containing first .conf file found<br>
-            <code>for dir in */; do (cd "$dir" && pwd && ls -la | head -5); done</code> - Enter each subdirectory and show contents (using subshell)<br>
+            <code>cd "$(dirname "$(find . -name "*.conf" | head -1)")"</code> - Change to directory containing first
+            .conf file found<br>
+            <code>for dir in */; do (cd "$dir" && pwd && ls -la | head -5); done</code> - Enter each subdirectory and
+            show contents (using subshell)<br>
             <code>OLDPWD=/tmp && cd -</code> - Set OLDPWD variable and change to that directory
         </div>
 
         <!-- mkdir command -->
         <h3>mkdir - Make Directory</h3>
         <p>Creates new directories.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -193,7 +198,7 @@
                 <td>Display information about created directories (verbose mode)</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>mkdir new_directory</code> - Create a new directory<br>
@@ -201,14 +206,16 @@
             <code>mkdir -m 755 secure_dir</code> - Create directory with permissions 755<br>
             <code>mkdir dir1 dir2 dir3</code> - Create multiple directories at once<br>
             <code>mkdir -p project/{src,lib,doc,test}</code> - Create multiple subdirectories using brace expansion<br>
-            <code>mkdir -p project/{src/{main,test}/{java,resources},lib,doc}</code> - Create complex directory structure at once<br>
-            <code>find . -type f -name "*.txt" | xargs dirname | sort | uniq | xargs mkdir -p</code> - Create directory structure matching paths where text files exist
+            <code>mkdir -p project/{src/{main,test}/{java,resources},lib,doc}</code> - Create complex directory
+            structure at once<br>
+            <code>find . -type f -name "*.txt" | xargs dirname | sort | uniq | xargs mkdir -p</code> - Create directory
+            structure matching paths where text files exist
         </div>
 
         <!-- rm command -->
         <h3>rm - Remove Files and Directories</h3>
         <p>Deletes files and directories.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -231,28 +238,32 @@
                 <td>Display progress of removal</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>rm file.txt</code> - Remove a file<br>
             <code>rm -r directory</code> - Remove a directory and its contents<br>
-            <code>rm -rf directory</code> - Force remove a directory and its contents without confirmation (use with caution)<br>
+            <code>rm -rf directory</code> - Force remove a directory and its contents without confirmation (use with
+            caution)<br>
             <code>rm -i *.txt</code> - Prompt for confirmation before removing each text file<br>
             <code>find . -name "*.tmp" -type f -delete</code> - Find and remove all .tmp files recursively<br>
-            <code>find . -name "*.log" -type f -mtime +30 -exec rm {} \;</code> - Remove log files older than 30 days<br>
+            <code>find . -name "*.log" -type f -mtime +30 -exec rm {} \;</code> - Remove log files older than 30
+            days<br>
             <code>find . -type f -size +100M -exec rm -i {} \;</code> - Interactively remove files larger than 100MB<br>
             <code>ls | grep -E "^temp.*\.txt$" | xargs rm</code> - Remove text files starting with "temp" using pipe<br>
             <code>rm -v !(*.txt|*.pdf)</code> - Remove all files except text and PDF files (using extended globbing)
         </div>
-        
+
         <div class="note">
-            <p><strong>Warning:</strong> <code>rm -rf</code> is a very powerful command that can delete files irreversibly. If used incorrectly, it can delete important or system files. Never run commands like <code>rm -rf /</code> or <code>rm -rf /*</code>.</p>
+            <p><strong>Warning:</strong> <code>rm -rf</code> is a very powerful command that can delete files
+                irreversibly. If used incorrectly, it can delete important or system files. Never run commands like
+                <code>rm -rf /</code> or <code>rm -rf /*</code>.</p>
         </div>
 
         <!-- cp command -->
         <h3>cp - Copy Files and Directories</h3>
         <p>Copies files and directories.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -268,7 +279,9 @@
             </tr>
             <tr>
                 <td>-u</td>
-                <td>Copy only when the source file is newer than the destination file or when the destination file doesn't exist</td>
+                <td>Copy only when the source file is newer than the destination file or when the destination file
+                    doesn't exist
+                </td>
             </tr>
             <tr>
                 <td>-v</td>
@@ -279,16 +292,19 @@
                 <td>Preserve file attributes (permissions, timestamps, etc.)</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>cp file.txt backup.txt</code> - Copy a file<br>
             <code>cp -r source_dir destination_dir</code> - Copy a directory and its contents recursively<br>
             <code>cp -rp source_dir destination_dir</code> - Copy a directory preserving attributes<br>
-            <code>cp -a source_dir destination_dir</code> - Copy in archive mode (equivalent to -dpr, preserves symlinks and special files)<br>
+            <code>cp -a source_dir destination_dir</code> - Copy in archive mode (equivalent to -dpr, preserves symlinks
+            and special files)<br>
             <code>cp -u *.txt backup/</code> - Copy only updated files (useful for backups)<br>
-            <code>find . -name "*.jpg" -exec cp {} /backup/images/ \;</code> - Find all JPG files and copy them to backup directory<br>
-            <code>find . -mtime -7 -type f | xargs cp -t /backup/recent/</code> - Copy files modified in the last 7 days to backup<br>
+            <code>find . -name "*.jpg" -exec cp {} /backup/images/ \;</code> - Find all JPG files and copy them to
+            backup directory<br>
+            <code>find . -mtime -7 -type f | xargs cp -t /backup/recent/</code> - Copy files modified in the last 7 days
+            to backup<br>
             <code>cp --parents src/config/app.conf /backup/</code> - Copy preserving directory structure<br>
             <code>ls *.log | xargs -I{} cp {} backup/{}.bak</code> - Copy all log files to backup with changed extension
         </div>
@@ -296,7 +312,7 @@
         <!-- mv command -->
         <h3>mv - Move/Rename Files and Directories</h3>
         <p>Moves or renames files and directories.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -312,14 +328,16 @@
             </tr>
             <tr>
                 <td>-u</td>
-                <td>Move only when the source file is newer than the destination file or when the destination file doesn't exist</td>
+                <td>Move only when the source file is newer than the destination file or when the destination file
+                    doesn't exist
+                </td>
             </tr>
             <tr>
                 <td>-v</td>
                 <td>Display progress of moving/renaming</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>mv file.txt new_name.txt</code> - Rename a file<br>
@@ -328,15 +346,18 @@
             <code>mv -i *.txt /backup/</code> - Move all text files with confirmation before overwriting<br>
             <code>mv -u *.log /archive/</code> - Move only updated log files<br>
             <code>find . -name "*.tmp" -exec mv {} /tmp/ \;</code> - Find and move all temporary files to /tmp directory<br>
-            <code>find . -type f -name "*.jpg" | xargs -I{} mv {} photos/</code> - Move all JPG files to photos directory<br>
-            <code>for f in *.txt; do mv "$f" "${f%.txt}.bak"; done</code> - Change extension of all text files from .txt to .bak<br>
-            <code>ls -1 | grep -E "^[0-9]+" | xargs -I{} mv {} numbered/{}</code> - Move files starting with numbers to numbered directory
+            <code>find . -type f -name "*.jpg" | xargs -I{} mv {} photos/</code> - Move all JPG files to photos
+            directory<br>
+            <code>for f in *.txt; do mv "$f" "${f%.txt}.bak"; done</code> - Change extension of all text files from .txt
+            to .bak<br>
+            <code>ls -1 | grep -E "^[0-9]+" | xargs -I{} mv {} numbered/{}</code> - Move files starting with numbers to
+            numbered directory
         </div>
 
         <!-- touch command -->
         <h3>touch - Create Files/Change Timestamps</h3>
         <p>Creates empty files or updates timestamps of existing files.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -359,7 +380,7 @@
                 <td>Set timestamp to specified time</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>touch new_file.txt</code> - Create an empty file or update timestamp if it exists<br>
@@ -368,14 +389,17 @@
             <code>touch file{1..10}.txt</code> - Create 10 files from file1.txt to file10.txt at once<br>
             <code>find . -name "*.log" -exec touch {} \;</code> - Update timestamps of all log files to current time<br>
             <code>find . -type f -mtime +30 | xargs touch</code> - Update timestamps of files older than 30 days<br>
-            <code>ls -1 *.txt | xargs -I{} touch -r reference.txt {}</code> - Set timestamps of all text files to match reference.txt<br>
-            <code>for i in {1..12}; do touch -d "2025-$i-01" "report-$(printf '%02d' $i).txt"; done</code> - Create report files with timestamps for the first day of each month<br>
-            <code>find . -type f -name "*.bak" | xargs touch -d "$(date -d '-1 year')"</code> - Set timestamps of all backup files to 1 year ago
+            <code>ls -1 *.txt | xargs -I{} touch -r reference.txt {}</code> - Set timestamps of all text files to match
+            reference.txt<br>
+            <code>for i in {1..12}; do touch -d "2025-$i-01" "report-$(printf '%02d' $i).txt"; done</code> - Create
+            report files with timestamps for the first day of each month<br>
+            <code>find . -type f -name "*.bak" | xargs touch -d "$(date -d '-1 year')"</code> - Set timestamps of all
+            backup files to 1 year ago
         </div>
     </section>
 
     <div class="navigation-links">
-        <a href="linux_command.html">Back to Main Page</a> | 
+        <a href="linux_command.html">Back to Main Page</a> |
         <a href="linux_command_text.html">Next Category: Text Processing</a>
     </div>
 

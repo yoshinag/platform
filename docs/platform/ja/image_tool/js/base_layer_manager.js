@@ -106,15 +106,15 @@ class BaseLayerManager {
     }
 
     getDimensions() {
-        return { width: this.width, height: this.height };
+        return {width: this.width, height: this.height};
     }
 
     disable(disabled) {
-        if(this.widthInput) this.widthInput.disabled = disabled;
-        if(this.heightInput) this.heightInput.disabled = disabled;
-        if(this.customWidthInput) this.customWidthInput.disabled = disabled;
-        if(this.customHeightInput) this.customHeightInput.disabled = disabled;
-        if(this.aspectLockCheckbox) this.aspectLockCheckbox.disabled = disabled;
+        if (this.widthInput) this.widthInput.disabled = disabled;
+        if (this.heightInput) this.heightInput.disabled = disabled;
+        if (this.customWidthInput) this.customWidthInput.disabled = disabled;
+        if (this.customHeightInput) this.customHeightInput.disabled = disabled;
+        if (this.aspectLockCheckbox) this.aspectLockCheckbox.disabled = disabled;
     }
 
     reset(initialWidth = 0, initialHeight = 0) {
@@ -130,4 +130,5 @@ class BaseLayerManager {
         // No onUpdate call on reset to avoid loops if main app also resets
     }
 }
+
 // --- END OF FILE base_layer_manager.js ---

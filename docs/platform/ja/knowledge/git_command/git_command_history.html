@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Git履歴と差分の確認コマンド解説</title>
@@ -8,8 +12,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
@@ -19,14 +22,14 @@
     </div>
 
     <h1>Git履歴と差分の確認コマンド解説</h1>
-    
+
     <section class="command-section">
         <h2>履歴と差分の確認</h2>
-        
+
         <!-- git log コマンド -->
         <h3>git log - コミット履歴の表示</h3>
         <p>リポジトリのコミット履歴を表示します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -69,7 +72,7 @@
                 <td>指定した日付以前のコミットを表示</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>git log</code> - コミット履歴を表示<br>
@@ -85,7 +88,7 @@
         <!-- git diff コマンド -->
         <h3>git diff - 変更内容の表示</h3>
         <p>ファイルの変更内容を表示します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション/引数</th>
@@ -116,7 +119,7 @@
                 <td>単語単位で差分を色付け</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>git diff</code> - 作業ディレクトリとステージングエリアの差分を表示<br>
@@ -129,7 +132,8 @@
 
         <!-- diff出力の読み方 -->
         <h3>diffの出力の読み方</h3>
-        <p>git diffコマンドの出力を理解することは、変更内容を正確に把握するために重要です。以下にdiff出力の基本的な読み方を説明します。</p>
+        <p>git
+            diffコマンドの出力を理解することは、変更内容を正確に把握するために重要です。以下にdiff出力の基本的な読み方を説明します。</p>
 
         <div class="diff-explanation">
             <h4>diff出力の基本構造</h4>
@@ -145,8 +149,10 @@ index ハッシュ1..ハッシュ2 モード
             </pre>
 
             <ul>
-                <li><strong>diff --git a/ファイル名 b/ファイル名</strong>: 比較対象のファイル名を示します。aが変更前、bが変更後です。</li>
-                <li><strong>index ハッシュ1..ハッシュ2 モード</strong>: ファイルのオブジェクトIDとファイルモードを示します。</li>
+                <li><strong>diff --git a/ファイル名 b/ファイル名</strong>: 比較対象のファイル名を示します。aが変更前、bが変更後です。
+                </li>
+                <li><strong>index ハッシュ1..ハッシュ2 モード</strong>: ファイルのオブジェクトIDとファイルモードを示します。
+                </li>
                 <li><strong>--- a/ファイル名</strong>: 変更前のファイルを示します。</li>
                 <li><strong>+++ b/ファイル名</strong>: 変更後のファイルを示します。</li>
                 <li><strong>@@ -開始行,行数 +開始行,行数 @@</strong>: 変更箇所の位置情報です。
@@ -191,7 +197,7 @@ index abc1234..def5678 100644
 
     <div class="navigation-links">
         <a href="git_command.html">メインページに戻る</a> |
-        <a href="git_command_remote.html">前のカテゴリ: リモートリポジトリ操作</a> | 
+        <a href="git_command_remote.html">前のカテゴリ: リモートリポジトリ操作</a> |
         <a href="git_command_stash.html">次のカテゴリ: 一時保存と作業の復元</a>
     </div>
 

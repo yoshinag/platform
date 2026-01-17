@@ -173,15 +173,15 @@ code {
     .container {
         padding: 10px;
     }
-    
+
     .command-table th, .command-table td {
         padding: 8px;
     }
-    
+
     .category-nav ul {
         flex-direction: column;
     }
-    
+
     .category-nav li {
         margin-right: 0;
     }

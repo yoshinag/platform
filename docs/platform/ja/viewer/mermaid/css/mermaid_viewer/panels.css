@@ -77,6 +77,7 @@
     justify-content: center;
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
+
 /* 最初のボタンだけは左マージン不要にする場合 */
 .code-actions button:first-child {
     margin-left: 0;
@@ -220,10 +221,10 @@ textarea#code-input.drag-over {
 .settings-panel .settings-content > div {
     margin-bottom: 15px;
 }
+
 .settings-panel .settings-content > div:last-child {
     margin-bottom: 0;
 }
-
 
 
 /* --- Hidden Class for Collapsible Panels --- */

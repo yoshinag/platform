@@ -27,4 +27,5 @@ class ColorManager {
         this.setRgbColor('#FFFFFF');
     }
 }
+
 // --- END OF FILE color_manager.js ---

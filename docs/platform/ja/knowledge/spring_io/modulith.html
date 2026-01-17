@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <title>Spring Modulith</title>
     <link rel="stylesheet" href="../../../css/knowledge.css">
@@ -11,6 +15,7 @@
             gap: 20px;
             margin-top: 20px;
         }
+
         .service-card {
             border: 1px solid #e0e0e0;
             border-radius: 8px;
@@ -18,21 +23,26 @@
             background-color: #f9f9f9;
             transition: transform 0.2s, box-shadow 0.2s;
         }
+
         .service-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
+
         .service-card h3 {
             margin-top: 0;
             color: #000000;
         }
+
         .service-card h3 a {
             color: #1a73e8;
         }
+
         .service-card p {
             color: #5f6368;
             margin-bottom: 10px;
         }
+
         .service-category {
             margin-top: 30px;
         }
@@ -40,21 +50,25 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body class="ja-knowledge">
-    <div style="margin-bottom: 20px;">
-        <a href="../../index.html">メインページに戻る</a> | 
-        <a href="spring_io.html">Spring Framework & Spring Bootに戻る</a>
-    </div>
-    <h1>Spring Modulith</h1>
-    
-    <h2>Spring Modulithとは</h2>
-    <p>Spring Modulithは、モノリシックアプリケーションをモジュール化するためのフレームワークです。マイクロサービスに分割することなく、単一のアプリケーション内で明確な境界を持つモジュールを作成し、保守性と拡張性を向上させます。Spring Modulithは、モジュール間の依存関係を明示的に定義し、アーキテクチャの整合性を確保するための機能を提供します。</p>
-    
-    <p>Spring Modulithは、「モジュラーモノリス」アーキテクチャパターンを実装するためのSpringベースのソリューションです。このパターンは、マイクロサービスの複雑さを避けながら、モジュール性の利点を享受したいプロジェクトに最適です。Spring Modulithは、Spring Bootプロジェクトに簡単に統合でき、既存のSpringの機能（特にアプリケーションイベント）を活用して、モジュール間の疎結合な通信を実現します。</p>
-    
-    <div style="text-align: center; margin: 20px 0;">
+<div style="margin-bottom: 20px;">
+    <a href="../../index.html">メインページに戻る</a> |
+    <a href="spring_io.html">Spring Framework & Spring Bootに戻る</a>
+</div>
+<h1>Spring Modulith</h1>
+
+<h2>Spring Modulithとは</h2>
+<p>Spring
+    Modulithは、モノリシックアプリケーションをモジュール化するためのフレームワークです。マイクロサービスに分割することなく、単一のアプリケーション内で明確な境界を持つモジュールを作成し、保守性と拡張性を向上させます。Spring
+    Modulithは、モジュール間の依存関係を明示的に定義し、アーキテクチャの整合性を確保するための機能を提供します。</p>
+
+<p>Spring
+    Modulithは、「モジュラーモノリス」アーキテクチャパターンを実装するためのSpringベースのソリューションです。このパターンは、マイクロサービスの複雑さを避けながら、モジュール性の利点を享受したいプロジェクトに最適です。Spring
+    Modulithは、Spring
+    Bootプロジェクトに簡単に統合でき、既存のSpringの機能（特にアプリケーションイベント）を活用して、モジュール間の疎結合な通信を実現します。</p>
+
+<div style="text-align: center; margin: 20px 0;">
         <pre style="text-align: left; display: inline-block; border: 1px solid #ddd; padding: 15px; border-radius: 4px; background-color: #f8f8f8; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
 +------------------------------------------+
 |           Spring Boot Application        |
@@ -79,54 +93,59 @@
 |        Spring Modulith Framework        |
 +------------------------------------------+
         </pre>
-        <p style="font-style: italic; margin-top: 10px;">図1: Spring Modulithアーキテクチャの概要 - モジュール間の通信はイベントバスを通じて行われる</p>
-    </div>
-    
-    <p>Spring Modulithの主な目的は以下の通りです：</p>
-    <ul>
-        <li>モジュール境界の明確化と強制</li>
-        <li>モジュール間の依存関係の制御</li>
-        <li>モジュール間の疎結合な通信の促進</li>
-        <li>アプリケーション構造の可視化</li>
-        <li>モジュール単位のテストの容易化</li>
-    </ul>
-    
-    <h2>Spring Modulithの主な特徴</h2>
-    <ul>
-        <li><strong>モジュール境界の明確化：</strong> パッケージ構造に基づいてアプリケーションのモジュールを定義</li>
-        <li><strong>依存関係の制御：</strong> モジュール間の許可された依存関係を強制し、アーキテクチャの整合性を確保</li>
-        <li><strong>イベント駆動アーキテクチャ：</strong> モジュール間の疎結合な通信のためのイベント発行と購読をサポート</li>
-        <li><strong>アプリケーション構造の可視化：</strong> モジュール構造とその依存関係を視覚化するドキュメント生成機能</li>
-        <li><strong>テストサポート：</strong> モジュール単位のインテグレーションテストを容易にする機能</li>
-        <li><strong>Spring Bootとの統合：</strong> Spring Bootアプリケーションにシームレスに統合</li>
-        <li><strong>非同期イベント処理：</strong> モジュール間の非同期通信をサポートし、パフォーマンスと応答性を向上</li>
-        <li><strong>アプリケーションイベントの永続化：</strong> イベントの永続化と再生をサポートし、信頼性を向上</li>
-        <li><strong>モジュール間の契約テスト：</strong> モジュール間のインターフェースの互換性を確保するためのテスト機能</li>
-    </ul>
-    
-    <h3>モジュール境界の詳細</h3>
-    <p>Spring Modulithでは、Javaパッケージ構造を使用してモジュールの境界を定義します。各モジュールは、特定のパッケージとそのサブパッケージで構成されます。例えば、<code>com.example.application.orders</code>パッケージは「orders」モジュールを表し、<code>com.example.application.inventory</code>パッケージは「inventory」モジュールを表します。</p>
-    
-    <p>モジュールの境界は、<code>@Modulith</code>アノテーションを使用して定義します。このアノテーションは、アプリケーションのルートパッケージに配置され、そのサブパッケージがモジュールとして扱われることを示します。例えば：</p>
-    
-    <pre><code>@org.springframework.modulith.Modulith
+    <p style="font-style: italic; margin-top: 10px;">図1: Spring Modulithアーキテクチャの概要 -
+        モジュール間の通信はイベントバスを通じて行われる</p>
+</div>
+
+<p>Spring Modulithの主な目的は以下の通りです：</p>
+<ul>
+    <li>モジュール境界の明確化と強制</li>
+    <li>モジュール間の依存関係の制御</li>
+    <li>モジュール間の疎結合な通信の促進</li>
+    <li>アプリケーション構造の可視化</li>
+    <li>モジュール単位のテストの容易化</li>
+</ul>
+
+<h2>Spring Modulithの主な特徴</h2>
+<ul>
+    <li><strong>モジュール境界の明確化：</strong> パッケージ構造に基づいてアプリケーションのモジュールを定義</li>
+    <li><strong>依存関係の制御：</strong> モジュール間の許可された依存関係を強制し、アーキテクチャの整合性を確保</li>
+    <li><strong>イベント駆動アーキテクチャ：</strong> モジュール間の疎結合な通信のためのイベント発行と購読をサポート</li>
+    <li><strong>アプリケーション構造の可視化：</strong> モジュール構造とその依存関係を視覚化するドキュメント生成機能</li>
+    <li><strong>テストサポート：</strong> モジュール単位のインテグレーションテストを容易にする機能</li>
+    <li><strong>Spring Bootとの統合：</strong> Spring Bootアプリケーションにシームレスに統合</li>
+    <li><strong>非同期イベント処理：</strong> モジュール間の非同期通信をサポートし、パフォーマンスと応答性を向上</li>
+    <li><strong>アプリケーションイベントの永続化：</strong> イベントの永続化と再生をサポートし、信頼性を向上</li>
+    <li><strong>モジュール間の契約テスト：</strong> モジュール間のインターフェースの互換性を確保するためのテスト機能</li>
+</ul>
+
+<h3>モジュール境界の詳細</h3>
+<p>Spring Modulithでは、Javaパッケージ構造を使用してモジュールの境界を定義します。各モジュールは、特定のパッケージとそのサブパッケージで構成されます。例えば、<code>com.example.application.orders</code>パッケージは「orders」モジュールを表し、<code>com.example.application.inventory</code>パッケージは「inventory」モジュールを表します。
+</p>
+
+<p>モジュールの境界は、<code>@Modulith</code>アノテーションを使用して定義します。このアノテーションは、アプリケーションのルートパッケージに配置され、そのサブパッケージがモジュールとして扱われることを示します。例えば：
+</p>
+
+<pre><code>@org.springframework.modulith.Modulith
 package com.example.application;
 
 import org.springframework.modulith.Modulith;</code></pre>
 
-    <p>また、特定のパッケージをモジュールとして明示的に定義するために、<code>@org.springframework.modulith.Module</code>アノテーションを使用することもできます：</p>
-    
-    <pre><code>@org.springframework.modulith.Module
+<p>また、特定のパッケージをモジュールとして明示的に定義するために、<code>@org.springframework.modulith.Module</code>アノテーションを使用することもできます：
+</p>
+
+<pre><code>@org.springframework.modulith.Module
 package com.example.application.orders;
 
 import org.springframework.modulith.Module;</code></pre>
 
-    <h3>依存関係の制御の詳細</h3>
-    <p>Spring Modulithは、モジュール間の依存関係を制御するための強力な機能を提供します。デフォルトでは、モジュールは他のモジュールの内部実装に依存することはできません。モジュール間の依存関係は、明示的に公開されたAPIを通じてのみ許可されます。</p>
-    
-    <p>公開APIは、<code>@org.springframework.modulith.ApplicationModule.API</code>アノテーションを使用して定義します：</p>
-    
-    <pre><code>package com.example.application.orders.api;
+<h3>依存関係の制御の詳細</h3>
+<p>Spring
+    Modulithは、モジュール間の依存関係を制御するための強力な機能を提供します。デフォルトでは、モジュールは他のモジュールの内部実装に依存することはできません。モジュール間の依存関係は、明示的に公開されたAPIを通じてのみ許可されます。</p>
+
+<p>公開APIは、<code>@org.springframework.modulith.ApplicationModule.API</code>アノテーションを使用して定義します：</p>
+
+<pre><code>package com.example.application.orders.api;
 
 import org.springframework.modulith.ApplicationModule;
 
@@ -135,19 +154,22 @@ public interface OrderService {
     // 公開APIメソッド
 }</code></pre>
 
-    <p>また、特定のモジュールに対する依存関係を明示的に許可するために、<code>@org.springframework.modulith.NamedInterface</code>アノテーションを使用することもできます：</p>
-    
-    <pre><code>@org.springframework.modulith.NamedInterface("api")
+<p>
+    また、特定のモジュールに対する依存関係を明示的に許可するために、<code>@org.springframework.modulith.NamedInterface</code>アノテーションを使用することもできます：
+</p>
+
+<pre><code>@org.springframework.modulith.NamedInterface("api")
 package com.example.application.orders.api;
 
 import org.springframework.modulith.NamedInterface;</code></pre>
 
-    <h3>イベント駆動アーキテクチャの詳細</h3>
-    <p>Spring Modulithは、Spring ApplicationEventを使用して、モジュール間の疎結合な通信を実現します。イベントは、モジュールの境界を越えて情報を伝達するための主要な手段です。これにより、モジュール間の直接的な依存関係を減らし、システムの柔軟性と拡張性を向上させることができます。</p>
-    
-    <p>イベントの発行は、<code>ApplicationEventPublisher</code>を使用して行います：</p>
-    
-    <pre><code>@Service
+<h3>イベント駆動アーキテクチャの詳細</h3>
+<p>Spring Modulithは、Spring
+    ApplicationEventを使用して、モジュール間の疎結合な通信を実現します。イベントは、モジュールの境界を越えて情報を伝達するための主要な手段です。これにより、モジュール間の直接的な依存関係を減らし、システムの柔軟性と拡張性を向上させることができます。</p>
+
+<p>イベントの発行は、<code>ApplicationEventPublisher</code>を使用して行います：</p>
+
+<pre><code>@Service
 class OrderService {
 
     private final ApplicationEventPublisher events;
@@ -168,9 +190,9 @@ class OrderService {
     }
 }</code></pre>
 
-    <p>イベントの購読は、<code>@EventListener</code>アノテーションを使用して行います：</p>
-    
-    <pre><code>@Service
+<p>イベントの購読は、<code>@EventListener</code>アノテーションを使用して行います：</p>
+
+<pre><code>@Service
 class InventoryService {
 
     @EventListener
@@ -180,56 +202,56 @@ class InventoryService {
         // ...
     }
 }</code></pre>
-    
-    <h2>Spring Modulithの利点</h2>
-    <div class="service-grid">
-        <div class="service-card">
-            <h3>モジュール性の向上</h3>
-            <p>明確な境界を持つモジュールにより、コードの理解と保守が容易になります</p>
-        </div>
-        <div class="service-card">
-            <h3>アーキテクチャの整合性</h3>
-            <p>モジュール間の依存関係を制御することで、アーキテクチャの整合性を確保します</p>
-        </div>
-        <div class="service-card">
-            <h3>段階的な進化</h3>
-            <p>必要に応じて個々のモジュールをマイクロサービスに分割できます</p>
-        </div>
-        <div class="service-card">
-            <h3>開発の効率化</h3>
-            <p>モノリスの単純さを維持しながら、モジュール化の利点を享受できます</p>
-        </div>
+
+<h2>Spring Modulithの利点</h2>
+<div class="service-grid">
+    <div class="service-card">
+        <h3>モジュール性の向上</h3>
+        <p>明確な境界を持つモジュールにより、コードの理解と保守が容易になります</p>
     </div>
-    
-    <h2>Spring Modulithの主要コンポーネント</h2>
-    <div class="service-grid">
-        <div class="service-card">
-            <h3>モジュール定義</h3>
-            <p>パッケージ構造に基づいてアプリケーションのモジュールを定義します</p>
-        </div>
-        <div class="service-card">
-            <h3>依存関係チェック</h3>
-            <p>モジュール間の許可された依存関係を強制するためのチェック機能</p>
-        </div>
-        <div class="service-card">
-            <h3>イベント発行</h3>
-            <p>モジュール間の疎結合な通信のためのイベント駆動アーキテクチャ</p>
-        </div>
-        <div class="service-card">
-            <h3>ドキュメント生成</h3>
-            <p>モジュール構造とその依存関係を視覚化するドキュメント生成機能</p>
-        </div>
+    <div class="service-card">
+        <h3>アーキテクチャの整合性</h3>
+        <p>モジュール間の依存関係を制御することで、アーキテクチャの整合性を確保します</p>
     </div>
-    
-    <h2>Spring Modulithの使用例</h2>
-    <h3>モジュール定義</h3>
-    <pre><code>@org.springframework.modulith.Modulith
+    <div class="service-card">
+        <h3>段階的な進化</h3>
+        <p>必要に応じて個々のモジュールをマイクロサービスに分割できます</p>
+    </div>
+    <div class="service-card">
+        <h3>開発の効率化</h3>
+        <p>モノリスの単純さを維持しながら、モジュール化の利点を享受できます</p>
+    </div>
+</div>
+
+<h2>Spring Modulithの主要コンポーネント</h2>
+<div class="service-grid">
+    <div class="service-card">
+        <h3>モジュール定義</h3>
+        <p>パッケージ構造に基づいてアプリケーションのモジュールを定義します</p>
+    </div>
+    <div class="service-card">
+        <h3>依存関係チェック</h3>
+        <p>モジュール間の許可された依存関係を強制するためのチェック機能</p>
+    </div>
+    <div class="service-card">
+        <h3>イベント発行</h3>
+        <p>モジュール間の疎結合な通信のためのイベント駆動アーキテクチャ</p>
+    </div>
+    <div class="service-card">
+        <h3>ドキュメント生成</h3>
+        <p>モジュール構造とその依存関係を視覚化するドキュメント生成機能</p>
+    </div>
+</div>
+
+<h2>Spring Modulithの使用例</h2>
+<h3>モジュール定義</h3>
+<pre><code>@org.springframework.modulith.Modulith
 package com.example.application;
 
 import org.springframework.modulith.Modulith;</code></pre>
-    
-    <h3>モジュール間のイベント発行</h3>
-    <pre><code>@Service
+
+<h3>モジュール間のイベント発行</h3>
+<pre><code>@Service
 class OrderService {
 
     private final ApplicationEventPublisher events;
@@ -249,9 +271,9 @@ class OrderService {
         return order;
     }
 }</code></pre>
-    
-    <h3>イベントリスナー</h3>
-    <pre><code>@Service
+
+<h3>イベントリスナー</h3>
+<pre><code>@Service
 class InventoryService {
 
     @EventListener
@@ -261,12 +283,13 @@ class InventoryService {
         // ...
     }
 }</code></pre>
-    
-    <h2>Spring Modulithのテスト</h2>
-    <p>Spring Modulithは、モジュール単位のテストを容易にするための強力な機能を提供します。<code>@ModuleTest</code>アノテーションを使用することで、特定のモジュールとその依存モジュールのみをロードしてテストを実行できます。これにより、テストの実行時間が短縮され、テストの信頼性が向上します。</p>
-    
-    <h3>基本的なモジュールテスト</h3>
-    <pre><code>@SpringBootTest
+
+<h2>Spring Modulithのテスト</h2>
+<p>Spring Modulithは、モジュール単位のテストを容易にするための強力な機能を提供します。<code>@ModuleTest</code>アノテーションを使用することで、特定のモジュールとその依存モジュールのみをロードしてテストを実行できます。これにより、テストの実行時間が短縮され、テストの信頼性が向上します。
+</p>
+
+<h3>基本的なモジュールテスト</h3>
+<pre><code>@SpringBootTest
 @ModuleTest
 class OrderModuleTests {
 
@@ -279,10 +302,11 @@ class OrderModuleTests {
     }
 }</code></pre>
 
-    <h3>イベント発行のテスト</h3>
-    <p>Spring Modulithは、モジュール間のイベント発行をテストするための機能も提供します。<code>ApplicationModuleTest</code>クラスを使用することで、イベントの発行と購読をテストできます。</p>
-    
-    <pre><code>@SpringBootTest
+<h3>イベント発行のテスト</h3>
+<p>Spring Modulithは、モジュール間のイベント発行をテストするための機能も提供します。<code>ApplicationModuleTest</code>クラスを使用することで、イベントの発行と購読をテストできます。
+</p>
+
+<pre><code>@SpringBootTest
 @ModuleTest
 class OrderModuleTests {
 
@@ -299,10 +323,11 @@ class OrderModuleTests {
     }
 }</code></pre>
 
-    <h3>モジュール間の依存関係のテスト</h3>
-    <p>Spring Modulithは、モジュール間の依存関係を検証するためのテスト機能も提供します。これにより、アーキテクチャの整合性を確保できます。</p>
-    
-    <pre><code>@Test
+<h3>モジュール間の依存関係のテスト</h3>
+<p>Spring
+    Modulithは、モジュール間の依存関係を検証するためのテスト機能も提供します。これにより、アーキテクチャの整合性を確保できます。</p>
+
+<pre><code>@Test
 void verifyModuleDependencies() {
     
     // モジュール間の依存関係の検証
@@ -310,72 +335,73 @@ void verifyModuleDependencies() {
         .verify()
         .assertThatDependenciesAreValid();
 }</code></pre>
-    
-    <h2>Spring Modulithとマイクロサービスの比較</h2>
-    <table border="1" cellpadding="10" style="border-collapse: collapse; width: 100%;">
-        <tr>
-            <th>特徴</th>
-            <th>Spring Modulith</th>
-            <th>マイクロサービス</th>
-        </tr>
-        <tr>
-            <td>デプロイ</td>
-            <td>単一のアプリケーションとしてデプロイ</td>
-            <td>個別のサービスとして独立してデプロイ</td>
-        </tr>
-        <tr>
-            <td>通信</td>
-            <td>メモリ内のイベント発行と購読</td>
-            <td>ネットワーク経由のAPI呼び出し</td>
-        </tr>
-        <tr>
-            <td>トランザクション</td>
-            <td>単一のトランザクション境界が可能</td>
-            <td>分散トランザクションが必要</td>
-        </tr>
-        <tr>
-            <td>スケーリング</td>
-            <td>アプリケーション全体をスケーリング</td>
-            <td>個別のサービスを独立してスケーリング</td>
-        </tr>
-        <tr>
-            <td>複雑さ</td>
-            <td>比較的低い</td>
-            <td>比較的高い</td>
-        </tr>
-    </table>
-    
-    <h2>Spring Modulithの導入ステップ</h2>
-    <ol>
-        <li>Spring Bootプロジェクトに依存関係を追加
-            <pre><code>&lt;dependency&gt;
+
+<h2>Spring Modulithとマイクロサービスの比較</h2>
+<table border="1" cellpadding="10" style="border-collapse: collapse; width: 100%;">
+    <tr>
+        <th>特徴</th>
+        <th>Spring Modulith</th>
+        <th>マイクロサービス</th>
+    </tr>
+    <tr>
+        <td>デプロイ</td>
+        <td>単一のアプリケーションとしてデプロイ</td>
+        <td>個別のサービスとして独立してデプロイ</td>
+    </tr>
+    <tr>
+        <td>通信</td>
+        <td>メモリ内のイベント発行と購読</td>
+        <td>ネットワーク経由のAPI呼び出し</td>
+    </tr>
+    <tr>
+        <td>トランザクション</td>
+        <td>単一のトランザクション境界が可能</td>
+        <td>分散トランザクションが必要</td>
+    </tr>
+    <tr>
+        <td>スケーリング</td>
+        <td>アプリケーション全体をスケーリング</td>
+        <td>個別のサービスを独立してスケーリング</td>
+    </tr>
+    <tr>
+        <td>複雑さ</td>
+        <td>比較的低い</td>
+        <td>比較的高い</td>
+    </tr>
+</table>
+
+<h2>Spring Modulithの導入ステップ</h2>
+<ol>
+    <li>Spring Bootプロジェクトに依存関係を追加
+        <pre><code>&lt;dependency&gt;
     &lt;groupId&gt;org.springframework.modulith&lt;/groupId&gt;
     &lt;artifactId&gt;spring-modulith-starter&lt;/artifactId&gt;
     &lt;version&gt;1.1.0&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
-        </li>
-        <li>アプリケーションのルートパッケージに@Modulithアノテーションを追加</li>
-        <li>パッケージ構造に基づいてモジュールを定義</li>
-        <li>モジュール間の依存関係を明示的に定義</li>
-        <li>イベント駆動アーキテクチャを使用してモジュール間の通信を実装</li>
-        <li>モジュール単位のテストを作成</li>
-    </ol>
-    
-    <h2>Spring Bootとの統合</h2>
-    <p>Spring Modulithは、Spring Bootアプリケーションにシームレスに統合できます。Spring Bootの自動設定機能を活用することで、最小限の設定でSpring Modulithの機能を利用できます。</p>
-    
-    <h3>Spring Boot Starterの使用</h3>
-    <p>Spring Modulithは、Spring Boot Starterを提供しており、必要な依存関係を自動的に追加します。</p>
-    
-    <pre><code>&lt;dependency&gt;
+    </li>
+    <li>アプリケーションのルートパッケージに@Modulithアノテーションを追加</li>
+    <li>パッケージ構造に基づいてモジュールを定義</li>
+    <li>モジュール間の依存関係を明示的に定義</li>
+    <li>イベント駆動アーキテクチャを使用してモジュール間の通信を実装</li>
+    <li>モジュール単位のテストを作成</li>
+</ol>
+
+<h2>Spring Bootとの統合</h2>
+<p>Spring Modulithは、Spring Bootアプリケーションにシームレスに統合できます。Spring Bootの自動設定機能を活用することで、最小限の設定でSpring
+    Modulithの機能を利用できます。</p>
+
+<h3>Spring Boot Starterの使用</h3>
+<p>Spring Modulithは、Spring Boot Starterを提供しており、必要な依存関係を自動的に追加します。</p>
+
+<pre><code>&lt;dependency&gt;
     &lt;groupId&gt;org.springframework.modulith&lt;/groupId&gt;
     &lt;artifactId&gt;spring-modulith-starter&lt;/artifactId&gt;
     &lt;version&gt;1.1.0&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
-    
-    <p>また、特定の機能のみを使用する場合は、個別のスターターを追加することもできます。</p>
-    
-    <pre><code>&lt;!-- イベント発行のみを使用する場合 --&gt;
+
+<p>また、特定の機能のみを使用する場合は、個別のスターターを追加することもできます。</p>
+
+<pre><code>&lt;!-- イベント発行のみを使用する場合 --&gt;
 &lt;dependency&gt;
     &lt;groupId&gt;org.springframework.modulith&lt;/groupId&gt;
     &lt;artifactId&gt;spring-modulith-events&lt;/artifactId&gt;
@@ -388,16 +414,16 @@ void verifyModuleDependencies() {
     &lt;artifactId&gt;spring-modulith-docs&lt;/artifactId&gt;
     &lt;version&gt;1.1.0&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
-    
-    <h3>Spring Bootの設定</h3>
-    <p>Spring Modulithは、Spring Bootの設定ファイル（application.properties または application.yml）を使用して設定できます。</p>
-    
-    <pre><code># application.properties
+
+<h3>Spring Bootの設定</h3>
+<p>Spring Modulithは、Spring Bootの設定ファイル（application.properties または application.yml）を使用して設定できます。</p>
+
+<pre><code># application.properties
 spring.modulith.events.enabled=true
 spring.modulith.events.async.enabled=true
 spring.modulith.events.persistence.enabled=true</code></pre>
-    
-    <pre><code># application.yml
+
+<pre><code># application.yml
 spring:
   modulith:
     events:
@@ -406,42 +432,62 @@ spring:
         enabled: true
       persistence:
         enabled: true</code></pre>
-    
-    <h2>Spring Modulithのベストプラクティス</h2>
-    <ol>
-        <li><strong>モジュールの適切なサイズ設計</strong>: モジュールは大きすぎず小さすぎないサイズにします。一般的に、ドメイン駆動設計（DDD）の境界付けられたコンテキスト（Bounded Context）に対応するサイズが適切です。</li>
-        <li><strong>明確なモジュール境界の定義</strong>: モジュールの境界を明確に定義し、パッケージ構造に反映させます。各モジュールは、特定のビジネス機能または技術的関心事に対応するべきです。</li>
-        <li><strong>公開APIの最小化</strong>: モジュールの公開APIは最小限に保ち、必要な機能のみを公開します。内部実装の詳細は隠蔽し、モジュールの独立性を高めます。</li>
-        <li><strong>イベント駆動通信の活用</strong>: モジュール間の通信には、直接的な依存関係ではなく、イベント駆動アーキテクチャを活用します。これにより、モジュール間の疎結合性が高まります。</li>
-        <li><strong>適切なイベント設計</strong>: イベントは、ドメインの変更を表現する意味のある単位で設計します。イベントには必要な情報のみを含め、過剰な情報は避けます。</li>
-        <li><strong>テストの自動化</strong>: モジュール単位のテストを自動化し、継続的インテグレーションパイプラインに組み込みます。これにより、モジュール間の依存関係の問題を早期に発見できます。</li>
-        <li><strong>ドキュメントの自動生成</strong>: Spring Modulithのドキュメント生成機能を活用して、モジュール構造とその依存関係を可視化します。これにより、アーキテクチャの理解と保守が容易になります。</li>
-        <li><strong>段階的な導入</strong>: 既存のアプリケーションにSpring Modulithを導入する場合は、段階的に導入します。まず、アプリケーションの一部にモジュール境界を導入し、徐々に拡大していきます。</li>
-        <li><strong>マイクロサービスへの移行計画</strong>: 将来的にマイクロサービスへの移行を検討している場合は、モジュール境界をマイクロサービスの境界と一致させるように設計します。これにより、将来の移行が容易になります。</li>
-    </ol>
-    
-    <h3>アンチパターン</h3>
-    <ul>
-        <li><strong>過度に細かいモジュール分割</strong>: モジュールを過度に細かく分割すると、モジュール間の依存関係が複雑になり、管理が困難になります。</li>
-        <li><strong>モジュール境界の無視</strong>: モジュール境界を無視して、他のモジュールの内部実装に直接依存すると、モジュール性の利点が失われます。</li>
-        <li><strong>過度なイベント使用</strong>: すべての通信をイベントで行うと、システムの理解と追跡が困難になる場合があります。適切なバランスを保つことが重要です。</li>
-        <li><strong>不適切なイベント設計</strong>: イベントに過剰な情報を含めたり、イベントの粒度が不適切だったりすると、システムの柔軟性と拡張性が低下します。</li>
-        <li><strong>テスト不足</strong>: モジュール単位のテストが不足していると、モジュール間の依存関係の問題を早期に発見できません。</li>
-    </ul>
-    
-    <h2>まとめ</h2>
-    <p>Spring Modulithは、モノリシックアプリケーションをモジュール化するための強力なフレームワークです。マイクロサービスに分割することなく、単一のアプリケーション内で明確な境界を持つモジュールを作成し、保守性と拡張性を向上させることができます。モジュール間の依存関係を明示的に定義し、イベント駆動アーキテクチャを使用することで、アーキテクチャの整合性を確保しながら、疎結合なモジュール間の通信を実現できます。</p>
-    
-    <p>Spring Modulithの主な利点は以下の通りです：</p>
-    <ul>
-        <li>モジュール性の向上による保守性と拡張性の向上</li>
-        <li>アーキテクチャの整合性の確保</li>
-        <li>段階的な進化の可能性</li>
-        <li>モノリスの単純さを維持しながらのモジュール化</li>
-        <li>テストの容易さ</li>
-        <li>Spring Bootとの統合</li>
-    </ul>
-    
-    <p>Spring Modulithは、マイクロサービスアーキテクチャの複雑さを避けながら、モジュール化の利点を享受したいプロジェクトに最適なソリューションです。特に、将来的にマイクロサービスへの移行を検討しているが、現時点ではモノリシックアプリケーションの単純さを維持したいプロジェクトに適しています。</p>
+
+<h2>Spring Modulithのベストプラクティス</h2>
+<ol>
+    <li><strong>モジュールの適切なサイズ設計</strong>: モジュールは大きすぎず小さすぎないサイズにします。一般的に、ドメイン駆動設計（DDD）の境界付けられたコンテキスト（Bounded
+        Context）に対応するサイズが適切です。
+    </li>
+    <li><strong>明確なモジュール境界の定義</strong>: モジュールの境界を明確に定義し、パッケージ構造に反映させます。各モジュールは、特定のビジネス機能または技術的関心事に対応するべきです。
+    </li>
+    <li><strong>公開APIの最小化</strong>: モジュールの公開APIは最小限に保ち、必要な機能のみを公開します。内部実装の詳細は隠蔽し、モジュールの独立性を高めます。
+    </li>
+    <li><strong>イベント駆動通信の活用</strong>: モジュール間の通信には、直接的な依存関係ではなく、イベント駆動アーキテクチャを活用します。これにより、モジュール間の疎結合性が高まります。
+    </li>
+    <li><strong>適切なイベント設計</strong>: イベントは、ドメインの変更を表現する意味のある単位で設計します。イベントには必要な情報のみを含め、過剰な情報は避けます。
+    </li>
+    <li><strong>テストの自動化</strong>: モジュール単位のテストを自動化し、継続的インテグレーションパイプラインに組み込みます。これにより、モジュール間の依存関係の問題を早期に発見できます。
+    </li>
+    <li><strong>ドキュメントの自動生成</strong>: Spring
+        Modulithのドキュメント生成機能を活用して、モジュール構造とその依存関係を可視化します。これにより、アーキテクチャの理解と保守が容易になります。
+    </li>
+    <li><strong>段階的な導入</strong>: 既存のアプリケーションにSpring
+        Modulithを導入する場合は、段階的に導入します。まず、アプリケーションの一部にモジュール境界を導入し、徐々に拡大していきます。
+    </li>
+    <li><strong>マイクロサービスへの移行計画</strong>:
+        将来的にマイクロサービスへの移行を検討している場合は、モジュール境界をマイクロサービスの境界と一致させるように設計します。これにより、将来の移行が容易になります。
+    </li>
+</ol>
+
+<h3>アンチパターン</h3>
+<ul>
+    <li><strong>過度に細かいモジュール分割</strong>: モジュールを過度に細かく分割すると、モジュール間の依存関係が複雑になり、管理が困難になります。
+    </li>
+    <li><strong>モジュール境界の無視</strong>: モジュール境界を無視して、他のモジュールの内部実装に直接依存すると、モジュール性の利点が失われます。
+    </li>
+    <li><strong>過度なイベント使用</strong>: すべての通信をイベントで行うと、システムの理解と追跡が困難になる場合があります。適切なバランスを保つことが重要です。
+    </li>
+    <li><strong>不適切なイベント設計</strong>: イベントに過剰な情報を含めたり、イベントの粒度が不適切だったりすると、システムの柔軟性と拡張性が低下します。
+    </li>
+    <li><strong>テスト不足</strong>: モジュール単位のテストが不足していると、モジュール間の依存関係の問題を早期に発見できません。
+    </li>
+</ul>
+
+<h2>まとめ</h2>
+<p>Spring
+    Modulithは、モノリシックアプリケーションをモジュール化するための強力なフレームワークです。マイクロサービスに分割することなく、単一のアプリケーション内で明確な境界を持つモジュールを作成し、保守性と拡張性を向上させることができます。モジュール間の依存関係を明示的に定義し、イベント駆動アーキテクチャを使用することで、アーキテクチャの整合性を確保しながら、疎結合なモジュール間の通信を実現できます。</p>
+
+<p>Spring Modulithの主な利点は以下の通りです：</p>
+<ul>
+    <li>モジュール性の向上による保守性と拡張性の向上</li>
+    <li>アーキテクチャの整合性の確保</li>
+    <li>段階的な進化の可能性</li>
+    <li>モノリスの単純さを維持しながらのモジュール化</li>
+    <li>テストの容易さ</li>
+    <li>Spring Bootとの統合</li>
+</ul>
+
+<p>Spring
+    Modulithは、マイクロサービスアーキテクチャの複雑さを避けながら、モジュール化の利点を享受したいプロジェクトに最適なソリューションです。特に、将来的にマイクロサービスへの移行を検討しているが、現時点ではモノリシックアプリケーションの単純さを維持したいプロジェクトに適しています。</p>
 </body>
 </html>

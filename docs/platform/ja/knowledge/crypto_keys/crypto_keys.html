@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>暗号化鍵の解説</title>
@@ -8,15 +12,14 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
         <a href="../../../ja/index.html">メインページに戻る</a>
     </div>
     <h1>暗号化鍵の解説</h1>
-    
+
     <section id="table-of-contents" class="crypto-section">
         <h2>目次</h2>
         <ul>
@@ -54,7 +57,7 @@
             <li><a href="#applications">暗号化鍵の応用</a></li>
         </ul>
     </section>
-    
+
     <section id="introduction" class="crypto-section">
         <h2>はじめに</h2>
         <p>
@@ -66,7 +69,7 @@
 
     <section id="encryption-basics" class="crypto-section">
         <h2>暗号化の基本</h2>
-        
+
         <section id="what-is-encryption" class="crypto-section">
             <h3>暗号化とは</h3>
             <p>
@@ -75,7 +78,7 @@
                 暗号化は、機密情報の保護、通信の安全性確保、データの完全性検証などに使用されます。
             </p>
         </section>
-    
+
         <section id="encryption-history" class="crypto-section">
             <h3>暗号化の歴史</h3>
             <p>
@@ -87,7 +90,7 @@
                 第二次世界大戦中のエニグマ暗号機の解読は、現代暗号学の発展に大きく貢献しました。
             </p>
         </section>
-    
+
         <section id="key-role" class="crypto-section">
             <h3>暗号化鍵の役割</h3>
             <p>
@@ -104,7 +107,7 @@
                 <li>データの完全性の確保</li>
             </ul>
         </section>
-    
+
         <section id="key-length" class="crypto-section">
             <h3>鍵の長さとセキュリティ</h3>
             <p>
@@ -124,7 +127,7 @@
                 セキュリティ要件に応じて適切な鍵の長さを選択することが重要です。
             </p>
         </section>
-    
+
         <section id="key-management" class="crypto-section">
             <h3>暗号化鍵の管理</h3>
             <p>
@@ -146,7 +149,7 @@
 
     <section id="symmetric-encryption" class="crypto-section">
         <h2>共通鍵暗号方式</h2>
-        
+
         <section id="symmetric-intro" class="crypto-section">
             <h3>共通鍵暗号方式とは</h3>
             <p>
@@ -298,7 +301,7 @@
 
     <section id="asymmetric-encryption" class="crypto-section">
         <h2>公開鍵暗号方式</h2>
-        
+
         <section id="asymmetric-intro" class="crypto-section">
             <h3>公開鍵暗号方式とは</h3>
             <p>
@@ -382,7 +385,9 @@
                 PKIの主要なコンポーネントには以下があります：
             </p>
             <ul>
-                <li>認証局（CA: Certificate Authority）: デジタル証明書を発行し、公開鍵の所有者を証明する信頼できる第三者機関</li>
+                <li>認証局（CA: Certificate Authority）:
+                    デジタル証明書を発行し、公開鍵の所有者を証明する信頼できる第三者機関
+                </li>
                 <li>登録局（RA: Registration Authority）: 証明書申請者の身元確認を行い、CAに証明書発行を依頼する機関</li>
                 <li>デジタル証明書: 公開鍵とその所有者の情報を含み、CAによってデジタル署名された電子文書</li>
                 <li>証明書失効リスト（CRL: Certificate Revocation List）: 有効期限前に失効した証明書のリスト</li>

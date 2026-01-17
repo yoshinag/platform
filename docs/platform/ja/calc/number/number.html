@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>進数変換ツール</title>
     <link rel="stylesheet" href="css/number.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
@@ -18,8 +22,10 @@
     <div>
         <label for="inputRadix">入力進数:</label>
         <select id="inputRadix">
-            <option value="2">2進数 (Binary)</option><option value="8">8進数 (Octal)</option>
-            <option value="10" selected>10進数 (Decimal)</option><option value="16">16進数 (Hexadecimal)</option>
+            <option value="2">2進数 (Binary)</option>
+            <option value="8">8進数 (Octal)</option>
+            <option value="10" selected>10進数 (Decimal)</option>
+            <option value="16">16進数 (Hexadecimal)</option>
         </select>
     </div>
     <div>
@@ -57,11 +63,14 @@
         </p>
         <h4>8進数 (Octal)</h4>
         <p>
-            底は8です。<code>0</code>から<code>7</code>までの8個の数字を使って数を表現します。コンピュータの初期の頃に、2進数表現をより短くするために使われました。3桁の2進数は1桁の8進数で表せるため、2進数と相性が良いです (例: 2進数の <code>111</code> は8進数の <code>7</code>)。
+            底は8です。<code>0</code>から<code>7</code>までの8個の数字を使って数を表現します。コンピュータの初期の頃に、2進数表現をより短くするために使われました。3桁の2進数は1桁の8進数で表せるため、2進数と相性が良いです
+            (例: 2進数の <code>111</code> は8進数の <code>7</code>)。
         </p>
         <h4>16進数 (Hexadecimal)</h4>
         <p>
-            底は16です。<code>0</code>から<code>9</code>までの数字と、<code>A</code>から<code>F</code>までのアルファベット（<code>A=10</code>, <code>B=11</code>, ..., <code>F=15</code>）の合計16個の記号を使って数を表現します。8進数と同様に、2進数表現を短くするために広く使われます。4桁の2進数は1桁の16進数で表せるため、特にプログラミングやコンピュータの低レベルな部分で頻繁に使用されます (例: 2進数の <code>1111</code> は16進数の <code>F</code>)。
+            底は16です。<code>0</code>から<code>9</code>までの数字と、<code>A</code>から<code>F</code>までのアルファベット（<code>A=10</code>,
+            <code>B=11</code>, ..., <code>F=15</code>）の合計16個の記号を使って数を表現します。8進数と同様に、2進数表現を短くするために広く使われます。4桁の2進数は1桁の16進数で表せるため、特にプログラミングやコンピュータの低レベルな部分で頻繁に使用されます
+            (例: 2進数の <code>1111</code> は16進数の <code>F</code>)。
         </p>
     </div>
 </div>

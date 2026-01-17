@@ -14,24 +14,22 @@ const copyOutputBtn = document.getElementById('copy-output-btn');
 const pasteOutputBtn = document.getElementById('paste-output-btn');
 const clearOutputBtn = document.getElementById('clear-output-btn');
 
-function formatJSON(){
+function formatJSON() {
     const inputText = jsonInput.value;
-    try{
+    try {
         const parsedJson = JSON.parse(inputText);
         jsonOutput.textContent = JSON.stringify(parsedJson, null, 2);
-    }
-    catch(e){
+    } catch (e) {
         jsonOutput.textContent = "Invalid JSON format.\n" + e;
     }
 }
 
-function minifyJSON(){
+function minifyJSON() {
     const outputText = jsonOutput.textContent;
-    try{
+    try {
         const parsedJson = JSON.parse(outputText);
         jsonInput.value = JSON.stringify(parsedJson);
-    }
-    catch(e){
+    } catch (e) {
         jsonInput.value = "Invalid formatted JSON.\n" + e;
     }
 }
@@ -102,7 +100,9 @@ function setupPasteButton(pasteButton, element, isTextarea = true, afterPasteCal
         if (!navigator.clipboard || !navigator.clipboard.readText) {
             alert('Clipboard reading is not supported in this browser.');
             pasteButton.title = 'Paste failed';
-            setTimeout(() => { pasteButton.title = originalTitle; }, 2000);
+            setTimeout(() => {
+                pasteButton.title = originalTitle;
+            }, 2000);
             return;
         }
 

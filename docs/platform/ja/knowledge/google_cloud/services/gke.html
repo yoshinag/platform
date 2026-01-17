@@ -1,104 +1,118 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <title>GKE (Google Kubernetes Engine)</title>
     <link rel="stylesheet" href="../../../../css/knowledge.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../../js/common/analytics.js"></script>
+
 <body class="ja-knowledge">
-    <div style="margin-bottom: 20px;">
-        <a href="../google_cloud.html">Google Cloud Platformに戻る</a>
-    </div>
-    <h1>GKE (Google Kubernetes Engine)</h1>
-    
-    <h2>GKEとは</h2>
-    <p>Google Kubernetes Engine (GKE) は、Google Cloud Platform (GCP) が提供するマネージド Kubernetes サービスです。Kubernetes は、コンテナ化されたアプリケーションのデプロイ、スケーリング、管理を自動化するためのオープンソースのコンテナオーケストレーションシステムです。GKEを使用することで、Kubernetesの複雑なインフラストラクチャ管理をGoogleに委託し、アプリケーション開発と運用に集中することができます。</p>
-    
-    <h2>GKEの主な特徴</h2>
+<div style="margin-bottom: 20px;">
+    <a href="../google_cloud.html">Google Cloud Platformに戻る</a>
+</div>
+<h1>GKE (Google Kubernetes Engine)</h1>
+
+<h2>GKEとは</h2>
+<p>Google Kubernetes Engine (GKE) は、Google Cloud Platform (GCP) が提供するマネージド Kubernetes サービスです。Kubernetes
+    は、コンテナ化されたアプリケーションのデプロイ、スケーリング、管理を自動化するためのオープンソースのコンテナオーケストレーションシステムです。GKEを使用することで、Kubernetesの複雑なインフラストラクチャ管理をGoogleに委託し、アプリケーション開発と運用に集中することができます。</p>
+
+<h2>GKEの主な特徴</h2>
+<ul>
+    <li><strong>マネージドサービス：</strong> コントロールプレーンの管理、アップグレード、セキュリティパッチの適用などをGoogleが自動的に処理
+    </li>
+    <li><strong>自動スケーリング：</strong> ワークロードに応じてクラスタとノードプールを自動的にスケーリング</li>
+    <li><strong>マルチクラスタ管理：</strong> 複数のクラスタを一元管理する機能</li>
+    <li><strong>統合モニタリング：</strong> Google Cloud Monitoringとの統合によるクラスタの監視</li>
+    <li><strong>セキュリティ機能：</strong> Binary Authorization、Shielded GKE Nodes、VPC-native クラスタなどの高度なセキュリティ機能
+    </li>
+    <li><strong>ハイブリッドおよびマルチクラウド対応：</strong> Anthos を通じてオンプレミスやマルチクラウド環境でも利用可能
+    </li>
+</ul>
+
+<h2>GKEのアーキテクチャ</h2>
+<p>GKEクラスタは以下の主要コンポーネントで構成されています：</p>
+
+<table>
+    <tr>
+        <th>コンポーネント</th>
+        <th>説明</th>
+    </tr>
+    <tr>
+        <td>コントロールプレーン</td>
+        <td>
+            クラスタの状態を管理し、ワークロードのスケジューリングや監視を行うKubernetesマスターコンポーネント群。GKEではこれらをGoogleが管理
+        </td>
+    </tr>
+    <tr>
+        <td>ノードプール</td>
+        <td>同じ構成を持つ複数のノード（VM）のグループ。異なる構成のワークロード用に複数のノードプールを作成可能</td>
+    </tr>
+    <tr>
+        <td>ノード</td>
+        <td>コンテナを実行するCompute
+            Engineインスタンス。各ノードにはKubeletエージェントが実行され、コントロールプレーンと通信
+        </td>
+    </tr>
+    <tr>
+        <td><a href="pod.html">ポッド</a></td>
+        <td>Kubernetesの最小デプロイ単位。1つ以上のコンテナとストレージリソースで構成</td>
+    </tr>
+    <tr>
+        <td>サービス</td>
+        <td>ポッドのグループに対する単一のエンドポイントとロードバランシングを提供</td>
+    </tr>
+</table>
+
+<div class="note">
+    <h3>Autopilot モードと Standard モード</h3>
+    <p>GKEには2つの運用モードがあります：</p>
     <ul>
-        <li><strong>マネージドサービス：</strong> コントロールプレーンの管理、アップグレード、セキュリティパッチの適用などをGoogleが自動的に処理</li>
-        <li><strong>自動スケーリング：</strong> ワークロードに応じてクラスタとノードプールを自動的にスケーリング</li>
-        <li><strong>マルチクラスタ管理：</strong> 複数のクラスタを一元管理する機能</li>
-        <li><strong>統合モニタリング：</strong> Google Cloud Monitoringとの統合によるクラスタの監視</li>
-        <li><strong>セキュリティ機能：</strong> Binary Authorization、Shielded GKE Nodes、VPC-native クラスタなどの高度なセキュリティ機能</li>
-        <li><strong>ハイブリッドおよびマルチクラウド対応：</strong> Anthos を通じてオンプレミスやマルチクラウド環境でも利用可能</li>
+        <li><strong>Autopilot モード：</strong> ノード管理を完全に自動化。ワークロードのリソース要件に基づいてインフラストラクチャを自動的に管理
+        </li>
+        <li><strong>Standard モード：</strong> ノードの構成と管理をより細かく制御可能。特定のハードウェア要件や特殊なワークロードに適している
+        </li>
     </ul>
-    
-    <h2>GKEのアーキテクチャ</h2>
-    <p>GKEクラスタは以下の主要コンポーネントで構成されています：</p>
-    
-    <table>
-        <tr>
-            <th>コンポーネント</th>
-            <th>説明</th>
-        </tr>
-        <tr>
-            <td>コントロールプレーン</td>
-            <td>クラスタの状態を管理し、ワークロードのスケジューリングや監視を行うKubernetesマスターコンポーネント群。GKEではこれらをGoogleが管理</td>
-        </tr>
-        <tr>
-            <td>ノードプール</td>
-            <td>同じ構成を持つ複数のノード（VM）のグループ。異なる構成のワークロード用に複数のノードプールを作成可能</td>
-        </tr>
-        <tr>
-            <td>ノード</td>
-            <td>コンテナを実行するCompute Engineインスタンス。各ノードにはKubeletエージェントが実行され、コントロールプレーンと通信</td>
-        </tr>
-        <tr>
-            <td><a href="pod.html">ポッド</a></td>
-            <td>Kubernetesの最小デプロイ単位。1つ以上のコンテナとストレージリソースで構成</td>
-        </tr>
-        <tr>
-            <td>サービス</td>
-            <td>ポッドのグループに対する単一のエンドポイントとロードバランシングを提供</td>
-        </tr>
-    </table>
-    
-    <div class="note">
-        <h3>Autopilot モードと Standard モード</h3>
-        <p>GKEには2つの運用モードがあります：</p>
-        <ul>
-            <li><strong>Autopilot モード：</strong> ノード管理を完全に自動化。ワークロードのリソース要件に基づいてインフラストラクチャを自動的に管理</li>
-            <li><strong>Standard モード：</strong> ノードの構成と管理をより細かく制御可能。特定のハードウェア要件や特殊なワークロードに適している</li>
-        </ul>
-    </div>
-    
-    <h2>GKEクラスタの作成</h2>
-    <p>GKEクラスタは、Google Cloud Console、gcloud CLIツール、またはTerraformなどのIaCツールを使用して作成できます。</p>
-    
-    <h3>Google Cloud Consoleを使用したクラスタ作成</h3>
-    <ol>
-        <li>Google Cloud Consoleにログイン</li>
-        <li>Kubernetes Engineページに移動</li>
-        <li>「クラスタを作成」をクリック</li>
-        <li>Standard または Autopilot モードを選択</li>
-        <li>クラスタの名前、リージョン、ネットワーク設定などを構成</li>
-        <li>「作成」をクリックしてクラスタをプロビジョニング</li>
-    </ol>
-    
-    <h3>gcloud CLIを使用したクラスタ作成</h3>
-    <div class="example">
-        <h4>Standard クラスタの作成例</h4>
-        <pre><code>gcloud container clusters create my-cluster \
+</div>
+
+<h2>GKEクラスタの作成</h2>
+<p>GKEクラスタは、Google Cloud Console、gcloud CLIツール、またはTerraformなどのIaCツールを使用して作成できます。</p>
+
+<h3>Google Cloud Consoleを使用したクラスタ作成</h3>
+<ol>
+    <li>Google Cloud Consoleにログイン</li>
+    <li>Kubernetes Engineページに移動</li>
+    <li>「クラスタを作成」をクリック</li>
+    <li>Standard または Autopilot モードを選択</li>
+    <li>クラスタの名前、リージョン、ネットワーク設定などを構成</li>
+    <li>「作成」をクリックしてクラスタをプロビジョニング</li>
+</ol>
+
+<h3>gcloud CLIを使用したクラスタ作成</h3>
+<div class="example">
+    <h4>Standard クラスタの作成例</h4>
+    <pre><code>gcloud container clusters create my-cluster \
     --zone asia-northeast1-a \
     --num-nodes 3 \
     --machine-type e2-standard-4</code></pre>
-        
-        <h4>Autopilot クラスタの作成例</h4>
-        <pre><code>gcloud container clusters create-auto my-autopilot-cluster \
+
+    <h4>Autopilot クラスタの作成例</h4>
+    <pre><code>gcloud container clusters create-auto my-autopilot-cluster \
     --region asia-northeast1</code></pre>
-    </div>
-    
-    <h2>GKEでのアプリケーションデプロイ</h2>
-    <p>GKEにアプリケーションをデプロイするには、Kubernetesのマニフェストファイル（YAML）を使用します。以下は基本的なデプロイメントとサービスの例です：</p>
-    
-    <div class="example">
-        <h4>デプロイメントの例</h4>
-        <pre><code>apiVersion: apps/v1
+</div>
+
+<h2>GKEでのアプリケーションデプロイ</h2>
+<p>
+    GKEにアプリケーションをデプロイするには、Kubernetesのマニフェストファイル（YAML）を使用します。以下は基本的なデプロイメントとサービスの例です：</p>
+
+<div class="example">
+    <h4>デプロイメントの例</h4>
+    <pre><code>apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
@@ -117,9 +131,9 @@ spec:
         image: nginx:1.21
         ports:
         - containerPort: 80</code></pre>
-        
-        <h4>サービスの例</h4>
-        <pre><code>apiVersion: v1
+
+    <h4>サービスの例</h4>
+    <pre><code>apiVersion: v1
 kind: Service
 metadata:
   name: nginx-service
@@ -130,17 +144,17 @@ spec:
   - port: 80
     targetPort: 80
   type: LoadBalancer</code></pre>
-    </div>
-    
-    <p>これらのマニフェストを適用するには、以下のコマンドを使用します：</p>
-    <pre><code>kubectl apply -f deployment.yaml
+</div>
+
+<p>これらのマニフェストを適用するには、以下のコマンドを使用します：</p>
+<pre><code>kubectl apply -f deployment.yaml
 kubectl apply -f service.yaml</code></pre>
-    
-    <h2>GKEの高度な機能</h2>
-    
-    <h3>水平ポッド自動スケーリング（HPA）</h3>
-    <p>CPUやメモリの使用率に基づいてポッドの数を自動的にスケールします：</p>
-    <pre><code>apiVersion: autoscaling/v2
+
+<h2>GKEの高度な機能</h2>
+
+<h3>水平ポッド自動スケーリング（HPA）</h3>
+<p>CPUやメモリの使用率に基づいてポッドの数を自動的にスケールします：</p>
+<pre><code>apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: nginx-hpa
@@ -158,18 +172,20 @@ spec:
       target:
         type: Utilization
         averageUtilization: 50</code></pre>
-    
-    <h3>ノード自動スケーリング</h3>
-    <p>GKEはポッドの要求に基づいてノードプールを自動的にスケールできます。これはクラスタ作成時または既存のクラスタで有効にできます：</p>
-    <pre><code>gcloud container clusters update my-cluster \
+
+<h3>ノード自動スケーリング</h3>
+<p>
+    GKEはポッドの要求に基づいてノードプールを自動的にスケールできます。これはクラスタ作成時または既存のクラスタで有効にできます：</p>
+<pre><code>gcloud container clusters update my-cluster \
     --enable-autoscaling \
     --min-nodes 1 \
     --max-nodes 10 \
     --zone asia-northeast1-a</code></pre>
-    
-    <h3>GKE Ingress</h3>
-    <p>GKE IngressはGoogle Cloud Load Balancerを自動的にプロビジョニングし、HTTPSトラフィックをサービスにルーティングします：</p>
-    <pre><code>apiVersion: networking.k8s.io/v1
+
+<h3>GKE Ingress</h3>
+<p>GKE IngressはGoogle Cloud Load
+    Balancerを自動的にプロビジョニングし、HTTPSトラフィックをサービスにルーティングします：</p>
+<pre><code>apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: my-ingress
@@ -185,21 +201,21 @@ spec:
             name: nginx-service
             port:
               number: 80</code></pre>
-    
-    <h2>GKEのセキュリティベストプラクティス</h2>
-    <ul>
-        <li><strong>最小権限の原則：</strong> サービスアカウントとIAMロールに必要最小限の権限を付与</li>
-        <li><strong>Workload Identity：</strong> GCPサービスアカウントとKubernetesサービスアカウントを安全に連携</li>
-        <li><strong>Private クラスタ：</strong> パブリックインターネットからノードへのアクセスを制限</li>
-        <li><strong>Binary Authorization：</strong> 承認されたコンテナイメージのみをデプロイ可能に</li>
-        <li><strong>コンテナの脆弱性スキャン：</strong> Artifact Registryの脆弱性スキャンを有効化</li>
-        <li><strong>定期的なクラスタアップグレード：</strong> セキュリティパッチを適用するために定期的にアップグレード</li>
-        <li><strong>ネットワークポリシー：</strong> ポッド間の通信を制限するネットワークポリシーを実装</li>
-    </ul>
-    
-    <div class="example">
-        <h4>ネットワークポリシーの例</h4>
-        <pre><code>apiVersion: networking.k8s.io/v1
+
+<h2>GKEのセキュリティベストプラクティス</h2>
+<ul>
+    <li><strong>最小権限の原則：</strong> サービスアカウントとIAMロールに必要最小限の権限を付与</li>
+    <li><strong>Workload Identity：</strong> GCPサービスアカウントとKubernetesサービスアカウントを安全に連携</li>
+    <li><strong>Private クラスタ：</strong> パブリックインターネットからノードへのアクセスを制限</li>
+    <li><strong>Binary Authorization：</strong> 承認されたコンテナイメージのみをデプロイ可能に</li>
+    <li><strong>コンテナの脆弱性スキャン：</strong> Artifact Registryの脆弱性スキャンを有効化</li>
+    <li><strong>定期的なクラスタアップグレード：</strong> セキュリティパッチを適用するために定期的にアップグレード</li>
+    <li><strong>ネットワークポリシー：</strong> ポッド間の通信を制限するネットワークポリシーを実装</li>
+</ul>
+
+<div class="example">
+    <h4>ネットワークポリシーの例</h4>
+    <pre><code>apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: default-deny-all
@@ -208,22 +224,22 @@ spec:
   policyTypes:
   - Ingress
   - Egress</code></pre>
-    </div>
-    
-    <h2>GKEのモニタリングとロギング</h2>
-    <p>GKEはGoogle Cloud Monitoringおよびロギングと統合されており、クラスタの健全性とパフォーマンスを監視できます：</p>
-    
-    <h3>主なモニタリング機能</h3>
-    <ul>
-        <li><strong>Cloud Monitoring：</strong> クラスタ、ノード、ポッドのメトリクスを収集・表示</li>
-        <li><strong>Cloud Logging：</strong> コンテナログ、システムログ、監査ログを収集・分析</li>
-        <li><strong>GKE ダッシュボード：</strong> クラスタの概要、ワークロードのステータス、リソース使用率を表示</li>
-        <li><strong>Prometheus：</strong> GKEと統合されたPrometheusモニタリング</li>
-    </ul>
-    
-    <h3>カスタムメトリクスの収集</h3>
-    <p>アプリケーション固有のメトリクスを収集するには、Prometheus形式でメトリクスを公開し、Cloud Monitoringで収集できます：</p>
-    <pre><code>apiVersion: v1
+</div>
+
+<h2>GKEのモニタリングとロギング</h2>
+<p>GKEはGoogle Cloud Monitoringおよびロギングと統合されており、クラスタの健全性とパフォーマンスを監視できます：</p>
+
+<h3>主なモニタリング機能</h3>
+<ul>
+    <li><strong>Cloud Monitoring：</strong> クラスタ、ノード、ポッドのメトリクスを収集・表示</li>
+    <li><strong>Cloud Logging：</strong> コンテナログ、システムログ、監査ログを収集・分析</li>
+    <li><strong>GKE ダッシュボード：</strong> クラスタの概要、ワークロードのステータス、リソース使用率を表示</li>
+    <li><strong>Prometheus：</strong> GKEと統合されたPrometheusモニタリング</li>
+</ul>
+
+<h3>カスタムメトリクスの収集</h3>
+<p>アプリケーション固有のメトリクスを収集するには、Prometheus形式でメトリクスを公開し、Cloud Monitoringで収集できます：</p>
+<pre><code>apiVersion: v1
 kind: Service
 metadata:
   name: prometheus-service
@@ -236,165 +252,169 @@ spec:
     app: myapp
   ports:
   - port: 8080</code></pre>
-    
-    <h2>GKEのコスト最適化</h2>
-    <p>GKEのコストを最適化するためのベストプラクティス：</p>
-    <ul>
-        <li><strong>Spot VMs（旧Preemptible VMs）：</strong> 非本番環境や耐障害性のあるワークロードにはSpot VMを使用</li>
-        <li><strong>リソース要求と制限の適切な設定：</strong> コンテナのリソース要求と制限を適切に設定</li>
-        <li><strong>クラスタ自動スケーラーの活用：</strong> ワークロードに応じてノード数を自動調整</li>
-        <li><strong>コミットメント割引：</strong> 長期的な使用が見込まれる場合はコミットメント割引を検討</li>
-        <li><strong>マルチテナントクラスタ：</strong> 複数のアプリケーションを同じクラスタで実行してリソースを共有</li>
-        <li><strong>GKE使用量メトリクスの監視：</strong> Cost Managerを使用してGKEのコストを監視・分析</li>
-    </ul>
-    
-    <div class="note">
-        <h3>Spot VMの使用例</h3>
-        <pre><code>gcloud container node-pools create spot-pool \
+
+<h2>GKEのコスト最適化</h2>
+<p>GKEのコストを最適化するためのベストプラクティス：</p>
+<ul>
+    <li><strong>Spot VMs（旧Preemptible VMs）：</strong> 非本番環境や耐障害性のあるワークロードにはSpot VMを使用</li>
+    <li><strong>リソース要求と制限の適切な設定：</strong> コンテナのリソース要求と制限を適切に設定</li>
+    <li><strong>クラスタ自動スケーラーの活用：</strong> ワークロードに応じてノード数を自動調整</li>
+    <li><strong>コミットメント割引：</strong> 長期的な使用が見込まれる場合はコミットメント割引を検討</li>
+    <li><strong>マルチテナントクラスタ：</strong> 複数のアプリケーションを同じクラスタで実行してリソースを共有</li>
+    <li><strong>GKE使用量メトリクスの監視：</strong> Cost Managerを使用してGKEのコストを監視・分析</li>
+</ul>
+
+<div class="note">
+    <h3>Spot VMの使用例</h3>
+    <pre><code>gcloud container node-pools create spot-pool \
     --cluster=my-cluster \
     --spot \
     --machine-type=e2-standard-4 \
     --num-nodes=3 \
     --zone=asia-northeast1-a</code></pre>
-    </div>
-    
-    <h2>GKEのトラブルシューティング</h2>
-    <p>GKEで発生する一般的な問題とその解決方法：</p>
-    
-    <table>
-        <tr>
-            <th>問題</th>
-            <th>考えられる原因</th>
-            <th>解決策</th>
-        </tr>
-        <tr>
-            <td>ポッドが起動しない</td>
-            <td>リソース不足、イメージプル失敗、構成エラー</td>
-            <td>
-                <code>kubectl describe pod &lt;pod-name&gt;</code>でイベントを確認<br>
-                <code>kubectl logs &lt;pod-name&gt;</code>でログを確認
-            </td>
-        </tr>
-        <tr>
-            <td>サービスにアクセスできない</td>
-            <td>セレクタの不一致、ポート構成の誤り、ファイアウォールルール</td>
-            <td>
-                <code>kubectl describe service &lt;service-name&gt;</code>で設定を確認<br>
-                <code>kubectl get endpoints &lt;service-name&gt;</code>でエンドポイントを確認
-            </td>
-        </tr>
-        <tr>
-            <td>ノードの問題</td>
-            <td>リソース枯渇、ディスク容量不足、カーネルの問題</td>
-            <td>
-                <code>kubectl describe node &lt;node-name&gt;</code>でノードの状態を確認<br>
-                Cloud Monitoringでノードメトリクスを確認
-            </td>
-        </tr>
-        <tr>
-            <td>クラスタの自動スケーリングが機能しない</td>
-            <td>リソース要求の未設定、クォータ制限、構成の誤り</td>
-            <td>
-                ポッドのリソース要求が設定されていることを確認<br>
-                クォータ制限を確認<br>
-                自動スケーリングの設定を確認
-            </td>
-        </tr>
-    </table>
-    
-    <h3>診断コマンド集</h3>
-    <ul>
-        <li><code>kubectl get nodes</code> - ノードの一覧と状態を表示</li>
-        <li><code>kubectl top nodes</code> - ノードのリソース使用率を表示</li>
-        <li><code>kubectl top pods</code> - ポッドのリソース使用率を表示</li>
-        <li><code>kubectl get events --sort-by=.metadata.creationTimestamp</code> - 時系列順にイベントを表示</li>
-        <li><code>kubectl describe pod &lt;pod-name&gt;</code> - ポッドの詳細情報とイベントを表示</li>
-        <li><code>kubectl logs &lt;pod-name&gt; -c &lt;container-name&gt;</code> - コンテナのログを表示</li>
-        <li><code>kubectl exec -it &lt;pod-name&gt; -- /bin/bash</code> - ポッド内でシェルを実行</li>
-    </ul>
-    
-    <h2>GKEのバージョンアップグレード</h2>
-    <p>GKEクラスタは定期的にアップグレードして、最新の機能、バグ修正、セキュリティパッチを適用することが重要です：</p>
-    
-    <h3>アップグレードの種類</h3>
-    <ul>
-        <li><strong>自動アップグレード：</strong> GKEはリリースチャンネル（Rapid、Regular、Stable）に基づいて自動的にアップグレード</li>
-        <li><strong>手動アップグレード：</strong> 特定のバージョンに手動でアップグレード</li>
-        <li><strong>ノードの自動アップグレード：</strong> コントロールプレーンのアップグレード後にノードを自動的にアップグレード</li>
-        <li><strong>ノードの手動アップグレード：</strong> ノードプールを手動でアップグレード</li>
-    </ul>
-    
-    <div class="example">
-        <h4>クラスタのアップグレード例</h4>
-        <pre><code>gcloud container clusters upgrade my-cluster \
+</div>
+
+<h2>GKEのトラブルシューティング</h2>
+<p>GKEで発生する一般的な問題とその解決方法：</p>
+
+<table>
+    <tr>
+        <th>問題</th>
+        <th>考えられる原因</th>
+        <th>解決策</th>
+    </tr>
+    <tr>
+        <td>ポッドが起動しない</td>
+        <td>リソース不足、イメージプル失敗、構成エラー</td>
+        <td>
+            <code>kubectl describe pod &lt;pod-name&gt;</code>でイベントを確認<br>
+            <code>kubectl logs &lt;pod-name&gt;</code>でログを確認
+        </td>
+    </tr>
+    <tr>
+        <td>サービスにアクセスできない</td>
+        <td>セレクタの不一致、ポート構成の誤り、ファイアウォールルール</td>
+        <td>
+            <code>kubectl describe service &lt;service-name&gt;</code>で設定を確認<br>
+            <code>kubectl get endpoints &lt;service-name&gt;</code>でエンドポイントを確認
+        </td>
+    </tr>
+    <tr>
+        <td>ノードの問題</td>
+        <td>リソース枯渇、ディスク容量不足、カーネルの問題</td>
+        <td>
+            <code>kubectl describe node &lt;node-name&gt;</code>でノードの状態を確認<br>
+            Cloud Monitoringでノードメトリクスを確認
+        </td>
+    </tr>
+    <tr>
+        <td>クラスタの自動スケーリングが機能しない</td>
+        <td>リソース要求の未設定、クォータ制限、構成の誤り</td>
+        <td>
+            ポッドのリソース要求が設定されていることを確認<br>
+            クォータ制限を確認<br>
+            自動スケーリングの設定を確認
+        </td>
+    </tr>
+</table>
+
+<h3>診断コマンド集</h3>
+<ul>
+    <li><code>kubectl get nodes</code> - ノードの一覧と状態を表示</li>
+    <li><code>kubectl top nodes</code> - ノードのリソース使用率を表示</li>
+    <li><code>kubectl top pods</code> - ポッドのリソース使用率を表示</li>
+    <li><code>kubectl get events --sort-by=.metadata.creationTimestamp</code> - 時系列順にイベントを表示</li>
+    <li><code>kubectl describe pod &lt;pod-name&gt;</code> - ポッドの詳細情報とイベントを表示</li>
+    <li><code>kubectl logs &lt;pod-name&gt; -c &lt;container-name&gt;</code> - コンテナのログを表示</li>
+    <li><code>kubectl exec -it &lt;pod-name&gt; -- /bin/bash</code> - ポッド内でシェルを実行</li>
+</ul>
+
+<h2>GKEのバージョンアップグレード</h2>
+<p>GKEクラスタは定期的にアップグレードして、最新の機能、バグ修正、セキュリティパッチを適用することが重要です：</p>
+
+<h3>アップグレードの種類</h3>
+<ul>
+    <li><strong>自動アップグレード：</strong> GKEはリリースチャンネル（Rapid、Regular、Stable）に基づいて自動的にアップグレード
+    </li>
+    <li><strong>手動アップグレード：</strong> 特定のバージョンに手動でアップグレード</li>
+    <li><strong>ノードの自動アップグレード：</strong> コントロールプレーンのアップグレード後にノードを自動的にアップグレード
+    </li>
+    <li><strong>ノードの手動アップグレード：</strong> ノードプールを手動でアップグレード</li>
+</ul>
+
+<div class="example">
+    <h4>クラスタのアップグレード例</h4>
+    <pre><code>gcloud container clusters upgrade my-cluster \
     --master \
     --zone asia-northeast1-a</code></pre>
-        
-        <h4>ノードプールのアップグレード例</h4>
-        <pre><code>gcloud container clusters upgrade my-cluster \
+
+    <h4>ノードプールのアップグレード例</h4>
+    <pre><code>gcloud container clusters upgrade my-cluster \
     --node-pool=default-pool \
     --zone asia-northeast1-a</code></pre>
-    </div>
-    
-    <h3>アップグレードのベストプラクティス</h3>
-    <ul>
-        <li>本番環境のアップグレード前にテスト環境でテスト</li>
-        <li>アップグレード前にクラスタとアプリケーションのバックアップを作成</li>
-        <li>ダウンタイムを最小限に抑えるためにブルー/グリーンデプロイメントを検討</li>
-        <li>アップグレード中のアプリケーションの動作を監視</li>
-        <li>複数のノードプールを使用して段階的にアップグレード</li>
-    </ul>
-    
-    <h2>GKEとの統合サービス</h2>
-    <p>GKEは他のGoogle Cloudサービスと統合して、より強力なソリューションを構築できます：</p>
-    
-    <table>
-        <tr>
-            <th>サービス</th>
-            <th>統合の利点</th>
-        </tr>
-        <tr>
-            <td><a href="cloud_build.html">Cloud Build</a></td>
-            <td>コンテナイメージのビルドとGKEへの継続的デプロイメント</td>
-        </tr>
-        <tr>
-            <td><a href="artifact_registry.html">Artifact Registry</a></td>
-            <td>コンテナイメージの安全な保存と脆弱性スキャン</td>
-        </tr>
-        <tr>
-            <td><a href="cloud_sql.html">Cloud SQL</a></td>
-            <td>マネージドデータベースサービスとの安全な接続</td>
-        </tr>
-        <tr>
-            <td><a href="secret_manager.html">Secret Manager</a></td>
-            <td>機密情報の安全な管理と利用</td>
-        </tr>
-        <tr>
-            <td><a href="cloud_cdn.html">Cloud CDN</a></td>
-            <td>GKEアプリケーションのコンテンツ配信の高速化</td>
-        </tr>
-        <tr>
-            <td><a href="cloud_armor.html">Cloud Armor</a></td>
-            <td>GKEアプリケーションのDDoS保護とWAF</td>
-        </tr>
-        <tr>
-            <td><a href="anthos.html">Anthos</a></td>
-            <td>ハイブリッドおよびマルチクラウド環境でのKubernetes管理</td>
-        </tr>
-    </table>
-    
-    <h2>まとめ</h2>
-    <p>Google Kubernetes Engine (GKE) は、Kubernetesの管理の複雑さを軽減しながら、スケーラビリティ、信頼性、セキュリティを提供するマネージドKubernetesサービスです。AutopilotモードとStandardモードの選択肢により、様々なユースケースに対応できます。</p>
-    
-    <p>GKEの主な利点は以下の通りです：</p>
-    <ul>
-        <li>インフラストラクチャ管理の負担軽減</li>
-        <li>自動スケーリングによるリソースの最適化</li>
-        <li>統合されたモニタリングとロギング</li>
-        <li>高度なセキュリティ機能</li>
-        <li>他のGoogle Cloudサービスとのシームレスな統合</li>
-    </ul>
-    
-    <p>GKEを効果的に活用するには、Kubernetesの基本概念を理解し、適切なクラスタ構成、リソース管理、セキュリティ対策、モニタリング戦略を実装することが重要です。また、定期的なアップグレードとメンテナンスを行い、最新の機能と改善を取り入れることで、アプリケーションの信頼性と効率性を維持することができます。</p>
+</div>
+
+<h3>アップグレードのベストプラクティス</h3>
+<ul>
+    <li>本番環境のアップグレード前にテスト環境でテスト</li>
+    <li>アップグレード前にクラスタとアプリケーションのバックアップを作成</li>
+    <li>ダウンタイムを最小限に抑えるためにブルー/グリーンデプロイメントを検討</li>
+    <li>アップグレード中のアプリケーションの動作を監視</li>
+    <li>複数のノードプールを使用して段階的にアップグレード</li>
+</ul>
+
+<h2>GKEとの統合サービス</h2>
+<p>GKEは他のGoogle Cloudサービスと統合して、より強力なソリューションを構築できます：</p>
+
+<table>
+    <tr>
+        <th>サービス</th>
+        <th>統合の利点</th>
+    </tr>
+    <tr>
+        <td><a href="cloud_build.html">Cloud Build</a></td>
+        <td>コンテナイメージのビルドとGKEへの継続的デプロイメント</td>
+    </tr>
+    <tr>
+        <td><a href="artifact_registry.html">Artifact Registry</a></td>
+        <td>コンテナイメージの安全な保存と脆弱性スキャン</td>
+    </tr>
+    <tr>
+        <td><a href="cloud_sql.html">Cloud SQL</a></td>
+        <td>マネージドデータベースサービスとの安全な接続</td>
+    </tr>
+    <tr>
+        <td><a href="secret_manager.html">Secret Manager</a></td>
+        <td>機密情報の安全な管理と利用</td>
+    </tr>
+    <tr>
+        <td><a href="cloud_cdn.html">Cloud CDN</a></td>
+        <td>GKEアプリケーションのコンテンツ配信の高速化</td>
+    </tr>
+    <tr>
+        <td><a href="cloud_armor.html">Cloud Armor</a></td>
+        <td>GKEアプリケーションのDDoS保護とWAF</td>
+    </tr>
+    <tr>
+        <td><a href="anthos.html">Anthos</a></td>
+        <td>ハイブリッドおよびマルチクラウド環境でのKubernetes管理</td>
+    </tr>
+</table>
+
+<h2>まとめ</h2>
+<p>Google Kubernetes Engine (GKE)
+    は、Kubernetesの管理の複雑さを軽減しながら、スケーラビリティ、信頼性、セキュリティを提供するマネージドKubernetesサービスです。AutopilotモードとStandardモードの選択肢により、様々なユースケースに対応できます。</p>
+
+<p>GKEの主な利点は以下の通りです：</p>
+<ul>
+    <li>インフラストラクチャ管理の負担軽減</li>
+    <li>自動スケーリングによるリソースの最適化</li>
+    <li>統合されたモニタリングとロギング</li>
+    <li>高度なセキュリティ機能</li>
+    <li>他のGoogle Cloudサービスとのシームレスな統合</li>
+</ul>
+
+<p>
+    GKEを効果的に活用するには、Kubernetesの基本概念を理解し、適切なクラスタ構成、リソース管理、セキュリティ対策、モニタリング戦略を実装することが重要です。また、定期的なアップグレードとメンテナンスを行い、最新の機能と改善を取り入れることで、アプリケーションの信頼性と効率性を維持することができます。</p>
 </body>
 </html>

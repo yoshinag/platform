@@ -1,209 +1,219 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <title>Amazon EC2</title>
     <link rel="stylesheet" href="../../../../css/knowledge.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../../../platform/js/common/analytics.js"></script>
+
 <body class="ja-knowledge">
-    <div style="margin-bottom: 20px;">
-        <a href="../aws.html">AWSに戻る</a>
-    </div>
-    <h1>Amazon EC2 (Elastic Compute Cloud)</h1>
-    
-    <h2>Amazon EC2とは</h2>
-    <p>Amazon Elastic Compute Cloud (Amazon EC2) は、AWSクラウド内でスケーラブルなコンピューティング容量を提供するウェブサービスです。EC2を使用することで、ハードウェアに事前投資する必要がなくなり、アプリケーションを迅速に開発およびデプロイすることができます。EC2は、必要な数の仮想サーバーを起動し、セキュリティやネットワーキング、ストレージを構成することができます。また、トラフィック予測の要件に合わせてスケールアップまたはスケールダウンできるため、コンピューティングリソースの使用を最適化できます。</p>
-    
-    <h2>Amazon EC2の主な特徴</h2>
+<div style="margin-bottom: 20px;">
+    <a href="../aws.html">AWSに戻る</a>
+</div>
+<h1>Amazon EC2 (Elastic Compute Cloud)</h1>
+
+<h2>Amazon EC2とは</h2>
+<p>Amazon Elastic Compute Cloud (Amazon EC2)
+    は、AWSクラウド内でスケーラブルなコンピューティング容量を提供するウェブサービスです。EC2を使用することで、ハードウェアに事前投資する必要がなくなり、アプリケーションを迅速に開発およびデプロイすることができます。EC2は、必要な数の仮想サーバーを起動し、セキュリティやネットワーキング、ストレージを構成することができます。また、トラフィック予測の要件に合わせてスケールアップまたはスケールダウンできるため、コンピューティングリソースの使用を最適化できます。</p>
+
+<h2>Amazon EC2の主な特徴</h2>
+<ul>
+    <li><strong>柔軟性：</strong> 多様なインスタンスタイプ、オペレーティングシステム、ソフトウェアパッケージから選択可能
+    </li>
+    <li><strong>コスト効率：</strong> 使用した分だけ支払う従量課金制と、長期利用割引のためのリザーブドインスタンス、スポットインスタンスオプション
+    </li>
+    <li><strong>スケーラビリティ：</strong> Auto Scalingを使用して需要に応じて自動的にキャパシティを調整</li>
+    <li><strong>信頼性：</strong> 複数のアベイラビリティゾーンにわたるデプロイメントによる高可用性</li>
+    <li><strong>セキュリティ：</strong> Amazon VPC、セキュリティグループ、ネットワークACL、IAMによる多層防御</li>
+    <li><strong>統合：</strong> 他のAWSサービスとの緊密な統合</li>
+    <li><strong>高性能：</strong> 高性能コンピューティング（HPC）ワークロードに対応するインスタンスタイプ</li>
+    <li><strong>グローバルリーチ：</strong> 世界中の複数のリージョンでデプロイ可能</li>
+</ul>
+
+<h2>Amazon EC2のインスタンスタイプ</h2>
+<p>EC2は様々なユースケースに最適化された多様なインスタンスタイプを提供しています：</p>
+
+<table>
+    <tr>
+        <th>インスタンスファミリー</th>
+        <th>最適化対象</th>
+        <th>ユースケース</th>
+    </tr>
+    <tr>
+        <td>汎用 (T, M)</td>
+        <td>コンピューティング、メモリ、ネットワークリソースのバランス</td>
+        <td>ウェブサーバー、コードリポジトリ、小〜中規模データベース</td>
+    </tr>
+    <tr>
+        <td>コンピューティング最適化 (C)</td>
+        <td>高性能プロセッサ</td>
+        <td>バッチ処理、メディアエンコーディング、高性能ウェブサーバー</td>
+    </tr>
+    <tr>
+        <td>メモリ最適化 (R, X)</td>
+        <td>大規模メモリ内データセット処理</td>
+        <td>高性能データベース、分散メモリキャッシュ、インメモリ分析</td>
+    </tr>
+    <tr>
+        <td>ストレージ最適化 (D, I)</td>
+        <td>高いシーケンシャル読み取り/書き込みアクセス</td>
+        <td>データウェアハウス、ログ処理、分散ファイルシステム</td>
+    </tr>
+    <tr>
+        <td>高速コンピューティング (P, G)</td>
+        <td>ハードウェアアクセラレータ（GPU）</td>
+        <td>機械学習、高性能コンピューティング、計算流体力学</td>
+    </tr>
+</table>
+
+<div class="note">
+    <h3>インスタンスタイプの命名規則</h3>
+    <p>EC2インスタンスタイプは通常、ファミリー、世代、サイズの組み合わせで命名されています。例えば、「m5.large」は：</p>
     <ul>
-        <li><strong>柔軟性：</strong> 多様なインスタンスタイプ、オペレーティングシステム、ソフトウェアパッケージから選択可能</li>
-        <li><strong>コスト効率：</strong> 使用した分だけ支払う従量課金制と、長期利用割引のためのリザーブドインスタンス、スポットインスタンスオプション</li>
-        <li><strong>スケーラビリティ：</strong> Auto Scalingを使用して需要に応じて自動的にキャパシティを調整</li>
-        <li><strong>信頼性：</strong> 複数のアベイラビリティゾーンにわたるデプロイメントによる高可用性</li>
-        <li><strong>セキュリティ：</strong> Amazon VPC、セキュリティグループ、ネットワークACL、IAMによる多層防御</li>
-        <li><strong>統合：</strong> 他のAWSサービスとの緊密な統合</li>
-        <li><strong>高性能：</strong> 高性能コンピューティング（HPC）ワークロードに対応するインスタンスタイプ</li>
-        <li><strong>グローバルリーチ：</strong> 世界中の複数のリージョンでデプロイ可能</li>
+        <li><strong>m</strong>：汎用インスタンスファミリー</li>
+        <li><strong>5</strong>：第5世代</li>
+        <li><strong>large</strong>：インスタンスサイズ（CPU、メモリ、ネットワーク容量を定義）</li>
     </ul>
-    
-    <h2>Amazon EC2のインスタンスタイプ</h2>
-    <p>EC2は様々なユースケースに最適化された多様なインスタンスタイプを提供しています：</p>
-    
-    <table>
-        <tr>
-            <th>インスタンスファミリー</th>
-            <th>最適化対象</th>
-            <th>ユースケース</th>
-        </tr>
-        <tr>
-            <td>汎用 (T, M)</td>
-            <td>コンピューティング、メモリ、ネットワークリソースのバランス</td>
-            <td>ウェブサーバー、コードリポジトリ、小〜中規模データベース</td>
-        </tr>
-        <tr>
-            <td>コンピューティング最適化 (C)</td>
-            <td>高性能プロセッサ</td>
-            <td>バッチ処理、メディアエンコーディング、高性能ウェブサーバー</td>
-        </tr>
-        <tr>
-            <td>メモリ最適化 (R, X)</td>
-            <td>大規模メモリ内データセット処理</td>
-            <td>高性能データベース、分散メモリキャッシュ、インメモリ分析</td>
-        </tr>
-        <tr>
-            <td>ストレージ最適化 (D, I)</td>
-            <td>高いシーケンシャル読み取り/書き込みアクセス</td>
-            <td>データウェアハウス、ログ処理、分散ファイルシステム</td>
-        </tr>
-        <tr>
-            <td>高速コンピューティング (P, G)</td>
-            <td>ハードウェアアクセラレータ（GPU）</td>
-            <td>機械学習、高性能コンピューティング、計算流体力学</td>
-        </tr>
-    </table>
-    
-    <div class="note">
-        <h3>インスタンスタイプの命名規則</h3>
-        <p>EC2インスタンスタイプは通常、ファミリー、世代、サイズの組み合わせで命名されています。例えば、「m5.large」は：</p>
-        <ul>
-            <li><strong>m</strong>：汎用インスタンスファミリー</li>
-            <li><strong>5</strong>：第5世代</li>
-            <li><strong>large</strong>：インスタンスサイズ（CPU、メモリ、ネットワーク容量を定義）</li>
-        </ul>
-    </div>
-    
-    <h2>Amazon EC2の購入オプション</h2>
-    <p>EC2インスタンスには複数の購入オプションがあり、ニーズと予算に合わせて選択できます：</p>
-    
-    <table>
-        <tr>
-            <th>購入オプション</th>
-            <th>説明</th>
-            <th>適したユースケース</th>
-        </tr>
-        <tr>
-            <td>オンデマンドインスタンス</td>
-            <td>使用した秒単位で支払い、長期契約なし</td>
-            <td>短期、不規則なワークロード、初めて開発またはテストするアプリケーション</td>
-        </tr>
-        <tr>
-            <td>リザーブドインスタンス</td>
-            <td>1年または3年の期間で予約することで大幅な割引</td>
-            <td>安定した状態の使用量、予測可能な使用量、長期コミットメントが可能なアプリケーション</td>
-        </tr>
-        <tr>
-            <td>スポットインスタンス</td>
-            <td>未使用のEC2容量を大幅な割引で利用</td>
-            <td>柔軟な開始・終了時間を持つアプリケーション、非常に低いコンピューティング価格のみが実行可能なアプリケーション</td>
-        </tr>
-        <tr>
-            <td>Savings Plans</td>
-            <td>1年または3年の期間で一定の使用量を約束することで割引</td>
-            <td>EC2、Fargate、Lambdaなど複数のコンピューティングサービスを使用するワークロード</td>
-        </tr>
-        <tr>
-            <td>専有ホスト</td>
-            <td>他のAWSアカウントと共有されない物理サーバー全体を専有</td>
-            <td>ライセンス要件のあるソフトウェア、コンプライアンス要件のあるワークロード</td>
-        </tr>
-    </table>
-    
-    <h2>Amazon EC2の使用方法</h2>
-    <p>EC2は、AWS Management Console、AWS CLI、SDKs、またはインフラストラクチャ as コード（IaC）ツールを使用して利用できます。</p>
-    
-    <h3>EC2インスタンスの起動</h3>
-    <div class="example">
-        <h4>AWS CLIを使用したEC2インスタンスの起動</h4>
-        <pre><code>aws ec2 run-instances \
+</div>
+
+<h2>Amazon EC2の購入オプション</h2>
+<p>EC2インスタンスには複数の購入オプションがあり、ニーズと予算に合わせて選択できます：</p>
+
+<table>
+    <tr>
+        <th>購入オプション</th>
+        <th>説明</th>
+        <th>適したユースケース</th>
+    </tr>
+    <tr>
+        <td>オンデマンドインスタンス</td>
+        <td>使用した秒単位で支払い、長期契約なし</td>
+        <td>短期、不規則なワークロード、初めて開発またはテストするアプリケーション</td>
+    </tr>
+    <tr>
+        <td>リザーブドインスタンス</td>
+        <td>1年または3年の期間で予約することで大幅な割引</td>
+        <td>安定した状態の使用量、予測可能な使用量、長期コミットメントが可能なアプリケーション</td>
+    </tr>
+    <tr>
+        <td>スポットインスタンス</td>
+        <td>未使用のEC2容量を大幅な割引で利用</td>
+        <td>
+            柔軟な開始・終了時間を持つアプリケーション、非常に低いコンピューティング価格のみが実行可能なアプリケーション
+        </td>
+    </tr>
+    <tr>
+        <td>Savings Plans</td>
+        <td>1年または3年の期間で一定の使用量を約束することで割引</td>
+        <td>EC2、Fargate、Lambdaなど複数のコンピューティングサービスを使用するワークロード</td>
+    </tr>
+    <tr>
+        <td>専有ホスト</td>
+        <td>他のAWSアカウントと共有されない物理サーバー全体を専有</td>
+        <td>ライセンス要件のあるソフトウェア、コンプライアンス要件のあるワークロード</td>
+    </tr>
+</table>
+
+<h2>Amazon EC2の使用方法</h2>
+<p>EC2は、AWS Management Console、AWS CLI、SDKs、またはインフラストラクチャ as コード（IaC）ツールを使用して利用できます。</p>
+
+<h3>EC2インスタンスの起動</h3>
+<div class="example">
+    <h4>AWS CLIを使用したEC2インスタンスの起動</h4>
+    <pre><code>aws ec2 run-instances \
     --image-id ami-0abcdef1234567890 \
     --instance-type t2.micro \
     --key-name MyKeyPair \
     --security-group-ids sg-0123456789abcdef0 \
     --subnet-id subnet-0123456789abcdef0 \
     --count 1</code></pre>
-        
-        <h4>ユーザーデータを使用したインスタンスの起動</h4>
-        <pre><code>aws ec2 run-instances \
+
+    <h4>ユーザーデータを使用したインスタンスの起動</h4>
+    <pre><code>aws ec2 run-instances \
     --image-id ami-0abcdef1234567890 \
     --instance-type t2.micro \
     --key-name MyKeyPair \
     --security-group-ids sg-0123456789abcdef0 \
     --subnet-id subnet-0123456789abcdef0 \
     --user-data file://my-script.sh</code></pre>
-    </div>
-    
-    <h3>インスタンスへの接続</h3>
-    <div class="example">
-        <h4>SSHを使用したLinuxインスタンスへの接続</h4>
-        <pre><code>ssh -i /path/to/my-key-pair.pem ec2-user@ec2-198-51-100-1.compute-1.amazonaws.com</code></pre>
-        
-        <h4>RDPを使用したWindowsインスタンスへの接続</h4>
-        <p>Windowsインスタンスの場合、パスワードを取得してからRDPクライアントを使用して接続します：</p>
-        <pre><code>aws ec2 get-password-data \
+</div>
+
+<h3>インスタンスへの接続</h3>
+<div class="example">
+    <h4>SSHを使用したLinuxインスタンスへの接続</h4>
+    <pre><code>ssh -i /path/to/my-key-pair.pem ec2-user@ec2-198-51-100-1.compute-1.amazonaws.com</code></pre>
+
+    <h4>RDPを使用したWindowsインスタンスへの接続</h4>
+    <p>Windowsインスタンスの場合、パスワードを取得してからRDPクライアントを使用して接続します：</p>
+    <pre><code>aws ec2 get-password-data \
     --instance-id i-0123456789abcdef0 \
     --priv-key-file /path/to/my-key-pair.pem</code></pre>
-    </div>
-    
-    <h3>インスタンスの管理</h3>
-    <div class="example">
-        <h4>インスタンスの停止と開始</h4>
-        <pre><code># インスタンスの停止
+</div>
+
+<h3>インスタンスの管理</h3>
+<div class="example">
+    <h4>インスタンスの停止と開始</h4>
+    <pre><code># インスタンスの停止
 aws ec2 stop-instances --instance-ids i-0123456789abcdef0
 
 # インスタンスの開始
 aws ec2 start-instances --instance-ids i-0123456789abcdef0</code></pre>
-        
-        <h4>インスタンスの終了</h4>
-        <pre><code>aws ec2 terminate-instances --instance-ids i-0123456789abcdef0</code></pre>
-    </div>
-    
-    <h2>Amazon EC2のストレージオプション</h2>
-    <p>EC2インスタンスには複数のストレージオプションがあります：</p>
-    
-    <table>
-        <tr>
-            <th>ストレージタイプ</th>
-            <th>説明</th>
-            <th>ユースケース</th>
-        </tr>
-        <tr>
-            <td>Amazon EBS</td>
-            <td>永続的なブロックレベルのストレージボリューム</td>
-            <td>データベース、ファイルシステム、アプリケーションの実行に必要なデータ</td>
-        </tr>
-        <tr>
-            <td>インスタンスストア</td>
-            <td>インスタンスに物理的に接続された一時的なブロックレベルのストレージ</td>
-            <td>一時的なデータ、キャッシュ、スクラッチデータ</td>
-        </tr>
-        <tr>
-            <td>Amazon EFS</td>
-            <td>複数のEC2インスタンスからアクセス可能なスケーラブルなファイルシステム</td>
-            <td>コンテンツ管理、ウェブサービング、データ共有、Wordpress</td>
-        </tr>
-        <tr>
-            <td>Amazon S3</td>
-            <td>オブジェクトストレージサービス</td>
-            <td>静的ウェブサイトホスティング、バックアップ、アーカイブ、ビッグデータ分析</td>
-        </tr>
-    </table>
-    
-    <h2>Amazon EC2のネットワーキング</h2>
-    <p>EC2インスタンスのネットワーキングは主に以下のコンポーネントで構成されています：</p>
-    
-    <h3>Amazon VPC</h3>
-    <p>Amazon Virtual Private Cloud (VPC) は、AWS内の論理的に分離されたネットワーク環境です。EC2インスタンスはVPC内にデプロイされ、サブネット、ルートテーブル、ネットワークACL、インターネットゲートウェイなどのネットワークリソースを使用します。</p>
-    
-    <h3>セキュリティグループ</h3>
-    <p>セキュリティグループは、EC2インスタンスの仮想ファイアウォールとして機能し、インバウンドおよびアウトバウンドトラフィックを制御します。セキュリティグループのルールは、許可ルールのみで構成されます（デフォルトではすべてのトラフィックが拒否されます）。</p>
-    
-    <div class="example">
-        <h4>セキュリティグループの作成と設定</h4>
-        <pre><code># セキュリティグループの作成
+
+    <h4>インスタンスの終了</h4>
+    <pre><code>aws ec2 terminate-instances --instance-ids i-0123456789abcdef0</code></pre>
+</div>
+
+<h2>Amazon EC2のストレージオプション</h2>
+<p>EC2インスタンスには複数のストレージオプションがあります：</p>
+
+<table>
+    <tr>
+        <th>ストレージタイプ</th>
+        <th>説明</th>
+        <th>ユースケース</th>
+    </tr>
+    <tr>
+        <td>Amazon EBS</td>
+        <td>永続的なブロックレベルのストレージボリューム</td>
+        <td>データベース、ファイルシステム、アプリケーションの実行に必要なデータ</td>
+    </tr>
+    <tr>
+        <td>インスタンスストア</td>
+        <td>インスタンスに物理的に接続された一時的なブロックレベルのストレージ</td>
+        <td>一時的なデータ、キャッシュ、スクラッチデータ</td>
+    </tr>
+    <tr>
+        <td>Amazon EFS</td>
+        <td>複数のEC2インスタンスからアクセス可能なスケーラブルなファイルシステム</td>
+        <td>コンテンツ管理、ウェブサービング、データ共有、Wordpress</td>
+    </tr>
+    <tr>
+        <td>Amazon S3</td>
+        <td>オブジェクトストレージサービス</td>
+        <td>静的ウェブサイトホスティング、バックアップ、アーカイブ、ビッグデータ分析</td>
+    </tr>
+</table>
+
+<h2>Amazon EC2のネットワーキング</h2>
+<p>EC2インスタンスのネットワーキングは主に以下のコンポーネントで構成されています：</p>
+
+<h3>Amazon VPC</h3>
+<p>Amazon Virtual Private Cloud (VPC)
+    は、AWS内の論理的に分離されたネットワーク環境です。EC2インスタンスはVPC内にデプロイされ、サブネット、ルートテーブル、ネットワークACL、インターネットゲートウェイなどのネットワークリソースを使用します。</p>
+
+<h3>セキュリティグループ</h3>
+<p>
+    セキュリティグループは、EC2インスタンスの仮想ファイアウォールとして機能し、インバウンドおよびアウトバウンドトラフィックを制御します。セキュリティグループのルールは、許可ルールのみで構成されます（デフォルトではすべてのトラフィックが拒否されます）。</p>
+
+<div class="example">
+    <h4>セキュリティグループの作成と設定</h4>
+    <pre><code># セキュリティグループの作成
 aws ec2 create-security-group \
     --group-name MySecurityGroup \
     --description "My security group" \
@@ -215,78 +225,83 @@ aws ec2 authorize-security-group-ingress \
     --protocol tcp \
     --port 22 \
     --cidr 203.0.113.0/24</code></pre>
-    </div>
-    
-    <h3>Elastic IP</h3>
-    <p>Elastic IPは、動的なクラウドコンピューティングのために設計された静的なIPv4アドレスです。Elastic IPをEC2インスタンスに関連付けることで、インスタンスの停止や再起動後も同じパブリックIPアドレスを維持できます。</p>
-    
-    <div class="example">
-        <h4>Elastic IPの割り当てと関連付け</h4>
-        <pre><code># Elastic IPの割り当て
+</div>
+
+<h3>Elastic IP</h3>
+<p>Elastic IPは、動的なクラウドコンピューティングのために設計された静的なIPv4アドレスです。Elastic
+    IPをEC2インスタンスに関連付けることで、インスタンスの停止や再起動後も同じパブリックIPアドレスを維持できます。</p>
+
+<div class="example">
+    <h4>Elastic IPの割り当てと関連付け</h4>
+    <pre><code># Elastic IPの割り当て
 aws ec2 allocate-address --domain vpc
 
 # Elastic IPのインスタンスへの関連付け
 aws ec2 associate-address \
     --instance-id i-0123456789abcdef0 \
     --allocation-id eipalloc-0123456789abcdef0</code></pre>
-    </div>
-    
-    <h2>Amazon EC2の高度な機能</h2>
-    
-    <h3>Auto Scaling</h3>
-    <p>Amazon EC2 Auto Scalingは、アプリケーションの負荷に応じてEC2インスタンスの数を自動的に調整するサービスです。これにより、需要のピーク時には容量を増やし、需要が少ない時には容量を減らすことができます。</p>
-    
-    <div class="example">
-        <h4>Auto Scalingグループの作成</h4>
-        <pre><code>aws autoscaling create-auto-scaling-group \
+</div>
+
+<h2>Amazon EC2の高度な機能</h2>
+
+<h3>Auto Scaling</h3>
+<p>Amazon EC2 Auto
+    Scalingは、アプリケーションの負荷に応じてEC2インスタンスの数を自動的に調整するサービスです。これにより、需要のピーク時には容量を増やし、需要が少ない時には容量を減らすことができます。</p>
+
+<div class="example">
+    <h4>Auto Scalingグループの作成</h4>
+    <pre><code>aws autoscaling create-auto-scaling-group \
     --auto-scaling-group-name my-asg \
     --launch-configuration-name my-launch-config \
     --min-size 1 \
     --max-size 3 \
     --desired-capacity 2 \
     --vpc-zone-identifier "subnet-0123456789abcdef0,subnet-0123456789abcdef1"</code></pre>
-    </div>
-    
-    <h3>Elastic Load Balancing</h3>
-    <p>Elastic Load Balancing (ELB) は、複数のEC2インスタンス間でトラフィックを自動的に分散させるサービスです。ELBには、Application Load Balancer (ALB)、Network Load Balancer (NLB)、Gateway Load Balancer (GWLB)、Classic Load Balancer (CLB) の4種類があります。</p>
-    
-    <div class="example">
-        <h4>Application Load Balancerの作成</h4>
-        <pre><code>aws elbv2 create-load-balancer \
+</div>
+
+<h3>Elastic Load Balancing</h3>
+<p>Elastic Load Balancing (ELB) は、複数のEC2インスタンス間でトラフィックを自動的に分散させるサービスです。ELBには、Application
+    Load Balancer (ALB)、Network Load Balancer (NLB)、Gateway Load Balancer (GWLB)、Classic Load Balancer (CLB)
+    の4種類があります。</p>
+
+<div class="example">
+    <h4>Application Load Balancerの作成</h4>
+    <pre><code>aws elbv2 create-load-balancer \
     --name my-alb \
     --subnets subnet-0123456789abcdef0 subnet-0123456789abcdef1 \
     --security-groups sg-0123456789abcdef0</code></pre>
-    </div>
-    
-    <h3>Amazon EC2 Instance Connect</h3>
-    <p>EC2 Instance Connectは、SSHキーを管理することなく、ブラウザベースのクライアントまたはAWS CLIを使用してEC2インスタンスに安全に接続するための方法を提供します。</p>
-    
-    <div class="example">
-        <h4>EC2 Instance Connectを使用した接続</h4>
-        <pre><code>aws ec2-instance-connect send-ssh-public-key \
+</div>
+
+<h3>Amazon EC2 Instance Connect</h3>
+<p>EC2 Instance Connectは、SSHキーを管理することなく、ブラウザベースのクライアントまたはAWS
+    CLIを使用してEC2インスタンスに安全に接続するための方法を提供します。</p>
+
+<div class="example">
+    <h4>EC2 Instance Connectを使用した接続</h4>
+    <pre><code>aws ec2-instance-connect send-ssh-public-key \
     --instance-id i-0123456789abcdef0 \
     --availability-zone us-west-2b \
     --instance-os-user ec2-user \
     --ssh-public-key file://my-key.pub</code></pre>
-    </div>
-    
-    <h2>Amazon EC2のセキュリティ</h2>
-    <p>EC2インスタンスのセキュリティを確保するためのベストプラクティス：</p>
-    
-    <ul>
-        <li><strong>最小権限の原則：</strong> インスタンスに必要最小限のアクセス権限のみを付与</li>
-        <li><strong>セキュリティグループの適切な設定：</strong> 必要なポートのみを開放</li>
-        <li><strong>定期的なパッチ適用：</strong> オペレーティングシステムとアプリケーションを最新の状態に保つ</li>
-        <li><strong>IAMロールの使用：</strong> EC2インスタンスにIAMロールを割り当てて、AWSリソースへのアクセスを管理</li>
-        <li><strong>暗号化の使用：</strong> EBSボリュームとスナップショットの暗号化</li>
-        <li><strong>インスタンスメタデータサービスの保護：</strong> IMDSv2の使用</li>
-        <li><strong>ネットワークトラフィックの監視：</strong> VPCフローログの有効化</li>
-    </ul>
-    
-    <h3>IAMロールの使用</h3>
-    <div class="example">
-        <h4>EC2インスタンス用のIAMロールの作成と関連付け</h4>
-        <pre><code># IAMロールの作成
+</div>
+
+<h2>Amazon EC2のセキュリティ</h2>
+<p>EC2インスタンスのセキュリティを確保するためのベストプラクティス：</p>
+
+<ul>
+    <li><strong>最小権限の原則：</strong> インスタンスに必要最小限のアクセス権限のみを付与</li>
+    <li><strong>セキュリティグループの適切な設定：</strong> 必要なポートのみを開放</li>
+    <li><strong>定期的なパッチ適用：</strong> オペレーティングシステムとアプリケーションを最新の状態に保つ</li>
+    <li><strong>IAMロールの使用：</strong> EC2インスタンスにIAMロールを割り当てて、AWSリソースへのアクセスを管理</li>
+    <li><strong>暗号化の使用：</strong> EBSボリュームとスナップショットの暗号化</li>
+    <li><strong>インスタンスメタデータサービスの保護：</strong> IMDSv2の使用</li>
+    <li><strong>ネットワークトラフィックの監視：</strong> VPCフローログの有効化</li>
+</ul>
+
+<h3>IAMロールの使用</h3>
+<div class="example">
+    <h4>EC2インスタンス用のIAMロールの作成と関連付け</h4>
+    <pre><code># IAMロールの作成
 aws iam create-role \
     --role-name EC2S3ReadOnly \
     --assume-role-policy-document file://ec2-trust-policy.json
@@ -309,17 +324,18 @@ aws iam add-role-to-instance-profile \
 aws ec2 associate-iam-instance-profile \
     --instance-id i-0123456789abcdef0 \
     --iam-instance-profile Name=EC2S3ReadOnly</code></pre>
-    </div>
-    
-    <h2>Amazon EC2のモニタリングと可観測性</h2>
-    <p>EC2インスタンスのパフォーマンスと健全性を監視するためのツール：</p>
-    
-    <h3>Amazon CloudWatch</h3>
-    <p>CloudWatchは、EC2インスタンスのメトリクス（CPU使用率、ネットワークトラフィック、ディスク活動など）を収集し、アラームを設定して自動アクションをトリガーすることができます。</p>
-    
-    <div class="example">
-        <h4>CloudWatchアラームの作成</h4>
-        <pre><code>aws cloudwatch put-metric-alarm \
+</div>
+
+<h2>Amazon EC2のモニタリングと可観測性</h2>
+<p>EC2インスタンスのパフォーマンスと健全性を監視するためのツール：</p>
+
+<h3>Amazon CloudWatch</h3>
+<p>
+    CloudWatchは、EC2インスタンスのメトリクス（CPU使用率、ネットワークトラフィック、ディスク活動など）を収集し、アラームを設定して自動アクションをトリガーすることができます。</p>
+
+<div class="example">
+    <h4>CloudWatchアラームの作成</h4>
+    <pre><code>aws cloudwatch put-metric-alarm \
     --alarm-name cpu-high \
     --comparison-operator GreaterThanThreshold \
     --evaluation-periods 2 \
@@ -330,111 +346,117 @@ aws ec2 associate-iam-instance-profile \
     --threshold 80 \
     --alarm-actions arn:aws:sns:us-west-2:123456789012:my-topic \
     --dimensions "Name=InstanceId,Value=i-0123456789abcdef0"</code></pre>
-    </div>
-    
-    <h3>AWS CloudTrail</h3>
-    <p>CloudTrailは、EC2 APIコールを記録し、誰が何をいつ行ったかを追跡します。これにより、セキュリティ分析、リソース変更の追跡、コンプライアンス監査が可能になります。</p>
-    
-    <h3>Amazon CloudWatch Logs</h3>
-    <p>CloudWatch Logsを使用して、EC2インスタンスからログを収集、監視、分析することができます。</p>
-    
-    <div class="example">
-        <h4>CloudWatch Logsエージェントのインストール</h4>
-        <pre><code># Amazon Linux 2の場合
+</div>
+
+<h3>AWS CloudTrail</h3>
+<p>CloudTrailは、EC2
+    APIコールを記録し、誰が何をいつ行ったかを追跡します。これにより、セキュリティ分析、リソース変更の追跡、コンプライアンス監査が可能になります。</p>
+
+<h3>Amazon CloudWatch Logs</h3>
+<p>CloudWatch Logsを使用して、EC2インスタンスからログを収集、監視、分析することができます。</p>
+
+<div class="example">
+    <h4>CloudWatch Logsエージェントのインストール</h4>
+    <pre><code># Amazon Linux 2の場合
 sudo yum install -y awslogs
 sudo systemctl start awslogsd
 sudo systemctl enable awslogsd</code></pre>
-    </div>
-    
-    <h2>Amazon EC2のユースケース</h2>
-    <p>EC2は以下のようなユースケースに適しています：</p>
+</div>
+
+<h2>Amazon EC2のユースケース</h2>
+<p>EC2は以下のようなユースケースに適しています：</p>
+<ul>
+    <li><strong>ウェブアプリケーションホスティング：</strong> ウェブサイトやウェブアプリケーションのホスティング</li>
+    <li><strong>バッチ処理：</strong> 大規模なデータセットの処理や分析</li>
+    <li><strong>ゲームサーバー：</strong> オンラインゲームのバックエンドサーバー</li>
+    <li><strong>高性能コンピューティング：</strong> 科学計算、金融モデリング、シミュレーション</li>
+    <li><strong>機械学習：</strong> モデルのトレーニングと推論</li>
+    <li><strong>開発とテスト環境：</strong> アプリケーションの開発とテスト</li>
+    <li><strong>ディザスタリカバリ：</strong> バックアップとリカバリソリューション</li>
+    <li><strong>デスクトップ仮想化：</strong> 仮想デスクトップインフラストラクチャ（VDI）</li>
+</ul>
+
+<h2>Amazon EC2との統合サービス</h2>
+<p>EC2は他のAWSサービスと統合して、より強力なソリューションを構築できます：</p>
+
+<table>
+    <tr>
+        <th>サービス</th>
+        <th>統合の利点</th>
+    </tr>
+    <tr>
+        <td>Amazon VPC</td>
+        <td>EC2インスタンスの論理的に分離されたネットワーク環境を提供</td>
+    </tr>
+    <tr>
+        <td>Amazon EBS</td>
+        <td>EC2インスタンス用の永続的なブロックストレージを提供</td>
+    </tr>
+    <tr>
+        <td>Amazon S3</td>
+        <td>EC2インスタンスからアクセス可能なオブジェクトストレージを提供</td>
+    </tr>
+    <tr>
+        <td>Amazon RDS</td>
+        <td>EC2インスタンスからアクセス可能なマネージドデータベースサービスを提供</td>
+    </tr>
+    <tr>
+        <td>AWS Lambda</td>
+        <td>EC2インスタンスのイベントに応じてサーバーレス関数を実行</td>
+    </tr>
+    <tr>
+        <td>Amazon CloudWatch</td>
+        <td>EC2インスタンスのモニタリングとアラート機能を提供</td>
+    </tr>
+    <tr>
+        <td>AWS Systems Manager</td>
+        <td>EC2インスタンスの管理と自動化機能を提供</td>
+    </tr>
+</table>
+
+<h2>Amazon EC2のベストプラクティス</h2>
+<ul>
+    <li><strong>適切なインスタンスタイプの選択：</strong> ワークロードに最適なインスタンスタイプを選択</li>
+    <li><strong>コスト最適化：</strong> リザーブドインスタンスやスポットインスタンスを活用してコストを削減</li>
+    <li><strong>Auto Scalingの使用：</strong> 需要に応じて自動的にスケールするようにEC2フリートを設定</li>
+    <li><strong>イミュータブルインフラストラクチャ：</strong> インスタンスを修正するのではなく、新しいインスタンスをデプロイ
+    </li>
+    <li><strong>インスタンスメタデータの活用：</strong> インスタンスメタデータサービスを使用してインスタンスの情報を取得
+    </li>
+    <li><strong>EBSスナップショットの定期的な作成：</strong> データ損失を防ぐためにEBSボリュームの定期的なバックアップを作成
+    </li>
+    <li><strong>タグ付け戦略の実装：</strong> リソースの管理とコスト追跡のためにタグを使用</li>
+    <li><strong>セキュリティグループの最小権限設定：</strong> 必要なポートのみを開放</li>
+</ul>
+
+<div class="note">
+    <h3>EC2インスタンスのタグ付けのベストプラクティス</h3>
+    <p>効果的なタグ付け戦略には以下のようなタグが含まれます：</p>
     <ul>
-        <li><strong>ウェブアプリケーションホスティング：</strong> ウェブサイトやウェブアプリケーションのホスティング</li>
-        <li><strong>バッチ処理：</strong> 大規模なデータセットの処理や分析</li>
-        <li><strong>ゲームサーバー：</strong> オンラインゲームのバックエンドサーバー</li>
-        <li><strong>高性能コンピューティング：</strong> 科学計算、金融モデリング、シミュレーション</li>
-        <li><strong>機械学習：</strong> モデルのトレーニングと推論</li>
-        <li><strong>開発とテスト環境：</strong> アプリケーションの開発とテスト</li>
-        <li><strong>ディザスタリカバリ：</strong> バックアップとリカバリソリューション</li>
-        <li><strong>デスクトップ仮想化：</strong> 仮想デスクトップインフラストラクチャ（VDI）</li>
+        <li><strong>Name：</strong> インスタンスの識別名</li>
+        <li><strong>Environment：</strong> 開発、テスト、本番環境など</li>
+        <li><strong>Project：</strong> 関連するプロジェクト名</li>
+        <li><strong>Owner：</strong> インスタンスの責任者</li>
+        <li><strong>CostCenter：</strong> コスト配分のための部門や予算コード</li>
+        <li><strong>AutoShutdown：</strong> 自動シャットダウンの対象かどうか</li>
     </ul>
-    
-    <h2>Amazon EC2との統合サービス</h2>
-    <p>EC2は他のAWSサービスと統合して、より強力なソリューションを構築できます：</p>
-    
-    <table>
-        <tr>
-            <th>サービス</th>
-            <th>統合の利点</th>
-        </tr>
-        <tr>
-            <td>Amazon VPC</td>
-            <td>EC2インスタンスの論理的に分離されたネットワーク環境を提供</td>
-        </tr>
-        <tr>
-            <td>Amazon EBS</td>
-            <td>EC2インスタンス用の永続的なブロックストレージを提供</td>
-        </tr>
-        <tr>
-            <td>Amazon S3</td>
-            <td>EC2インスタンスからアクセス可能なオブジェクトストレージを提供</td>
-        </tr>
-        <tr>
-            <td>Amazon RDS</td>
-            <td>EC2インスタンスからアクセス可能なマネージドデータベースサービスを提供</td>
-        </tr>
-        <tr>
-            <td>AWS Lambda</td>
-            <td>EC2インスタンスのイベントに応じてサーバーレス関数を実行</td>
-        </tr>
-        <tr>
-            <td>Amazon CloudWatch</td>
-            <td>EC2インスタンスのモニタリングとアラート機能を提供</td>
-        </tr>
-        <tr>
-            <td>AWS Systems Manager</td>
-            <td>EC2インスタンスの管理と自動化機能を提供</td>
-        </tr>
-    </table>
-    
-    <h2>Amazon EC2のベストプラクティス</h2>
-    <ul>
-        <li><strong>適切なインスタンスタイプの選択：</strong> ワークロードに最適なインスタンスタイプを選択</li>
-        <li><strong>コスト最適化：</strong> リザーブドインスタンスやスポットインスタンスを活用してコストを削減</li>
-        <li><strong>Auto Scalingの使用：</strong> 需要に応じて自動的にスケールするようにEC2フリートを設定</li>
-        <li><strong>イミュータブルインフラストラクチャ：</strong> インスタンスを修正するのではなく、新しいインスタンスをデプロイ</li>
-        <li><strong>インスタンスメタデータの活用：</strong> インスタンスメタデータサービスを使用してインスタンスの情報を取得</li>
-        <li><strong>EBSスナップショットの定期的な作成：</strong> データ損失を防ぐためにEBSボリュームの定期的なバックアップを作成</li>
-        <li><strong>タグ付け戦略の実装：</strong> リソースの管理とコスト追跡のためにタグを使用</li>
-        <li><strong>セキュリティグループの最小権限設定：</strong> 必要なポートのみを開放</li>
-    </ul>
-    
-    <div class="note">
-        <h3>EC2インスタンスのタグ付けのベストプラクティス</h3>
-        <p>効果的なタグ付け戦略には以下のようなタグが含まれます：</p>
-        <ul>
-            <li><strong>Name：</strong> インスタンスの識別名</li>
-            <li><strong>Environment：</strong> 開発、テスト、本番環境など</li>
-            <li><strong>Project：</strong> 関連するプロジェクト名</li>
-            <li><strong>Owner：</strong> インスタンスの責任者</li>
-            <li><strong>CostCenter：</strong> コスト配分のための部門や予算コード</li>
-            <li><strong>AutoShutdown：</strong> 自動シャットダウンの対象かどうか</li>
-        </ul>
-    </div>
-    
-    <h2>まとめ</h2>
-    <p>Amazon EC2は、AWSクラウド内でスケーラブルなコンピューティング容量を提供する柔軟なサービスです。多様なインスタンスタイプ、購入オプション、ストレージオプション、ネットワーキング機能を提供し、様々なユースケースに対応します。</p>
-    
-    <p>EC2の主な利点は以下の通りです：</p>
-    <ul>
-        <li>ハードウェアへの先行投資が不要で、迅速にスケールアップ/ダウン可能</li>
-        <li>多様なインスタンスタイプによる様々なワークロードへの対応</li>
-        <li>従量課金制と長期割引オプションによるコスト最適化</li>
-        <li>高可用性と信頼性を実現するグローバルインフラストラクチャ</li>
-        <li>包括的なセキュリティ機能</li>
-        <li>他のAWSサービスとの緊密な統合</li>
-    </ul>
-    
-    <p>EC2を効果的に活用するには、ワークロードに適したインスタンスタイプの選択、コスト最適化戦略の実装、Auto Scalingの活用、セキュリティベストプラクティスの適用、適切なモニタリングの設定が重要です。また、他のAWSサービスと組み合わせることで、より強力で柔軟なクラウドソリューションを構築することができます。</p>
+</div>
+
+<h2>まとめ</h2>
+<p>Amazon
+    EC2は、AWSクラウド内でスケーラブルなコンピューティング容量を提供する柔軟なサービスです。多様なインスタンスタイプ、購入オプション、ストレージオプション、ネットワーキング機能を提供し、様々なユースケースに対応します。</p>
+
+<p>EC2の主な利点は以下の通りです：</p>
+<ul>
+    <li>ハードウェアへの先行投資が不要で、迅速にスケールアップ/ダウン可能</li>
+    <li>多様なインスタンスタイプによる様々なワークロードへの対応</li>
+    <li>従量課金制と長期割引オプションによるコスト最適化</li>
+    <li>高可用性と信頼性を実現するグローバルインフラストラクチャ</li>
+    <li>包括的なセキュリティ機能</li>
+    <li>他のAWSサービスとの緊密な統合</li>
+</ul>
+
+<p>EC2を効果的に活用するには、ワークロードに適したインスタンスタイプの選択、コスト最適化戦略の実装、Auto
+    Scalingの活用、セキュリティベストプラクティスの適用、適切なモニタリングの設定が重要です。また、他のAWSサービスと組み合わせることで、より強力で柔軟なクラウドソリューションを構築することができます。</p>
 </body>
 </html>

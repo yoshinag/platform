@@ -1,83 +1,95 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <title>Amazon Cognito</title>
     <link rel="stylesheet" href="../../../../css/knowledge.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../../../platform/js/common/analytics.js"></script>
+
 <body class="ja-knowledge">
-    <div style="margin-bottom: 20px;">
-        <a href="../aws.html">AWSに戻る</a>
-    </div>
-    <h1>Amazon Cognito</h1>
-    
-    <h2>Amazon Cognitoとは</h2>
-    <p>Amazon Cognitoは、ウェブおよびモバイルアプリケーションのユーザー認証、認可、ユーザー管理を提供するAWSのサービスです。Cognitoを使用することで、開発者はユーザーのサインアップ、サインイン、アクセス制御を簡単に追加でき、ユーザーIDを安全に管理できます。また、ソーシャルIDプロバイダー（Facebook、Google、Appleなど）やエンタープライズIDプロバイダー（SAML、OpenID Connectなど）との統合も可能です。</p>
-    
-    <h2>Amazon Cognitoの主な特徴</h2>
-    <ul>
-        <li><strong>ユーザープール：</strong> ユーザーディレクトリの作成と管理</li>
-        <li><strong>IDプール：</strong> 一時的なAWS認証情報の提供</li>
-        <li><strong>ソーシャルIDプロバイダー統合：</strong> Facebook、Google、Appleなどとの連携</li>
-        <li><strong>エンタープライズIDプロバイダー統合：</strong> SAML、OpenID Connectとの連携</li>
-        <li><strong>多要素認証（MFA）：</strong> SMS、TOTPなどによる追加のセキュリティ</li>
-        <li><strong>カスタム認証フロー：</strong> 認証プロセスのカスタマイズ</li>
-        <li><strong>高度なセキュリティ機能：</strong> 適応型認証、コンプロマイズされた認証情報の検出</li>
-        <li><strong>ユーザー属性の管理：</strong> カスタム属性の追加と管理</li>
-        <li><strong>トークンベースの認証：</strong> JWT（JSON Web Token）の発行と検証</li>
-        <li><strong>スケーラビリティ：</strong> 数百万ユーザーへの対応</li>
-    </ul>
-    
-    <h2>Amazon Cognitoのコンポーネント</h2>
-    <p>Amazon Cognitoは、主に以下の2つのコンポーネントで構成されています：</p>
-    
-    <h3>ユーザープール</h3>
-    <p>ユーザープールは、ウェブおよびモバイルアプリケーションのユーザーディレクトリです。ユーザープールを使用することで、ユーザーはユーザー名とパスワード、またはソーシャルIDプロバイダーを通じてアプリケーションにサインインできます。ユーザープールは、ユーザー登録、サインイン、アカウント回復、ユーザープロファイル管理などの機能を提供します。</p>
-    
-    <h4>ユーザープールの主な機能</h4>
-    <ul>
-        <li><strong>ユーザー登録と確認：</strong> メールアドレスや電話番号による確認</li>
-        <li><strong>サインインとサインアウト：</strong> ユーザー名/パスワード、ソーシャルIDプロバイダー、SAML、OpenID Connect</li>
-        <li><strong>セキュリティ機能：</strong> 多要素認証、適応型認証、コンプロマイズされた認証情報の検出</li>
-        <li><strong>パスワードポリシー：</strong> 強力なパスワードの要求、パスワードの有効期限</li>
-        <li><strong>ユーザー属性：</strong> 標準属性とカスタム属性の管理</li>
-        <li><strong>トークン管理：</strong> ID、アクセス、更新トークンの発行と検証</li>
-        <li><strong>トリガー：</strong> Lambda関数を使用したカスタム認証フローとユーザー管理</li>
-        <li><strong>ホスト型UI：</strong> カスタマイズ可能なサインインおよびサインアップページ</li>
-    </ul>
-    
-    <h3>IDプール</h3>
-    <p>IDプール（フェデレーテッドアイデンティティ）は、ユーザーに一時的なAWS認証情報を提供し、AWSリソースへのアクセスを許可します。IDプールを使用することで、ユーザーはCognitoユーザープール、ソーシャルIDプロバイダー、またはカスタム認証プロセスを通じて認証し、AWSサービス（S3、DynamoDB、API Gatewayなど）に直接アクセスできます。</p>
-    
-    <h4>IDプールの主な機能</h4>
-    <ul>
-        <li><strong>一時的なAWS認証情報：</strong> IAMロールに基づく一時的な認証情報の提供</li>
-        <li><strong>認証済みおよび未認証のアクセス：</strong> 認証されたユーザーと未認証ユーザーの両方に対する認証情報の提供</li>
-        <li><strong>IDプロバイダーの統合：</strong> Cognitoユーザープール、Facebook、Google、Appleなどとの統合</li>
-        <li><strong>ロールベースのアクセス制御：</strong> ユーザーの属性やグループに基づくIAMロールの選択</li>
-        <li><strong>アイデンティティの結合：</strong> 複数のIDプロバイダーからのIDの結合</li>
-    </ul>
-    
-    <h2>Amazon Cognitoの認証フロー</h2>
-    <p>Amazon Cognitoは、以下のような認証フローをサポートしています：</p>
-    
-    <h3>ユーザープールの認証フロー</h3>
-    <ol>
-        <li><strong>ユーザー登録：</strong> ユーザーがアプリケーションに登録し、確認コードを受け取ります。</li>
-        <li><strong>確認：</strong> ユーザーが確認コードを入力して、アカウントを確認します。</li>
-        <li><strong>サインイン：</strong> ユーザーが認証情報（ユーザー名/パスワード、ソーシャルIDなど）を使用してサインインします。</li>
-        <li><strong>トークン発行：</strong> 認証に成功すると、Cognitoはトークン（ID、アクセス、更新トークン）を発行します。</li>
-        <li><strong>トークン検証：</strong> アプリケーションはトークンを検証し、ユーザーにアクセスを許可します。</li>
-        <li><strong>トークン更新：</strong> アクセストークンの有効期限が切れると、更新トークンを使用して新しいトークンを取得します。</li>
-    </ol>
-    
-    <div class="example">
-        <h4>ユーザープールの認証フロー図</h4>
-        <pre>
+<div style="margin-bottom: 20px;">
+    <a href="../aws.html">AWSに戻る</a>
+</div>
+<h1>Amazon Cognito</h1>
+
+<h2>Amazon Cognitoとは</h2>
+<p>Amazon
+    Cognitoは、ウェブおよびモバイルアプリケーションのユーザー認証、認可、ユーザー管理を提供するAWSのサービスです。Cognitoを使用することで、開発者はユーザーのサインアップ、サインイン、アクセス制御を簡単に追加でき、ユーザーIDを安全に管理できます。また、ソーシャルIDプロバイダー（Facebook、Google、Appleなど）やエンタープライズIDプロバイダー（SAML、OpenID
+    Connectなど）との統合も可能です。</p>
+
+<h2>Amazon Cognitoの主な特徴</h2>
+<ul>
+    <li><strong>ユーザープール：</strong> ユーザーディレクトリの作成と管理</li>
+    <li><strong>IDプール：</strong> 一時的なAWS認証情報の提供</li>
+    <li><strong>ソーシャルIDプロバイダー統合：</strong> Facebook、Google、Appleなどとの連携</li>
+    <li><strong>エンタープライズIDプロバイダー統合：</strong> SAML、OpenID Connectとの連携</li>
+    <li><strong>多要素認証（MFA）：</strong> SMS、TOTPなどによる追加のセキュリティ</li>
+    <li><strong>カスタム認証フロー：</strong> 認証プロセスのカスタマイズ</li>
+    <li><strong>高度なセキュリティ機能：</strong> 適応型認証、コンプロマイズされた認証情報の検出</li>
+    <li><strong>ユーザー属性の管理：</strong> カスタム属性の追加と管理</li>
+    <li><strong>トークンベースの認証：</strong> JWT（JSON Web Token）の発行と検証</li>
+    <li><strong>スケーラビリティ：</strong> 数百万ユーザーへの対応</li>
+</ul>
+
+<h2>Amazon Cognitoのコンポーネント</h2>
+<p>Amazon Cognitoは、主に以下の2つのコンポーネントで構成されています：</p>
+
+<h3>ユーザープール</h3>
+<p>
+    ユーザープールは、ウェブおよびモバイルアプリケーションのユーザーディレクトリです。ユーザープールを使用することで、ユーザーはユーザー名とパスワード、またはソーシャルIDプロバイダーを通じてアプリケーションにサインインできます。ユーザープールは、ユーザー登録、サインイン、アカウント回復、ユーザープロファイル管理などの機能を提供します。</p>
+
+<h4>ユーザープールの主な機能</h4>
+<ul>
+    <li><strong>ユーザー登録と確認：</strong> メールアドレスや電話番号による確認</li>
+    <li><strong>サインインとサインアウト：</strong> ユーザー名/パスワード、ソーシャルIDプロバイダー、SAML、OpenID Connect
+    </li>
+    <li><strong>セキュリティ機能：</strong> 多要素認証、適応型認証、コンプロマイズされた認証情報の検出</li>
+    <li><strong>パスワードポリシー：</strong> 強力なパスワードの要求、パスワードの有効期限</li>
+    <li><strong>ユーザー属性：</strong> 標準属性とカスタム属性の管理</li>
+    <li><strong>トークン管理：</strong> ID、アクセス、更新トークンの発行と検証</li>
+    <li><strong>トリガー：</strong> Lambda関数を使用したカスタム認証フローとユーザー管理</li>
+    <li><strong>ホスト型UI：</strong> カスタマイズ可能なサインインおよびサインアップページ</li>
+</ul>
+
+<h3>IDプール</h3>
+<p>
+    IDプール（フェデレーテッドアイデンティティ）は、ユーザーに一時的なAWS認証情報を提供し、AWSリソースへのアクセスを許可します。IDプールを使用することで、ユーザーはCognitoユーザープール、ソーシャルIDプロバイダー、またはカスタム認証プロセスを通じて認証し、AWSサービス（S3、DynamoDB、API
+    Gatewayなど）に直接アクセスできます。</p>
+
+<h4>IDプールの主な機能</h4>
+<ul>
+    <li><strong>一時的なAWS認証情報：</strong> IAMロールに基づく一時的な認証情報の提供</li>
+    <li><strong>認証済みおよび未認証のアクセス：</strong> 認証されたユーザーと未認証ユーザーの両方に対する認証情報の提供
+    </li>
+    <li><strong>IDプロバイダーの統合：</strong> Cognitoユーザープール、Facebook、Google、Appleなどとの統合</li>
+    <li><strong>ロールベースのアクセス制御：</strong> ユーザーの属性やグループに基づくIAMロールの選択</li>
+    <li><strong>アイデンティティの結合：</strong> 複数のIDプロバイダーからのIDの結合</li>
+</ul>
+
+<h2>Amazon Cognitoの認証フロー</h2>
+<p>Amazon Cognitoは、以下のような認証フローをサポートしています：</p>
+
+<h3>ユーザープールの認証フロー</h3>
+<ol>
+    <li><strong>ユーザー登録：</strong> ユーザーがアプリケーションに登録し、確認コードを受け取ります。</li>
+    <li><strong>確認：</strong> ユーザーが確認コードを入力して、アカウントを確認します。</li>
+    <li><strong>サインイン：</strong> ユーザーが認証情報（ユーザー名/パスワード、ソーシャルIDなど）を使用してサインインします。
+    </li>
+    <li><strong>トークン発行：</strong> 認証に成功すると、Cognitoはトークン（ID、アクセス、更新トークン）を発行します。</li>
+    <li><strong>トークン検証：</strong> アプリケーションはトークンを検証し、ユーザーにアクセスを許可します。</li>
+    <li><strong>トークン更新：</strong> アクセストークンの有効期限が切れると、更新トークンを使用して新しいトークンを取得します。
+    </li>
+</ol>
+
+<div class="example">
+    <h4>ユーザープールの認証フロー図</h4>
+    <pre>
 ユーザー                  アプリケーション                 Cognito
    |                           |                           |
    |--- 登録情報 ------------->|                           |
@@ -96,19 +108,21 @@
    |<-- サインイン成功 ---------|                           |
    |                           |                           |
         </pre>
-    </div>
-    
-    <h3>IDプールの認証フロー</h3>
-    <ol>
-        <li><strong>ユーザー認証：</strong> ユーザーがCognitoユーザープールまたは外部IDプロバイダーで認証します。</li>
-        <li><strong>トークン取得：</strong> 認証に成功すると、IDプロバイダーからトークンを取得します。</li>
-        <li><strong>トークン交換：</strong> アプリケーションはトークンをCognito IDプールに送信し、AWS認証情報と交換します。</li>
-        <li><strong>AWS認証情報の使用：</strong> アプリケーションは一時的なAWS認証情報を使用して、AWSリソースにアクセスします。</li>
-    </ol>
-    
-    <div class="example">
-        <h4>IDプールの認証フロー図</h4>
-        <pre>
+</div>
+
+<h3>IDプールの認証フロー</h3>
+<ol>
+    <li><strong>ユーザー認証：</strong> ユーザーがCognitoユーザープールまたは外部IDプロバイダーで認証します。</li>
+    <li><strong>トークン取得：</strong> 認証に成功すると、IDプロバイダーからトークンを取得します。</li>
+    <li><strong>トークン交換：</strong> アプリケーションはトークンをCognito IDプールに送信し、AWS認証情報と交換します。
+    </li>
+    <li><strong>AWS認証情報の使用：</strong> アプリケーションは一時的なAWS認証情報を使用して、AWSリソースにアクセスします。
+    </li>
+</ol>
+
+<div class="example">
+    <h4>IDプールの認証フロー図</h4>
+    <pre>
 ユーザー                  アプリケーション                 Cognito                    AWS サービス
    |                           |                           |                           |
    |--- サインイン情報 -------->|                           |                           |
@@ -124,23 +138,23 @@
    |                           |<-- リソースレスポンス ---------------------------|
    |<-- リソースレスポンス ------|                           |                           |
         </pre>
-    </div>
-    
-    <h2>Amazon Cognitoの使用方法</h2>
-    <p>Amazon Cognitoは、AWS Management Console、AWS CLI、SDKs、またはAPIを使用して利用できます。</p>
-    
-    <h3>ユーザープールの作成と設定</h3>
-    <div class="example">
-        <h4>AWS CLIを使用したユーザープールの作成</h4>
-        <pre><code>aws cognito-idp create-user-pool \
+</div>
+
+<h2>Amazon Cognitoの使用方法</h2>
+<p>Amazon Cognitoは、AWS Management Console、AWS CLI、SDKs、またはAPIを使用して利用できます。</p>
+
+<h3>ユーザープールの作成と設定</h3>
+<div class="example">
+    <h4>AWS CLIを使用したユーザープールの作成</h4>
+    <pre><code>aws cognito-idp create-user-pool \
     --pool-name MyUserPool \
     --policies '{"PasswordPolicy":{"MinimumLength":8,"RequireUppercase":true,"RequireLowercase":true,"RequireNumbers":true,"RequireSymbols":true}}' \
     --auto-verified-attributes email \
     --schema '[{"Name":"email","Required":true},{"Name":"name","Required":true}]' \
     --mfa-configuration OFF</code></pre>
-        
-        <h4>AWS CLIを使用したユーザープールクライアントの作成</h4>
-        <pre><code>aws cognito-idp create-user-pool-client \
+
+    <h4>AWS CLIを使用したユーザープールクライアントの作成</h4>
+    <pre><code>aws cognito-idp create-user-pool-client \
     --user-pool-id us-west-2_abcdefghi \
     --client-name MyAppClient \
     --no-generate-secret \
@@ -151,62 +165,62 @@
     --allowed-o-auth-flows code implicit \
     --allowed-o-auth-scopes openid email profile \
     --allowed-o-auth-flows-user-pool-client</code></pre>
-    </div>
-    
-    <h3>IDプールの作成と設定</h3>
-    <div class="example">
-        <h4>AWS CLIを使用したIDプールの作成</h4>
-        <pre><code>aws cognito-identity create-identity-pool \
+</div>
+
+<h3>IDプールの作成と設定</h3>
+<div class="example">
+    <h4>AWS CLIを使用したIDプールの作成</h4>
+    <pre><code>aws cognito-identity create-identity-pool \
     --identity-pool-name MyIdentityPool \
     --allow-unauthenticated-identities \
     --cognito-identity-providers ProviderName=cognito-idp.us-west-2.amazonaws.com/us-west-2_abcdefghi,ClientId=1example23456789,ServerSideTokenCheck=false</code></pre>
-        
-        <h4>AWS CLIを使用したIDプールのロール設定</h4>
-        <pre><code>aws cognito-identity set-identity-pool-roles \
+
+    <h4>AWS CLIを使用したIDプールのロール設定</h4>
+    <pre><code>aws cognito-identity set-identity-pool-roles \
     --identity-pool-id us-west-2:12345678-1234-1234-1234-123456789012 \
     --roles authenticated=arn:aws:iam::123456789012:role/Cognito_MyIdentityPoolAuth_Role,unauthenticated=arn:aws:iam::123456789012:role/Cognito_MyIdentityPoolUnauth_Role</code></pre>
-    </div>
-    
-    <h3>ユーザー管理</h3>
-    <div class="example">
-        <h4>AWS CLIを使用したユーザーの作成</h4>
-        <pre><code>aws cognito-idp admin-create-user \
+</div>
+
+<h3>ユーザー管理</h3>
+<div class="example">
+    <h4>AWS CLIを使用したユーザーの作成</h4>
+    <pre><code>aws cognito-idp admin-create-user \
     --user-pool-id us-west-2_abcdefghi \
     --username johndoe \
     --user-attributes Name=email,Value=johndoe@example.com Name=name,Value="John Doe" \
     --message-action SUPPRESS</code></pre>
-        
-        <h4>AWS CLIを使用したユーザーの確認</h4>
-        <pre><code>aws cognito-idp admin-confirm-sign-up \
+
+    <h4>AWS CLIを使用したユーザーの確認</h4>
+    <pre><code>aws cognito-idp admin-confirm-sign-up \
     --user-pool-id us-west-2_abcdefghi \
     --username johndoe</code></pre>
-        
-        <h4>AWS CLIを使用したユーザーの一覧表示</h4>
-        <pre><code>aws cognito-idp list-users \
+
+    <h4>AWS CLIを使用したユーザーの一覧表示</h4>
+    <pre><code>aws cognito-idp list-users \
     --user-pool-id us-west-2_abcdefghi</code></pre>
-    </div>
-    
-    <h3>認証と認可</h3>
-    <div class="example">
-        <h4>AWS CLIを使用したユーザーの認証</h4>
-        <pre><code>aws cognito-idp admin-initiate-auth \
+</div>
+
+<h3>認証と認可</h3>
+<div class="example">
+    <h4>AWS CLIを使用したユーザーの認証</h4>
+    <pre><code>aws cognito-idp admin-initiate-auth \
     --user-pool-id us-west-2_abcdefghi \
     --client-id 1example23456789 \
     --auth-flow ADMIN_USER_PASSWORD_AUTH \
     --auth-parameters USERNAME=johndoe,PASSWORD=P@ssw0rd</code></pre>
-        
-        <h4>AWS CLIを使用したトークンの更新</h4>
-        <pre><code>aws cognito-idp admin-initiate-auth \
+
+    <h4>AWS CLIを使用したトークンの更新</h4>
+    <pre><code>aws cognito-idp admin-initiate-auth \
     --user-pool-id us-west-2_abcdefghi \
     --client-id 1example23456789 \
     --auth-flow REFRESH_TOKEN_AUTH \
     --auth-parameters REFRESH_TOKEN=your-refresh-token</code></pre>
-    </div>
-    
-    <h3>AWS Amplifyを使用したCognitoの統合</h3>
-    <div class="example">
-        <h4>Amplify CLIを使用した認証の追加</h4>
-        <pre><code>amplify add auth
+</div>
+
+<h3>AWS Amplifyを使用したCognitoの統合</h3>
+<div class="example">
+    <h4>Amplify CLIを使用した認証の追加</h4>
+    <pre><code>amplify add auth
 
 ? Do you want to use the default authentication and security configuration? 
   Default configuration
@@ -214,9 +228,9 @@
   Username
 ? Do you want to configure advanced settings? 
   No, I am done.</code></pre>
-        
-        <h4>React アプリケーションでの Amplify Auth の使用</h4>
-        <pre><code>import { Amplify, Auth } from 'aws-amplify';
+
+    <h4>React アプリケーションでの Amplify Auth の使用</h4>
+    <pre><code>import { Amplify, Auth } from 'aws-amplify';
 import awsconfig from './aws-exports';
 
 Amplify.configure(awsconfig);
@@ -277,153 +291,168 @@ async function signOut() {
     console.log('サインアウトエラー:', error);
   }
 }</code></pre>
-    </div>
-    
-    <h2>Amazon Cognitoのセキュリティ</h2>
-    <p>Amazon Cognitoは、アプリケーションのユーザー認証と認可を安全に管理するための多くのセキュリティ機能を提供しています：</p>
-    
-    <h3>多要素認証（MFA）</h3>
-    <p>Cognitoは、SMS、TOTPベースのアプリケーション（Google Authenticator、Microsoft Authenticatorなど）を使用した多要素認証をサポートしています。MFAを有効にすると、ユーザーはサインイン時にパスワードに加えて2つ目の認証要素を提供する必要があります。</p>
-    
-    <div class="example">
-        <h4>AWS CLIを使用したMFAの有効化</h4>
-        <pre><code>aws cognito-idp set-user-pool-mfa-config \
+</div>
+
+<h2>Amazon Cognitoのセキュリティ</h2>
+<p>Amazon
+    Cognitoは、アプリケーションのユーザー認証と認可を安全に管理するための多くのセキュリティ機能を提供しています：</p>
+
+<h3>多要素認証（MFA）</h3>
+<p>Cognitoは、SMS、TOTPベースのアプリケーション（Google Authenticator、Microsoft
+    Authenticatorなど）を使用した多要素認証をサポートしています。MFAを有効にすると、ユーザーはサインイン時にパスワードに加えて2つ目の認証要素を提供する必要があります。</p>
+
+<div class="example">
+    <h4>AWS CLIを使用したMFAの有効化</h4>
+    <pre><code>aws cognito-idp set-user-pool-mfa-config \
     --user-pool-id us-west-2_abcdefghi \
     --software-token-mfa-configuration Enabled=true \
     --mfa-configuration ON</code></pre>
-    </div>
-    
-    <h3>適応型認証</h3>
-    <p>適応型認証は、リスクベースの認証メカニズムで、ユーザーのサインインパターン、デバイス、場所などの要素に基づいて追加の認証チャレンジを要求します。これにより、不審なサインイン試行を検出し、アカウントの乗っ取りを防止できます。</p>
-    
-    <div class="example">
-        <h4>AWS CLIを使用した適応型認証の有効化</h4>
-        <pre><code>aws cognito-idp update-user-pool-client \
+</div>
+
+<h3>適応型認証</h3>
+<p>
+    適応型認証は、リスクベースの認証メカニズムで、ユーザーのサインインパターン、デバイス、場所などの要素に基づいて追加の認証チャレンジを要求します。これにより、不審なサインイン試行を検出し、アカウントの乗っ取りを防止できます。</p>
+
+<div class="example">
+    <h4>AWS CLIを使用した適応型認証の有効化</h4>
+    <pre><code>aws cognito-idp update-user-pool-client \
     --user-pool-id us-west-2_abcdefghi \
     --client-id 1example23456789 \
     --prevent-user-existence-errors ENABLED \
     --enable-token-revocation \
     --auth-session-validity 3 \
     --user-pool-add-ons AdvancedSecurityMode=ENFORCED</code></pre>
-    </div>
-    
-    <h3>コンプロマイズされた認証情報の検出</h3>
-    <p>Cognitoは、データ侵害で漏洩した認証情報のデータベースと照合して、ユーザーのパスワードをチェックできます。コンプロマイズされた認証情報が検出された場合、ユーザーにパスワードの変更を要求できます。</p>
-    
-    <h3>セキュアなパスワードポリシー</h3>
-    <p>Cognitoでは、パスワードの最小長、大文字・小文字・数字・特殊文字の要件、パスワードの有効期限などのパスワードポリシーを設定できます。</p>
-    
-    <div class="example">
-        <h4>AWS CLIを使用したパスワードポリシーの設定</h4>
-        <pre><code>aws cognito-idp update-user-pool \
+</div>
+
+<h3>コンプロマイズされた認証情報の検出</h3>
+<p>
+    Cognitoは、データ侵害で漏洩した認証情報のデータベースと照合して、ユーザーのパスワードをチェックできます。コンプロマイズされた認証情報が検出された場合、ユーザーにパスワードの変更を要求できます。</p>
+
+<h3>セキュアなパスワードポリシー</h3>
+<p>
+    Cognitoでは、パスワードの最小長、大文字・小文字・数字・特殊文字の要件、パスワードの有効期限などのパスワードポリシーを設定できます。</p>
+
+<div class="example">
+    <h4>AWS CLIを使用したパスワードポリシーの設定</h4>
+    <pre><code>aws cognito-idp update-user-pool \
     --user-pool-id us-west-2_abcdefghi \
     --policies '{"PasswordPolicy":{"MinimumLength":12,"RequireUppercase":true,"RequireLowercase":true,"RequireNumbers":true,"RequireSymbols":true,"TemporaryPasswordValidityDays":7}}'</code></pre>
-    </div>
-    
-    <h3>アカウントロックアウト</h3>
-    <p>Cognitoは、連続した認証失敗に対してアカウントロックアウトポリシーを設定できます。これにより、ブルートフォース攻撃からアカウントを保護できます。</p>
-    
-    <h3>セキュアなトークン管理</h3>
-    <p>Cognitoは、JWT（JSON Web Token）を使用してユーザーの認証と認可を管理します。トークンは署名され、有効期限が設定されており、改ざんを検出できます。</p>
-    
-    <h2>Amazon Cognitoのユースケース</h2>
-    <p>Amazon Cognitoは以下のようなユースケースに適しています：</p>
-    <ul>
-        <li><strong>モバイルアプリケーション：</strong> iOS、Android、React Nativeアプリのユーザー認証</li>
-        <li><strong>シングルページアプリケーション（SPA）：</strong> React、Angular、Vueなどで構築されたSPAのユーザー認証</li>
-        <li><strong>ウェブアプリケーション：</strong> 従来のウェブアプリケーションのユーザー認証</li>
-        <li><strong>APIアクセス制御：</strong> API GatewayやAppSyncなどのAPIへのアクセス制御</li>
-        <li><strong>マイクロサービス：</strong> マイクロサービスアーキテクチャでのサービス間認証</li>
-        <li><strong>B2C（Business to Consumer）：</strong> 消費者向けアプリケーションのユーザー管理</li>
-        <li><strong>B2B（Business to Business）：</strong> ビジネスパートナー向けアプリケーションのユーザー管理</li>
-        <li><strong>IoTデバイス：</strong> IoTデバイスの認証と認可</li>
-    </ul>
-    
-    <h3>具体的なユースケース例</h3>
-    
-    <h4>モバイルアプリケーション</h4>
-    <p>モバイルアプリケーションでは、Cognitoを使用してユーザーのサインアップ、サインイン、ソーシャルIDプロバイダーとの統合を実装できます。また、IDプールを使用して、認証されたユーザーにAWSリソース（S3バケット、DynamoDBテーブルなど）への直接アクセスを許可できます。</p>
-    
-    <h4>シングルページアプリケーション</h4>
-    <p>SPAでは、Cognitoを使用してユーザー認証を実装し、JWTを使用してAPIへのアクセスを制御できます。Cognitoのホスト型UIを使用して、カスタマイズ可能なサインインおよびサインアップページを提供することもできます。</p>
-    
-    <h4>マイクロサービスアーキテクチャ</h4>
-    <p>マイクロサービスアーキテクチャでは、Cognitoを使用して一元的なユーザー認証を提供し、JWTを使用してサービス間の認証と認可を実装できます。これにより、各マイクロサービスが独自の認証メカニズムを実装する必要がなくなります。</p>
-    
-    <h2>Amazon Cognitoとの統合サービス</h2>
-    <p>Amazon Cognitoは他のAWSサービスと統合して、より強力な認証と認可のソリューションを構築できます：</p>
-    
-    <table>
-        <tr>
-            <th>サービス</th>
-            <th>統合の利点</th>
-        </tr>
-        <tr>
-            <td>Amazon API Gateway</td>
-            <td>Cognitoユーザープールを使用してAPIへのアクセスを制御</td>
-        </tr>
-        <tr>
-            <td>AWS AppSync</td>
-            <td>GraphQL APIへのアクセスをCognitoで認証</td>
-        </tr>
-        <tr>
-            <td>AWS Lambda</td>
-            <td>認証フローのカスタマイズ、ユーザー管理の自動化</td>
-        </tr>
-        <tr>
-            <td>Amazon S3</td>
-            <td>IDプールを使用してS3バケットへの直接アクセスを許可</td>
-        </tr>
-        <tr>
-            <td>Amazon DynamoDB</td>
-            <td>IDプールを使用してDynamoDBテーブルへの直接アクセスを許可</td>
-        </tr>
-        <tr>
-            <td>AWS Amplify</td>
-            <td>フロントエンドアプリケーションとの簡単な統合</td>
-        </tr>
-        <tr>
-            <td>Amazon Pinpoint</td>
-            <td>ユーザーエンゲージメントとアナリティクス</td>
-        </tr>
-        <tr>
-            <td>AWS WAF</td>
-            <td>ウェブアプリケーションファイアウォールによる保護</td>
-        </tr>
-        <tr>
-            <td>Amazon CloudWatch</td>
-            <td>認証イベントのモニタリングとアラート</td>
-        </tr>
-    </table>
-    
-    <h2>Amazon Cognitoのベストプラクティス</h2>
-    <ul>
-        <li><strong>多要素認証の有効化：</strong> セキュリティを強化するためにMFAを有効化</li>
-        <li><strong>適応型認証の使用：</strong> リスクベースの認証を実装して不審なサインインを検出</li>
-        <li><strong>強力なパスワードポリシーの設定：</strong> 強力なパスワードを要求し、定期的な変更を促す</li>
-        <li><strong>最小権限の原則の適用：</strong> IDプールのIAMロールに必要最小限のアクセス権限のみを付与</li>
-        <li><strong>ユーザープールトリガーの活用：</strong> Lambda関数を使用して認証フローとユーザー管理をカスタマイズ</li>
-        <li><strong>トークンの適切な処理：</strong> クライアント側でトークンを安全に保存し、有効期限を適切に管理</li>
-        <li><strong>リフレッシュトークンのローテーション：</strong> リフレッシュトークンのローテーションを有効にして、長期的なセキュリティを確保</li>
-        <li><strong>ユーザー存在エラーの防止：</strong> ユーザーの存在を漏らさないようにエラーメッセージを一般化</li>
-        <li><strong>ログとモニタリングの設定：</strong> CloudWatchを使用して認証イベントをモニタリング</li>
-        <li><strong>定期的なセキュリティレビュー：</strong> 定期的にセキュリティ設定をレビューし、最新のベストプラクティスを適用</li>
-    </ul>
-    
-    <h2>まとめ</h2>
-    <p>Amazon Cognitoは、ウェブおよびモバイルアプリケーションのユーザー認証、認可、ユーザー管理を提供するAWSのサービスです。ユーザープールとIDプールの2つの主要なコンポーネントを通じて、安全で拡張性の高いユーザー認証と認可のソリューションを構築できます。</p>
-    
-    <p>Amazon Cognitoの主な利点は以下の通りです：</p>
-    <ul>
-        <li>ユーザー登録、サインイン、アカウント回復などの認証機能の簡単な実装</li>
-        <li>ソーシャルIDプロバイダーやエンタープライズIDプロバイダーとの統合</li>
-        <li>多要素認証、適応型認証などの高度なセキュリティ機能</li>
-        <li>AWSリソースへのアクセスを制御するための一時的な認証情報の提供</li>
-        <li>数百万ユーザーへのスケーラビリティ</li>
-        <li>他のAWSサービスとの緊密な統合</li>
-        <li>カスタマイズ可能な認証フローとユーザー管理</li>
-    </ul>
-    
-    <p>Amazon Cognitoを効果的に活用するには、多要素認証の有効化、適応型認証の使用、強力なパスワードポリシーの設定、最小権限の原則の適用などのベストプラクティスを実践することが重要です。また、AWS Amplify、API Gateway、AppSyncなどの他のAWSサービスと統合することで、より強力な認証と認可のソリューションを構築できます。</p>
+</div>
+
+<h3>アカウントロックアウト</h3>
+<p>
+    Cognitoは、連続した認証失敗に対してアカウントロックアウトポリシーを設定できます。これにより、ブルートフォース攻撃からアカウントを保護できます。</p>
+
+<h3>セキュアなトークン管理</h3>
+<p>Cognitoは、JWT（JSON Web
+    Token）を使用してユーザーの認証と認可を管理します。トークンは署名され、有効期限が設定されており、改ざんを検出できます。</p>
+
+<h2>Amazon Cognitoのユースケース</h2>
+<p>Amazon Cognitoは以下のようなユースケースに適しています：</p>
+<ul>
+    <li><strong>モバイルアプリケーション：</strong> iOS、Android、React Nativeアプリのユーザー認証</li>
+    <li><strong>シングルページアプリケーション（SPA）：</strong> React、Angular、Vueなどで構築されたSPAのユーザー認証</li>
+    <li><strong>ウェブアプリケーション：</strong> 従来のウェブアプリケーションのユーザー認証</li>
+    <li><strong>APIアクセス制御：</strong> API GatewayやAppSyncなどのAPIへのアクセス制御</li>
+    <li><strong>マイクロサービス：</strong> マイクロサービスアーキテクチャでのサービス間認証</li>
+    <li><strong>B2C（Business to Consumer）：</strong> 消費者向けアプリケーションのユーザー管理</li>
+    <li><strong>B2B（Business to Business）：</strong> ビジネスパートナー向けアプリケーションのユーザー管理</li>
+    <li><strong>IoTデバイス：</strong> IoTデバイスの認証と認可</li>
+</ul>
+
+<h3>具体的なユースケース例</h3>
+
+<h4>モバイルアプリケーション</h4>
+<p>
+    モバイルアプリケーションでは、Cognitoを使用してユーザーのサインアップ、サインイン、ソーシャルIDプロバイダーとの統合を実装できます。また、IDプールを使用して、認証されたユーザーにAWSリソース（S3バケット、DynamoDBテーブルなど）への直接アクセスを許可できます。</p>
+
+<h4>シングルページアプリケーション</h4>
+<p>
+    SPAでは、Cognitoを使用してユーザー認証を実装し、JWTを使用してAPIへのアクセスを制御できます。Cognitoのホスト型UIを使用して、カスタマイズ可能なサインインおよびサインアップページを提供することもできます。</p>
+
+<h4>マイクロサービスアーキテクチャ</h4>
+<p>
+    マイクロサービスアーキテクチャでは、Cognitoを使用して一元的なユーザー認証を提供し、JWTを使用してサービス間の認証と認可を実装できます。これにより、各マイクロサービスが独自の認証メカニズムを実装する必要がなくなります。</p>
+
+<h2>Amazon Cognitoとの統合サービス</h2>
+<p>Amazon Cognitoは他のAWSサービスと統合して、より強力な認証と認可のソリューションを構築できます：</p>
+
+<table>
+    <tr>
+        <th>サービス</th>
+        <th>統合の利点</th>
+    </tr>
+    <tr>
+        <td>Amazon API Gateway</td>
+        <td>Cognitoユーザープールを使用してAPIへのアクセスを制御</td>
+    </tr>
+    <tr>
+        <td>AWS AppSync</td>
+        <td>GraphQL APIへのアクセスをCognitoで認証</td>
+    </tr>
+    <tr>
+        <td>AWS Lambda</td>
+        <td>認証フローのカスタマイズ、ユーザー管理の自動化</td>
+    </tr>
+    <tr>
+        <td>Amazon S3</td>
+        <td>IDプールを使用してS3バケットへの直接アクセスを許可</td>
+    </tr>
+    <tr>
+        <td>Amazon DynamoDB</td>
+        <td>IDプールを使用してDynamoDBテーブルへの直接アクセスを許可</td>
+    </tr>
+    <tr>
+        <td>AWS Amplify</td>
+        <td>フロントエンドアプリケーションとの簡単な統合</td>
+    </tr>
+    <tr>
+        <td>Amazon Pinpoint</td>
+        <td>ユーザーエンゲージメントとアナリティクス</td>
+    </tr>
+    <tr>
+        <td>AWS WAF</td>
+        <td>ウェブアプリケーションファイアウォールによる保護</td>
+    </tr>
+    <tr>
+        <td>Amazon CloudWatch</td>
+        <td>認証イベントのモニタリングとアラート</td>
+    </tr>
+</table>
+
+<h2>Amazon Cognitoのベストプラクティス</h2>
+<ul>
+    <li><strong>多要素認証の有効化：</strong> セキュリティを強化するためにMFAを有効化</li>
+    <li><strong>適応型認証の使用：</strong> リスクベースの認証を実装して不審なサインインを検出</li>
+    <li><strong>強力なパスワードポリシーの設定：</strong> 強力なパスワードを要求し、定期的な変更を促す</li>
+    <li><strong>最小権限の原則の適用：</strong> IDプールのIAMロールに必要最小限のアクセス権限のみを付与</li>
+    <li><strong>ユーザープールトリガーの活用：</strong> Lambda関数を使用して認証フローとユーザー管理をカスタマイズ</li>
+    <li><strong>トークンの適切な処理：</strong> クライアント側でトークンを安全に保存し、有効期限を適切に管理</li>
+    <li><strong>リフレッシュトークンのローテーション：</strong> リフレッシュトークンのローテーションを有効にして、長期的なセキュリティを確保
+    </li>
+    <li><strong>ユーザー存在エラーの防止：</strong> ユーザーの存在を漏らさないようにエラーメッセージを一般化</li>
+    <li><strong>ログとモニタリングの設定：</strong> CloudWatchを使用して認証イベントをモニタリング</li>
+    <li><strong>定期的なセキュリティレビュー：</strong> 定期的にセキュリティ設定をレビューし、最新のベストプラクティスを適用
+    </li>
+</ul>
+
+<h2>まとめ</h2>
+<p>Amazon
+    Cognitoは、ウェブおよびモバイルアプリケーションのユーザー認証、認可、ユーザー管理を提供するAWSのサービスです。ユーザープールとIDプールの2つの主要なコンポーネントを通じて、安全で拡張性の高いユーザー認証と認可のソリューションを構築できます。</p>
+
+<p>Amazon Cognitoの主な利点は以下の通りです：</p>
+<ul>
+    <li>ユーザー登録、サインイン、アカウント回復などの認証機能の簡単な実装</li>
+    <li>ソーシャルIDプロバイダーやエンタープライズIDプロバイダーとの統合</li>
+    <li>多要素認証、適応型認証などの高度なセキュリティ機能</li>
+    <li>AWSリソースへのアクセスを制御するための一時的な認証情報の提供</li>
+    <li>数百万ユーザーへのスケーラビリティ</li>
+    <li>他のAWSサービスとの緊密な統合</li>
+    <li>カスタマイズ可能な認証フローとユーザー管理</li>
+</ul>
+
+<p>Amazon Cognitoを効果的に活用するには、多要素認証の有効化、適応型認証の使用、強力なパスワードポリシーの設定、最小権限の原則の適用などのベストプラクティスを実践することが重要です。また、AWS
+    Amplify、API
+    Gateway、AppSyncなどの他のAWSサービスと統合することで、より強力な認証と認可のソリューションを構築できます。</p>
 </body>
 </html>

@@ -1,6 +1,10 @@
 ```html
 <html lang="en">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Secure Communication: VPN, Wireless Communication (WPA2/WPA3)</title>
@@ -45,8 +49,10 @@
         <h2>Introduction</h2>
         <p>
             When using the internet or wireless networks, the security of your communication is extremely important.
-            On public Wi-Fi or general internet connections, there is a risk that your communications could be intercepted by third parties.
-            This page explains VPNs (Virtual Private Networks) and wireless security standards (WPA2/WPA3), which are technologies for securely protecting communications.
+            On public Wi-Fi or general internet connections, there is a risk that your communications could be
+            intercepted by third parties.
+            This page explains VPNs (Virtual Private Networks) and wireless security standards (WPA2/WPA3), which are
+            technologies for securely protecting communications.
         </p>
     </section>
 
@@ -56,7 +62,8 @@
         <section id="vpn-intro" class="crypto-section">
             <h3>What is a VPN?</h3>
             <p>
-                A VPN (Virtual Private Network) is a technology that allows you to communicate securely as if you were on a private network, even while using the public internet.
+                A VPN (Virtual Private Network) is a technology that allows you to communicate securely as if you were
+                on a private network, even while using the public internet.
                 A VPN creates an encrypted tunnel and exchanges data within it,
                 preventing eavesdropping and tampering of communication content.
             </p>
@@ -76,14 +83,16 @@
             <h3>Types of VPNs</h3>
             <h4>Remote Access VPN</h4>
             <p>
-                A remote access VPN is used by individual users to connect to a company's private network over the internet.
+                A remote access VPN is used by individual users to connect to a company's private network over the
+                internet.
                 It is often used for telecommuting or remote work to access internal company systems.
             </p>
 
             <h4>Site-to-Site VPN</h4>
             <p>
                 A Site-to-Site VPN is used to connect the networks of multiple geographically dispersed locations.
-                For example, it can securely connect the networks of a headquarters and a branch office, allowing them to function as a single large network.
+                For example, it can securely connect the networks of a headquarters and a branch office, allowing them
+                to function as a single large network.
             </p>
 
             <h4>Client VPN</h4>
@@ -103,7 +112,8 @@
             <h4>OpenVPN</h4>
             <p>
                 OpenVPN is an open-source VPN protocol that offers high security and flexibility.
-                It uses SSL/TLS for encryption and has the advantage of being able to easily bypass firewall restrictions.
+                It uses SSL/TLS for encryption and has the advantage of being able to easily bypass firewall
+                restrictions.
                 It can operate on both TCP/UDP ports and is adopted by many VPN services.
             </p>
 
@@ -117,7 +127,8 @@
             <h4>IKEv2/IPsec</h4>
             <p>
                 The combination of IKEv2 (Internet Key Exchange version 2) and IPsec (Internet Protocol Security)
-                provides a stable and high-speed connection. It is particularly strong when switching between networks (e.g., from Wi-Fi to mobile data)
+                provides a stable and high-speed connection. It is particularly strong when switching between networks
+                (e.g., from Wi-Fi to mobile data)
                 and is suitable for mobile devices.
             </p>
 
@@ -132,7 +143,8 @@
             <p>
                 SSTP (Secure Socket Tunneling Protocol) is a protocol developed by Microsoft that
                 communicates similarly to HTTPS traffic using SSL/TLS.
-                It has the advantage of being able to easily pass through firewalls, but it is mainly supported on the Windows platform.
+                It has the advantage of being able to easily pass through firewalls, but it is mainly supported on the
+                Windows platform.
             </p>
         </section>
 
@@ -153,12 +165,14 @@
             <h4>ChaCha20</h4>
             <p>
                 ChaCha20 is a type of stream cipher that can operate faster than AES,
-                especially in environments without hardware acceleration (such as mobile devices). It is adopted by new VPN protocols like WireGuard.
+                especially in environments without hardware acceleration (such as mobile devices). It is adopted by new
+                VPN protocols like WireGuard.
             </p>
 
             <h4>RSA and Elliptic Curve Cryptography (ECC)</h4>
             <p>
-                RSA and Elliptic Curve Cryptography are used as public-key cryptosystems for key exchange and authentication.
+                RSA and Elliptic Curve Cryptography are used as public-key cryptosystems for key exchange and
+                authentication.
                 Compared to RSA, ECC can achieve a similar level of security with a shorter key length,
                 enabling more efficient processing.
             </p>
@@ -182,7 +196,8 @@
             <h4>Using Public Wi-Fi</h4>
             <p>
                 Public Wi-Fi in places like cafes, hotels, and airports can pose a high security risk.
-                By using a VPN, you can encrypt your communication content and protect your data from eavesdropping and man-in-the-middle attacks.
+                By using a VPN, you can encrypt your communication content and protect your data from eavesdropping and
+                man-in-the-middle attacks.
             </p>
 
             <h4>Bypassing Geographic Restrictions</h4>
@@ -194,7 +209,8 @@
 
             <h4>Privacy Protection</h4>
             <p>
-                Using a VPN can prevent your Browse history from being tracked by your Internet Service Provider (ISP) and ad networks.
+                Using a VPN can prevent your Browse history from being tracked by your Internet Service Provider (ISP)
+                and ad networks.
                 Your IP address is anonymized, which enhances your online privacy.
             </p>
         </section>
@@ -240,13 +256,15 @@
         <section id="wpa2" class="crypto-section">
             <h3>WPA2 (Wi-Fi Protected Access 2)</h3>
             <p>
-                WPA2 was introduced in 2004 and became mandatory for all Wi-Fi certified devices manufactured after 2006.
+                WPA2 was introduced in 2004 and became mandatory for all Wi-Fi certified devices manufactured after
+                2006.
                 Its main features are as follows:
             </p>
 
             <h4>AES-CCMP Encryption</h4>
             <p>
-                WPA2 uses AES (Advanced Encryption Standard) and CCMP (Counter Mode with Cipher Block Chaining Message Authentication Code Protocol).
+                WPA2 uses AES (Advanced Encryption Standard) and CCMP (Counter Mode with Cipher Block Chaining Message
+                Authentication Code Protocol).
                 This provides stronger encryption than the TKIP used in WEP and WPA.
             </p>
 
@@ -261,7 +279,8 @@
             <p>
                 WPA2-Enterprise is a mode for businesses and large organizations.
                 It works in conjunction with an authentication server, such as a RADIUS server,
-                and uses different authentication credentials (such as a username and password) for each user to access the network.
+                and uses different authentication credentials (such as a username and password) for each user to access
+                the network.
                 This simplifies user management and improves security.
             </p>
 
@@ -270,16 +289,23 @@
                 Several vulnerabilities have also been discovered in WPA2:
             </p>
             <ul>
-                <li>KRACK (Key Reinstallation Attack): A vulnerability discovered in 2017 that allows an attacker to intercept communications by exploiting the WPA2 handshake process.</li>
-                <li>Dictionary Attack: If a weak passphrase is used, it can be cracked through brute-force or dictionary attacks.</li>
-                <li>WPS (Wi-Fi Protected Setup) Vulnerability: If WPS is enabled, it may be possible to access the network by brute-forcing the PIN code.</li>
+                <li>KRACK (Key Reinstallation Attack): A vulnerability discovered in 2017 that allows an attacker to
+                    intercept communications by exploiting the WPA2 handshake process.
+                </li>
+                <li>Dictionary Attack: If a weak passphrase is used, it can be cracked through brute-force or dictionary
+                    attacks.
+                </li>
+                <li>WPS (Wi-Fi Protected Setup) Vulnerability: If WPS is enabled, it may be possible to access the
+                    network by brute-forcing the PIN code.
+                </li>
             </ul>
         </section>
 
         <section id="wpa3" class="crypto-section">
             <h3>WPA3 (Wi-Fi Protected Access 3)</h3>
             <p>
-                WPA3 is the latest Wi-Fi security protocol, introduced in 2018, and was developed to address the vulnerabilities of WPA2.
+                WPA3 is the latest Wi-Fi security protocol, introduced in 2018, and was developed to address the
+                vulnerabilities of WPA2.
                 Its main features are as follows:
             </p>
 
@@ -287,7 +313,8 @@
             <p>
                 WPA3 replaces the PSK (Pre-Shared Key) of WPA2 with SAE (also known as the Dragonfly Handshake).
                 SAE increases resistance to brute-force attacks and prevents offline dictionary attacks.
-                It also provides Perfect Forward Secrecy (PFS), ensuring that past communications remain secure even if a key is compromised in the future.
+                It also provides Perfect Forward Secrecy (PFS), ensuring that past communications remain secure even if
+                a key is compromised in the future.
             </p>
 
             <h4>WPA3-Personal</h4>
@@ -300,7 +327,8 @@
             <p>
                 WPA3-Enterprise is a mode for businesses and large organizations that provides a 192-bit security suite.
                 This includes encryption with GCMP-256 (Galois/Counter Mode Protocol), authentication with GMAC-256,
-                and key exchange and authentication with ECDSA (Elliptic Curve Digital Signature Algorithm) or 3072-bit RSA.
+                and key exchange and authentication with ECDSA (Elliptic Curve Digital Signature Algorithm) or 3072-bit
+                RSA.
             </p>
 
             <h4>Easy Connect (DPP)</h4>
@@ -325,7 +353,9 @@
             </p>
             <ul>
                 <li>Use WPA3 whenever possible (or WPA2 if not supported)</li>
-                <li>Use a strong, complex password (12 characters or more, including uppercase letters, lowercase letters, numbers, and special characters)</li>
+                <li>Use a strong, complex password (12 characters or more, including uppercase letters, lowercase
+                    letters, numbers, and special characters)
+                </li>
                 <li>Change the default SSID (network name)</li>
                 <li>Regularly update the router's firmware</li>
                 <li>Disable WPS</li>

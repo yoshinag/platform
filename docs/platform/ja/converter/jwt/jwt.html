@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>JWTエンコード・デコードツール</title>
     <link rel="stylesheet" href="css/jwt.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
@@ -102,7 +106,8 @@
         <ul>
             <li><strong>ヘッダー (Header)</strong> - トークンのタイプと使用している署名アルゴリズムを指定します</li>
             <li><strong>ペイロード (Payload)</strong> - クレーム（ユーザーデータや追加情報）を含みます</li>
-            <li><strong>署名 (Signature)</strong> - エンコードされたヘッダー、エンコードされたペイロード、シークレット、アルゴリズムを使用して生成されます</li>
+            <li><strong>署名 (Signature)</strong> - エンコードされたヘッダー、エンコードされたペイロード、シークレット、アルゴリズムを使用して生成されます
+            </li>
         </ul>
         <p>
             例えば、以下のようなJWTトークンがあります：

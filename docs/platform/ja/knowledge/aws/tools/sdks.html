@@ -1,257 +1,262 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <title>AWS SDKs</title>
     <link rel="stylesheet" href="../../../../css/knowledge.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../../../platform/js/common/analytics.js"></script>
+
 <body class="ja-knowledge">
-    <div style="margin-bottom: 20px;">
-        <a href="../aws.html">AWSに戻る</a>
-    </div>
-    <h1>AWS SDKs (Software Development Kits)</h1>
-    
-    <h2>AWS SDKsとは</h2>
-    <p>AWS SDKs（Software Development Kits）は、特定のプログラミング言語やプラットフォーム向けに最適化されたライブラリとツールのコレクションで、開発者がアプリケーション内でAWSサービスを簡単に統合できるようにします。SDKsを使用することで、AWSのAPIを直接呼び出す複雑さを抽象化し、プログラミング言語固有の慣用的なインターフェースを通じてAWSリソースを操作できます。</p>
-    
-    <h2>AWS SDKsの主な特徴</h2>
-    <ul>
-        <li><strong>言語固有のインターフェース：</strong> 各プログラミング言語の慣用的なパターンに合わせたAPI</li>
-        <li><strong>認証の処理：</strong> AWSサービスへの認証を自動的に処理</li>
-        <li><strong>リクエストの署名：</strong> AWS APIリクエストの署名を自動的に処理</li>
-        <li><strong>再試行ロジック：</strong> 一時的な障害に対する自動再試行メカニズム</li>
-        <li><strong>ページネーション：</strong> 大量のデータを扱うための自動ページネーション</li>
-        <li><strong>エラー処理：</strong> AWSサービスからのエラーレスポンスを言語固有の例外に変換</li>
-        <li><strong>非同期サポート：</strong> 多くのSDKsで非同期操作をサポート</li>
-        <li><strong>高レベルの抽象化：</strong> 複雑な操作を簡素化する高レベルのヘルパー関数</li>
-        <li><strong>オープンソース：</strong> GitHubでソースコードが公開され、コミュニティによる貢献が可能</li>
-        <li><strong>定期的な更新：</strong> 新しいAWSサービスと機能のサポートを迅速に追加</li>
-    </ul>
-    
-    <h2>利用可能なAWS SDKs</h2>
-    <p>AWSは、以下のプログラミング言語とプラットフォーム向けにSDKsを提供しています：</p>
-    
-    <table>
-        <tr>
-            <th>SDK</th>
-            <th>プログラミング言語/プラットフォーム</th>
-            <th>主な特徴</th>
-        </tr>
-        <tr>
-            <td>AWS SDK for Java</td>
-            <td>Java</td>
-            <td>
-                <ul>
-                    <li>Java 8以上をサポート</li>
-                    <li>同期および非同期クライアント</li>
-                    <li>Maven/Gradleとの統合</li>
-                    <li>Spring Frameworkとの統合</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>AWS SDK for .NET</td>
-            <td>C#, .NET</td>
-            <td>
-                <ul>
-                    <li>.NET Core/.NET 5+をサポート</li>
-                    <li>NuGetパッケージ</li>
-                    <li>ASP.NETとの統合</li>
-                    <li>Windows、Linux、macOSをサポート</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>AWS SDK for JavaScript</td>
-            <td>JavaScript, TypeScript</td>
-            <td>
-                <ul>
-                    <li>ブラウザとNode.jsの両方をサポート</li>
-                    <li>Promise、async/awaitをサポート</li>
-                    <li>TypeScriptの型定義</li>
-                    <li>モジュラー構造（v3）</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>AWS SDK for Python (Boto3)</td>
-            <td>Python</td>
-            <td>
-                <ul>
-                    <li>低レベルのクライアントと高レベルのリソースインターフェース</li>
-                    <li>Python 3.7以上をサポート</li>
-                    <li>非同期サポート（aioboto3）</li>
-                    <li>Jupyter Notebookとの統合</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>AWS SDK for PHP</td>
-            <td>PHP</td>
-            <td>
-                <ul>
-                    <li>PHP 7.2以上をサポート</li>
-                    <li>Composerとの統合</li>
-                    <li>Promise、async/awaitをサポート</li>
-                    <li>Laravel、Symfonyとの統合</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>AWS SDK for Ruby</td>
-            <td>Ruby</td>
-            <td>
-                <ul>
-                    <li>Ruby 2.3以上をサポート</li>
-                    <li>リソースインターフェース</li>
-                    <li>Rails統合</li>
-                    <li>モジュラー構造</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>AWS SDK for Go</td>
-            <td>Go</td>
-            <td>
-                <ul>
-                    <li>Go 1.15以上をサポート</li>
-                    <li>並行処理のサポート</li>
-                    <li>モジュラー構造（v2）</li>
-                    <li>コンテキストサポート</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>AWS SDK for C++</td>
-            <td>C++</td>
-            <td>
-                <ul>
-                    <li>モダンC++（C++11以上）</li>
-                    <li>クロスプラットフォーム</li>
-                    <li>非同期API</li>
-                    <li>メモリ管理</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>AWS SDK for Rust</td>
-            <td>Rust</td>
-            <td>
-                <ul>
-                    <li>Rustの安全性と並行性</li>
-                    <li>非同期サポート</li>
-                    <li>強力な型システム</li>
-                    <li>開発者プレビュー段階</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>AWS Mobile SDKs</td>
-            <td>iOS, Android</td>
-            <td>
-                <ul>
-                    <li>モバイル固有の機能</li>
-                    <li>オフライン同期</li>
-                    <li>認証とユーザー管理</li>
-                    <li>プッシュ通知</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>AWS Amplify</td>
-            <td>JavaScript, iOS, Android, Flutter</td>
-            <td>
-                <ul>
-                    <li>フロントエンド開発のためのフレームワーク</li>
-                    <li>認証、ストレージ、APIなどの一般的なユースケースのための高レベルの抽象化</li>
-                    <li>React、Vue、Angular、Ionicなどのフレームワークとの統合</li>
-                    <li>CLIツールとUI components</li>
-                </ul>
-            </td>
-        </tr>
-    </table>
-    
-    <h2>AWS SDKsのインストールと設定</h2>
-    <p>以下は、主要なAWS SDKsのインストールと設定方法です。</p>
-    
-    <h3>AWS SDK for Java</h3>
-    <div class="example">
-        <h4>Maven</h4>
-        <pre><code>&lt;dependency&gt;
+<div style="margin-bottom: 20px;">
+    <a href="../aws.html">AWSに戻る</a>
+</div>
+<h1>AWS SDKs (Software Development Kits)</h1>
+
+<h2>AWS SDKsとは</h2>
+<p>AWS SDKs（Software Development
+    Kits）は、特定のプログラミング言語やプラットフォーム向けに最適化されたライブラリとツールのコレクションで、開発者がアプリケーション内でAWSサービスを簡単に統合できるようにします。SDKsを使用することで、AWSのAPIを直接呼び出す複雑さを抽象化し、プログラミング言語固有の慣用的なインターフェースを通じてAWSリソースを操作できます。</p>
+
+<h2>AWS SDKsの主な特徴</h2>
+<ul>
+    <li><strong>言語固有のインターフェース：</strong> 各プログラミング言語の慣用的なパターンに合わせたAPI</li>
+    <li><strong>認証の処理：</strong> AWSサービスへの認証を自動的に処理</li>
+    <li><strong>リクエストの署名：</strong> AWS APIリクエストの署名を自動的に処理</li>
+    <li><strong>再試行ロジック：</strong> 一時的な障害に対する自動再試行メカニズム</li>
+    <li><strong>ページネーション：</strong> 大量のデータを扱うための自動ページネーション</li>
+    <li><strong>エラー処理：</strong> AWSサービスからのエラーレスポンスを言語固有の例外に変換</li>
+    <li><strong>非同期サポート：</strong> 多くのSDKsで非同期操作をサポート</li>
+    <li><strong>高レベルの抽象化：</strong> 複雑な操作を簡素化する高レベルのヘルパー関数</li>
+    <li><strong>オープンソース：</strong> GitHubでソースコードが公開され、コミュニティによる貢献が可能</li>
+    <li><strong>定期的な更新：</strong> 新しいAWSサービスと機能のサポートを迅速に追加</li>
+</ul>
+
+<h2>利用可能なAWS SDKs</h2>
+<p>AWSは、以下のプログラミング言語とプラットフォーム向けにSDKsを提供しています：</p>
+
+<table>
+    <tr>
+        <th>SDK</th>
+        <th>プログラミング言語/プラットフォーム</th>
+        <th>主な特徴</th>
+    </tr>
+    <tr>
+        <td>AWS SDK for Java</td>
+        <td>Java</td>
+        <td>
+            <ul>
+                <li>Java 8以上をサポート</li>
+                <li>同期および非同期クライアント</li>
+                <li>Maven/Gradleとの統合</li>
+                <li>Spring Frameworkとの統合</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>AWS SDK for .NET</td>
+        <td>C#, .NET</td>
+        <td>
+            <ul>
+                <li>.NET Core/.NET 5+をサポート</li>
+                <li>NuGetパッケージ</li>
+                <li>ASP.NETとの統合</li>
+                <li>Windows、Linux、macOSをサポート</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>AWS SDK for JavaScript</td>
+        <td>JavaScript, TypeScript</td>
+        <td>
+            <ul>
+                <li>ブラウザとNode.jsの両方をサポート</li>
+                <li>Promise、async/awaitをサポート</li>
+                <li>TypeScriptの型定義</li>
+                <li>モジュラー構造（v3）</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>AWS SDK for Python (Boto3)</td>
+        <td>Python</td>
+        <td>
+            <ul>
+                <li>低レベルのクライアントと高レベルのリソースインターフェース</li>
+                <li>Python 3.7以上をサポート</li>
+                <li>非同期サポート（aioboto3）</li>
+                <li>Jupyter Notebookとの統合</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>AWS SDK for PHP</td>
+        <td>PHP</td>
+        <td>
+            <ul>
+                <li>PHP 7.2以上をサポート</li>
+                <li>Composerとの統合</li>
+                <li>Promise、async/awaitをサポート</li>
+                <li>Laravel、Symfonyとの統合</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>AWS SDK for Ruby</td>
+        <td>Ruby</td>
+        <td>
+            <ul>
+                <li>Ruby 2.3以上をサポート</li>
+                <li>リソースインターフェース</li>
+                <li>Rails統合</li>
+                <li>モジュラー構造</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>AWS SDK for Go</td>
+        <td>Go</td>
+        <td>
+            <ul>
+                <li>Go 1.15以上をサポート</li>
+                <li>並行処理のサポート</li>
+                <li>モジュラー構造（v2）</li>
+                <li>コンテキストサポート</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>AWS SDK for C++</td>
+        <td>C++</td>
+        <td>
+            <ul>
+                <li>モダンC++（C++11以上）</li>
+                <li>クロスプラットフォーム</li>
+                <li>非同期API</li>
+                <li>メモリ管理</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>AWS SDK for Rust</td>
+        <td>Rust</td>
+        <td>
+            <ul>
+                <li>Rustの安全性と並行性</li>
+                <li>非同期サポート</li>
+                <li>強力な型システム</li>
+                <li>開発者プレビュー段階</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>AWS Mobile SDKs</td>
+        <td>iOS, Android</td>
+        <td>
+            <ul>
+                <li>モバイル固有の機能</li>
+                <li>オフライン同期</li>
+                <li>認証とユーザー管理</li>
+                <li>プッシュ通知</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>AWS Amplify</td>
+        <td>JavaScript, iOS, Android, Flutter</td>
+        <td>
+            <ul>
+                <li>フロントエンド開発のためのフレームワーク</li>
+                <li>認証、ストレージ、APIなどの一般的なユースケースのための高レベルの抽象化</li>
+                <li>React、Vue、Angular、Ionicなどのフレームワークとの統合</li>
+                <li>CLIツールとUI components</li>
+            </ul>
+        </td>
+    </tr>
+</table>
+
+<h2>AWS SDKsのインストールと設定</h2>
+<p>以下は、主要なAWS SDKsのインストールと設定方法です。</p>
+
+<h3>AWS SDK for Java</h3>
+<div class="example">
+    <h4>Maven</h4>
+    <pre><code>&lt;dependency&gt;
     &lt;groupId&gt;software.amazon.awssdk&lt;/groupId&gt;
     &lt;artifactId&gt;s3&lt;/artifactId&gt;
     &lt;version&gt;2.20.0&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
-        
-        <h4>Gradle</h4>
-        <pre><code>implementation 'software.amazon.awssdk:s3:2.20.0'</code></pre>
-    </div>
-    
-    <h3>AWS SDK for .NET</h3>
-    <div class="example">
-        <h4>NuGet Package Manager</h4>
-        <pre><code>Install-Package AWSSDK.S3</code></pre>
-        
-        <h4>.NET CLI</h4>
-        <pre><code>dotnet add package AWSSDK.S3</code></pre>
-    </div>
-    
-    <h3>AWS SDK for JavaScript</h3>
-    <div class="example">
-        <h4>npm (Node.js)</h4>
-        <pre><code># v3 (推奨)
+
+    <h4>Gradle</h4>
+    <pre><code>implementation 'software.amazon.awssdk:s3:2.20.0'</code></pre>
+</div>
+
+<h3>AWS SDK for .NET</h3>
+<div class="example">
+    <h4>NuGet Package Manager</h4>
+    <pre><code>Install-Package AWSSDK.S3</code></pre>
+
+    <h4>.NET CLI</h4>
+    <pre><code>dotnet add package AWSSDK.S3</code></pre>
+</div>
+
+<h3>AWS SDK for JavaScript</h3>
+<div class="example">
+    <h4>npm (Node.js)</h4>
+    <pre><code># v3 (推奨)
 npm install @aws-sdk/client-s3
 
 # v2
 npm install aws-sdk</code></pre>
-        
-        <h4>ブラウザ</h4>
-        <pre><code>&lt;script src="https://sdk.amazonaws.com/js/aws-sdk-2.1386.0.min.js"&gt;&lt;/script&gt;</code></pre>
-    </div>
-    
-    <h3>AWS SDK for Python (Boto3)</h3>
-    <div class="example">
-        <h4>pip</h4>
-        <pre><code>pip install boto3</code></pre>
-    </div>
-    
-    <h3>AWS SDK for PHP</h3>
-    <div class="example">
-        <h4>Composer</h4>
-        <pre><code>composer require aws/aws-sdk-php</code></pre>
-    </div>
-    
-    <h3>AWS SDK for Ruby</h3>
-    <div class="example">
-        <h4>gem</h4>
-        <pre><code>gem install aws-sdk</code></pre>
-        
-        <h4>Bundler</h4>
-        <pre><code># Gemfile
+
+    <h4>ブラウザ</h4>
+    <pre><code>&lt;script src="https://sdk.amazonaws.com/js/aws-sdk-2.1386.0.min.js"&gt;&lt;/script&gt;</code></pre>
+</div>
+
+<h3>AWS SDK for Python (Boto3)</h3>
+<div class="example">
+    <h4>pip</h4>
+    <pre><code>pip install boto3</code></pre>
+</div>
+
+<h3>AWS SDK for PHP</h3>
+<div class="example">
+    <h4>Composer</h4>
+    <pre><code>composer require aws/aws-sdk-php</code></pre>
+</div>
+
+<h3>AWS SDK for Ruby</h3>
+<div class="example">
+    <h4>gem</h4>
+    <pre><code>gem install aws-sdk</code></pre>
+
+    <h4>Bundler</h4>
+    <pre><code># Gemfile
 gem 'aws-sdk', '~> 3'</code></pre>
-    </div>
-    
-    <h3>AWS SDK for Go</h3>
-    <div class="example">
-        <h4>go get</h4>
-        <pre><code># v2 (推奨)
+</div>
+
+<h3>AWS SDK for Go</h3>
+<div class="example">
+    <h4>go get</h4>
+    <pre><code># v2 (推奨)
 go get github.com/aws/aws-sdk-go-v2/aws
 go get github.com/aws/aws-sdk-go-v2/service/s3
 
 # v1
 go get github.com/aws/aws-sdk-go</code></pre>
-    </div>
-    
-    <h2>認証情報の設定</h2>
-    <p>AWS SDKsは、以下の方法で認証情報を設定できます：</p>
-    
-    <h3>共有認証情報ファイル</h3>
-    <p>~/.aws/credentials（Windows: %USERPROFILE%\.aws\credentials）ファイルに認証情報を保存します。これは、AWS CLIと同じ形式です。</p>
-    <div class="example">
+</div>
+
+<h2>認証情報の設定</h2>
+<p>AWS SDKsは、以下の方法で認証情報を設定できます：</p>
+
+<h3>共有認証情報ファイル</h3>
+<p>~/.aws/credentials（Windows: %USERPROFILE%\.aws\credentials）ファイルに認証情報を保存します。これは、AWS
+    CLIと同じ形式です。</p>
+<div class="example">
         <pre><code>[default]
 aws_access_key_id = AKIAIOSFODNN7EXAMPLE
 aws_secret_access_key = wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
@@ -259,32 +264,33 @@ aws_secret_access_key = wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 [production]
 aws_access_key_id = AKIAI44QH8DHBEXAMPLE
 aws_secret_access_key = je7MtGbClwBF/2Zp9Utk/h3yCo8nvbEXAMPLEKEY</code></pre>
-    </div>
-    
-    <h3>環境変数</h3>
-    <p>環境変数を使用して認証情報を設定できます：</p>
-    <div class="example">
-        <h4>Linux/macOS</h4>
-        <pre><code>export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+</div>
+
+<h3>環境変数</h3>
+<p>環境変数を使用して認証情報を設定できます：</p>
+<div class="example">
+    <h4>Linux/macOS</h4>
+    <pre><code>export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
 export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 export AWS_REGION=ap-northeast-1</code></pre>
-        
-        <h4>Windows (Command Prompt)</h4>
-        <pre><code>set AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+
+    <h4>Windows (Command Prompt)</h4>
+    <pre><code>set AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
 set AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 set AWS_REGION=ap-northeast-1</code></pre>
-    </div>
-    
-    <h3>IAMロール</h3>
-    <p>EC2インスタンス、Lambda関数、ECSタスクなどでは、IAMロールを使用して認証情報を提供することをお勧めします。SDKは自動的にロールから一時的な認証情報を取得します。</p>
-    
-    <h2>AWS SDKsの基本的な使用方法</h2>
-    <p>以下は、主要なプログラミング言語でのAWS SDKsの基本的な使用例です。</p>
-    
-    <h3>Python (Boto3)</h3>
-    <div class="example">
-        <h4>S3バケットの一覧表示</h4>
-        <pre><code>import boto3
+</div>
+
+<h3>IAMロール</h3>
+<p>
+    EC2インスタンス、Lambda関数、ECSタスクなどでは、IAMロールを使用して認証情報を提供することをお勧めします。SDKは自動的にロールから一時的な認証情報を取得します。</p>
+
+<h2>AWS SDKsの基本的な使用方法</h2>
+<p>以下は、主要なプログラミング言語でのAWS SDKsの基本的な使用例です。</p>
+
+<h3>Python (Boto3)</h3>
+<div class="example">
+    <h4>S3バケットの一覧表示</h4>
+    <pre><code>import boto3
 
 # S3クライアントの作成
 s3 = boto3.client('s3')
@@ -295,9 +301,9 @@ response = s3.list_buckets()
 # バケット名の出力
 for bucket in response['Buckets']:
     print(bucket['Name'])</code></pre>
-        
-        <h4>S3バケットへのファイルのアップロード</h4>
-        <pre><code>import boto3
+
+    <h4>S3バケットへのファイルのアップロード</h4>
+    <pre><code>import boto3
 
 # S3クライアントの作成
 s3 = boto3.client('s3')
@@ -308,12 +314,12 @@ s3.upload_file(
     Bucket='my-bucket',
     Key='remote-file.txt'
 )</code></pre>
-    </div>
-    
-    <h3>JavaScript (Node.js)</h3>
-    <div class="example">
-        <h4>S3バケットの一覧表示 (v3)</h4>
-        <pre><code>// AWS SDK for JavaScript v3
+</div>
+
+<h3>JavaScript (Node.js)</h3>
+<div class="example">
+    <h4>S3バケットの一覧表示 (v3)</h4>
+    <pre><code>// AWS SDK for JavaScript v3
 import { S3Client, ListBucketsCommand } from "@aws-sdk/client-s3";
 
 // S3クライアントの作成
@@ -332,15 +338,15 @@ async function listBuckets() {
 }
 
 listBuckets();</code></pre>
-    </div>
-    
-    <h2>AWS SDKsの高度な機能</h2>
-    
-    <h3>ページネーション</h3>
-    <p>大量のデータを扱う場合、AWS SDKsはページネーションをサポートしています：</p>
-    <div class="example">
-        <h4>Python (Boto3)</h4>
-        <pre><code>import boto3
+</div>
+
+<h2>AWS SDKsの高度な機能</h2>
+
+<h3>ページネーション</h3>
+<p>大量のデータを扱う場合、AWS SDKsはページネーションをサポートしています：</p>
+<div class="example">
+    <h4>Python (Boto3)</h4>
+    <pre><code>import boto3
 
 s3 = boto3.client('s3')
 
@@ -351,13 +357,13 @@ pages = paginator.paginate(Bucket='my-bucket')
 for page in pages:
     for obj in page.get('Contents', []):
         print(obj['Key'])</code></pre>
-    </div>
-    
-    <h3>ウェイター</h3>
-    <p>特定の状態になるまで待機するためのウェイター機能：</p>
-    <div class="example">
-        <h4>Python (Boto3)</h4>
-        <pre><code>import boto3
+</div>
+
+<h3>ウェイター</h3>
+<p>特定の状態になるまで待機するためのウェイター機能：</p>
+<div class="example">
+    <h4>Python (Boto3)</h4>
+    <pre><code>import boto3
 
 ec2 = boto3.client('ec2')
 
@@ -374,13 +380,13 @@ instance_id = response['Instances'][0]['InstanceId']
 # インスタンスが実行状態になるまで待機
 waiter = ec2.get_waiter('instance_running')
 waiter.wait(InstanceIds=[instance_id])</code></pre>
-    </div>
-    
-    <h3>リソースインターフェース</h3>
-    <p>一部のSDKs（Python、Ruby）は、より高レベルのリソースインターフェースを提供しています：</p>
-    <div class="example">
-        <h4>Python (Boto3)</h4>
-        <pre><code>import boto3
+</div>
+
+<h3>リソースインターフェース</h3>
+<p>一部のSDKs（Python、Ruby）は、より高レベルのリソースインターフェースを提供しています：</p>
+<div class="example">
+    <h4>Python (Boto3)</h4>
+    <pre><code>import boto3
 
 # リソースインターフェースの使用
 s3 = boto3.resource('s3')
@@ -392,83 +398,85 @@ for bucket in s3.buckets.all():
 # オブジェクトのアップロード
 bucket = s3.Bucket('my-bucket')
 bucket.upload_file('local-file.txt', 'remote-file.txt')</code></pre>
-    </div>
-    
-    <h2>AWS SDKsのセキュリティのベストプラクティス</h2>
-    <ul>
-        <li><strong>認証情報の保護：</strong> アクセスキーをソースコードやバージョン管理システムにコミットしない</li>
-        <li><strong>IAMロールの使用：</strong> EC2インスタンスやLambda関数ではIAMロールを使用</li>
-        <li><strong>最小権限の原則：</strong> 必要最小限の権限のみを付与</li>
-        <li><strong>一時的な認証情報の使用：</strong> 長期的な認証情報ではなく、一時的な認証情報を使用</li>
-        <li><strong>転送中の暗号化：</strong> HTTPSを使用してAWSサービスと通信</li>
-        <li><strong>保存中の暗号化：</strong> 保存されるデータを暗号化</li>
-        <li><strong>依存関係の更新：</strong> SDKsと依存関係を定期的に更新して、セキュリティパッチを適用</li>
-        <li><strong>認証情報のローテーション：</strong> アクセスキーを定期的にローテーション</li>
-    </ul>
-    
-    <h2>AWS SDKsのベストプラクティス</h2>
-    <ul>
-        <li><strong>最新バージョンの使用：</strong> 常に最新バージョンのSDKを使用して、新機能とセキュリティパッチを利用</li>
-        <li><strong>接続プーリング：</strong> 接続プーリングを活用して、パフォーマンスを向上</li>
-        <li><strong>再試行ポリシーの設定：</strong> 一時的な障害に対する適切な再試行ポリシーを設定</li>
-        <li><strong>非同期APIの使用：</strong> 可能な限り非同期APIを使用して、スケーラビリティを向上</li>
-        <li><strong>例外処理：</strong> 適切な例外処理を実装して、エラーを適切に処理</li>
-        <li><strong>リソースの解放：</strong> 使用後にリソースを適切に解放</li>
-        <li><strong>ページネーションの活用：</strong> 大量のデータを扱う場合はページネーションを活用</li>
-        <li><strong>キャッシュの活用：</strong> 頻繁に使用するデータをキャッシュして、パフォーマンスを向上</li>
-        <li><strong>モニタリングの実装：</strong> AWS X-RayやCloudWatchなどを使用して、アプリケーションをモニタリング</li>
-    </ul>
-    
-    <h2>AWS SDKsとの統合サービス</h2>
-    <p>AWS SDKsは、他のAWSサービスと統合して、より強力なアプリケーションを構築できます：</p>
-    
-    <table>
-        <tr>
-            <th>サービス</th>
-            <th>統合の利点</th>
-        </tr>
-        <tr>
-            <td>AWS X-Ray</td>
-            <td>アプリケーションのトレースとパフォーマンス分析</td>
-        </tr>
-        <tr>
-            <td>AWS CloudTrail</td>
-            <td>APIコールの記録と監査</td>
-        </tr>
-        <tr>
-            <td>Amazon CloudWatch</td>
-            <td>メトリクスの収集とアラームの設定</td>
-        </tr>
-        <tr>
-            <td>AWS IAM</td>
-            <td>アクセス制御と認証</td>
-        </tr>
-        <tr>
-            <td>AWS Secrets Manager</td>
-            <td>認証情報の安全な管理</td>
-        </tr>
-        <tr>
-            <td>AWS CloudFormation</td>
-            <td>インフラストラクチャのプロビジョニングと管理</td>
-        </tr>
-        <tr>
-            <td>AWS CDK</td>
-            <td>プログラミング言語を使用したインフラストラクチャの定義</td>
-        </tr>
-    </table>
-    
-    <h2>まとめ</h2>
-    <p>AWS SDKs（Software Development Kits）は、アプリケーション内でAWSサービスを簡単に統合するための強力なツールです。各プログラミング言語やプラットフォーム向けに最適化されたSDKsを使用することで、AWSのAPIを直接呼び出す複雑さを抽象化し、プログラミング言語固有の慣用的なインターフェースを通じてAWSリソースを操作できます。</p>
-    
-    <p>AWS SDKsの主な利点は以下の通りです：</p>
-    <ul>
-        <li>各プログラミング言語の慣用的なパターンに合わせたAPI</li>
-        <li>認証、リクエストの署名、再試行ロジックなどの自動処理</li>
-        <li>非同期プログラミング、ページネーション、ウェイターなどの高度な機能</li>
-        <li>複雑な操作を簡素化する高レベルの抽象化</li>
-        <li>定期的な更新による新しいAWSサービスと機能のサポート</li>
-    </ul>
-    
-    <p>AWS SDKsを効果的に活用するには、適切な認証情報の設定、セキュリティのベストプラクティスの適用、最新バージョンの使用、適切な例外処理の実装が重要です。また、AWS X-RayやCloudWatchなどのサービスと統合することで、アプリケーションのモニタリングとトラブルシューティングを強化できます。</p>
+</div>
+
+<h2>AWS SDKsのセキュリティのベストプラクティス</h2>
+<ul>
+    <li><strong>認証情報の保護：</strong> アクセスキーをソースコードやバージョン管理システムにコミットしない</li>
+    <li><strong>IAMロールの使用：</strong> EC2インスタンスやLambda関数ではIAMロールを使用</li>
+    <li><strong>最小権限の原則：</strong> 必要最小限の権限のみを付与</li>
+    <li><strong>一時的な認証情報の使用：</strong> 長期的な認証情報ではなく、一時的な認証情報を使用</li>
+    <li><strong>転送中の暗号化：</strong> HTTPSを使用してAWSサービスと通信</li>
+    <li><strong>保存中の暗号化：</strong> 保存されるデータを暗号化</li>
+    <li><strong>依存関係の更新：</strong> SDKsと依存関係を定期的に更新して、セキュリティパッチを適用</li>
+    <li><strong>認証情報のローテーション：</strong> アクセスキーを定期的にローテーション</li>
+</ul>
+
+<h2>AWS SDKsのベストプラクティス</h2>
+<ul>
+    <li><strong>最新バージョンの使用：</strong> 常に最新バージョンのSDKを使用して、新機能とセキュリティパッチを利用</li>
+    <li><strong>接続プーリング：</strong> 接続プーリングを活用して、パフォーマンスを向上</li>
+    <li><strong>再試行ポリシーの設定：</strong> 一時的な障害に対する適切な再試行ポリシーを設定</li>
+    <li><strong>非同期APIの使用：</strong> 可能な限り非同期APIを使用して、スケーラビリティを向上</li>
+    <li><strong>例外処理：</strong> 適切な例外処理を実装して、エラーを適切に処理</li>
+    <li><strong>リソースの解放：</strong> 使用後にリソースを適切に解放</li>
+    <li><strong>ページネーションの活用：</strong> 大量のデータを扱う場合はページネーションを活用</li>
+    <li><strong>キャッシュの活用：</strong> 頻繁に使用するデータをキャッシュして、パフォーマンスを向上</li>
+    <li><strong>モニタリングの実装：</strong> AWS X-RayやCloudWatchなどを使用して、アプリケーションをモニタリング</li>
+</ul>
+
+<h2>AWS SDKsとの統合サービス</h2>
+<p>AWS SDKsは、他のAWSサービスと統合して、より強力なアプリケーションを構築できます：</p>
+
+<table>
+    <tr>
+        <th>サービス</th>
+        <th>統合の利点</th>
+    </tr>
+    <tr>
+        <td>AWS X-Ray</td>
+        <td>アプリケーションのトレースとパフォーマンス分析</td>
+    </tr>
+    <tr>
+        <td>AWS CloudTrail</td>
+        <td>APIコールの記録と監査</td>
+    </tr>
+    <tr>
+        <td>Amazon CloudWatch</td>
+        <td>メトリクスの収集とアラームの設定</td>
+    </tr>
+    <tr>
+        <td>AWS IAM</td>
+        <td>アクセス制御と認証</td>
+    </tr>
+    <tr>
+        <td>AWS Secrets Manager</td>
+        <td>認証情報の安全な管理</td>
+    </tr>
+    <tr>
+        <td>AWS CloudFormation</td>
+        <td>インフラストラクチャのプロビジョニングと管理</td>
+    </tr>
+    <tr>
+        <td>AWS CDK</td>
+        <td>プログラミング言語を使用したインフラストラクチャの定義</td>
+    </tr>
+</table>
+
+<h2>まとめ</h2>
+<p>AWS SDKs（Software Development
+    Kits）は、アプリケーション内でAWSサービスを簡単に統合するための強力なツールです。各プログラミング言語やプラットフォーム向けに最適化されたSDKsを使用することで、AWSのAPIを直接呼び出す複雑さを抽象化し、プログラミング言語固有の慣用的なインターフェースを通じてAWSリソースを操作できます。</p>
+
+<p>AWS SDKsの主な利点は以下の通りです：</p>
+<ul>
+    <li>各プログラミング言語の慣用的なパターンに合わせたAPI</li>
+    <li>認証、リクエストの署名、再試行ロジックなどの自動処理</li>
+    <li>非同期プログラミング、ページネーション、ウェイターなどの高度な機能</li>
+    <li>複雑な操作を簡素化する高レベルの抽象化</li>
+    <li>定期的な更新による新しいAWSサービスと機能のサポート</li>
+</ul>
+
+<p>AWS SDKsを効果的に活用するには、適切な認証情報の設定、セキュリティのベストプラクティスの適用、最新バージョンの使用、適切な例外処理の実装が重要です。また、AWS
+    X-RayやCloudWatchなどのサービスと統合することで、アプリケーションのモニタリングとトラブルシューティングを強化できます。</p>
 </body>
 </html>

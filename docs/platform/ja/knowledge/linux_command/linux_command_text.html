@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Linuxテキスト処理コマンド解説</title>
@@ -8,8 +12,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
@@ -19,16 +22,16 @@
     </div>
 
     <h1>Linuxテキスト処理コマンド解説</h1>
-    
+
     <!-- テキスト処理コマンド -->
     <section id="text-processing" class="command-section">
         <h2>テキスト処理コマンド</h2>
         <p>テキストファイルの表示、検索、編集、加工などを行うコマンドです。</p>
-        
+
         <!-- cat コマンド -->
         <h3>cat - ファイルの内容表示・連結</h3>
         <p>ファイルの内容を表示したり、複数のファイルを連結したりします。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -51,7 +54,7 @@
                 <td>制御文字や特殊文字を表示（タブ、改行など）</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>cat file.txt</code> - ファイルの内容を表示<br>
@@ -62,7 +65,7 @@
         <!-- grep コマンド -->
         <h3>grep - テキスト検索</h3>
         <p>ファイル内のテキストパターンを検索します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -109,7 +112,7 @@
                 <td>一致した行の前後 n 行を表示</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>grep "pattern" file.txt</code> - ファイル内でパターンに一致する行を検索<br>
@@ -127,7 +130,7 @@
         <!-- sed コマンド -->
         <h3>sed - ストリームエディタ</h3>
         <p>テキストの置換、削除、挿入などの編集を行います。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション/構文</th>
@@ -162,7 +165,7 @@
                 <td>パターンに一致する行を出力（通常は-nと共に使用）</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>sed 's/old/new/' file.txt</code> - 各行の最初の「old」を「new」に置換<br>
@@ -183,7 +186,7 @@
         <!-- awk コマンド -->
         <h3>awk - テキスト処理言語</h3>
         <p>テキストデータの加工や分析を行うためのプログラミング言語です。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>構文/パターン</th>
@@ -214,7 +217,7 @@
                 <td>現在の行のフィールド数</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>awk '{print $1}' file.txt</code> - 各行の1番目のフィールドを出力<br>
@@ -228,14 +231,15 @@
             <code>awk 'BEGIN {FS=","; OFS="\t"} {print $1, $2, $3}' file.csv</code> - CSVをTSVに変換<br>
             <code>ps aux | awk '$3 > 10.0 {print $2, $3, $11}'</code> - CPU使用率が10%を超えるプロセスを表示<br>
             <code>cat /etc/passwd | awk -F: '{print "User: " $1 ", Home: " $6}'</code> - ユーザー情報を整形して表示<br>
-            <code>ls -l | awk '{sum += $5} END {printf "Total size: %.2f MB\n", sum/1024/1024}'</code> - ディレクトリ内のファイルサイズ合計をMB単位で表示<br>
+            <code>ls -l | awk '{sum += $5} END {printf "Total size: %.2f MB\n", sum/1024/1024}'</code> -
+            ディレクトリ内のファイルサイズ合計をMB単位で表示<br>
             <code>grep "ERROR" log.txt | awk -F: '{print $1}' | sort | uniq -c</code> - エラーが発生したファイルとその回数を表示
         </div>
 
         <!-- head/tail コマンド -->
         <h3>head/tail - ファイルの先頭/末尾部分の表示</h3>
         <p>ファイルの先頭または末尾の一部を表示します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>コマンド/オプション</th>
@@ -262,7 +266,7 @@
                 <td>ファイルの末尾を表示し、追加されるデータをリアルタイムに表示（ログ監視などに便利）</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>head -n 5 file.txt</code> - ファイルの先頭5行を表示<br>
@@ -281,7 +285,7 @@
         <!-- sort コマンド -->
         <h3>sort - テキストのソート</h3>
         <p>テキストファイルの行をソートします。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -312,7 +316,7 @@
                 <td>大文字小文字を区別せずにソート</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>sort file.txt</code> - ファイルの内容をアルファベット順にソート<br>
@@ -332,7 +336,7 @@
         <!-- uniq コマンド -->
         <h3>uniq - 重複行の処理</h3>
         <p>連続する重複行を処理します（通常はsortと組み合わせて使用）。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -355,7 +359,7 @@
                 <td>大文字小文字を区別せずに比較</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>sort file.txt | uniq</code> - ソートしてから重複行を削除<br>
@@ -364,16 +368,18 @@
             <code>sort file.txt | uniq -u</code> - 重複しない行のみを表示<br>
             <code>sort file.txt | uniq -c | sort -nr</code> - 出現頻度の高い順に表示<br>
             <code>cat access.log | cut -d' ' -f1 | sort | uniq -c | sort -nr</code> - IPアドレスのアクセス頻度を集計<br>
-            <code>cat file.txt | tr '[:upper:]' '[:lower:]' | sort | uniq</code> - 大文字小文字を区別せずに重複を削除<br>
+            <code>cat file.txt | tr '[:upper:]' '[:lower:]' | sort | uniq</code> -
+            大文字小文字を区別せずに重複を削除<br>
             <code>history | cut -c8- | sort | uniq -c | sort -nr | head -n 10</code> - 最もよく使うコマンド上位10個を表示<br>
             <code>find . -type f -name "*.txt" | xargs cat | sort | uniq -c</code> - 全テキストファイル内の行の出現回数を集計<br>
-            <code>grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' access.log | sort | uniq -c | sort -nr</code> - ログファイル内のIPアドレスの出現頻度を集計
+            <code>grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' access.log | sort | uniq -c | sort
+                -nr</code> - ログファイル内のIPアドレスの出現頻度を集計
         </div>
 
         <!-- wc コマンド -->
         <h3>wc - 行数・単語数・バイト数のカウント</h3>
         <p>ファイルの行数、単語数、バイト数をカウントします。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -396,7 +402,7 @@
                 <td>文字数のみをカウント</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>wc file.txt</code> - ファイルの行数、単語数、バイト数を表示<br>
@@ -407,7 +413,8 @@
             <code>find . -name "*.py" | xargs wc -l</code> - すべてのPythonファイルの行数を表示<br>
             <code>find . -name "*.py" | xargs wc -l | sort -nr</code> - Pythonファイルを行数の多い順にソート<br>
             <code>grep -v "^#" script.sh | grep -v "^$" | wc -l</code> - コメントと空行を除いたスクリプトの実行行数<br>
-            <code>cat file.txt | tr -s ' ' '\n' | sort | uniq | wc -l</code> - ファイル内のユニークな単語数をカウント<br>
+            <code>cat file.txt | tr -s ' ' '\n' | sort | uniq | wc -l</code> -
+            ファイル内のユニークな単語数をカウント<br>
             <code>ls -la | wc -l</code> - ディレクトリ内のファイル数をカウント（ヘッダー行を含む）<br>
             <code>for file in *.txt; do echo -n "$file: "; wc -l < "$file"; done</code> - 各テキストファイルの行数を表示<br>
             <code>find . -type f -exec cat {} \; | wc -l</code> - ディレクトリ内のすべてのファイルの合計行数
@@ -415,8 +422,8 @@
     </section>
 
     <div class="navigation-links">
-        <a href="linux_command_file.html">前のカテゴリ: ファイル操作</a> | 
-        <a href="linux_command.html">メインページに戻る</a> | 
+        <a href="linux_command_file.html">前のカテゴリ: ファイル操作</a> |
+        <a href="linux_command.html">メインページに戻る</a> |
         <a href="linux_command_system.html">次のカテゴリ: システム情報</a>
     </div>
 

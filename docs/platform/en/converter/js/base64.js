@@ -14,7 +14,7 @@ function encodeToBase64() {
             outputText.value = '';
             return;
         }
-        
+
         // Use built-in btoa function for Base64 encoding
         // First encode to UTF-8 to handle non-ASCII characters
         const encoded = btoa(unescape(encodeURIComponent(input)));
@@ -32,7 +32,7 @@ function decodeFromBase64() {
             outputText.value = '';
             return;
         }
-        
+
         // Use built-in atob function for Base64 decoding
         // Then decode from UTF-8
         const decoded = decodeURIComponent(escape(atob(input)));
@@ -52,10 +52,10 @@ function clearText() {
 // Function to copy output to clipboard
 function copyToClipboard() {
     if (!outputText.value) return;
-    
+
     outputText.select();
     document.execCommand('copy');
-    
+
     // Show temporary "Copied!" message
     const originalText = copyBtn.textContent;
     copyBtn.textContent = 'Copied!';

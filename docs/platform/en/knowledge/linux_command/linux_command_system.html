@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Linux System Information Commands Guide</title>
@@ -8,8 +12,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
@@ -19,16 +22,16 @@
     </div>
 
     <h1>Linux System Information Commands Guide</h1>
-    
+
     <!-- System Information Commands -->
     <section id="system-info" class="command-section">
         <h2>System Information Commands</h2>
         <p>Commands for displaying system information.</p>
-        
+
         <!-- uname command -->
         <h3>uname - Display System Information</h3>
         <p>Displays basic system information.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -67,7 +70,7 @@
                 <td>Display operating system</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>uname -a</code> - Display all system information<br>
@@ -75,7 +78,8 @@
             <code>uname -o</code> - Display operating system<br>
             <code>uname -a | awk '{print $3}'</code> - Extract only the kernel version<br>
             <code>echo "Kernel: $(uname -r)"</code> - Display kernel version in a shell script<br>
-            <code>uname -m | grep -q "x86_64" && echo "64-bit system" || echo "32-bit system"</code> - Determine system architecture<br>
+            <code>uname -m | grep -q "x86_64" && echo "64-bit system" || echo "32-bit system"</code> - Determine system
+            architecture<br>
             <code>uname -a | grep -i "ubuntu"</code> - Check if system is Ubuntu<br>
             <code>uname -a > system_info.txt</code> - Save system information to a file<br>
             <code>if [ "$(uname)" = "Linux" ]; then echo "This is Linux"; fi</code> - Conditional based on OS type
@@ -84,7 +88,7 @@
         <!-- hostname command -->
         <h3>hostname - Display/Set Hostname</h3>
         <p>Displays or sets the system's hostname.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -103,7 +107,7 @@
                 <td>Display DNS domain name</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>hostname</code> - Display hostname<br>
@@ -112,7 +116,8 @@
             <code>hostname -I</code> - Display all IP addresses of the system<br>
             <code>hostname | tr '[:lower:]' '[:upper:]'</code> - Display hostname in uppercase<br>
             <code>echo "Current host: $(hostname)"</code> - Display hostname in a shell script<br>
-            <code>hostname -i | grep -q "127.0.0.1" && echo "Localhost configuration detected"</code> - Check for localhost configuration<br>
+            <code>hostname -i | grep -q "127.0.0.1" && echo "Localhost configuration detected"</code> - Check for
+            localhost configuration<br>
             <code>ping -c 1 $(hostname)</code> - Ping your own host<br>
             <code>ssh user@$(hostname -f)</code> - SSH to your own host using FQDN
         </div>
@@ -120,7 +125,7 @@
         <!-- df command -->
         <h3>df - Display Disk Space Usage</h3>
         <p>Displays disk space usage of file systems.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -143,17 +148,20 @@
                 <td>Display all file systems (including those with 0 size)</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>df -h</code> - Display disk usage in human-readable format<br>
             <code>df -h /home</code> - Display disk usage for a specific mount point<br>
             <code>df -hT</code> - Display disk usage with file system types<br>
-            <code>df -h | grep -v "tmpfs" | sort -k 5 -r</code> - Exclude temporary file systems and sort by usage percentage<br>
+            <code>df -h | grep -v "tmpfs" | sort -k 5 -r</code> - Exclude temporary file systems and sort by usage
+            percentage<br>
             <code>df -h | awk '$5 > "80%" {print $0}'</code> - Display file systems with usage over 80%<br>
             <code>df -i | grep -v "tmpfs"</code> - Display inode usage excluding temporary file systems<br>
-            <code>df -h | grep "^/dev" | awk '{total += $2; used += $3} END {print "Total: " total "GB, Used: " used "GB"}'</code> - Calculate total capacity and usage across all disks<br>
-            <code>df -h --output=source,size,used,avail,pcent | grep -v "tmpfs"</code> - Display only specific columns<br>
+            <code>df -h | grep "^/dev" | awk '{total += $2; used += $3} END {print "Total: " total "GB, Used: " used
+                "GB"}'</code> - Calculate total capacity and usage across all disks<br>
+            <code>df -h --output=source,size,used,avail,pcent | grep -v "tmpfs"</code> - Display only specific
+            columns<br>
             <code>watch -n 5 "df -h | grep /dev/sda"</code> - Monitor disk usage every 5 seconds<br>
             <code>df -h | mail -s "Disk Usage Report $(date +%F)" admin@example.com</code> - Email disk usage report
         </div>
@@ -161,7 +169,7 @@
         <!-- du command -->
         <h3>du - Display Directory Size</h3>
         <p>Displays disk usage of directories and files.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -188,7 +196,7 @@
                 <td>Display directories only to specified depth</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>du -h</code> - Display size of current directory and subdirectories<br>
@@ -197,17 +205,22 @@
             <code>du -h --max-depth=1 | sort -hr</code> - Sort subdirectories by size (largest first)<br>
             <code>du -h --max-depth=1 | grep "[0-9]G\b"</code> - Display only directories with size in GB<br>
             <code>find . -type f -name "*.log" | xargs du -ch</code> - Display size of all log files with total<br>
-            <code>du -sh /var/* 2>/dev/null | sort -hr | head -n 5</code> - Display 5 largest directories in /var (ignoring errors)<br>
-            <code>du -h --time /home/user | sort -r</code> - Display sizes with last modification time, sorted by size<br>
-            <code>du -h --exclude="*.bak" --max-depth=2 /home</code> - Display directory sizes excluding backup files<br>
-            <code>du -b | sort -n | awk '{printf "%.3f MB: %s\n", $1/(1024*1024), $2}' | tail</code> - Display largest directories in MB<br>
-            <code>for i in /*; do if [ -d "$i" ]; then du -sh "$i"; fi; done | sort -hr</code> - Display top-level directories sorted by size
+            <code>du -sh /var/* 2>/dev/null | sort -hr | head -n 5</code> - Display 5 largest directories in /var
+            (ignoring errors)<br>
+            <code>du -h --time /home/user | sort -r</code> - Display sizes with last modification time, sorted by
+            size<br>
+            <code>du -h --exclude="*.bak" --max-depth=2 /home</code> - Display directory sizes excluding backup
+            files<br>
+            <code>du -b | sort -n | awk '{printf "%.3f MB: %s\n", $1/(1024*1024), $2}' | tail</code> - Display largest
+            directories in MB<br>
+            <code>for i in /*; do if [ -d "$i" ]; then du -sh "$i"; fi; done | sort -hr</code> - Display top-level
+            directories sorted by size
         </div>
 
         <!-- free command -->
         <h3>free - Display Memory Usage</h3>
         <p>Displays system memory usage.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -234,25 +247,30 @@
                 <td>Update display every N seconds (continuous monitoring)</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>free -h</code> - Display memory usage in human-readable format<br>
             <code>free -m</code> - Display memory usage in megabytes<br>
             <code>free -s 5</code> - Update memory usage display every 5 seconds<br>
-            <code>free -m | awk 'NR==2{printf "Memory Usage: %s/%s MB (%.2f%%)\n", $3,$2,$3*100/$2 }'</code> - Display memory usage percentage<br>
-            <code>free -m | grep Mem | awk '{print "Used: " $3 "MB, Free: " $4 "MB, Available: " $7 "MB"}'</code> - Extract used, free, and available memory<br>
+            <code>free -m | awk 'NR==2{printf "Memory Usage: %s/%s MB (%.2f%%)\n", $3,$2,$3*100/$2 }'</code> - Display
+            memory usage percentage<br>
+            <code>free -m | grep Mem | awk '{print "Used: " $3 "MB, Free: " $4 "MB, Available: " $7 "MB"}'</code> -
+            Extract used, free, and available memory<br>
             <code>watch -n 1 'free -m | grep "Mem\|Swap"'</code> - Monitor memory and swap usage every second<br>
-            <code>free -b | grep "Mem:" | awk '{printf "%.2f GB\n", $2/(1024*1024*1024)}'</code> - Display total memory in GB<br>
+            <code>free -b | grep "Mem:" | awk '{printf "%.2f GB\n", $2/(1024*1024*1024)}'</code> - Display total memory
+            in GB<br>
             <code>free -m > memory_$(date +%Y%m%d_%H%M%S).log</code> - Save memory usage to timestamped log file<br>
-            <code>for i in {1..10}; do free -m | grep Mem; sleep 5; done</code> - Record memory usage 10 times at 5-second intervals<br>
-            <code>free -m | awk '/Mem:/ {print "Memory used: " 100*$3/$2 "%"} /Swap:/ {print "Swap used: " 100*$3/$2 "%"}'</code> - Display memory and swap usage percentages
+            <code>for i in {1..10}; do free -m | grep Mem; sleep 5; done</code> - Record memory usage 10 times at
+            5-second intervals<br>
+            <code>free -m | awk '/Mem:/ {print "Memory used: " 100*$3/$2 "%"} /Swap:/ {print "Swap used: " 100*$3/$2
+                "%"}'</code> - Display memory and swap usage percentages
         </div>
 
         <!-- lscpu command -->
         <h3>lscpu - Display CPU Information</h3>
         <p>Displays CPU architecture information.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -271,7 +289,7 @@
                 <td>Output in JSON format</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>lscpu</code> - Display CPU information<br>
@@ -282,14 +300,15 @@
             <code>lscpu -J | jq</code> - Display CPU information in formatted JSON<br>
             <code>lscpu | grep -i cache | sort</code> - Extract and sort cache information<br>
             <code>lscpu -p=CPU,CORE,SOCKET | grep -v "^#"</code> - Display CPU, core, and socket relationships<br>
-            <code>lscpu | awk -F: '/Model name/ {print $2}' | sed 's/^ *//'</code> - Extract CPU model name and remove leading spaces<br>
+            <code>lscpu | awk -F: '/Model name/ {print $2}' | sed 's/^ *//'</code> - Extract CPU model name and remove
+            leading spaces<br>
             <code>lscpu | grep -i "virt" | grep -i "tech"</code> - Display virtualization technology information
         </div>
 
         <!-- lsblk command -->
         <h3>lsblk - Display Block Devices</h3>
         <p>Displays block devices (hard disks, SSDs, USB drives, etc.) on the system.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -312,25 +331,29 @@
                 <td>Specify columns to display</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>lsblk</code> - Display block devices<br>
             <code>lsblk -f</code> - Display with filesystem information<br>
             <code>lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINT</code> - Display only specific columns<br>
             <code>lsblk -d | grep -v "loop"</code> - Display only disks (exclude loop devices)<br>
-            <code>lsblk -o NAME,SIZE,TYPE,MOUNTPOINT | grep "disk\|part" | sort -k 2 -hr</code> - Display disks and partitions sorted by size<br>
+            <code>lsblk -o NAME,SIZE,TYPE,MOUNTPOINT | grep "disk\|part" | sort -k 2 -hr</code> - Display disks and
+            partitions sorted by size<br>
             <code>lsblk -J | jq</code> - Display block device information in formatted JSON<br>
-            <code>lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINT,UUID | grep -v "^loop"</code> - Display detailed information including UUID (exclude loop devices)<br>
+            <code>lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINT,UUID | grep -v "^loop"</code> - Display detailed information
+            including UUID (exclude loop devices)<br>
             <code>lsblk -o NAME,SIZE,RO,RM,MOUNTPOINT | grep "1$" | grep "^sd"</code> - Find removable SD devices<br>
-            <code>lsblk -b | awk '$4=="0" && $6=="disk" {sum+=$3} END {print sum/1024/1024/1024 " GB"}'</code> - Calculate total disk capacity in GB<br>
-            <code>lsblk -o NAME,SIZE,MOUNTPOINT | grep -v "^loop" | awk 'NR>1 {print}' | column -t</code> - Display in formatted table
+            <code>lsblk -b | awk '$4=="0" && $6=="disk" {sum+=$3} END {print sum/1024/1024/1024 " GB"}'</code> -
+            Calculate total disk capacity in GB<br>
+            <code>lsblk -o NAME,SIZE,MOUNTPOINT | grep -v "^loop" | awk 'NR>1 {print}' | column -t</code> - Display in
+            formatted table
         </div>
 
         <!-- lsusb command -->
         <h3>lsusb - Display USB Devices</h3>
         <p>Displays USB devices connected to the system.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -349,7 +372,7 @@
                 <td>Display only devices with specified vendor and product ID</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>lsusb</code> - List USB devices<br>
@@ -360,14 +383,16 @@
             <code>lsusb | awk '{print $6, $7, $8, $9, $10, $11}'</code> - Extract device names<br>
             <code>lsusb -v | grep -i "bcdusb" | sort</code> - Extract and sort USB version information<br>
             <code>lsusb | cut -d' ' -f6 | sort | uniq -c</code> - Count devices by vendor<br>
-            <code>lsusb -v 2>/dev/null | grep -i "power" | grep -i "ma"</code> - Display power consumption information<br>
-            <code>for dev in $(lsusb | awk '{print $2":"$4}' | sed 's/://' | sed 's/://'); do lsusb -D /dev/bus/usb/$dev | grep -i product; done</code> - Display product names for all USB devices
+            <code>lsusb -v 2>/dev/null | grep -i "power" | grep -i "ma"</code> - Display power consumption
+            information<br>
+            <code>for dev in $(lsusb | awk '{print $2":"$4}' | sed 's/://' | sed 's/://'); do lsusb -D /dev/bus/usb/$dev
+                | grep -i product; done</code> - Display product names for all USB devices
         </div>
 
         <!-- uptime command -->
         <h3>uptime - Display System Uptime and Load</h3>
         <p>Displays system uptime, number of users, and load averages.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -382,7 +407,7 @@
                 <td>Display system up since date/time</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>uptime</code> - Display uptime and load averages<br>
@@ -391,17 +416,21 @@
             <code>uptime | awk '{print $3, $4}' | sed 's/,//'</code> - Extract only uptime<br>
             <code>uptime | awk '{print $10, $11, $12}'</code> - Extract only load averages<br>
             <code>watch -n 5 uptime</code> - Monitor uptime and load averages every 5 seconds<br>
-            <code>uptime | awk '{print $10}' | sed 's/,//' | awk '{if ($1 > 1.0) print "High load: " $1; else print "Normal load: " $1}'</code> - Evaluate 1-minute load average<br>
+            <code>uptime | awk '{print $10}' | sed 's/,//' | awk '{if ($1 > 1.0) print "High load: " $1; else print
+                "Normal load: " $1}'</code> - Evaluate 1-minute load average<br>
             <code>echo "System has been up since $(uptime -s)"</code> - Display formatted uptime<br>
-            <code>for i in {1..12}; do uptime | awk '{print $10}' | tr -d ','; sleep 5; done</code> - Record load average 12 times at 5-second intervals<br>
-            <code>uptime > uptime_$(date +%Y%m%d_%H%M%S).log</code> - Save uptime information to timestamped log file<br>
-            <code>uptime | awk '{print $3, $4, $5}' | sed 's/,//g' | awk -v d="$(date +%F)" '{print d, $0}'</code> - Combine current date with uptime
+            <code>for i in {1..12}; do uptime | awk '{print $10}' | tr -d ','; sleep 5; done</code> - Record load
+            average 12 times at 5-second intervals<br>
+            <code>uptime > uptime_$(date +%Y%m%d_%H%M%S).log</code> - Save uptime information to timestamped log
+            file<br>
+            <code>uptime | awk '{print $3, $4, $5}' | sed 's/,//g' | awk -v d="$(date +%F)" '{print d, $0}'</code> -
+            Combine current date with uptime
         </div>
     </section>
 
     <div class="navigation-links">
-        <a href="linux_command_text.html">Previous Category: Text Processing</a> | 
-        <a href="linux_command.html">Back to Main Page</a> | 
+        <a href="linux_command_text.html">Previous Category: Text Processing</a> |
+        <a href="linux_command.html">Back to Main Page</a> |
         <a href="linux_command_network.html">Next Category: Networking</a>
     </div>
 

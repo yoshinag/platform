@@ -1,102 +1,112 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <title>Cloud Firestore</title>
     <link rel="stylesheet" href="../../../../css/knowledge.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../../js/common/analytics.js"></script>
+
 <body class="ja-knowledge">
-    <div style="margin-bottom: 20px;">
-        <a href="../google_cloud.html">Google Cloud Platformに戻る</a>
-    </div>
-    <h1>Cloud Firestore</h1>
-    
-    <h2>Cloud Firestoreとは</h2>
-    <p>Cloud Firestoreは、Google Cloud Platform (GCP) が提供するフルマネージドのNoSQLドキュメントデータベースサービスです。モバイル、ウェブ、サーバーアプリケーション向けに設計されており、リアルタイムデータ同期、オフラインサポート、強力なクエリ機能を備えています。Firestoreは、Firebase（Googleのモバイルアプリ開発プラットフォーム）とGoogle Cloudの両方から利用できるため、幅広いアプリケーション開発シナリオに対応できます。</p>
-    
-    <h2>Cloud Firestoreの主な特徴</h2>
+<div style="margin-bottom: 20px;">
+    <a href="../google_cloud.html">Google Cloud Platformに戻る</a>
+</div>
+<h1>Cloud Firestore</h1>
+
+<h2>Cloud Firestoreとは</h2>
+<p>Cloud Firestoreは、Google Cloud Platform (GCP)
+    が提供するフルマネージドのNoSQLドキュメントデータベースサービスです。モバイル、ウェブ、サーバーアプリケーション向けに設計されており、リアルタイムデータ同期、オフラインサポート、強力なクエリ機能を備えています。Firestoreは、Firebase（Googleのモバイルアプリ開発プラットフォーム）とGoogle
+    Cloudの両方から利用できるため、幅広いアプリケーション開発シナリオに対応できます。</p>
+
+<h2>Cloud Firestoreの主な特徴</h2>
+<ul>
+    <li><strong>リアルタイムデータ同期：</strong> データの変更をリアルタイムでクライアントに通知</li>
+    <li><strong>オフラインサポート：</strong> インターネット接続がない状態でもデータの読み書きが可能</li>
+    <li><strong>強力なクエリ機能：</strong> 複雑なクエリや複合インデックスをサポート</li>
+    <li><strong>自動スケーリング：</strong> トラフィックに応じて自動的にスケールアップ・ダウン</li>
+    <li><strong>ACID準拠のトランザクション：</strong> 複数のドキュメントにまたがるトランザクションをサポート</li>
+    <li><strong>セキュリティルール：</strong> 柔軟なセキュリティルールによるアクセス制御</li>
+    <li><strong>マルチリージョンレプリケーション：</strong> 高可用性と災害復旧のためのデータレプリケーション</li>
+    <li><strong>階層型データモデル：</strong> コレクションとドキュメントの階層構造</li>
+</ul>
+
+<h2>Cloud Firestoreのアーキテクチャ</h2>
+<p>Cloud Firestoreは以下の主要コンポーネントで構成されています：</p>
+
+<table>
+    <tr>
+        <th>コンポーネント</th>
+        <th>説明</th>
+    </tr>
+    <tr>
+        <td>コレクション</td>
+        <td>ドキュメントのコンテナ。SQLのテーブルに相当するが、スキーマは強制されない</td>
+    </tr>
+    <tr>
+        <td>ドキュメント</td>
+        <td>データを格納する基本単位。キーと値のペアで構成され、様々なデータ型をサポート</td>
+    </tr>
+    <tr>
+        <td>サブコレクション</td>
+        <td>ドキュメント内に含まれるコレクション。階層的なデータ構造を作成可能</td>
+    </tr>
+    <tr>
+        <td>フィールド</td>
+        <td>ドキュメント内の個々のデータ要素。名前と型付きの値で構成</td>
+    </tr>
+    <tr>
+        <td>リファレンス</td>
+        <td>コレクションやドキュメントへの参照。他のドキュメントへのリンクを作成可能</td>
+    </tr>
+    <tr>
+        <td>インデックス</td>
+        <td>クエリのパフォーマンスを向上させるためのデータ構造</td>
+    </tr>
+</table>
+
+<div class="note">
+    <h3>Cloud Firestore と他のデータベースの違い</h3>
+    <p>Cloud Firestoreと他のデータベースサービスには以下のような違いがあります：</p>
     <ul>
-        <li><strong>リアルタイムデータ同期：</strong> データの変更をリアルタイムでクライアントに通知</li>
-        <li><strong>オフラインサポート：</strong> インターネット接続がない状態でもデータの読み書きが可能</li>
-        <li><strong>強力なクエリ機能：</strong> 複雑なクエリや複合インデックスをサポート</li>
-        <li><strong>自動スケーリング：</strong> トラフィックに応じて自動的にスケールアップ・ダウン</li>
-        <li><strong>ACID準拠のトランザクション：</strong> 複数のドキュメントにまたがるトランザクションをサポート</li>
-        <li><strong>セキュリティルール：</strong> 柔軟なセキュリティルールによるアクセス制御</li>
-        <li><strong>マルチリージョンレプリケーション：</strong> 高可用性と災害復旧のためのデータレプリケーション</li>
-        <li><strong>階層型データモデル：</strong> コレクションとドキュメントの階層構造</li>
+        <li><strong>Cloud Firestore：</strong> NoSQLドキュメントデータベース。リアルタイム同期とオフラインサポートが特徴。モバイルとウェブアプリに最適
+        </li>
+        <li><strong>Cloud SQL：</strong> フルマネージドのリレーショナルデータベース（MySQL、PostgreSQL、SQL
+            Server）。構造化データと複雑なトランザクションに適している
+        </li>
+        <li><strong>Bigtable：</strong> 大規模なNoSQLワイドカラムストア。高スループットの読み書きが必要な大量データに適している
+        </li>
+        <li><strong>Datastore：</strong> Firestoreの前身となるNoSQLデータベース。アプリエンジン向けに最適化されている</li>
+        <li><strong>Realtime Database：</strong> Firebaseの元のデータベース。単一のJSONツリー構造でデータを保存。Firestoreよりもシンプルだが、複雑なクエリには制限がある
+        </li>
     </ul>
-    
-    <h2>Cloud Firestoreのアーキテクチャ</h2>
-    <p>Cloud Firestoreは以下の主要コンポーネントで構成されています：</p>
-    
-    <table>
-        <tr>
-            <th>コンポーネント</th>
-            <th>説明</th>
-        </tr>
-        <tr>
-            <td>コレクション</td>
-            <td>ドキュメントのコンテナ。SQLのテーブルに相当するが、スキーマは強制されない</td>
-        </tr>
-        <tr>
-            <td>ドキュメント</td>
-            <td>データを格納する基本単位。キーと値のペアで構成され、様々なデータ型をサポート</td>
-        </tr>
-        <tr>
-            <td>サブコレクション</td>
-            <td>ドキュメント内に含まれるコレクション。階層的なデータ構造を作成可能</td>
-        </tr>
-        <tr>
-            <td>フィールド</td>
-            <td>ドキュメント内の個々のデータ要素。名前と型付きの値で構成</td>
-        </tr>
-        <tr>
-            <td>リファレンス</td>
-            <td>コレクションやドキュメントへの参照。他のドキュメントへのリンクを作成可能</td>
-        </tr>
-        <tr>
-            <td>インデックス</td>
-            <td>クエリのパフォーマンスを向上させるためのデータ構造</td>
-        </tr>
-    </table>
-    
-    <div class="note">
-        <h3>Cloud Firestore と他のデータベースの違い</h3>
-        <p>Cloud Firestoreと他のデータベースサービスには以下のような違いがあります：</p>
-        <ul>
-            <li><strong>Cloud Firestore：</strong> NoSQLドキュメントデータベース。リアルタイム同期とオフラインサポートが特徴。モバイルとウェブアプリに最適</li>
-            <li><strong>Cloud SQL：</strong> フルマネージドのリレーショナルデータベース（MySQL、PostgreSQL、SQL Server）。構造化データと複雑なトランザクションに適している</li>
-            <li><strong>Bigtable：</strong> 大規模なNoSQLワイドカラムストア。高スループットの読み書きが必要な大量データに適している</li>
-            <li><strong>Datastore：</strong> Firestoreの前身となるNoSQLデータベース。アプリエンジン向けに最適化されている</li>
-            <li><strong>Realtime Database：</strong> Firebaseの元のデータベース。単一のJSONツリー構造でデータを保存。Firestoreよりもシンプルだが、複雑なクエリには制限がある</li>
-        </ul>
-    </div>
-    
-    <h2>Cloud Firestoreのデータモデル</h2>
-    <p>Firestoreのデータモデルは、コレクションとドキュメントの階層構造に基づいています：</p>
-    
-    <h3>ドキュメント構造</h3>
-    <p>ドキュメントは、以下のデータ型をサポートするフィールドの集合です：</p>
-    <ul>
-        <li>文字列（String）</li>
-        <li>数値（Number）- 整数と浮動小数点数</li>
-        <li>真偽値（Boolean）</li>
-        <li>マップ（Map）- ネストされたオブジェクト</li>
-        <li>配列（Array）</li>
-        <li>NULL</li>
-        <li>タイムスタンプ（Timestamp）</li>
-        <li>地理的位置情報（GeoPoint）</li>
-        <li>リファレンス（Reference）- 他のドキュメントへの参照</li>
-        <li>バイナリデータ（Bytes）</li>
-    </ul>
-    
-    <div class="example">
-        <h4>ドキュメント構造の例</h4>
-        <pre><code>{
+</div>
+
+<h2>Cloud Firestoreのデータモデル</h2>
+<p>Firestoreのデータモデルは、コレクションとドキュメントの階層構造に基づいています：</p>
+
+<h3>ドキュメント構造</h3>
+<p>ドキュメントは、以下のデータ型をサポートするフィールドの集合です：</p>
+<ul>
+    <li>文字列（String）</li>
+    <li>数値（Number）- 整数と浮動小数点数</li>
+    <li>真偽値（Boolean）</li>
+    <li>マップ（Map）- ネストされたオブジェクト</li>
+    <li>配列（Array）</li>
+    <li>NULL</li>
+    <li>タイムスタンプ（Timestamp）</li>
+    <li>地理的位置情報（GeoPoint）</li>
+    <li>リファレンス（Reference）- 他のドキュメントへの参照</li>
+    <li>バイナリデータ（Bytes）</li>
+</ul>
+
+<div class="example">
+    <h4>ドキュメント構造の例</h4>
+    <pre><code>{
   "id": "user123",
   "name": "山田太郎",
   "email": "yamada@example.com",
@@ -112,21 +122,21 @@
   },
   "friendRef": DocumentReference("users/friend456")
 }</code></pre>
-    </div>
-    
-    <h3>コレクションとサブコレクション</h3>
-    <p>Firestoreのデータは以下のような階層構造で編成されます：</p>
-    <ul>
-        <li>データベースのルートにはコレクションが存在</li>
-        <li>コレクションにはドキュメントが含まれる</li>
-        <li>ドキュメントにはサブコレクションを含めることができる</li>
-        <li>サブコレクションには更にドキュメントが含まれる</li>
-        <li>この階層は無制限に深くすることが可能</li>
-    </ul>
-    
-    <div class="example">
-        <h4>データ階層の例</h4>
-        <pre><code>データベース
+</div>
+
+<h3>コレクションとサブコレクション</h3>
+<p>Firestoreのデータは以下のような階層構造で編成されます：</p>
+<ul>
+    <li>データベースのルートにはコレクションが存在</li>
+    <li>コレクションにはドキュメントが含まれる</li>
+    <li>ドキュメントにはサブコレクションを含めることができる</li>
+    <li>サブコレクションには更にドキュメントが含まれる</li>
+    <li>この階層は無制限に深くすることが可能</li>
+</ul>
+
+<div class="example">
+    <h4>データ階層の例</h4>
+    <pre><code>データベース
 └── users（コレクション）
     └── user123（ドキュメント）
         ├── name: "山田太郎"
@@ -139,26 +149,27 @@
                     └── item789（ドキュメント）
                         ├── name: "商品A"
                         └── price: 2500</code></pre>
-    </div>
-    
-    <h2>Cloud Firestoreの使用方法</h2>
-    <p>Cloud Firestoreは、Google Cloud Console、Firebase Console、クライアントライブラリ、またはRESTful APIを使用して利用できます。</p>
-    
-    <h3>データベースの作成</h3>
-    <p>Google Cloud ConsoleまたはFirebase Consoleから新しいFirestoreデータベースを作成できます：</p>
-    <ol>
-        <li>Google Cloud ConsoleまたはFirebase Consoleにログイン</li>
-        <li>プロジェクトを選択または作成</li>
-        <li>Firestoreを選択し、「データベースの作成」をクリック</li>
-        <li>ロケーションモード（単一リージョンまたはマルチリージョン）を選択</li>
-        <li>リージョンを選択（例：asia-northeast1）</li>
-        <li>「作成」をクリックしてデータベースを作成</li>
-    </ol>
-    
-    <h3>クライアントライブラリを使用したデータの操作</h3>
-    <div class="example">
-        <h4>Node.jsでのドキュメント作成例</h4>
-        <pre><code>const { Firestore } = require('@google-cloud/firestore');
+</div>
+
+<h2>Cloud Firestoreの使用方法</h2>
+<p>Cloud Firestoreは、Google Cloud Console、Firebase Console、クライアントライブラリ、またはRESTful
+    APIを使用して利用できます。</p>
+
+<h3>データベースの作成</h3>
+<p>Google Cloud ConsoleまたはFirebase Consoleから新しいFirestoreデータベースを作成できます：</p>
+<ol>
+    <li>Google Cloud ConsoleまたはFirebase Consoleにログイン</li>
+    <li>プロジェクトを選択または作成</li>
+    <li>Firestoreを選択し、「データベースの作成」をクリック</li>
+    <li>ロケーションモード（単一リージョンまたはマルチリージョン）を選択</li>
+    <li>リージョンを選択（例：asia-northeast1）</li>
+    <li>「作成」をクリックしてデータベースを作成</li>
+</ol>
+
+<h3>クライアントライブラリを使用したデータの操作</h3>
+<div class="example">
+    <h4>Node.jsでのドキュメント作成例</h4>
+    <pre><code>const { Firestore } = require('@google-cloud/firestore');
 const firestore = new Firestore();
 
 async function addDocument() {
@@ -177,9 +188,9 @@ async function addDocument() {
 }
 
 addDocument();</code></pre>
-        
-        <h4>Node.jsでのドキュメント取得例</h4>
-        <pre><code>const { Firestore } = require('@google-cloud/firestore');
+
+    <h4>Node.jsでのドキュメント取得例</h4>
+    <pre><code>const { Firestore } = require('@google-cloud/firestore');
 const firestore = new Firestore();
 
 async function getDocument() {
@@ -198,9 +209,9 @@ async function getDocument() {
 }
 
 getDocument();</code></pre>
-        
-        <h4>Webアプリケーションでの使用例（JavaScript）</h4>
-        <pre><code>// Firebaseの初期化
+
+    <h4>Webアプリケーションでの使用例（JavaScript）</h4>
+    <pre><code>// Firebaseの初期化
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, doc, setDoc, getDoc, query, where, getDocs } from "firebase/firestore";
 
@@ -262,9 +273,9 @@ async function queryUsers() {
     console.error("エラー:", error);
   }
 }</code></pre>
-        
-        <h4>Androidでの使用例（Kotlin）</h4>
-        <pre><code>// Firebaseの初期化
+
+    <h4>Androidでの使用例（Kotlin）</h4>
+    <pre><code>// Firebaseの初期化
 val db = FirebaseFirestore.getInstance()
 
 // ドキュメントの作成
@@ -319,13 +330,13 @@ fun addRealtimeListener() {
             }
         }
 }</code></pre>
-    </div>
-    
-    <h3>クエリの実行</h3>
-    <p>Firestoreでは、様々な条件でデータをクエリできます：</p>
-    <div class="example">
-        <h4>基本的なクエリ例（Node.js）</h4>
-        <pre><code>const { Firestore } = require('@google-cloud/firestore');
+</div>
+
+<h3>クエリの実行</h3>
+<p>Firestoreでは、様々な条件でデータをクエリできます：</p>
+<div class="example">
+    <h4>基本的なクエリ例（Node.js）</h4>
+    <pre><code>const { Firestore } = require('@google-cloud/firestore');
 const firestore = new Firestore();
 
 async function queryData() {
@@ -364,13 +375,13 @@ async function queryData() {
 }
 
 queryData();</code></pre>
-    </div>
-    
-    <h3>トランザクションとバッチ処理</h3>
-    <p>Firestoreでは、複数の操作を原子的に実行するためのトランザクションとバッチ処理をサポートしています：</p>
-    <div class="example">
-        <h4>トランザクションの例（Node.js）</h4>
-        <pre><code>const { Firestore } = require('@google-cloud/firestore');
+</div>
+
+<h3>トランザクションとバッチ処理</h3>
+<p>Firestoreでは、複数の操作を原子的に実行するためのトランザクションとバッチ処理をサポートしています：</p>
+<div class="example">
+    <h4>トランザクションの例（Node.js）</h4>
+    <pre><code>const { Firestore } = require('@google-cloud/firestore');
 const firestore = new Firestore();
 
 async function transferPoints() {
@@ -414,9 +425,9 @@ async function transferPoints() {
 }
 
 transferPoints();</code></pre>
-        
-        <h4>バッチ処理の例（Node.js）</h4>
-        <pre><code>const { Firestore } = require('@google-cloud/firestore');
+
+    <h4>バッチ処理の例（Node.js）</h4>
+    <pre><code>const { Firestore } = require('@google-cloud/firestore');
 const firestore = new Firestore();
 
 async function batchUpdate() {
@@ -448,16 +459,16 @@ async function batchUpdate() {
 }
 
 batchUpdate();</code></pre>
-    </div>
-    
-    <h2>Cloud Firestoreのセキュリティ</h2>
-    <p>Firestoreでは、データへのアクセスを制御するための複数のセキュリティ機能が提供されています：</p>
-    
-    <h3>セキュリティルール</h3>
-    <p>Firebaseセキュリティルールを使用して、データへのアクセスを詳細に制御できます：</p>
-    <div class="example">
-        <h4>基本的なセキュリティルールの例</h4>
-        <pre><code>rules_version = '2';
+</div>
+
+<h2>Cloud Firestoreのセキュリティ</h2>
+<p>Firestoreでは、データへのアクセスを制御するための複数のセキュリティ機能が提供されています：</p>
+
+<h3>セキュリティルール</h3>
+<p>Firebaseセキュリティルールを使用して、データへのアクセスを詳細に制御できます：</p>
+<div class="example">
+    <h4>基本的なセキュリティルールの例</h4>
+    <pre><code>rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     // 認証済みユーザーのみがデータを読み取り可能
@@ -486,28 +497,29 @@ service cloud.firestore {
     }
   }
 }</code></pre>
-    </div>
-    
-    <h3>Identity and Access Management (IAM)</h3>
-    <p>Google Cloud IAMを使用して、プロジェクトレベルでのアクセス制御を設定できます：</p>
-    <pre><code>gcloud projects add-iam-policy-binding PROJECT_ID \
+</div>
+
+<h3>Identity and Access Management (IAM)</h3>
+<p>Google Cloud IAMを使用して、プロジェクトレベルでのアクセス制御を設定できます：</p>
+<pre><code>gcloud projects add-iam-policy-binding PROJECT_ID \
     --member=serviceAccount:my-service-account@PROJECT_ID.iam.gserviceaccount.com \
     --role=roles/datastore.user</code></pre>
-    
-    <h3>VPCサービスコントロール</h3>
-    <p>VPCサービスコントロールを使用して、Firestoreへのアクセスをセキュリティ境界内に制限できます。</p>
-    
-    <h3>暗号化</h3>
-    <p>Firestoreのデータは、保存時と転送時に自動的に暗号化されます。さらに、カスタマー管理の暗号化キー（CMEK）を使用することもできます。</p>
-    
-    <h2>Cloud Firestoreのパフォーマンス最適化</h2>
-    <p>Firestoreを効率的に使用するためのパフォーマンス最適化のベストプラクティス：</p>
-    
-    <h3>インデックス管理</h3>
-    <p>Firestoreは自動的に単一フィールドのインデックスを作成しますが、複合クエリには複合インデックスが必要です：</p>
-    <div class="example">
-        <h4>firestore.indexes.jsonの例</h4>
-        <pre><code>{
+
+<h3>VPCサービスコントロール</h3>
+<p>VPCサービスコントロールを使用して、Firestoreへのアクセスをセキュリティ境界内に制限できます。</p>
+
+<h3>暗号化</h3>
+<p>
+    Firestoreのデータは、保存時と転送時に自動的に暗号化されます。さらに、カスタマー管理の暗号化キー（CMEK）を使用することもできます。</p>
+
+<h2>Cloud Firestoreのパフォーマンス最適化</h2>
+<p>Firestoreを効率的に使用するためのパフォーマンス最適化のベストプラクティス：</p>
+
+<h3>インデックス管理</h3>
+<p>Firestoreは自動的に単一フィールドのインデックスを作成しますが、複合クエリには複合インデックスが必要です：</p>
+<div class="example">
+    <h4>firestore.indexes.jsonの例</h4>
+    <pre><code>{
   "indexes": [
     {
       "collectionGroup": "users",
@@ -528,27 +540,27 @@ service cloud.firestore {
   ],
   "fieldOverrides": []
 }</code></pre>
-    </div>
-    
-    <h3>データ構造の最適化</h3>
-    <ul>
-        <li><strong>適切なコレクション設計：</strong> クエリパターンに基づいてコレクションを設計</li>
-        <li><strong>ドキュメントサイズの制限：</strong> ドキュメントサイズを1MB以下に保つ</li>
-        <li><strong>非正規化とデータ複製：</strong> 読み取りパフォーマンスを向上させるためにデータを複製</li>
-        <li><strong>サブコレクションの使用：</strong> 階層的なデータや大量のサブデータにはサブコレクションを使用</li>
-    </ul>
-    
-    <h3>クエリの最適化</h3>
-    <ul>
-        <li><strong>シャロークエリの使用：</strong> 必要なデータのみを取得</li>
-        <li><strong>ページネーションの実装：</strong> 大量のデータを取得する場合はページネーションを使用</li>
-        <li><strong>クエリの制限：</strong> limit()を使用して結果セットを制限</li>
-        <li><strong>インデックスの活用：</strong> 複合クエリには適切なインデックスを作成</li>
-    </ul>
-    
-    <div class="example">
-        <h4>ページネーションの実装例（Node.js）</h4>
-        <pre><code>const { Firestore } = require('@google-cloud/firestore');
+</div>
+
+<h3>データ構造の最適化</h3>
+<ul>
+    <li><strong>適切なコレクション設計：</strong> クエリパターンに基づいてコレクションを設計</li>
+    <li><strong>ドキュメントサイズの制限：</strong> ドキュメントサイズを1MB以下に保つ</li>
+    <li><strong>非正規化とデータ複製：</strong> 読み取りパフォーマンスを向上させるためにデータを複製</li>
+    <li><strong>サブコレクションの使用：</strong> 階層的なデータや大量のサブデータにはサブコレクションを使用</li>
+</ul>
+
+<h3>クエリの最適化</h3>
+<ul>
+    <li><strong>シャロークエリの使用：</strong> 必要なデータのみを取得</li>
+    <li><strong>ページネーションの実装：</strong> 大量のデータを取得する場合はページネーションを使用</li>
+    <li><strong>クエリの制限：</strong> limit()を使用して結果セットを制限</li>
+    <li><strong>インデックスの活用：</strong> 複合クエリには適切なインデックスを作成</li>
+</ul>
+
+<div class="example">
+    <h4>ページネーションの実装例（Node.js）</h4>
+    <pre><code>const { Firestore } = require('@google-cloud/firestore');
 const firestore = new Firestore();
 
 async function paginatedQuery(lastDoc = null, pageSize = 10) {
@@ -605,73 +617,74 @@ async function fetchAllPages() {
     }
   }
 }</code></pre>
-    </div>
-    
-    <h2>Cloud Firestoreのベストプラクティス</h2>
+</div>
+
+<h2>Cloud Firestoreのベストプラクティス</h2>
+<ul>
+    <li><strong>適切なセキュリティルールの設定：</strong> 最小権限の原則に基づいてアクセス制御を設定</li>
+    <li><strong>バッチ処理とトランザクションの活用：</strong> 複数の操作を原子的に実行</li>
+    <li><strong>オフラインサポートの活用：</strong> モバイルアプリではオフラインサポートを活用してユーザー体験を向上</li>
+    <li><strong>リアルタイムリスナーの適切な使用：</strong> 必要な場合のみリアルタイムリスナーを使用し、不要になったらデタッチ
+    </li>
+    <li><strong>コストの最適化：</strong> 読み取り/書き込み/削除操作の数を最小限に抑える</li>
+    <li><strong>適切なインデックス管理：</strong> 不要なインデックスを削除してコストとパフォーマンスを最適化</li>
+    <li><strong>データ構造の慎重な設計：</strong> アプリケーションの要件に基づいてデータ構造を設計</li>
+    <li><strong>大量のデータの分割：</strong> 大量のデータは複数のコレクションに分割</li>
+</ul>
+
+<div class="note">
+    <h3>コスト最適化のヒント</h3>
     <ul>
-        <li><strong>適切なセキュリティルールの設定：</strong> 最小権限の原則に基づいてアクセス制御を設定</li>
-        <li><strong>バッチ処理とトランザクションの活用：</strong> 複数の操作を原子的に実行</li>
-        <li><strong>オフラインサポートの活用：</strong> モバイルアプリではオフラインサポートを活用してユーザー体験を向上</li>
-        <li><strong>リアルタイムリスナーの適切な使用：</strong> 必要な場合のみリアルタイムリスナーを使用し、不要になったらデタッチ</li>
-        <li><strong>コストの最適化：</strong> 読み取り/書き込み/削除操作の数を最小限に抑える</li>
-        <li><strong>適切なインデックス管理：</strong> 不要なインデックスを削除してコストとパフォーマンスを最適化</li>
-        <li><strong>データ構造の慎重な設計：</strong> アプリケーションの要件に基づいてデータ構造を設計</li>
-        <li><strong>大量のデータの分割：</strong> 大量のデータは複数のコレクションに分割</li>
+        <li>必要なデータのみを取得するようにクエリを最適化</li>
+        <li>リアルタイムリスナーの数を制限</li>
+        <li>バッチ処理を使用して書き込み操作をまとめる</li>
+        <li>不要なインデックスを削除</li>
+        <li>大きなドキュメントは分割または外部ストレージ（Cloud Storage）に保存</li>
     </ul>
-    
-    <div class="note">
-        <h3>コスト最適化のヒント</h3>
-        <ul>
-            <li>必要なデータのみを取得するようにクエリを最適化</li>
-            <li>リアルタイムリスナーの数を制限</li>
-            <li>バッチ処理を使用して書き込み操作をまとめる</li>
-            <li>不要なインデックスを削除</li>
-            <li>大きなドキュメントは分割または外部ストレージ（Cloud Storage）に保存</li>
-        </ul>
-    </div>
-    
-    <h2>Cloud Firestoreとの統合サービス</h2>
-    <p>Firestoreは他のGoogle Cloudサービスと統合して、より強力なソリューションを構築できます：</p>
-    
-    <table>
-        <tr>
-            <th>サービス</th>
-            <th>統合の利点</th>
-        </tr>
-        <tr>
-            <td>Firebase Authentication</td>
-            <td>ユーザー認証とFirestoreセキュリティルールの連携によるアクセス制御</td>
-        </tr>
-        <tr>
-            <td>Cloud Functions</td>
-            <td>Firestoreのデータ変更をトリガーとしたサーバーレス関数の実行</td>
-        </tr>
-        <tr>
-            <td>Cloud Run</td>
-            <td>Firestoreと連携したマイクロサービスの実装</td>
-        </tr>
-        <tr>
-            <td>App Engine</td>
-            <td>Firestoreをバックエンドとしたウェブアプリケーションの構築</td>
-        </tr>
-        <tr>
-            <td>BigQuery</td>
-            <td>Firestoreデータのエクスポートと高度な分析</td>
-        </tr>
-        <tr>
-            <td>Cloud Storage</td>
-            <td>大容量ファイルの保存とFirestoreでのメタデータ管理</td>
-        </tr>
-        <tr>
-            <td>Pub/Sub</td>
-            <td>Firestoreの変更に基づくイベント駆動型アーキテクチャの実装</td>
-        </tr>
-    </table>
-    
-    <h3>Cloud Functionsとの統合例</h3>
-    <div class="example">
-        <h4>Firestoreトリガー関数の例（Node.js）</h4>
-        <pre><code>const functions = require('firebase-functions');
+</div>
+
+<h2>Cloud Firestoreとの統合サービス</h2>
+<p>Firestoreは他のGoogle Cloudサービスと統合して、より強力なソリューションを構築できます：</p>
+
+<table>
+    <tr>
+        <th>サービス</th>
+        <th>統合の利点</th>
+    </tr>
+    <tr>
+        <td>Firebase Authentication</td>
+        <td>ユーザー認証とFirestoreセキュリティルールの連携によるアクセス制御</td>
+    </tr>
+    <tr>
+        <td>Cloud Functions</td>
+        <td>Firestoreのデータ変更をトリガーとしたサーバーレス関数の実行</td>
+    </tr>
+    <tr>
+        <td>Cloud Run</td>
+        <td>Firestoreと連携したマイクロサービスの実装</td>
+    </tr>
+    <tr>
+        <td>App Engine</td>
+        <td>Firestoreをバックエンドとしたウェブアプリケーションの構築</td>
+    </tr>
+    <tr>
+        <td>BigQuery</td>
+        <td>Firestoreデータのエクスポートと高度な分析</td>
+    </tr>
+    <tr>
+        <td>Cloud Storage</td>
+        <td>大容量ファイルの保存とFirestoreでのメタデータ管理</td>
+    </tr>
+    <tr>
+        <td>Pub/Sub</td>
+        <td>Firestoreの変更に基づくイベント駆動型アーキテクチャの実装</td>
+    </tr>
+</table>
+
+<h3>Cloud Functionsとの統合例</h3>
+<div class="example">
+    <h4>Firestoreトリガー関数の例（Node.js）</h4>
+    <pre><code>const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
 
@@ -715,34 +728,35 @@ exports.onOrderStatusUpdate = functions.firestore
       changedAt: admin.firestore.FieldValue.serverTimestamp()
     });
   });</code></pre>
-    </div>
-    
-    <h3>BigQueryとの統合</h3>
-    <p>FirestoreのデータをBigQueryにエクスポートして分析できます：</p>
-    <pre><code>gcloud firestore export gs://my-bucket/my-export
+</div>
+
+<h3>BigQueryとの統合</h3>
+<p>FirestoreのデータをBigQueryにエクスポートして分析できます：</p>
+<pre><code>gcloud firestore export gs://my-bucket/my-export
 
 # BigQueryにインポート
 bq load \
   --source_format=DATASTORE_BACKUP \
   my_dataset.users \
   gs://my-bucket/my-export/all_namespaces/kind_users/all_namespaces_kind_users.export_metadata</code></pre>
-    
-    <h2>Cloud Firestoreのユースケース</h2>
-    <p>Firestoreは以下のようなユースケースに適しています：</p>
-    <ul>
-        <li><strong>モバイルアプリケーション：</strong> オフラインサポートとリアルタイム同期機能を活用したモバイルアプリ</li>
-        <li><strong>ウェブアプリケーション：</strong> リアルタイムデータ更新が必要なウェブアプリ（チャット、コラボレーションツールなど）</li>
-        <li><strong>ゲーム：</strong> ユーザープロファイル、ゲーム状態、リーダーボードなどの保存</li>
-        <li><strong>IoTアプリケーション：</strong> センサーデータの保存と分析</li>
-        <li><strong>コンテンツ管理システム：</strong> 柔軟なスキーマを活用したコンテンツ管理</li>
-        <li><strong>eコマース：</strong> 商品カタログ、ユーザープロファイル、注文履歴の管理</li>
-        <li><strong>リアルタイム分析：</strong> ダッシュボードやレポートのためのデータ保存</li>
-    </ul>
-    
-    <h3>ユースケース例：チャットアプリケーション</h3>
-    <div class="example">
-        <h4>チャットアプリのデータモデル</h4>
-        <pre><code>// コレクション構造
+
+<h2>Cloud Firestoreのユースケース</h2>
+<p>Firestoreは以下のようなユースケースに適しています：</p>
+<ul>
+    <li><strong>モバイルアプリケーション：</strong> オフラインサポートとリアルタイム同期機能を活用したモバイルアプリ</li>
+    <li><strong>ウェブアプリケーション：</strong> リアルタイムデータ更新が必要なウェブアプリ（チャット、コラボレーションツールなど）
+    </li>
+    <li><strong>ゲーム：</strong> ユーザープロファイル、ゲーム状態、リーダーボードなどの保存</li>
+    <li><strong>IoTアプリケーション：</strong> センサーデータの保存と分析</li>
+    <li><strong>コンテンツ管理システム：</strong> 柔軟なスキーマを活用したコンテンツ管理</li>
+    <li><strong>eコマース：</strong> 商品カタログ、ユーザープロファイル、注文履歴の管理</li>
+    <li><strong>リアルタイム分析：</strong> ダッシュボードやレポートのためのデータ保存</li>
+</ul>
+
+<h3>ユースケース例：チャットアプリケーション</h3>
+<div class="example">
+    <h4>チャットアプリのデータモデル</h4>
+    <pre><code>// コレクション構造
 chats/
   chatId1/
     messages/
@@ -771,9 +785,9 @@ users/
     chats/
       chatId1: true
       chatId2: true</code></pre>
-        
-        <h4>リアルタイムチャットの実装例（JavaScript）</h4>
-        <pre><code>import { initializeApp } from "firebase/app";
+
+    <h4>リアルタイムチャットの実装例（JavaScript）</h4>
+    <pre><code>import { initializeApp } from "firebase/app";
 import { getFirestore, collection, doc, addDoc, query, orderBy, limit, onSnapshot } from "firebase/firestore";
 
 // Firebaseの初期化
@@ -825,21 +839,23 @@ const unsubscribe = subscribeToMessages("chatId1", (messages) => {
 function cleanup() {
   unsubscribe();
 }</code></pre>
-    </div>
-    
-    <h2>まとめ</h2>
-    <p>Cloud Firestore は、Google Cloud Platform上でのNoSQLドキュメントデータベースサービスとして、モバイル、ウェブ、サーバーアプリケーション向けに設計されています。リアルタイムデータ同期、オフラインサポート、強力なクエリ機能を備え、スケーラブルで信頼性の高いデータベースソリューションを提供します。</p>
-    
-    <p>Firestoreの主な利点は以下の通りです：</p>
-    <ul>
-        <li>リアルタイムデータ同期によるリアルタイムコラボレーションの実現</li>
-        <li>オフラインサポートによるモバイルアプリのユーザー体験向上</li>
-        <li>階層型データモデルによる柔軟なデータ構造の実現</li>
-        <li>自動スケーリングによる高い可用性と信頼性</li>
-        <li>強力なセキュリティ機能によるデータの保護</li>
-        <li>他のGoogle Cloudサービスとのシームレスな統合</li>
-    </ul>
-    
-    <p>Firestoreを効果的に活用するには、適切なデータモデルの設計、セキュリティルールの設定、パフォーマンス最適化のベストプラクティスの適用が重要です。また、アプリケーションの要件に基づいて、他のデータベースサービス（Cloud SQL、Bigtable、Spanner など）との適切な使い分けも検討すべきです。</p>
+</div>
+
+<h2>まとめ</h2>
+<p>Cloud Firestore は、Google Cloud
+    Platform上でのNoSQLドキュメントデータベースサービスとして、モバイル、ウェブ、サーバーアプリケーション向けに設計されています。リアルタイムデータ同期、オフラインサポート、強力なクエリ機能を備え、スケーラブルで信頼性の高いデータベースソリューションを提供します。</p>
+
+<p>Firestoreの主な利点は以下の通りです：</p>
+<ul>
+    <li>リアルタイムデータ同期によるリアルタイムコラボレーションの実現</li>
+    <li>オフラインサポートによるモバイルアプリのユーザー体験向上</li>
+    <li>階層型データモデルによる柔軟なデータ構造の実現</li>
+    <li>自動スケーリングによる高い可用性と信頼性</li>
+    <li>強力なセキュリティ機能によるデータの保護</li>
+    <li>他のGoogle Cloudサービスとのシームレスな統合</li>
+</ul>
+
+<p>Firestoreを効果的に活用するには、適切なデータモデルの設計、セキュリティルールの設定、パフォーマンス最適化のベストプラクティスの適用が重要です。また、アプリケーションの要件に基づいて、他のデータベースサービス（Cloud
+    SQL、Bigtable、Spanner など）との適切な使い分けも検討すべきです。</p>
 </body>
 </html>

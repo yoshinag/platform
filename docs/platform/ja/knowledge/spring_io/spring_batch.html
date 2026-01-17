@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <title>Spring Batch</title>
     <link rel="stylesheet" href="../../../css/knowledge.css">
@@ -11,6 +15,7 @@
             gap: 20px;
             margin-top: 20px;
         }
+
         .service-card {
             border: 1px solid #e0e0e0;
             border-radius: 8px;
@@ -18,21 +23,26 @@
             background-color: #f9f9f9;
             transition: transform 0.2s, box-shadow 0.2s;
         }
+
         .service-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
+
         .service-card h3 {
             margin-top: 0;
             color: #000000;
         }
+
         .service-card h3 a {
             color: #1a73e8;
         }
+
         .service-card p {
             color: #5f6368;
             margin-bottom: 10px;
         }
+
         .service-category {
             margin-top: 30px;
         }
@@ -40,28 +50,30 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body class="ja-knowledge">
-    <div style="margin-bottom: 20px;">
-        <a href="../../index.html">メインページに戻る</a> | 
-        <a href="spring_io.html">Spring Framework & Spring Bootに戻る</a>
-    </div>
-    <h1>Spring Batch</h1>
-    
-    <h2>Spring Batchとは</h2>
-    <p>Spring Batchは、エンタープライズシステムの日常的な運用に不可欠なバッチ処理を開発するための包括的なフレームワークです。大量データの処理、トランザクション管理、ジョブの再起動機能、ステップベースの処理など、バッチアプリケーション開発に必要な機能を提供します。Spring Batchは、Spring Frameworkの機能を活用し、依存性注入、宣言的トランザクション管理、バッチ処理に特化したリスナーなどの機能を統合しています。</p>
-    
-    <p>Spring Batchは、特に以下のような状況で有用です：</p>
-    <ul>
-        <li>大量のデータを自動的に処理する必要がある場合</li>
-        <li>複雑なビジネスルールに基づいてデータを変換する場合</li>
-        <li>定期的にスケジュールされたジョブを実行する必要がある場合</li>
-        <li>エラー発生時に処理を再開できる堅牢なバッチ処理が必要な場合</li>
-        <li>複数のデータソース間でデータを移行する場合</li>
-    </ul>
-    
-    <div style="text-align: center; margin: 20px 0;">
+<div style="margin-bottom: 20px;">
+    <a href="../../index.html">メインページに戻る</a> |
+    <a href="spring_io.html">Spring Framework & Spring Bootに戻る</a>
+</div>
+<h1>Spring Batch</h1>
+
+<h2>Spring Batchとは</h2>
+<p>Spring
+    Batchは、エンタープライズシステムの日常的な運用に不可欠なバッチ処理を開発するための包括的なフレームワークです。大量データの処理、トランザクション管理、ジョブの再起動機能、ステップベースの処理など、バッチアプリケーション開発に必要な機能を提供します。Spring
+    Batchは、Spring
+    Frameworkの機能を活用し、依存性注入、宣言的トランザクション管理、バッチ処理に特化したリスナーなどの機能を統合しています。</p>
+
+<p>Spring Batchは、特に以下のような状況で有用です：</p>
+<ul>
+    <li>大量のデータを自動的に処理する必要がある場合</li>
+    <li>複雑なビジネスルールに基づいてデータを変換する場合</li>
+    <li>定期的にスケジュールされたジョブを実行する必要がある場合</li>
+    <li>エラー発生時に処理を再開できる堅牢なバッチ処理が必要な場合</li>
+    <li>複数のデータソース間でデータを移行する場合</li>
+</ul>
+
+<div style="text-align: center; margin: 20px 0;">
         <pre style="text-align: left; display: inline-block; border: 1px solid #ddd; padding: 15px; border-radius: 4px; background-color: #f8f8f8; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
 +------------------------------------------+
 |           Spring Batch Framework         |
@@ -92,37 +104,40 @@
 |                                          |
 +------------------------------------------+
         </pre>
-        <p style="font-style: italic; margin-top: 10px;">図1: Spring Batchアーキテクチャの概要 - ジョブ、ステップ、ItemReader/Processor/Writerの関係</p>
-    </div>
-    
-    <p>Spring Batchの主な目的は以下の通りです：</p>
-    <ul>
-        <li>大量データの効率的な処理</li>
-        <li>自動化されたバッチ処理の実行</li>
-        <li>堅牢なエラーハンドリングとリカバリ機能の提供</li>
-        <li>バッチ処理の監視と管理</li>
-        <li>再利用可能なバッチ処理コンポーネントの提供</li>
-    </ul>
-    
-    <h2>Spring Batchの主な特徴</h2>
-    <ul>
-        <li><strong>ジョブとステップの階層構造：</strong> バッチ処理をジョブとステップに分割し、モジュール化と再利用性を向上</li>
-        <li><strong>チャンク処理：</strong> 大量データを小さなチャンクに分割して処理し、メモリ効率を向上</li>
-        <li><strong>トランザクション管理：</strong> ステップレベルでのトランザクション管理により、データの整合性を確保</li>
-        <li><strong>再起動機能：</strong> 失敗したジョブを最後に成功したポイントから再開可能</li>
-        <li><strong>ジョブリポジトリ：</strong> ジョブの実行状態を永続化し、監視と管理を容易に</li>
-        <li><strong>リスナー：</strong> ジョブとステップのライフサイクルイベントをフックするためのリスナー機能</li>
-        <li><strong>スケーラビリティ：</strong> 並列処理、マルチスレッド処理、分散処理をサポート</li>
-        <li><strong>Spring統合：</strong> Spring Frameworkとの統合により、依存性注入などの機能を活用</li>
-        <li><strong>多様なデータソースサポート：</strong> ファイル、データベース、JMSなど様々なデータソースをサポート</li>
-    </ul>
-    
-    <h3>ジョブとステップの詳細</h3>
-    <p>Spring Batchでは、バッチ処理は「ジョブ」と呼ばれる単位で構成されます。各ジョブは1つ以上の「ステップ」から構成され、各ステップは特定の処理タスクを実行します。ジョブとステップの階層構造により、バッチ処理を論理的に分割し、再利用性と保守性を向上させることができます。</p>
-    
-    <p>ジョブは、<code>JobBuilderFactory</code>を使用して定義します：</p>
-    
-    <pre><code>@Configuration
+    <p style="font-style: italic; margin-top: 10px;">図1: Spring Batchアーキテクチャの概要 -
+        ジョブ、ステップ、ItemReader/Processor/Writerの関係</p>
+</div>
+
+<p>Spring Batchの主な目的は以下の通りです：</p>
+<ul>
+    <li>大量データの効率的な処理</li>
+    <li>自動化されたバッチ処理の実行</li>
+    <li>堅牢なエラーハンドリングとリカバリ機能の提供</li>
+    <li>バッチ処理の監視と管理</li>
+    <li>再利用可能なバッチ処理コンポーネントの提供</li>
+</ul>
+
+<h2>Spring Batchの主な特徴</h2>
+<ul>
+    <li><strong>ジョブとステップの階層構造：</strong> バッチ処理をジョブとステップに分割し、モジュール化と再利用性を向上
+    </li>
+    <li><strong>チャンク処理：</strong> 大量データを小さなチャンクに分割して処理し、メモリ効率を向上</li>
+    <li><strong>トランザクション管理：</strong> ステップレベルでのトランザクション管理により、データの整合性を確保</li>
+    <li><strong>再起動機能：</strong> 失敗したジョブを最後に成功したポイントから再開可能</li>
+    <li><strong>ジョブリポジトリ：</strong> ジョブの実行状態を永続化し、監視と管理を容易に</li>
+    <li><strong>リスナー：</strong> ジョブとステップのライフサイクルイベントをフックするためのリスナー機能</li>
+    <li><strong>スケーラビリティ：</strong> 並列処理、マルチスレッド処理、分散処理をサポート</li>
+    <li><strong>Spring統合：</strong> Spring Frameworkとの統合により、依存性注入などの機能を活用</li>
+    <li><strong>多様なデータソースサポート：</strong> ファイル、データベース、JMSなど様々なデータソースをサポート</li>
+</ul>
+
+<h3>ジョブとステップの詳細</h3>
+<p>Spring
+    Batchでは、バッチ処理は「ジョブ」と呼ばれる単位で構成されます。各ジョブは1つ以上の「ステップ」から構成され、各ステップは特定の処理タスクを実行します。ジョブとステップの階層構造により、バッチ処理を論理的に分割し、再利用性と保守性を向上させることができます。</p>
+
+<p>ジョブは、<code>JobBuilderFactory</code>を使用して定義します：</p>
+
+<pre><code>@Configuration
 @EnableBatchProcessing
 public class BatchConfiguration {
 
@@ -144,9 +159,9 @@ public class BatchConfiguration {
     }
 }</code></pre>
 
-    <p>ステップは、<code>StepBuilderFactory</code>を使用して定義します：</p>
-    
-    <pre><code>@Bean
+<p>ステップは、<code>StepBuilderFactory</code>を使用して定義します：</p>
+
+<pre><code>@Bean
 public Step step1(ItemReader&lt;Person&gt; reader, ItemProcessor&lt;Person, Person&gt; processor, ItemWriter&lt;Person&gt; writer) {
     return stepBuilderFactory.get("step1")
             .&lt;Person, Person&gt;chunk(10)
@@ -155,32 +170,35 @@ public Step step1(ItemReader&lt;Person&gt; reader, ItemProcessor&lt;Person, Pers
             .writer(writer)
             .build();
 }</code></pre>
-    
-    <h3>チャンク処理の詳細</h3>
-    <p>Spring Batchのチャンク処理は、大量データを効率的に処理するための重要な機能です。チャンク処理では、データを小さな「チャンク」に分割し、各チャンクをトランザクション境界内で処理します。これにより、メモリ効率が向上し、エラー発生時の影響を最小限に抑えることができます。</p>
-    
-    <p>チャンク処理は、以下の3つのコンポーネントから構成されます：</p>
-    <ul>
-        <li><strong>ItemReader：</strong> データソースからアイテムを読み込む</li>
-        <li><strong>ItemProcessor：</strong> 読み込んだアイテムを処理する（オプション）</li>
-        <li><strong>ItemWriter：</strong> 処理したアイテムを書き込む</li>
-    </ul>
-    
-    <p>チャンク処理の流れは以下の通りです：</p>
-    <ol>
-        <li>ItemReaderがチャンクサイズ分のアイテムを読み込む</li>
-        <li>各アイテムがItemProcessorによって処理される</li>
-        <li>処理されたアイテムがItemWriterによって一括で書き込まれる</li>
-        <li>トランザクションがコミットされる</li>
-        <li>次のチャンクの処理が開始される</li>
-    </ol>
-    
-    <h3>トランザクション管理の詳細</h3>
-    <p>Spring Batchは、ステップレベルでのトランザクション管理を提供します。各ステップ（またはチャンク）は、独自のトランザクション境界内で実行され、すべての処理が成功した場合にのみコミットされます。エラーが発生した場合、トランザクションはロールバックされ、ステップは失敗としてマークされます。</p>
-    
-    <p>トランザクション管理は、<code>@Transactional</code>アノテーションや<code>TransactionManager</code>を使用して設定できます：</p>
-    
-    <pre><code>@Bean
+
+<h3>チャンク処理の詳細</h3>
+<p>Spring
+    Batchのチャンク処理は、大量データを効率的に処理するための重要な機能です。チャンク処理では、データを小さな「チャンク」に分割し、各チャンクをトランザクション境界内で処理します。これにより、メモリ効率が向上し、エラー発生時の影響を最小限に抑えることができます。</p>
+
+<p>チャンク処理は、以下の3つのコンポーネントから構成されます：</p>
+<ul>
+    <li><strong>ItemReader：</strong> データソースからアイテムを読み込む</li>
+    <li><strong>ItemProcessor：</strong> 読み込んだアイテムを処理する（オプション）</li>
+    <li><strong>ItemWriter：</strong> 処理したアイテムを書き込む</li>
+</ul>
+
+<p>チャンク処理の流れは以下の通りです：</p>
+<ol>
+    <li>ItemReaderがチャンクサイズ分のアイテムを読み込む</li>
+    <li>各アイテムがItemProcessorによって処理される</li>
+    <li>処理されたアイテムがItemWriterによって一括で書き込まれる</li>
+    <li>トランザクションがコミットされる</li>
+    <li>次のチャンクの処理が開始される</li>
+</ol>
+
+<h3>トランザクション管理の詳細</h3>
+<p>Spring
+    Batchは、ステップレベルでのトランザクション管理を提供します。各ステップ（またはチャンク）は、独自のトランザクション境界内で実行され、すべての処理が成功した場合にのみコミットされます。エラーが発生した場合、トランザクションはロールバックされ、ステップは失敗としてマークされます。</p>
+
+<p>トランザクション管理は、<code>@Transactional</code>アノテーションや<code>TransactionManager</code>を使用して設定できます：
+</p>
+
+<pre><code>@Bean
 public Step step1(PlatformTransactionManager transactionManager) {
     return stepBuilderFactory.get("step1")
             .&lt;Person, Person&gt;chunk(10)
@@ -190,46 +208,46 @@ public Step step1(PlatformTransactionManager transactionManager) {
             .transactionManager(transactionManager)
             .build();
 }</code></pre>
-    
-    <h2>Spring Batchの主要コンポーネント</h2>
-    <div class="service-grid">
-        <div class="service-card">
-            <h3>Job</h3>
-            <p>バッチ処理の最上位単位。1つ以上のステップから構成される</p>
-        </div>
-        <div class="service-card">
-            <h3>Step</h3>
-            <p>ジョブ内の独立した処理単位。チャンク指向または tasklet 指向</p>
-        </div>
-        <div class="service-card">
-            <h3>ItemReader</h3>
-            <p>データソースからアイテムを読み込むためのインターフェース</p>
-        </div>
-        <div class="service-card">
-            <h3>ItemProcessor</h3>
-            <p>読み込んだアイテムを処理するためのインターフェース</p>
-        </div>
-        <div class="service-card">
-            <h3>ItemWriter</h3>
-            <p>処理したアイテムを書き込むためのインターフェース</p>
-        </div>
-        <div class="service-card">
-            <h3>JobRepository</h3>
-            <p>ジョブの実行状態を永続化するためのリポジトリ</p>
-        </div>
-        <div class="service-card">
-            <h3>JobLauncher</h3>
-            <p>ジョブを実行するためのインターフェース</p>
-        </div>
-        <div class="service-card">
-            <h3>JobExplorer</h3>
-            <p>ジョブの実行状態を読み取るためのインターフェース</p>
-        </div>
+
+<h2>Spring Batchの主要コンポーネント</h2>
+<div class="service-grid">
+    <div class="service-card">
+        <h3>Job</h3>
+        <p>バッチ処理の最上位単位。1つ以上のステップから構成される</p>
     </div>
-    
-    <h2>Spring Batchの使用例</h2>
-    <h3>基本的なバッチジョブの定義</h3>
-    <pre><code>@Configuration
+    <div class="service-card">
+        <h3>Step</h3>
+        <p>ジョブ内の独立した処理単位。チャンク指向または tasklet 指向</p>
+    </div>
+    <div class="service-card">
+        <h3>ItemReader</h3>
+        <p>データソースからアイテムを読み込むためのインターフェース</p>
+    </div>
+    <div class="service-card">
+        <h3>ItemProcessor</h3>
+        <p>読み込んだアイテムを処理するためのインターフェース</p>
+    </div>
+    <div class="service-card">
+        <h3>ItemWriter</h3>
+        <p>処理したアイテムを書き込むためのインターフェース</p>
+    </div>
+    <div class="service-card">
+        <h3>JobRepository</h3>
+        <p>ジョブの実行状態を永続化するためのリポジトリ</p>
+    </div>
+    <div class="service-card">
+        <h3>JobLauncher</h3>
+        <p>ジョブを実行するためのインターフェース</p>
+    </div>
+    <div class="service-card">
+        <h3>JobExplorer</h3>
+        <p>ジョブの実行状態を読み取るためのインターフェース</p>
+    </div>
+</div>
+
+<h2>Spring Batchの使用例</h2>
+<h3>基本的なバッチジョブの定義</h3>
+<pre><code>@Configuration
 @EnableBatchProcessing
 public class BatchConfiguration {
 
@@ -259,9 +277,9 @@ public class BatchConfiguration {
                 .build();
     }
 }</code></pre>
-    
-    <h3>CSVファイルからデータを読み込む例</h3>
-    <pre><code>@Bean
+
+<h3>CSVファイルからデータを読み込む例</h3>
+<pre><code>@Bean
 public FlatFileItemReader&lt;Person&gt; reader() {
     return new FlatFileItemReaderBuilder&lt;Person&gt;()
             .name("personItemReader")
@@ -273,9 +291,9 @@ public FlatFileItemReader&lt;Person&gt; reader() {
             }})
             .build();
 }</code></pre>
-    
-    <h3>データ処理の例</h3>
-    <pre><code>@Bean
+
+<h3>データ処理の例</h3>
+<pre><code>@Bean
 public ItemProcessor&lt;Person, Person&gt; processor() {
     return person -> {
         final String firstName = person.getFirstName().toUpperCase();
@@ -286,9 +304,9 @@ public ItemProcessor&lt;Person, Person&gt; processor() {
         return transformedPerson;
     };
 }</code></pre>
-    
-    <h3>データベースへの書き込み例</h3>
-    <pre><code>@Bean
+
+<h3>データベースへの書き込み例</h3>
+<pre><code>@Bean
 public JdbcBatchItemWriter&lt;Person&gt; writer(DataSource dataSource) {
     return new JdbcBatchItemWriterBuilder&lt;Person&gt;()
             .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider&lt;&gt;())
@@ -296,12 +314,13 @@ public JdbcBatchItemWriter&lt;Person&gt; writer(DataSource dataSource) {
             .dataSource(dataSource)
             .build();
 }</code></pre>
-    
-    <h2>Spring Batchのテスト</h2>
-    <p>Spring Batchは、バッチジョブのテストを容易にするための機能を提供します。<code>@SpringBatchTest</code>アノテーションを使用することで、テストに必要なコンテキストを自動的に設定できます。</p>
-    
-    <h3>基本的なジョブテスト</h3>
-    <pre><code>@SpringBatchTest
+
+<h2>Spring Batchのテスト</h2>
+<p>Spring Batchは、バッチジョブのテストを容易にするための機能を提供します。<code>@SpringBatchTest</code>アノテーションを使用することで、テストに必要なコンテキストを自動的に設定できます。
+</p>
+
+<h3>基本的なジョブテスト</h3>
+<pre><code>@SpringBatchTest
 @SpringBootTest
 class ImportUserJobTests {
 
@@ -318,8 +337,8 @@ class ImportUserJobTests {
     }
 }</code></pre>
 
-    <h3>ステップのテスト</h3>
-    <pre><code>@SpringBatchTest
+<h3>ステップのテスト</h3>
+<pre><code>@SpringBatchTest
 @SpringBootTest
 class ImportUserStepTests {
 
@@ -335,12 +354,13 @@ class ImportUserStepTests {
         assertEquals(ExitStatus.COMPLETED, jobExecution.getExitStatus());
     }
 }</code></pre>
-    
-    <h2>Spring Batchの応用例</h2>
-    <h3>並列処理</h3>
-    <p>Spring Batchは、並列処理をサポートしており、複数のステップを並列に実行したり、単一のステップ内で並列処理を行ったりすることができます。</p>
-    
-    <pre><code>@Bean
+
+<h2>Spring Batchの応用例</h2>
+<h3>並列処理</h3>
+<p>Spring
+    Batchは、並列処理をサポートしており、複数のステップを並列に実行したり、単一のステップ内で並列処理を行ったりすることができます。</p>
+
+<pre><code>@Bean
 public Job parallelJob(Step step1, Step step2) {
     return jobBuilderFactory.get("parallelJob")
             .start(splitFlow(step1, step2))
@@ -369,11 +389,11 @@ public Flow flow2(Step step2) {
             .start(step2)
             .build();
 }</code></pre>
-    
-    <h3>条件分岐</h3>
-    <p>Spring Batchは、ステップの実行結果に基づいて条件分岐を行うことができます。</p>
-    
-    <pre><code>@Bean
+
+<h3>条件分岐</h3>
+<p>Spring Batchは、ステップの実行結果に基づいて条件分岐を行うことができます。</p>
+
+<pre><code>@Bean
 public Job conditionalJob(Step step1, Step successStep, Step failureStep) {
     return jobBuilderFactory.get("conditionalJob")
             .start(step1)
@@ -382,11 +402,11 @@ public Job conditionalJob(Step step1, Step successStep, Step failureStep) {
             .end()
             .build();
 }</code></pre>
-    
-    <h3>リスナーの使用</h3>
-    <p>Spring Batchは、ジョブとステップのライフサイクルイベントをフックするためのリスナー機能を提供します。</p>
-    
-    <pre><code>public class JobCompletionNotificationListener extends JobExecutionListenerSupport {
+
+<h3>リスナーの使用</h3>
+<p>Spring Batchは、ジョブとステップのライフサイクルイベントをフックするためのリスナー機能を提供します。</p>
+
+<pre><code>public class JobCompletionNotificationListener extends JobExecutionListenerSupport {
 
     private final JdbcTemplate jdbcTemplate;
     
@@ -405,30 +425,33 @@ public Job conditionalJob(Step step1, Step successStep, Step failureStep) {
         }
     }
 }</code></pre>
-    
-    <h2>Spring Batchの設定</h2>
-    <h3>基本設定</h3>
-    <p>Spring Batchの基本設定は、<code>@EnableBatchProcessing</code>アノテーションを使用して行います。このアノテーションにより、Spring Batchに必要なインフラストラクチャが自動的に設定されます。</p>
-    
-    <pre><code>@Configuration
+
+<h2>Spring Batchの設定</h2>
+<h3>基本設定</h3>
+<p>Spring Batchの基本設定は、<code>@EnableBatchProcessing</code>アノテーションを使用して行います。このアノテーションにより、Spring
+    Batchに必要なインフラストラクチャが自動的に設定されます。</p>
+
+<pre><code>@Configuration
 @EnableBatchProcessing
 public class BatchConfiguration {
     // バッチジョブの設定
 }</code></pre>
-    
-    <h3>データベース設定</h3>
-    <p>Spring Batchは、ジョブリポジトリとしてデータベースを使用します。デフォルトでは、メモリ内データベースが使用されますが、本番環境では永続的なデータベースを使用することが推奨されます。</p>
-    
-    <pre><code># application.properties
+
+<h3>データベース設定</h3>
+<p>Spring
+    Batchは、ジョブリポジトリとしてデータベースを使用します。デフォルトでは、メモリ内データベースが使用されますが、本番環境では永続的なデータベースを使用することが推奨されます。</p>
+
+<pre><code># application.properties
 spring.datasource.url=jdbc:mysql://localhost:3306/batch
 spring.datasource.username=user
 spring.datasource.password=password
 spring.batch.jdbc.initialize-schema=always</code></pre>
-    
-    <h3>ジョブパラメータの設定</h3>
-    <p>Spring Batchは、ジョブパラメータを使用してジョブの実行を制御することができます。ジョブパラメータは、ジョブの実行時に指定され、ジョブ内で参照できます。</p>
-    
-    <pre><code>@Bean
+
+<h3>ジョブパラメータの設定</h3>
+<p>Spring
+    Batchは、ジョブパラメータを使用してジョブの実行を制御することができます。ジョブパラメータは、ジョブの実行時に指定され、ジョブ内で参照できます。</p>
+
+<pre><code>@Bean
 public Job parameterizedJob(Step step1) {
     return jobBuilderFactory.get("parameterizedJob")
             .incrementer(new RunIdIncrementer())
@@ -450,101 +473,119 @@ public FlatFileItemReader&lt;Person&gt; reader(@Value("#{jobParameters['inputFil
             }})
             .build();
 }</code></pre>
-    
-    <h2>Spring Batchのベストプラクティス</h2>
-    <ol>
-        <li><strong>適切なチャンクサイズの選択</strong>: チャンクサイズは、メモリ使用量とパフォーマンスのバランスを考慮して選択します。一般的に、数百から数千のアイテムが適切です。</li>
-        <li><strong>エラーハンドリングの実装</strong>: エラーが発生した場合の処理を適切に実装し、データの整合性を確保します。特に、スキップポリシーやリトライポリシーを設定することが重要です。</li>
-        <li><strong>ジョブの再起動機能の活用</strong>: ジョブの再起動機能を活用し、失敗したジョブを最後に成功したポイントから再開できるようにします。</li>
-        <li><strong>適切なトランザクション境界の設定</strong>: トランザクション境界を適切に設定し、データの整合性を確保します。特に、長時間実行されるジョブでは、トランザクションのタイムアウトに注意が必要です。</li>
-        <li><strong>パフォーマンスの最適化</strong>: 並列処理、マルチスレッド処理、分散処理などの機能を活用して、パフォーマンスを最適化します。</li>
-        <li><strong>ジョブの監視と管理</strong>: ジョブの実行状態を監視し、問題が発生した場合に迅速に対応できるようにします。Spring Batch Adminなどのツールを活用することが有効です。</li>
-        <li><strong>テストの自動化</strong>: バッチジョブのテストを自動化し、継続的インテグレーションパイプラインに組み込みます。これにより、バグの早期発見と品質の向上が可能になります。</li>
-        <li><strong>ドキュメントの整備</strong>: バッチジョブの目的、入力、出力、実行条件などを明確にドキュメント化し、運用担当者や他の開発者が理解しやすくします。</li>
-        <li><strong>段階的な導入</strong>: 既存のバッチ処理をSpring Batchに移行する場合は、段階的に導入します。まず、単純なジョブから始め、徐々に複雑なジョブに移行していきます。</li>
-    </ol>
-    
-    <h3>アンチパターン</h3>
-    <ul>
-        <li><strong>過度に大きなチャンクサイズ</strong>: チャンクサイズが大きすぎると、メモリ使用量が増加し、エラー発生時の影響が大きくなります。</li>
-        <li><strong>不適切なエラーハンドリング</strong>: エラーハンドリングが不適切だと、データの整合性が損なわれる可能性があります。</li>
-        <li><strong>トランザクション境界の無視</strong>: トランザクション境界を無視すると、データの整合性が損なわれる可能性があります。</li>
-        <li><strong>過度な並列処理</strong>: 並列処理が過度だと、リソースの競合が発生し、パフォーマンスが低下する可能性があります。</li>
-        <li><strong>テスト不足</strong>: バッチジョブのテストが不足していると、本番環境で問題が発生する可能性が高まります。</li>
-    </ul>
-    
-    <h2>Spring Batchと他のフレームワークの比較</h2>
-    <table border="1" cellpadding="10" style="border-collapse: collapse; width: 100%;">
-        <tr>
-            <th>特徴</th>
-            <th>Spring Batch</th>
-            <th>Apache Camel</th>
-            <th>Quartz</th>
-        </tr>
-        <tr>
-            <td>主な用途</td>
-            <td>バッチ処理</td>
-            <td>メッセージングとインテグレーション</td>
-            <td>ジョブスケジューリング</td>
-        </tr>
-        <tr>
-            <td>データ処理</td>
-            <td>チャンク指向</td>
-            <td>メッセージ指向</td>
-            <td>なし</td>
-        </tr>
-        <tr>
-            <td>スケジューリング</td>
-            <td>外部スケジューラが必要</td>
-            <td>基本的なスケジューリング機能</td>
-            <td>高度なスケジューリング機能</td>
-        </tr>
-        <tr>
-            <td>トランザクション管理</td>
-            <td>強力</td>
-            <td>基本的</td>
-            <td>なし</td>
-        </tr>
-        <tr>
-            <td>エラーハンドリング</td>
-            <td>強力</td>
-            <td>基本的</td>
-            <td>基本的</td>
-        </tr>
-    </table>
-    
-    <h2>Spring Batchの導入ステップ</h2>
-    <ol>
-        <li>Spring Bootプロジェクトに依存関係を追加
-            <pre><code>&lt;dependency&gt;
+
+<h2>Spring Batchのベストプラクティス</h2>
+<ol>
+    <li><strong>適切なチャンクサイズの選択</strong>: チャンクサイズは、メモリ使用量とパフォーマンスのバランスを考慮して選択します。一般的に、数百から数千のアイテムが適切です。
+    </li>
+    <li><strong>エラーハンドリングの実装</strong>: エラーが発生した場合の処理を適切に実装し、データの整合性を確保します。特に、スキップポリシーやリトライポリシーを設定することが重要です。
+    </li>
+    <li><strong>ジョブの再起動機能の活用</strong>: ジョブの再起動機能を活用し、失敗したジョブを最後に成功したポイントから再開できるようにします。
+    </li>
+    <li><strong>適切なトランザクション境界の設定</strong>:
+        トランザクション境界を適切に設定し、データの整合性を確保します。特に、長時間実行されるジョブでは、トランザクションのタイムアウトに注意が必要です。
+    </li>
+    <li><strong>パフォーマンスの最適化</strong>: 並列処理、マルチスレッド処理、分散処理などの機能を活用して、パフォーマンスを最適化します。
+    </li>
+    <li><strong>ジョブの監視と管理</strong>: ジョブの実行状態を監視し、問題が発生した場合に迅速に対応できるようにします。Spring
+        Batch Adminなどのツールを活用することが有効です。
+    </li>
+    <li><strong>テストの自動化</strong>: バッチジョブのテストを自動化し、継続的インテグレーションパイプラインに組み込みます。これにより、バグの早期発見と品質の向上が可能になります。
+    </li>
+    <li><strong>ドキュメントの整備</strong>: バッチジョブの目的、入力、出力、実行条件などを明確にドキュメント化し、運用担当者や他の開発者が理解しやすくします。
+    </li>
+    <li><strong>段階的な導入</strong>: 既存のバッチ処理をSpring
+        Batchに移行する場合は、段階的に導入します。まず、単純なジョブから始め、徐々に複雑なジョブに移行していきます。
+    </li>
+</ol>
+
+<h3>アンチパターン</h3>
+<ul>
+    <li><strong>過度に大きなチャンクサイズ</strong>: チャンクサイズが大きすぎると、メモリ使用量が増加し、エラー発生時の影響が大きくなります。
+    </li>
+    <li><strong>不適切なエラーハンドリング</strong>: エラーハンドリングが不適切だと、データの整合性が損なわれる可能性があります。
+    </li>
+    <li><strong>トランザクション境界の無視</strong>: トランザクション境界を無視すると、データの整合性が損なわれる可能性があります。
+    </li>
+    <li><strong>過度な並列処理</strong>: 並列処理が過度だと、リソースの競合が発生し、パフォーマンスが低下する可能性があります。
+    </li>
+    <li><strong>テスト不足</strong>: バッチジョブのテストが不足していると、本番環境で問題が発生する可能性が高まります。
+    </li>
+</ul>
+
+<h2>Spring Batchと他のフレームワークの比較</h2>
+<table border="1" cellpadding="10" style="border-collapse: collapse; width: 100%;">
+    <tr>
+        <th>特徴</th>
+        <th>Spring Batch</th>
+        <th>Apache Camel</th>
+        <th>Quartz</th>
+    </tr>
+    <tr>
+        <td>主な用途</td>
+        <td>バッチ処理</td>
+        <td>メッセージングとインテグレーション</td>
+        <td>ジョブスケジューリング</td>
+    </tr>
+    <tr>
+        <td>データ処理</td>
+        <td>チャンク指向</td>
+        <td>メッセージ指向</td>
+        <td>なし</td>
+    </tr>
+    <tr>
+        <td>スケジューリング</td>
+        <td>外部スケジューラが必要</td>
+        <td>基本的なスケジューリング機能</td>
+        <td>高度なスケジューリング機能</td>
+    </tr>
+    <tr>
+        <td>トランザクション管理</td>
+        <td>強力</td>
+        <td>基本的</td>
+        <td>なし</td>
+    </tr>
+    <tr>
+        <td>エラーハンドリング</td>
+        <td>強力</td>
+        <td>基本的</td>
+        <td>基本的</td>
+    </tr>
+</table>
+
+<h2>Spring Batchの導入ステップ</h2>
+<ol>
+    <li>Spring Bootプロジェクトに依存関係を追加
+        <pre><code>&lt;dependency&gt;
     &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
     &lt;artifactId&gt;spring-boot-starter-batch&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
-        </li>
-        <li>バッチ処理を有効化するために@EnableBatchProcessingアノテーションを追加</li>
-        <li>ジョブリポジトリのためのデータベースを設定</li>
-        <li>ジョブとステップを定義</li>
-        <li>ItemReader、ItemProcessor、ItemWriterを実装</li>
-        <li>エラーハンドリングとリカバリ機能を設定</li>
-        <li>ジョブの実行と監視の仕組みを整備</li>
-    </ol>
-    
-    <h2>Spring Bootとの統合</h2>
-    <p>Spring Batchは、Spring Bootと統合することで、より簡単に使用できます。Spring Boot Starter Batchを使用することで、必要な依存関係が自動的に追加され、基本的な設定が自動的に行われます。</p>
-    
-    <h3>Spring Boot Starterの使用</h3>
-    <pre><code>&lt;dependency&gt;
+    </li>
+    <li>バッチ処理を有効化するために@EnableBatchProcessingアノテーションを追加</li>
+    <li>ジョブリポジトリのためのデータベースを設定</li>
+    <li>ジョブとステップを定義</li>
+    <li>ItemReader、ItemProcessor、ItemWriterを実装</li>
+    <li>エラーハンドリングとリカバリ機能を設定</li>
+    <li>ジョブの実行と監視の仕組みを整備</li>
+</ol>
+
+<h2>Spring Bootとの統合</h2>
+<p>Spring Batchは、Spring Bootと統合することで、より簡単に使用できます。Spring Boot Starter
+    Batchを使用することで、必要な依存関係が自動的に追加され、基本的な設定が自動的に行われます。</p>
+
+<h3>Spring Boot Starterの使用</h3>
+<pre><code>&lt;dependency&gt;
     &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
     &lt;artifactId&gt;spring-boot-starter-batch&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
-    
-    <h3>Spring Bootの設定</h3>
-    <pre><code># application.properties
+
+<h3>Spring Bootの設定</h3>
+<pre><code># application.properties
 spring.batch.job.enabled=true
 spring.batch.jdbc.initialize-schema=always</code></pre>
-    
-    <h3>Spring Bootアプリケーションでのジョブの実行</h3>
-    <pre><code>@SpringBootApplication
+
+<h3>Spring Bootアプリケーションでのジョブの実行</h3>
+<pre><code>@SpringBootApplication
 @EnableBatchProcessing
 public class BatchApplication {
 
@@ -552,20 +593,24 @@ public class BatchApplication {
         SpringApplication.run(BatchApplication.class, args);
     }
 }</code></pre>
-    
-    <h2>まとめ</h2>
-    <p>Spring Batchは、エンタープライズシステムのバッチ処理を開発するための包括的なフレームワークです。大量データの処理、トランザクション管理、ジョブの再起動機能、ステップベースの処理など、バッチアプリケーション開発に必要な機能を提供します。Spring Batchは、Spring Frameworkの機能を活用し、依存性注入、宣言的トランザクション管理、バッチ処理に特化したリスナーなどの機能を統合しています。</p>
-    
-    <p>Spring Batchの主な利点は以下の通りです：</p>
-    <ul>
-        <li>大量データの効率的な処理</li>
-        <li>堅牢なエラーハンドリングとリカバリ機能</li>
-        <li>トランザクション管理によるデータの整合性の確保</li>
-        <li>モジュール化されたジョブとステップによる再利用性の向上</li>
-        <li>スケーラビリティの向上</li>
-        <li>Spring Frameworkとの統合</li>
-    </ul>
-    
-    <p>Spring Batchは、大量データの処理、定期的なジョブの実行、複雑なビジネスルールに基づくデータ変換など、様々なバッチ処理のニーズに対応できる強力なフレームワークです。特に、エンタープライズシステムでの使用に適しており、堅牢で信頼性の高いバッチ処理を実現することができます。</p>
+
+<h2>まとめ</h2>
+<p>Spring
+    Batchは、エンタープライズシステムのバッチ処理を開発するための包括的なフレームワークです。大量データの処理、トランザクション管理、ジョブの再起動機能、ステップベースの処理など、バッチアプリケーション開発に必要な機能を提供します。Spring
+    Batchは、Spring
+    Frameworkの機能を活用し、依存性注入、宣言的トランザクション管理、バッチ処理に特化したリスナーなどの機能を統合しています。</p>
+
+<p>Spring Batchの主な利点は以下の通りです：</p>
+<ul>
+    <li>大量データの効率的な処理</li>
+    <li>堅牢なエラーハンドリングとリカバリ機能</li>
+    <li>トランザクション管理によるデータの整合性の確保</li>
+    <li>モジュール化されたジョブとステップによる再利用性の向上</li>
+    <li>スケーラビリティの向上</li>
+    <li>Spring Frameworkとの統合</li>
+</ul>
+
+<p>Spring
+    Batchは、大量データの処理、定期的なジョブの実行、複雑なビジネスルールに基づくデータ変換など、様々なバッチ処理のニーズに対応できる強力なフレームワークです。特に、エンタープライズシステムでの使用に適しており、堅牢で信頼性の高いバッチ処理を実現することができます。</p>
 </body>
 </html>

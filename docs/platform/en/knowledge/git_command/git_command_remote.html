@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Git Remote Repository Operations Commands Guide</title>
@@ -8,8 +12,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
@@ -19,14 +22,14 @@
     </div>
 
     <h1>Git Remote Repository Operations Commands Guide</h1>
-    
+
     <section class="command-section">
         <h2>Remote Repository Operations</h2>
-        
+
         <!-- git remote command -->
         <h3>git remote - Manage Remote Repositories</h3>
         <p>Adds, removes, and displays remote repositories.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option/Subcommand</th>
@@ -53,12 +56,13 @@
                 <td>Display detailed information about the specified remote repository</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>git remote</code> - List remote repositories<br>
             <code>git remote -v</code> - List remote repositories with URLs<br>
-            <code>git remote add origin https://github.com/username/repo.git</code> - Add a remote repository named origin<br>
+            <code>git remote add origin https://github.com/username/repo.git</code> - Add a remote repository named
+            origin<br>
             <code>git remote remove origin</code> - Remove the origin remote<br>
             <code>git remote rename origin upstream</code> - Rename the origin remote to upstream<br>
             <code>git remote show origin</code> - Show detailed information about the origin remote
@@ -67,7 +71,7 @@
         <!-- git push command -->
         <h3>git push - Send Local Changes to Remote Repository</h3>
         <p>Sends changes from local branches to a remote repository.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -94,7 +98,7 @@
                 <td>Delete a remote branch</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>git push origin main</code> - Push local main branch to origin remote<br>
@@ -108,7 +112,7 @@
         <!-- git pull command -->
         <h3>git pull - Incorporate Remote Changes into Local Repository</h3>
         <p>Incorporates changes from a remote branch into the local branch (fetch + merge).</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -131,10 +135,11 @@
                 <td>Remove references to remote branches that have been deleted</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
-            <code>git pull</code> - Fetch and merge changes from the remote branch corresponding to the current branch<br>
+            <code>git pull</code> - Fetch and merge changes from the remote branch corresponding to the current
+            branch<br>
             <code>git pull origin main</code> - Fetch and merge changes from the main branch of the origin remote<br>
             <code>git pull --rebase</code> - Fetch remote changes and rebase local changes<br>
             <code>git pull --ff-only</code> - Pull only if fast-forward is possible (don't create a merge commit)
@@ -179,7 +184,8 @@
         <!-- git pull vs git fetch differences -->
         <h3>Differences Between git pull and git fetch - Detailed Comparison</h3>
         <p>
-            Both <code>git pull</code> and <code>git fetch</code> are commands that retrieve data from a remote repository,
+            Both <code>git pull</code> and <code>git fetch</code> are commands that retrieve data from a remote
+            repository,
             but there are important differences in their behavior and use cases.
         </p>
 
@@ -192,7 +198,9 @@
                 </tr>
                 <tr>
                     <td>Only retrieves data from the remote repository without modifying local working branches</td>
-                    <td>Retrieves data from the remote repository and automatically merges (or rebases if specified) into the local working branch</td>
+                    <td>Retrieves data from the remote repository and automatically merges (or rebases if specified)
+                        into the local working branch
+                    </td>
                 </tr>
                 <tr>
                     <td>Safe operation: does not affect your current work</td>
@@ -218,7 +226,9 @@
             <p><strong>How git pull works:</strong></p>
             <ol>
                 <li>Executes <code>git fetch</code> to retrieve remote changes</li>
-                <li>Then automatically executes <code>git merge</code> (or <code>git rebase</code> if the <code>--rebase</code> option is specified)</li>
+                <li>Then automatically executes <code>git merge</code> (or <code>git rebase</code> if the
+                    <code>--rebase</code> option is specified)
+                </li>
                 <li>Updates the local working branch</li>
             </ol>
         </div>
@@ -247,21 +257,23 @@
             <code>git diff main origin/main</code> - ローカルのmainブランチとリモートのmainブランチの差分を表示<br>
             <code>git log main..origin/main</code> - リモートにあって、ローカルにないコミットを表示<br>
             <code>git log -p main..origin/main</code> - 差分のあるコミットの詳細な変更内容も表示<br>
-            
+
             <p>確認後、マージする場合は：</p>
             <code>git merge origin/main</code> - リモートの変更をローカルブランチにマージ<br>
             <code>git rebase origin/main</code> - リモートの変更をベースにローカルの変更を再適用
         </div>
 
         <div class="note">
-            <p><strong>ワークフロー例：</strong> 多くの開発者は、<code>git fetch</code>を使って変更を確認してから、明示的に<code>git merge</code>または<code>git rebase</code>を実行するワークフローを好みます。これにより、リモートの変更を統合する前に、その内容を理解し、潜在的な問題を特定する機会が得られます。</p>
+            <p><strong>ワークフロー例：</strong> 多くの開発者は、<code>git fetch</code>を使って変更を確認してから、明示的に<code>git
+                merge</code>または<code>git rebase</code>を実行するワークフローを好みます。これにより、リモートの変更を統合する前に、その内容を理解し、潜在的な問題を特定する機会が得られます。
+            </p>
         </div>
 
     </section>
 
     <div class="navigation-links">
         <a href="git_command.html">メインページに戻る</a> |
-        <a href="git_command_branch.html">前のカテゴリ: ブランチ関連のコマンド</a> | 
+        <a href="git_command_branch.html">前のカテゴリ: ブランチ関連のコマンド</a> |
         <a href="git_command_history.html">次のカテゴリ: 履歴と差分の確認</a>
     </div>
 

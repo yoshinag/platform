@@ -217,19 +217,19 @@ code {
     .container {
         padding: 10px;
     }
-    
+
     .tool-list {
         flex-direction: column;
     }
-    
+
     .tool-item {
         min-width: auto;
     }
-    
+
     .buttons {
         flex-direction: column;
     }
-    
+
     .buttons button, #copyBtn {
         width: 100%;
         margin-bottom: 5px;

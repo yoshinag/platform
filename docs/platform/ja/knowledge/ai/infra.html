@@ -1,67 +1,76 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <title>セキュリティと管理レベルに応じた利用形態の選択</title>
     <link rel="stylesheet" href="../../../../platform/css/knowledge.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body class="ja-knowledge">
-    <h1>セキュリティと管理レベルに応じた利用形態の選択</h1>
-    
-    <p>AIの管理は一つではありません。求めるセキュリティレベルや、自社でかけられる運用コストに応じて、以下の選択肢を検討できます。</p>
-    
-    <h3>レベル1：SaaS型AIサービスを利用する</h3>
-    <ul>
-        <li><strong>概要</strong>: OpenAIのChatGPTやGoogleのGeminiなど、WebブラウザやAPIを通じて手軽に利用できるサービス。</li>
-        <li><strong>メリット</strong>:
-            <ul>
-                <li>常に最新・最高レベルのAIモデルを利用できる。</li>
-                <li>インフラの管理が不要で、すぐに利用開始できる。</li>
-            </ul>
-        </li>
-        <li><strong>デメリット</strong>:
-            <ul>
-                <li>データがサービス提供者の管理する外部サーバー（MCPサーバー）を経由する。</li>
-                <li>カスタマイズの自由度が低い。</li>
-            </ul>
-        </li>
-    </ul>
-    
-    <h3>レベル2：既製のAIサーバーをIaaSとして構築する（推奨される中間案）</h3>
-    <ul>
-        <li><strong>概要</strong>: <strong>プライベートネットワーク上に、各社が提供するAI開発環境がプリインストールされた仮想マシンイメージを使って、自社専用のAIサーバーを構築する。</strong></li>
-        <li><strong>メリット</strong>:
-            <ul>
-                <li><strong>データは自社で契約するクラウドの仮想ネットワーク（VPC）内で処理され、SaaS型より格段に高いセキュリティを確保できる。</strong></li>
-                <li>オープンソースのAIモデルを自由に導入・チューニングできるなど、カスタマイズ性が高い。</li>
-            </ul>
-        </li>
-        <li><strong>デメリット</strong>:
-            <ul>
-                <li>サーバーのOSやソフトウェアのアップデートなど、インフラの維持管理責任が自社で発生する。</li>
-                <li>SaaSがそのような形式で提供されているとは限らないので選択肢が大幅に制限される。</li>
-            </ul>
-        </li>
-    </ul>
-    
-    <h3>レベル3：オンプレミスでAIサーバーを構築する</h3>
-    <ul>
-        <li><strong>概要</strong>: 自社内のデータセンターに物理的なサーバーを設置し、AI環境をゼロから構築する。</li>
-        <li><strong>メリット</strong>:
-            <ul>
-                <li><strong>情報が完全に組織内ネットワークで完結するため、セキュリティレベルが最も高い。</strong></li>
-            </ul>
-        </li>
-        <li><strong>デメリット</strong>:
-            <ul>
-                <li>高価なGPUサーバーの購入や設置場所の確保など、初期コストと運用負荷が非常に大きい。</li>
-                <li>構築・維持に高度な専門人材が不可欠。</li>
-            </ul>
-        </li>
-    </ul>
+<h1>セキュリティと管理レベルに応じた利用形態の選択</h1>
+
+<p>
+    AIの管理は一つではありません。求めるセキュリティレベルや、自社でかけられる運用コストに応じて、以下の選択肢を検討できます。</p>
+
+<h3>レベル1：SaaS型AIサービスを利用する</h3>
+<ul>
+    <li><strong>概要</strong>: OpenAIのChatGPTやGoogleのGeminiなど、WebブラウザやAPIを通じて手軽に利用できるサービス。
+    </li>
+    <li><strong>メリット</strong>:
+        <ul>
+            <li>常に最新・最高レベルのAIモデルを利用できる。</li>
+            <li>インフラの管理が不要で、すぐに利用開始できる。</li>
+        </ul>
+    </li>
+    <li><strong>デメリット</strong>:
+        <ul>
+            <li>データがサービス提供者の管理する外部サーバー（MCPサーバー）を経由する。</li>
+            <li>カスタマイズの自由度が低い。</li>
+        </ul>
+    </li>
+</ul>
+
+<h3>レベル2：既製のAIサーバーをIaaSとして構築する（推奨される中間案）</h3>
+<ul>
+    <li><strong>概要</strong>:
+        <strong>プライベートネットワーク上に、各社が提供するAI開発環境がプリインストールされた仮想マシンイメージを使って、自社専用のAIサーバーを構築する。</strong>
+    </li>
+    <li><strong>メリット</strong>:
+        <ul>
+            <li>
+                <strong>データは自社で契約するクラウドの仮想ネットワーク（VPC）内で処理され、SaaS型より格段に高いセキュリティを確保できる。</strong>
+            </li>
+            <li>オープンソースのAIモデルを自由に導入・チューニングできるなど、カスタマイズ性が高い。</li>
+        </ul>
+    </li>
+    <li><strong>デメリット</strong>:
+        <ul>
+            <li>サーバーのOSやソフトウェアのアップデートなど、インフラの維持管理責任が自社で発生する。</li>
+            <li>SaaSがそのような形式で提供されているとは限らないので選択肢が大幅に制限される。</li>
+        </ul>
+    </li>
+</ul>
+
+<h3>レベル3：オンプレミスでAIサーバーを構築する</h3>
+<ul>
+    <li><strong>概要</strong>: 自社内のデータセンターに物理的なサーバーを設置し、AI環境をゼロから構築する。</li>
+    <li><strong>メリット</strong>:
+        <ul>
+            <li><strong>情報が完全に組織内ネットワークで完結するため、セキュリティレベルが最も高い。</strong></li>
+        </ul>
+    </li>
+    <li><strong>デメリット</strong>:
+        <ul>
+            <li>高価なGPUサーバーの購入や設置場所の確保など、初期コストと運用負荷が非常に大きい。</li>
+            <li>構築・維持に高度な専門人材が不可欠。</li>
+        </ul>
+    </li>
+</ul>
 </body>
 </html>

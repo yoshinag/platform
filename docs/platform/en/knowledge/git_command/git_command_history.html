@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Git History and Diff Checking Commands Guide</title>
@@ -8,8 +12,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
@@ -19,14 +22,14 @@
     </div>
 
     <h1>Git History and Diff Checking Commands Guide</h1>
-    
+
     <section class="command-section">
         <h2>History and Diff Checking</h2>
-        
+
         <!-- git log command -->
         <h3>git log - Display Commit History</h3>
         <p>Displays the commit history of the repository.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option</th>
@@ -69,7 +72,7 @@
                 <td>Show commits older than specified date</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>git log</code> - Display commit history<br>
@@ -85,7 +88,7 @@
         <!-- git diff command -->
         <h3>git diff - Display Changes</h3>
         <p>Displays changes between files.</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>Option/Argument</th>
@@ -116,7 +119,7 @@
                 <td>Highlight changes at word level</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>Examples:</strong></p>
             <code>git diff</code> - Show differences between working directory and staging area<br>
@@ -129,7 +132,8 @@
 
         <!-- How to read diff output -->
         <h3>How to Read Diff Output</h3>
-        <p>Understanding the output of git diff commands is essential for accurately interpreting changes. Here's a guide to reading diff output.</p>
+        <p>Understanding the output of git diff commands is essential for accurately interpreting changes. Here's a
+            guide to reading diff output.</p>
 
         <div class="diff-explanation">
             <h4>Basic Structure of Diff Output</h4>
@@ -145,7 +149,9 @@ index hash1..hash2 mode
             </pre>
 
             <ul>
-                <li><strong>diff --git a/filename b/filename</strong>: Shows the files being compared. 'a' is the original file, 'b' is the modified file.</li>
+                <li><strong>diff --git a/filename b/filename</strong>: Shows the files being compared. 'a' is the
+                    original file, 'b' is the modified file.
+                </li>
                 <li><strong>index hash1..hash2 mode</strong>: Shows the object IDs and file mode.</li>
                 <li><strong>--- a/filename</strong>: Indicates the original file.</li>
                 <li><strong>+++ b/filename</strong>: Indicates the modified file.</li>
@@ -191,7 +197,7 @@ index abc1234..def5678 100644
 
     <div class="navigation-links">
         <a href="git_command.html">Return to Main Page</a> |
-        <a href="git_command_remote.html">Previous Category: Remote Repository Operations</a> | 
+        <a href="git_command_remote.html">Previous Category: Remote Repository Operations</a> |
         <a href="git_command_stash.html">Next Category: Temporary Storage and Work Restoration</a>
     </div>
 

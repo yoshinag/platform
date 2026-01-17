@@ -1,5 +1,5 @@
 // js/mermaid_viewer/mermaid_viewer.js
-import { initializeApp } from './modules/app_initializer.js';
+import {initializeApp} from './modules/app_initializer.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     initializeApp().catch(err => {

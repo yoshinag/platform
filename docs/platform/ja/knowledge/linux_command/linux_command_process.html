@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Linuxプロセス管理コマンド解説</title>
@@ -8,8 +12,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
@@ -19,16 +22,16 @@
     </div>
 
     <h1>Linuxプロセス管理コマンド解説</h1>
-    
+
     <!-- プロセス管理コマンド -->
     <section id="process" class="command-section">
         <h2>プロセス管理コマンド</h2>
         <p>プロセスの表示、監視、制御などを行うコマンドです。</p>
-        
+
         <!-- ps コマンド -->
         <h3>ps - プロセスの表示</h3>
         <p>実行中のプロセスを表示します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -63,7 +66,7 @@
                 <td>出力フォーマットをカスタマイズ</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>ps</code> - 現在のターミナルのプロセスを表示<br>
@@ -81,7 +84,7 @@
         <!-- top コマンド -->
         <h3>top - プロセスのリアルタイム監視</h3>
         <p>システムのプロセスをリアルタイムで監視します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション/キー</th>
@@ -120,7 +123,7 @@
                 <td>topを終了（実行中にqキーを押す）</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>top</code> - プロセスをリアルタイムで監視<br>
@@ -137,7 +140,7 @@
         <!-- htop コマンド -->
         <h3>htop - 拡張プロセスビューア</h3>
         <p>topの拡張版で、より使いやすいインターフェースを提供します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>キー</th>
@@ -168,7 +171,7 @@
                 <td>設定メニューを表示</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>htop</code> - htopを起動<br>
@@ -184,7 +187,7 @@
         <!-- kill コマンド -->
         <h3>kill - プロセスの終了</h3>
         <p>指定したプロセスIDのプロセスにシグナルを送信します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション/シグナル</th>
@@ -211,7 +214,7 @@
                 <td>TERM（終了）シグナル - デフォルトのシグナル、プロセスに正常終了を要求</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>kill 1234</code> - プロセスID 1234のプロセスに終了シグナル（TERM）を送信<br>
@@ -227,7 +230,7 @@
         <!-- killall コマンド -->
         <h3>killall - 名前でプロセスを終了</h3>
         <p>指定した名前のすべてのプロセスにシグナルを送信します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -254,7 +257,7 @@
                 <td>詳細な情報を表示</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>killall firefox</code> - すべてのfirefoxプロセスを終了<br>
@@ -269,8 +272,9 @@
 
         <!-- nice/renice コマンド -->
         <h3>nice/renice - プロセスの優先度の設定・変更</h3>
-        <p>プロセスの実行優先度（nice値）を設定または変更します。nice値は-20（最高優先度）から19（最低優先度）までの範囲で、デフォルトは0です。</p>
-        
+        <p>
+            プロセスの実行優先度（nice値）を設定または変更します。nice値は-20（最高優先度）から19（最低優先度）までの範囲で、デフォルトは0です。</p>
+
         <table class="command-table">
             <tr>
                 <th>コマンド/オプション</th>
@@ -289,7 +293,7 @@
                 <td>指定したユーザーのすべてのプロセスの優先度を変更</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>nice -n 10 ./script.sh</code> - 低い優先度（10）でスクリプトを実行<br>
@@ -306,7 +310,7 @@
         <!-- nohup コマンド -->
         <h3>nohup - ログアウト後もプロセスを実行</h3>
         <p>ターミナルを閉じたりログアウトしたりしても、プロセスを継続して実行します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>構文</th>
@@ -317,7 +321,7 @@
                 <td>コマンドをバックグラウンドで実行し、ターミナルを閉じても継続して実行</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>nohup ./long_running_script.sh &</code> - スクリプトをバックグラウンドで実行し、ログアウト後も継続<br>
@@ -335,7 +339,7 @@
         <!-- bg/fg コマンド -->
         <h3>bg/fg - バックグラウンド/フォアグラウンドでのジョブ制御</h3>
         <p>ジョブをバックグラウンドまたはフォアグラウンドで実行します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>コマンド</th>
@@ -370,7 +374,7 @@
                 <td>バックグラウンドジョブの一覧を表示</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>./long_script.sh &</code> - スクリプトをバックグラウンドで実行<br>
@@ -387,8 +391,8 @@
     </section>
 
     <div class="navigation-links">
-        <a href="linux_command_network.html">前のカテゴリ: ネットワーク</a> | 
-        <a href="linux_command.html">メインページに戻る</a> | 
+        <a href="linux_command_network.html">前のカテゴリ: ネットワーク</a> |
+        <a href="linux_command.html">メインページに戻る</a> |
         <a href="linux_command_permission.html">次のカテゴリ: 権限管理</a>
     </div>
 

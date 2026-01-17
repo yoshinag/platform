@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Back to top button functionality
     const backToTopButton = document.getElementById('back-to-top');
 
@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
         backToTopButton.style.display = 'none';
 
         // Show/hide button based on scroll position
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             if (window.pageYOffset > 300) {
                 backToTopButton.style.display = 'block';
             } else {
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Scroll to top when button is clicked
-        backToTopButton.addEventListener('click', function() {
+        backToTopButton.addEventListener('click', function () {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.navigation-links a');
 
     navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             // Only apply smooth scrolling for links to the same page
             if (this.getAttribute('href').startsWith('#')) {
                 e.preventDefault();
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const outputText = document.getElementById('outputText');
 
     if (copyBtn && outputText) {
-        copyBtn.addEventListener('click', function() {
+        copyBtn.addEventListener('click', function () {
             outputText.select();
             document.execCommand('copy');
 

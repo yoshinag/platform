@@ -115,7 +115,7 @@ body.graph-view-fullscreen #graph-container {
     padding: 15px !important; /* Slightly reduced padding to maximize display area */
     margin: 0 !important;
     min-height: 0 !important; /* Override original min-height */
-    
+
     /* Ensure content is centered */
     display: flex !important;
     justify-content: center !important;
@@ -142,7 +142,7 @@ body.graph-view-fullscreen .global-controls {
     background-color: rgba(40, 40, 40, 0.7); /* Slightly more opaque for better visibility */
     padding: 8px;
     border-radius: 4px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     text-align: right;
     margin-bottom: 0; /* Override original margin */
     opacity: 0.9; /* Default opacity */
@@ -163,6 +163,7 @@ body.graph-view-fullscreen .global-controls #toggle-all-panels-btn {
 body.graph-view-fullscreen #toggle-fullscreen-btn {
     background-color: #dc3545; /* "Exit" color (e.g., red) */
 }
+
 body.graph-view-fullscreen #toggle-fullscreen-btn:hover {
     background-color: #c82333;
 }

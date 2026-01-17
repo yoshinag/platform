@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Linux権限管理コマンド解説</title>
@@ -8,8 +12,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
@@ -19,16 +22,16 @@
     </div>
 
     <h1>Linux権限管理コマンド解説</h1>
-    
+
     <!-- 権限管理コマンド -->
     <section id="permissions" class="command-section">
         <h2>権限管理コマンド</h2>
         <p>ファイルやディレクトリの所有者や権限を管理するコマンドです。</p>
-        
+
         <!-- chmod コマンド -->
         <h3>chmod - ファイル・ディレクトリの権限変更</h3>
         <p>ファイルやディレクトリのアクセス権限を変更します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>構文/オプション</th>
@@ -51,7 +54,7 @@
                 <td>指定したファイルと同じ権限に設定</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>数値モード（8進数）:</strong></p>
             <code>chmod 755 file.txt</code> - 所有者に読み書き実行権限、グループとその他に読み実行権限を付与<br>
@@ -61,7 +64,7 @@
             <code>chmod 440 /etc/sudoers</code> - sudoersファイルをroot所有者とsudoグループのみが読み取り可能に設定<br>
             <code>find . -type f -name "*.sh" -exec chmod 755 {} \;</code> - すべてのシェルスクリプトに実行権限を付与
         </div>
-        
+
         <div class="example">
             <p><strong>シンボリックモード:</strong></p>
             <code>chmod u+x file.txt</code> - 所有者に実行権限を追加<br>
@@ -69,10 +72,11 @@
             <code>chmod o=r file.txt</code> - その他のユーザーに読み取り権限のみを設定<br>
             <code>chmod a+r file.txt</code> - すべてのユーザーに読み取り権限を追加<br>
             <code>chmod u+x,g+x,o-rwx script.sh</code> - 所有者とグループに実行権限を追加し、その他のユーザーからすべての権限を削除<br>
-            <code>chmod -R g+rX directory/</code> - ディレクトリとその中のファイルにグループ読み取り権限を追加し、ディレクトリにのみ実行権限を追加（大文字Xはディレクトリまたは既に実行権限があるファイルにのみ適用）<br>
+            <code>chmod -R g+rX directory/</code> -
+            ディレクトリとその中のファイルにグループ読み取り権限を追加し、ディレクトリにのみ実行権限を追加（大文字Xはディレクトリまたは既に実行権限があるファイルにのみ適用）<br>
             <code>find . -type d -exec chmod g+s {} \;</code> - すべてのディレクトリにSGIDビットを設定（新しく作成されるファイルが親ディレクトリのグループを継承）
         </div>
-        
+
         <div class="note">
             <p><strong>権限の数値表現:</strong></p>
             <ul>
@@ -87,7 +91,7 @@
         <!-- chown コマンド -->
         <h3>chown - ファイル・ディレクトリの所有者変更</h3>
         <p>ファイルやディレクトリの所有者やグループを変更します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>構文/オプション</th>
@@ -118,23 +122,26 @@
                 <td>指定したファイルと同じ所有者とグループに設定</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>sudo chown user1 file.txt</code> - ファイルの所有者をuser1に変更<br>
             <code>sudo chown user1:group1 file.txt</code> - ファイルの所有者をuser1、グループをgroup1に変更<br>
             <code>sudo chown :group1 file.txt</code> - ファイルのグループのみをgroup1に変更<br>
-            <code>sudo chown -R user1:group1 directory</code> - ディレクトリとその中身の所有者とグループを再帰的に変更<br>
-            <code>sudo chown --reference=ref_file.txt target_file.txt</code> - 参照ファイルと同じ所有者とグループに設定<br>
+            <code>sudo chown -R user1:group1 directory</code> -
+            ディレクトリとその中身の所有者とグループを再帰的に変更<br>
+            <code>sudo chown --reference=ref_file.txt target_file.txt</code> -
+            参照ファイルと同じ所有者とグループに設定<br>
             <code>find /var/www -type f -exec sudo chown www-data:www-data {} \;</code> - Webサーバーのファイルの所有者を適切に設定<br>
             <code>sudo chown -R $(whoami) ~/.config</code> - 設定ディレクトリの所有権を現在のユーザーに変更<br>
-            <code>sudo find /home/user -not -user user -exec chown user:user {} \;</code> - ユーザーのホームディレクトリ内で所有者が異なるファイルを修正
+            <code>sudo find /home/user -not -user user -exec chown user:user {} \;</code> -
+            ユーザーのホームディレクトリ内で所有者が異なるファイルを修正
         </div>
 
         <!-- chgrp コマンド -->
         <h3>chgrp - ファイル・ディレクトリのグループ変更</h3>
         <p>ファイルやディレクトリのグループを変更します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>構文/オプション</th>
@@ -157,7 +164,7 @@
                 <td>指定したファイルと同じグループに設定</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>sudo chgrp group1 file.txt</code> - ファイルのグループをgroup1に変更<br>
@@ -172,7 +179,7 @@
         <!-- umask コマンド -->
         <h3>umask - デフォルトのファイル作成権限マスクの設定</h3>
         <p>新しく作成されるファイルやディレクトリのデフォルト権限を制御します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>構文/オプション</th>
@@ -191,7 +198,7 @@
                 <td>シンボリックモードで表示</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>umask</code> - 現在のumask値を表示（例: 0022）<br>
@@ -203,7 +210,7 @@
             <code>( umask 077 && touch secret.txt )</code> - 一時的にumaskを変更して安全なファイルを作成<br>
             <code>umask -p</code> - シェルスクリプトで使用可能な形式で現在のumask値を表示
         </div>
-        
+
         <div class="note">
             <p><strong>umaskの計算方法:</strong></p>
             <p>ファイルの最大権限は666（rw-rw-rw-）、ディレクトリの最大権限は777（rwxrwxrwx）です。</p>
@@ -218,7 +225,7 @@
         <!-- getfacl/setfacl コマンド -->
         <h3>getfacl/setfacl - アクセス制御リスト（ACL）の管理</h3>
         <p>より詳細なアクセス制御リスト（ACL）を表示・設定します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>コマンド/オプション</th>
@@ -249,7 +256,7 @@
                 <td>ディレクトリとその中身に再帰的に適用</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>getfacl file.txt</code> - ファイルのACLを表示<br>
@@ -267,7 +274,7 @@
         <!-- sudo コマンド -->
         <h3>sudo - 特権コマンドの実行</h3>
         <p>他のユーザー（通常はroot）の権限でコマンドを実行します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -298,7 +305,7 @@
                 <td>タイムスタンプを無効化（次回のsudoで再認証が必要）</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>sudo apt update</code> - rootとしてaptコマンドを実行<br>
@@ -315,8 +322,8 @@
     </section>
 
     <div class="navigation-links">
-        <a href="linux_command_process.html">前のカテゴリ: プロセス管理</a> | 
-        <a href="linux_command.html">メインページに戻る</a> | 
+        <a href="linux_command_process.html">前のカテゴリ: プロセス管理</a> |
+        <a href="linux_command.html">メインページに戻る</a> |
         <a href="linux_command_archive.html">次のカテゴリ: アーカイブ</a>
     </div>
 

@@ -1,15 +1,22 @@
 <!doctype html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../platform/js/common/analytics.js"></script>
+
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>醸造台レシピ一覧（Java版） | マインクラフト攻略・レシピ集</title>
-    <meta name="description" content="Minecraft(Java版)の醸造台で作れるポーション(錬金)のレシピを、基本の流れ・ベースポーション・代表レシピ・強化/延長・投擲/残留・クイック表・FAQまで簡潔に整理。1.20+ 基準。">
-    <meta name="keywords" content="マインクラフト, Minecraft, ポーション, 醸造台, レシピ, 俊敏, 跳躍, 耐火, 水中呼吸, 力, 再生, 治癒, 低速落下, 弱化, タートルマスター">
+    <meta name="description"
+          content="Minecraft(Java版)の醸造台で作れるポーション(錬金)のレシピを、基本の流れ・ベースポーション・代表レシピ・強化/延長・投擲/残留・クイック表・FAQまで簡潔に整理。1.20+ 基準。">
+    <meta name="keywords"
+          content="マインクラフト, Minecraft, ポーション, 醸造台, レシピ, 俊敏, 跳躍, 耐火, 水中呼吸, 力, 再生, 治癒, 低速落下, 弱化, タートルマスター">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
+          rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 
 
@@ -26,7 +33,8 @@
                 } else {
                     root.removeAttribute('data-theme');
                 }
-            } catch (e) {}
+            } catch (e) {
+            }
         })();
     </script>
 
@@ -41,7 +49,8 @@
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="醸造台レシピ一覧（Java版）">
-    <meta property="og:description" content="Java版マインクラフトのポーション醸造レシピ早見表。基本の流れ、主要レシピ、強化/延長、スプラッシュ/残留、クイック表、FAQ。">
+    <meta property="og:description"
+          content="Java版マインクラフトのポーション醸造レシピ早見表。基本の流れ、主要レシピ、強化/延長、スプラッシュ/残留、クイック表、FAQ。">
     <meta property="og:url" content="./brewing_recipes.html">
     <meta property="og:image" content="https://static.mcer.assets.example/og-minecraft.png">
 
@@ -50,18 +59,63 @@
             "@context": "https://schema.org",
             "@type": "Article",
             "headline": "醸造台レシピ一覧（Java版）",
-            "about": ["Minecraft", "醸造台", "ポーション", "レシピ"],
-            "author": {"@type": "Organization", "name": "Minecraft Guide"},
-            "mainEntityOfPage": {"@type": "WebPage", "@id": "./brewing_recipes.html"}
+            "about": [
+                "Minecraft",
+                "醸造台",
+                "ポーション",
+                "レシピ"
+            ],
+            "author": {
+                "@type": "Organization",
+                "name": "Minecraft Guide"
+            },
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "./brewing_recipes.html"
+            }
         }
     </script>
 
     <style>
-        html { scroll-behavior: smooth; }
-        .page-container { max-width: 1100px; margin: 0 auto; padding: 16px; }
-        .hero { display: grid; gap: 12px; padding: 16px; background: var(--md-sys-color-inverse-on-surface); border: var(--mc-border); position: relative; border-radius: var(--radius-s); }
-        .hero::after { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 2px solid rgba(255,255,255,0.2); pointer-events: none; }
-        .hero h1 { margin: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 8px; }
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .page-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        .hero {
+            display: grid;
+            gap: 12px;
+            padding: 16px;
+            background: var(--md-sys-color-inverse-on-surface);
+            border: var(--mc-border);
+            position: relative;
+            border-radius: var(--radius-s);
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         .btn {
             display: inline-flex;
             align-items: center;
@@ -79,35 +133,152 @@
             font-weight: bold;
             border-radius: var(--radius-s);
         }
-        .btn:hover { background: #d6d6d6; }
-        .btn:active { border-top: 2px solid var(--mc-panel-shadow); border-left: 2px solid var(--mc-panel-shadow); border-bottom: 2px solid var(--mc-panel-light); border-right: 2px solid var(--mc-panel-light); }
-        .breadcrumbs { display:flex; align-items:center; gap:6px; padding:8px 0; color: var(--md-sys-color-outline); }
-        .breadcrumbs a { color: inherit; text-decoration: none; }
-        .section { margin-top: 24px; }
+
+        .btn:hover {
+            background: #d6d6d6;
+        }
+
+        .btn:active {
+            border-top: 2px solid var(--mc-panel-shadow);
+            border-left: 2px solid var(--mc-panel-shadow);
+            border-bottom: 2px solid var(--mc-panel-light);
+            border-right: 2px solid var(--mc-panel-light);
+        }
+
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 0;
+            color: var(--md-sys-color-outline);
+        }
+
+        .breadcrumbs a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .section {
+            margin-top: 24px;
+        }
 
         /* Layout with right TOC */
-        .page-layout { display: grid; grid-template-columns: 1fr 260px; gap: 24px; align-items: start; }
-        .article { min-width: 0; }
-        .toc { position: sticky; top: 72px; background: var(--md-sys-color-inverse-on-surface); border: var(--mc-border); border-radius: var(--radius-s); padding: 12px; }
-        .toc h2 { margin: 0 0 8px; font-size: 1rem; display:flex; align-items:center; gap:6px; }
-        .toc ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
-        .toc a { color: var(--md-sys-color-on-surface); text-decoration: none; display:block; padding:6px 8px; border-radius: var(--radius-s); }
-        .toc a:hover { background: color-mix(in oklab, var(--md-sys-color-primary) 10%, transparent); }
-        .toc .lvl-3 { padding-left: 16px; font-size: .95em; opacity: .9; }
-        @media (max-width: 1023px) { .page-layout { grid-template-columns: 1fr; } .toc { display:none; } }
+        .page-layout {
+            display: grid;
+            grid-template-columns: 1fr 260px;
+            gap: 24px;
+            align-items: start;
+        }
 
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid var(--md-sys-color-outline); padding: 6px 8px; }
-        thead th { background: var(--md-sys-color-surface-variant); }
+        .article {
+            min-width: 0;
+        }
+
+        .toc {
+            position: sticky;
+            top: 72px;
+            background: var(--md-sys-color-inverse-on-surface);
+            border: var(--mc-border);
+            border-radius: var(--radius-s);
+            padding: 12px;
+        }
+
+        .toc h2 {
+            margin: 0 0 8px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 4px;
+        }
+
+        .toc a {
+            color: var(--md-sys-color-on-surface);
+            text-decoration: none;
+            display: block;
+            padding: 6px 8px;
+            border-radius: var(--radius-s);
+        }
+
+        .toc a:hover {
+            background: color-mix(in oklab, var(--md-sys-color-primary) 10%, transparent);
+        }
+
+        .toc .lvl-3 {
+            padding-left: 16px;
+            font-size: .95em;
+            opacity: .9;
+        }
+
+        @media (max-width: 1023px) {
+            .page-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .toc {
+                display: none;
+            }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid var(--md-sys-color-outline);
+            padding: 6px 8px;
+        }
+
+        thead th {
+            background: var(--md-sys-color-surface-variant);
+        }
 
         /* Callout (note) */
-        .callout { display:flex; gap:10px; align-items:flex-start; padding:10px 12px; border: var(--mc-border); border-radius: var(--radius-s); background: var(--md-sys-color-inverse-on-surface); }
-        .callout__icon { color: var(--md-sys-color-primary); }
-        .callout__content { line-height: 1.6; }
-        .callout__title { margin: 0 0 2px; font-weight: 600; font-size: .98rem; }
-        .callout__text { margin: 0; color: var(--md-sys-color-on-surface); }
-        .callout--info { }
-        .callout a { color: var(--md-sys-color-primary); text-decoration: underline; text-underline-offset: 2px; }
+        .callout {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            padding: 10px 12px;
+            border: var(--mc-border);
+            border-radius: var(--radius-s);
+            background: var(--md-sys-color-inverse-on-surface);
+        }
+
+        .callout__icon {
+            color: var(--md-sys-color-primary);
+        }
+
+        .callout__content {
+            line-height: 1.6;
+        }
+
+        .callout__title {
+            margin: 0 0 2px;
+            font-weight: 600;
+            font-size: .98rem;
+        }
+
+        .callout__text {
+            margin: 0;
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .callout--info {
+        }
+
+        .callout a {
+            color: var(--md-sys-color-primary);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
     </style>
 </head>
 <body>
@@ -123,9 +294,11 @@
             <span class="material-icons-outlined" aria-hidden="true">science</span>
             醸造台レシピ一覧（Java版）
         </h1>
-        <p>Java 版マインクラフトの「醸造台」で作れるポーション（錬金）レシピの早見表。基本の流れから代表レシピ、強化/延長、スプラッシュ/残留、FAQ まで。</p>
+        <p>Java 版マインクラフトの「醸造台」で作れるポーション（錬金）レシピの早見表。基本の流れから代表レシピ、強化/延長、スプラッシュ/残留、FAQ
+            まで。</p>
         <div>
-            <a class="btn" href="#quick"><span class="material-icons-outlined" aria-hidden="true">table_chart</span> クイックガイド</a>
+            <a class="btn" href="#quick"><span class="material-icons-outlined" aria-hidden="true">table_chart</span>
+                クイックガイド</a>
             <a class="btn" href="#flow"><span class="material-icons-outlined" aria-hidden="true">route</span> 基本の流れ</a>
         </div>
     </section>
@@ -139,50 +312,129 @@
                     <div class="callout__content">
                         <p class="callout__title">クイックガイドについて</p>
                         <p class="callout__text">ベースとなるポーション別に整理しています。</p>
-                        <p class="callout__text">細かい手順は省略しているので、詳細は <a href="#flow">基本の流れ</a> を参照してください。</p>
+                        <p class="callout__text">細かい手順は省略しているので、詳細は <a href="#flow">基本の流れ</a>
+                            を参照してください。</p>
                     </div>
                 </div>
                 <div class="table-wrap">
                     <h3 id="quick-awkward">奇妙なポーション（Awkward）ベース</h3>
                     <table>
                         <thead>
-                            <tr>
-                                <th>ポーション</th>
-                                <th>素材</th>
-                                <th>基本</th>
-                                <th>強化</th>
-                                <th>延長</th>
-                            </tr>
+                        <tr>
+                            <th>ポーション</th>
+                            <th>素材</th>
+                            <th>基本</th>
+                            <th>強化</th>
+                            <th>延長</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr><td>暗視</td><td>金のニンジン</td><td>3:00</td><td>—</td><td>8:00</td></tr>
-                            <tr><td>俊敏</td><td>砂糖</td><td>3:00</td><td>1:30（II）</td><td>8:00</td></tr>
-                            <tr><td>跳躍</td><td>ウサギの足</td><td>3:00</td><td>1:30（II）</td><td>8:00</td></tr>
-                            <tr><td>耐火</td><td>マグマクリーム</td><td>3:00</td><td>—</td><td>8:00</td></tr>
-                            <tr><td>水中呼吸</td><td>フグ</td><td>3:00</td><td>—</td><td>8:00</td></tr>
-                            <tr><td>力</td><td>ブレイズパウダー</td><td>3:00</td><td>1:30（II）</td><td>8:00</td></tr>
-                            <tr><td>再生</td><td>ガストの涙</td><td>0:45</td><td>0:22（II）</td><td>1:30</td></tr>
-                            <tr><td>治癒（即時）</td><td>きらめくスイカ</td><td>即時</td><td>即時（II）</td><td>—</td></tr>
-                            <tr><td>低速落下</td><td>ファントムの皮膜</td><td>1:30</td><td>—</td><td>4:00</td></tr>
-                            <tr><td>タートルマスター</td><td>カメの甲羅</td><td>0:20（I）</td><td>0:20（II）</td><td>0:40（I）</td></tr>
-                            <tr><td>毒</td><td>クモの目</td><td>0:45</td><td>0:22（II）</td><td>1:30</td></tr>
-                            <tr><td>虫食い</td><td>石</td><td>3:00（I）</td><td>—</td><td>—</td></tr>
+                        <tr>
+                            <td>暗視</td>
+                            <td>金のニンジン</td>
+                            <td>3:00</td>
+                            <td>—</td>
+                            <td>8:00</td>
+                        </tr>
+                        <tr>
+                            <td>俊敏</td>
+                            <td>砂糖</td>
+                            <td>3:00</td>
+                            <td>1:30（II）</td>
+                            <td>8:00</td>
+                        </tr>
+                        <tr>
+                            <td>跳躍</td>
+                            <td>ウサギの足</td>
+                            <td>3:00</td>
+                            <td>1:30（II）</td>
+                            <td>8:00</td>
+                        </tr>
+                        <tr>
+                            <td>耐火</td>
+                            <td>マグマクリーム</td>
+                            <td>3:00</td>
+                            <td>—</td>
+                            <td>8:00</td>
+                        </tr>
+                        <tr>
+                            <td>水中呼吸</td>
+                            <td>フグ</td>
+                            <td>3:00</td>
+                            <td>—</td>
+                            <td>8:00</td>
+                        </tr>
+                        <tr>
+                            <td>力</td>
+                            <td>ブレイズパウダー</td>
+                            <td>3:00</td>
+                            <td>1:30（II）</td>
+                            <td>8:00</td>
+                        </tr>
+                        <tr>
+                            <td>再生</td>
+                            <td>ガストの涙</td>
+                            <td>0:45</td>
+                            <td>0:22（II）</td>
+                            <td>1:30</td>
+                        </tr>
+                        <tr>
+                            <td>治癒（即時）</td>
+                            <td>きらめくスイカ</td>
+                            <td>即時</td>
+                            <td>即時（II）</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td>低速落下</td>
+                            <td>ファントムの皮膜</td>
+                            <td>1:30</td>
+                            <td>—</td>
+                            <td>4:00</td>
+                        </tr>
+                        <tr>
+                            <td>タートルマスター</td>
+                            <td>カメの甲羅</td>
+                            <td>0:20（I）</td>
+                            <td>0:20（II）</td>
+                            <td>0:40（I）</td>
+                        </tr>
+                        <tr>
+                            <td>毒</td>
+                            <td>クモの目</td>
+                            <td>0:45</td>
+                            <td>0:22（II）</td>
+                            <td>1:30</td>
+                        </tr>
+                        <tr>
+                            <td>虫食い</td>
+                            <td>石</td>
+                            <td>3:00（I）</td>
+                            <td>—</td>
+                            <td>—</td>
+                        </tr>
                         </tbody>
                     </table>
 
                     <h3 id="quick-water">水の瓶（ネザーウォート不要）ベース</h3>
                     <table>
                         <thead>
-                            <tr>
-                                <th>ポーション</th>
-                                <th>素材</th>
-                                <th>基本</th>
-                                <th>強化</th>
-                                <th>延長</th>
-                            </tr>
+                        <tr>
+                            <th>ポーション</th>
+                            <th>素材</th>
+                            <th>基本</th>
+                            <th>強化</th>
+                            <th>延長</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr><td>弱化</td><td>発酵したクモの目</td><td>1:30</td><td>—</td><td>4:00</td></tr>
+                        <tr>
+                            <td>弱化</td>
+                            <td>発酵したクモの目</td>
+                            <td>1:30</td>
+                            <td>—</td>
+                            <td>4:00</td>
+                        </tr>
                         </tbody>
                     </table>
 
@@ -209,23 +461,44 @@
                     <div class="table-wrap">
                         <table>
                             <thead>
-                                <tr>
-                                    <th>変換で得られるポーション</th>
-                                    <th>基本</th>
-                                    <th>強化</th>
-                                    <th>延長</th>
-                                </tr>
+                            <tr>
+                                <th>変換で得られるポーション</th>
+                                <th>基本</th>
+                                <th>強化</th>
+                                <th>延長</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr><td>透明化</td><td>3:00</td><td>—</td><td>8:00</td></tr>
-                                <tr><td>鈍化</td><td>1:30</td><td>0:20（II）</td><td>4:00</td></tr>
-                                <tr><td>負傷（即時）</td><td>即時</td><td>即時（II）</td><td>—</td></tr>
-                                <tr><td>弱化</td><td>1:30</td><td>—</td><td>4:00</td></tr>
+                            <tr>
+                                <td>透明化</td>
+                                <td>3:00</td>
+                                <td>—</td>
+                                <td>8:00</td>
+                            </tr>
+                            <tr>
+                                <td>鈍化</td>
+                                <td>1:30</td>
+                                <td>0:20（II）</td>
+                                <td>4:00</td>
+                            </tr>
+                            <tr>
+                                <td>負傷（即時）</td>
+                                <td>即時</td>
+                                <td>即時（II）</td>
+                                <td>—</td>
+                            </tr>
+                            <tr>
+                                <td>弱化</td>
+                                <td>1:30</td>
+                                <td>—</td>
+                                <td>4:00</td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <p class="note">注: スプラッシュ/残留にすると効果時間は短くなります（スプラッシュ ≒ 0.75x、残留はさらに減少）。</p>
+                    <p class="note">注: スプラッシュ/残留にすると効果時間は短くなります（スプラッシュ ≒
+                        0.75x、残留はさらに減少）。</p>
                 </div>
             </section>
             <section class="section" id="flow">
@@ -254,7 +527,8 @@
                 <h2>ベースポーション</h2>
                 <ul>
                     <li>奇妙なポーション（Awkward）: 水入り瓶 + ネザーウォート</li>
-                    <li>むらさきのポーション（Mundane）: 水入り瓶 + 砂糖/きらめくスイカ/マグマクリーム 等（用途ほぼなし）</li>
+                    <li>むらさきのポーション（Mundane）: 水入り瓶 + 砂糖/きらめくスイカ/マグマクリーム 等（用途ほぼなし）
+                    </li>
                     <li>濃厚なポーション（Thick）: 水入り瓶 + グロウストーンダスト（用途ほぼなし）</li>
                 </ul>
             </section>
@@ -262,9 +536,15 @@
             <section class="section" id="faq">
                 <h2>よくある質問（FAQ）</h2>
                 <ul>
-                    <li><strong>Q.</strong> ネザーウォートを忘れたら？<br><strong>A.</strong> 多くの目的ポーションは 奇妙なポーション が必要。まず 奇妙なポーション を作ってから素材を投入してください。</li>
-                    <li><strong>Q.</strong> どの順で後処理すべき？<br><strong>A.</strong> 強化/延長 → スプラッシュ → 残留 の順。スプラッシュ化後に強化/延長はできません。</li>
-                    <li><strong>Q.</strong> 統合版と違いは？<br><strong>A.</strong> 一部レシピや時間、効果範囲に差異があります。本表は Java 版基準です。</li>
+                    <li><strong>Q.</strong> ネザーウォートを忘れたら？<br><strong>A.</strong> 多くの目的ポーションは
+                        奇妙なポーション が必要。まず 奇妙なポーション を作ってから素材を投入してください。
+                    </li>
+                    <li><strong>Q.</strong> どの順で後処理すべき？<br><strong>A.</strong> 強化/延長 → スプラッシュ → 残留
+                        の順。スプラッシュ化後に強化/延長はできません。
+                    </li>
+                    <li><strong>Q.</strong> 統合版と違いは？<br><strong>A.</strong> 一部レシピや時間、効果範囲に差異があります。本表は
+                        Java 版基準です。
+                    </li>
                 </ul>
             </section>
 

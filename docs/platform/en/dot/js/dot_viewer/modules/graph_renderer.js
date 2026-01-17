@@ -1,7 +1,7 @@
 // js/dot_viewer/modules/graph_renderer.js
-import { graphContainer, codeInput } from './dom_elements.js';
+import {graphContainer, codeInput} from './dom_elements.js';
 import * as state from './state.js';
-import { getSelectedNotation } from './graph_utils.js';
+import {getSelectedNotation} from './graph_utils.js';
 
 export function initializeVizInstance() {
     if (typeof Viz === 'undefined') {
@@ -23,7 +23,7 @@ export function initializeVizInstance() {
 
 export function initializeMermaid() {
     if (typeof mermaid !== 'undefined') {
-        mermaid.initialize({ startOnLoad: false, theme: 'default' });
+        mermaid.initialize({startOnLoad: false, theme: 'default'});
     } else {
         console.warn("Mermaid.js is not loaded.");
     }
@@ -62,7 +62,7 @@ export async function renderGraph() {
         try {
             const uniqueId = 'mermaid-graph-' + Date.now();
             graphContainer.innerHTML = '';
-            const { svg, bindFunctions } = await mermaid.render(uniqueId, code);
+            const {svg, bindFunctions} = await mermaid.render(uniqueId, code);
             graphContainer.innerHTML = svg;
             if (bindFunctions) bindFunctions(graphContainer);
         } catch (error) {

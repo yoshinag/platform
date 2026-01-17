@@ -1,118 +1,126 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <title>Cloud Security Command Center</title>
     <link rel="stylesheet" href="../../../../css/knowledge.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../../js/common/analytics.js"></script>
+
 <body class="ja-knowledge">
-    <div style="margin-bottom: 20px;">
-        <a href="../google_cloud.html">Google Cloud Platformに戻る</a>
-    </div>
-    <h1>Cloud Security Command Center</h1>
-    
-    <h2>Cloud Security Command Centerとは</h2>
-    <p>Cloud Security Command Center（Security Command Center）は、Google Cloud Platform (GCP) が提供するセキュリティおよびリスク管理プラットフォームです。GCPリソースのセキュリティ状態を可視化し、脆弱性、脅威、コンプライアンス違反などのセキュリティリスクを検出、調査、修正するための統合ダッシュボードを提供します。Security Command Centerを使用することで、組織のクラウド環境を保護し、セキュリティ体制を強化することができます。</p>
-    
-    <h2>Cloud Security Command Centerの主な特徴</h2>
+<div style="margin-bottom: 20px;">
+    <a href="../google_cloud.html">Google Cloud Platformに戻る</a>
+</div>
+<h1>Cloud Security Command Center</h1>
+
+<h2>Cloud Security Command Centerとは</h2>
+<p>Cloud Security Command Center（Security Command Center）は、Google Cloud Platform (GCP)
+    が提供するセキュリティおよびリスク管理プラットフォームです。GCPリソースのセキュリティ状態を可視化し、脆弱性、脅威、コンプライアンス違反などのセキュリティリスクを検出、調査、修正するための統合ダッシュボードを提供します。Security
+    Command Centerを使用することで、組織のクラウド環境を保護し、セキュリティ体制を強化することができます。</p>
+
+<h2>Cloud Security Command Centerの主な特徴</h2>
+<ul>
+    <li><strong>セキュリティ状態の可視化：</strong> GCPリソースのセキュリティ状態を包括的に可視化</li>
+    <li><strong>脆弱性の検出：</strong> アプリケーションやインフラストラクチャの脆弱性を検出</li>
+    <li><strong>脅威の検出：</strong> 不審なアクティビティや潜在的な脅威を特定</li>
+    <li><strong>コンプライアンス監視：</strong> 業界標準やベストプラクティスへの準拠状況を監視</li>
+    <li><strong>セキュリティ構成の評価：</strong> セキュリティ設定の誤りや弱点を特定</li>
+    <li><strong>統合セキュリティダッシュボード：</strong> セキュリティリスクを一元的に管理</li>
+    <li><strong>自動修復の推奨：</strong> 検出された問題に対する修復アクションを推奨</li>
+    <li><strong>セキュリティ分析：</strong> セキュリティデータの高度な分析と相関関係の特定</li>
+    <li><strong>サードパーティ統合：</strong> 他のセキュリティツールやサービスとの統合</li>
+</ul>
+
+<h2>Cloud Security Command Centerのアーキテクチャ</h2>
+<p>Cloud Security Command Centerは以下の主要コンポーネントで構成されています：</p>
+
+<table>
+    <tr>
+        <th>コンポーネント</th>
+        <th>説明</th>
+    </tr>
+    <tr>
+        <td>セキュリティソース</td>
+        <td>セキュリティデータを収集するスキャナーやセンサー（Security Health Analytics、Web Security Scanner、Event
+            Threatなど）
+        </td>
+    </tr>
+    <tr>
+        <td>データ収集システム</td>
+        <td>様々なソースからセキュリティデータを収集するコンポーネント</td>
+    </tr>
+    <tr>
+        <td>分析エンジン</td>
+        <td>セキュリティデータを分析し、リスクを評価するエンジン</td>
+    </tr>
+    <tr>
+        <td>セキュリティストア</td>
+        <td>セキュリティデータを保存するためのデータベース</td>
+    </tr>
+    <tr>
+        <td>通知システム</td>
+        <td>セキュリティイベント発生時に通知を送信するシステム</td>
+    </tr>
+    <tr>
+        <td>ユーザーインターフェース</td>
+        <td>セキュリティリスクを表示、分析、管理するためのダッシュボード</td>
+    </tr>
+</table>
+
+<div class="note">
+    <h3>Cloud Security Command Center と他のセキュリティ管理サービスの違い</h3>
+    <p>Cloud Security Command Centerと他のセキュリティ管理サービスには以下のような違いがあります：</p>
     <ul>
-        <li><strong>セキュリティ状態の可視化：</strong> GCPリソースのセキュリティ状態を包括的に可視化</li>
-        <li><strong>脆弱性の検出：</strong> アプリケーションやインフラストラクチャの脆弱性を検出</li>
-        <li><strong>脅威の検出：</strong> 不審なアクティビティや潜在的な脅威を特定</li>
-        <li><strong>コンプライアンス監視：</strong> 業界標準やベストプラクティスへの準拠状況を監視</li>
-        <li><strong>セキュリティ構成の評価：</strong> セキュリティ設定の誤りや弱点を特定</li>
-        <li><strong>統合セキュリティダッシュボード：</strong> セキュリティリスクを一元的に管理</li>
-        <li><strong>自動修復の推奨：</strong> 検出された問題に対する修復アクションを推奨</li>
-        <li><strong>セキュリティ分析：</strong> セキュリティデータの高度な分析と相関関係の特定</li>
-        <li><strong>サードパーティ統合：</strong> 他のセキュリティツールやサービスとの統合</li>
+        <li><strong>Cloud Security Command Center：</strong> GCPに統合されたフルマネージドのセキュリティ管理プラットフォーム。GCPサービスとの連携が強力
+        </li>
+        <li><strong>AWS Security Hub：</strong> AWSのセキュリティ管理サービス。AWS環境に最適化されている</li>
+        <li><strong>Azure Security Center：</strong> Azureのセキュリティ管理サービス。Azure環境に最適化されている</li>
+        <li><strong>Qualys：</strong> クラウドベースの脆弱性管理プラットフォーム。マルチクラウド環境をサポート</li>
     </ul>
-    
-    <h2>Cloud Security Command Centerのアーキテクチャ</h2>
-    <p>Cloud Security Command Centerは以下の主要コンポーネントで構成されています：</p>
-    
-    <table>
-        <tr>
-            <th>コンポーネント</th>
-            <th>説明</th>
-        </tr>
-        <tr>
-            <td>セキュリティソース</td>
-            <td>セキュリティデータを収集するスキャナーやセンサー（Security Health Analytics、Web Security Scanner、Event Threatなど）</td>
-        </tr>
-        <tr>
-            <td>データ収集システム</td>
-            <td>様々なソースからセキュリティデータを収集するコンポーネント</td>
-        </tr>
-        <tr>
-            <td>分析エンジン</td>
-            <td>セキュリティデータを分析し、リスクを評価するエンジン</td>
-        </tr>
-        <tr>
-            <td>セキュリティストア</td>
-            <td>セキュリティデータを保存するためのデータベース</td>
-        </tr>
-        <tr>
-            <td>通知システム</td>
-            <td>セキュリティイベント発生時に通知を送信するシステム</td>
-        </tr>
-        <tr>
-            <td>ユーザーインターフェース</td>
-            <td>セキュリティリスクを表示、分析、管理するためのダッシュボード</td>
-        </tr>
-    </table>
-    
-    <div class="note">
-        <h3>Cloud Security Command Center と他のセキュリティ管理サービスの違い</h3>
-        <p>Cloud Security Command Centerと他のセキュリティ管理サービスには以下のような違いがあります：</p>
-        <ul>
-            <li><strong>Cloud Security Command Center：</strong> GCPに統合されたフルマネージドのセキュリティ管理プラットフォーム。GCPサービスとの連携が強力</li>
-            <li><strong>AWS Security Hub：</strong> AWSのセキュリティ管理サービス。AWS環境に最適化されている</li>
-            <li><strong>Azure Security Center：</strong> Azureのセキュリティ管理サービス。Azure環境に最適化されている</li>
-            <li><strong>Qualys：</strong> クラウドベースの脆弱性管理プラットフォーム。マルチクラウド環境をサポート</li>
-        </ul>
-    </div>
-    
-    <h2>Cloud Security Command Centerのエディション</h2>
-    <p>Cloud Security Command Centerは、以下の3つのエディションで提供されています：</p>
-    
-    <table>
-        <tr>
-            <th>エディション</th>
-            <th>特徴</th>
-        </tr>
-        <tr>
-            <td>Standard</td>
-            <td>基本的なセキュリティ可視化と脆弱性管理機能を提供</td>
-        </tr>
-        <tr>
-            <td>Premium</td>
-            <td>Standardの機能に加えて、高度な脅威検出と対応機能を提供</td>
-        </tr>
-        <tr>
-            <td>Enterprise</td>
-            <td>Premiumの機能に加えて、最も包括的なセキュリティ管理機能を提供</td>
-        </tr>
-    </table>
-    
-    <h2>Cloud Security Command Centerの使用方法</h2>
-    <p>Cloud Security Command Centerは、Google Cloud Console、gcloud CLIツール、またはRESTful APIを使用して利用できます。</p>
-    
-    <h3>Security Command Centerの有効化</h3>
-    <p>組織レベルまたはプロジェクトレベルでSecurity Command Centerを有効化できます：</p>
-    <div class="example">
-        <h4>組織レベルでの有効化</h4>
-        <pre><code>// Google Cloud Consoleで有効化
+</div>
+
+<h2>Cloud Security Command Centerのエディション</h2>
+<p>Cloud Security Command Centerは、以下の3つのエディションで提供されています：</p>
+
+<table>
+    <tr>
+        <th>エディション</th>
+        <th>特徴</th>
+    </tr>
+    <tr>
+        <td>Standard</td>
+        <td>基本的なセキュリティ可視化と脆弱性管理機能を提供</td>
+    </tr>
+    <tr>
+        <td>Premium</td>
+        <td>Standardの機能に加えて、高度な脅威検出と対応機能を提供</td>
+    </tr>
+    <tr>
+        <td>Enterprise</td>
+        <td>Premiumの機能に加えて、最も包括的なセキュリティ管理機能を提供</td>
+    </tr>
+</table>
+
+<h2>Cloud Security Command Centerの使用方法</h2>
+<p>Cloud Security Command Centerは、Google Cloud Console、gcloud CLIツール、またはRESTful APIを使用して利用できます。</p>
+
+<h3>Security Command Centerの有効化</h3>
+<p>組織レベルまたはプロジェクトレベルでSecurity Command Centerを有効化できます：</p>
+<div class="example">
+    <h4>組織レベルでの有効化</h4>
+    <pre><code>// Google Cloud Consoleで有効化
 // 1. Security Command Center > Settings に移動
 // 2. 「Enable Security Command Center」をクリック
 // 3. エディション（Standard、Premium、Enterprise）を選択
 // 4. 「Enable」をクリック</code></pre>
-        
-        <h4>gcloud CLIを使用した有効化</h4>
-        <pre><code>// Security Command Centerサービスの有効化
+
+    <h4>gcloud CLIを使用した有効化</h4>
+    <pre><code>// Security Command Centerサービスの有効化
 gcloud services enable securitycenter.googleapis.com
 
 // 組織レベルでのSecurity Command Centerの有効化
@@ -120,36 +128,36 @@ gcloud scc settings update \
   --organization=ORGANIZATION_ID \
   --enable-security-center=true \
   --update-mask=enableSecurityCenter</code></pre>
-    </div>
-    
-    <h3>セキュリティソースの設定</h3>
-    <p>Security Command Centerで使用するセキュリティソース（スキャナーやセンサー）を設定できます：</p>
-    <div class="example">
-        <h4>Security Health Analyticsの有効化</h4>
-        <pre><code>// Google Cloud Consoleで有効化
+</div>
+
+<h3>セキュリティソースの設定</h3>
+<p>Security Command Centerで使用するセキュリティソース（スキャナーやセンサー）を設定できます：</p>
+<div class="example">
+    <h4>Security Health Analyticsの有効化</h4>
+    <pre><code>// Google Cloud Consoleで有効化
 // 1. Security Command Center > Settings > Security Sources に移動
 // 2. Security Health Analyticsを選択
 // 3. 「Enable」をクリック</code></pre>
-        
-        <h4>Web Security Scannerの有効化</h4>
-        <pre><code>// Google Cloud Consoleで有効化
+
+    <h4>Web Security Scannerの有効化</h4>
+    <pre><code>// Google Cloud Consoleで有効化
 // 1. Security Command Center > Settings > Security Sources に移動
 // 2. Web Security Scannerを選択
 // 3. 「Enable」をクリック
 // 4. スキャン対象のURLを設定</code></pre>
-    </div>
-    
-    <h3>セキュリティ調査結果の表示と分析</h3>
-    <p>Security Command Centerダッシュボードを使用して、セキュリティ調査結果を表示、分析できます：</p>
-    <div class="example">
-        <h4>調査結果の表示</h4>
-        <pre><code>// Google Cloud Consoleで表示
+</div>
+
+<h3>セキュリティ調査結果の表示と分析</h3>
+<p>Security Command Centerダッシュボードを使用して、セキュリティ調査結果を表示、分析できます：</p>
+<div class="example">
+    <h4>調査結果の表示</h4>
+    <pre><code>// Google Cloud Consoleで表示
 // 1. Security Command Center > Findings に移動
 // 2. 調査結果のリストを表示
 // 3. 特定の調査結果をクリックして詳細を表示</code></pre>
-        
-        <h4>調査結果のフィルタリング</h4>
-        <pre><code>// カテゴリによるフィルタリング
+
+    <h4>調査結果のフィルタリング</h4>
+    <pre><code>// カテゴリによるフィルタリング
 category="VULNERABILITY"
 
 // 重要度によるフィルタリング
@@ -160,13 +168,13 @@ resource.type="google.cloud.storage.Bucket"
 
 // 複合フィルタリング
 category="VULNERABILITY" AND severity="HIGH" AND resource.type="google.cloud.storage.Bucket"</code></pre>
-    </div>
-    
-    <h3>APIを使用した調査結果の取得</h3>
-    <p>Security Command Center APIを使用して、プログラムで調査結果を取得できます：</p>
-    <div class="example">
-        <h4>Node.jsでの調査結果取得例</h4>
-        <pre><code>const {SecurityCenterClient} = require('@google-cloud/security-center');
+</div>
+
+<h3>APIを使用した調査結果の取得</h3>
+<p>Security Command Center APIを使用して、プログラムで調査結果を取得できます：</p>
+<div class="example">
+    <h4>Node.jsでの調査結果取得例</h4>
+    <pre><code>const {SecurityCenterClient} = require('@google-cloud/security-center');
 
 // Security Centerクライアントの初期化
 const client = new SecurityCenterClient();
@@ -189,9 +197,9 @@ async function listFindings() {
 }
 
 listFindings();</code></pre>
-        
-        <h4>Pythonでの調査結果取得例</h4>
-        <pre><code>from google.cloud import securitycenter
+
+    <h4>Pythonでの調査結果取得例</h4>
+    <pre><code>from google.cloud import securitycenter
 
 # Security Centerクライアントの初期化
 client = securitycenter.SecurityCenterClient()
@@ -211,107 +219,107 @@ findings = client.list_findings(
 print('Findings:')
 for finding in findings:
     print(f"- {finding.category}: {finding.resource_name}")</code></pre>
-    </div>
-    
-    <h2>Security Command Centerの主要なセキュリティソース</h2>
-    <p>Security Command Centerは、以下の主要なセキュリティソースを提供しています：</p>
-    
-    <h3>Security Health Analytics</h3>
-    <p>GCPリソースのセキュリティ構成を継続的に評価し、ベストプラクティスからの逸脱を検出します：</p>
-    <ul>
-        <li>公開されたストレージバケット</li>
-        <li>過度に許可されたIAMポリシー</li>
-        <li>暗号化されていないデータ</li>
-        <li>不適切なファイアウォール設定</li>
-        <li>APIキーの露出</li>
-    </ul>
-    
-    <h3>Web Security Scanner</h3>
-    <p>Webアプリケーションの一般的な脆弱性をスキャンします：</p>
-    <ul>
-        <li>クロスサイトスクリプティング（XSS）</li>
-        <li>SQLインジェクション</li>
-        <li>クロスサイトリクエストフォージェリ（CSRF）</li>
-        <li>混合コンテンツの使用</li>
-        <li>古いライブラリの使用</li>
-    </ul>
-    
-    <h3>Event Threat Detection</h3>
-    <p>Cloud Loggingのログを分析して、潜在的な脅威を検出します（Premiumエディション以上）：</p>
-    <ul>
-        <li>マルウェアの活動</li>
-        <li>暗号通貨マイニング</li>
-        <li>権限昇格の試み</li>
-        <li>不審なAPIコール</li>
-        <li>データ流出の兆候</li>
-    </ul>
-    
-    <h3>Container Threat Detection</h3>
-    <p>コンテナ環境でのランタイム脅威を検出します（Premiumエディション以上）：</p>
-    <ul>
-        <li>権限昇格の試み</li>
-        <li>不審なプロセスの実行</li>
-        <li>コンテナエスケープの試み</li>
-        <li>マルウェアの実行</li>
-    </ul>
-    
-    <h3>Virtual Machine Threat Detection</h3>
-    <p>仮想マシン上での不審なアクティビティを検出します（Premiumエディション以上）：</p>
-    <ul>
-        <li>マルウェアの実行</li>
-        <li>不審なプロセスの起動</li>
-        <li>権限昇格の試み</li>
-        <li>データ流出の兆候</li>
-    </ul>
-    
-    <h2>Security Command Centerの統合</h2>
-    <p>Security Command Centerは、以下のサードパーティセキュリティツールと統合できます：</p>
-    
-    <table>
-        <tr>
-            <th>統合パートナー</th>
-            <th>提供機能</th>
-        </tr>
-        <tr>
-            <td>Palo Alto Networks</td>
-            <td>脅威検出と防止</td>
-        </tr>
-        <tr>
-            <td>Qualys</td>
-            <td>脆弱性管理</td>
-        </tr>
-        <tr>
-            <td>Tenable</td>
-            <td>脆弱性管理</td>
-        </tr>
-        <tr>
-            <td>CrowdStrike</td>
-            <td>エンドポイント保護</td>
-        </tr>
-        <tr>
-            <td>Aqua Security</td>
-            <td>コンテナセキュリティ</td>
-        </tr>
-        <tr>
-            <td>Check Point</td>
-            <td>クラウドセキュリティ</td>
-        </tr>
-    </table>
-    
-    <div class="example">
-        <h4>サードパーティ統合の設定</h4>
-        <pre><code>// Google Cloud Consoleで設定
+</div>
+
+<h2>Security Command Centerの主要なセキュリティソース</h2>
+<p>Security Command Centerは、以下の主要なセキュリティソースを提供しています：</p>
+
+<h3>Security Health Analytics</h3>
+<p>GCPリソースのセキュリティ構成を継続的に評価し、ベストプラクティスからの逸脱を検出します：</p>
+<ul>
+    <li>公開されたストレージバケット</li>
+    <li>過度に許可されたIAMポリシー</li>
+    <li>暗号化されていないデータ</li>
+    <li>不適切なファイアウォール設定</li>
+    <li>APIキーの露出</li>
+</ul>
+
+<h3>Web Security Scanner</h3>
+<p>Webアプリケーションの一般的な脆弱性をスキャンします：</p>
+<ul>
+    <li>クロスサイトスクリプティング（XSS）</li>
+    <li>SQLインジェクション</li>
+    <li>クロスサイトリクエストフォージェリ（CSRF）</li>
+    <li>混合コンテンツの使用</li>
+    <li>古いライブラリの使用</li>
+</ul>
+
+<h3>Event Threat Detection</h3>
+<p>Cloud Loggingのログを分析して、潜在的な脅威を検出します（Premiumエディション以上）：</p>
+<ul>
+    <li>マルウェアの活動</li>
+    <li>暗号通貨マイニング</li>
+    <li>権限昇格の試み</li>
+    <li>不審なAPIコール</li>
+    <li>データ流出の兆候</li>
+</ul>
+
+<h3>Container Threat Detection</h3>
+<p>コンテナ環境でのランタイム脅威を検出します（Premiumエディション以上）：</p>
+<ul>
+    <li>権限昇格の試み</li>
+    <li>不審なプロセスの実行</li>
+    <li>コンテナエスケープの試み</li>
+    <li>マルウェアの実行</li>
+</ul>
+
+<h3>Virtual Machine Threat Detection</h3>
+<p>仮想マシン上での不審なアクティビティを検出します（Premiumエディション以上）：</p>
+<ul>
+    <li>マルウェアの実行</li>
+    <li>不審なプロセスの起動</li>
+    <li>権限昇格の試み</li>
+    <li>データ流出の兆候</li>
+</ul>
+
+<h2>Security Command Centerの統合</h2>
+<p>Security Command Centerは、以下のサードパーティセキュリティツールと統合できます：</p>
+
+<table>
+    <tr>
+        <th>統合パートナー</th>
+        <th>提供機能</th>
+    </tr>
+    <tr>
+        <td>Palo Alto Networks</td>
+        <td>脅威検出と防止</td>
+    </tr>
+    <tr>
+        <td>Qualys</td>
+        <td>脆弱性管理</td>
+    </tr>
+    <tr>
+        <td>Tenable</td>
+        <td>脆弱性管理</td>
+    </tr>
+    <tr>
+        <td>CrowdStrike</td>
+        <td>エンドポイント保護</td>
+    </tr>
+    <tr>
+        <td>Aqua Security</td>
+        <td>コンテナセキュリティ</td>
+    </tr>
+    <tr>
+        <td>Check Point</td>
+        <td>クラウドセキュリティ</td>
+    </tr>
+</table>
+
+<div class="example">
+    <h4>サードパーティ統合の設定</h4>
+    <pre><code>// Google Cloud Consoleで設定
 // 1. Security Command Center > Settings > Security Sources に移動
 // 2. 「Add New Source」をクリック
 // 3. 統合するサードパーティツールを選択
 // 4. 必要な設定を行い、「Enable」をクリック</code></pre>
-    </div>
-    
-    <h2>Security Command Centerの通知設定</h2>
-    <p>Security Command Centerでは、重要なセキュリティイベントに関する通知を設定できます：</p>
-    <div class="example">
-        <h4>Pub/Subを使用した通知の設定</h4>
-        <pre><code>// 1. Pub/Subトピックの作成
+</div>
+
+<h2>Security Command Centerの通知設定</h2>
+<p>Security Command Centerでは、重要なセキュリティイベントに関する通知を設定できます：</p>
+<div class="example">
+    <h4>Pub/Subを使用した通知の設定</h4>
+    <pre><code>// 1. Pub/Subトピックの作成
 gcloud pubsub topics create scc-notifications
 
 // 2. 通知構成の作成
@@ -320,9 +328,9 @@ gcloud scc notifications create scc-notify \
   --description="SCC high severity notifications" \
   --pubsub-topic=projects/PROJECT_ID/topics/scc-notifications \
   --filter="severity=\"HIGH\" OR severity=\"CRITICAL\""</code></pre>
-        
-        <h4>Cloud Functionsを使用した通知処理</h4>
-        <pre><code>// Cloud Functionsの例（Node.js）
+
+    <h4>Cloud Functionsを使用した通知処理</h4>
+    <pre><code>// Cloud Functionsの例（Node.js）
 const {SecurityCenterClient} = require('@google-cloud/security-center');
 const client = new SecurityCenterClient();
 
@@ -336,56 +344,62 @@ exports.handleSccNotification = async (pubsubMessage, context) => {
   // Slackに通知を送信する例
   await sendSlackNotification(finding);
 };</code></pre>
-    </div>
-    
-    <h2>Security Command Centerのベストプラクティス</h2>
-    <p>Security Command Centerを効果的に活用するためのベストプラクティス：</p>
-    
-    <h3>セットアップと構成のベストプラクティス</h3>
+</div>
+
+<h2>Security Command Centerのベストプラクティス</h2>
+<p>Security Command Centerを効果的に活用するためのベストプラクティス：</p>
+
+<h3>セットアップと構成のベストプラクティス</h3>
+<ul>
+    <li><strong>組織レベルでの有効化：</strong> 組織全体のセキュリティ状態を包括的に把握するために、組織レベルでSecurity
+        Command Centerを有効化
+    </li>
+    <li><strong>適切なエディションの選択：</strong> セキュリティ要件に基づいて適切なエディション（Standard、Premium、Enterprise）を選択
+    </li>
+    <li><strong>すべての関連セキュリティソースの有効化：</strong> 包括的なセキュリティカバレッジのために、関連するすべてのセキュリティソースを有効化
+    </li>
+    <li><strong>サードパーティ統合の活用：</strong> 既存のセキュリティツールとの統合を設定して、セキュリティデータを一元化
+    </li>
+    <li><strong>適切なIAM権限の設定：</strong> 最小権限の原則に基づいて、Security Command Centerへのアクセス権限を設定
+    </li>
+</ul>
+
+<h3>運用のベストプラクティス</h3>
+<ul>
+    <li><strong>調査結果の優先順位付け：</strong> 重要度と影響度に基づいて調査結果に優先順位を付ける</li>
+    <li><strong>定期的なセキュリティレビュー：</strong> 調査結果を定期的にレビューし、セキュリティ体制を継続的に改善</li>
+    <li><strong>自動修復の活用：</strong> 可能な場合は、自動修復機能を活用して一般的な問題を解決</li>
+    <li><strong>通知設定の最適化：</strong> 重要な調査結果のみに通知を設定し、通知疲れを防止</li>
+    <li><strong>セキュリティメトリクスの追跡：</strong> セキュリティ体制の改善を測定するためのメトリクスを追跡</li>
+</ul>
+
+<div class="note">
+    <h3>コスト最適化のヒント</h3>
     <ul>
-        <li><strong>組織レベルでの有効化：</strong> 組織全体のセキュリティ状態を包括的に把握するために、組織レベルでSecurity Command Centerを有効化</li>
-        <li><strong>適切なエディションの選択：</strong> セキュリティ要件に基づいて適切なエディション（Standard、Premium、Enterprise）を選択</li>
-        <li><strong>すべての関連セキュリティソースの有効化：</strong> 包括的なセキュリティカバレッジのために、関連するすべてのセキュリティソースを有効化</li>
-        <li><strong>サードパーティ統合の活用：</strong> 既存のセキュリティツールとの統合を設定して、セキュリティデータを一元化</li>
-        <li><strong>適切なIAM権限の設定：</strong> 最小権限の原則に基づいて、Security Command Centerへのアクセス権限を設定</li>
+        <li>必要なセキュリティソースのみを有効化</li>
+        <li>スキャン頻度を適切に設定</li>
+        <li>非本番環境では低いエディションを使用</li>
+        <li>調査結果のエクスポートと保持期間を最適化</li>
     </ul>
-    
-    <h3>運用のベストプラクティス</h3>
-    <ul>
-        <li><strong>調査結果の優先順位付け：</strong> 重要度と影響度に基づいて調査結果に優先順位を付ける</li>
-        <li><strong>定期的なセキュリティレビュー：</strong> 調査結果を定期的にレビューし、セキュリティ体制を継続的に改善</li>
-        <li><strong>自動修復の活用：</strong> 可能な場合は、自動修復機能を活用して一般的な問題を解決</li>
-        <li><strong>通知設定の最適化：</strong> 重要な調査結果のみに通知を設定し、通知疲れを防止</li>
-        <li><strong>セキュリティメトリクスの追跡：</strong> セキュリティ体制の改善を測定するためのメトリクスを追跡</li>
-    </ul>
-    
-    <div class="note">
-        <h3>コスト最適化のヒント</h3>
-        <ul>
-            <li>必要なセキュリティソースのみを有効化</li>
-            <li>スキャン頻度を適切に設定</li>
-            <li>非本番環境では低いエディションを使用</li>
-            <li>調査結果のエクスポートと保持期間を最適化</li>
-        </ul>
-    </div>
-    
-    <h2>Security Command Centerのユースケース</h2>
-    <p>Security Command Centerは以下のようなユースケースに適しています：</p>
-    <ul>
-        <li><strong>セキュリティ体制の評価：</strong> 組織全体のセキュリティ状態を評価し、改善点を特定</li>
-        <li><strong>脆弱性管理：</strong> アプリケーションやインフラストラクチャの脆弱性を特定、優先順位付け、修正</li>
-        <li><strong>脅威検出と対応：</strong> 潜在的な脅威を検出し、迅速に対応</li>
-        <li><strong>コンプライアンス監視：</strong> 業界標準やベストプラクティスへの準拠状況を監視</li>
-        <li><strong>セキュリティ構成の管理：</strong> セキュリティ設定の誤りや弱点を特定し、修正</li>
-        <li><strong>セキュリティイベントの調査：</strong> セキュリティイベントの詳細な調査と根本原因分析</li>
-        <li><strong>セキュリティ監査：</strong> セキュリティ監査のためのエビデンスの収集と報告</li>
-    </ul>
-    
-    <h3>ユースケース例：クラウド環境のセキュリティ評価</h3>
-    <div class="example">
-        <h4>クラウド環境のセキュリティ評価シナリオ</h4>
-        <p>大規模な組織がGCPへの移行後にセキュリティ体制を評価する例：</p>
-        <pre>
+</div>
+
+<h2>Security Command Centerのユースケース</h2>
+<p>Security Command Centerは以下のようなユースケースに適しています：</p>
+<ul>
+    <li><strong>セキュリティ体制の評価：</strong> 組織全体のセキュリティ状態を評価し、改善点を特定</li>
+    <li><strong>脆弱性管理：</strong> アプリケーションやインフラストラクチャの脆弱性を特定、優先順位付け、修正</li>
+    <li><strong>脅威検出と対応：</strong> 潜在的な脅威を検出し、迅速に対応</li>
+    <li><strong>コンプライアンス監視：</strong> 業界標準やベストプラクティスへの準拠状況を監視</li>
+    <li><strong>セキュリティ構成の管理：</strong> セキュリティ設定の誤りや弱点を特定し、修正</li>
+    <li><strong>セキュリティイベントの調査：</strong> セキュリティイベントの詳細な調査と根本原因分析</li>
+    <li><strong>セキュリティ監査：</strong> セキュリティ監査のためのエビデンスの収集と報告</li>
+</ul>
+
+<h3>ユースケース例：クラウド環境のセキュリティ評価</h3>
+<div class="example">
+    <h4>クラウド環境のセキュリティ評価シナリオ</h4>
+    <p>大規模な組織がGCPへの移行後にセキュリティ体制を評価する例：</p>
+    <pre>
 1. セキュリティ構成の評価
    - 公開されたストレージバケットの特定
    - 過度に許可されたIAMポリシーの特定
@@ -402,76 +416,78 @@ exports.handleSccNotification = async (pubsubMessage, context) => {
    - 権限昇格の試みの監視
    - データ流出の兆候の検出
 </pre>
-        <p>Security Command Centerを使用して、これらの評価を行い、以下のような対応を実施します：</p>
-        <ul>
-            <li>重大なセキュリティリスクに対する即時の修復アクションの実施</li>
-            <li>セキュリティ体制の改善のためのロードマップの作成</li>
-            <li>セキュリティポリシーとガイドラインの更新</li>
-            <li>セキュリティ意識向上トレーニングの実施</li>
-        </ul>
-    </div>
-    
-    <h2>Security Command Centerとの統合サービス</h2>
-    <p>Security Command Centerは他のGoogle Cloudサービスと統合して、より強力なセキュリティソリューションを構築できます：</p>
-    
-    <table>
-        <tr>
-            <th>サービス</th>
-            <th>統合の利点</th>
-        </tr>
-        <tr>
-            <td><a href="cloud_logging.html">Cloud Logging</a></td>
-            <td>セキュリティイベントのログ記録と分析</td>
-        </tr>
-        <tr>
-            <td><a href="cloud_monitoring.html">Cloud Monitoring</a></td>
-            <td>セキュリティメトリクスの監視とアラート設定</td>
-        </tr>
-        <tr>
-            <td><a href="cloud_armor.html">Cloud Armor</a></td>
-            <td>Webアプリケーションファイアウォールとの統合</td>
-        </tr>
-        <tr>
-            <td>Identity-Aware Proxy</td>
-            <td>アクセス制御とアイデンティティ管理</td>
-        </tr>
-        <tr>
-            <td>Cloud KMS</td>
-            <td>暗号化キー管理との統合</td>
-        </tr>
-        <tr>
-            <td><a href="cloud_functions.html">Cloud Functions</a></td>
-            <td>セキュリティイベントに基づく自動対応</td>
-        </tr>
-        <tr>
-            <td><a href="bigquery.html">BigQuery</a></td>
-            <td>セキュリティデータの高度な分析</td>
-        </tr>
-    </table>
-    
-    <h3>Cloud Loggingとの統合例</h3>
-    <div class="example">
-        <h4>セキュリティイベントのログ記録</h4>
-        <pre><code>// Security Command Centerの調査結果をCloud Loggingにエクスポート
+    <p>Security Command Centerを使用して、これらの評価を行い、以下のような対応を実施します：</p>
+    <ul>
+        <li>重大なセキュリティリスクに対する即時の修復アクションの実施</li>
+        <li>セキュリティ体制の改善のためのロードマップの作成</li>
+        <li>セキュリティポリシーとガイドラインの更新</li>
+        <li>セキュリティ意識向上トレーニングの実施</li>
+    </ul>
+</div>
+
+<h2>Security Command Centerとの統合サービス</h2>
+<p>Security Command Centerは他のGoogle Cloudサービスと統合して、より強力なセキュリティソリューションを構築できます：</p>
+
+<table>
+    <tr>
+        <th>サービス</th>
+        <th>統合の利点</th>
+    </tr>
+    <tr>
+        <td><a href="cloud_logging.html">Cloud Logging</a></td>
+        <td>セキュリティイベントのログ記録と分析</td>
+    </tr>
+    <tr>
+        <td><a href="cloud_monitoring.html">Cloud Monitoring</a></td>
+        <td>セキュリティメトリクスの監視とアラート設定</td>
+    </tr>
+    <tr>
+        <td><a href="cloud_armor.html">Cloud Armor</a></td>
+        <td>Webアプリケーションファイアウォールとの統合</td>
+    </tr>
+    <tr>
+        <td>Identity-Aware Proxy</td>
+        <td>アクセス制御とアイデンティティ管理</td>
+    </tr>
+    <tr>
+        <td>Cloud KMS</td>
+        <td>暗号化キー管理との統合</td>
+    </tr>
+    <tr>
+        <td><a href="cloud_functions.html">Cloud Functions</a></td>
+        <td>セキュリティイベントに基づく自動対応</td>
+    </tr>
+    <tr>
+        <td><a href="bigquery.html">BigQuery</a></td>
+        <td>セキュリティデータの高度な分析</td>
+    </tr>
+</table>
+
+<h3>Cloud Loggingとの統合例</h3>
+<div class="example">
+    <h4>セキュリティイベントのログ記録</h4>
+    <pre><code>// Security Command Centerの調査結果をCloud Loggingにエクスポート
 // 1. Cloud Logging > Logs Router に移動
 // 2. 新しいシンクを作成
 // 3. フィルタを設定: resource.type="google.cloud.securitycenter.Finding"
 // 4. 宛先をCloud Storageに設定</code></pre>
-    </div>
-    
-    <h2>まとめ</h2>
-    <p>Cloud Security Command Center は、Google Cloud Platform上でのセキュリティおよびリスク管理プラットフォームとして、GCPリソースのセキュリティ状態を可視化し、脆弱性、脅威、コンプライアンス違反などのセキュリティリスクを検出、調査、修正するための統合ダッシュボードを提供します。組織のクラウド環境を保護し、セキュリティ体制を強化するための重要なツールです。</p>
-    
-    <p>Security Command Centerの主な利点は以下の通りです：</p>
-    <ul>
-        <li>GCPリソースのセキュリティ状態の包括的な可視化</li>
-        <li>脆弱性、脅威、コンプライアンス違反の自動検出</li>
-        <li>セキュリティリスクの優先順位付けと修復の推奨</li>
-        <li>統合セキュリティダッシュボードによるセキュリティ管理の効率化</li>
-        <li>サードパーティセキュリティツールとの統合</li>
-        <li>他のGoogle Cloudサービスとのシームレスな連携</li>
-    </ul>
-    
-    <p>Security Command Centerを効果的に活用するには、組織レベルでの有効化、適切なエディションの選択、すべての関連セキュリティソースの有効化などのベストプラクティスを適用することが重要です。また、調査結果の優先順位付け、定期的なセキュリティレビュー、自動修復の活用などの運用プラクティスを導入することで、セキュリティ管理の効率を向上させることができます。</p>
+</div>
+
+<h2>まとめ</h2>
+<p>Cloud Security Command Center は、Google Cloud
+    Platform上でのセキュリティおよびリスク管理プラットフォームとして、GCPリソースのセキュリティ状態を可視化し、脆弱性、脅威、コンプライアンス違反などのセキュリティリスクを検出、調査、修正するための統合ダッシュボードを提供します。組織のクラウド環境を保護し、セキュリティ体制を強化するための重要なツールです。</p>
+
+<p>Security Command Centerの主な利点は以下の通りです：</p>
+<ul>
+    <li>GCPリソースのセキュリティ状態の包括的な可視化</li>
+    <li>脆弱性、脅威、コンプライアンス違反の自動検出</li>
+    <li>セキュリティリスクの優先順位付けと修復の推奨</li>
+    <li>統合セキュリティダッシュボードによるセキュリティ管理の効率化</li>
+    <li>サードパーティセキュリティツールとの統合</li>
+    <li>他のGoogle Cloudサービスとのシームレスな連携</li>
+</ul>
+
+<p>Security Command
+    Centerを効果的に活用するには、組織レベルでの有効化、適切なエディションの選択、すべての関連セキュリティソースの有効化などのベストプラクティスを適用することが重要です。また、調査結果の優先順位付け、定期的なセキュリティレビュー、自動修復の活用などの運用プラクティスを導入することで、セキュリティ管理の効率を向上させることができます。</p>
 </body>
 </html>

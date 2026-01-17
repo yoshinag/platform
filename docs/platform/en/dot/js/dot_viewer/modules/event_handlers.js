@@ -4,9 +4,9 @@ import {
     downloadFormatSelect, graphContainer
 } from './dom_elements.js';
 import * as state from './state.js';
-import { applyTemplateToUI } from './template_manager.js'; // Updated import
-import { renderGraph } from './graph_renderer.js';
-import { downloadSVG, downloadPNG, triggerDownload } from './download_utils.js'; // Updated import
+import {applyTemplateToUI} from './template_manager.js'; // Updated import
+import {renderGraph} from './graph_renderer.js';
+import {downloadSVG, downloadPNG, triggerDownload} from './download_utils.js'; // Updated import
 
 export function handleNotationChange(event) {
     const selectedNotation = event.target.value;
@@ -32,6 +32,7 @@ export function handleTemplateChange(event) {
 }
 
 let debounceTimer;
+
 export function handleCodeInputChange() {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(renderGraph, 500);
@@ -48,7 +49,7 @@ export function handleDownload() {
     } else {
         const currentText = graphContainer.textContent || graphContainer.innerText;
         if (currentText && currentText.trim() !== '') {
-            const blob = new Blob([currentText.trim()], { type: 'text/plain;charset=utf-8' });
+            const blob = new Blob([currentText.trim()], {type: 'text/plain;charset=utf-8'});
             const url = URL.createObjectURL(blob);
             triggerDownload(url, 'graph_content.txt');
         } else {

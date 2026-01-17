@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <title>Spring Modulith - ドキュメント生成</title>
     <link rel="stylesheet" href="../../../css/knowledge.css">
@@ -11,6 +15,7 @@
             gap: 20px;
             margin-top: 20px;
         }
+
         .service-card {
             border: 1px solid #e0e0e0;
             border-radius: 8px;
@@ -18,21 +23,26 @@
             background-color: #f9f9f9;
             transition: transform 0.2s, box-shadow 0.2s;
         }
+
         .service-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
+
         .service-card h3 {
             margin-top: 0;
             color: #000000;
         }
+
         .service-card h3 a {
             color: #1a73e8;
         }
+
         .service-card p {
             color: #5f6368;
             margin-bottom: 10px;
         }
+
         .service-category {
             margin-top: 30px;
         }
@@ -40,22 +50,23 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body class="ja-knowledge">
-    <div style="margin-bottom: 20px;">
-        <a href="../../index.html">メインページに戻る</a> | 
-        <a href="spring_io.html">Spring Framework & Spring Bootに戻る</a> |
-        <a href="modulith.html">Spring Modulithに戻る</a>
-    </div>
-    <h1>Spring Modulith - ドキュメント生成</h1>
-    
-    <h2>Spring Modulithにおけるドキュメント生成とは</h2>
-    <p>Spring Modulithのドキュメント生成機能は、アプリケーションのモジュール構造とその依存関係を可視化するための強力なツールです。この機能を使用することで、モジュール間の関係を明確に理解し、アーキテクチャの整合性を確保することができます。ドキュメント生成機能は、開発者間のコミュニケーションを促進し、新しいチームメンバーのオンボーディングを容易にします。</p>
-    
-    <p>Spring Modulithは、静的解析を使用してアプリケーションのモジュール構造を分析し、その結果をPlantUML図やAsciiDoc形式のドキュメントとして出力します。これにより、モジュール間の依存関係、公開API、イベントの発行と購読などの情報を視覚的に理解することができます。</p>
-    
-    <div style="text-align: center; margin: 20px 0;">
+<div style="margin-bottom: 20px;">
+    <a href="../../index.html">メインページに戻る</a> |
+    <a href="spring_io.html">Spring Framework & Spring Bootに戻る</a> |
+    <a href="modulith.html">Spring Modulithに戻る</a>
+</div>
+<h1>Spring Modulith - ドキュメント生成</h1>
+
+<h2>Spring Modulithにおけるドキュメント生成とは</h2>
+<p>Spring
+    Modulithのドキュメント生成機能は、アプリケーションのモジュール構造とその依存関係を可視化するための強力なツールです。この機能を使用することで、モジュール間の関係を明確に理解し、アーキテクチャの整合性を確保することができます。ドキュメント生成機能は、開発者間のコミュニケーションを促進し、新しいチームメンバーのオンボーディングを容易にします。</p>
+
+<p>Spring
+    Modulithは、静的解析を使用してアプリケーションのモジュール構造を分析し、その結果をPlantUML図やAsciiDoc形式のドキュメントとして出力します。これにより、モジュール間の依存関係、公開API、イベントの発行と購読などの情報を視覚的に理解することができます。</p>
+
+<div style="text-align: center; margin: 20px 0;">
         <pre style="text-align: left; display: inline-block; border: 1px solid #ddd; padding: 15px; border-radius: 4px; background-color: #f8f8f8; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
 +------------------------------------------+
 |           Spring Boot Application        |
@@ -81,16 +92,19 @@
 |                                          |
 +------------------------------------------+
         </pre>
-        <p style="font-style: italic; margin-top: 10px;">図1: Spring Modulithのドキュメント生成機能によるモジュール構造の可視化</p>
-    </div>
-    
-    <h2>Spring Modulithのドキュメント生成機能</h2>
-    <p>Spring Modulithは、以下のドキュメント生成機能を提供しています：</p>
-    
-    <h3>1. モジュール構造の可視化</h3>
-    <p>Spring Modulithは、アプリケーションのモジュール構造を可視化するための機能を提供します。<code>Modulith</code>クラスの<code>toModuleModel()</code>メソッドを使用して、アプリケーションのモジュール構造をモデル化し、そのモデルを使用して様々な形式のドキュメントを生成することができます。</p>
-    
-    <pre><code>@Test
+    <p style="font-style: italic; margin-top: 10px;">図1: Spring
+        Modulithのドキュメント生成機能によるモジュール構造の可視化</p>
+</div>
+
+<h2>Spring Modulithのドキュメント生成機能</h2>
+<p>Spring Modulithは、以下のドキュメント生成機能を提供しています：</p>
+
+<h3>1. モジュール構造の可視化</h3>
+<p>Spring
+    Modulithは、アプリケーションのモジュール構造を可視化するための機能を提供します。<code>Modulith</code>クラスの<code>toModuleModel()</code>メソッドを使用して、アプリケーションのモジュール構造をモデル化し、そのモデルを使用して様々な形式のドキュメントを生成することができます。
+</p>
+
+<pre><code>@Test
 void createModulithDiagram() {
     
     // モジュール構造のモデル化
@@ -102,11 +116,12 @@ void createModulithDiagram() {
     // AsciiDoc図の生成
     new AsciiDocModuleWriter().write(model, Paths.get("modulith-diagram.adoc"));
 }</code></pre>
-    
-    <h3>2. 依存関係の可視化</h3>
-    <p>Spring Modulithは、モジュール間の依存関係を可視化するための機能を提供します。依存関係の可視化により、モジュール間の関係を明確に理解し、不適切な依存関係を特定することができます。</p>
-    
-    <pre><code>@Test
+
+<h3>2. 依存関係の可視化</h3>
+<p>Spring
+    Modulithは、モジュール間の依存関係を可視化するための機能を提供します。依存関係の可視化により、モジュール間の関係を明確に理解し、不適切な依存関係を特定することができます。</p>
+
+<pre><code>@Test
 void createModulithDependencyDiagram() {
     
     // モジュール構造のモデル化
@@ -115,11 +130,12 @@ void createModulithDependencyDiagram() {
     // 依存関係図の生成
     new PlantUmlModuleWriter(Options.defaults().withDependencies()).write(model, Paths.get("modulith-dependencies.puml"));
 }</code></pre>
-    
-    <h3>3. イベントの可視化</h3>
-    <p>Spring Modulithは、モジュール間のイベント発行と購読の関係を可視化するための機能を提供します。イベントの可視化により、モジュール間の疎結合な通信パターンを理解することができます。</p>
-    
-    <pre><code>@Test
+
+<h3>3. イベントの可視化</h3>
+<p>Spring
+    Modulithは、モジュール間のイベント発行と購読の関係を可視化するための機能を提供します。イベントの可視化により、モジュール間の疎結合な通信パターンを理解することができます。</p>
+
+<pre><code>@Test
 void createModulithEventDiagram() {
     
     // モジュール構造のモデル化
@@ -128,11 +144,12 @@ void createModulithEventDiagram() {
     // イベント図の生成
     new PlantUmlModuleWriter(Options.defaults().withEvents()).write(model, Paths.get("modulith-events.puml"));
 }</code></pre>
-    
-    <h3>4. 公開APIの可視化</h3>
-    <p>Spring Modulithは、モジュールの公開APIを可視化するための機能を提供します。公開APIの可視化により、モジュールが外部に公開している機能を明確に理解することができます。</p>
-    
-    <pre><code>@Test
+
+<h3>4. 公開APIの可視化</h3>
+<p>Spring
+    Modulithは、モジュールの公開APIを可視化するための機能を提供します。公開APIの可視化により、モジュールが外部に公開している機能を明確に理解することができます。</p>
+
+<pre><code>@Test
 void createModulithApiDiagram() {
     
     // モジュール構造のモデル化
@@ -141,24 +158,26 @@ void createModulithApiDiagram() {
     // 公開API図の生成
     new PlantUmlModuleWriter(Options.defaults().withApiTypes()).write(model, Paths.get("modulith-api.puml"));
 }</code></pre>
-    
-    <h2>ドキュメント生成の設定と使用方法</h2>
-    <p>Spring Modulithのドキュメント生成機能を使用するためには、以下の設定と手順が必要です：</p>
-    
-    <h3>1. 依存関係の追加</h3>
-    <p>Spring Modulithのドキュメント生成機能を使用するには、<code>spring-modulith-docs</code>依存関係を追加する必要があります。</p>
-    
-    <pre><code>&lt;dependency&gt;
+
+<h2>ドキュメント生成の設定と使用方法</h2>
+<p>Spring Modulithのドキュメント生成機能を使用するためには、以下の設定と手順が必要です：</p>
+
+<h3>1. 依存関係の追加</h3>
+<p>Spring Modulithのドキュメント生成機能を使用するには、<code>spring-modulith-docs</code>依存関係を追加する必要があります。
+</p>
+
+<pre><code>&lt;dependency&gt;
     &lt;groupId&gt;org.springframework.modulith&lt;/groupId&gt;
     &lt;artifactId&gt;spring-modulith-docs&lt;/artifactId&gt;
     &lt;version&gt;1.1.0&lt;/version&gt;
     &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
-    
-    <h3>2. テストクラスの作成</h3>
-    <p>ドキュメント生成のためのテストクラスを作成します。このテストクラスは、アプリケーションのモジュール構造を分析し、ドキュメントを生成するためのテストメソッドを含みます。</p>
-    
-    <pre><code>@SpringBootTest
+
+<h3>2. テストクラスの作成</h3>
+<p>
+    ドキュメント生成のためのテストクラスを作成します。このテストクラスは、アプリケーションのモジュール構造を分析し、ドキュメントを生成するためのテストメソッドを含みます。</p>
+
+<pre><code>@SpringBootTest
 class ModulithDocumentationTests {
 
     @Test
@@ -175,33 +194,37 @@ class ModulithDocumentationTests {
             .write(model, Paths.get("target/modulith-documentation"));
     }
 }</code></pre>
-    
-    <h3>3. ドキュメントの生成</h3>
-    <p>テストを実行して、ドキュメントを生成します。生成されたドキュメントは、指定したパスに保存されます。</p>
-    
-    <pre><code>$ ./mvnw test -Dtest=ModulithDocumentationTests</code></pre>
-    
-    <h3>4. ドキュメントの表示</h3>
-    <p>生成されたPlantUML図は、PlantUMLビューアーやオンラインサービスを使用して表示することができます。また、AsciiDoc形式のドキュメントは、AsciiDocビューアーやHTMLに変換して表示することができます。</p>
-    
-    <pre><code>$ java -jar plantuml.jar target/modulith-documentation/modulith-overview.puml</code></pre>
-    
-    <h2>ドキュメント生成のカスタマイズ</h2>
-    <p>Spring Modulithのドキュメント生成機能は、様々なオプションを使用してカスタマイズすることができます。以下に、主要なカスタマイズオプションを紹介します。</p>
-    
-    <h3>1. 出力形式のカスタマイズ</h3>
-    <p>Spring Modulithは、PlantUML形式とAsciiDoc形式のドキュメントを生成することができます。出力形式は、使用するライターによって決まります。</p>
-    
-    <pre><code>// PlantUML形式のドキュメント生成
+
+<h3>3. ドキュメントの生成</h3>
+<p>テストを実行して、ドキュメントを生成します。生成されたドキュメントは、指定したパスに保存されます。</p>
+
+<pre><code>$ ./mvnw test -Dtest=ModulithDocumentationTests</code></pre>
+
+<h3>4. ドキュメントの表示</h3>
+<p>
+    生成されたPlantUML図は、PlantUMLビューアーやオンラインサービスを使用して表示することができます。また、AsciiDoc形式のドキュメントは、AsciiDocビューアーやHTMLに変換して表示することができます。</p>
+
+<pre><code>$ java -jar plantuml.jar target/modulith-documentation/modulith-overview.puml</code></pre>
+
+<h2>ドキュメント生成のカスタマイズ</h2>
+<p>Spring
+    Modulithのドキュメント生成機能は、様々なオプションを使用してカスタマイズすることができます。以下に、主要なカスタマイズオプションを紹介します。</p>
+
+<h3>1. 出力形式のカスタマイズ</h3>
+<p>Spring
+    Modulithは、PlantUML形式とAsciiDoc形式のドキュメントを生成することができます。出力形式は、使用するライターによって決まります。</p>
+
+<pre><code>// PlantUML形式のドキュメント生成
 new PlantUmlModuleWriter().write(model, Paths.get("modulith-diagram.puml"));
 
 // AsciiDoc形式のドキュメント生成
 new AsciiDocModuleWriter().write(model, Paths.get("modulith-diagram.adoc"));</code></pre>
-    
-    <h3>2. 表示オプションのカスタマイズ</h3>
-    <p>Spring Modulithは、<code>Options</code>クラスを使用して、ドキュメントの表示オプションをカスタマイズすることができます。表示オプションには、依存関係の表示、イベントの表示、公開APIの表示などがあります。</p>
-    
-    <pre><code>// 表示オプションのカスタマイズ
+
+<h3>2. 表示オプションのカスタマイズ</h3>
+<p>Spring Modulithは、<code>Options</code>クラスを使用して、ドキュメントの表示オプションをカスタマイズすることができます。表示オプションには、依存関係の表示、イベントの表示、公開APIの表示などがあります。
+</p>
+
+<pre><code>// 表示オプションのカスタマイズ
 Options options = Options.defaults()
         .withDependencies()  // 依存関係を表示
         .withEvents()        // イベントを表示
@@ -211,20 +234,22 @@ Options options = Options.defaults()
 
 // カスタマイズされたオプションを使用してドキュメントを生成
 new PlantUmlModuleWriter(options).write(model, Paths.get("modulith-diagram.puml"));</code></pre>
-    
-    <h3>3. モジュールのフィルタリング</h3>
-    <p>Spring Modulithは、特定のモジュールのみを表示するためのフィルタリング機能を提供します。フィルタリングを使用することで、関心のあるモジュールに焦点を当てたドキュメントを生成することができます。</p>
-    
-    <pre><code>// モジュールのフィルタリング
+
+<h3>3. モジュールのフィルタリング</h3>
+<p>Spring
+    Modulithは、特定のモジュールのみを表示するためのフィルタリング機能を提供します。フィルタリングを使用することで、関心のあるモジュールに焦点を当てたドキュメントを生成することができます。</p>
+
+<pre><code>// モジュールのフィルタリング
 ModuleModel filteredModel = model.filterModules(module -> module.getName().startsWith("orders"));
 
 // フィルタリングされたモデルを使用してドキュメントを生成
 new PlantUmlModuleWriter().write(filteredModel, Paths.get("orders-modules.puml"));</code></pre>
-    
-    <h3>4. カスタムスタイルの適用</h3>
-    <p>Spring Modulithは、PlantUML図にカスタムスタイルを適用するための機能を提供します。カスタムスタイルを使用することで、ドキュメントの見た目をカスタマイズすることができます。</p>
-    
-    <pre><code>// カスタムスタイルの定義
+
+<h3>4. カスタムスタイルの適用</h3>
+<p>Spring
+    Modulithは、PlantUML図にカスタムスタイルを適用するための機能を提供します。カスタムスタイルを使用することで、ドキュメントの見た目をカスタマイズすることができます。</p>
+
+<pre><code>// カスタムスタイルの定義
 String customStyle = """
 !define MODULITH_STYLE
 skinparam component {
@@ -237,14 +262,16 @@ skinparam component {
 
 // カスタムスタイルを適用してドキュメントを生成
 new PlantUmlModuleWriter(Options.defaults().withStyle(customStyle)).write(model, Paths.get("styled-modulith.puml"));</code></pre>
-    
-    <h2>ドキュメント生成のユースケース</h2>
-    <p>Spring Modulithのドキュメント生成機能は、様々なユースケースで活用することができます。以下に、代表的なユースケースを紹介します。</p>
-    
-    <h3>1. アーキテクチャの可視化</h3>
-    <p>Spring Modulithのドキュメント生成機能を使用して、アプリケーションのアーキテクチャを可視化することができます。アーキテクチャの可視化により、モジュール間の関係を明確に理解し、アーキテクチャの整合性を確保することができます。</p>
-    
-    <pre><code>@Test
+
+<h2>ドキュメント生成のユースケース</h2>
+<p>Spring
+    Modulithのドキュメント生成機能は、様々なユースケースで活用することができます。以下に、代表的なユースケースを紹介します。</p>
+
+<h3>1. アーキテクチャの可視化</h3>
+<p>Spring
+    Modulithのドキュメント生成機能を使用して、アプリケーションのアーキテクチャを可視化することができます。アーキテクチャの可視化により、モジュール間の関係を明確に理解し、アーキテクチャの整合性を確保することができます。</p>
+
+<pre><code>@Test
 void visualizeArchitecture() {
     
     // モジュール構造のモデル化
@@ -253,11 +280,12 @@ void visualizeArchitecture() {
     // アーキテクチャ図の生成
     new PlantUmlModuleWriter(Options.defaults().withDependencies()).write(model, Paths.get("architecture.puml"));
 }</code></pre>
-    
-    <h3>2. ドキュメントの自動生成</h3>
-    <p>Spring Modulithのドキュメント生成機能を使用して、継続的インテグレーションパイプラインの一部としてドキュメントを自動生成することができます。ドキュメントの自動生成により、常に最新のアーキテクチャドキュメントを維持することができます。</p>
-    
-    <pre><code>// CI/CDパイプラインでのドキュメント生成
+
+<h3>2. ドキュメントの自動生成</h3>
+<p>Spring
+    Modulithのドキュメント生成機能を使用して、継続的インテグレーションパイプラインの一部としてドキュメントを自動生成することができます。ドキュメントの自動生成により、常に最新のアーキテクチャドキュメントを維持することができます。</p>
+
+<pre><code>// CI/CDパイプラインでのドキュメント生成
 @Test
 void generateDocumentation() {
     
@@ -278,11 +306,12 @@ void generateDocumentation() {
         Options.builder().toFile(true).backend("html5").build()
     );
 }</code></pre>
-    
-    <h3>3. アーキテクチャの検証</h3>
-    <p>Spring Modulithのドキュメント生成機能を使用して、アーキテクチャの検証を行うことができます。モジュール間の依存関係を可視化することで、不適切な依存関係を特定し、アーキテクチャの整合性を確保することができます。</p>
-    
-    <pre><code>@Test
+
+<h3>3. アーキテクチャの検証</h3>
+<p>Spring
+    Modulithのドキュメント生成機能を使用して、アーキテクチャの検証を行うことができます。モジュール間の依存関係を可視化することで、不適切な依存関係を特定し、アーキテクチャの整合性を確保することができます。</p>
+
+<pre><code>@Test
 void verifyArchitecture() {
     
     // モジュール構造のモデル化と検証
@@ -294,11 +323,12 @@ void verifyArchitecture() {
     ModuleModel model = new Modulith(Application.class).toModuleModel();
     new PlantUmlModuleWriter(Options.defaults().withDependencies()).write(model, Paths.get("verification-result.puml"));
 }</code></pre>
-    
-    <h3>4. 新しいチームメンバーのオンボーディング</h3>
-    <p>Spring Modulithのドキュメント生成機能を使用して、新しいチームメンバーのオンボーディングを支援することができます。アプリケーションのモジュール構造と依存関係を可視化することで、新しいチームメンバーがアーキテクチャを理解しやすくなります。</p>
-    
-    <pre><code>// オンボーディングドキュメントの生成
+
+<h3>4. 新しいチームメンバーのオンボーディング</h3>
+<p>Spring
+    Modulithのドキュメント生成機能を使用して、新しいチームメンバーのオンボーディングを支援することができます。アプリケーションのモジュール構造と依存関係を可視化することで、新しいチームメンバーがアーキテクチャを理解しやすくなります。</p>
+
+<pre><code>// オンボーディングドキュメントの生成
 @Test
 void generateOnboardingDocumentation() {
     
@@ -313,36 +343,46 @@ void generateOnboardingDocumentation() {
             .withDisplayName(DisplayName.SIMPLE))
         .write(model, Paths.get("onboarding/architecture.adoc"));
 }</code></pre>
-    
-    <h2>ドキュメント生成のベストプラクティス</h2>
-    <p>Spring Modulithのドキュメント生成機能を効果的に活用するためのベストプラクティスを紹介します。</p>
-    
-    <h3>1. ドキュメント生成の自動化</h3>
-    <p>ドキュメント生成を継続的インテグレーションパイプラインの一部として自動化することで、常に最新のアーキテクチャドキュメントを維持することができます。自動化により、ドキュメントとコードの乖離を防ぎ、ドキュメントの信頼性を高めることができます。</p>
-    
-    <h3>2. 適切な粒度の選択</h3>
-    <p>ドキュメントの粒度は、目的や対象者に応じて適切に選択する必要があります。全体像を把握するための概要図と、詳細な情報を提供する詳細図を組み合わせることで、様々なニーズに対応することができます。</p>
-    
-    <h3>3. 視覚的な区別の活用</h3>
-    <p>モジュールの種類や重要度に応じて、色や形状などの視覚的な区別を活用することで、ドキュメントの可読性を向上させることができます。視覚的な区別により、重要な情報を強調し、ドキュメントの理解を促進することができます。</p>
-    
-    <h3>4. ドキュメントの組み合わせ</h3>
-    <p>Spring Modulithのドキュメント生成機能と他のドキュメントツールを組み合わせることで、より包括的なドキュメントを作成することができます。例えば、Spring Modulithの図とAsciiDocの説明文を組み合わせることで、視覚的な情報と詳細な説明を提供することができます。</p>
-    
-    <h3>5. ドキュメントの定期的な更新</h3>
-    <p>アプリケーションのアーキテクチャは時間とともに変化するため、ドキュメントも定期的に更新する必要があります。ドキュメントの更新を怠ると、ドキュメントとコードの乖離が生じ、ドキュメントの信頼性が低下します。</p>
-    
-    <h3>6. フィードバックの収集と反映</h3>
-    <p>ドキュメントの利用者からフィードバックを収集し、それを反映することで、ドキュメントの品質を向上させることができます。フィードバックにより、ドキュメントの不足点や改善点を特定し、より有用なドキュメントを作成することができます。</p>
-    
-    <h3>7. ドキュメントの目的の明確化</h3>
-    <p>ドキュメントの目的を明確にし、その目的に合わせてドキュメントを設計することが重要です。目的が明確でないと、ドキュメントが冗長になったり、必要な情報が不足したりする可能性があります。</p>
-    
-    <h2>まとめ</h2>
-    <p>Spring Modulithのドキュメント生成機能は、アプリケーションのモジュール構造とその依存関係を可視化するための強力なツールです。この機能を使用することで、モジュール間の関係を明確に理解し、アーキテクチャの整合性を確保することができます。</p>
-    
-    <p>Spring Modulithは、モジュール構造の可視化、依存関係の可視化、イベントの可視化、公開APIの可視化など、様々なドキュメント生成機能を提供しています。これらの機能を適切に活用することで、アプリケーションのアーキテクチャを効果的に可視化し、開発者間のコミュニケーションを促進することができます。</p>
-    
-    <p>ドキュメント生成を効果的に活用するためには、ドキュメント生成の自動化、適切な粒度の選択、視覚的な区別の活用、ドキュメントの組み合わせ、定期的な更新、フィードバックの収集と反映、目的の明確化などのベストプラクティスを適用することが重要です。これらのプラクティスを実践することで、より有用で信頼性の高いアーキテクチャドキュメントを作成することができます。</p>
+
+<h2>ドキュメント生成のベストプラクティス</h2>
+<p>Spring Modulithのドキュメント生成機能を効果的に活用するためのベストプラクティスを紹介します。</p>
+
+<h3>1. ドキュメント生成の自動化</h3>
+<p>
+    ドキュメント生成を継続的インテグレーションパイプラインの一部として自動化することで、常に最新のアーキテクチャドキュメントを維持することができます。自動化により、ドキュメントとコードの乖離を防ぎ、ドキュメントの信頼性を高めることができます。</p>
+
+<h3>2. 適切な粒度の選択</h3>
+<p>
+    ドキュメントの粒度は、目的や対象者に応じて適切に選択する必要があります。全体像を把握するための概要図と、詳細な情報を提供する詳細図を組み合わせることで、様々なニーズに対応することができます。</p>
+
+<h3>3. 視覚的な区別の活用</h3>
+<p>
+    モジュールの種類や重要度に応じて、色や形状などの視覚的な区別を活用することで、ドキュメントの可読性を向上させることができます。視覚的な区別により、重要な情報を強調し、ドキュメントの理解を促進することができます。</p>
+
+<h3>4. ドキュメントの組み合わせ</h3>
+<p>Spring Modulithのドキュメント生成機能と他のドキュメントツールを組み合わせることで、より包括的なドキュメントを作成することができます。例えば、Spring
+    Modulithの図とAsciiDocの説明文を組み合わせることで、視覚的な情報と詳細な説明を提供することができます。</p>
+
+<h3>5. ドキュメントの定期的な更新</h3>
+<p>
+    アプリケーションのアーキテクチャは時間とともに変化するため、ドキュメントも定期的に更新する必要があります。ドキュメントの更新を怠ると、ドキュメントとコードの乖離が生じ、ドキュメントの信頼性が低下します。</p>
+
+<h3>6. フィードバックの収集と反映</h3>
+<p>
+    ドキュメントの利用者からフィードバックを収集し、それを反映することで、ドキュメントの品質を向上させることができます。フィードバックにより、ドキュメントの不足点や改善点を特定し、より有用なドキュメントを作成することができます。</p>
+
+<h3>7. ドキュメントの目的の明確化</h3>
+<p>
+    ドキュメントの目的を明確にし、その目的に合わせてドキュメントを設計することが重要です。目的が明確でないと、ドキュメントが冗長になったり、必要な情報が不足したりする可能性があります。</p>
+
+<h2>まとめ</h2>
+<p>Spring
+    Modulithのドキュメント生成機能は、アプリケーションのモジュール構造とその依存関係を可視化するための強力なツールです。この機能を使用することで、モジュール間の関係を明確に理解し、アーキテクチャの整合性を確保することができます。</p>
+
+<p>Spring
+    Modulithは、モジュール構造の可視化、依存関係の可視化、イベントの可視化、公開APIの可視化など、様々なドキュメント生成機能を提供しています。これらの機能を適切に活用することで、アプリケーションのアーキテクチャを効果的に可視化し、開発者間のコミュニケーションを促進することができます。</p>
+
+<p>
+    ドキュメント生成を効果的に活用するためには、ドキュメント生成の自動化、適切な粒度の選択、視覚的な区別の活用、ドキュメントの組み合わせ、定期的な更新、フィードバックの収集と反映、目的の明確化などのベストプラクティスを適用することが重要です。これらのプラクティスを実践することで、より有用で信頼性の高いアーキテクチャドキュメントを作成することができます。</p>
 </body>
 </html>

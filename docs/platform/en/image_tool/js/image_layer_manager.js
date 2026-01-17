@@ -74,7 +74,7 @@ class ImageLayerManager {
         // スライダーの値を更新
         this.scaleSlider.value = newValue;
         this.currentScalePercentage = newValue;
-        if(this.scaleDisplay) this.scaleDisplay.textContent = newValue;
+        if (this.scaleDisplay) this.scaleDisplay.textContent = newValue;
 
         // 寸法を更新
         this._updateDimensionsFromScale();
@@ -87,7 +87,7 @@ class ImageLayerManager {
         if (this.baseLayerWidth > 0 && this.currentWidth > 0) {
             // Calculate scale based on width, assuming original aspect ratio is maintained for current dimensions
             // This might need refinement if currentWidth/Height don't match originalAspectRatio
-            const expectedWidthAt100Percent = this.originalWidth * (this.baseLayerWidth / this.originalWidth) ; // This simplification is not quite right
+            const expectedWidthAt100Percent = this.originalWidth * (this.baseLayerWidth / this.originalWidth); // This simplification is not quite right
             // if base aspect != image aspect.
             // A better way is to see which dim (W or H) is more constrained
             // by the base layer if we were to fit the image.
@@ -124,12 +124,12 @@ class ImageLayerManager {
         } else {
             this.currentScalePercentage = 100;
         }
-        if(this.scaleSlider) this.scaleSlider.value = this.currentScalePercentage;
-        if(this.scaleDisplay) this.scaleDisplay.textContent = this.currentScalePercentage;
+        if (this.scaleSlider) this.scaleSlider.value = this.currentScalePercentage;
+        if (this.scaleDisplay) this.scaleDisplay.textContent = this.currentScalePercentage;
     }
 
     _updateDimensionsFromScale() {
-        if (this.baseLayerWidth <= 0 || this.baseLayerHeight <= 0 || this.originalWidth <=0 || this.originalHeight <=0) {
+        if (this.baseLayerWidth <= 0 || this.baseLayerHeight <= 0 || this.originalWidth <= 0 || this.originalHeight <= 0) {
             // Not enough info to scale relative to base, or no original image
             // Fallback to scaling original image dimensions directly if possible
             this.currentWidth = Math.round(this.originalWidth * (this.currentScalePercentage / 100));
@@ -152,8 +152,8 @@ class ImageLayerManager {
         this.currentWidth = getSafePositiveInt(this.currentWidth, 1);
         this.currentHeight = getSafePositiveInt(this.currentHeight, 1);
 
-        if(this.widthInput) this.widthInput.value = this.currentWidth;
-        if(this.heightInput) this.heightInput.value = this.currentHeight;
+        if (this.widthInput) this.widthInput.value = this.currentWidth;
+        if (this.heightInput) this.heightInput.value = this.currentHeight;
     }
 
 
@@ -162,7 +162,7 @@ class ImageLayerManager {
         this.isUserModifying = true;
 
         this.currentScalePercentage = getSafePositiveInt(this.scaleSlider.value, 100);
-        if(this.scaleDisplay) this.scaleDisplay.textContent = this.currentScalePercentage;
+        if (this.scaleDisplay) this.scaleDisplay.textContent = this.currentScalePercentage;
 
         this._updateDimensionsFromScale();
 
@@ -205,8 +205,8 @@ class ImageLayerManager {
 
         // When a new image is loaded, reset scale to 100% and update dimensions accordingly
         this.currentScalePercentage = 100;
-        if(this.scaleSlider) this.scaleSlider.value = this.currentScalePercentage;
-        if(this.scaleDisplay) this.scaleDisplay.textContent = this.currentScalePercentage;
+        if (this.scaleSlider) this.scaleSlider.value = this.currentScalePercentage;
+        if (this.scaleDisplay) this.scaleDisplay.textContent = this.currentScalePercentage;
 
         this._updateDimensionsFromScale(); // This will set currentWidth/Height based on new original and current base size
     }
@@ -221,18 +221,18 @@ class ImageLayerManager {
 
 
     getDimensions() {
-        return { width: this.currentWidth, height: this.currentHeight };
+        return {width: this.currentWidth, height: this.currentHeight};
     }
 
     disable(disabled) {
-        if(this.scaleSlider) this.scaleSlider.disabled = disabled;
+        if (this.scaleSlider) this.scaleSlider.disabled = disabled;
         // scaleDisplay is just text
-        if(this.widthInput) this.widthInput.disabled = disabled;
-        if(this.heightInput) this.heightInput.disabled = disabled;
-        if(this.aspectLockCheckbox) this.aspectLockCheckbox.disabled = disabled;
+        if (this.widthInput) this.widthInput.disabled = disabled;
+        if (this.heightInput) this.heightInput.disabled = disabled;
+        if (this.aspectLockCheckbox) this.aspectLockCheckbox.disabled = disabled;
         // +/- ボタンも無効/有効にする
-        if(this.decreaseScaleBtn) this.decreaseScaleBtn.disabled = disabled;
-        if(this.increaseScaleBtn) this.increaseScaleBtn.disabled = disabled;
+        if (this.decreaseScaleBtn) this.decreaseScaleBtn.disabled = disabled;
+        if (this.increaseScaleBtn) this.increaseScaleBtn.disabled = disabled;
     }
 
     reset(initialWidth = 0, initialHeight = 0) { // These are original image dimensions
@@ -241,8 +241,8 @@ class ImageLayerManager {
         this.originalAspectRatio = (this.originalHeight > 0) ? this.originalWidth / this.originalHeight : 1;
 
         this.currentScalePercentage = 100;
-        if(this.scaleSlider) this.scaleSlider.value = this.currentScalePercentage;
-        if(this.scaleDisplay) this.scaleDisplay.textContent = this.currentScalePercentage;
+        if (this.scaleSlider) this.scaleSlider.value = this.currentScalePercentage;
+        if (this.scaleDisplay) this.scaleDisplay.textContent = this.currentScalePercentage;
 
         // Dimensions will be set based on scale and base layer size (which is also reset by main app)
         // or directly if initialWidth/Height provided (on first load)
@@ -253,9 +253,10 @@ class ImageLayerManager {
             this._updateDimensionsFromScale();
         }
 
-        if(this.widthInput) this.widthInput.value = this.currentWidth > 0 ? this.currentWidth : "";
-        if(this.heightInput) this.heightInput.value = this.currentHeight > 0 ? this.currentHeight : "";
-        if(this.aspectLockCheckbox) this.aspectLockCheckbox.checked = true;
+        if (this.widthInput) this.widthInput.value = this.currentWidth > 0 ? this.currentWidth : "";
+        if (this.heightInput) this.heightInput.value = this.currentHeight > 0 ? this.currentHeight : "";
+        if (this.aspectLockCheckbox) this.aspectLockCheckbox.checked = true;
     }
 }
+
 // --- END OF FILE image_layer_manager.js ---

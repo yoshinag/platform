@@ -25,7 +25,7 @@ export async function downloadSVG(svgElement, graphContainer) { // graphContaine
         svgString = svgString.replace(/^<\?xml[^>]*encoding="[^"]*"[^>]*\?>/i,
             '<?xml version="1.0" encoding="UTF-8" standalone="no"?>');
     }
-    const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+    const blob = new Blob([svgString], {type: 'image/svg+xml;charset=utf-8'});
     const url = URL.createObjectURL(blob);
     triggerDownload(url, 'graph.svg');
 }
@@ -68,10 +68,12 @@ export async function downloadPNG(svgElement, graphContainer) { // graphContaine
                 const bbox = svgElement.getBBox();
                 width = bbox.width;
                 height = bbox.height;
-            } catch (e) { /* ignore */ }
+            } catch (e) { /* ignore */
+            }
         }
         if (!width || !height || width === 0 || height === 0) {
-            width = 800; height = 600;
+            width = 800;
+            height = 600;
         }
         canvas.width = Math.max(1, Math.ceil(width));
         canvas.height = Math.max(1, Math.ceil(height));

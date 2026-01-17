@@ -1,9 +1,9 @@
 // js/mermaid_viewer/modules/tab_manager.js
-import { tabButtons, tabContent, codeInput, notationRadios } from './dom_elements.js';
+import {tabButtons, tabContent, codeInput, notationRadios} from './dom_elements.js';
 import * as state from './state.js';
-import { renderGraph } from './graph_renderer.js';
-import { showNotification } from './ui_interactions.js';
-import { detectLanguage } from './language_detector.js';
+import {renderGraph} from './graph_renderer.js';
+import {showNotification} from './ui_interactions.js';
+import {detectLanguage} from './language_detector.js';
 
 /**
  * Initializes the tab system
@@ -18,21 +18,21 @@ export function initializeTabs() {
  */
 export function renderTabs() {
     if (!tabButtons) return;
-    
+
     // Clear existing tabs
     tabButtons.innerHTML = '';
-    
+
     // Create tab buttons
     state.tabs.forEach((tab, index) => {
         const tabButton = document.createElement('button');
         tabButton.className = `tab-button ${index === state.activeTabIndex ? 'active' : ''}`;
         tabButton.dataset.tabIndex = index;
-        
+
         const tabText = document.createElement('span');
         tabText.className = 'tab-button-text';
         tabText.textContent = tab.title;
         tabButton.appendChild(tabText);
-        
+
         // Only add close button if there's more than one tab
         if (state.tabs.length > 1) {
             const closeBtn = document.createElement('span');
@@ -45,7 +45,7 @@ export function renderTabs() {
             });
             tabButton.appendChild(closeBtn);
         }
-        
+
         tabButton.addEventListener('click', () => switchTab(index));
         tabButtons.appendChild(tabButton);
     });
@@ -57,10 +57,10 @@ export function renderTabs() {
  */
 export function switchTab(index) {
     if (index === state.activeTabIndex) return;
-    
+
     // Save current tab content
     saveActiveTabContent();
-    
+
     // Switch to new tab
     if (state.setActiveTabIndex(index)) {
         renderTabs();
@@ -76,14 +76,14 @@ export function switchTab(index) {
 export function addTab(title = null) {
     // Save current tab content
     saveActiveTabContent();
-    
+
     // Add new tab and switch to it
     const newIndex = state.addTab(title);
     state.setActiveTabIndex(newIndex);
-    
+
     renderTabs();
     syncCodeInputWithActiveTab();
-    
+
     showNotification('新しいタブを追加しました', 'success');
 }
 
@@ -97,16 +97,16 @@ export function closeTab(index) {
         showNotification('最後のタブは閉じることができません', 'warning');
         return;
     }
-    
+
     // Save current tab content before closing any tab
     saveActiveTabContent();
-    
+
     // Close the tab
     if (state.removeTab(index)) {
         renderTabs();
         syncCodeInputWithActiveTab();
         renderGraph();
-        
+
         showNotification('タブを閉じました', 'info');
     }
 }
@@ -129,17 +129,17 @@ export function syncCodeInputWithActiveTab() {
     if (codeInput) {
         const content = state.getActiveTabContent();
         codeInput.value = content || '';
-        
+
         // Auto-detect language when tab becomes active
         if (content) {
             const currentNotation = state.getActiveTabNotation();
             const detectedLanguage = detectLanguage(content);
-            
+
             // Only update if the detected language is different from the current notation
             if (detectedLanguage !== currentNotation) {
                 // Update the active tab's notation
                 state.setActiveTabNotation(detectedLanguage);
-                
+
                 // Update the radio buttons to reflect the detected language
                 if (notationRadios) {
                     for (const radio of notationRadios) {
@@ -148,13 +148,13 @@ export function syncCodeInputWithActiveTab() {
                         }
                     }
                 }
-                
+
                 // Show notification about the auto-detection
                 const languageName = detectedLanguage === 'dot' ? 'DOT' : 'Mermaid';
                 showNotification(`タブがアクティブになり、言語を自動検出しました: ${languageName}`, 'info');
             }
         }
-        
+
         // Render the graph immediately when a tab is activated
         renderGraph();
     }

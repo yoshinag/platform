@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Google Analytics -->
+    <script src="../../../../platform/js/common/analytics.js"></script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Linux検索コマンド解説</title>
@@ -8,8 +12,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
             crossorigin="anonymous"></script>
 </head>
-<!-- Google Analytics -->
-<script src="../../../js/common/analytics.js"></script>
+
 <body>
 <div class="container">
     <div class="navigation-links">
@@ -18,16 +21,16 @@
     </div>
 
     <h1>Linux検索コマンド解説</h1>
-    
+
     <!-- 検索コマンド -->
     <section id="search" class="command-section">
         <h2>検索コマンド</h2>
         <p>ファイル、ディレクトリ、テキスト内容などを検索するコマンドです。</p>
-        
+
         <!-- find コマンド -->
         <h3>find - ファイルとディレクトリの検索</h3>
         <p>指定した条件に一致するファイルやディレクトリを検索します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>構文/オプション</th>
@@ -70,7 +73,7 @@
                 <td>検索結果の各ファイルに対してコマンドを実行</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>find /home -name "*.txt"</code> - /home以下の.txtファイルを検索<br>
@@ -78,9 +81,11 @@
             <code>find /var/log -name "*.log" -mtime -7</code> - 過去7日以内に変更されたログファイルを検索<br>
             <code>find . -type f -name "*.jpg" -exec cp {} /backup/ \;</code> - 全てのJPGファイルをバックアップディレクトリにコピー<br>
             <code>find . -type f -empty</code> - 空のファイルを検索<br>
-            <code>find . -type f -perm 0777 -print</code> - 777権限（すべてのユーザーが読み書き実行可能）のファイルを検索<br>
+            <code>find . -type f -perm 0777 -print</code> -
+            777権限（すべてのユーザーが読み書き実行可能）のファイルを検索<br>
             <code>find . -type f -not -name "*.txt" -not -name "*.log"</code> - テキストファイルとログファイル以外のファイルを検索<br>
-            <code>find . -type f -name "*.log" -size +1M -exec ls -lh {} \; | sort -k5,5hr</code> - 1MB以上のログファイルをサイズの大きい順に表示<br>
+            <code>find . -type f -name "*.log" -size +1M -exec ls -lh {} \; | sort -k5,5hr</code> -
+            1MB以上のログファイルをサイズの大きい順に表示<br>
             <code>find . -type f -name "*.conf" -exec grep -l "DEBUG" {} \;</code> - "DEBUG"という文字列を含む設定ファイルを検索<br>
             <code>find . -type f -mtime +30 -name "*.bak" -delete</code> - 30日以上前のバックアップファイルを削除
         </div>
@@ -88,7 +93,7 @@
         <!-- locate コマンド -->
         <h3>locate - データベースを使用したファイル検索</h3>
         <p>事前に構築されたデータベースを使用して、ファイルやディレクトリを高速に検索します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -115,7 +120,7 @@
                 <td>データベースの統計情報を表示</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>locate "*.conf"</code> - すべての.confファイルを検索<br>
@@ -124,18 +129,21 @@
             <code>sudo updatedb</code> - locateデータベースを更新（検索前に実行すると最新の状態で検索可能）<br>
             <code>locate -r "\.mp4$"</code> - 正規表現を使用してMP4ファイルを検索<br>
             <code>locate -l 10 "*.pdf"</code> - 最初の10件のPDFファイルのみを表示<br>
-            <code>locate -e "report"</code> - 存在するファイルのみを表示（データベース更新後に削除されたファイルを除外）<br>
+            <code>locate -e "report"</code> -
+            存在するファイルのみを表示（データベース更新後に削除されたファイルを除外）<br>
             <code>locate "*.log" | grep "/var/" | xargs ls -lh</code> - /varディレクトリ内のログファイルの詳細情報を表示
         </div>
-        
+
         <div class="note">
-            <p><strong>注意:</strong> locateはデータベースを使用するため高速ですが、データベースは定期的に更新されるため、最近作成されたファイルは検索結果に含まれない場合があります。最新の状態で検索するには、<code>sudo updatedb</code>コマンドでデータベースを更新してください。</p>
+            <p><strong>注意:</strong>
+                locateはデータベースを使用するため高速ですが、データベースは定期的に更新されるため、最近作成されたファイルは検索結果に含まれない場合があります。最新の状態で検索するには、<code>sudo
+                    updatedb</code>コマンドでデータベースを更新してください。</p>
         </div>
 
         <!-- which コマンド -->
         <h3>which - 実行可能ファイルの場所を検索</h3>
         <p>コマンドの実行可能ファイルがPATH環境変数のどこにあるかを表示します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -146,7 +154,7 @@
                 <td>PATHに含まれるすべての一致するファイルを表示（デフォルトでは最初の一致のみ）</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>which python</code> - pythonコマンドの実行可能ファイルの場所を表示<br>
@@ -159,7 +167,7 @@
         <!-- whereis コマンド -->
         <h3>whereis - コマンドのバイナリ、ソース、マニュアルの場所を検索</h3>
         <p>コマンドの実行可能ファイル、ソースコード、マニュアルページの場所を表示します。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -178,7 +186,7 @@
                 <td>ソースファイルのみを検索</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>whereis ls</code> - lsコマンドのバイナリ、ソース、マニュアルの場所を表示<br>
@@ -191,8 +199,9 @@
 
         <!-- grep コマンド（詳細） -->
         <h3>grep - テキストパターンの検索</h3>
-        <p>ファイル内のテキストパターンを検索します。テキスト処理コマンドセクションでも紹介していますが、ここではより詳細に説明します。</p>
-        
+        <p>
+            ファイル内のテキストパターンを検索します。テキスト処理コマンドセクションでも紹介していますが、ここではより詳細に説明します。</p>
+
         <table class="command-table">
             <tr>
                 <th>オプション</th>
@@ -251,7 +260,7 @@
                 <td>一致したテキストを色付きで表示</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>grep "error" /var/log/syslog</code> - ログファイル内の"error"を検索<br>
@@ -270,7 +279,7 @@
         <!-- ack/ag コマンド -->
         <h3>ack/ag - プログラマー向けのgrep代替</h3>
         <p>ackとag（The Silver Searcher）は、プログラマー向けに最適化されたgrep代替コマンドです。</p>
-        
+
         <table class="command-table">
             <tr>
                 <th>コマンド/オプション</th>
@@ -305,7 +314,7 @@
                 <td>検索の深さを制限</td>
             </tr>
         </table>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>ack "function"</code> - カレントディレクトリ以下のファイルから"function"を検索<br>
@@ -318,30 +327,36 @@
             <code>ag -l "TODO|FIXME" | xargs wc -l</code> - TODOまたはFIXMEを含むファイルの行数を表示<br>
             <code>ag --count "import" --sort-files</code> - 各ファイル内の"import"の出現回数をファイル名順に表示
         </div>
-        
+
         <div class="note">
-            <p><strong>注意:</strong> ackとagはデフォルトでバージョン管理システムのディレクトリ（.git, .svnなど）や一時ファイルを無視し、テキストファイルのみを検索します。これにより、grepよりも効率的にコードを検索できます。</p>
+            <p><strong>注意:</strong> ackとagはデフォルトでバージョン管理システムのディレクトリ（.git,
+                .svnなど）や一時ファイルを無視し、テキストファイルのみを検索します。これにより、grepよりも効率的にコードを検索できます。
+            </p>
         </div>
 
         <!-- find と grep の組み合わせ -->
         <h3>findとgrepの組み合わせ</h3>
         <p>findとgrepを組み合わせることで、特定のファイルタイプ内のテキストを検索できます。</p>
-        
+
         <div class="example">
             <p><strong>例:</strong></p>
             <code>find . -name "*.py" -exec grep "import" {} \;</code> - Pythonファイル内の"import"を検索<br>
             <code>find . -name "*.log" -mtime -7 -exec grep "ERROR" {} \;</code> - 過去7日以内に変更されたログファイル内の"ERROR"を検索<br>
-            <code>find . -type f -not -path "*/\.*" -exec grep -l "TODO" {} \;</code> - 隠しファイルを除く全ファイル内の"TODO"を含むファイル名を表示<br>
-            <code>find . -name "*.conf" -exec grep -l "DEBUG" {} \; | xargs cp -t /backup/debug-configs/</code> - DEBUGを含む設定ファイルをバックアップディレクトリにコピー<br>
-            <code>find . -name "*.java" -exec grep -l "Deprecated" {} \; | xargs sed -i 's/Deprecated/DEPRECATED/g'</code> - 非推奨マークのあるJavaファイルを一括編集<br>
+            <code>find . -type f -not -path "*/\.*" -exec grep -l "TODO" {} \;</code> -
+            隠しファイルを除く全ファイル内の"TODO"を含むファイル名を表示<br>
+            <code>find . -name "*.conf" -exec grep -l "DEBUG" {} \; | xargs cp -t /backup/debug-configs/</code> -
+            DEBUGを含む設定ファイルをバックアップディレクトリにコピー<br>
+            <code>find . -name "*.java" -exec grep -l "Deprecated" {} \; | xargs sed -i
+                's/Deprecated/DEPRECATED/g'</code> - 非推奨マークのあるJavaファイルを一括編集<br>
             <code>find . -type f -size +1M -exec grep -l "ERROR" {} \; | xargs ls -lh</code> - エラーを含む大きなファイルの詳細情報を表示<br>
             <code>find . -name "*.log" -exec grep -q "FATAL" {} \; -print</code> - "FATAL"を含むログファイルのパスのみを表示<br>
-            <code>find . -name "*.sh" -type f -exec grep -l "#!/bin/bash" {} \; | xargs chmod +x</code> - bashスクリプトに実行権限を付与
+            <code>find . -name "*.sh" -type f -exec grep -l "#!/bin/bash" {} \; | xargs chmod +x</code> -
+            bashスクリプトに実行権限を付与
         </div>
     </section>
 
     <div class="navigation-links">
-        <a href="linux_command_archive.html">前のカテゴリ: アーカイブ</a> | 
+        <a href="linux_command_archive.html">前のカテゴリ: アーカイブ</a> |
         <a href="linux_command.html">メインページに戻る</a>
     </div>
 
