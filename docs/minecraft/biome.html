@@ -12,7 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191" crossorigin="anonymous"></script>
     <script>
         // Apply saved theme early (same key as /src/minecraft/app.js)
         (function () {
@@ -32,7 +31,7 @@
 
     <!-- Use hosted loaders (see template/guide/guide_sample.md) -->
     <script src="https://iroirotool.github.io/libraries/iroiro.0.js" defer></script>
-    <script src="https://iroirotool.github.io/libraries/analytics.js" defer></script>
+    <script src="https://iroirotool.com/platform/js/common/analytics.js" defer></script>
 
     <link rel="stylesheet" href="style.css">
     <link rel="canonical" href="./biome.html">
@@ -57,22 +56,60 @@
     <style>
         html { scroll-behavior: smooth; }
         .page-container { max-width: 1100px; margin: 0 auto; padding: 16px; }
-        .hero { display: grid; gap: 12px; padding: 16px; border-radius: 12px; background: var(--md-sys-color-inverse-on-surface); }
+        .hero { display: grid; gap: 12px; padding: 16px; background: var(--md-sys-color-inverse-on-surface); border: 3px solid #3d2b1f; position: relative; }
+        .hero::after { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 2px solid rgba(255,255,255,0.3); pointer-events: none; }
         .hero h1 { margin: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 8px; }
-        .btn { display: inline-flex; align-items: center; gap: 6px; border: none; border-radius: 20px; padding: 8px 14px; cursor: pointer; color: var(--md-sys-color-on-primary); background: var(--md-sys-color-primary); text-decoration: none; }
+        .hero .note { font-size: 0.85rem; opacity: 0.8; margin: 0; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-top: 2px solid #ffffff;
+            border-left: 2px solid #ffffff;
+            border-bottom: 2px solid #555555;
+            border-right: 2px solid #555555;
+            padding: 8px 14px;
+            cursor: pointer;
+            color: #3d2b1f;
+            background: #c6c6c6;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        .btn:hover { background: #d6d6d6; }
+        .btn:active { border-top: 2px solid #555555; border-left: 2px solid #555555; border-bottom: 2px solid #ffffff; border-right: 2px solid #ffffff; }
         .breadcrumbs { display:flex; align-items:center; gap:6px; padding:8px 0; color: var(--md-sys-color-outline); }
         .breadcrumbs a { color: inherit; text-decoration: none; }
         .section { margin-top: 24px; }
 
         .page-layout { display: grid; grid-template-columns: 1fr 260px; gap: 24px; align-items: start; }
         .article { min-width: 0; }
-        .toc { position: sticky; top: 72px; background: var(--md-sys-color-inverse-on-surface); border: 1px solid var(--md-sys-color-surface-variant); border-radius: 12px; padding: 12px; }
+        .toc { position: sticky; top: 72px; background: var(--md-sys-color-inverse-on-surface); border: 3px solid #3d2b1f; padding: 12px; }
         .toc h2 { margin: 0 0 8px; font-size: 1rem; display:flex; align-items:center; gap:6px; }
         .toc ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
-        .toc a { color: var(--md-sys-color-on-surface); text-decoration: none; display:block; padding:6px 8px; border-radius:8px; }
-        .toc a:hover { background: color-mix(in oklab, var(--md-sys-color-primary) 12%, transparent); }
+        .toc a { color: var(--md-sys-color-on-surface); text-decoration: none; display:block; padding:6px 8px; border-radius:0px; }
+        .toc a:hover { background: #d6d6d6; }
+        .toc a.active { background: #c6c6c6; border-top: 2px solid #555555; border-left: 2px solid #555555; border-bottom: 2px solid #ffffff; border-right: 2px solid #ffffff; }
         .toc .lvl-3 { padding-left: 16px; font-size: .95em; opacity: .9; }
         @media (max-width: 1023px) { .page-layout { grid-template-columns: 1fr; } .toc { display:none; } }
+
+        /* Table styles */
+        table { width: 100%; border-collapse: collapse; margin-top: 12px; border: 3px solid #3d2b1f; background: #ffffff; color: #3d2b1f; }
+        th, td { border: 1px solid #3d2b1f; padding: 8px; text-align: left; font-size: 0.9rem; }
+        th { background: #d6d6d6; font-weight: bold; }
+        tr:nth-child(even) { background: #f0f0f0; }
+        [data-theme="dark"] table { background: #2c2c2c; color: #e0e0e0; border-color: #555555; }
+        [data-theme="dark"] th, [data-theme="dark"] td { border-color: #555555; }
+        [data-theme="dark"] th { background: #444444; }
+        [data-theme="dark"] tr:nth-child(even) { background: #333333; }
+        @media (max-width: 600px) {
+            table, thead, tbody, th, td, tr { display: block; }
+            thead tr { position: absolute; top: -9999px; left: -9999px; }
+            tr { border: 2px solid #3d2b1f; margin-bottom: 8px; }
+            td { border: none; border-bottom: 1px solid #eeeeee; position: relative; padding-left: 40%; min-height: 2.5em; }
+            td::before { position: absolute; top: 8px; left: 8px; width: 35%; padding-right: 10px; white-space: nowrap; font-weight: bold; content: attr(data-label); }
+        }
+        .note-box { background: var(--md-sys-color-surface-variant); border-left: 4px solid var(--md-sys-color-primary); padding: 12px; font-size: 0.9rem; }
 
     </style>
 </head>
@@ -117,43 +154,43 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr><td>平原 (Plains)</td><td>温暖/降雪なし</td><td>草・花・村人の村</td><td>ウマ・ロバ・ハチ</td><td>村、略奪者の前哨基地</td></tr>
-                        <tr><td>ヒマワリ平原 (Sunflower Plains)</td><td>温暖/降雪なし</td><td>ヒマワリ、草</td><td>—</td><td>—</td></tr>
-                        <tr><td>草地 (Meadow)</td><td>涼しい/稀に降雪</td><td>多くの花、ミツバチ</td><td>ロバ</td><td>村（稀）、前哨基地</td></tr>
-                        <tr><td>花の森 (Flower Forest)</td><td>温暖/降雪なし</td><td>多種の花、ミツバチ</td><td>ハチ</td><td>—</td></tr>
-                        <tr><td>森 (Forest)</td><td>温暖/降雪なし</td><td>オーク、シラカバ</td><td>オオカミ</td><td>—</td></tr>
-                        <tr><td>白樺の森 (Birch Forest)</td><td>温暖/降雪なし</td><td>シラカバ</td><td>—</td><td>—</td></tr>
-                        <tr><td>沼地 (Swamp)</td><td>温暖/降雪なし</td><td>スイレン、粘土</td><td>スライム（満月）、カエル</td><td>魔女の小屋（稀）</td></tr>
-                        <tr><td>マングローブの沼地 (Mangrove Swamp)</td><td>温暖/湿潤</td><td>マングローブ、泥ブロック、マングローブの根</td><td>カエル</td><td>—</td></tr>
-                        <tr><td>原生の白樺の森 (Old Growth Birch Forest)</td><td>温暖</td><td>高いシラカバ</td><td>—</td><td>—</td></tr>
-                        <tr><td>薄暗い森 (Dark Forest)</td><td>温暖/降雪なし</td><td>ダークオーク、キノコ</td><td>—</td><td>森の洋館</td></tr>
-                        <tr><td>ジャングル (Jungle)</td><td>湿潤/降雪なし</td><td>ジャングル木、カカオ、竹（稀）</td><td>オウム、オセロット</td><td>ジャングル寺院</td></tr>
-                        <tr><td>疎らなジャングル (Sparse Jungle)</td><td>湿潤</td><td>ジャングル木が疎ら</td><td>—</td><td>—</td></tr>
-                        <tr><td>竹林 (Bamboo Jungle)</td><td>湿潤</td><td>竹、パンダ</td><td>パンダ</td><td>—</td></tr>
-                        <tr><td>タイガ (Taiga)</td><td>涼しい/稀に降雪</td><td>トウヒ、スイートベリー</td><td>オオカミ、キツネ</td><td>イグルー（稀）</td></tr>
-                        <tr><td>雪のタイガ (Snowy Taiga)</td><td>寒冷/降雪</td><td>トウヒ</td><td>ウサギ、オオカミ</td><td>イグルー</td></tr>
-                        <tr><td>原生の松のタイガ (Old Growth Pine Taiga)</td><td>涼しい</td><td>高木のマツ</td><td>—</td><td>—</td></tr>
-                        <tr><td>原生のトウヒのタイガ (Old Growth Spruce Taiga)</td><td>涼しい</td><td>高木のトウヒ</td><td>—</td><td>—</td></tr>
-                        <tr><td>サバンナ (Savanna)</td><td>乾燥/降雪なし</td><td>アカシア</td><td>ウマ</td><td>村</td></tr>
-                        <tr><td>風にさらされたサバンナ (Windswept Savanna)</td><td>乾燥</td><td>険しい地形</td><td>—</td><td>—</td></tr>
-                        <tr><td>砂漠 (Desert)</td><td>乾燥/降雪なし</td><td>サボテン、枯れ木</td><td>ウサギ、ハスク</td><td>村、砂漠の寺院、井戸</td></tr>
-                        <tr><td>悪地 (Badlands)</td><td>乾燥</td><td>テラコッタ、金鉱脈（露出多）</td><td>—</td><td>廃坑（地表付近）</td></tr>
-                        <tr><td>木が生えた悪地 (Wooded Badlands)</td><td>乾燥</td><td>オーク、テラコッタ</td><td>—</td><td>—</td></tr>
-                        <tr><td>侵食された悪地 (Eroded Badlands)</td><td>乾燥</td><td>尖塔状の地形</td><td>—</td><td>—</td></tr>
-                        <tr><td>キノコ島 (Mushroom Fields)</td><td>温暖/降雪なし</td><td>菌糸、巨大キノコ</td><td>ムーシュルーム</td><td>—</td></tr>
-                        <tr><td>吹雪の平原 (Snowy Plains)</td><td>寒冷/降雪</td><td>氷/雪</td><td>ウサギ、ストレイ</td><td>イグルー、村</td></tr>
-                        <tr><td>氷樹の平原 (Ice Spikes)</td><td>寒冷/降雪</td><td>氷塊・氷柱</td><td>—</td><td>—</td></tr>
-                        <tr><td>桜の園 (Cherry Grove)</td><td>涼しい</td><td>サクラ、サクラの花びら</td><td>ハチ</td><td>—</td></tr>
-                        <tr><td>針葉樹の林 (Grove)</td><td>寒冷/降雪</td><td>トウヒ</td><td>—</td><td>—</td></tr>
-                        <tr><td>雪の斜面 (Snowy Slopes)</td><td>寒冷/降雪</td><td>粉雪、氷</td><td>ヤギ</td><td>—</td></tr>
-                        <tr><td>ギザギザの山頂 (Jagged Peaks)</td><td>寒冷/降雪</td><td>雪、氷</td><td>ヤギ</td><td>—</td></tr>
-                        <tr><td>凍った山頂 (Frozen Peaks)</td><td>寒冷/降雪</td><td>雪、氷</td><td>—</td><td>—</td></tr>
-                        <tr><td>石だらけの山頂 (Stony Peaks)</td><td>涼しい</td><td>石、安山岩</td><td>—</td><td>—</td></tr>
-                        <tr><td>浜 (Beach)</td><td>温暖/降雪なし</td><td>砂、サトウキビ</td><td>カメ</td><td>難破船（沖合）</td></tr>
-                        <tr><td>雪の浜 (Snowy Beach)</td><td>寒冷/降雪</td><td>雪の砂浜</td><td>—</td><td>—</td></tr>
-                        <tr><td>石の岸辺 (Stony Shore)</td><td>涼しい</td><td>丸石/石が露出</td><td>—</td><td>—</td></tr>
-                        <tr><td>川 (River)</td><td>多様</td><td>砂利、粘土、サトウキビ</td><td>サーモン、タラ</td><td>—</td></tr>
-                        <tr><td>凍った川 (Frozen River)</td><td>寒冷/凍結</td><td>氷</td><td>—</td><td>—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">平原 (Plains)</td><td data-label="温度/降雪">温暖/降雪なし</td><td data-label="主な資源・植物">草・花・村人の村</td><td data-label="出現モブ">ウマ・ロバ・ハチ</td><td data-label="構造物">村、略奪者の前哨基地</td></tr>
+                        <tr><td data-label="日本語名（英語名）">ヒマワリ平原 (Sunflower Plains)</td><td data-label="温度/降雪">温暖/降雪なし</td><td data-label="主な資源・植物">ヒマワリ、草</td><td data-label="出現モブ">—</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">草地 (Meadow)</td><td data-label="温度/降雪">涼しい/稀に降雪</td><td data-label="主な資源・植物">多くの花、ミツバチ</td><td data-label="出現モブ">ロバ</td><td data-label="構造物">村（稀）、前哨基地</td></tr>
+                        <tr><td data-label="日本語名（英語名）">花の森 (Flower Forest)</td><td data-label="温度/降雪">温暖/降雪なし</td><td data-label="主な資源・植物">多種の花、ミツバチ</td><td data-label="出現モブ">ハチ</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">森 (Forest)</td><td data-label="温度/降雪">温暖/降雪なし</td><td data-label="主な資源・植物">オーク、シラカバ</td><td data-label="出現モブ">オオカミ</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">白樺の森 (Birch Forest)</td><td data-label="温度/降雪">温暖/降雪なし</td><td data-label="主な資源・植物">シラカバ</td><td data-label="出現モブ">—</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">沼地 (Swamp)</td><td data-label="温度/降雪">温暖/降雪なし</td><td data-label="主な資源・植物">スイレン、粘土</td><td data-label="出現モブ">スライム（満月）、カエル</td><td data-label="構造物">魔女の小屋（稀）</td></tr>
+                        <tr><td data-label="日本語名（英語名）">マングローブの沼地 (Mangrove Swamp)</td><td data-label="温度/降雪">温暖/湿潤</td><td data-label="主な資源・植物">マングローブ、泥ブロック、マングローブの根</td><td data-label="出現モブ">カエル</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">原生の白樺の森 (Old Growth Birch Forest)</td><td data-label="温度/降雪">温暖</td><td data-label="主な資源・植物">高いシラカバ</td><td data-label="出現モブ">—</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">薄暗い森 (Dark Forest)</td><td data-label="温度/降雪">温暖/降雪なし</td><td data-label="主な資源・植物">ダークオーク、キノコ</td><td data-label="出現モブ">—</td><td data-label="構造物">森の洋館</td></tr>
+                        <tr><td data-label="日本語名（英語名）">ジャングル (Jungle)</td><td data-label="温度/降雪">湿潤/降雪なし</td><td data-label="主な資源・植物">ジャングル木、カカオ、竹（稀）</td><td data-label="出現モブ">オウム、オセロット</td><td data-label="構造物">ジャングル寺院</td></tr>
+                        <tr><td data-label="日本語名（英語名）">疎らなジャングル (Sparse Jungle)</td><td data-label="温度/降雪">湿潤</td><td data-label="主な資源・植物">ジャングル木が疎ら</td><td data-label="出現モブ">—</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">竹林 (Bamboo Jungle)</td><td data-label="温度/降雪">湿潤</td><td data-label="主な資源・植物">竹、パンダ</td><td data-label="出現モブ">パンダ</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">タイガ (Taiga)</td><td data-label="温度/降雪">涼しい/稀に降雪</td><td data-label="主な資源・植物">トウヒ、スイートベリー</td><td data-label="出現モブ">オオカミ、キツネ</td><td data-label="構造物">イグルー（稀）</td></tr>
+                        <tr><td data-label="日本語名（英語名）">雪のタイガ (Snowy Taiga)</td><td data-label="温度/降雪">寒冷/降雪</td><td data-label="主な資源・植物">トウヒ</td><td data-label="出現モブ">ウサギ、オオカミ</td><td data-label="構造物">イグルー</td></tr>
+                        <tr><td data-label="日本語名（英語名）">原生の松のタイガ (Old Growth Pine Taiga)</td><td data-label="温度/降雪">涼しい</td><td data-label="主な資源・植物">高木のマツ</td><td data-label="出現モブ">—</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">原生のトウヒのタイガ (Old Growth Spruce Taiga)</td><td data-label="温度/降雪">涼しい</td><td data-label="主な資源・植物">高木のトウヒ</td><td data-label="出現モブ">—</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">サバンナ (Savanna)</td><td data-label="温度/降雪">乾燥/降雪なし</td><td data-label="主な資源・植物">アカシア</td><td data-label="出現モブ">ウマ</td><td data-label="構造物">村</td></tr>
+                        <tr><td data-label="日本語名（英語名）">風にさらされたサバンナ (Windswept Savanna)</td><td data-label="温度/降雪">乾燥</td><td data-label="主な資源・植物">険しい地形</td><td data-label="出現モブ">—</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">砂漠 (Desert)</td><td data-label="温度/降雪">乾燥/降雪なし</td><td data-label="主な資源・植物">サボテン、枯れ木</td><td data-label="出現モブ">ウサギ、ハスク</td><td data-label="構造物">村、砂漠の寺院、井戸</td></tr>
+                        <tr><td data-label="日本語名（英語名）">悪地 (Badlands)</td><td data-label="温度/降雪">乾燥</td><td data-label="主な資源・植物">テラコッタ、金鉱脈（露出多）</td><td data-label="出現モブ">—</td><td data-label="構造物">廃坑（地表付近）</td></tr>
+                        <tr><td data-label="日本語名（英語名）">木が生えた悪地 (Wooded Badlands)</td><td data-label="温度/降雪">乾燥</td><td data-label="主な資源・植物">オーク、テラコッタ</td><td data-label="出現モブ">—</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">侵食された悪地 (Eroded Badlands)</td><td data-label="温度/降雪">乾燥</td><td data-label="主な資源・植物">尖塔状の地形</td><td data-label="出現モブ">—</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">キノコ島 (Mushroom Fields)</td><td data-label="温度/降雪">温暖/降雪なし</td><td data-label="主な資源・植物">菌糸、巨大キノコ</td><td data-label="出現モブ">ムーシュルーム</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">吹雪の平原 (Snowy Plains)</td><td data-label="温度/降雪">寒冷/降雪</td><td data-label="主な資源・植物">氷/雪</td><td data-label="出現モブ">ウサギ、ストレイ</td><td data-label="構造物">イグルー、村</td></tr>
+                        <tr><td data-label="日本語名（英語名）">氷樹の平原 (Ice Spikes)</td><td data-label="温度/降雪">寒冷/降雪</td><td data-label="主な資源・植物">氷塊・氷柱</td><td data-label="出現モブ">—</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">桜の園 (Cherry Grove)</td><td data-label="温度/降雪">涼しい</td><td data-label="主な資源・植物">サクラ、サクラの花びら</td><td data-label="出現モブ">ハチ</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">針葉樹の林 (Grove)</td><td data-label="温度/降雪">寒冷/降雪</td><td data-label="主な資源・植物">トウヒ</td><td data-label="出現モブ">—</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">雪の斜面 (Snowy Slopes)</td><td data-label="温度/降雪">寒冷/降雪</td><td data-label="主な資源・植物">粉雪、氷</td><td data-label="出現モブ">ヤギ</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">ギザギザの山頂 (Jagged Peaks)</td><td data-label="温度/降雪">寒冷/降雪</td><td data-label="主な資源・植物">雪、氷</td><td data-label="出現モブ">ヤギ</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">凍った山頂 (Frozen Peaks)</td><td data-label="温度/降雪">寒冷/降雪</td><td data-label="主な資源・植物">雪、氷</td><td data-label="出現モブ">—</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">石だらけの山頂 (Stony Peaks)</td><td data-label="温度/降雪">涼しい</td><td data-label="主な資源・植物">石、安山岩</td><td data-label="出現モブ">—</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">浜 (Beach)</td><td data-label="温度/降雪">温暖/降雪なし</td><td data-label="主な資源・植物">砂、サトウキビ</td><td data-label="出現モブ">カメ</td><td data-label="構造物">難破船（沖合）</td></tr>
+                        <tr><td data-label="日本語名（英語名）">雪の浜 (Snowy Beach)</td><td data-label="温度/降雪">寒冷/降雪</td><td data-label="主な資源・植物">雪の砂浜</td><td data-label="出現モブ">—</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">石の岸辺 (Stony Shore)</td><td data-label="温度/降雪">涼しい</td><td data-label="主な資源・植物">丸石/石が露出</td><td data-label="出現モブ">—</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">川 (River)</td><td data-label="温度/降雪">多様</td><td data-label="主な資源・植物">砂利、粘土、サトウキビ</td><td data-label="出現モブ">サーモン、タラ</td><td data-label="構造物">—</td></tr>
+                        <tr><td data-label="日本語名（英語名）">凍った川 (Frozen River)</td><td data-label="温度/降雪">寒冷/凍結</td><td data-label="主な資源・植物">氷</td><td data-label="出現モブ">—</td><td data-label="構造物">—</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -172,16 +209,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr><td>温暖な海 (Warm Ocean)</td><td>暖かい/珊瑚礁</td><td>サンゴ、熱帯魚、海草</td><td>フグ、熱帯魚</td><td>難破船、海底遺跡（少）</td></tr>
-                    <tr><td>ぬるい海 (Lukewarm Ocean)</td><td>温暖</td><td>海草、コンブ</td><td>タラ、イルカ</td><td>難破船、海底遺跡</td></tr>
-                    <tr><td>深いぬるい海 (Deep Lukewarm Ocean)</td><td>温暖/深海</td><td>コンブ</td><td>ドラウンド（少）</td><td>海底渓谷</td></tr>
-                    <tr><td>海 (Ocean)</td><td>中間</td><td>海草、コンブ</td><td>タラ、イルカ</td><td>難破船、海底遺跡</td></tr>
-                    <tr><td>深海 (Deep Ocean)</td><td>中間/深海</td><td>—</td><td>ドラウンド</td><td>海底神殿（稀）</td></tr>
-                    <tr><td>冷たい海 (Cold Ocean)</td><td>冷たい</td><td>コンブ、氷山付近</td><td>サケ</td><td>難破船、海底遺跡</td></tr>
-                    <tr><td>深い冷たい海 (Deep Cold Ocean)</td><td>冷たい/深海</td><td>—</td><td>ドラウンド</td><td>—</td></tr>
-                    <tr><td>凍った海 (Frozen Ocean)</td><td>寒冷/氷</td><td>氷山、氷</td><td>イカ（下層）</td><td>—</td></tr>
-                    <tr><td>深い凍った海 (Deep Frozen Ocean)</td><td>寒冷/深海</td><td>氷</td><td>—</td><td>—</td></tr>
-                    
+                    <tr><td data-label="日本語名（英語名）">温暖な海 (Warm Ocean)</td><td data-label="温度/特性">暖かい/珊瑚礁</td><td data-label="主な資源・植物">サンゴ、熱帯魚、海草</td><td data-label="出現モブ">フグ、熱帯魚</td><td data-label="構造物">難破船、海底遺跡（少）</td></tr>
+                    <tr><td data-label="日本語名（英語名）">ぬるい海 (Lukewarm Ocean)</td><td data-label="温度/特性">温暖</td><td data-label="主な資源・植物">海草、コンブ</td><td data-label="出現モブ">タラ、イルカ</td><td data-label="構造物">難破船、海底遺跡</td></tr>
+                    <tr><td data-label="日本語名（英語名）">深いぬるい海 (Deep Lukewarm Ocean)</td><td data-label="温度/特性">温暖/深海</td><td data-label="主な資源・植物">コンブ</td><td data-label="出現モブ">ドラウンド（少）</td><td data-label="構造物">海底渓谷</td></tr>
+                    <tr><td data-label="日本語名（英語名）">海 (Ocean)</td><td data-label="温度/特性">中間</td><td data-label="主な資源・植物">海草、コンブ</td><td data-label="出現モブ">タラ、イルカ</td><td data-label="構造物">難破船、海底遺跡</td></tr>
+                    <tr><td data-label="日本語名（英語名）">深海 (Deep Ocean)</td><td data-label="温度/特性">中間/深海</td><td data-label="主な資源・植物">—</td><td data-label="出現モブ">ドラウンド</td><td data-label="構造物">海底神殿（稀）</td></tr>
+                    <tr><td data-label="日本語名（英語名）">冷たい海 (Cold Ocean)</td><td data-label="温度/特性">冷たい</td><td data-label="主な資源・植物">コンブ、氷山付近</td><td data-label="出現モブ">サケ</td><td data-label="構造物">難破船、海底遺跡</td></tr>
+                    <tr><td data-label="日本語名（英語名）">深い冷たい海 (Deep Cold Ocean)</td><td data-label="温度/特性">冷たい/深海</td><td data-label="主な資源・植物">—</td><td data-label="出現モブ">ドラウンド</td><td data-label="構造物">—</td></tr>
+                    <tr><td data-label="日本語名（英語名）">凍った海 (Frozen Ocean)</td><td data-label="温度/特性">寒冷/氷</td><td data-label="主な資源・植物">氷山、氷</td><td data-label="出現モブ">イカ（下層）</td><td data-label="構造物">—</td></tr>
+                    <tr><td data-label="日本語名（英語名）">深い凍った海 (Deep Frozen Ocean)</td><td data-label="温度/特性">寒冷/深海</td><td data-label="主な資源・植物">氷</td><td data-label="出現モブ">—</td><td data-label="構造物">—</td></tr>
                     </tbody>
                 </table>
             </section>
@@ -199,9 +235,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr><td>繁茂した洞窟 (Lush Caves)</td><td>湿潤</td><td>グロウベリー、ツツジ、苔</td><td>ヒカリイカ、ウーパールーパー</td><td>—</td></tr>
-                    <tr><td>鍾乳洞 (Dripstone Caves)</td><td>乾燥</td><td>鍾乳石、石灰岩</td><td>—</td><td>—</td></tr>
-                    <tr><td>ディープダーク (Deep Dark)</td><td>暗闇/超低光</td><td>スカルク系ブロック</td><td>ウォーデン（ソナーで出現）</td><td>古代都市（Ancient City）</td></tr>
+                    <tr><td data-label="日本語名（英語名）">繁茂した洞窟 (Lush Caves)</td><td data-label="環境">湿潤</td><td data-label="主な資源・植物">グロウベリー、ツツジ、苔</td><td data-label="出現モブ">ヒカリイカ、ウーパールーパー</td><td data-label="構造物">—</td></tr>
+                    <tr><td data-label="日本語名（英語名）">鍾乳洞 (Dripstone Caves)</td><td data-label="環境">乾燥</td><td data-label="主な資源・植物">鍾乳石、石灰岩</td><td data-label="出現モブ">—</td><td data-label="構造物">—</td></tr>
+                    <tr><td data-label="日本語名（英語名）">ディープダーク (Deep Dark)</td><td data-label="環境">暗闇/超低光</td><td data-label="主な資源・植物">スカルク系ブロック</td><td data-label="出現モブ">ウォーデン（ソナーで出現）</td><td data-label="構造物">古代都市（Ancient City）</td></tr>
                     </tbody>
                 </table>
             </section>
@@ -219,11 +255,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr><td>歪んだ森 (Warped Forest)</td><td>比較的安全</td><td>歪んだ幹/菌糸、ネザー菌類</td><td>エンダーマン</td><td>—</td></tr>
-                    <tr><td>真紅の森 (Crimson Forest)</td><td>危険</td><td>真紅の幹/菌糸、クリムゾン菌類</td><td>ホグリン、ピグリン</td><td>—</td></tr>
-                    <tr><td>玄武岩デルタ (Basalt Deltas)</td><td>非常に険しい</td><td>玄武岩、黒曜石（稀）</td><td>マグマキューブ</td><td>—</td></tr>
-                    <tr><td>ネザーの荒地 (Nether Wastes)</td><td>標準</td><td>ネザーラック、クォーツ</td><td>ガスト、ゾンビピグリン</td><td>ネザー要塞、砦の遺跡（稀）</td></tr>
-                    <tr><td>ソウルサンドの谷 (Soul Sand Valley)</td><td>見通し良い</td><td>ソウルサンド、ソウルソイル、骨ブロック</td><td>ガスト、スケルトン</td><td>—</td></tr>
+                    <tr><td data-label="日本語名（英語名）">歪んだ森 (Warped Forest)</td><td data-label="環境">比較的安全</td><td data-label="主な資源・植物">歪んだ幹/菌糸、ネザー菌類</td><td data-label="出現モブ">エンダーマン</td><td data-label="構造物">—</td></tr>
+                    <tr><td data-label="日本語名（英語名）">真紅の森 (Crimson Forest)</td><td data-label="環境">危険</td><td data-label="主な資源・植物">真紅の幹/菌糸、クリムゾン菌類</td><td data-label="出現モブ">ホグリン、ピグリン</td><td data-label="構造物">—</td></tr>
+                    <tr><td data-label="日本語名（英語名）">玄武岩デルタ (Basalt Deltas)</td><td data-label="環境">非常に険しい</td><td data-label="主な資源・植物">玄武岩、黒曜石（稀）</td><td data-label="出現モブ">マグマキューブ</td><td data-label="構造物">—</td></tr>
+                    <tr><td data-label="日本語名（英語名）">ネザーの荒地 (Nether Wastes)</td><td data-label="環境">標準</td><td data-label="主な資源・植物">ネザーラック、クォーツ</td><td data-label="出現モブ">ガスト、ゾンビピグリン</td><td data-label="構造物">ネザー要塞、砦の遺跡（稀）</td></tr>
+                    <tr><td data-label="日本語名（英語名）">ソウルサンドの谷 (Soul Sand Valley)</td><td data-label="環境">見通し良い</td><td data-label="主な資源・植物">ソウルサンド、ソウルソイル、骨ブロック</td><td data-label="出現モブ">ガスト、スケルトン</td><td data-label="構造物">—</td></tr>
                     </tbody>
                 </table>
             </section>
@@ -241,17 +277,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr><td>ジ・エンド (The End)</td><td>中央島</td><td>エンドストーン</td><td>エンダードラゴン、エンダーマン</td><td>出口ポータル</td></tr>
-                    <tr><td>エンド・ハイランド (End Highlands)</td><td>外周島の高地</td><td>コーラスプラント</td><td>エンダーマン</td><td>エンドシティ（稀）</td></tr>
-                    <tr><td>エンド・ミッドランド (End Midlands)</td><td>外周島の中地</td><td>エンドストーン</td><td>エンダーマン</td><td>—</td></tr>
-                    <tr><td>エンド・バラック (End Barrens)</td><td>外周の痩せ地</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>スモールエンドアイランド (Small End Islands)</td><td>外周の小島</td><td>—</td><td>—</td><td>—</td></tr>
+                    <tr><td data-label="日本語名（英語名）">ジ・エンド (The End)</td><td data-label="環境">中央島</td><td data-label="主な資源・植物">エンドストーン</td><td data-label="出現モブ">エンダードラゴン、エンダーマン</td><td data-label="構造物">出口ポータル</td></tr>
+                    <tr><td data-label="日本語名（英語名）">エンド・ハイランド (End Highlands)</td><td data-label="環境">外周島の高地</td><td data-label="主な資源・植物">コーラスプラント</td><td data-label="出現モブ">エンダーマン</td><td data-label="構造物">エンドシティ（稀）</td></tr>
+                    <tr><td data-label="日本語名（英語名）">エンド・ミッドランド (End Midlands)</td><td data-label="環境">外周島の中地</td><td data-label="主な資源・植物">エンドストーン</td><td data-label="出現モブ">エンダーマン</td><td data-label="構造物">—</td></tr>
+                    <tr><td data-label="日本語名（英語名）">エンド・バラック (End Barrens)</td><td data-label="環境">外周の痩せ地</td><td data-label="主な資源・植物">—</td><td data-label="出現モブ">—</td><td data-label="構造物">—</td></tr>
+                    <tr><td data-label="日本語名（英語名）">スモールエンドアイランド (Small End Islands)</td><td data-label="環境">外周の小島</td><td data-label="主な資源・植物">—</td><td data-label="出現モブ">—</td><td data-label="構造物">—</td></tr>
                     </tbody>
                 </table>
             </section>
 
             <section class="section">
-                <div class="note">用語・名前は Java 1.20 の公式日本語ローカライズを参考に作成していますが、環境やリソースの記述は簡略化しています。各バイオームの詳細はゲーム内または公式Wikiをご確認ください。</div>
+                <div class="note-box">用語・名前は Java 1.20 の公式日本語ローカライズを参考に作成していますが、環境やリソースの記述は簡略化しています。各バイオームの詳細はゲーム内または公式Wikiをご確認ください。</div>
             </section>
         </article>
 

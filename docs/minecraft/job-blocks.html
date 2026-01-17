@@ -30,8 +30,6 @@
             }
         })();
     </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
-            crossorigin="anonymous"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XSBND7P00L"></script>
     <script>
         (function(){
@@ -88,8 +86,16 @@
             display: grid;
             gap: 12px;
             padding: 16px;
-            border-radius: 12px;
             background: var(--md-sys-color-inverse-on-surface);
+            border: 3px solid #3d2b1f;
+            position: relative;
+        }
+        .hero::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border: 2px solid rgba(255,255,255,0.3);
+            pointer-events: none;
         }
 
         .hero h1 {
@@ -104,13 +110,28 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            border: none;
-            border-radius: 20px;
+            border-top: 2px solid #ffffff;
+            border-left: 2px solid #ffffff;
+            border-bottom: 2px solid #555555;
+            border-right: 2px solid #555555;
             padding: 8px 14px;
             cursor: pointer;
-            color: var(--md-sys-color-on-primary);
-            background: var(--md-sys-color-primary);
+            color: #3d2b1f;
+            background: #c6c6c6;
             text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background: #d6d6d6;
+        }
+
+        .btn:active {
+            border-top: 2px solid #555555;
+            border-left: 2px solid #555555;
+            border-bottom: 2px solid #ffffff;
+            border-right: 2px solid #ffffff;
         }
 
         .section {
@@ -132,8 +153,7 @@
             position: sticky;
             top: 72px;
             background: var(--md-sys-color-inverse-on-surface);
-            border: 1px solid var(--md-sys-color-surface-variant);
-            border-radius: 12px;
+            border: 3px solid #3d2b1f;
             padding: 12px;
         }
 
@@ -162,15 +182,19 @@
             text-decoration: none;
             display: block;
             padding: 6px 8px;
-            border-radius: 8px;
+            border-radius: 0px;
         }
 
         .toc a:hover {
-            background: color-mix(in oklab, var(--md-sys-color-primary) 12%, transparent);
+            background: #d6d6d6;
         }
 
         .toc a.active {
-            background: color-mix(in oklab, var(--md-sys-color-primary) 22%, transparent);
+            background: #c6c6c6;
+            border-top: 2px solid #555555;
+            border-left: 2px solid #555555;
+            border-bottom: 2px solid #ffffff;
+            border-right: 2px solid #ffffff;
         }
 
         .toc .lvl-3 {
@@ -190,7 +214,7 @@
         }
     </style>
     <script src="https://iroirotool.github.io/libraries/iroiro.0.js" defer></script>
-    <script src="https://iroirotool.github.io/libraries/analytics.js" defer></script>
+    <script src="https://iroirotool.com/platform/js/common/analytics.js" defer></script>
 </head>
 <body>
 <header class="app-bar elevation-2">
@@ -229,17 +253,6 @@
                 </div>
             </section>
 
-            <section class="section" aria-label="スポンサーリンク">
-                <div class="ad-container" style="min-height: 280px;">
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-1932463298924191"
-                         data-ad-slot="1234567890"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                </div>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-            </section>
 
             <section class="section">
                 <h2>書見台（司書）</h2>
