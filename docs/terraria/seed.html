@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <!-- Google Analytics -->
+    <script src="../terraria/js/analytics.js"></script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>シード値一覧 | テラリア攻略</title>
+    <meta name="description"
+          content="テラリア(Terraria)の便利なシード値や特殊なワールド生成用シード値を一覧で紹介。">
+    <meta name="keywords" content="テラリア, Terraria, シード値, Seed, 特殊ワールド, 1.4.5">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    <script>
+        (function () {
+            try {
+                var theme = localStorage.getItem('mc-theme') || 'system';
+                var root = document.documentElement;
+                if (theme === 'dark') {
+                    root.setAttribute('data-theme', 'dark');
+                } else if (theme === 'light') {
+                    root.setAttribute('data-theme', 'light');
+                } else {
+                    root.removeAttribute('data-theme');
+                }
+            } catch (e) {
+            }
+        })();
+    </script>
+
+    <link rel="stylesheet" href="css/knowledge.css">
+</head>
+<body>
+
+<header class="app-bar elevation-2">
+    <a href="index.html" class="icon-btn" aria-label="戻る">
+        <span class="material-icons-outlined">arrow_back</span>
+    </a>
+    <div class="brand">
+        <span class="brand-name">テラリア攻略</span>
+    </div>
+    <div class="spacer"></div>
+    <button id="themeToggle" class="icon-btn" aria-label="テーマ切替">
+        <span class="material-icons-outlined" id="themeIcon">dark_mode</span>
+    </button>
+</header>
+
+<main class="content">
+    <nav class="breadcrumbs" aria-label="パンくず">
+        <a href="index.html">ホーム</a>
+        <span class="sep">/</span>
+        <span>シード値一覧</span>
+    </nav>
+
+    <div class="hero">
+        <h1>
+            <span class="material-icons-outlined">public</span>
+            シード値一覧
+        </h1>
+        <p>ワールド生成時に入力することで、特殊な挙動や便利な配置のワールドを生成できるシード値のまとめです。</p>
+    </div>
+
+    <section class="section">
+        <h2>特殊なワールドシード(1.4.5.4)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>シード値</th>
+                    <th>名称 / 効果</th>
+                    <th>備考</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label="シード値"><code>1.1.2.0.173158438</code></td>
+                    <td data-label="名称 / 効果">ビンづめのすなあらし(Sandstorm in a Bottle)</td>
+                    <td>小, classic, 真紅, west: 659, depth: 34</td>
+                </tr>
+                <tr>
+                    <td data-label="シード値"><code>1.1.1.0.1715462086</code></td>
+                    <td data-label="名称 / 効果">アイススケート</td>
+                    <td>小, classic, 邪悪, west: 1180, depth: 68</td>
+                </tr>
+                <tr>
+                    <td data-label="シード値"><code> - </code></td>
+                    <td data-label="名称 / 効果">まほうのじゅうたん</td>
+                    <td><a href="https://okanezakuzaku.net/post-10338" target="_blank" rel="noopener">(外部) https://okanezakuzaku.net/post-10338</a></td>
+                </tr>
+                <tr>
+                    <td data-label="シード値"><code>05162020</code></td>
+                    <td data-label="名称 / 効果">Drunk World</td>
+                    <td>両方の汚染バイオームが存在する、特殊な生成ルール</td>
+                </tr>
+                <tr>
+                    <td data-label="シード値"><code>not the bees</code></td>
+                    <td data-label="名称 / 効果">Not the Bees!</td>
+                    <td>世界の大半がジャングルと蜂の巣になる</td>
+                </tr>
+                <tr>
+                    <td data-label="シード値"><code>for the worthy</code></td>
+                    <td data-label="名称 / 効果">For the Worthy</td>
+                    <td>非常に難易度が高い高難易度ワールド</td>
+                </tr>
+                <tr>
+                    <td data-label="シード値"><code>celebrationmk10</code></td>
+                    <td data-label="名称 / 効果">Celebrationmk10</td>
+                    <td>10周年記念。明るい配色でレアアイテムが出やすい</td>
+                </tr>
+                <tr>
+                    <td data-label="シード値"><code>constant</code></td>
+                    <td data-label="名称 / 効果">The Constant</td>
+                    <td>Don't Starveコラボ。空腹度システムなどが導入される</td>
+                </tr>
+                <tr>
+                    <td data-label="シード値"><code>no traps</code></td>
+                    <td data-label="名称 / 効果">No Traps</td>
+                    <td>「罠がない」と見せかけて、実際には非常に多くの罠が生成される</td>
+                </tr>
+                <tr>
+                    <td data-label="シード値"><code>don't dig up</code></td>
+                    <td data-label="名称 / 効果">Don't Dig Up</td>
+                    <td>地底からスタートし、地上へ向かって進む</td>
+                </tr>
+                <tr>
+                    <td data-label="シード値"><code>get fixed boi</code></td>
+                    <td data-label="名称 / 効果">Zenith World</td>
+                    <td>すべての特殊シードを組み合わせた究極のシード</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<footer class="app-footer">
+    <div class="container">
+        <span>© <span id="year"></span> Terraria Guide</span>
+    </div>
+</footer>
+
+<script src="../minecraft/app.js" defer></script>
+</body>
+</html>
