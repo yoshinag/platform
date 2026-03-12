@@ -32,8 +32,15 @@
             color: inherit;
             display: flex;
             flex-direction: column;
+            align-items: center;
             justify-content: center;
-            min-height: 150px;
+            min-height: 200px;
+        }
+        .portal-item img {
+            max-width: 120px;
+            height: auto;
+            margin-bottom: 15px;
+            border-radius: 4px;
         }
         .portal-item:hover {
             transform: translateY(-5px);
@@ -62,18 +69,22 @@
 
     <div class="portal-grid">
         <a href="single_disk.html" class="portal-item">
+            <img src="image/single_disk.png" alt="シングルディスクルーレット">
             <h2>シングルディスク</h2>
             <p>標準的な円形ルーレットです。</p>
         </a>
         <a href="double_disk.html" class="portal-item">
+            <img src="image/double_disk.png" alt="ダブルディスクルーレット">
             <h2>ダブルディスク</h2>
             <p>2つの円形ルーレットを同時に回せます。</p>
         </a>
         <a href="single_drum.html" class="portal-item">
+            <img src="image/single_drum.png" alt="シングルドラムルーレット">
             <h2>シングルドラム</h2>
-            <p>スロットマシンのような縦回転ルーレットです。</p>
+            <p>スロットマシンのような縦回転ルーレットです。単一のドラムです。</p>
         </a>
         <a href="double_drum.html" class="portal-item">
+            <img src="image/double_drum.png" alt="ダブルドラムルーレット">
             <h2>ダブルドラム</h2>
             <p>2つのドラム型ルーレットを同時に回せます。</p>
         </a>
