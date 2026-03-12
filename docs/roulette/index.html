@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <script src="../roulette/js/analytics.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ルーレットツール一覧 | iroirotool</title>
+    <meta name="description" content="ディスク型やドラム型など、様々なタイプのルーレットツール。項目を自由にカスタマイズして、抽選やランダムな決定に利用できます。">
+    <meta name="keywords" content="ルーレット,ドラムルーレット,スロット,抽選,ランダム決定,ツール,iroirotool">
+    <meta property="og:title" content="ルーレットツール一覧 | iroirotool">
+    <meta property="og:description" content="カスタマイズ可能な各種ルーレットツール集。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://iroirotool.com/roulette/index.html">
+    <meta name="twitter:card" content="summary">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .portal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .portal-item {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 150px;
+        }
+        .portal-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            border-color: var(--primary-color);
+        }
+        .portal-item h2 {
+            margin: 0 0 10px 0;
+            font-size: 1.25rem;
+            color: var(--primary-color);
+        }
+        .portal-item p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="visually-hidden">ルーレットツール一覧</h1>
+    <p>用途に合わせてルーレットのタイプを選んでください。</p>
+
+    <div class="portal-grid">
+        <a href="single_disk.html" class="portal-item">
+            <h2>シングルディスク</h2>
+            <p>標準的な円形ルーレットです。</p>
+        </a>
+        <a href="double_disk.html" class="portal-item">
+            <h2>ダブルディスク</h2>
+            <p>2つの円形ルーレットを同時に回せます。</p>
+        </a>
+        <a href="single_drum.html" class="portal-item">
+            <h2>シングルドラム</h2>
+            <p>スロットマシンのような縦回転ルーレットです。</p>
+        </a>
+        <a href="double_drum.html" class="portal-item">
+            <h2>ダブルドラム</h2>
+            <p>2つのドラム型ルーレットを同時に回せます。</p>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

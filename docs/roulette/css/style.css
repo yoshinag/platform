@@ -173,6 +173,21 @@ button:disabled { background-color: #ccc; cursor: not-allowed; }
     border: 0;
 }
 
+.navigation-links {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.navigation-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.navigation-links a:hover {
+    text-decoration: underline;
+}
+
 /* ドラムルーレット用スタイル */
 .drum-wrapper {
     position: relative;
