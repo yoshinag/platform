@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <script src="../roulette/js/analytics.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ダブルドラムルーレット | iroirotool</title>
+    <meta name="description" content="2つのドラムを同時に回せるスロット形式のルーレットです。項目の組み合わせ抽選に最適。">
+    <meta name="keywords" content="ダブルドラム,スロットルーレット,抽選,ランダム決定,ツール,iroirotool">
+    <meta property="og:title" content="ダブルドラムルーレット | iroirotool">
+    <meta property="og:description" content="2つのドラムを回せるスロット風ルーレットツール。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://iroirotool.com/roulette/double_drum.html">
+    <meta name="twitter:card" content="summary">
+    <link rel="stylesheet" href="css/style.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="visually-hidden">ダブルドラムルーレット</h1>
+    <div class="roulette-container">
+        <!-- ドラム 1 -->
+        <div class="roulette-section" id="drum1">
+            <div class="result-container">
+                <div class="result">結果: -</div>
+            </div>
+            <div class="drum-wrapper">
+                <div class="drum-window">
+                    <canvas width="200" height="400"></canvas>
+                    <div class="drum-indicator"></div>
+                    <div class="drum-shadow-top"></div>
+                    <div class="drum-shadow-bottom"></div>
+                </div>
+            </div>
+            <div class="controls">
+                <div class="button-group">
+                    <button id="spin1Btn" class="secondary">1 だけ回す</button>
+                </div>
+                <button class="remove-btn" style="display: none; margin-bottom: 20px;">この項目を除去</button>
+                <div class="input-group">
+                    <label>ドラム 1 項目:</label>
+                    <textarea placeholder="項目A&#10;項目B&#10;項目C">項目A
+項目B
+項目C
+項目D
+項目E
+項目F</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- ドラム 2 -->
+        <div class="roulette-section" id="drum2">
+            <div class="result-container">
+                <div class="result">結果: -</div>
+            </div>
+            <div class="drum-wrapper">
+                <div class="drum-window">
+                    <canvas width="200" height="400"></canvas>
+                    <div class="drum-indicator"></div>
+                    <div class="drum-shadow-top"></div>
+                    <div class="drum-shadow-bottom"></div>
+                </div>
+            </div>
+            <div class="controls">
+                <div class="button-group">
+                    <button id="spin2Btn" class="secondary">2 だけ回す</button>
+                </div>
+                <button class="remove-btn" style="display: none; margin-bottom: 20px;">この項目を除去</button>
+                <div class="input-group">
+                    <label>ドラム 2 項目:</label>
+                    <textarea placeholder="項目1&#10;項目2&#10;項目3">項目1
+項目2
+項目3
+項目4
+項目5
+項目6</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="button-group">
+        <button id="spinBothBtn">両方回す！</button>
+    </div>
+</div>
+
+<script src="js/roulette.js"></script>
+<script>
+    const d1 = new Drum('drum1', globalColors);
+    const d2 = new Drum('drum2', globalColors);
+
+    const spinBothBtn = document.getElementById('spinBothBtn');
+    const spin1Btn = document.getElementById('spin1Btn');
+    const spin2Btn = document.getElementById('spin2Btn');
+
+    spinBothBtn.addEventListener('click', async () => {
+        spinBothBtn.disabled = true;
+        spin1Btn.disabled = true;
+        spin2Btn.disabled = true;
+        await Promise.all([d1.spin(), d2.spin()]);
+        spinBothBtn.disabled = false;
+        spin1Btn.disabled = false;
+        spin2Btn.disabled = false;
+    });
+
+    spin1Btn.addEventListener('click', async () => {
+        spinBothBtn.disabled = true;
+        spin1Btn.disabled = true;
+        await d1.spin();
+        if (!d2.isSpinning) {
+            spinBothBtn.disabled = false;
+            spin1Btn.disabled = false;
+        }
+    });
+
+    spin2Btn.addEventListener('click', async () => {
+        spinBothBtn.disabled = true;
+        spin2Btn.disabled = true;
+        await d2.spin();
+        if (!d1.isSpinning) {
+            spinBothBtn.disabled = false;
+            spin2Btn.disabled = false;
+        }
+    });
+</script>
+
+</body>
+</html>

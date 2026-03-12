@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <script src="../roulette/js/analytics.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>シングルドラムルーレット | iroirotool</title>
+    <meta name="description" content="スロット形式のドラム型ルーレットです。スムーズな回転と奥行きのある描画で抽選を演出します。">
+    <meta name="keywords" content="ドラムルーレット,スロットルーレット,抽選,ランダム決定,ツール,iroirotool">
+    <meta property="og:title" content="シングルドラムルーレット | iroirotool">
+    <meta property="og:description" content="スロットのようなドラム型ルーレットツール。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://iroirotool.com/roulette/single_drum.html">
+    <meta name="twitter:card" content="summary">
+    <link rel="stylesheet" href="css/style.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="visually-hidden">シングルドラムルーレット</h1>
+    <div class="roulette-container">
+        <div class="roulette-section" id="drum1">
+            <div class="result-container">
+                <div class="result">結果: -</div>
+            </div>
+            <div class="drum-wrapper">
+                <div class="drum-window">
+                    <canvas width="200" height="400"></canvas>
+                    <div class="drum-indicator"></div>
+                    <div class="drum-shadow-top"></div>
+                    <div class="drum-shadow-bottom"></div>
+                </div>
+            </div>
+            <div class="controls">
+                <div class="button-group">
+                    <button id="spinBtn">ドラムを回す！</button>
+                </div>
+                <button class="remove-btn" style="display: none; margin-bottom: 20px;">この項目を除去</button>
+                <div class="input-group">
+                    <label>ドラム項目 (1行に1項目):</label>
+                    <textarea placeholder="項目A&#10;項目B&#10;項目C">項目A
+項目B
+項目C
+項目D
+項目E
+項目F</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/roulette.js"></script>
+<script>
+    const d1 = new Drum('drum1', globalColors);
+    const spinBtn = document.getElementById('spinBtn');
+
+    spinBtn.addEventListener('click', async () => {
+        spinBtn.disabled = true;
+        await d1.spin();
+        spinBtn.disabled = false;
+    });
+</script>
+
+</body>
+</html>
