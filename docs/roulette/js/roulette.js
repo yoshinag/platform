@@ -381,3 +381,16 @@ const globalColors = [
     '#f1c40f', '#e67e22', '#e74c3c', '#9b59b6', '#3498db', 
     '#2ecc71', '#1abc9c', '#34495e', '#16a085', '#27ae60'
 ];
+
+async function loadDefaultItems() {
+    try {
+        const response = await fetch('default.txt');
+        if (!response.ok) throw new Error('Failed to fetch default.txt');
+        const text = await response.text();
+        return text.trim();
+    } catch (e) {
+        console.error(e);
+        // フォールバック: 以前のデフォルト値
+        return Array.from({length: 32}, (_, i) => i + 1).join('\n');
+    }
+}

@@ -43,12 +43,7 @@
                 <button class="remove-btn" style="display: none; margin-bottom: 20px;">この項目を除去</button>
                 <div class="input-group">
                     <label>ドラム項目 (1行に1項目):</label>
-                    <textarea placeholder="項目A&#10;項目B&#10;項目C">項目A
-項目B
-項目C
-項目D
-項目E
-項目F</textarea>
+                    <textarea placeholder="項目A&#10;項目B&#10;項目C"></textarea>
                 </div>
             </div>
         </div>
@@ -57,14 +52,19 @@
 
 <script src="js/roulette.js"></script>
 <script>
-    const d1 = new Drum('drum1', globalColors);
-    const spinBtn = document.getElementById('spinBtn');
+    (async () => {
+        const defaultText = await loadDefaultItems();
+        document.querySelectorAll('textarea').forEach(ta => ta.value = defaultText);
 
-    spinBtn.addEventListener('click', async () => {
-        spinBtn.disabled = true;
-        await d1.spin();
-        spinBtn.disabled = false;
-    });
+        const d1 = new Drum('drum1', globalColors);
+        const spinBtn = document.getElementById('spinBtn');
+
+        spinBtn.addEventListener('click', async () => {
+            spinBtn.disabled = true;
+            await d1.spin();
+            spinBtn.disabled = false;
+        });
+    })();
 </script>
 
 </body>
