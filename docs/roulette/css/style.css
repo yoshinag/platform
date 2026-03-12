@@ -270,6 +270,34 @@ button:disabled { background-color: #ccc; cursor: not-allowed; }
     z-index: 2;
 }
 
+.terms-container {
+    width: 100%;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.terms-field {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+.terms-field h3 {
+    margin: 0 0 10px 0;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.terms-field ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
 @media (max-width: 768px) {
     .roulette-container {
         flex-direction: column;
