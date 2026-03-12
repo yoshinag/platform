@@ -30,16 +30,28 @@
             </div>
             <div class="roulette-wrapper">
                 <div class="pointer"></div>
-                <canvas width="400" height="400"></canvas>
+                <canvas width="300" height="300"></canvas>
             </div>
             <div class="controls">
                 <div class="button-group">
                     <button id="spinBtn">ルーレットを回す！</button>
                 </div>
                 <button class="remove-btn" style="display: none; margin-bottom: 20px;">この項目を除去</button>
-                <div class="input-group">
-                    <label>ルーレット項目 (1行に1項目):</label>
-                    <textarea placeholder="項目A&#10;項目B&#10;項目C"></textarea>
+
+                <div class="settings-panel" id="settingsPanel">
+                    <div class="settings-header" onclick="document.getElementById('settingsPanel').classList.toggle('open')">
+                        設定
+                    </div>
+                    <div class="settings-content">
+                        <div class="input-group">
+                            <label>サイズ: <span id="sizeValue">300</span>px</label>
+                            <input type="range" id="sizeRange" min="200" max="800" value="300">
+                        </div>
+                        <div class="input-group">
+                            <label>ルーレット項目 (1行に1項目):</label>
+                            <textarea placeholder="項目A&#10;項目B&#10;項目C"></textarea>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -54,6 +66,14 @@
 
         const r1 = new Roulette('roulette1', globalColors);
         const spinBtn = document.getElementById('spinBtn');
+        const sizeRange = document.getElementById('sizeRange');
+        const sizeValue = document.getElementById('sizeValue');
+
+        sizeRange.addEventListener('input', () => {
+            const val = sizeRange.value;
+            sizeValue.textContent = val;
+            r1.setSize(parseInt(val), parseInt(val));
+        });
 
         spinBtn.addEventListener('click', async () => {
             spinBtn.disabled = true;

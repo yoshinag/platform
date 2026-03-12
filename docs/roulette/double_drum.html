@@ -31,7 +31,7 @@
             </div>
             <div class="drum-wrapper">
                 <div class="drum-window">
-                    <canvas width="200" height="400"></canvas>
+                    <canvas width="200" height="200"></canvas>
                     <div class="drum-indicator"></div>
                     <div class="drum-shadow-top"></div>
                     <div class="drum-shadow-bottom"></div>
@@ -42,9 +42,25 @@
                     <button id="spin1Btn" class="secondary">1 だけ回す</button>
                 </div>
                 <button class="remove-btn" style="display: none; margin-bottom: 20px;">この項目を除去</button>
-                <div class="input-group">
-                    <label>ドラム 1 項目:</label>
-                    <textarea placeholder="項目A&#10;項目B&#10;項目C"></textarea>
+
+                <div class="settings-panel" id="settingsPanel1">
+                    <div class="settings-header" onclick="document.getElementById('settingsPanel1').classList.toggle('open')">
+                        ドラム 1 設定
+                    </div>
+                    <div class="settings-content">
+                        <div class="input-group">
+                            <label>ドラムの幅: <span class="widthValue">200</span>px</label>
+                            <input type="range" class="widthRange" min="150" max="600" value="200">
+                        </div>
+                        <div class="input-group">
+                            <label>ドラムの高さ: <span class="heightValue">200</span>px</label>
+                            <input type="range" class="heightRange" min="200" max="800" value="200">
+                        </div>
+                        <div class="input-group">
+                            <label>ドラム 1 項目:</label>
+                            <textarea placeholder="項目A&#10;項目B&#10;項目C"></textarea>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -56,7 +72,7 @@
             </div>
             <div class="drum-wrapper">
                 <div class="drum-window">
-                    <canvas width="200" height="400"></canvas>
+                    <canvas width="200" height="200"></canvas>
                     <div class="drum-indicator"></div>
                     <div class="drum-shadow-top"></div>
                     <div class="drum-shadow-bottom"></div>
@@ -67,9 +83,25 @@
                     <button id="spin2Btn" class="secondary">2 だけ回す</button>
                 </div>
                 <button class="remove-btn" style="display: none; margin-bottom: 20px;">この項目を除去</button>
-                <div class="input-group">
-                    <label>ドラム 2 項目:</label>
-                    <textarea placeholder="項目1&#10;項目2&#10;項目3"></textarea>
+
+                <div class="settings-panel" id="settingsPanel2">
+                    <div class="settings-header" onclick="document.getElementById('settingsPanel2').classList.toggle('open')">
+                        ドラム 2 設定
+                    </div>
+                    <div class="settings-content">
+                        <div class="input-group">
+                            <label>ドラムの幅: <span class="widthValue">200</span>px</label>
+                            <input type="range" class="widthRange" min="150" max="600" value="200">
+                        </div>
+                        <div class="input-group">
+                            <label>ドラムの高さ: <span class="heightValue">200</span>px</label>
+                            <input type="range" class="heightRange" min="200" max="800" value="200">
+                        </div>
+                        <div class="input-group">
+                            <label>ドラム 2 項目:</label>
+                            <textarea placeholder="項目1&#10;項目2&#10;項目3"></textarea>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -88,6 +120,27 @@
 
         const d1 = new Drum('drum1', globalColors);
         const d2 = new Drum('drum2', globalColors);
+
+        // サイズ変更イベントの設定
+        [d1, d2].forEach((d, i) => {
+            const section = document.getElementById(`drum${i + 1}`);
+            const widthRange = section.querySelector('.widthRange');
+            const heightRange = section.querySelector('.heightRange');
+            const widthValue = section.querySelector('.widthValue');
+            const heightValue = section.querySelector('.heightValue');
+
+            widthRange.addEventListener('input', () => {
+                const val = widthRange.value;
+                widthValue.textContent = val;
+                d.setSize(parseInt(val), d.height);
+            });
+
+            heightRange.addEventListener('input', () => {
+                const val = heightRange.value;
+                heightValue.textContent = val;
+                d.setSize(d.width, parseInt(val));
+            });
+        });
 
         const spinBothBtn = document.getElementById('spinBothBtn');
         const spin1Btn = document.getElementById('spin1Btn');

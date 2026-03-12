@@ -43,6 +43,18 @@ class Roulette {
         this.draw();
     }
 
+    setSize(width, height) {
+        this.canvas.width = width;
+        this.canvas.height = height;
+        // wrapper は .roulette-wrapper
+        const wrapper = this.container.querySelector('.roulette-wrapper');
+        if (wrapper) {
+            wrapper.style.width = width + 'px';
+            wrapper.style.height = height + 'px';
+        }
+        this.draw();
+    }
+
     draw() {
         const text = this.textarea.value.trim();
         this.items = text ? text.split('\n').filter(i => i.trim() !== '') : ['項目なし'];
@@ -186,6 +198,10 @@ class Drum {
         this.isSpinning = false;
         this.winningIndex = -1;
         this.itemHeight = 80; // 各項目の高さ
+        this.width = this.canvas.width;
+        this.height = this.canvas.height;
+        this.wrapper = this.container.querySelector('.drum-wrapper');
+        this.window = this.container.querySelector('.drum-window');
 
         this.textarea.addEventListener('input', () => {
             this.winningIndex = -1;
@@ -217,6 +233,22 @@ class Drum {
         this.draw();
     }
 
+    setSize(width, height) {
+        this.width = width;
+        this.height = height;
+        this.canvas.width = width;
+        this.canvas.height = height;
+        if (this.wrapper) {
+            this.wrapper.style.width = width + 'px';
+            this.wrapper.style.height = height + 'px';
+        }
+        if (this.window) {
+            this.window.style.width = width + 'px';
+            this.window.style.height = height + 'px';
+        }
+        this.draw();
+    }
+
     draw() {
         const text = this.textarea.value.trim();
         this.items = text ? text.split('\n').filter(i => i.trim() !== '') : ['項目なし'];
@@ -230,8 +262,8 @@ class Drum {
 
         // ループするように描画
         // currentY は 0 が「最初の項目が中央」を指すように調整する
-        const startIdx = Math.floor(-this.currentY / this.itemHeight) - 5;
-        const endIdx = startIdx + Math.ceil(this.canvas.height / this.itemHeight) + 10;
+        const startIdx = Math.floor(-this.currentY / this.itemHeight) - Math.ceil(this.canvas.height / this.itemHeight);
+        const endIdx = startIdx + Math.ceil(this.canvas.height / this.itemHeight) * 2 + 5;
 
         for (let i = startIdx; i <= endIdx; i++) {
             let actualIdx = i % numItems;
@@ -255,7 +287,7 @@ class Drum {
             // 投影後のY位置（上端と下端）
             const drawTopY = centerY + Math.sin(topAngle) * radius;
             const drawBottomY = centerY + Math.sin(bottomAngle) * radius;
-            const currentItemHeight = drawBottomY - drawTopY;
+            const currentItemHeight = Math.max(1, drawBottomY - drawTopY);
             const drawY = drawTopY;
 
             // 中央から遠ざかるほど透明にする（フェードアウト効果）
@@ -342,10 +374,10 @@ class Drum {
         // 当選させるインデックスをランダムに選ぶ
         const stopIdx = Math.floor(Math.random() * numItems);
         
-        // 何回転かさせた後に、-(stopIdx * itemHeight) で止まるようにする
+        // 何回転かさせた後に、(stopIdx * itemHeight) で止まるようにする
         // (currentY=0 のときに index 0 が中央にくる)
         const extraSpins = 5 + Math.floor(Math.random() * 5);
-        const targetY = -(extraSpins * totalHeight + stopIdx * this.itemHeight);
+        const targetY = (extraSpins * totalHeight - stopIdx * this.itemHeight);
         
         const startY = this.currentY;
         const spinY = targetY - startY;

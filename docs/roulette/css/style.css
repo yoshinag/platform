@@ -45,7 +45,7 @@ h1 { margin-bottom: 20px; }
     flex-direction: column;
     align-items: center;
     flex: 1;
-    min-width: 300px;
+    min-width: 350px;
 }
 
 .roulette-wrapper {
@@ -56,7 +56,7 @@ h1 { margin-bottom: 20px; }
 canvas {
     border-radius: 50%;
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    max-width: 100%;
+    display: block;
     height: auto;
 }
 
@@ -193,13 +193,13 @@ button:disabled { background-color: #ccc; cursor: not-allowed; }
     position: relative;
     margin: 20px 0;
     width: 200px;
-    height: 400px;
+    height: 200px;
 }
 
 .drum-window {
     position: relative;
     width: 200px;
-    height: 400px;
+    height: 200px;
     overflow: hidden;
     border: 4px solid #333;
     border-radius: 8px;
@@ -210,6 +210,7 @@ button:disabled { background-color: #ccc; cursor: not-allowed; }
 .drum-window canvas {
     border-radius: 0;
     box-shadow: none;
+    display: block;
 }
 
 .drum-indicator {
@@ -296,6 +297,50 @@ button:disabled { background-color: #ccc; cursor: not-allowed; }
 .terms-field ul {
     margin: 0;
     padding-left: 20px;
+}
+
+.settings-panel {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.settings-header {
+    background-color: #f8f9fa;
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    user-select: none;
+}
+
+.settings-header:hover {
+    background-color: #e9ecef;
+}
+
+.settings-header::after {
+    content: '▼';
+    font-size: 0.8rem;
+    transition: transform 0.3s;
+}
+
+.settings-panel.open .settings-header::after {
+    transform: rotate(180deg);
+}
+
+.settings-content {
+    padding: 15px;
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.settings-panel.open .settings-content {
+    display: flex;
 }
 
 @media (max-width: 768px) {
