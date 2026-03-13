@@ -6,6 +6,7 @@ class Roulette {
         this.textarea = this.container.querySelector('textarea');
         this.resultDiv = this.container.querySelector('.result');
         this.removeBtn = this.container.querySelector('.remove-btn');
+        this.shuffleBtn = this.container.querySelector('.shuffle-btn');
         this.colors = colors;
         
         this.items = [];
@@ -19,6 +20,24 @@ class Roulette {
             this.draw();
         });
         this.removeBtn.addEventListener('click', () => this.removeItem());
+        if (this.shuffleBtn) {
+            this.shuffleBtn.addEventListener('click', () => this.shuffleItems());
+        }
+    }
+
+    shuffleItems() {
+        const text = this.textarea.value.trim();
+        if (!text) return;
+        const items = text.split('\n').filter(i => i.trim() !== '');
+        for (let i = items.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [items[i], items[j]] = [items[j], items[i]];
+        }
+        this.textarea.value = items.join('\n');
+        this.winningIndex = -1;
+        this.resultDiv.textContent = '結果: -';
+        this.updateRemoveButton();
+        this.draw();
     }
 
     setRandomPosition() {
@@ -207,6 +226,7 @@ class Drum {
         this.textarea = this.container.querySelector('textarea');
         this.resultDiv = this.container.querySelector('.result');
         this.removeBtn = this.container.querySelector('.remove-btn');
+        this.shuffleBtn = this.container.querySelector('.shuffle-btn');
         this.colors = colors;
 
         this.items = [];
@@ -226,6 +246,24 @@ class Drum {
             this.draw();
         });
         this.removeBtn.addEventListener('click', () => this.removeItem());
+        if (this.shuffleBtn) {
+            this.shuffleBtn.addEventListener('click', () => this.shuffleItems());
+        }
+    }
+
+    shuffleItems() {
+        const text = this.textarea.value.trim();
+        if (!text) return;
+        const items = text.split('\n').filter(i => i.trim() !== '');
+        for (let i = items.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [items[i], items[j]] = [items[j], items[i]];
+        }
+        this.textarea.value = items.join('\n');
+        this.winningIndex = -1;
+        this.resultDiv.textContent = '結果: -';
+        this.updateRemoveButton();
+        this.draw();
     }
 
     setRandomPosition() {
