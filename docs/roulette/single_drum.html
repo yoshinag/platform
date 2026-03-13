@@ -73,6 +73,7 @@
         document.querySelectorAll('textarea').forEach(ta => ta.value = defaultText);
 
         const d1 = new Drum('drum1', globalColors);
+        d1.setRandomPosition();
         const spinBtn = document.getElementById('spinBtn');
         const widthRange = document.getElementById('widthRange');
         const heightRange = document.getElementById('heightRange');

@@ -65,6 +65,7 @@
         document.querySelectorAll('textarea').forEach(ta => ta.value = defaultText);
 
         const r1 = new Roulette('roulette1', globalColors);
+        r1.setRandomPosition();
         const spinBtn = document.getElementById('spinBtn');
         const sizeRange = document.getElementById('sizeRange');
         const sizeValue = document.getElementById('sizeValue');

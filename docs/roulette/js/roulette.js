@@ -19,7 +19,24 @@ class Roulette {
             this.draw();
         });
         this.removeBtn.addEventListener('click', () => this.removeItem());
-        this.draw();
+    }
+
+    setRandomPosition() {
+        const text = this.textarea.value.trim();
+        const items = text ? text.split('\n').filter(i => i.trim() !== '') : ['項目なし'];
+        const numItems = items.length;
+        if (numItems > 0) {
+            const arcSize = (2 * Math.PI) / numItems;
+            const randomIndex = Math.floor(Math.random() * numItems);
+            // 針の位置（3π/2）にrandomIndexが来るようにcurrentRotationを設定
+            // 0.5を加算して扇形の中心が針を指すようにする
+            this.currentRotation = (1.5 * Math.PI) - (randomIndex + 0.5) * arcSize;
+            this.draw();
+            // 初期状態では結果をハイフンにする
+            this.resultDiv.textContent = '結果: -';
+            this.winningIndex = -1;
+            this.updateRemoveButton();
+        }
     }
 
     updateRemoveButton() {
@@ -209,7 +226,21 @@ class Drum {
             this.draw();
         });
         this.removeBtn.addEventListener('click', () => this.removeItem());
-        this.draw();
+    }
+
+    setRandomPosition() {
+        const text = this.textarea.value.trim();
+        const items = text ? text.split('\n').filter(i => i.trim() !== '') : ['項目なし'];
+        const numItems = items.length;
+        if (numItems > 0) {
+            const stopIdx = Math.floor(Math.random() * numItems);
+            this.currentY = -stopIdx * this.itemHeight;
+            this.draw();
+            // 初期状態では結果をハイフンにする
+            this.resultDiv.textContent = '結果: -';
+            this.winningIndex = -1;
+            this.updateRemoveButton();
+        }
     }
 
     updateRemoveButton() {

@@ -120,6 +120,8 @@
 
         const d1 = new Drum('drum1', globalColors);
         const d2 = new Drum('drum2', globalColors);
+        d1.setRandomPosition();
+        d2.setRandomPosition();
 
         // サイズ変更イベントの設定
         [d1, d2].forEach((d, i) => {

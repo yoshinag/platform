@@ -104,6 +104,8 @@
 
         const r1 = new Roulette('roulette1', globalColors);
         const r2 = new Roulette('roulette2', globalColors);
+        r1.setRandomPosition();
+        r2.setRandomPosition();
 
         // サイズ変更イベントの設定
         [r1, r2].forEach((r, i) => {
