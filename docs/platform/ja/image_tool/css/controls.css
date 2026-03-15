@@ -131,6 +131,15 @@
     width: 70px;
 }
 
+.control-group input[type="range"] {
+    width: 150px;
+    margin: 0 5px;
+}
+
+.control-group input[type="number"] {
+    width: 80px;
+}
+
 .control-group input[type="checkbox"] + label {
     margin-left: 2px; /* Space between checkbox and its label */
     text-align: left;

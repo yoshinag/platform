@@ -43,16 +43,29 @@
     <div class="upload-area">
         <h3>ベース画像</h3>
         <input type="file" id="baseImageUpload" accept="image/*">
-        <p>または、ここにベース画像をドラッグ＆ドロップしてください</p>
+        <p>または、ここにベース画像（土台）をドラッグ＆ドロップしてください</p>
     </div>
 
     <div class="upload-area">
         <h3>オーバーレイ画像</h3>
-        <input type="file" id="overlayImageUpload" accept="image/*">
+        <input type="file" id="overlayImageUpload" accept="image/*" disabled>
         <p>または、ここにオーバーレイ画像をドラッグ＆ドロップしてください</p>
     </div>
 
     <div class="controls">
+        <p class="section-title">ベース画像オプション</p>
+        <div class="control-group">
+            <label for="baseWidth">幅 (px):</label>
+            <input type="number" id="baseWidth" min="1" disabled>
+            <label for="baseHeight">高さ (px):</label>
+            <input type="number" id="baseHeight" min="1" disabled>
+        </div>
+        <div class="control-group">
+            <input type="checkbox" id="baseAspectRatioLock" checked disabled>
+            <label for="baseAspectRatioLock">土台のアスペクト比を維持</label>
+        </div>
+
+        <hr>
         <p class="section-title">オーバーレイ画像オプション</p>
         <div class="control-group">
             <label for="opacitySlider">透明度: </label>
@@ -61,17 +74,18 @@
         </div>
 
         <div class="control-group">
-            <label for="positionX">X位置: </label>
-            <input type="number" id="positionX" value="0" disabled> px
+            <label for="positionX">X位置 (px): </label>
+            <input type="number" id="positionX" value="0" disabled>
+            <input type="range" id="positionXSlider" min="-1000" max="1000" value="0" disabled>
+        </div>
+        <div class="control-group">
+            <label for="positionY">Y位置 (px): </label>
+            <input type="number" id="positionY" value="0" disabled>
+            <input type="range" id="positionYSlider" min="-1000" max="1000" value="0" disabled>
         </div>
 
         <div class="control-group">
-            <label for="positionY">Y位置: </label>
-            <input type="number" id="positionY" value="0" disabled> px
-        </div>
-
-        <div class="control-group">
-            <label for="overlayScalePercentage">サイズ: </label>
+            <label for="overlayScalePercentage">サイズ (土台に対する割合): </label>
             <button id="decreaseScaleBtn" class="scale-btn" disabled>-</button>
             <input type="range" id="overlayScalePercentage" min="1" max="200" value="100" disabled>
             <button id="increaseScaleBtn" class="scale-btn" disabled>+</button>
@@ -79,15 +93,15 @@
         </div>
 
         <div class="control-group">
-            <input type="checkbox" id="overlayAspectRatioLock" checked disabled>
-            <label for="overlayAspectRatioLock">アスペクト比を維持</label>
-        </div>
-
-        <div class="control-group">
             <label for="overlayWidth">幅 (px):</label>
             <input type="number" id="overlayWidth" min="1" disabled>
             <label for="overlayHeight">高さ (px):</label>
             <input type="number" id="overlayHeight" min="1" disabled>
+        </div>
+
+        <div class="control-group">
+            <input type="checkbox" id="overlayAspectRatioLock" checked disabled>
+            <label for="overlayAspectRatioLock">オーバーレイのアスペクト比を維持</label>
         </div>
     </div>
 
@@ -116,8 +130,8 @@
 
 <script src="js/utils.js"></script>
 <script src="js/color_manager.js"></script>
-<script src="js/base_image_manager.js"></script>
-<script src="js/overlay_image_manager.js"></script>
+<script src="js/base_layer_manager.js"></script>
+<script src="js/image_layer_manager.js"></script>
 <script src="js/image_merge.js"></script>
 </body>
 </html>
