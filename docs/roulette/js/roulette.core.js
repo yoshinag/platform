@@ -29,7 +29,7 @@ class BaseRoulette {
         if (!text) return;
         const items = text.split('\n').filter(i => i.trim() !== '');
         for (let i = items.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
+            const j = Math.floor(this._getRandom() * (i + 1));
             [items[i], items[j]] = [items[j], items[i]];
         }
         this.textarea.value = items.join('\n');
@@ -85,6 +85,13 @@ class BaseRoulette {
         const text = this.textarea.value.trim();
         this.items = text ? text.split('\n').filter(i => i.trim() !== '') : ['項目なし'];
         return this.items.length;
+    }
+
+    // 暗号強度の乱数生成
+    _getRandom() {
+        const array = new Uint32Array(1);
+        window.crypto.getRandomValues(array);
+        return array[0] / 4294967296; // 2^32
     }
 
     // 初期表示用のランダム位置設定

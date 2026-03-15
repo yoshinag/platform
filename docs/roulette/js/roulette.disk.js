@@ -7,7 +7,7 @@ class Roulette extends BaseRoulette {
     setRandomPosition() {
         this._setInitialRandom((numItems) => {
             const arcSize = (2 * Math.PI) / numItems;
-            const randomIndex = Math.floor(Math.random() * numItems);
+            const randomIndex = Math.floor(this._getRandom() * numItems);
             // 針の位置（3π/2）にrandomIndexが来るようにcurrentRotationを設定
             // 0.5を加算して扇形の中心が針を指すようにする
             this.currentRotation = (1.5 * Math.PI) - (randomIndex + 0.5) * arcSize;
@@ -91,9 +91,10 @@ class Roulette extends BaseRoulette {
         this.isSpinning = true;
         this.winningIndex = -1;
         this.updateRemoveButton();
+        this.draw();
 
-        const spinDuration = 3000 + Math.random() * 2000;
-        const spinRotation = 10 * 2 * Math.PI + Math.random() * 2 * Math.PI;
+        const spinDuration = 3000 + this._getRandom() * 2000;
+        const spinRotation = 10 * 2 * Math.PI + this._getRandom() * 2 * Math.PI;
         const startRotation = this.currentRotation;
         const startTime = performance.now();
 

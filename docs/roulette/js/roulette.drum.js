@@ -7,11 +7,46 @@ class Drum extends BaseRoulette {
         this.height = this.canvas.height;
         this.wrapper = this.container.querySelector('.drum-wrapper');
         this.window = this.container.querySelector('.drum-window');
+        this.imageInput = this.container.querySelector('.image-upload');
+        this.imageMap = new Map(); // キー(テキスト): Imageオブジェクト
+
+        if (this.imageInput) {
+            this.imageInput.addEventListener('change', (e) => this.handleImageUpload(e));
+        }
+    }
+
+    handleImageUpload(e) {
+        const files = Array.from(e.target.files);
+        if (files.length === 0) return;
+
+        let loadedCount = 0;
+        const newItems = [];
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const img = new Image();
+                img.onload = () => {
+                    const imageName = file.name;
+                    this.imageMap.set(imageName, img);
+                    newItems.push(imageName);
+                    loadedCount++;
+                    if (loadedCount === files.length) {
+                        const currentText = this.textarea.value.trim();
+                        const separator = currentText ? '\n' : '';
+                        this.textarea.value = currentText + separator + newItems.join('\n');
+                        this.winningIndex = -1;
+                        this.draw();
+                    }
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
     }
 
     setRandomPosition() {
         this._setInitialRandom((numItems) => {
-            const stopIdx = Math.floor(Math.random() * numItems);
+            const stopIdx = Math.floor(this._getRandom() * numItems);
             this.currentY = -stopIdx * this.itemHeight;
         });
     }
@@ -80,27 +115,39 @@ class Drum extends BaseRoulette {
                 this.ctx.restore();
             }
 
-            this.ctx.fillStyle = 'white';
-            this.ctx.textAlign = 'center';
-            this.ctx.textBaseline = 'middle';
-            
-            const baseFontSize = 24;
-            const fontSize = Math.max(10, baseFontSize * Math.pow(opacity, 0.8));
-            this.ctx.font = `bold ${fontSize}px Arial`;
-            
-            this.ctx.shadowBlur = 4 * opacity;
-            this.ctx.shadowColor = `rgba(0,0,0,${0.5 * opacity})`;
-            
-            const maxWidth = this.canvas.width * 0.8;
-            const lines = this._splitText(item, maxWidth);
+            const image = this.imageMap.get(item);
+            if (image) {
+                const imgAspect = image.width / image.height;
+                const drawWidth = Math.min(this.canvas.width * 0.9, currentItemHeight * imgAspect * 2); // 2 is a heuristic for drum curvature
+                const drawHeight = Math.min(currentItemHeight * 0.9, (this.canvas.width * 0.9) / imgAspect);
+                
+                const x = (this.canvas.width - drawWidth) / 2;
+                const y = drawY + (currentItemHeight - drawHeight) / 2;
+                
+                this.ctx.drawImage(image, x, y, drawWidth, drawHeight);
+            } else {
+                this.ctx.fillStyle = 'white';
+                this.ctx.textAlign = 'center';
+                this.ctx.textBaseline = 'middle';
+                
+                const baseFontSize = 24;
+                const fontSize = Math.max(10, baseFontSize * Math.pow(opacity, 0.8));
+                this.ctx.font = `bold ${fontSize}px Arial`;
+                
+                this.ctx.shadowBlur = 4 * opacity;
+                this.ctx.shadowColor = `rgba(0,0,0,${0.5 * opacity})`;
+                
+                const maxWidth = this.canvas.width * 0.8;
+                const lines = this._splitText(item, maxWidth);
 
-            const lineHeight = fontSize * 1.1;
-            const startYOffset = (lines.length - 1) * lineHeight / 2;
-            lines.forEach((l, index) => {
-                this.ctx.fillText(l, this.canvas.width / 2, drawY + currentItemHeight / 2 - startYOffset + (index * lineHeight));
-            });
-            
-            this.ctx.shadowBlur = 0;
+                const lineHeight = fontSize * 1.1;
+                const startYOffset = (lines.length - 1) * lineHeight / 2;
+                lines.forEach((l, index) => {
+                    this.ctx.fillText(l, this.canvas.width / 2, drawY + currentItemHeight / 2 - startYOffset + (index * lineHeight));
+                });
+                
+                this.ctx.shadowBlur = 0;
+            }
             this.ctx.globalAlpha = 1.0;
         }
     }
@@ -117,11 +164,11 @@ class Drum extends BaseRoulette {
 
         const numItems = this.items.length;
         const totalHeight = numItems * this.itemHeight;
-        const spinDuration = 3000 + Math.random() * 2000;
+        const spinDuration = 3000 + this._getRandom() * 2000;
         
-        const stopIdx = Math.floor(Math.random() * numItems);
+        const stopIdx = Math.floor(this._getRandom() * numItems);
         
-        const extraSpins = 5 + Math.floor(Math.random() * 5);
+        const extraSpins = 5 + Math.floor(this._getRandom() * 5);
         const targetY = (extraSpins * totalHeight - stopIdx * this.itemHeight);
         
         const startY = this.currentY;
@@ -143,7 +190,14 @@ class Drum extends BaseRoulette {
                     this.isSpinning = false;
                     this.currentY = this.currentY % totalHeight;
                     this.winningIndex = stopIdx;
-                    this.resultDiv.textContent = '結果: ' + this.items[this.winningIndex];
+                    
+                    let resultText = this.items[this.winningIndex];
+                    if (this.imageMap.has(resultText)) {
+                        // 画像の場合は拡張子を除く
+                        resultText = resultText.replace(/\.[^/.]+$/, "");
+                    }
+                    this.resultDiv.textContent = '結果: ' + resultText;
+                    
                     this.updateRemoveButton();
                     resolve();
                 }
