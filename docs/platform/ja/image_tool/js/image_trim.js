@@ -9,6 +9,9 @@ class ImageTrimApp {
         // Controls
         this.thresholdSlider = document.getElementById('thresholdSlider');
         this.thresholdValueDisplay = document.getElementById('thresholdValueDisplay');
+        if (this.thresholdSlider && this.thresholdValueDisplay) {
+            this.thresholdValueDisplay.textContent = this.thresholdSlider.value;
+        }
         this.edgeWidthSlider = document.getElementById('edgeWidthSlider');
         this.edgeWidthValueDisplay = document.getElementById('edgeWidthValueDisplay');
         this.edgeColorPicker = document.getElementById('edgeColorPicker');
@@ -96,6 +99,12 @@ class ImageTrimApp {
         if (this.downloadJpegBtn) {
             this.downloadJpegBtn.addEventListener('click', () => this.download('jpeg', false));
         }
+
+        if (this.fillContourCheckbox) {
+            this.fillContourCheckbox.addEventListener('change', () => {
+                if (this.fillColorPicker) this.fillColorPicker.disabled = !this.fillContourCheckbox.checked;
+            });
+        }
     }
 
     handleFile(file) {
@@ -145,61 +154,122 @@ class ImageTrimApp {
         const imageData = tempCtx.getImageData(0, 0, width, height);
         const data = imageData.data;
         const threshold = parseInt(this.thresholdSlider.value);
-        
-        // Simple Edge Detection (Sobel-like or simple difference)
-        const gray = new Uint8ClampedArray(width * height);
-        for (let i = 0; i < data.length; i += 4) {
-            gray[i / 4] = (data[i] + data[i + 1] + data[i + 2]) / 3;
-        }
+        const edgeWidth = parseInt(this.edgeWidthSlider.value);
+        const edgeColor = this._hexToRgb(this.edgeColorPicker.value);
+        const fillColor = this._hexToRgb(this.fillColorPicker.value);
+        const fillEnabled = this.fillContourCheckbox.checked;
+        const outerOnly = this.outerContourOnlyCheckbox.checked;
 
-        const edges = new Uint8ClampedArray(width * height);
-        for (let y = 1; y < height - 1; y++) {
-            for (let x = 1; x < width - 1; x++) {
-                const idx = y * width + x;
-                const gx = -gray[idx - 1 - width] + gray[idx + 1 - width]
-                           - 2 * gray[idx - 1] + 2 * gray[idx + 1]
-                           - gray[idx - 1 + width] + gray[idx + 1 + width];
-                const gy = -gray[idx - 1 - width] - 2 * gray[idx - width] - gray[idx + 1 - width]
-                           + gray[idx - 1 + width] + 2 * gray[idx + width] + gray[idx + 1 + width];
-                const mag = Math.sqrt(gx * gx + gy * gy);
-                edges[idx] = mag > threshold ? 255 : 0;
+        // Binary image for contour detection (1 for object, 0 for background)
+        const binary = new Uint8Array(width * height);
+        let hasAlpha = false;
+        for (let i = 3; i < data.length; i += 4) {
+            if (data[i] < 255) {
+                hasAlpha = true;
+                break;
             }
         }
 
-        // Draw edges to processedCanvas
-        this.processedCanvas.width = width;
-        this.processedCanvas.height = height;
-        const pCtx = this.processedCanvas.getContext('2d');
-        pCtx.clearRect(0, 0, width, height);
-
-        const edgeColor = this.edgeColorPicker.value;
-        const fillColor = this.fillColorPicker.value;
-        const edgeWidth = parseInt(this.edgeWidthSlider.value);
-        const fillEnabled = this.fillContourCheckbox.checked;
-
-        pCtx.fillStyle = fillEnabled ? fillColor : 'transparent';
-        if (fillEnabled) {
-            // Very basic fill: just fill where we found edges and interior (this is complex in JS without libraries, simplified here)
-            // For now, let's just draw the edges.
+        for (let i = 0; i < data.length; i += 4) {
+            const r = data[i], g = data[i+1], b = data[i+2], a = data[i+3];
+            if (hasAlpha) {
+                // Use alpha to decide if it's "part of the object" based on threshold
+                binary[i / 4] = (a >= threshold) ? 1 : 0;
+            } else {
+                // If no alpha, use brightness with threshold
+                const brightness = (r + g + b) / 3;
+                // Since threshold is 0-255, we can use it directly
+                // Normally users expect to keep "dark" objects on "light" backgrounds or vice versa
+                // Let's assume threshold slider controls "what is considered object brightness"
+                // If threshold is high, more things are objects.
+                binary[i / 4] = (brightness <= threshold) ? 1 : 0;
+            }
         }
 
-        pCtx.strokeStyle = edgeColor;
-        pCtx.lineWidth = edgeWidth;
-        pCtx.lineJoin = 'round';
-        pCtx.lineCap = 'round';
+        const edges = new Uint8Array(width * height);
+        const filled = new Uint8Array(width * height);
 
-        pCtx.beginPath();
-        for (let y = 1; y < height - 1; y++) {
-            for (let x = 1; x < width - 1; x++) {
-                if (edges[y * width + x] === 255) {
-                    pCtx.rect(x, y, 1, 1);
+        for (let y = 0; y < height; y++) {
+            for (let x = 0; x < width; x++) {
+                const idx = y * width + x;
+                if (binary[idx] === 1) {
+                    // Check neighbors
+                    let isEdge = false;
+                    for (let dy = -1; dy <= 1; dy++) {
+                        for (let dx = -1; dx <= 1; dx++) {
+                            const ny = y + dy, nx = x + dx;
+                            if (ny < 0 || ny >= height || nx < 0 || nx >= width) {
+                                isEdge = true;
+                                break;
+                            }
+                            if (binary[ny * width + nx] === 0) {
+                                isEdge = true;
+                                break;
+                            }
+                        }
+                        if (isEdge) break;
+                    }
+                    if (isEdge) {
+                        // Apply edge width
+                        for (let dy = -edgeWidth + 1; dy < edgeWidth; dy++) {
+                            for (let dx = -edgeWidth + 1; dx < edgeWidth; dx++) {
+                                // Optimization: use circle for better corners if edgeWidth > 1
+                                if (dx * dx + dy * dy >= edgeWidth * edgeWidth) continue;
+                                
+                                const ny = y + dy, nx = x + dx;
+                                if (ny >= 0 && ny < height && nx >= 0 && nx < width) {
+                                    edges[ny * width + nx] = 1;
+                                }
+                            }
+                        }
+                    }
+                    filled[idx] = 1;
                 }
             }
         }
-        pCtx.stroke();
+
+        // Draw to processedCanvas
+        this.processedCanvas.width = width;
+        this.processedCanvas.height = height;
+        const pCtx = this.processedCanvas.getContext('2d');
+        const outputImageData = pCtx.createImageData(width, height);
+        const outData = outputImageData.data;
+
+        for (let i = 0; i < width * height; i++) {
+            const outIdx = i * 4;
+            if (edges[i] === 1) {
+                outData[outIdx] = edgeColor.r;
+                outData[outIdx + 1] = edgeColor.g;
+                outData[outIdx + 2] = edgeColor.b;
+                outData[outIdx + 3] = 255;
+            } else if (fillEnabled && filled[i] === 1 && !outerOnly) {
+                 // Simplified fill (everywhere that was original object)
+                outData[outIdx] = fillColor.r;
+                outData[outIdx + 1] = fillColor.g;
+                outData[outIdx + 2] = fillColor.b;
+                outData[outIdx + 3] = 255;
+            } else {
+                outData[outIdx + 3] = 0; // Transparent
+            }
+        }
+        
+        // If outerOnly is true, we should have only filled the outermost contour, 
+        // but that's complex without a proper contour finder.
+        // For now, let's just use the original edges.
+
+        pCtx.putImageData(outputImageData, 0, 0);
 
         this.isContourApplied = true;
         this.updatePreview();
+    }
+
+    _hexToRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : { r: 0, g: 0, b: 0 };
     }
 
     resetToOriginal() {
