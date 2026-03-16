@@ -6,6 +6,8 @@ class BaseRoulette {
         this.textarea = this.container.querySelector('textarea');
         this.resultDiv = this.container.querySelector('.result');
         this.removeBtn = this.container.querySelector('.remove-btn');
+        this.autoShuffleContainer = this.container.querySelector('.auto-shuffle-container');
+        this.autoShuffleCheckbox = this.container.querySelector('.auto-shuffle');
         this.shuffleBtn = this.container.querySelector('.shuffle-btn');
         this.colors = colors;
 
@@ -42,8 +44,10 @@ class BaseRoulette {
     updateRemoveButton() {
         if (this.winningIndex !== -1 && this.items.length > 1 && this.items[0] !== '項目なし') {
             this.removeBtn.style.display = 'inline-block';
+            if (this.autoShuffleContainer) this.autoShuffleContainer.style.display = 'flex';
         } else {
             this.removeBtn.style.display = 'none';
+            if (this.autoShuffleContainer) this.autoShuffleContainer.style.display = 'none';
         }
     }
 
@@ -56,8 +60,13 @@ class BaseRoulette {
 
         this.winningIndex = -1;
         this.resultDiv.textContent = '結果: -';
-        this.updateRemoveButton();
-        this.draw();
+
+        if (this.autoShuffleCheckbox && this.autoShuffleCheckbox.checked) {
+            this.shuffleItems();
+        } else {
+            this.updateRemoveButton();
+            this.draw();
+        }
     }
 
     // テキストの折り返し処理
