@@ -84,7 +84,11 @@ class Roulette extends BaseRoulette {
 
     spin() {
         if (this.isSpinning) return Promise.resolve();
-        
+
+        if (this.spinShuffleCheckbox && this.spinShuffleCheckbox.checked) {
+            this.shuffleItems();
+        }
+
         const text = this.textarea.value.trim();
         if (!text) return Promise.resolve();
 

@@ -8,6 +8,7 @@ class BaseRoulette {
         this.removeBtn = this.container.querySelector('.remove-btn');
         this.autoShuffleContainer = this.container.querySelector('.auto-shuffle-container');
         this.autoShuffleCheckbox = this.container.querySelector('.auto-shuffle');
+        this.spinShuffleCheckbox = this.container.querySelector('.spin-shuffle');
         this.shuffleBtn = this.container.querySelector('.shuffle-btn');
         this.colors = colors;
 
