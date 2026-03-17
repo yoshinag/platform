@@ -6,7 +6,6 @@ class BaseRoulette {
         this.textarea = this.container.querySelector('textarea');
         this.resultDiv = this.container.querySelector('.result');
         this.removeBtn = this.container.querySelector('.remove-btn');
-        this.autoShuffleContainer = this.container.querySelector('.auto-shuffle-container');
         this.autoShuffleCheckbox = this.container.querySelector('.auto-shuffle');
         this.spinShuffleCheckbox = this.container.querySelector('.spin-shuffle');
         this.shuffleBtn = this.container.querySelector('.shuffle-btn');
@@ -45,10 +44,8 @@ class BaseRoulette {
     updateRemoveButton() {
         if (this.winningIndex !== -1 && this.items.length > 1 && this.items[0] !== '項目なし') {
             this.removeBtn.style.display = 'inline-block';
-            if (this.autoShuffleContainer) this.autoShuffleContainer.style.display = 'flex';
         } else {
             this.removeBtn.style.display = 'none';
-            if (this.autoShuffleContainer) this.autoShuffleContainer.style.display = 'none';
         }
     }
 
