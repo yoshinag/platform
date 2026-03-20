@@ -152,19 +152,8 @@ class Drum extends BaseRoulette {
         }
     }
 
-    spin() {
-        if (this.isSpinning) return Promise.resolve();
-
-        if (this.spinShuffleCheckbox && this.spinShuffleCheckbox.checked) {
-            this.shuffleItems();
-        }
-
-        const text = this.textarea.value.trim();
-        if (!text) return Promise.resolve();
-
-        this.isSpinning = true;
-        this.winningIndex = -1;
-        this.updateRemoveButton();
+    async spin() {
+        if (!await super.spin()) return false;
 
         const numItems = this.items.length;
         const totalHeight = numItems * this.itemHeight;
@@ -203,7 +192,7 @@ class Drum extends BaseRoulette {
                     this.resultDiv.textContent = '結果: ' + resultText;
                     
                     this.updateRemoveButton();
-                    resolve();
+                    resolve(true);
                 }
             };
             requestAnimationFrame(animate);

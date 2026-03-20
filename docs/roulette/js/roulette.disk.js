@@ -82,20 +82,8 @@ class Roulette extends BaseRoulette {
         });
     }
 
-    spin() {
-        if (this.isSpinning) return Promise.resolve();
-
-        if (this.spinShuffleCheckbox && this.spinShuffleCheckbox.checked) {
-            this.shuffleItems();
-        }
-
-        const text = this.textarea.value.trim();
-        if (!text) return Promise.resolve();
-
-        this.isSpinning = true;
-        this.winningIndex = -1;
-        this.updateRemoveButton();
-        this.draw();
+    async spin() {
+        if (!await super.spin()) return false;
 
         const spinDuration = 3000 + this._getRandom() * 2000;
         const spinRotation = 10 * 2 * Math.PI + this._getRandom() * 2 * Math.PI;
@@ -116,7 +104,7 @@ class Roulette extends BaseRoulette {
                 } else {
                     this.isSpinning = false;
                     this.determineResult();
-                    resolve();
+                    resolve(true);
                 }
             };
             requestAnimationFrame(animate);

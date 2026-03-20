@@ -116,7 +116,24 @@ class BaseRoulette {
     // Abstract methods (to be implemented by subclasses)
     draw() {}
     setRandomPosition() {}
-    spin() {}
+    
+    spin() {
+        if (this.isSpinning) return Promise.resolve(false);
+
+        if (this.spinShuffleCheckbox && this.spinShuffleCheckbox.checked) {
+            this.shuffleItems();
+        }
+
+        const text = this.textarea.value.trim();
+        if (!text) return Promise.resolve(false);
+
+        this.isSpinning = true;
+        this.winningIndex = -1;
+        this.updateRemoveButton();
+        this.draw();
+
+        return Promise.resolve(true);
+    }
 }
 
 const globalColors = [
@@ -127,7 +144,10 @@ const globalColors = [
 async function loadDefaultItems() {
     try {
         const response = await fetch('default.txt');
-        if (!response.ok) throw new Error('Failed to fetch default.txt');
+        if (!response.ok) {
+            console.error('Failed to fetch default.txt');
+            return Array.from({length: 32}, (_, i) => i + 1).join('\n');
+        }
         const text = await response.text();
         return text.trim();
     } catch (e) {
