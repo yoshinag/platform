@@ -1,0 +1,32 @@
+# Local working directory
+tmp/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Node / build artifacts
+node_modules/
+dist/
+build/
+.cache/
+
+# Environment files
+.env
+.env.local
+.env.*.local
