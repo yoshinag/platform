@@ -46,21 +46,17 @@ const state = {
     sourceName: 'icon',
 };
 
-// ピクセルサイズで重複排除した一覧（プレビュー＆生成単位）
-const UNIQUE_FILES = (() => {
-    const map = new Map();
-    for (const e of ICON_ENTRIES) {
-        if (!map.has(e.expectedSize)) {
-            map.set(e.expectedSize, {
-                px: e.expectedSize,
-                filename: `${e.expectedSize}.png`,
-                uses: [],
-            });
-        }
-        map.get(e.expectedSize).uses.push(e);
-    }
-    return Array.from(map.values()).sort((a, b) => a.px - b.px);
-})();
+// 出力するピクセルサイズ一覧（プレビュー＆生成単位）
+const SIZES = [
+    16, 20, 29, 32, 40, 48, 50, 55, 57, 58, 60, 64, 66, 72, 76, 80, 87, 88, 92,
+    100, 102, 108, 114, 120, 128, 144, 152, 167, 172, 180, 196, 216, 234, 256, 258, 512, 1024,
+];
+
+const UNIQUE_FILES = SIZES.map((px) => ({
+    px,
+    filename: `${px}.png`,
+    uses: ICON_ENTRIES.filter((e) => e.expectedSize === px),
+}));
 
 const dropZone = document.getElementById('dropZone');
 const fileInput = document.getElementById('imageUpload');
@@ -228,7 +224,12 @@ function selectedIdioms() {
 function applyFilter() {
     const enabled = selectedIdioms();
     iconGrid.querySelectorAll('.icon-card').forEach((card) => {
-        const idioms = (card.dataset.idioms || '').split(',');
+        const raw = card.dataset.idioms || '';
+        if (!raw) {
+            card.classList.remove('hidden');
+            return;
+        }
+        const idioms = raw.split(',');
         const visible = idioms.some((i) => enabled.has(i));
         card.classList.toggle('hidden', !visible);
     });
@@ -261,10 +262,10 @@ async function downloadZip() {
     downloadZipBtn.textContent = '生成中...';
 
     try {
-        // 必要な PNG をピクセルサイズ単位で生成
-        const neededPx = new Set(entries.map((e) => e.expectedSize));
+        // ZIP には UNIQUE_FILES の全サイズを含める（デバイス未対応サイズも一緒に出力）
+        const neededPx = new Set(UNIQUE_FILES.map((f) => f.px));
         const pngs = new Map();
-        for (const px of neededPx) {
+        for (const px of Array.from(neededPx).sort((a, b) => a - b)) {
             const canvas = document.createElement('canvas');
             renderIcon(canvas, px);
             const blob = await canvasToBlob(canvas);
@@ -272,7 +273,7 @@ async function downloadZip() {
             pngs.set(px, buf);
         }
 
-        // Contents.json (参考ファイルのフォーマットに合わせる: 単一行)
+        // Contents.json は Apple 標準サイズ（ICON_ENTRIES）のみ
         const images = entries.map((e) => ({
             size: e.size,
             'expected-size': String(e.expectedSize),
