@@ -1,0 +1,68 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+    background: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    color: #222;
+    line-height: 1.6;
+}
+
+.container {
+    background: #fff;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 32px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+}
+
+h1 {
+    font-size: 1.6em;
+    margin-top: 0;
+    border-bottom: 2px solid #007aff;
+    padding-bottom: 8px;
+}
+
+h2 {
+    font-size: 1.2em;
+    margin-top: 1.8em;
+    color: #333;
+}
+
+.lead {
+    color: #555;
+    font-size: 1em;
+    margin-bottom: 1em;
+}
+
+.entry-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 24px;
+}
+
+.entry-list li {
+    padding: 14px 16px;
+    border: 1px solid #e3e3e3;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background: #fff;
+}
+
+.entry-list a {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #007aff;
+    text-decoration: none;
+}
+
+.entry-list a:hover {
+    text-decoration: underline;
+}
+
+.entry-list .desc {
+    display: block;
+    margin-top: 4px;
+    color: #555;
+    font-size: 0.9em;
+}
