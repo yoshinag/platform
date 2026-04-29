@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- Google Analytics -->
+    <script src="../../platform/js/common/analytics.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone / iPad アイコンサイズ生成ツール</title>
+    <link rel="stylesheet" href="css/ios_icon.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container" id="dropZone">
+    <div class="navigation-links">
+        <a href="index.html">ツール一覧へ戻る</a>
+    </div>
+    <h1>iPhone / iPad アイコンサイズ生成ツール</h1>
+
+    <details open>
+        <summary>使用方法</summary>
+        <ol>
+            <li>1024×1024 程度の正方形画像をアップロードしてください（ファイル選択またはドラッグ＆ドロップ）。</li>
+            <li>iPhone / iPad / App Store の各サイズの PNG が自動生成されます。</li>
+            <li>個別ダウンロードのほか、Xcode の <code>Assets.xcassets/AppIcon.appiconset/</code> 構造を含む ZIP として一括ダウンロードできます（<code>Contents.json</code> 自動生成）。</li>
+            <li>サーバーへの画像アップロードは行われず、すべての処理はブラウザ上で完結します。</li>
+        </ol>
+    </details>
+
+    <div class="upload-area">
+        <input type="file" id="imageUpload" accept="image/*">
+        <p>または、ここに画像をドラッグ＆ドロップしてください</p>
+    </div>
+
+    <div class="source-info" id="sourceInfo" hidden>
+        <span id="sourceName"></span>
+        <span id="sourceDimensions"></span>
+        <span id="sourceWarning" class="warning" hidden></span>
+    </div>
+
+    <div class="controls" id="controls" hidden>
+        <div class="filter-group">
+            <label><input type="checkbox" class="device-filter" value="iphone" checked> iPhone</label>
+            <label><input type="checkbox" class="device-filter" value="ipad" checked> iPad</label>
+            <label><input type="checkbox" class="device-filter" value="ios-marketing" checked> App Store (1024)</label>
+        </div>
+        <div class="action-group">
+            <label>
+                背景色:
+                <input type="color" id="bgColor" value="#ffffff">
+                <input type="checkbox" id="bgTransparent" checked>
+                <span>透過</span>
+            </label>
+            <button id="downloadZipBtn">ZIP でまとめてダウンロード</button>
+        </div>
+    </div>
+
+    <div class="icon-grid" id="iconGrid"></div>
+</div>
+
+<script src="js/ios_icon.js"></script>
+</body>
+</html>
