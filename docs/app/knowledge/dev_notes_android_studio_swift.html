@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- Google Analytics -->
+    <script src="../js/common/analytics.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android Studio で Swift / iOS アプリを開発するノート</title>
+    <link rel="stylesheet" href="css/knowledge.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<article class="container">
+    <nav class="navigation-links">
+        <a href="index.html">ナレッジ一覧へ戻る</a>
+    </nav>
+
+    <h1>Android Studio で Swift / iOS アプリを開発するノート</h1>
+
+    <p class="lead">Xcode を直接立ち上げず、Android Studio（IntelliJ ベース）+ CLI で iPhone / iPad アプリを作る運用のまとめ。シミュレータのタップ自動化や Lint など周辺ツールも含む。</p>
+
+    <details class="toc" open>
+        <summary>目次</summary>
+        <ol>
+            <li><a href="#sec-1">全体構成</a></li>
+            <li><a href="#sec-2">初回セットアップ</a>
+                <ol>
+                    <li><a href="#sec-2-1">必要ツール</a></li>
+                    <li><a href="#sec-2-2">Android Studio 側</a></li>
+                </ol>
+            </li>
+            <li><a href="#sec-3">ビルド &amp; 実行</a></li>
+            <li><a href="#sec-4">シミュレータ操作の自動化</a>
+                <ol>
+                    <li><a href="#sec-4-1">タップ自動化（idb 経由）</a></li>
+                    <li><a href="#sec-4-2">スクリーンショット</a></li>
+                </ol>
+            </li>
+            <li><a href="#sec-5">Lint / フォーマッタ</a>
+                <ol>
+                    <li><a href="#sec-5-1">SwiftLint</a></li>
+                    <li><a href="#sec-5-2">SwiftFormat（任意）</a></li>
+                </ol>
+            </li>
+            <li><a href="#sec-6">Git pre-commit hook の運用</a></li>
+            <li><a href="#sec-7">典型ワークフロー</a></li>
+            <li><a href="#sec-8">ハマりどころメモ</a></li>
+            <li><a href="#sec-9">補足: なぜ Android Studio？</a></li>
+        </ol>
+    </details>
+
+    <section id="sec-1">
+        <h2>1. 全体構成</h2>
+<pre class="ascii-art">┌─ Android Studio (エディタ) ─────────┐
+│  ├─ Swift コードの編集             │
+│  ├─ Run/Debug Configurations から   │
+│  │   外部スクリプト経由でビルド・起動 │
+│  └─ ターミナル（make / scripts）    │
+└──────────────────────────────────┘
+         │
+         ▼
+┌─ CLI ツール群 ──────────────────────┐
+│  xcodebuild  → iOS Simulator ビルド │
+│  simctl      → Simulator 起動・操作 │
+│  idb         → タップ自動化         │
+└──────────────────────────────────┘
+         │
+         ▼
+┌─ iOS Simulator ──────────────────┐
+│  アプリの起動・操作・SS 撮影が可能  │
+└────────────────────────────────┘</pre>
+        <p class="callout"><strong>ポイント:</strong> Android Studio 自体は Swift をネイティブビルドできない。Xcode CLI（<code>xcodebuild</code>）に投げる Run Configuration を作るのが肝。</p>
+    </section>
+
+    <section id="sec-2">
+        <h2>2. 初回セットアップ</h2>
+
+        <h3 id="sec-2-1">2.1. 必要ツール</h3>
+<pre><code># Xcode CLI
+xcode-select --install
+xcodebuild -version
+
+# Homebrew でツール群
+brew install jq fb-idb
+
+# fb-idb は Python 3.14 で動かないので注意（後述）
+brew install python@3.11
+pipx install --python python3.11 fb-idb</code></pre>
+
+        <h3 id="sec-2-2">2.2. Android Studio 側</h3>
+        <p><strong>Run Configuration（外部スクリプト実行）</strong></p>
+        <p>Run/Debug Configurations → <code>+</code> → <strong>Shell Script</strong> を選択し、Script path にビルド／実行スクリプトのパスを指定する。</p>
+        <table>
+            <thead>
+                <tr><th>構成名（例）</th><th>中身</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Run (iPhone)</td><td><code>xcodebuild -destination 'platform=iOS Simulator,name=iPhone XX' build</code> ＋ Simulator 起動</td></tr>
+                <tr><td>Run (iPad)</td><td>iPad 向け destination でビルド</td></tr>
+                <tr><td>Build only</td><td>ビルドのみ</td></tr>
+                <tr><td>Screenshot</td><td><code>xcrun simctl io booted screenshot</code> 等</td></tr>
+            </tbody>
+        </table>
+        <p><strong>Swift プラグイン:</strong> AppCode は撤退済み。IntelliJ の Swift サポートは限定的なので、コード補完は割り切って <code>cmd-click</code> での定義ジャンプと grep / Find in Files に頼る。本格的に補完が必要なときだけ Xcode を別途開く（<code>open *.xcodeproj</code>）。</p>
+    </section>
+
+    <section id="sec-3">
+        <h2>3. ビルド &amp; 実行</h2>
+<pre><code># 基本形
+xcodebuild \
+  -project YourApp.xcodeproj \
+  -scheme YourApp \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
+  -quiet build</code></pre>
+        <p>ログを抑制したいので <code>-quiet</code> を付けるのがコツ。エラーだけ出る。</p>
+        <p><code>Makefile</code> でラップしておくと便利:</p>
+<pre><code>PROJECT := YourApp.xcodeproj
+SCHEME  := YourApp
+DEST    := platform=iOS Simulator,name=iPhone 17 Pro
+
+build:
+	xcodebuild -project $(PROJECT) -scheme $(SCHEME) \
+		-destination '$(DEST)' -quiet build
+
+run: build
+	xcrun simctl boot '$(DEVICE_NAME)' 2&gt;/dev/null || true
+	open -a Simulator
+	xcrun simctl install booted $(BUILT_APP_PATH)
+	xcrun simctl launch booted $(BUNDLE_ID)
+
+test:
+	xcodebuild -project $(PROJECT) -scheme $(SCHEME) \
+		-destination '$(DEST)' -quiet test
+
+clean:
+	xcodebuild -project $(PROJECT) -scheme $(SCHEME) clean -quiet
+
+install-hooks:
+	./scripts/install_hooks.sh</code></pre>
+        <p><code>$(BUILT_APP_PATH)</code> と <code>$(BUNDLE_ID)</code> は <code>xcodebuild -showBuildSettings</code> から取得するか、別シェルスクリプトに切り出すと安定する。</p>
+    </section>
+
+    <section id="sec-4">
+        <h2>4. シミュレータ操作の自動化</h2>
+
+        <h3 id="sec-4-1">4.1. タップ自動化（idb 経由）</h3>
+        <p><code>idb_companion</code> をバックグラウンド起動 → <code>idb connect</code> で接続済みなら、シミュレータがフォーカスにあるかどうかに関わらず操作できる。</p>
+        <p><strong>準備（セッションごと）</strong></p>
+        <p><code>idb_companion</code> は永続化されないため、Mac を再起動するか companion が落ちたら再度起動が必要。<code>~/.zshrc</code> から自動起動するスクリプトを噛ませると楽（§8 参照）。</p>
+<pre><code># 起動中の Simulator UDID を取得
+UDID=$(xcrun simctl list devices booted -j \
+  | jq -r '.devices | to_entries[] | .value[] | select(.state=="Booted") | .udid' \
+  | head -1)
+
+# companion をバックグラウンド起動
+idb_companion --udid "$UDID" &amp;
+
+# クライアント側で接続
+idb connect localhost &lt;表示されたport&gt;</code></pre>
+        <p><strong>使い方</strong></p>
+<pre><code># 座標タップ（points）
+idb ui tap 200 400
+
+# AXLabel から要素の frame を取得（中央座標を計算して tap に渡す）
+idb ui describe-all \
+  | jq -r '.[] | select(.AXLabel=="開始") | "\(.frame.x + .frame.width/2) \(.frame.y + .frame.height/2)"' \
+  | xargs idb ui tap</code></pre>
+        <p><strong>ハマりどころ</strong></p>
+        <ul>
+            <li><code>RuntimeError: There is no current event loop</code> → fb-idb が Python 3.14 で動かない。Python 3.11 で再インストール</li>
+            <li>companion は落ちることがある → <code>pgrep idb_companion</code> で確認、落ちていたら再起動・再接続</li>
+            <li>フォーカスが Simulator から外れていても OK（Companion が IPC で操作するため）</li>
+        </ul>
+
+        <h3 id="sec-4-2">4.2. スクリーンショット</h3>
+<pre><code>xcrun simctl io booted screenshot \
+  tmp/ss/$(date +%Y%m%d)/ss_$(date +%H%M%S).png</code></pre>
+        <p>時分秒入りファイル名でディレクトリ分けして保存しておくと、後で見直しやすい。</p>
+    </section>
+
+    <section id="sec-5">
+        <h2>5. Lint / フォーマッタ</h2>
+
+        <h3 id="sec-5-1">5.1. SwiftLint</h3>
+<pre><code>brew install swiftlint
+swiftlint                          # プロジェクトルートで実行
+swiftlint --fix                    # 自動修正可能なものを修正
+swiftlint --path Sources/          # 特定パス</code></pre>
+        <p><strong>設定ファイル <code>.swiftlint.yml</code> の例</strong></p>
+<pre><code>identifier_name:
+  min_length:
+    warning: 1    # 1文字変数を許容（i, q, c 等のループ変数）
+  max_length:
+    warning: 60
+  excluded:
+    - id
+
+line_length:
+  warning: 200
+  error: 300
+  ignores_comments: true
+  ignores_urls: true
+  ignores_interpolated_strings: true
+
+function_body_length:
+  warning: 100
+  error: 150
+
+file_length:
+  warning: 700
+  error: 1200
+
+disabled_rules:
+  - todo    # TODO コメントは開発中に有用
+
+excluded:
+  - SomeTests
+  - SomeUITests</code></pre>
+
+        <h3 id="sec-5-2">5.2. SwiftFormat（任意）</h3>
+        <p><code>.swiftformat</code> を導入すれば自動整形できるが、SwiftLint の <code>--fix</code> でも大半は足りる。チームで強制ルールが要るとき以外は SwiftLint だけで十分。</p>
+    </section>
+
+    <section id="sec-6">
+        <h2>6. Git pre-commit hook の運用</h2>
+        <p>ステージされた特定ファイルだけを検証する pre-commit パターン。</p>
+        <p><strong><code>scripts/hooks/pre-commit</code> の例</strong></p>
+<pre><code>#!/bin/bash
+set -e
+
+ROOT="$(git rev-parse --show-toplevel)"
+
+# 対象ファイルの抽出（例: Swift ファイルのみ）
+STAGED=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.swift$' || true)
+[ -z "$STAGED" ] &amp;&amp; exit 0
+
+# SwiftLint があれば実行
+if command -v swiftlint &gt; /dev/null; then
+    echo "[pre-commit] Running SwiftLint on staged files..."
+    while IFS= read -r f; do
+        swiftlint lint --quiet --path "$ROOT/$f" || exit 1
+    done &lt;&lt;&lt; "$STAGED"
+fi</code></pre>
+        <p><strong>インストーラ <code>scripts/install_hooks.sh</code></strong></p>
+<pre><code>#!/bin/bash
+set -e
+ROOT="$(cd "$(dirname "$0")/.." &amp;&amp; pwd)"
+HOOKS="$ROOT/.git/hooks"
+SOURCE="$ROOT/scripts/hooks/pre-commit"
+
+# 既存があればバックアップ
+if [ -f "$HOOKS/pre-commit" ] &amp;&amp; [ ! -L "$HOOKS/pre-commit" ]; then
+    mv "$HOOKS/pre-commit" "$HOOKS/pre-commit.backup.$(date +%Y%m%d_%H%M%S)"
+fi
+
+# シンボリックリンクで設置（リポジトリ更新に追従）
+ln -sf "../../scripts/hooks/pre-commit" "$HOOKS/pre-commit"
+chmod +x "$SOURCE"
+echo "Installed pre-commit hook"</code></pre>
+        <p><code>make install-hooks</code> で叩けるようにしておくと、新規 clone 後すぐ導入できる。</p>
+        <p>回避（非推奨）: <code>git commit --no-verify</code></p>
+        <p><strong>コツ</strong></p>
+        <ul>
+            <li>リポジトリ管理されたスクリプトをシンボリックリンクで <code>.git/hooks/</code> に配置すると、リポジトリ更新時に自動追従する（<code>.git/hooks/</code> 自体は git 管理外なので）</li>
+            <li>重い検証（ビルド・全ファイル lint 等）は CI に寄せ、pre-commit はステージ済みファイルだけに絞る</li>
+            <li><code>git config &lt;project&gt;.strict true</code> のような <strong>オプトインフラグ</strong> を読むようにすると、厳格モードを必要に応じて切替可能</li>
+        </ul>
+    </section>
+
+    <section id="sec-7">
+        <h2>7. 典型ワークフロー</h2>
+<pre><code># 1. ブランチ作成・コード編集（Android Studio）
+
+# 2. ローカル lint
+swiftlint --fix
+swiftlint                # warning/error が 0 か確認
+
+# 3. ビルド
+make build               # まずビルドが通るか確認
+make run                 # Simulator で起動
+
+# 4. UI 動作確認（手動 or idb）
+idb ui tap 200 400
+xcrun simctl io booted screenshot tmp/ss/$(date +%Y%m%d)/...
+
+# 5. テスト
+make test
+
+# 6. コミット（pre-commit が走る）
+git add &lt;files&gt;
+git commit -m "..."</code></pre>
+    </section>
+
+    <section id="sec-8">
+        <h2>8. ハマりどころメモ</h2>
+        <ul>
+            <li><strong>xcodebuild の destination が長い:</strong> シェル変数化して使い回す
+<pre><code>export DEST='platform=iOS Simulator,name=iPhone 17 Pro'</code></pre>
+            </li>
+            <li><strong>destination にカッコが入る場合:</strong> <code>'platform=iOS Simulator,name=iPad Pro 13-inch (M5)'</code> のようにシングルクォートで囲む</li>
+            <li><strong>Simulator のブートが残る:</strong> <code>xcrun simctl shutdown all</code> でリセット</li>
+            <li><strong>ビルドキャッシュが壊れる:</strong> <code>make clean</code> → <code>make build</code></li>
+            <li><strong>idb companion が頻繁に落ちる:</strong> シェル起動時に再起動するスクリプトを <code>~/.zshrc</code> に登録すると楽</li>
+            <li><strong>fb-idb は Python 3.14 NG:</strong> 必ず 3.11 系で <code>pipx</code></li>
+            <li><strong>複数 Simulator が起動している:</strong> <code>simctl list devices booted</code> で確認、必要なら <code>simctl shutdown &lt;UDID&gt;</code></li>
+        </ul>
+    </section>
+
+    <section id="sec-9">
+        <h2>9. 補足: なぜ Android Studio？</h2>
+        <ul>
+            <li>普段 Android / Kotlin で IntelliJ 系を使っているなら、キーバインドや UI 操作がそのまま流用できる</li>
+            <li>Xcode の Source Editor は VCS 連携や Git Hook 周りが弱い。IntelliJ 系の方が快適</li>
+            <li>ただし <strong>Storyboard / Asset Catalog の編集</strong>、<strong>Provisioning / Signing</strong>、<strong>Instruments プロファイラ</strong> は Xcode が必要 → 適宜切替</li>
+            <li>Swift コード補完は弱いので、深い IDE サポートが要るなら Xcode 併用が現実的</li>
+        </ul>
+    </section>
+</article>
+</body>
+</html>
