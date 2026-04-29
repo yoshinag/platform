@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="js/analytics.js"></script>
+  <title>お知らせ — INT18 - KIDS</title>
+  <style>
+    :root {
+      --bg: #fff;
+      --fg: #222;
+      --muted: #666;
+      --border: #e0e0e0;
+      --accent: #2563eb;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1a1a;
+        --fg: #e0e0e0;
+        --muted: #999;
+        --border: #333;
+        --accent: #60a5fa;
+      }
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.8;
+      padding: 24px 16px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    h1 { font-size: 1.5rem; margin-bottom: 20px; }
+    .entry { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+    .entry:last-child { border-bottom: none; }
+    .date { font-size: 0.85rem; color: var(--muted); margin-bottom: 4px; }
+    .entry h2 { font-size: 1.1rem; margin-bottom: 6px; border: none; padding: 0; }
+    .entry p { margin-bottom: 6px; }
+    .entry ul { padding-left: 1.5em; margin-bottom: 6px; }
+    .entry li { margin-bottom: 2px; }
+    a { color: var(--accent); }
+    .back { margin-top: 24px; }
+  </style>
+</head>
+<body>
+
+<h1>お知らせ</h1>
+
+<div class="entry">
+  <p class="date">2026-04-30</p>
+  <h2>INT18 - KIDS リリース</h2>
+  <p>小学生向けの無料クイズ学習アプリ「INT18 - KIDS」をリリースしました。</p>
+  <ul>
+    <li>小学 1〜6 年の教科クイズ（国語・算数・理科・社会・漢字）</li>
+    <li>元素記号・周期表クイズ</li>
+    <li>5 種の出題形式に対応</li>
+    <li>すべてのコンテンツが無料で利用可能</li>
+  </ul>
+</div>
+
+<p class="back"><a href="about.html">INT18 - KIDS について</a></p>
+
+</body>
+</html>
