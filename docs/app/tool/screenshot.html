@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- Google Analytics -->
+    <script src="../../platform/js/common/analytics.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Store スクリーンショットサイズ調整ツール</title>
+    <link rel="stylesheet" href="css/screenshot.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container" id="dropZone">
+    <div class="navigation-links">
+        <a href="index.html">ツール一覧へ戻る</a>
+    </div>
+    <h1>App Store スクリーンショットサイズ調整ツール</h1>
+
+    <details open>
+        <summary>使用方法</summary>
+        <ol>
+            <li>iPhone / iPad のスクリーンショット画像を複数まとめてアップロードしてください（ファイル選択 / ドラッグ＆ドロップ）。</li>
+            <li>各画像の縦横比から自動的にポートレート / ランドスケープを判定し、各デバイスサイズに変換します。</li>
+            <li>フィット方法（cover / contain / stretch）と、レターボックス時の背景色を選択できます。</li>
+            <li>個別にダウンロードするか、デバイスサイズごとのフォルダ構造を持つ ZIP として一括ダウンロードできます。</li>
+            <li>サーバーへの画像アップロードは行われず、すべての処理はブラウザ上で完結します。</li>
+        </ol>
+    </details>
+
+    <div class="upload-area">
+        <input type="file" id="imageUpload" accept="image/*" multiple>
+        <p>または、ここに画像をドラッグ＆ドロップしてください（複数同時可）</p>
+    </div>
+
+    <div class="controls" id="controls" hidden>
+        <div class="control-row">
+            <label>
+                フィット:
+                <select id="fitMode">
+                    <option value="contain" selected>contain (レターボックス)</option>
+                    <option value="cover">cover (中央クロップ)</option>
+                    <option value="stretch">stretch (引き伸ばし)</option>
+                </select>
+            </label>
+            <label>
+                背景色:
+                <input type="color" id="bgColor" value="#000000">
+            </label>
+        </div>
+        <div class="control-row">
+            <span class="control-label">対象サイズ:</span>
+            <div class="device-filters" id="deviceFilters"></div>
+        </div>
+        <div class="control-row">
+            <button id="clearBtn">画像をすべてクリア</button>
+            <button id="downloadZipBtn">ZIP でまとめてダウンロード</button>
+        </div>
+    </div>
+
+    <div class="image-list" id="imageList"></div>
+</div>
+
+<script src="js/zip.js"></script>
+<script src="js/screenshot.js"></script>
+</body>
+</html>
