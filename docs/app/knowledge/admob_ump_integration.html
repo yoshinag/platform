@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- Google Analytics -->
+    <script src="../js/common/analytics.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iOS アプリで Google AdMob UMP（同意管理）を統合する</title>
+    <link rel="stylesheet" href="css/knowledge.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<article class="container">
+    <nav class="navigation-links">
+        <a href="../index.html">アプリトップへ戻る</a>
+    </nav>
+
+    <h1>iOS アプリで Google AdMob UMP（同意管理）を統合する</h1>
+
+    <p class="lead">Google Mobile Ads SDK と一緒に <strong>UMP（User Messaging Platform）</strong> を組み込み、GDPR（EEA・英国・スイス）と米国州法（CCPA など）の同意要件を満たすための実装と AdMob コンソール作業のまとめ。Swift / SwiftUI を前提とするが、考え方は UIKit でも同じ。</p>
+
+    <details class="toc" open>
+        <summary>目次</summary>
+        <ol>
+            <li><a href="#sec-1">UMP とは / 何を解決するか</a></li>
+            <li><a href="#sec-2">全体フロー</a></li>
+            <li><a href="#sec-3">SDK 導入（SPM）</a></li>
+            <li><a href="#sec-4">コード実装</a>
+                <ol>
+                    <li><a href="#sec-4-1">ConsentManager の責務分離</a></li>
+                    <li><a href="#sec-4-2">起動時フロー</a></li>
+                    <li><a href="#sec-4-3">設定画面のエントリポイント</a></li>
+                    <li><a href="#sec-4-4">子ども向けアプリの注意点</a></li>
+                </ol>
+            </li>
+            <li><a href="#sec-5">AdMob コンソール側の作業</a>
+                <ol>
+                    <li><a href="#sec-5-1">米国の州メッセージ</a></li>
+                    <li><a href="#sec-5-2">GDPR メッセージ</a></li>
+                    <li><a href="#sec-5-3">GDPR アカウント設定</a></li>
+                </ol>
+            </li>
+            <li><a href="#sec-6">App Store Connect 側</a></li>
+            <li><a href="#sec-7">ハマりどころ・トラブルシューティング</a></li>
+            <li><a href="#sec-8">動作確認のコツ</a></li>
+            <li><a href="#sec-9">参考リンク</a></li>
+        </ol>
+    </details>
+
+    <section id="sec-1">
+        <h2>1. UMP とは / 何を解決するか</h2>
+        <p>UMP（User Messaging Platform）は Google が提供する <strong>同意管理 SDK</strong> で、AdMob・Google 広告を使うアプリが各地域の同意要件を自動で満たすための仕組み。</p>
+        <ul>
+            <li><strong>GDPR（EEA / 英国 / スイス）</strong>: パーソナライズ広告 / Cookie / アナリティクス使用への明示同意</li>
+            <li><strong>米国州法（CCPA / VCDPA など）</strong>: 「データの販売・共有を拒否する権利」の提示</li>
+            <li><strong>Apple ATT</strong>: iOS の IDFA トラッキング許諾（UMP とは別だが連携可能）</li>
+        </ul>
+        <p class="callout"><strong>ポイント:</strong> UMP は <strong>地域判定をランタイム（IP ベース）で行う</strong>ので、単一バイナリで全地域に対応できる。EU 向けに別ビルドを作る必要はない。</p>
+
+        <h3>UMP を使わないとどうなるか</h3>
+        <ul>
+            <li>EEA ユーザーへの広告配信が止まる、または非パーソナライズ広告のみ（eCPM 大幅減）</li>
+            <li>米国対象州での広告開示要件違反となる可能性</li>
+            <li>App Store / Google Play の審査で指摘されることがある</li>
+        </ul>
+    </section>
+
+    <section id="sec-2">
+        <h2>2. 全体フロー</h2>
+<pre class="ascii-art">アプリ起動
+  └─ ConsentManager.requestConsentInfoUpdate()  ← UMP に問い合わせ
+       ├─ 必要なら同意フォーム表示（地域判定済み）
+       └─ 取得後 MobileAds.start()             ← 広告 SDK 初期化
+
+設定画面
+  └─ 「広告データの設定」ボタン
+       └─ presentPrivacyOptionsForm()  ← EEA / 米国州ユーザーが同意を変更</pre>
+        <p class="callout"><strong>順序が重要:</strong> 同意取得が <em>完了してから</em> <code>MobileAds.start()</code> を呼ぶこと。逆順だと「同意なしで初期化」したことになり Google ポリシー違反扱いになりうる。</p>
+    </section>
+
+    <section id="sec-3">
+        <h2>3. SDK 導入（SPM）</h2>
+        <p>Xcode → File → Add Package Dependencies で以下のいずれかを追加。</p>
+        <table>
+            <thead>
+                <tr><th>パッケージ</th><th>含まれる SDK</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><code>github.com/googleads/swift-package-manager-google-mobile-ads</code></td><td>GoogleMobileAds + GoogleUserMessagingPlatform（UMP は依存で同梱）</td></tr>
+                <tr><td><code>github.com/googleads/swift-package-manager-google-user-messaging-platform</code></td><td>UMP のみ（UserMessagingPlatform）</td></tr>
+            </tbody>
+        </table>
+        <p>広告も配信するアプリなら前者でまとめて入る。SDK のライブラリ名は <strong>パッケージ経由で <code>GoogleUserMessagingPlatform</code></strong>、単独パッケージで <strong><code>UserMessagingPlatform</code></strong> と異なる点に注意。両対応するなら <code>canImport</code> でガードする:</p>
+<pre><code>#if canImport(UserMessagingPlatform)
+import UserMessagingPlatform
+#elseif canImport(GoogleUserMessagingPlatform)
+import GoogleUserMessagingPlatform
+#endif</code></pre>
+    </section>
+
+    <section id="sec-4">
+        <h2>4. コード実装</h2>
+
+        <h3 id="sec-4-1">4.1. ConsentManager の責務分離</h3>
+        <p>UMP API を直接 View / App から呼ぶと条件付きコンパイルや状態管理が散らかる。<strong>専用クラス（<code>ConsentManager</code> など）にラップ</strong>するのが定石。</p>
+<pre><code>import Foundation
+import os
+import Observation
+#if canImport(UIKit)
+import UIKit
+#endif
+#if canImport(UserMessagingPlatform)
+import UserMessagingPlatform
+#elseif canImport(GoogleUserMessagingPlatform)
+import GoogleUserMessagingPlatform
+#endif
+
+@Observable
+final class ConsentManager {
+    static let shared = ConsentManager()
+    private init() {}
+
+    /// 設定画面で「広告データの設定」ボタンを表示すべきか
+    var canPresentPrivacyOptions: Bool = false
+
+    #if os(iOS)
+
+    static func keyRootViewController() -> UIViewController? {
+        UIApplication.shared.connectedScenes
+            .compactMap { ($0 as? UIWindowScene)?.windows.first?.rootViewController }
+            .first
+    }
+
+    /// アプリ起動時に呼ぶ。完了後に completion を呼ぶ。
+    func requestConsentIfNeeded(from rootVC: UIViewController?,
+                                 completion: @escaping () -> Void) {
+        #if canImport(UserMessagingPlatform) || canImport(GoogleUserMessagingPlatform)
+        let params = RequestParameters()
+        // 子ども向けアプリの場合のみ true。それ以外は false（既定）
+        // params.isTaggedForUnderAgeOfConsent = true
+
+        ConsentInformation.shared.requestConsentInfoUpdate(with: params) { [weak self] error in
+            if let error {
+                // ログだけ残して続行（オフライン時など）
+                self?.refreshAvailability()
+                completion()
+                return
+            }
+            guard let rootVC else {
+                self?.refreshAvailability()
+                completion()
+                return
+            }
+            ConsentForm.loadAndPresentIfRequired(from: rootVC) { [weak self] _ in
+                self?.refreshAvailability()
+                completion()
+            }
+        }
+        #else
+        completion()
+        #endif
+    }
+
+    func presentPrivacyOptionsForm(from rootVC: UIViewController) {
+        #if canImport(UserMessagingPlatform) || canImport(GoogleUserMessagingPlatform)
+        ConsentForm.presentPrivacyOptionsForm(from: rootVC) { _ in }
+        #endif
+    }
+
+    private func refreshAvailability() {
+        #if canImport(UserMessagingPlatform) || canImport(GoogleUserMessagingPlatform)
+        canPresentPrivacyOptions =
+            ConsentInformation.shared.privacyOptionsRequirementStatus == .required
+        #endif
+    }
+
+    #endif
+}</code></pre>
+        <p class="callout"><strong>API 名のリネームに注意:</strong> Google Mobile Ads SDK 13.x 以降の UMP は Objective-C 由来の <code>UMP</code> プレフィックス API（<code>UMPConsentInformation</code> など）から Swift 命名（<code>ConsentInformation.shared</code>、<code>params.isTaggedForUnderAgeOfConsent</code>）にリネームされている。古い記事のコードはそのまま動かない。</p>
+
+        <h3 id="sec-4-2">4.2. 起動時フロー</h3>
+        <p>SwiftUI なら <code>WindowGroup</code> 配下のルート View に <code>.task</code> を付け、UMP → 広告 SDK の順で起動する:</p>
+<pre><code>@main
+struct MyApp: App {
+    var body: some Scene {
+        WindowGroup {
+            RootView()
+                .task { startConsentAndAds() }
+        }
+    }
+
+    private func startConsentAndAds() {
+        if AdService.shared.isInitialized { return }
+        #if os(iOS)
+        let rootVC = ConsentManager.keyRootViewController()
+        ConsentManager.shared.requestConsentIfNeeded(from: rootVC) {
+            AdService.shared.configure()  // ここで MobileAds.start
+        }
+        #else
+        AdService.shared.configure()
+        #endif
+    }
+}</code></pre>
+        <ul>
+            <li><strong><code>App.init()</code> から呼ばない</strong> — まだ <code>UIWindowScene</code> が確立していないので <code>rootVC</code> が <code>nil</code> になる</li>
+            <li><strong>多重起動を防ぐ</strong> — <code>isInitialized</code> ガードで再入を弾く（タブ切り替えで <code>.task</code> が再発火する SwiftUI のクセ対策）</li>
+        </ul>
+
+        <h3 id="sec-4-3">4.3. 設定画面のエントリポイント</h3>
+        <p>GDPR / 米国州法は<strong>「ユーザーが同意を後から変更できる導線」</strong>を要求する。設定画面に「広告データの設定」「プライバシー設定」などのボタンを置き、UMP のフォームを再表示できるようにする:</p>
+<pre><code>Section("プライバシー") {
+    if ConsentManager.shared.canPresentPrivacyOptions {
+        Button {
+            guard let rootVC = ConsentManager.keyRootViewController() else { return }
+            ConsentManager.shared.presentPrivacyOptionsForm(from: rootVC)
+        } label: {
+            Label("広告データの設定", systemImage: "hand.raised")
+        }
+    }
+}</code></pre>
+        <p><code>canPresentPrivacyOptions</code>（=<code>privacyOptionsRequirementStatus == .required</code>）で出し分けることで、<strong>EEA / 米国対象州のユーザーにだけ表示</strong>される。日本ユーザーには表示されない。</p>
+
+        <h3 id="sec-4-4">4.4. 子ども向けアプリの注意点</h3>
+        <p>13 歳未満をターゲットとするアプリ（Apple Kids Category / Family Designed for Kids）では:</p>
+        <ul>
+            <li><code>params.isTaggedForUnderAgeOfConsent = true</code> を渡す</li>
+            <li>Google Mobile Ads SDK 側で <code>tagForChildDirectedTreatment = true</code>、<code>tagForUnderAgeOfConsent = true</code>、<code>maxAdContentRating = .general</code> を設定（COPPA）</li>
+            <li>UMP はサーバ側で under-age 用の最小限の同意 UI に切替、または非表示にする</li>
+            <li><strong>ATT（IDFA）は使わない</strong> — <code>NSUserTrackingUsageDescription</code> も <code>Info.plist</code> に入れない</li>
+        </ul>
+    </section>
+
+    <section id="sec-5">
+        <h2>5. AdMob コンソール側の作業</h2>
+        <p>コードだけでは不十分で、AdMob 管理画面で<strong>同意メッセージを作成・公開</strong>する必要がある。場所は:</p>
+<pre class="ascii-art">AdMob 左メニュー
+└─ プライバシーとメッセージ
+   ├─ 欧州の規制（GDPR）       ← 作成 / 公開
+   ├─ 米国の州の規制（CCPA 等） ← 作成 / 公開
+   └─ IDFA 説明メッセージ      ← ATT 使うときのみ</pre>
+
+        <h3 id="sec-5-1">5.1. 米国の州メッセージ</h3>
+        <ol>
+            <li>「米国の州の規制」→ 「作成」</li>
+            <li>テンプレート（<em>My data preferences</em>）から「同意のみ」または「Don't sell or share my data」を選択</li>
+            <li>対象アプリを選択（後述の「アプリを選択」ダイアログでプライバシーポリシー URL も入力）</li>
+            <li>言語を追加（日本語 + 英語など）</li>
+            <li><strong>公開</strong></li>
+            <li>「エントリ ポイント」タブは触らなくて OK（<a href="#sec-7">§7</a> 参照）</li>
+        </ol>
+
+        <h3 id="sec-5-2">5.2. GDPR メッセージ</h3>
+        <ol>
+            <li>「欧州の規制」→ 「作成」</li>
+            <li>標準は IAB TCF v2.2 形式（200 社超のパートナー一覧）。子ども向けアプリでも UMP がサーバ側で under-age 用に切り替えるのでこのテンプレで OK</li>
+            <li>右パネル「ユーザーの選択」で <strong>「同意しない」を必ずオン</strong>（CNIL 解釈で実質必須）</li>
+            <li>「アプリを選択」ダイアログでアプリ選択 + プライバシーポリシー URL を入力</li>
+            <li>デフォルト言語と追加言語を設定</li>
+            <li>右上「公開」ボタンが青くなったらクリック</li>
+        </ol>
+
+        <h3 id="sec-5-3">5.3. GDPR アカウント設定（メッセージとは別）</h3>
+        <p>欧州の規制 → 「設定」タブには、メッセージとは別の<strong>アカウント全体の挙動</strong>を制御する項目がある。子ども向け / 厳格運用なら:</p>
+        <table>
+            <thead>
+                <tr><th>項目</th><th>推奨</th><th>理由</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>正当な利益のコントロール</td><td>オフ</td><td>明示同意のみで運用。CNIL 等で安全</td></tr>
+                <tr><td>広告目的の同意モード</td><td>オン</td><td>UMP SDK と Google 広告サービスの連携に必須</td></tr>
+                <tr><td>特殊機能 2（デバイススキャン）</td><td>オフ</td><td>子ども向けやプライバシー重視なら不要</td></tr>
+                <tr><td>同意の同期</td><td>オフ</td><td>複数アプリで同期しないなら off</td></tr>
+                <tr><td>広告パートナーを自動的に追加</td><td>オン</td><td>収益機会を逃さない</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="sec-6">
+        <h2>6. App Store Connect 側</h2>
+        <ul>
+            <li><strong>Privacy Policy URL</strong>: App Information → Privacy Policy URL に入れる。AdMob 側のメッセージからもこれを参照させる運用が一般的</li>
+            <li><strong>App Privacy Labels</strong>: 「広告」カテゴリのデータ収集を正確に申告</li>
+            <li><strong>Privacy Manifest（PrivacyInfo.xcprivacy）</strong>: 2024 年春以降、サードパーティ SDK を使うアプリで必須。Google Mobile Ads SDK の <code>NSPrivacyAccessedAPIType</code>（UserDefaults・FileTimestamp など）を宣言</li>
+            <li><strong>EU 配信時の Trader 宣言</strong>: DSA 要件で 2024 年 2 月〜必須。個人開発でも EU に配信するなら宣言する</li>
+        </ul>
+    </section>
+
+    <section id="sec-7">
+        <h2>7. ハマりどころ・トラブルシューティング</h2>
+
+        <h3>TS-1: プライバシーポリシー URL は AdMob のどこに入れるか</h3>
+        <p><strong>設定場所:</strong> プライバシーとメッセージ → <em>欧州の規制（または 米国の州の規制）</em> → メッセージ編集 → 全般設定 → アプリ → 「<strong>アプリを選択</strong>」ボタン → 開いたダイアログ内に、アプリごとの行に「プライバシー ポリシーの URL」列がある。ここに URL を入れる。</p>
+        <p><strong>誤探索しやすい場所:</strong></p>
+        <ul>
+            <li>メッセージ編集画面の「設定」タブ（GDPR アカウント設定）→ ここには無い</li>
+            <li>左メニュー → アプリ → 個別アプリ → 「アプリの設定」ページ → ここにも無い</li>
+        </ul>
+        <p>AdMob はプライバシーポリシー URL を「アプリ単位、メッセージ編集時の選択ダイアログ内」で管理している。</p>
+
+        <h3>TS-2: 「エントリ ポイント」タブで「実装する必要があります」表示が消えない</h3>
+        <p>コード側で <code>presentPrivacyOptionsForm</code> を SettingsView に組み込んでも、AdMob のエントリポイントタブが「未実装」表示のまま。</p>
+        <p><strong>結論:</strong> このタブは SDK のランタイム通信ベースで Google が検知するが、<strong>反映に大幅なラグがある</strong>。ストア公開も必須ではない。表示が消えなくてもメッセージの公開は可能。実装完了の判定にはこのタブを使えない。</p>
+
+        <h3>TS-3: 「公開」ボタンが灰色のまま押せない</h3>
+        <p>必須項目の未入力で公開ボタンが活性化しない。よくある原因:</p>
+        <ul>
+            <li>「同意しない」が <code>選択 ▼</code> のまま → オンに変更</li>
+            <li>アプリを選択していない → 「アプリを選択」で選ぶ</li>
+            <li>言語が未設定</li>
+        </ul>
+
+        <h3>TS-4: SDK API リネームでビルドエラー</h3>
+        <p>古い記事のコードをコピーすると <code>UMPRequestParameters</code> など Obj-C 由来の名前で書かれており、現行 SDK ではビルドが通らない。Xcode のリネーム提案に従って:</p>
+        <table>
+            <thead>
+                <tr><th>旧 API（Obj-C）</th><th>新 API（Swift）</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><code>UMPRequestParameters</code></td><td><code>RequestParameters</code></td></tr>
+                <tr><td><code>params.tagForUnderAgeOfConsent</code></td><td><code>params.isTaggedForUnderAgeOfConsent</code></td></tr>
+                <tr><td><code>UMPConsentInformation.sharedInstance</code></td><td><code>ConsentInformation.shared</code></td></tr>
+                <tr><td><code>UMPConsentForm.loadAndPresentIfRequired</code></td><td><code>ConsentForm.loadAndPresentIfRequired</code></td></tr>
+                <tr><td><code>UMPConsentForm.presentPrivacyOptionsForm</code></td><td><code>ConsentForm.presentPrivacyOptionsForm</code></td></tr>
+            </tbody>
+        </table>
+
+        <h3>TS-5: <code>import UserMessagingPlatform</code> でビルド失敗</h3>
+        <p>SPM で GoogleMobileAds 経由で UMP が入ると、ライブラリ名が <code>GoogleUserMessagingPlatform</code> になる。<code>import UserMessagingPlatform</code> 単独だと解決できないことがある。</p>
+        <p><strong>対応:</strong> 両方の <code>canImport</code> でガードする（<a href="#sec-3">§3</a>）。</p>
+
+        <h3>TS-6: 子ども向けアプリで IAB TCF v2.2 を出してよいか</h3>
+        <p>IAB TCF テンプレは「200 社超のパートナーへのデータ共有」を求める文言。子ども向けには不適切に見える。</p>
+        <p><strong>結論:</strong> UMP は <code>isTaggedForUnderAgeOfConsent = true</code> を受け取ると、サーバ側で under-age ユーザーに対して<strong>最小限の表示か非表示</strong>に切り替える。テンプレ自体はそのままでよい。ただしアカウント設定で「正当な利益オフ / 特殊機能 2 オフ」にして厳格化しておくと安心。</p>
+    </section>
+
+    <section id="sec-8">
+        <h2>8. 動作確認のコツ</h2>
+        <p>日本のシミュレーターでは UMP フォームが出ないので、デバッグ設定で地域を強制する:</p>
+<pre><code>let debug = DebugSettings()
+debug.geography = .EEA  // .EEA / .other / .disabled
+debug.testDeviceIdentifiers = ["XXXX-XXXX-..."]  // Xcode コンソールに出る ID
+params.debugSettings = debug</code></pre>
+        <ul>
+            <li><strong>テストデバイス ID</strong>: 初回起動時に SDK が <code>&lt;UMP SDK&gt;</code> ログでハッシュを出す。それをコピペ</li>
+            <li><strong>同意状態をリセット</strong>: <code>ConsentInformation.shared.reset()</code> をデバッグメニューから呼べるようにしておくと検証が楽</li>
+            <li><strong>本番では debugSettings を外す</strong> — テスト ID が含まれたままだと挙動が変わる</li>
+        </ul>
+    </section>
+
+    <section id="sec-9">
+        <h2>9. 参考リンク</h2>
+        <ul>
+            <li><a href="https://developers.google.com/admob/ios/privacy" target="_blank" rel="noopener">Google: User messaging platform (iOS)</a></li>
+            <li><a href="https://support.google.com/admob/answer/10115218" target="_blank" rel="noopener">AdMob ヘルプ: GDPR メッセージの作成</a></li>
+            <li><a href="https://support.google.com/admob/answer/13554116" target="_blank" rel="noopener">AdMob ヘルプ: 米国の州プライバシー規制</a></li>
+            <li><a href="https://developers.google.com/admob/ios/privacy/policy-tags" target="_blank" rel="noopener">Google: COPPA / under-age タグ設定</a></li>
+        </ul>
+    </section>
+</article>
+</body>
+</html>
