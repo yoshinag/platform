@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- Google Analytics -->
+    <script src="../js/common/analytics.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple App Store 申請手続きチェックリスト</title>
+    <link rel="stylesheet" href="css/knowledge.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<article class="container">
+    <nav class="navigation-links">
+        <a href="../index.html">アプリトップへ戻る</a>
+    </nav>
+
+    <h1>Apple App Store 申請手続きチェックリスト</h1>
+
+    <p class="lead">個人 / 小規模チームが iOS アプリを App Store に申請するときの作業項目を、上から順にこなせる形で並べたチェックリスト。各項目はクリックで完了マークが付き、ブラウザの LocalStorage に保存されるので作業を中断しても続きから再開できる。Reject されやすい落とし穴と TIPS も併記。</p>
+
+    <div class="progress-bar" id="progress-bar">
+        <span>進捗: <span class="count" id="progress-count">0 / 0</span></span>
+        <button type="button" class="btn-reset" id="reset-checklist">全リセット</button>
+    </div>
+
+    <details class="toc" open>
+        <summary>目次</summary>
+        <ol>
+            <li><a href="#sec-1">全体フロー</a></li>
+            <li><a href="#sec-2">Apple Developer Program 加入</a></li>
+            <li><a href="#sec-3">Bundle ID / 証明書 / Provisioning</a></li>
+            <li><a href="#sec-4">App Store Connect でアプリ作成</a></li>
+            <li><a href="#sec-5">App Information（基本情報）</a></li>
+            <li><a href="#sec-6">価格と配信地域</a></li>
+            <li><a href="#sec-7">プライバシー（最重要）</a>
+                <ol>
+                    <li><a href="#sec-7-1">App Privacy（栄養成分表示）</a></li>
+                    <li><a href="#sec-7-2">Privacy Manifest（PrivacyInfo.xcprivacy）</a></li>
+                    <li><a href="#sec-7-3">ATT / Usage Description</a></li>
+                </ol>
+            </li>
+            <li><a href="#sec-8">ストアページ（アイコン・スクショ・テキスト）</a></li>
+            <li><a href="#sec-9">ビルド作成とアップロード</a></li>
+            <li><a href="#sec-10">TestFlight（任意・推奨）</a></li>
+            <li><a href="#sec-11">App Review への提出</a></li>
+            <li><a href="#sec-12">よく Reject されるパターン</a></li>
+            <li><a href="#sec-13">審査ステータスと Reject 対応</a></li>
+            <li><a href="#sec-14">リリース後</a></li>
+            <li><a href="#sec-15">参考リンク</a></li>
+        </ol>
+    </details>
+
+    <section id="sec-1">
+        <h2>1. 全体フロー</h2>
+<pre class="ascii-art">[Apple Developer Program 加入]   ← 個人 $99/年, 法人は D-U-N-S 必要
+              │
+              ▼
+[Bundle ID / 証明書 / Provisioning]   ← Xcode 自動管理でも可
+              │
+              ▼
+[App Store Connect でアプリ作成]
+              │
+              ▼
+[ストアページ情報入力]   ← アイコン / スクショ / 説明文 / プライバシー
+              │
+              ▼
+[Xcode で Archive → Upload]   ← Bundle Version は単調増加
+              │
+              ▼
+[ビルド処理待ち（5〜30 分）]
+              │
+              ▼
+[(任意) TestFlight でベータ確認]
+              │
+              ▼
+[App Review に提出]
+              │
+              ▼
+[Waiting → In Review → Approved / Rejected]
+              │                            │
+              ▼                            ▼
+       [Ready for Sale]         [Resolution Center で対応]</pre>
+        <p class="callout"><strong>所要時間の目安:</strong> 初回申請は事前準備（D-U-N-S, 銀行情報, 証明書類）に 1〜2 週間、その後の作業は実働 2〜3 日。審査自体は通常 24〜48 時間で結果が出る（Reject だと往復が増える）。</p>
+    </section>
+
+    <section id="sec-2">
+        <h2>2. Apple Developer Program 加入</h2>
+        <ul class="checklist">
+            <li><input type="checkbox" id="chk-2-1"><label for="chk-2-1">Apple ID を作成し、二要素認証を有効化（必須）</label></li>
+            <li><input type="checkbox" id="chk-2-2"><label for="chk-2-2">Apple Developer Program に登録（個人 / 組織 / Enterprise から選択、年間 $99）</label></li>
+            <li><input type="checkbox" id="chk-2-3"><label for="chk-2-3">組織として登録する場合: <strong>D-U-N-S 番号</strong>を取得（Dun &amp; Bradstreet で無料、ただし反映に <strong>1〜4 週間</strong>かかることがある）</label></li>
+            <li><input type="checkbox" id="chk-2-4"><label for="chk-2-4">App Store Connect → <code>Agreements, Tax, and Banking</code> で各種契約に署名</label>
+                <ul class="checklist nested">
+                    <li><input type="checkbox" id="chk-2-4-1"><label for="chk-2-4-1">Free Apps Agreement（基本必須）</label></li>
+                    <li><input type="checkbox" id="chk-2-4-2"><label for="chk-2-4-2">Paid Apps Agreement（有料アプリ / IAP / 広告収益化する場合）</label></li>
+                    <li><input type="checkbox" id="chk-2-4-3"><label for="chk-2-4-3">Tax Forms（W-8BEN など、米国非居住者でも要提出）</label></li>
+                    <li><input type="checkbox" id="chk-2-4-4"><label for="chk-2-4-4">Banking Information（受け取り口座、収益化する場合）</label></li>
+                </ul>
+            </li>
+            <li><input type="checkbox" id="chk-2-5"><label for="chk-2-5">EU に配信するなら <strong>Trader Status</strong> を申告（DSA 対応、2024 年 2 月以降必須）</label></li>
+        </ul>
+        <p class="callout callout-warn"><strong>注意:</strong> 法人で D-U-N-S を新規取得する場合、登記情報と <em>完全に一致する</em> 名前 / 住所で取らないと Apple 側で照合が通らず登録が止まる。途中で修正できないので最初から正確に。</p>
+    </section>
+
+    <section id="sec-3">
+        <h2>3. Bundle ID / 証明書 / Provisioning</h2>
+        <ul class="checklist">
+            <li><input type="checkbox" id="chk-3-1"><label for="chk-3-1">Apple Developer Portal → <code>Identifiers</code> で App ID（Bundle ID）を作成（例: <code>com.example.myapp</code>）</label></li>
+            <li><input type="checkbox" id="chk-3-2"><label for="chk-3-2">Bundle ID は<strong>あとから変更不可</strong>。命名は慎重に（逆ドメイン形式）</label></li>
+            <li><input type="checkbox" id="chk-3-3"><label for="chk-3-3">必要な Capabilities を有効化（Push / Sign in with Apple / iCloud / Associated Domains など）</label></li>
+            <li><input type="checkbox" id="chk-3-4"><label for="chk-3-4">Distribution Certificate を作成（または Xcode の Automatically manage signing に任せる）</label></li>
+            <li><input type="checkbox" id="chk-3-5"><label for="chk-3-5">App Store Provisioning Profile を作成（自動管理なら自動生成）</label></li>
+            <li><input type="checkbox" id="chk-3-6"><label for="chk-3-6">Push Notification を使うなら APNs 認証鍵（.p8）を作成（証明書 .p12 より新しく管理が楽）</label></li>
+            <li><input type="checkbox" id="chk-3-7"><label for="chk-3-7">Sign in with Apple を使うなら Service ID / Domain 設定（Web 連携時）</label></li>
+        </ul>
+        <p class="callout"><strong>TIPS:</strong> 個人開発なら Xcode の <em>Automatically manage signing</em> に任せて OK。手動管理は CI / 複数アプリで秘密鍵を共有するときに必要になる。</p>
+    </section>
+
+    <section id="sec-4">
+        <h2>4. App Store Connect でアプリ作成</h2>
+        <p>App Store Connect（<code>appstoreconnect.apple.com</code>）→ My Apps → 「+」→ 新規 App。</p>
+        <ul class="checklist">
+            <li><input type="checkbox" id="chk-4-1"><label for="chk-4-1"><strong>Platform</strong> を選択（iOS / iPadOS / macOS / tvOS / visionOS / watchOS）</label></li>
+            <li><input type="checkbox" id="chk-4-2"><label for="chk-4-2"><strong>Name</strong>（30 文字以内、App Store 表示名。あとで変更可だが審査必要）</label></li>
+            <li><input type="checkbox" id="chk-4-3"><label for="chk-4-3"><strong>Primary Language</strong> 設定（ローカライズの基準言語）</label></li>
+            <li><input type="checkbox" id="chk-4-4"><label for="chk-4-4"><strong>Bundle ID</strong> を選択（Apple Developer Portal で作成済みのもの）</label></li>
+            <li><input type="checkbox" id="chk-4-5"><label for="chk-4-5"><strong>SKU</strong> を入力（社内管理用 ID、半角英数字、<strong>あとから変更不可</strong>）</label></li>
+            <li><input type="checkbox" id="chk-4-6"><label for="chk-4-6"><strong>User Access</strong>（Full / Limited）を設定</label></li>
+        </ul>
+    </section>
+
+    <section id="sec-5">
+        <h2>5. App Information（基本情報）</h2>
+        <p>左メニュー → App Information で記入する情報。<strong>言語ごとに別々に入れる</strong>項目があるので、ローカライズ対象の各言語で記入する。</p>
+        <ul class="checklist">
+            <li><input type="checkbox" id="chk-5-1"><label for="chk-5-1"><strong>Subtitle</strong>（30 文字、検索結果の補助タイトル）</label></li>
+            <li><input type="checkbox" id="chk-5-2"><label for="chk-5-2"><strong>Privacy Policy URL</strong>（必須、HTTPS かつ常時アクセス可能）</label></li>
+            <li><input type="checkbox" id="chk-5-3"><label for="chk-5-3"><strong>Category</strong> Primary / Secondary を選択</label></li>
+            <li><input type="checkbox" id="chk-5-4"><label for="chk-5-4"><strong>Content Rights</strong>: 第三者コンテンツを含むかどうか申告</label></li>
+            <li><input type="checkbox" id="chk-5-5"><label for="chk-5-5"><strong>Age Rating</strong> アンケートに回答（暴力 / 性的表現 / 賭博 / 薬物 / アルコール / タバコ / 衝撃的なテーマなど）</label></li>
+            <li><input type="checkbox" id="chk-5-6"><label for="chk-5-6"><strong>License Agreement</strong> はデフォルト EULA で OK（カスタムを使うなら別途文面を用意）</label></li>
+        </ul>
+    </section>
+
+    <section id="sec-6">
+        <h2>6. 価格と配信地域</h2>
+        <ul class="checklist">
+            <li><input type="checkbox" id="chk-6-1"><label for="chk-6-1"><strong>Price</strong>（Free / Tier 1〜）を選択</label></li>
+            <li><input type="checkbox" id="chk-6-2"><label for="chk-6-2"><strong>Availability</strong>: 配信地域選択（全 175 ヵ国 / 特定地域 / 中国本土除外など）</label></li>
+            <li><input type="checkbox" id="chk-6-3"><label for="chk-6-3"><strong>Pre-Orders</strong> を使うか（任意、最大 1 年先まで予約受付可能）</label></li>
+            <li><input type="checkbox" id="chk-6-4"><label for="chk-6-4">Volume Purchase Program（教育 / B2B 一括販売）を有効化するか</label></li>
+            <li><input type="checkbox" id="chk-6-5"><label for="chk-6-5">Educational Discount を有効化するか</label></li>
+        </ul>
+        <p class="callout"><strong>初回は無料 / 全地域</strong>から始めて、運用が安定してから絞るのが安全。中国本土だけは ICP ライセンスなど別要件があるので、最初は外しておくのも一手。</p>
+    </section>
+
+    <section id="sec-7">
+        <h2>7. プライバシー（最重要）</h2>
+        <p>近年、Reject の最大要因はプライバシー関連。App Privacy / Privacy Manifest / ATT / Usage Description の <strong>4 つすべて</strong>を整合させる必要がある。</p>
+
+        <h3 id="sec-7-1">7.1. App Privacy（栄養成分表示）</h3>
+        <p>App Store Connect → App Privacy で<strong>収集データの種類と用途</strong>を申告。<strong>第三者 SDK の収集も自分のアプリの収集として申告する</strong>のが落とし穴。</p>
+        <ul class="checklist">
+            <li><input type="checkbox" id="chk-7-1-1"><label for="chk-7-1-1">使用している全 SDK のプライバシー情報を確認（Firebase / GA / AdMob / Sentry / etc.）</label></li>
+            <li><input type="checkbox" id="chk-7-1-2"><label for="chk-7-1-2">「データを収集しない」と宣言する場合: <strong>本当にゼロ</strong>か再確認（解析 SDK が入っていないか）</label></li>
+            <li><input type="checkbox" id="chk-7-1-3"><label for="chk-7-1-3">収集する場合、以下を全データタイプ × 用途で記入</label>
+                <ul class="checklist nested">
+                    <li><input type="checkbox" id="chk-7-1-3-1"><label for="chk-7-1-3-1">トラッキングに使うか（広告 ID 連携など）</label></li>
+                    <li><input type="checkbox" id="chk-7-1-3-2"><label for="chk-7-1-3-2">ユーザーの ID / 端末にリンクされるか</label></li>
+                    <li><input type="checkbox" id="chk-7-1-3-3"><label for="chk-7-1-3-3">用途（Analytics / App Functionality / Advertising / Personalization など）</label></li>
+                </ul>
+            </li>
+            <li><input type="checkbox" id="chk-7-1-4"><label for="chk-7-1-4">Privacy Policy URL の内容と App Privacy の申告が<strong>一致</strong>しているか確認</label></li>
+        </ul>
+
+        <h3 id="sec-7-2">7.2. Privacy Manifest（PrivacyInfo.xcprivacy）</h3>
+        <p>2024 年 5 月以降、サードパーティ SDK を使うアプリでは <code>PrivacyInfo.xcprivacy</code> の同梱が必須。アップロード時にチェックされる。</p>
+        <ul class="checklist">
+            <li><input type="checkbox" id="chk-7-2-1"><label for="chk-7-2-1">アプリ本体に <code>PrivacyInfo.xcprivacy</code> を追加（Xcode → New File → App Privacy）</label></li>
+            <li><input type="checkbox" id="chk-7-2-2"><label for="chk-7-2-2"><strong>NSPrivacyTracking</strong>: トラッキングを行うか（true / false）</label></li>
+            <li><input type="checkbox" id="chk-7-2-3"><label for="chk-7-2-3"><strong>NSPrivacyTrackingDomains</strong>: トラッキング用ドメイン一覧（ATT 許可がない場合 SKAdNetwork に強制される）</label></li>
+            <li><input type="checkbox" id="chk-7-2-4"><label for="chk-7-2-4"><strong>NSPrivacyCollectedDataTypes</strong>: 収集データの種類（App Privacy と整合させる）</label></li>
+            <li><input type="checkbox" id="chk-7-2-5"><label for="chk-7-2-5"><strong>NSPrivacyAccessedAPITypes</strong>: 使用 API と Reason（UserDefaults / FileTimestamp / SystemBoot / DiskSpace / ActiveKeyboards）</label></li>
+            <li><input type="checkbox" id="chk-7-2-6"><label for="chk-7-2-6">使用しているサードパーティ SDK が Privacy Manifest を含んでいるか確認（Apple 指定の SDK は<strong>署名された</strong> Privacy Manifest 必須）</label></li>
+            <li><input type="checkbox" id="chk-7-2-7"><label for="chk-7-2-7">アップロード後、ITMS-91053 などの警告メールが来ていないか確認</label></li>
+        </ul>
+        <p class="callout callout-warn"><strong>典型的な Reason 値:</strong> <code>UserDefaults</code> なら <code>CA92.1</code>（同じアプリ内で書き読み）、<code>FileTimestamp</code> なら <code>C617.1</code>（自分が作ったファイル）。Apple のドキュメント <em>"Describing use of required reason API"</em> に対応表がある。</p>
+
+        <h3 id="sec-7-3">7.3. ATT / Usage Description</h3>
+        <p><code>Info.plist</code> に Usage Description（使用理由文）を入れていない API を呼ぶとアプリがクラッシュする。<strong>使う API すべて</strong>に対応する文言を必ず入れる。</p>
+        <ul class="checklist">
+            <li><input type="checkbox" id="chk-7-3-1"><label for="chk-7-3-1">IDFA（広告識別子）を使う場合: <code>NSUserTrackingUsageDescription</code> + ATT プロンプト実装</label></li>
+            <li><input type="checkbox" id="chk-7-3-2"><label for="chk-7-3-2">子ども向けアプリでは ATT は使わない（<code>NSUserTrackingUsageDescription</code> も入れない）</label></li>
+            <li><input type="checkbox" id="chk-7-3-3"><label for="chk-7-3-3"><code>NSCameraUsageDescription</code>（カメラ）</label></li>
+            <li><input type="checkbox" id="chk-7-3-4"><label for="chk-7-3-4"><code>NSMicrophoneUsageDescription</code>（マイク）</label></li>
+            <li><input type="checkbox" id="chk-7-3-5"><label for="chk-7-3-5"><code>NSPhotoLibraryUsageDescription</code> / <code>NSPhotoLibraryAddUsageDescription</code>（写真ライブラリ）</label></li>
+            <li><input type="checkbox" id="chk-7-3-6"><label for="chk-7-3-6"><code>NSLocationWhenInUseUsageDescription</code> / <code>NSLocationAlwaysAndWhenInUseUsageDescription</code>（位置情報）</label></li>
+            <li><input type="checkbox" id="chk-7-3-7"><label for="chk-7-3-7"><code>NSContactsUsageDescription</code>（連絡先）</label></li>
+            <li><input type="checkbox" id="chk-7-3-8"><label for="chk-7-3-8"><code>NSCalendarsUsageDescription</code> / <code>NSRemindersUsageDescription</code>（カレンダー / リマインダー）</label></li>
+            <li><input type="checkbox" id="chk-7-3-9"><label for="chk-7-3-9"><code>NSMotionUsageDescription</code>（モーションセンサー）</label></li>
+            <li><input type="checkbox" id="chk-7-3-10"><label for="chk-7-3-10"><code>NSBluetoothAlwaysUsageDescription</code>（Bluetooth）</label></li>
+            <li><input type="checkbox" id="chk-7-3-11"><label for="chk-7-3-11"><code>NSLocalNetworkUsageDescription</code>（ローカルネットワーク、iOS 14+）</label></li>
+            <li><input type="checkbox" id="chk-7-3-12"><label for="chk-7-3-12"><strong>説明文は具体的に</strong>: 「機能のため」では Reject される。「○○機能で△△するために使用します」と書く</label></li>
+        </ul>
+    </section>
+
+    <section id="sec-8">
+        <h2>8. ストアページ（アイコン・スクショ・テキスト）</h2>
+
+        <h3>8.1. アイコン</h3>
+        <ul class="checklist">
+            <li><input type="checkbox" id="chk-8-1-1"><label for="chk-8-1-1">App Store 用 <strong>1024 × 1024 PNG</strong>（角丸なし、透過なし、PNG 形式のみ）</label></li>
+            <li><input type="checkbox" id="chk-8-1-2"><label for="chk-8-1-2">アプリ内アイコンを各サイズで書き出し（既存ツール <a href="../tool/ios_icon.html">tool/ios_icon.html</a> で一括生成可能）</label></li>
+            <li><input type="checkbox" id="chk-8-1-3"><label for="chk-8-1-3">マスター画像とストアアイコンの<strong>デザインを完全一致</strong>させる（不一致は Reject 対象）</label></li>
+            <li><input type="checkbox" id="chk-8-1-4"><label for="chk-8-1-4">Tinted Icon（iOS 18+ ダークモード用）も用意（任意）</label></li>
+        </ul>
+
+        <h3>8.2. スクリーンショット</h3>
+        <p>App Store ではデバイスサイズごとに別々のスクショが必要。最大デバイスサイズを用意すれば下のサイズは Apple が自動で縮小してくれるが、できれば各サイズ手動で作るのが推奨。</p>
+        <table>
+            <thead>
+                <tr><th>デバイス</th><th>解像度</th><th>必須/任意</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>iPhone 6.9" (16 Pro Max など)</td><td>1290 × 2796</td><td>iPhone 対応なら必須</td></tr>
+                <tr><td>iPhone 6.5" (11 Pro Max など)</td><td>1242 × 2688 / 1284 × 2778</td><td>任意（推奨）</td></tr>
+                <tr><td>iPad 13" (Pro 13")</td><td>2064 × 2752</td><td>iPad 対応なら必須</td></tr>
+                <tr><td>iPad 12.9" (Pro 第 2-6 世代)</td><td>2048 × 2732</td><td>任意</td></tr>
+            </tbody>
+        </table>
+        <ul class="checklist">
+            <li><input type="checkbox" id="chk-8-2-1"><label for="chk-8-2-1">最大 10 枚 / デバイスサイズ（最初の 3 枚が検索結果プレビューで表示される）</label></li>
+            <li><input type="checkbox" id="chk-8-2-2"><label for="chk-8-2-2">既存ツール <a href="../tool/screenshot.html">tool/screenshot.html</a> で各サイズに変換</label></li>
+            <li><input type="checkbox" id="chk-8-2-3"><label for="chk-8-2-3">App Preview 動画（任意、最大 3 本、15-30 秒、M4V/MP4/MOV、デバイス録画推奨）</label></li>
+            <li><input type="checkbox" id="chk-8-2-4"><label for="chk-8-2-4">ステータスバーのモック（時刻 9:41 / 電池 100% / 電波フル）が定番</label></li>
+        </ul>
+
+        <h3>8.3. テキスト</h3>
+        <ul class="checklist">
+            <li><input type="checkbox" id="chk-8-3-1"><label for="chk-8-3-1"><strong>Promotional Text</strong>（170 文字、リリース後も<strong>審査なしで変更可能</strong>。期間限定キャンペーン告知などに）</label></li>
+            <li><input type="checkbox" id="chk-8-3-2"><label for="chk-8-3-2"><strong>Description</strong>（4000 文字、最初の数行が「もっと読む」前に表示される）</label></li>
+            <li><input type="checkbox" id="chk-8-3-3"><label for="chk-8-3-3"><strong>Keywords</strong>（100 文字、カンマ区切り、競合アプリ名や Apple 商標は禁止）</label></li>
+            <li><input type="checkbox" id="chk-8-3-4"><label for="chk-8-3-4"><strong>Support URL</strong>（必須、問い合わせ先 / FAQ ページ）</label></li>
+            <li><input type="checkbox" id="chk-8-3-5"><label for="chk-8-3-5"><strong>Marketing URL</strong>（任意、製品ランディングページ）</label></li>
+            <li><input type="checkbox" id="chk-8-3-6"><label for="chk-8-3-6"><strong>What's New</strong>（バージョンアップ時、4000 文字。新規 1.0 では空欄可）</label></li>
+        </ul>
+
+        <h3>8.4. ローカライズ</h3>
+        <ul class="checklist">
+            <li><input type="checkbox" id="chk-8-4-1"><label for="chk-8-4-1">対応言語ごとに、Subtitle / Description / Keywords / Promotional Text を翻訳</label></li>
+            <li><input type="checkbox" id="chk-8-4-2"><label for="chk-8-4-2">スクリーンショット内の文字も該当言語にローカライズ（推奨）</label></li>
+            <li><input type="checkbox" id="chk-8-4-3"><label for="chk-8-4-3">アプリ内ローカライズと一致しているか確認</label></li>
+        </ul>
+    </section>
+
+    <section id="sec-9">
+        <h2>9. ビルド作成とアップロード</h2>
+
+        <h3>9.1. Xcode 側の事前確認</h3>
+        <ul class="checklist">
+            <li><input type="checkbox" id="chk-9-1-1"><label for="chk-9-1-1"><strong>CFBundleShortVersionString</strong>（マーケティングバージョン、例: <code>1.2.0</code>）を設定</label></li>
+            <li><input type="checkbox" id="chk-9-1-2"><label for="chk-9-1-2"><strong>CFBundleVersion</strong>（ビルド番号）を<strong>単調増加</strong>させる（過去と同じ番号は再アップロード不可）</label></li>
+            <li><input type="checkbox" id="chk-9-1-3"><label for="chk-9-1-3">Build Configuration: <strong>Release</strong></label></li>
+            <li><input type="checkbox" id="chk-9-1-4"><label for="chk-9-1-4">Team / Bundle Identifier 確認</label></li>
+            <li><input type="checkbox" id="chk-9-1-5"><label for="chk-9-1-5">Code Signing が正しく動いている（Automatic 推奨）</label></li>
+            <li><input type="checkbox" id="chk-9-1-6"><label for="chk-9-1-6">Capabilities が必要な分だけ ON（過剰だと Reject 対象）</label></li>
+            <li><input type="checkbox" id="chk-9-1-7"><label for="chk-9-1-7"><code>Info.plist</code> の Usage Description が全て埋まっている</label></li>
+            <li><input type="checkbox" id="chk-9-1-8"><label for="chk-9-1-8"><code>PrivacyInfo.xcprivacy</code> がターゲットに含まれている</label></li>
+            <li><input type="checkbox" id="chk-9-1-9"><label for="chk-9-1-9">Debug 用コード（<code>print</code> のテスト出力, デバッグメニュー, テストアカウントの自動入力）が Release ビルドで除去されている</label></li>
+            <li><input type="checkbox" id="chk-9-1-10"><label for="chk-9-1-10">SwiftUI Preview 用コードが Release ビルドに混入していないか確認</label></li>
+            <li><input type="checkbox" id="chk-9-1-11"><label for="chk-9-1-11">Strip Debug Symbols 設定 + dSYM 生成（クラッシュ解析用）</label></li>
+        </ul>
+
+        <h3>9.2. Archive とアップロード</h3>
+        <ul class="checklist">
+            <li><input type="checkbox" id="chk-9-2-1"><label for="chk-9-2-1">スキーム → デスティネーションを <strong>Any iOS Device (arm64)</strong> に</label></li>
+            <li><input type="checkbox" id="chk-9-2-2"><label for="chk-9-2-2"><code>Product → Archive</code></label></li>
+            <li><input type="checkbox" id="chk-9-2-3"><label for="chk-9-2-3">Organizer で <strong>Validate App</strong>（事前検証、署名 / Privacy Manifest など事前チェック）</label></li>
+            <li><input type="checkbox" id="chk-9-2-4"><label for="chk-9-2-4"><code>Distribute App → App Store Connect → Upload</code></label></li>
+            <li><input type="checkbox" id="chk-9-2-5"><label for="chk-9-2-5">アップロード時に <strong>dSYM を含める</strong>にチェック（クラッシュレポートのシンボリケーション用）</label></li>
+            <li><input type="checkbox" id="chk-9-2-6"><label for="chk-9-2-6">CLI なら <code>xcodebuild archive</code> + <code>xcodebuild -exportArchive</code> + <code>xcrun altool / notarytool</code></label></li>
+        </ul>
+
+        <h3>9.3. 処理待ち と Export Compliance</h3>
+        <ul class="checklist">
+            <li><input type="checkbox" id="chk-9-3-1"><label for="chk-9-3-1">アップロード完了後、App Store Connect で <strong>「処理中」</strong> → 5〜30 分待つ</label></li>
+            <li><input type="checkbox" id="chk-9-3-2"><label for="chk-9-3-2"><strong>Export Compliance</strong>（暗号化使用申告）に回答</label></li>
+            <li><input type="checkbox" id="chk-9-3-3"><label for="chk-9-3-3">HTTPS / 標準暗号化のみなら <code>Info.plist</code> に <code>ITSAppUsesNonExemptEncryption = NO</code> を入れて毎回の質問を省略</label></li>
+            <li><input type="checkbox" id="chk-9-3-4"><label for="chk-9-3-4">処理失敗メールが来ていないか確認（ITMS-XXX エラーコードで原因調査）</label></li>
+        </ul>
+        <p class="callout callout-warn"><strong>よくある処理失敗:</strong> ITMS-91053（必須 Reason API 未宣言）、ITMS-90683（Usage Description 不足）、ITMS-90338（dSYM 不足）、ITMS-90809（非推奨 API 使用）。エラーメールが来たら指定の項目を埋めて再アップロード。</p>
+    </section>
+
+    <section id="sec-10">
+        <h2>10. TestFlight（任意・推奨）</h2>
+        <p>本番審査の前に身内 / ベータユーザーに配って動作確認するフェーズ。新規 1.0 では本番と同じビルドを TestFlight で先にテストするのが定石。</p>
+        <ul class="checklist">
+            <li><input type="checkbox" id="chk-10-1"><label for="chk-10-1">アップロード済みビルドに対し Export Compliance 回答済み</label></li>
+            <li><input type="checkbox" id="chk-10-2"><label for="chk-10-2"><strong>内部テスター</strong>（最大 100 人、App Store Connect の Users 招待）— 即配信可能、ベータ審査不要</label></li>
+            <li><input type="checkbox" id="chk-10-3"><label for="chk-10-3"><strong>外部テスター</strong>（最大 10,000 人、メール / 公開リンクで招待）— 初回はベータ審査必要（24-48h）</label></li>
+            <li><input type="checkbox" id="chk-10-4"><label for="chk-10-4">Test Information を記入（Beta App Description / Email / Feedback URL / What to Test）</label></li>
+            <li><input type="checkbox" id="chk-10-5"><label for="chk-10-5">ベータビルドの有効期限は 90 日（過ぎると新ビルドのアップロードが必要）</label></li>
+            <li><input type="checkbox" id="chk-10-6"><label for="chk-10-6">クラッシュ / フィードバックを TestFlight アプリ経由で受領</label></li>
+        </ul>
+    </section>
+
+    <section id="sec-11">
+        <h2>11. App Review への提出</h2>
+        <p>App Store Connect → アプリ → 「+ Version or Platform」でバージョンを作成（または既存バージョンに対してビルドを紐付け）。</p>
+        <ul class="checklist">
+            <li><input type="checkbox" id="chk-11-1"><label for="chk-11-1"><strong>Build</strong> を選択（処理済みのビルドが選択肢に出る）</label></li>
+            <li><input type="checkbox" id="chk-11-2"><label for="chk-11-2"><strong>Version Information</strong>（What's New / Description / Keywords / etc.）の最終確認</label></li>
+            <li><input type="checkbox" id="chk-11-3"><label for="chk-11-3"><strong>App Review Information</strong> セクション</label>
+                <ul class="checklist nested">
+                    <li><input type="checkbox" id="chk-11-3-1"><label for="chk-11-3-1">サインインが必要なら <strong>Demo Account</strong>（必須、確実に動くアカウント）を提供</label></li>
+                    <li><input type="checkbox" id="chk-11-3-2"><label for="chk-11-3-2"><strong>Notes</strong> に審査担当者向けの注意事項を記入（特殊機能の使い方、外部 API 依存、テスト手順など）</label></li>
+                    <li><input type="checkbox" id="chk-11-3-3"><label for="chk-11-3-3"><strong>Contact Information</strong>（First / Last / Phone / Email）— Apple からの問い合わせに使われる</label></li>
+                    <li><input type="checkbox" id="chk-11-3-4"><label for="chk-11-3-4"><strong>Attachment</strong>（任意、動作証明動画 / 補足資料）</label></li>
+                </ul>
+            </li>
+            <li><input type="checkbox" id="chk-11-4"><label for="chk-11-4"><strong>Version Release</strong> オプションを選択</label>
+                <ul class="checklist nested">
+                    <li><input type="checkbox" id="chk-11-4-1"><label for="chk-11-4-1">Manually release（手動。自分でボタン押す）</label></li>
+                    <li><input type="checkbox" id="chk-11-4-2"><label for="chk-11-4-2">Automatically release（承認後即リリース）</label></li>
+                    <li><input type="checkbox" id="chk-11-4-3"><label for="chk-11-4-3">Scheduled release（指定日時、PT/UTC 注意）</label></li>
+                </ul>
+            </li>
+            <li><input type="checkbox" id="chk-11-5"><label for="chk-11-5"><strong>Phased Release</strong>（段階的リリース）を有効化するか — 7 日間で 1% → 2% → 5% → 10% → 20% → 50% → 100%</label></li>
+            <li><input type="checkbox" id="chk-11-6"><label for="chk-11-6"><strong>Submit for Review</strong> をクリック</label></li>
+        </ul>
+        <p class="callout"><strong>新規アプリ（1.0）は通常より審査が厳しい。</strong> 説明文 / スクショ / 機能のすべてが整合していること、Demo Account が完璧に動くことを直前に確認。提出後 24-48 時間で <em>In Review</em> → 結果通知。</p>
+    </section>
+
+    <section id="sec-12">
+        <h2>12. よく Reject されるパターン</h2>
+        <table>
+            <thead>
+                <tr><th>Guideline</th><th>典型例</th><th>対策</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>2.1 App Completeness</td><td>クラッシュ / プレースホルダーテキスト / 機能不全</td><td>実機で全機能を一通り動かしてから提出</td></tr>
+                <tr><td>2.3.1 Hidden Features</td><td>未公開機能 / プライベート API 使用</td><td>公開 API のみ使用</td></tr>
+                <tr><td>2.5.1 Software Requirements</td><td>非公開 API 使用 / メソッドスウィズリング濫用</td><td>同上</td></tr>
+                <tr><td>3.1.1 In-App Purchase</td><td>デジタルコンテンツの外部決済誘導</td><td>StoreKit / IAP に統一（実物商品は除く）</td></tr>
+                <tr><td>4.0 Design</td><td>UI が壊れている / iOS らしくない / 不自然</td><td>HIG 準拠、複数デバイス / Dynamic Type で検証</td></tr>
+                <tr><td>4.2 Minimum Functionality</td><td>機能が薄い / Web ラッパーのみ</td><td>ネイティブ機能を組み込む</td></tr>
+                <tr><td>4.3 Spam</td><td>既存アプリの薄いコピー / 重複出品</td><td>独自性を確保</td></tr>
+                <tr><td>4.8 Sign in with Apple</td><td>サードパーティログイン提供時に Apple 認証なし</td><td>Sign in with Apple も提供</td></tr>
+                <tr><td>5.1.1 Privacy - Data Collection</td><td>不要な権限 / Usage Description 不足 / 説明文が抽象的</td><td>最小権限、具体的な利用目的を明記</td></tr>
+                <tr><td>5.1.2 Privacy - Data Use and Sharing</td><td>Privacy Policy と App Privacy が不一致</td><td>申告内容と Privacy Policy を整合</td></tr>
+                <tr><td>5.1.3 Health and Health Research</td><td>医療系の根拠不足</td><td>医療従事者監修 / エビデンス提示</td></tr>
+                <tr><td>5.2.1 Intellectual Property</td><td>商標 / キャラ無断使用</td><td>権利確認、ライセンス取得</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="sec-13">
+        <h2>13. 審査ステータスと Reject 対応</h2>
+
+        <h3>13.1. ステータスの流れ</h3>
+<pre class="ascii-art">[Prepare for Submission]   ← 入力中
+        │
+        ▼
+[Waiting for Review]   ← 提出済み（通常 24h 以内に進む）
+        │
+        ▼
+[In Review]   ← 審査中（数時間〜1 日）
+        │
+        ├──→ [Pending Developer Release]   ← 承認、手動リリース待ち
+        │           │
+        │           ▼
+        │    [Ready for Sale]   ← 配信中
+        │
+        └──→ [Rejected]   ← 拒否、Resolution Center で対応</pre>
+
+        <h3>13.2. Rejected された場合</h3>
+        <ul class="checklist">
+            <li><input type="checkbox" id="chk-13-2-1"><label for="chk-13-2-1"><strong>Resolution Center</strong> で具体的な指摘内容と Guideline 番号を確認</label></li>
+            <li><input type="checkbox" id="chk-13-2-2"><label for="chk-13-2-2">指摘が解釈の問題なら <strong>Reply</strong> で反論 / 質問（バイナリ再アップ不要）</label></li>
+            <li><input type="checkbox" id="chk-13-2-3"><label for="chk-13-2-3">コード修正が必要なら新ビルドをアップロードし、修正点を Notes に記入して再提出</label></li>
+            <li><input type="checkbox" id="chk-13-2-4"><label for="chk-13-2-4">Apple のガイドライン解釈に異議があれば <strong>App Review Board</strong> にアピール（同じレベル・別審査官の判断を仰ぐ）</label></li>
+            <li><input type="checkbox" id="chk-13-2-5"><label for="chk-13-2-5">繰り返し落ちる場合は <strong>Apple Developer Forums</strong> や <strong>Code-Level Support</strong> 相談を検討</label></li>
+        </ul>
+        <p class="callout"><strong>Rejected の心構え:</strong> 初回はほぼ何かしら指摘される。短文で礼儀正しく Reply し、修正は<strong>指摘範囲だけ</strong>に絞る（範囲外を弄ると別の Reject 理由を生む）。返答待ちは新規申請より早く 24h 以内が多い。</p>
+    </section>
+
+    <section id="sec-14">
+        <h2>14. リリース後</h2>
+        <ul class="checklist">
+            <li><input type="checkbox" id="chk-14-1"><label for="chk-14-1">App Store でアプリページが表示されているか確認（反映に最大 24 時間）</label></li>
+            <li><input type="checkbox" id="chk-14-2"><label for="chk-14-2">実機で App Store からダウンロードして起動確認</label></li>
+            <li><input type="checkbox" id="chk-14-3"><label for="chk-14-3">Phased Release 中なら毎日％を確認、重大なクラッシュが出たら<strong>停止</strong> or <strong>緊急アップデート</strong></label></li>
+            <li><input type="checkbox" id="chk-14-4"><label for="chk-14-4">App Analytics で DAU / インプレッション / コンバージョン率を確認</label></li>
+            <li><input type="checkbox" id="chk-14-5"><label for="chk-14-5">Xcode Organizer の Crashes でクラッシュレポート確認（dSYM 上げ忘れていなければシンボリケーションされる）</label></li>
+            <li><input type="checkbox" id="chk-14-6"><label for="chk-14-6">Reviews &amp; Ratings を監視、低評価レビューには Developer Response で返信</label></li>
+            <li><input type="checkbox" id="chk-14-7"><label for="chk-14-7">問題発生時は <strong>Expedited Review</strong>（緊急審査リクエスト、ユーザー影響を明記）を申請</label></li>
+            <li><input type="checkbox" id="chk-14-8"><label for="chk-14-8">バージョンアップ時は同じ流れで再申請（What's New に変更点記入）</label></li>
+        </ul>
+    </section>
+
+    <section id="sec-15">
+        <h2>15. 参考リンク</h2>
+        <ul>
+            <li><a href="https://developer.apple.com/app-store/review/guidelines/" target="_blank" rel="noopener">App Store Review Guidelines</a> — 審査ガイドライン本体</li>
+            <li><a href="https://developer.apple.com/design/human-interface-guidelines/" target="_blank" rel="noopener">Human Interface Guidelines</a> — UI/UX ガイドライン</li>
+            <li><a href="https://developer.apple.com/help/app-store-connect/" target="_blank" rel="noopener">App Store Connect Help</a> — Connect 操作マニュアル</li>
+            <li><a href="https://developer.apple.com/documentation/bundleresources/privacy_manifest_files" target="_blank" rel="noopener">Privacy Manifest Files</a> — Privacy Manifest 公式ドキュメント</li>
+            <li><a href="https://developer.apple.com/documentation/bundleresources/privacy_manifest_files/describing_use_of_required_reason_api" target="_blank" rel="noopener">Describing use of required reason API</a> — Reason 値一覧</li>
+            <li><a href="https://developer.apple.com/app-store/app-privacy-details/" target="_blank" rel="noopener">App Privacy Details</a> — App Privacy 申告ガイド</li>
+            <li><a href="https://developer.apple.com/app-store/contact/" target="_blank" rel="noopener">Contact Us / Expedited Review</a> — 緊急審査リクエスト窓口</li>
+            <li><a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" target="_blank" rel="noopener">Standard EULA</a> — デフォルト使用許諾契約</li>
+        </ul>
+    </section>
+</article>
+
+<script>
+(function () {
+    const STORAGE_KEY = 'app_store_checklist_state_v1';
+
+    function saveState() {
+        const state = {};
+        document.querySelectorAll('.checklist input[type="checkbox"]').forEach(function (cb) {
+            state[cb.id] = cb.checked;
+        });
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (e) { /* quota or disabled storage — ignore */ }
+    }
+
+    function loadState() {
+        let state = {};
+        try {
+            state = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        } catch (e) { /* ignore */ }
+        document.querySelectorAll('.checklist input[type="checkbox"]').forEach(function (cb) {
+            if (state[cb.id]) cb.checked = true;
+        });
+    }
+
+    function updateProgress() {
+        const cbs = document.querySelectorAll('.checklist input[type="checkbox"]');
+        const total = cbs.length;
+        const done = Array.from(cbs).filter(function (cb) { return cb.checked; }).length;
+        const counter = document.getElementById('progress-count');
+        if (counter) counter.textContent = done + ' / ' + total;
+    }
+
+    function resetAll() {
+        if (!window.confirm('全てのチェックをリセットしますか？')) return;
+        try { localStorage.removeItem(STORAGE_KEY); } catch (e) { /* ignore */ }
+        document.querySelectorAll('.checklist input[type="checkbox"]').forEach(function (cb) {
+            cb.checked = false;
+        });
+        updateProgress();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        loadState();
+        updateProgress();
+        document.querySelectorAll('.checklist input[type="checkbox"]').forEach(function (cb) {
+            cb.addEventListener('change', function () {
+                saveState();
+                updateProgress();
+            });
+        });
+        const btn = document.getElementById('reset-checklist');
+        if (btn) btn.addEventListener('click', resetAll);
+    });
+})();
+</script>
+</body>
+</html>

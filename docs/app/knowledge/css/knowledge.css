@@ -168,3 +168,83 @@ details.toc ol ol {
 .callout-warn strong {
     color: #b35900;
 }
+
+ul.checklist {
+    list-style: none;
+    padding-left: 0;
+}
+
+ul.checklist li {
+    margin: 0.5em 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+ul.checklist input[type="checkbox"] {
+    margin: 0.35em 0 0;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    cursor: pointer;
+    accent-color: #007aff;
+}
+
+ul.checklist label {
+    cursor: pointer;
+    flex: 1;
+    min-width: 0;
+}
+
+ul.checklist input[type="checkbox"]:checked + label {
+    color: #999;
+    text-decoration: line-through;
+}
+
+ul.checklist input[type="checkbox"]:checked + label code,
+ul.checklist input[type="checkbox"]:checked + label strong {
+    color: inherit;
+}
+
+ul.checklist .nested {
+    width: 100%;
+    margin: 0.4em 0 0 24px;
+    padding-left: 0;
+}
+
+.progress-bar {
+    background: #f0f7ff;
+    border: 1px solid #cfe3ff;
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 16px 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95em;
+    position: sticky;
+    top: 8px;
+    z-index: 10;
+}
+
+.progress-bar .count {
+    font-weight: bold;
+    color: #007aff;
+    margin-left: 4px;
+}
+
+.btn-reset {
+    background: #fff;
+    border: 1px solid #cfe3ff;
+    border-radius: 4px;
+    padding: 4px 12px;
+    cursor: pointer;
+    font-size: 0.85em;
+    color: #007aff;
+    font-family: inherit;
+}
+
+.btn-reset:hover {
+    background: #e8f1ff;
+}
