@@ -81,11 +81,11 @@
 xcode-select --install
 xcodebuild -version
 
-# Homebrew でツール群
-brew install jq fb-idb
+# Homebrew でツール群（jq は idb の出力パースに使う）
+brew install jq
 
-# fb-idb は Python 3.14 で動かないので注意（後述）
-brew install python@3.11
+# fb-idb は Python 3.14 で動かないので 3.11 系に固定して pipx で入れる（後述）
+brew install python@3.11 pipx
 pipx install --python python3.11 fb-idb</code></pre>
 
         <h3 id="sec-2-2">2.2. Android Studio 側</h3>
@@ -96,7 +96,7 @@ pipx install --python python3.11 fb-idb</code></pre>
                 <tr><th>構成名（例）</th><th>中身</th></tr>
             </thead>
             <tbody>
-                <tr><td>Run (iPhone)</td><td><code>xcodebuild -destination 'platform=iOS Simulator,name=iPhone XX' build</code> ＋ Simulator 起動</td></tr>
+                <tr><td>Run (iPhone)</td><td><code>xcodebuild -destination 'platform=iOS Simulator,name=iPhone 17 Pro' build</code> ＋ Simulator 起動</td></tr>
                 <tr><td>Run (iPad)</td><td>iPad 向け destination でビルド</td></tr>
                 <tr><td>Build only</td><td>ビルドのみ</td></tr>
                 <tr><td>Screenshot</td><td><code>xcrun simctl io booted screenshot</code> 等</td></tr>
@@ -115,9 +115,10 @@ xcodebuild \
   -quiet build</code></pre>
         <p>ログを抑制したいので <code>-quiet</code> を付けるのがコツ。エラーだけ出る。</p>
         <p><code>Makefile</code> でラップしておくと便利:</p>
-<pre><code>PROJECT := YourApp.xcodeproj
-SCHEME  := YourApp
-DEST    := platform=iOS Simulator,name=iPhone 17 Pro
+<pre><code>PROJECT     := YourApp.xcodeproj
+SCHEME      := YourApp
+DEVICE_NAME ?= iPhone 17 Pro
+DEST        := platform=iOS Simulator,name=$(DEVICE_NAME)
 
 build:
 	xcodebuild -project $(PROJECT) -scheme $(SCHEME) \
@@ -153,11 +154,13 @@ UDID=$(xcrun simctl list devices booted -j \
   | jq -r '.devices | to_entries[] | .value[] | select(.state=="Booted") | .udid' \
   | head -1)
 
-# companion をバックグラウンド起動
-idb_companion --udid "$UDID" &amp;
+# companion をバックグラウンド起動 → 起動ログから grpc_port を取得
+idb_companion --udid "$UDID" &gt; /tmp/idb_companion.log 2&gt;&amp;1 &amp;
+sleep 1
+PORT=$(jq -r '.grpc_swift_port // .grpc_port' /tmp/idb_companion.log | head -1)
 
 # クライアント側で接続
-idb connect localhost &lt;表示されたport&gt;</code></pre>
+idb connect localhost "$PORT"</code></pre>
         <p><strong>使い方</strong></p>
 <pre><code># 座標タップ（points）
 idb ui tap 200 400
@@ -170,13 +173,14 @@ idb ui describe-all \
         <ul>
             <li><code>RuntimeError: There is no current event loop</code> → fb-idb が Python 3.14 で動かない。Python 3.11 で再インストール</li>
             <li>companion は落ちることがある → <code>pgrep idb_companion</code> で確認、落ちていたら再起動・再接続</li>
-            <li>フォーカスが Simulator から外れていても OK（Companion が IPC で操作するため）</li>
+            <li>フォーカスが Simulator から外れていても OK（Companion が gRPC で操作するため）</li>
         </ul>
 
         <h3 id="sec-4-2">4.2. スクリーンショット</h3>
-<pre><code>xcrun simctl io booted screenshot \
-  tmp/ss/$(date +%Y%m%d)/ss_$(date +%H%M%S).png</code></pre>
-        <p>時分秒入りファイル名でディレクトリ分けして保存しておくと、後で見直しやすい。</p>
+<pre><code>DIR=tmp/ss/$(date +%Y%m%d)
+mkdir -p "$DIR"
+xcrun simctl io booted screenshot "$DIR/ss_$(date +%H%M%S).png"</code></pre>
+        <p>時分秒入りファイル名でディレクトリ分けして保存しておくと、後で見直しやすい。<code>mkdir -p</code> を忘れると <code>simctl io ... screenshot</code> はサイレントに失敗するので注意。</p>
     </section>
 
     <section id="sec-5">
