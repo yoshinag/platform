@@ -161,6 +161,16 @@
         <p>近年、Reject の最大要因はプライバシー関連。App Privacy / Privacy Manifest / ATT / Usage Description の <strong>4 つすべて</strong>を整合させる必要がある。</p>
 
         <h3 id="sec-7-1">7.1. App Privacy（栄養成分表示）</h3>
+        <details class="callout">
+            <summary><strong>「栄養成分表示」とは？</strong></summary>
+            <p>Apple が 2020 年（iOS 14.3 / App Store Connect）で導入した <strong>Privacy Nutrition Labels</strong>（プライバシー栄養成分ラベル）の通称。食品パッケージの栄養成分表示になぞらえた Apple の公式呼称で、ストアのアプリページに以下の 3 区分で収集データが表示される。</p>
+            <ul>
+                <li><strong>データの追跡に使用されるデータ</strong>（Data Used to Track You）</li>
+                <li><strong>ユーザーにリンクされたデータ</strong>（Data Linked to You）</li>
+                <li><strong>ユーザーにリンクされていないデータ</strong>（Data Not Linked to You）</li>
+            </ul>
+            <p>位置情報 / 連絡先 / 購入履歴 / 識別子などを「収集しているか・何の目的か」で申告する。Firebase / AdMob / Sentry など第三者 SDK が裏で収集している分も<strong>すべて自己申告</strong>する必要があり、近年の Reject 上位要因。</p>
+        </details>
         <p>App Store Connect → App Privacy で<strong>収集データの種類と用途</strong>を申告。<strong>第三者 SDK の収集も自分のアプリの収集として申告する</strong>のが落とし穴。</p>
         <ul class="checklist">
             <li><input type="checkbox" id="chk-7-1-1"><label for="chk-7-1-1">使用している全 SDK のプライバシー情報を確認（Firebase / GA / AdMob / Sentry / etc.）</label></li>
