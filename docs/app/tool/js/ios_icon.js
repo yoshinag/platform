@@ -297,7 +297,7 @@ async function downloadZip() {
             data: new TextEncoder().encode(contentsJson),
         });
         // 参考ディレクトリと同様に App Store 用 1024 を最上位にも置く
-        if (enabled.has('ios-marketing') && pngs.has(1024)) {
+        if (pngs.has(1024)) {
             zipFiles.push({ name: 'AppIcon.png', data: pngs.get(1024) });
             zipFiles.push({ name: 'appstore.png', data: pngs.get(1024) });
         }
