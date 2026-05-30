@@ -34,33 +34,24 @@
     line-height: 1;
     cursor: pointer;
     transition: background 0.15s ease;
-    overflow: hidden;
   }
   .lang-picker:hover { background: rgba(255,255,255,0.22); }
-  .lang-picker::before {
-    content: "";
+  .lang-picker__icon {
     position: absolute;
     left: 10px;
     top: 50%;
     width: 14px;
     height: 14px;
     transform: translateY(-50%);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/><path d='M2 12h20'/><path d='M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z'/></svg>");
-    opacity: 0.9;
     pointer-events: none;
   }
-  .lang-picker::after {
-    content: "";
+  .lang-picker__caret {
     position: absolute;
     right: 12px;
     top: 50%;
     width: 8px;
     height: 5px;
     transform: translateY(-50%);
-    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'><path fill='white' d='M0 0l5 6 5-6z'/></svg>") no-repeat center / contain;
     pointer-events: none;
     opacity: 0.85;
   }
@@ -69,27 +60,42 @@
     user-select: none;
     letter-spacing: 0.02em;
   }
-  /* Google Translate generates a <div class="skiptranslate goog-te-gadget"> with
-     selects + helper text. We hide everything visually but keep the <select>
-     interactive so it covers the whole pill. */
+  /* Google Translate generates a <div class="skiptranslate goog-te-gadget">
+     containing helper spans + the real <select class="goog-te-combo">.
+     We hide the gadget chrome and let the select overlay the whole pill. */
   #google_translate_element {
     position: absolute;
     inset: 0;
-    opacity: 0;
+    overflow: hidden;
   }
-  #google_translate_element .goog-te-gadget,
-  #google_translate_element .goog-te-gadget * { font-size: 0 !important; }
-  #google_translate_element .goog-te-combo {
+  #google_translate_element .goog-te-gadget {
+    position: absolute;
+    inset: 0;
+    font-size: 0;
+    color: transparent;
+  }
+  #google_translate_element .goog-te-gadget > span,
+  #google_translate_element .goog-te-gadget a,
+  #google_translate_element .goog-logo-link,
+  #google_translate_element img { display: none !important; }
+  /* The real <select> covers the whole pill, invisible but clickable */
+  #google_translate_element select.goog-te-combo {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-    cursor: pointer;
+    margin: 0;
+    padding: 0;
     border: 0;
     background: transparent;
     color: transparent;
+    font-size: 16px; /* prevents iOS auto-zoom on focus */
+    cursor: pointer;
+    opacity: 0;
     appearance: none;
     -webkit-appearance: none;
   }
-  #google_translate_element .goog-te-combo option {
+  #google_translate_element select.goog-te-combo option {
     color: #1a1a1a;
     font-size: 14px;
   }
@@ -103,7 +109,7 @@
   body { top: 0 !important; position: static !important; }
   @media (max-width: 760px) {
     .lang-picker { margin-left: 12px; font-size: 0.78rem; height: 30px; padding: 0 26px 0 28px; }
-    .lang-picker::before { left: 8px; width: 12px; height: 12px; }
+    .lang-picker__icon { left: 8px; width: 12px; height: 12px; }
   }
 </style>
 <script src="js/analytics.js"></script>
@@ -120,19 +126,23 @@
       <a href="#features">機能</a>
       <a href="#connect">接続について</a>
       <a href="#requirements">ダウンロード</a>
-      <label class="lang-picker notranslate" title="このサイトは日本語で記載されています。他言語は Google 翻訳による自動翻訳です。 / Auto-translated by Google Translate.">
+      <span class="lang-picker notranslate" title="このサイトは日本語で記載されています。他言語は Google 翻訳による自動翻訳です。 / Auto-translated by Google Translate.">
+        <svg class="lang-picker__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         <span class="lang-picker__label">Language</span>
+        <svg class="lang-picker__caret" viewBox="0 0 10 6" aria-hidden="true"><path fill="currentColor" d="M0 0l5 6 5-6z"/></svg>
         <span id="google_translate_element"></span>
-      </label>
+      </span>
     </div>
   </div>
 </nav>
 <script>
   function googleTranslateElementInit() {
+    // HORIZONTAL produces a real <select> element we can overlay.
+    // (SIMPLE produces an <a> link with a custom popup, which is harder to skin.)
     new google.translate.TranslateElement({
       pageLanguage: 'ja',
       includedLanguages: 'ja,en,zh-CN,zh-TW,ko,fr,de,es,pt',
-      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+      layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
       autoDisplay: false
     }, 'google_translate_element');
   }
