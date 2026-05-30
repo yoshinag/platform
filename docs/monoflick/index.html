@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MonoFlick — 左手の iPhone だけで PC に文字入力</title>
+<meta name="description" content="右手がふさがった PC 作業中に、左手の iPhone だけで PC のフォアグラウンドアプリへ文字入力するためのツール。iOS + macOS コンパニオン構成、解析・広告ゼロ。">
+<meta name="theme-color" content="#7398A9">
+<meta property="og:title" content="MonoFlick">
+<meta property="og:description" content="左手の iPhone だけで PC に文字入力。iOS + macOS コンパニオン構成。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="./icons/og-image.png">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/svg+xml" href="./icons/favicon.svg">
+<link rel="icon" type="image/png" sizes="48x48" href="./icons/favicon-48.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512.png">
+<style>
+  /* Palette derived from MonoFlick app icon (tmp/monoflick_icon/icon_master.svg):
+     background gradient #7A98A9 → #68889C, orange #E6781E, green #10B981. */
+  :root {
+    --bg-start: #7A98A9;
+    --bg-end: #68889C;
+    --bg-solid: #7398A9;
+    --on-bg: #ffffff;
+    --on-bg-muted: rgba(255, 255, 255, 0.78);
+    --border: rgba(255, 255, 255, 0.18);
+    --accent: #E6781E;
+    --accent-hover: #D26910;
+    --accent-soft: rgba(230, 120, 30, 0.22);
+    --accent-2: #10B981;
+    --accent-2-hover: #0E9F71;
+    --card-bg: #ffffff;
+    --card-fg: #1a1a1a;
+    --card-muted: #6a6a6a;
+    --card-border: rgba(0, 0, 0, 0.06);
+    --shadow: 0 1px 2px rgba(0,0,0,0.08), 0 16px 40px rgba(0,0,0,0.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-start: #3d4d58;
+      --bg-end: #2d3a44;
+      --bg-solid: #3a4a55;
+      --on-bg: #f0f0f3;
+      --on-bg-muted: rgba(240, 240, 243, 0.72);
+      --border: rgba(255, 255, 255, 0.1);
+      --accent: #FF8A3D;
+      --accent-hover: #FF7A1E;
+      --accent-soft: rgba(255, 138, 61, 0.18);
+      --accent-2: #34D399;
+      --accent-2-hover: #1FB87F;
+      --card-bg: #1f2026;
+      --card-fg: #f0f0f3;
+      --card-muted: #9a9aa1;
+      --card-border: rgba(255, 255, 255, 0.06);
+      --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 32px rgba(0,0,0,0.35);
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 100%);
+    background-attachment: fixed;
+    color: var(--on-bg);
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "Segoe UI", Roboto, sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  a {
+    color: var(--on-bg);
+    text-decoration: none;
+  }
+  a:hover { text-decoration: underline; }
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* ===== Nav ===== */
+  .nav {
+    border-bottom: 1px solid var(--border);
+    background: rgba(115, 152, 169, 0.78);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+  }
+  .nav-inner {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.95rem;
+  }
+  .nav-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--on-bg);
+  }
+  .nav-brand img {
+    width: 28px;
+    height: 28px;
+    display: block;
+  }
+  .nav-links a {
+    margin-left: 20px;
+    color: var(--on-bg-muted);
+  }
+  .nav-links a:hover { color: var(--on-bg); text-decoration: none; }
+
+  /* ===== Container ===== */
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  section {
+    padding: 72px 0;
+  }
+  section + section { border-top: 1px solid var(--border); }
+
+  /* ===== Hero ===== */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    padding-top: 80px;
+    padding-bottom: 96px;
+  }
+  .hero-text h1 {
+    font-size: 2.8rem;
+    margin: 0 0 16px;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+  .hero-text .lead {
+    font-size: 1.15rem;
+    color: var(--on-bg-muted);
+    margin: 0 0 28px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+  }
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    color: var(--on-bg);
+    background: rgba(255, 255, 255, 0.08);
+    transition: transform 0.06s ease, box-shadow 0.15s ease, background 0.15s ease;
+  }
+  .btn:hover {
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.16);
+    box-shadow: var(--shadow);
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn.primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .btn.primary:hover {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+  }
+  .hero-img {
+    text-align: center;
+  }
+  .hero-img img {
+    margin: 0 auto;
+    max-width: 420px;
+  }
+
+  /* ===== Section heading ===== */
+  .section-head {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .section-head .eyebrow {
+    display: inline-block;
+    color: var(--accent);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .section-head h2 {
+    font-size: 2rem;
+    margin: 0 0 8px;
+    letter-spacing: -0.02em;
+    color: var(--on-bg);
+  }
+  .section-head p {
+    color: var(--on-bg-muted);
+    margin: 0;
+  }
+
+  /* ===== Card grid ===== */
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 1024px) {
+    .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    color: var(--card-fg);
+  }
+  .card img {
+    margin: 0 auto 16px;
+    max-width: 180px;
+    height: 160px;
+    object-fit: contain;
+  }
+  .card h3 {
+    margin: 0 0 8px;
+    font-size: 1.1rem;
+    letter-spacing: -0.01em;
+    color: var(--card-fg);
+  }
+  .card p {
+    margin: 0;
+    color: var(--card-muted);
+    font-size: 0.95rem;
+  }
+
+  /* ===== Connectivity ===== */
+  .connect {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .connect-img img { max-width: 380px; margin: 0 auto; }
+  .connect h2 {
+    font-size: 1.8rem;
+    margin: 0 0 16px;
+    letter-spacing: -0.02em;
+    color: var(--on-bg);
+  }
+  .connect ul {
+    padding-left: 1.2em;
+    margin: 0 0 16px;
+    color: var(--on-bg);
+  }
+  .connect li { margin: 6px 0; }
+  .connect .note {
+    color: var(--on-bg-muted);
+    font-size: 0.9rem;
+  }
+
+  /* ===== Privacy ===== */
+  .privacy {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 48px 40px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 40px;
+    align-items: center;
+    box-shadow: var(--shadow);
+    color: var(--card-fg);
+  }
+  .privacy img { max-width: 200px; margin: 0 auto; }
+  .privacy h2 {
+    font-size: 1.8rem;
+    margin: 0 0 12px;
+    letter-spacing: -0.02em;
+    color: var(--card-fg);
+  }
+  .privacy ul {
+    padding-left: 1.2em;
+    margin: 0 0 16px;
+    color: var(--card-fg);
+  }
+  .privacy li { margin: 4px 0; }
+  .privacy .btn {
+    background: var(--accent-2);
+    color: #ffffff;
+    border-color: var(--accent-2);
+  }
+  .privacy .btn:hover {
+    background: var(--accent-2-hover);
+    border-color: var(--accent-2-hover);
+  }
+
+  /* ===== Requirements ===== */
+  .req {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .req .card { padding: 24px; text-align: left; }
+  .req .card .label {
+    font-size: 0.8rem;
+    color: var(--card-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+  .req .card .value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--card-fg);
+  }
+
+  /* ===== English summary ===== */
+  .en-summary {
+    text-align: center;
+    color: var(--on-bg-muted);
+    font-size: 0.95rem;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .en-summary h2 {
+    color: var(--on-bg);
+    font-size: 1.4rem;
+    margin: 0 0 12px;
+    letter-spacing: -0.01em;
+  }
+  .en-summary a { color: var(--on-bg); text-decoration: underline; }
+
+  /* ===== Footer ===== */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 24px;
+    text-align: center;
+    color: var(--on-bg-muted);
+    font-size: 0.85rem;
+  }
+  footer a { color: var(--on-bg-muted); text-decoration: underline; }
+  footer a:hover { color: var(--on-bg); }
+  footer .credit {
+    margin-top: 8px;
+    font-size: 0.8rem;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 760px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding-top: 48px;
+      padding-bottom: 56px;
+      text-align: center;
+    }
+    .hero-text h1 { font-size: 2.1rem; }
+    .hero-img { order: -1; }
+    .hero-img img { max-width: 280px; }
+    .cta { justify-content: center; }
+    section { padding: 56px 0; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .grid-4 { grid-template-columns: 1fr; }
+    .connect { grid-template-columns: 1fr; gap: 32px; text-align: center; }
+    .privacy { grid-template-columns: 1fr; text-align: center; padding: 32px 24px; }
+    .req { grid-template-columns: 1fr; }
+    .section-head h2 { font-size: 1.6rem; }
+    .nav-links a { margin-left: 12px; font-size: 0.85rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <span class="nav-brand">
+      <img src="./icons/favicon.svg" alt="" width="28" height="28">
+      MonoFlick
+    </span>
+    <div class="nav-links">
+      <a href="#features">機能</a>
+      <a href="#connect">接続について</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero wrap">
+  <div class="hero-text">
+    <span class="badge">iPhone (iOS 18+) + Mac (macOS 15+) 両方アプリ必須</span>
+    <h1>左手の iPhone だけで、<br>PC に文字入力。</h1>
+    <p class="lead">
+      右手/左手がふさがる時も、片手しか動かせない時も。iPhone 1 つで Mac への文字入力とポインタ操作を完結。
+      コーヒーを持っていても、横になっていても、片手のみでも、PC を諦めなくていい。
+    </p>
+    <div class="cta">
+      <a class="btn" href="#scenarios">こんな時に</a>
+      <a class="btn primary" href="#features">機能を見る</a>
+    </div>
+  </div>
+  <div class="hero-img">
+    <!-- いらすとや: 「スマートフォン 片手」「フリック入力」 -->
+    <img src="./images/hero_one_hand.png" alt="片手でスマートフォンを操作する人">
+  </div>
+</section>
+
+<!-- ===================== SCENARIOS ===================== -->
+<section id="scenarios">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">SCENARIOS</span>
+      <h2>片手 で、十分。</h2>
+      <p>右手がふさがる時も、片手しか動かせない時も。PC への入力を諦めなくていい。</p>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <!-- いらすとや: 「パソコン コーヒー」「ながら作業」 -->
+        <img src="./images/scenario_coffee.png" alt="片手にコーヒーを持ちながら PC に向かう人">
+        <h3>飲み物を持っている</h3>
+        <p>コーヒーやお弁当を持ったまま、PC でメッセージ返信や検索ワード入力。</p>
+      </div>
+      <div class="card">
+        <!-- いらすとや: 「車椅子 スマートフォン」「片麻痺」「義手 スマホ」 -->
+        <img src="./images/scenario_accessibility.png" alt="片手で iPhone を操作するユーザーのイラスト">
+        <h3>片手だけでフル操作</h3>
+        <p>障がいや怪我などで片手しか使えなくても、文字入力もポインタ操作も iPhone 片手で完結。アクセシビリティを重視した設計です。</p>
+      </div>
+      <div class="card">
+        <!-- いらすとや: 「寝ながら スマホ」「ソファ パソコン」 -->
+        <img src="./images/scenario_lying.png" alt="ソファで横になりながらスマホを操作する人">
+        <h3>横になって作業</h3>
+        <p>ソファやベッドで横向き姿勢のまま、PC の入力欄を埋める。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FEATURES ===================== -->
+<section id="features">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">FEATURES</span>
+      <h2>MonoFlick ができること</h2>
+      <p>iPhone を「片手オンリーで完結する PC 入力デバイス」に変える 4 つの機能。</p>
+    </div>
+    <div class="grid-4">
+      <div class="card">
+        <!-- いらすとや: 「フリック入力」「スマホ 文字入力」 -->
+        <img src="./images/feature_flick.png" alt="フリック入力のイラスト">
+        <h3>片手フリック入力</h3>
+        <p>親指 1 本で打てるよう調整された日本語フリックキーボード。</p>
+      </div>
+      <div class="card">
+        <img src="./images/trackpad.png" alt="iPhone をトラックパッドとして使うイラスト">
+        <h3>片手トラックパッド</h3>
+        <p>iPhone 全面をトラックパッドにして Mac のポインタを片手で操作。タップ・ドラッグ・スクロールに対応。</p>
+      </div>
+      <div class="card">
+        <!-- いらすとや: 「スマホ パソコン 連携」「リモート操作」 -->
+        <img src="./images/feature_pc_input.png" alt="スマホから PC にキー入力を送るイラスト">
+        <h3>PC へキー送信</h3>
+        <p>入力した文字や任意のキーバインドを アプリを通じて、Mac のフォアグラウンドアプリへ即時送信。</p>
+      </div>
+      <div class="card">
+        <!-- いらすとや: 「アプリ 起動」「ショートカット パソコン」 -->
+        <img src="./images/feature_launcher.png" alt="アプリ起動ランチャーのイラスト">
+        <h3>アプリ起動ランチャー</h3>
+        <p>Mac 上の任意アプリを iPhone からワンタップでフォアグラウンドに呼び出す。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONNECT ===================== -->
+<section id="connect">
+  <div class="wrap connect">
+    <div class="connect-img">
+      <!-- いらすとや: 「スマホ パソコン 連携」「Wi-Fi Bluetooth」 -->
+      <img src="./images/connect_phone_pc.png" alt="iPhone と Mac が接続されているイラスト">
+    </div>
+    <div>
+      <h2>屋内も屋外もシームレスに接続</h2>
+      <ul>
+        <li><strong>屋内 (Wi-Fi あり):</strong> ローカルネットワーク接続を利用した通信</li>
+        <li><strong>屋外 (Wi-Fi なし):</strong> Bluetooth Low Energy + L2CAP CoC（有料）</li>
+      </ul>
+      <p class="note">
+        2 つの経路が並走し、先に確立した方が active になります。BLEは有料ですが、Wi-Fiだけでも通信に問題はありません。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PRIVACY ===================== -->
+<section id="privacy">
+  <div class="wrap">
+    <div class="privacy">
+      <div>
+        <!-- いらすとや: 「セキュリティ 鍵」「プライバシー 盾」 -->
+        <img src="./images/privacy_shield.png" alt="プライバシー保護のイラスト">
+      </div>
+      <div>
+        <h2>解析ゼロ・広告ゼロ・サーバゼロ</h2>
+        <ul>
+          <li>外部サーバへいかなる個人データも送信しません</li>
+          <li>広告 ID (IDFA) や端末識別子を取得しません</li>
+          <li>Firebase / Sentry / Crashlytics 等のサードパーティ SDK は導入していません</li>
+          <li>すべての通信は iPhone ↔ あなたの Mac の 2 点間のみ（サーバレス）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== REQUIREMENTS ===================== -->
+<section id="requirements">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">REQUIREMENTS</span>
+      <h2>動作環境</h2>
+      <p>ご利用には iPhone と Mac の <strong>両方</strong> にアプリをインストールする必要があります。</p>
+    </div>
+    <div class="req">
+      <div class="card">
+        <div class="label">iPhone アプリ (必須)</div>
+        <div class="value">iOS 18+</div>
+      </div>
+      <div class="card">
+        <div class="label">Mac コンパニオン (必須)</div>
+        <div class="value">macOS 15+</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ENGLISH ===================== -->
+<section id="english">
+  <div class="wrap en-summary">
+    <h2>In English</h2>
+    <p>
+      <strong>MonoFlick</strong> lets you type into the foreground app on your Mac using only your left hand on an iPhone —
+      for moments when your right hand is occupied. End-to-end encrypted via Wi-Fi or Bluetooth.
+      No analytics, no advertising IDs, no servers. See the <a href="./privacy-policy.html">Privacy Policy</a> for details.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <a href="./privacy-policy.html">Privacy Policy</a>
+    &nbsp;·&nbsp;
+    <a href="https://github.com/yoshinag/mono_flick_docs/issues">Contact (GitHub Issues)</a>
+  </div>
+  <div class="credit">
+    イラスト: <a href="https://www.irasutoya.com" rel="noopener">いらすとや</a>
+  </div>
+  <div style="margin-top: 8px;">&copy; 2026 MonoFlick</div>
+</footer>
+
+</body>
+</html>
