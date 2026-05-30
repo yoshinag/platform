@@ -11,6 +11,11 @@ const SCREENSHOT_SPECS = [
     { id: 'iPad-13',     device: 'iPad 13"',     portrait: [2064, 2752], examples: 'iPad Pro M4',               kind: 'ipad',   defaultOn: true },
     { id: 'iPad-12.9',   device: 'iPad 12.9"',   portrait: [2048, 2732], examples: 'iPad Pro 6th gen',          kind: 'ipad',   defaultOn: true },
     { id: 'iPad-11',     device: 'iPad 11"',     portrait: [1668, 2388], examples: 'iPad Pro 11"',              kind: 'ipad',   defaultOn: false },
+    // macOS (ランドスケープ固定。App Store Connect が受け付ける 4 サイズ)
+    { id: 'mac-2880',    device: 'Mac 2880×1800', portrait: [1800, 2880], examples: 'Retina 16:10',             kind: 'mac',    defaultOn: false, fixedOrientation: 'landscape' },
+    { id: 'mac-2560',    device: 'Mac 2560×1600', portrait: [1600, 2560], examples: 'Retina 16:10',             kind: 'mac',    defaultOn: false, fixedOrientation: 'landscape' },
+    { id: 'mac-1440',    device: 'Mac 1440×900',  portrait: [900, 1440],  examples: '16:10',                    kind: 'mac',    defaultOn: false, fixedOrientation: 'landscape' },
+    { id: 'mac-1280',    device: 'Mac 1280×800',  portrait: [800, 1280],  examples: '16:10',                    kind: 'mac',    defaultOn: false, fixedOrientation: 'landscape' },
 ];
 
 const PREVIEW_MAX_DIM = 220; // CSS表示と合わせる
@@ -184,7 +189,8 @@ function buildRow(entry) {
 
 function targetSize(spec, orientation) {
     const [w, h] = spec.portrait;
-    return orientation === 'landscape' ? [h, w] : [w, h];
+    const o = spec.fixedOrientation || orientation;
+    return o === 'landscape' ? [h, w] : [w, h];
 }
 
 function renderToCanvas(srcImg, [tw, th], fitMode, bgColor, forPreview) {
