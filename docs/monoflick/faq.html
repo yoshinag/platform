@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>よくある質問 — MonoFlick</title>
+<meta name="description" content="MonoFlick の使い方とトラブル対処をまとめた FAQ。初回ペアリング、接続トラブル、セキュリティ、Dock 取り込み、キーバインド送信、電池節約、MPC と BLE の使い分けまで。">
+<meta name="theme-color" content="#7398A9">
+<link rel="icon" type="image/svg+xml" href="./icons/favicon.svg">
+<link rel="icon" type="image/png" sizes="48x48" href="./icons/favicon-48.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
+<link rel="stylesheet" href="./css/style.css">
+<style>
+  /* ---------- Language picker (wraps Google Translate) ---------- */
+  .lang-picker {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 20px;
+    height: 32px;
+    padding: 0 30px 0 32px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.14);
+    border: 1px solid var(--border);
+    color: var(--on-bg);
+    font-size: 0.82rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .lang-picker:hover { background: rgba(255,255,255,0.22); }
+  .lang-picker__icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  .lang-picker__caret {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    width: 8px;
+    height: 5px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    opacity: 0.85;
+  }
+  .lang-picker__label {
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: 0.02em;
+  }
+  #google_translate_element {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  #google_translate_element .goog-te-gadget {
+    position: absolute;
+    inset: 0;
+    font-size: 0;
+    color: transparent;
+  }
+  #google_translate_element .goog-te-gadget > span,
+  #google_translate_element .goog-te-gadget a,
+  #google_translate_element .goog-logo-link,
+  #google_translate_element img { display: none !important; }
+  #google_translate_element select.goog-te-combo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: transparent;
+    font-size: 16px;
+    cursor: pointer;
+    opacity: 0;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  #google_translate_element select.goog-te-combo option {
+    color: #1a1a1a;
+    font-size: 14px;
+  }
+  .goog-te-banner-frame.skiptranslate,
+  .goog-tooltip,
+  .goog-tooltip:hover,
+  #goog-gt-tt,
+  .VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
+  .VIpgJd-ZVi9od-aZ2wEe-OiiCO { display: none !important; }
+  body { top: 0 !important; position: static !important; }
+  @media (max-width: 760px) {
+    .lang-picker { margin-left: 12px; font-size: 0.78rem; height: 30px; padding: 0 26px 0 28px; }
+    .lang-picker__icon { left: 8px; width: 12px; height: 12px; }
+  }
+
+  /* ---------- FAQ page-specific layout ---------- */
+  .faq-hero {
+    padding-top: 64px;
+    padding-bottom: 40px;
+    text-align: center;
+  }
+  .faq-hero h1 {
+    font-size: 2.4rem;
+    margin: 0 0 12px;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+  .faq-hero .lead {
+    font-size: 1.05rem;
+    color: var(--on-bg-muted);
+    max-width: 640px;
+    margin: 0 auto 24px;
+  }
+  .faq-hero .badge {
+    margin-bottom: 18px;
+  }
+
+  /* TOC */
+  .toc {
+    position: sticky;
+    top: 56px;
+    z-index: 5;
+    background: rgba(115, 152, 169, 0.78);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .toc-inner {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 10px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 16px;
+    font-size: 0.85rem;
+  }
+  .toc a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    color: var(--on-bg-muted);
+    border: 1px solid transparent;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .toc a:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: var(--on-bg);
+    text-decoration: none;
+    border-color: var(--border);
+  }
+  .toc a .num {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.75rem;
+  }
+
+  /* Q section card */
+  .faq-section { padding: 48px 0; }
+  .faq-section + .faq-section { border-top: 1px solid var(--border); }
+
+  .faq-card {
+    background: var(--card-bg);
+    color: var(--card-fg);
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    padding: 28px 32px;
+    box-shadow: var(--shadow);
+  }
+  .faq-card h2 {
+    margin: 0 0 18px;
+    font-size: 1.35rem;
+    color: var(--card-fg);
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .faq-card h2 .qnum {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+  }
+  .faq-card p { color: var(--card-muted); line-height: 1.75; margin: 0 0 12px; }
+  .faq-card .footnote {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--card-border);
+    font-size: 0.88rem;
+    color: var(--card-muted);
+  }
+
+  /* Numbered step list */
+  ol.steps {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px;
+    counter-reset: step;
+  }
+  ol.steps li {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 12px;
+    padding: 6px 0;
+    color: var(--card-muted);
+    line-height: 1.75;
+  }
+  ol.steps li::before {
+    content: counter(step) ".";
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-align: right;
+  }
+
+  /* Bullet item (sub-headed list) */
+  ul.bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  ul.bullets > li {
+    display: grid;
+    grid-template-columns: 14px 1fr;
+    gap: 10px;
+    padding: 10px 0;
+  }
+  ul.bullets > li::before {
+    content: "";
+    margin-top: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--card-muted);
+    opacity: 0.5;
+  }
+  ul.bullets > li .bul-title {
+    font-weight: 700;
+    color: var(--card-fg);
+    margin-bottom: 3px;
+    display: block;
+  }
+  ul.bullets > li .bul-body {
+    color: var(--card-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .subhead {
+    font-weight: 700;
+    color: var(--card-fg);
+    margin: 16px 0 4px;
+  }
+  .subhead:first-child { margin-top: 0; }
+
+  /* Tables */
+  table.faq-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 0;
+    font-size: 0.92rem;
+  }
+  table.faq-table th, table.faq-table td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--card-border);
+    vertical-align: top;
+    color: var(--card-muted);
+    line-height: 1.6;
+  }
+  table.faq-table th {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--card-fg);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: rgba(0, 0, 0, 0.02);
+  }
+  table.faq-table td.win-mpc { color: #2563EB; font-weight: 700; }
+  table.faq-table td.win-ble { color: #10B981; font-weight: 700; }
+  table.faq-table td.win-tie { color: var(--card-muted); font-weight: 700; }
+
+  /* Q2 pattern (transport) labels */
+  .badge-mpc { color: #2563EB; font-weight: 700; }
+  .badge-ble { color: #10B981; font-weight: 700; }
+
+  /* Code-like inline */
+  code {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--card-border);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.88em;
+  }
+
+  @media (max-width: 720px) {
+    .faq-card { padding: 22px 20px; }
+    .faq-card h2 { font-size: 1.18rem; }
+    table.faq-table { font-size: 0.85rem; }
+    table.faq-table th, table.faq-table td { padding: 8px 10px; }
+    .toc { top: 52px; }
+    .toc-inner { gap: 6px 10px; padding: 8px 16px; }
+    .faq-hero h1 { font-size: 1.9rem; }
+  }
+</style>
+<script src="js/analytics.js"></script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="./index.html">
+      <img src="./icons/favicon.svg" alt="" width="28" height="28">
+      MonoFlick
+    </a>
+    <div class="nav-links">
+      <a href="./index.html#features">機能</a>
+      <a href="./index.html#requirements">ダウンロード</a>
+      <a href="./guide.html">初回接続ガイド</a>
+      <a href="./faq.html" style="color: var(--on-bg);">FAQ</a>
+      <span class="lang-picker notranslate" title="このサイトは日本語で記載されています。他言語は Google 翻訳による自動翻訳です。 / Auto-translated by Google Translate.">
+        <svg class="lang-picker__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span class="lang-picker__label">Language</span>
+        <svg class="lang-picker__caret" viewBox="0 0 10 6" aria-hidden="true"><path fill="currentColor" d="M0 0l5 6 5-6z"/></svg>
+        <span id="google_translate_element"></span>
+      </span>
+    </div>
+  </div>
+</nav>
+<script>
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'ja',
+      includedLanguages: 'ja,en,zh-CN,zh-TW,ko,fr,de,es,pt',
+      layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+</script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<!-- ===================== HERO ===================== -->
+<section class="faq-hero wrap">
+  <span class="badge">よくある質問</span>
+  <h1>MonoFlick の使い方とトラブル対処</h1>
+  <p class="lead">
+    初回ペアリングから経路の使い分け、電池節約まで、よく聞かれる質問をまとめました。
+  </p>
+</section>
+
+<!-- ===================== TOC ===================== -->
+<div class="toc">
+  <div class="toc-inner">
+    <a href="#q1"><span class="num">1</span>初回ペアリング</a>
+    <a href="#q2"><span class="num">2</span>接続パターン</a>
+    <a href="#q3"><span class="num">3</span>接続トラブル</a>
+    <a href="#q4"><span class="num">4</span>通信と権限</a>
+    <a href="#q5"><span class="num">5</span>Dock 取り込み</a>
+    <a href="#q6"><span class="num">6</span>キーバインド送信</a>
+    <a href="#q7"><span class="num">7</span>電池節約</a>
+    <a href="#q8"><span class="num">8</span>MPC と BLE</a>
+  </div>
+</div>
+
+<!-- ===================== Q1: Pairing ===================== -->
+<section class="faq-section" id="q1">
+  <div class="wrap">
+    <div class="faq-card">
+      <h2><span class="qnum">Q1.</span> iPhone と最初にペアリングする手順は？</h2>
+      <ol class="steps">
+        <li>Mac アプリを起動するとメニューバーに 6 桁の PIN が表示されます。</li>
+        <li>iPhone で「MonoFlick」を起動するとペアリング画面が出ます。</li>
+        <li>経路を選択 — 同じ Wi-Fi にいる場合は MPC 経路（候補をタップ）、Wi-Fi が無い場合は「Wi-Fi なしでペアリング (Bluetooth)」ボタン経由の BLE 経路。</li>
+        <li>PIN を入力 →「接続」→ 鍵交換後にメニューバーから PIN が消えればペア完了。</li>
+        <li>以降は端末が近くにいれば自動的に再接続します。両経路が並走で立ち上がります。</li>
+      </ol>
+      <div class="footnote">
+        PIN は接続失敗ごと、または「PIN を再生成」ボタンで作り直せます。経路の使い分けは次の Q を参照。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Q2: Connection patterns ===================== -->
+<section class="faq-section" id="q2">
+  <div class="wrap">
+    <div class="faq-card">
+      <h2><span class="qnum">Q2.</span> 初回ペアリングのパターン</h2>
+      <p>
+        初回ペアリングは Wi-Fi の有無で経路を選びます。ペア完了後は MPC（Wi-Fi）と BLE（Bluetooth）の両方が自動で使えるようになります。
+      </p>
+      <table class="faq-table">
+        <thead>
+          <tr>
+            <th>シナリオ</th>
+            <th>経路</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>同じ Wi-Fi にいる</td>
+            <td><span class="badge-mpc">MPC（推奨）</span></td>
+            <td>ペアリング画面の候補をタップ → PIN 入力</td>
+          </tr>
+          <tr>
+            <td>Wi-Fi が無い・繋げない</td>
+            <td><span class="badge-ble">BLE 単独</span></td>
+            <td>「Wi-Fi なしでペアリング」ボタン → 候補タップ → PIN 入力</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="footnote">
+        ペア完了後の再接続・経路切替の挙動（屋内 / 屋外 / 移動中など）は、仕様書（<code>02_protocol.md §2.x</code>）にシナリオ別の一覧があります。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Q3: Troubleshooting ===================== -->
+<section class="faq-section" id="q3">
+  <div class="wrap">
+    <div class="faq-card">
+      <h2><span class="qnum">Q3.</span> 接続できないときに確認すること</h2>
+      <ul class="bullets">
+        <li>
+          <div>
+            <span class="bul-title">アクセシビリティ権限</span>
+            <span class="bul-body">Mac の「システム設定 → プライバシーとセキュリティ → アクセシビリティ」で MonoFlick Companion が ON になっているか。OFF だとキー入力が Mac に反映されません。</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="bul-title">Bluetooth 権限と電源</span>
+            <span class="bul-body">両端末の Bluetooth が ON か、初回起動時のプロンプトで許可したか。iPhone は「設定 → MonoFlick → Bluetooth」、Mac は「システム設定 → プライバシーとセキュリティ → Bluetooth」を確認。</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="bul-title">ローカルネットワーク権限</span>
+            <span class="bul-body">MPC（Wi-Fi）経路のために必須。iPhone 側は初回プロンプトで許可、Mac 側は「ローカルネットワーク」セクションを確認。</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="bul-title">PIN を再生成</span>
+            <span class="bul-body">メニューバーの「PIN を再生成」を押してから、iPhone 側で再ペアリングを試す。</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="bul-title">BLE が「Mac を探索中…」のまま進まない</span>
+            <span class="bul-body">
+              macOS の Bluetooth サービス (bluetoothd) が内部的に詰まっている可能性。MonoFlick Companion のメニューバーから「環境設定 &gt; 接続」または「エラー一覧」を開き、「Bluetooth サービスを再起動」ボタンで bluetoothd を再起動してください（ターミナル派は <code>sudo pkill bluetoothd</code> でも同じ結果）。BT チップ自体は ON のままなので、無線マウスなど他の BT 機器の切断時間も最小です。その後 MonoFlick Companion を起動し直してください。<br><br>
+              なお Bluetooth を OFF→ON する手順でも復旧はしますが、無線マウス利用中は OFF にした瞬間にマウスが効かなくなり ON に戻せなくなることがあるため非推奨です。
+            </span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="bul-title">アクセシビリティ設定が機能していない（チェック ON でも入力が届かない）</span>
+            <span class="bul-body">
+              「システム設定 → プライバシーとセキュリティ → アクセシビリティ」で MonoFlick Companion が ON のはずなのにキー入力が Mac 側で発火しない、あるいは ON / OFF を切替ても挙動が変わらない場合は TCC データベースに古いエントリが残っている可能性があります。MonoFlick Companion のメニューバーから「環境設定 &gt; アクセシビリティ」を開き、「アクセシビリティ権限をリセット」ボタンで TCC レコードを削除してください（ターミナル派は <code>tccutil reset Accessibility dev.foo.MonoFlick.Companion</code> でも同じ結果）。その後 MonoFlick Companion を起動し直してから「設定を開く」プロンプトに従って再度許可してください（他のアプリの権限には影響しません）。
+            </span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="bul-title">それでもダメな場合</span>
+            <span class="bul-body">iPhone 側で「ペアを解除」してから初回ペアリングからやり直す。Keychain 内の古い credential がクリアされて状態がリセットされます。</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Q4: Security ===================== -->
+<section class="faq-section" id="q4">
+  <div class="wrap">
+    <div class="faq-card">
+      <h2><span class="qnum">Q4.</span> 通信は安全？何が必要な権限？</h2>
+      <p>
+        通信内容は Curve25519 (ECDH) の鍵交換で得た 32 byte の共有秘密を使って認証されます。MPC は AES-256 で暗号化、BLE は L2CAP CoC 上にアプリ層 HMAC-SHA256 認証が乗ります。
+      </p>
+
+      <p class="subhead">保存場所:</p>
+      <ul class="bullets">
+        <li>
+          <div>
+            <span class="bul-title">ペア情報（共有秘密）</span>
+            <span class="bul-body">iOS / Mac それぞれの Keychain。iCloud 同期はしない設定。</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="bul-title">キーバインド設定</span>
+            <span class="bul-body">iOS の Documents ディレクトリに JSON ファイル。「ファイル」アプリから可視。</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="bul-title">ランチャー設定</span>
+            <span class="bul-body">iOS の UserDefaults。</span>
+          </div>
+        </li>
+      </ul>
+
+      <p class="subhead">必要な権限:</p>
+      <ul class="bullets">
+        <li>
+          <div>
+            <span class="bul-title">Mac: アクセシビリティ</span>
+            <span class="bul-body">CGEvent でのキー / マウス注入のため必須。</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="bul-title">Mac: ローカルネットワーク</span>
+            <span class="bul-body">MultipeerConnectivity の peer 発見のため。</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="bul-title">Mac / iOS: Bluetooth</span>
+            <span class="bul-body">BLE 経路を使う場合。OFF でも MPC のみで動作可能。</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Q5: Dock import ===================== -->
+<section class="faq-section" id="q5">
+  <div class="wrap">
+    <div class="faq-card">
+      <h2><span class="qnum">Q5.</span> Mac の Dock アプリを iPhone のランチャーに取り込むには？</h2>
+      <ol class="steps">
+        <li>iPhone の歯車（設定）→ ランチャーセクションを開く。</li>
+        <li>「Mac の Dock から取り込み」ボタンをタップ。</li>
+        <li>Mac から Dock の永続アプリ一覧が届いてシートに並びます。</li>
+        <li>追加したいアプリを選んで「追加」を押す。既に登録済みのものは「登録済み」表示でスキップされます。</li>
+      </ol>
+      <div class="footnote">
+        Dock を並べ替えたら再度同じ手順で取り込み直しできます（重複しないので何度押しても安全）。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Q6: Keybind sync ===================== -->
+<section class="faq-section" id="q6">
+  <div class="wrap">
+    <div class="faq-card">
+      <h2><span class="qnum">Q6.</span> Mac で作ったキーバインドを iPhone に送るには？</h2>
+      <ul class="bullets">
+        <li>
+          <div>
+            <span class="bul-title">直送（推奨、ペア接続中のみ）</span>
+            <span class="bul-body">「キーバインドを登録」を開く → タブを作成して登録 → 右上の iPhone アイコンをタップ。iPhone 側でタブ単位の取り込みシートが自動で開きます。</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="bul-title">ファイル経由（オフライン共有）</span>
+            <span class="bul-body">右上の「↑」アイコンで JSON 書き出し → AirDrop や iCloud Drive で iPhone に渡す → iPhone の「ペア」セクションの「Mac の書き出しを取り込み」で同じシートが開きます。</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="bul-title">Minecraft の F3+B のような chord</span>
+            <span class="bul-body">Mac の登録 UI で複数キーをまとめて押せば同時押し chord として保存され、iPhone 側もそのまま取り込まれます。</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Q7: Battery saving ===================== -->
+<section class="faq-section" id="q7">
+  <div class="wrap">
+    <div class="faq-card">
+      <h2><span class="qnum">Q7.</span> iPhone の電池を長持ちさせるコツは？</h2>
+      <p>
+        iPhone 側で Wi-Fi を OFF にすると BLE だけが使われるようになり、Wi-Fi 無線の常時 ON 状態が解消されて電池消費が大幅に下がります。
+      </p>
+      <ul class="bullets">
+        <li>
+          <div>
+            <span class="bul-title">影響あり</span>
+            <span class="bul-body">Mac から大きなデータ（キーバインドの一括同期、Dock 取り込み、起動中アプリのアイコン）を送る場面は少し遅くなる。</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="bul-title">影響なし</span>
+            <span class="bul-body">フリック入力 / キーバインドの 1 打 / トラックパッドのクリックなど、通常の操作は体感差ゼロ。</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="bul-title">切り戻し</span>
+            <span class="bul-body">Wi-Fi を ON に戻せば自動で MPC が再接続します（再ペアリング不要）。</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Q8: Transport comparison ===================== -->
+<section class="faq-section" id="q8">
+  <div class="wrap">
+    <div class="faq-card">
+      <h2><span class="qnum">Q8.</span> MPC と BLE、どちらが使われるの？</h2>
+      <p>
+        両方有効な場合は MPC を優先し、Wi-Fi が無い／不安定な環境では BLE に自動フォールバックします。下表が比較です。
+      </p>
+
+      <table class="faq-table">
+        <thead>
+          <tr>
+            <th>軸</th>
+            <th>MPC (AWDL / Wi-Fi)</th>
+            <th>BLE (L2CAP CoC)</th>
+            <th>勝ち</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>スループット</td>
+            <td>数 Mbps〜数十 Mbps</td>
+            <td>数十〜数百 kbps</td>
+            <td class="win-mpc">MPC（大差）</td>
+          </tr>
+          <tr>
+            <td>レイテンシ（1 キー）</td>
+            <td>約 5–20ms</td>
+            <td>約 15–50ms</td>
+            <td class="win-mpc">MPC（体感差小）</td>
+          </tr>
+          <tr>
+            <td>キー入力のリアルタイム性</td>
+            <td>余裕で十分</td>
+            <td>余裕で十分</td>
+            <td class="win-tie">どちらでも OK</td>
+          </tr>
+          <tr>
+            <td>トラックパッド <code>.pointerMove</code>（60Hz）</td>
+            <td>安定</td>
+            <td>帯域・connection interval 的に厳しい場面あり</td>
+            <td class="win-mpc">MPC</td>
+          </tr>
+          <tr>
+            <td>keybindBundle / runningApps (数 KB〜数十 KB)</td>
+            <td>一瞬で届く</td>
+            <td>数百 ms〜秒オーダー</td>
+            <td class="win-mpc">MPC</td>
+          </tr>
+          <tr>
+            <td>電池消費（iPhone）</td>
+            <td>Wi-Fi 無線常時 ON</td>
+            <td>大幅に低い</td>
+            <td class="win-ble">BLE</td>
+          </tr>
+          <tr>
+            <td>屋外 / Wi-Fi 無し</td>
+            <td>不可（AWDL/Bonjour なし）</td>
+            <td>可</td>
+            <td class="win-ble">BLE</td>
+          </tr>
+          <tr>
+            <td>接続安定性（移動・干渉）</td>
+            <td>AWDL は他 BT 機器と干渉して切れる事あり</td>
+            <td>短距離なら安定</td>
+            <td class="win-ble">BLE</td>
+          </tr>
+          <tr>
+            <td>ペアリング</td>
+            <td>フル機能（PIN + ECDH）</td>
+            <td>BLE 単独でも初回ペアリング可（PIN + ECDH を L2CAP 上で完結）</td>
+            <td class="win-tie">どちらでも OK</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="subhead" style="margin-top: 22px;">結論</p>
+      <ul class="bullets">
+        <li>
+          <div>
+            <span class="bul-title">デスク作業・室内</span>
+            <span class="bul-body">両方 ON のまま運用。実質 MPC が使われ、keybindBundle 送信などの重い操作も速い。</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="bul-title">屋外・電車・カフェで Wi-Fi 切る</span>
+            <span class="bul-body">MPC が使えず自動で BLE のみに切り替わる。</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="bul-title">バッテリー節約(在宅でも長時間使う)</span>
+            <span class="bul-body">あえて iPhone の Wi-Fi を切って BLE のみ運用にすると電池が大幅に持つ。フリック入力だけなら速度差は気にならない。</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="bul-title">MPC を完全に切りたい場面</span>
+            <span class="bul-body">通常は無し。AWDL が混雑して切れまくる時は自然に BLE が選ばれる。</span>
+          </div>
+        </li>
+      </ul>
+      <div class="footnote">
+        MenuBar の MPC / BLE バッジで現在どちらが繋がっているかを確認できます。両方点灯＝室内モード、BLE だけ点灯＝屋外モード、と読み替えられます。
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <a href="./index.html">トップ</a>
+    &nbsp;·&nbsp;
+    <a href="./guide.html">初回接続ガイド</a>
+    &nbsp;·&nbsp;
+    <a href="./privacy-policy.html">Privacy Policy</a>
+    &nbsp;·&nbsp;
+    <a href="https://github.com/yoshinag/mono_flick_docs/issues">Contact (GitHub Issues)</a>
+  </div>
+  <div style="margin-top: 8px;">&copy; 2026 MonoFlick</div>
+</footer>
+
+</body>
+</html>
