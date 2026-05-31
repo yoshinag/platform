@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>初回接続ガイド — MonoFlick</title>
+<meta name="description" content="MonoFlick の初回接続までの手順を、ダウンロード → インストール → アクセシビリティ許可 → 接続の 4 ステップでガイドします。">
+<meta name="theme-color" content="#7398A9">
+<link rel="icon" type="image/svg+xml" href="./icons/favicon.svg">
+<link rel="icon" type="image/png" sizes="48x48" href="./icons/favicon-48.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
+<link rel="stylesheet" href="./css/style.css">
+<style>
+  /* ---------- Guide-specific layout ---------- */
+  .guide-hero {
+    padding-top: 64px;
+    padding-bottom: 40px;
+    text-align: center;
+  }
+  .guide-hero h1 {
+    font-size: 2.4rem;
+    margin: 0 0 12px;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+  .guide-hero .lead {
+    font-size: 1.05rem;
+    color: var(--on-bg-muted);
+    max-width: 640px;
+    margin: 0 auto 24px;
+  }
+  .guide-hero .badge {
+    margin-bottom: 18px;
+  }
+
+  /* Sticky table of contents (top progress bar style) */
+  .toc {
+    position: sticky;
+    top: 56px;
+    z-index: 5;
+    background: rgba(115, 152, 169, 0.78);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .toc-inner {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 10px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 16px;
+    font-size: 0.85rem;
+  }
+  .toc a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    color: var(--on-bg-muted);
+    border: 1px solid transparent;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .toc a:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: var(--on-bg);
+    text-decoration: none;
+    border-color: var(--border);
+  }
+  .toc a .num {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.75rem;
+  }
+
+  /* ---------- Step section ---------- */
+  .step-section { padding: 56px 0; }
+  .step-section + .step-section { border-top: 1px solid var(--border); }
+
+  .step-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .step-number {
+    flex: 0 0 auto;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow);
+    letter-spacing: -0.02em;
+  }
+  .step-head h2 {
+    font-size: 1.7rem;
+    margin: 0;
+    color: var(--on-bg);
+    letter-spacing: -0.02em;
+  }
+  .step-head .step-eyebrow {
+    display: block;
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .step-card {
+    background: var(--card-bg);
+    color: var(--card-fg);
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: var(--shadow);
+  }
+
+  .substep {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 32px;
+    align-items: center;
+  }
+  .substep + .substep {
+    margin-top: 28px;
+    padding-top: 28px;
+    border-top: 1px dashed var(--card-border);
+  }
+  .substep-text h3 {
+    margin: 0 0 8px;
+    font-size: 1.15rem;
+    color: var(--card-fg);
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .substep-text h3 .substep-num {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+  }
+  .substep-text p {
+    margin: 0 0 10px;
+    color: var(--card-muted);
+    font-size: 0.97rem;
+    line-height: 1.75;
+  }
+  .substep-text ul {
+    margin: 8px 0 0;
+    padding-left: 1.2em;
+    color: var(--card-muted);
+    font-size: 0.93rem;
+  }
+  .substep-text ul li { margin: 4px 0; }
+  .substep-text .hint {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .substep-text .hint.tip {
+    background: rgba(16, 185, 129, 0.18);
+    color: var(--accent-2);
+  }
+
+  .substep-img {
+    text-align: center;
+  }
+  .substep-img img {
+    max-width: 100%;
+    max-height: 460px;
+    margin: 0 auto;
+    border-radius: 12px;
+    border: 1px solid var(--card-border);
+    background: rgba(0, 0, 0, 0.04);
+    object-fit: contain;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .substep-img img:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  }
+  .substep-img .caption {
+    margin-top: 8px;
+    font-size: 0.78rem;
+    color: var(--card-muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* Mirrored layout for variety */
+  .substep.reverse { grid-template-columns: 360px 1fr; }
+  .substep.reverse .substep-img { order: -1; }
+
+  /* Final "complete" footer banner */
+  .complete {
+    text-align: center;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    border-radius: 18px;
+    padding: 36px 24px;
+    color: #fff;
+    box-shadow: var(--shadow);
+    margin-top: 16px;
+  }
+  .complete h2 {
+    margin: 0 0 8px;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+  .complete p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 0.98rem;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px) {
+    .substep, .substep.reverse {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .substep.reverse .substep-img { order: 0; }
+    .substep-img img { max-height: 380px; }
+    .toc { top: 52px; }
+    .toc-inner { gap: 6px 10px; padding: 8px 16px; }
+    .guide-hero h1 { font-size: 1.9rem; }
+    .step-head h2 { font-size: 1.4rem; }
+    .step-number { width: 48px; height: 48px; font-size: 1.3rem; }
+    .step-card { padding: 20px; border-radius: 14px; }
+  }
+</style>
+<script src="js/analytics.js"></script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="./index.html">
+      <img src="./icons/favicon.svg" alt="" width="28" height="28">
+      MonoFlick
+    </a>
+    <div class="nav-links">
+      <a href="./index.html#features">機能</a>
+      <a href="./index.html#requirements">ダウンロード</a>
+      <a href="./guide.html" style="color: var(--on-bg);">初回接続ガイド</a>
+      <a href="./faq.html">FAQ</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<section class="guide-hero wrap">
+  <span class="badge">初回接続ガイド</span>
+  <h1>初回接続までの手順</h1>
+  <p class="lead">
+    ダウンロードから接続完了まで、4 ステップでご案内します。<br>
+    所要時間は 5 〜 10 分ほど。スクリーンショット通りに進めれば迷いません。
+  </p>
+</section>
+
+<!-- ===================== TABLE OF CONTENTS ===================== -->
+<div class="toc">
+  <div class="toc-inner">
+    <a href="#step1"><span class="num">1</span>ダウンロード</a>
+    <a href="#step2"><span class="num">2</span>インストール</a>
+    <a href="#step3"><span class="num">3</span>アクセシビリティの許可</a>
+    <a href="#step4"><span class="num">4</span>接続</a>
+  </div>
+</div>
+
+<!-- ===================== STEP 1 ===================== -->
+<section class="step-section" id="step1">
+  <div class="wrap">
+    <div class="step-head">
+      <span class="step-number">1</span>
+      <div>
+        <span class="step-eyebrow">STEP 1</span>
+        <h2>ダウンロード</h2>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="substep">
+        <div class="substep-text">
+          <h3><span class="substep-num">1-1.</span> Mac コンパニオンの DMG を入手</h3>
+          <p>
+            このサイトの「動作環境」セクションから <strong>MonoFlick Companion</strong> の DMG をダウンロードします。
+            iPhone アプリは別途 App Store から入手してください。
+          </p>
+          <ul>
+            <li>macOS 15 (Sequoia) 以降に対応</li>
+            <li>iPhone は iOS 18 以降が必須</li>
+          </ul>
+          <p style="margin-top: 14px;">
+            <a class="btn primary" href="./index.html#requirements">ダウンロードページへ</a>
+          </p>
+        </div>
+        <div class="substep-img">
+          <img src="./images/guide/1-1.png" alt="動作環境カードに表示された『DMG をダウンロード (v1.0.0)』ボタン">
+          <div class="caption">サイト上のダウンロードボタン</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== STEP 2 ===================== -->
+<section class="step-section" id="step2">
+  <div class="wrap">
+    <div class="step-head">
+      <span class="step-number">2</span>
+      <div>
+        <span class="step-eyebrow">STEP 2</span>
+        <h2>MonoFlick Companion のインストール</h2>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="substep">
+        <div class="substep-text">
+          <h3><span class="substep-num">2-1.</span> DMG を開く</h3>
+          <p>
+            ダウンロードした <code>MonoFlick-Companion-1.0.0.dmg</code> をダブルクリックしてマウントします。
+            Finder にディスクイメージが開き、<strong>MonoFlick Companion.app</strong> と
+            <strong>Applications</strong> ショートカットが表示されます。
+          </p>
+          <span class="hint">ファイルサイズ約 4.4 MB</span>
+        </div>
+        <div class="substep-img">
+          <img src="./images/guide/2-1.png" alt="マウントされた DMG。MonoFlick Companion.app と Applications ショートカット">
+          <div class="caption">DMG を開いた直後</div>
+        </div>
+      </div>
+
+      <div class="substep reverse">
+        <div class="substep-text">
+          <h3><span class="substep-num">2-2.</span> アプリケーションへドラッグ&ドロップ</h3>
+          <p>
+            <strong>MonoFlick Companion.app</strong> を <strong>Applications</strong> アイコンへドラッグして
+            インストール完了です。インストール後は DMG をアンマウント(取り出し)して問題ありません。
+          </p>
+          <ul>
+            <li>初回起動時は Gatekeeper の確認ダイアログが出る場合があります</li>
+            <li>右クリック → 開く で許可してください</li>
+          </ul>
+        </div>
+        <div class="substep-img">
+          <img src="./images/guide/2-2.png" alt="アプリケーションフォルダにコピーされた MonoFlick Companion.app">
+          <div class="caption">/Applications に配置された状態</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== STEP 3 ===================== -->
+<section class="step-section" id="step3">
+  <div class="wrap">
+    <div class="step-head">
+      <span class="step-number">3</span>
+      <div>
+        <span class="step-eyebrow">STEP 3</span>
+        <h2>アクセシビリティの許可</h2>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="substep">
+        <div class="substep-text">
+          <h3><span class="substep-num">3-1.</span> 設定画面を開く</h3>
+          <p>
+            メニューバー右上の <strong>MonoFlick</strong> アイコン(赤丸の部分)をクリックすると、
+            ポップオーバーが開きます。<br>
+            下部の <strong>「Accessibility 権限: 未許可」</strong> 横にある
+            <strong>「システム設定を開く」</strong> をクリックしてください。
+          </p>
+          <span class="hint">キー入力を Mac へ送るための権限です</span>
+        </div>
+        <div class="substep-img">
+          <img src="./images/guide/3-1.png" alt="メニューバーから開いた MonoFlick Companion のポップオーバー。Accessibility 未許可の警告">
+          <div class="caption">メニューバーアイコンをクリック</div>
+        </div>
+      </div>
+
+      <div class="substep reverse">
+        <div class="substep-text">
+          <h3><span class="substep-num">3-2.</span> アクセシビリティを許可する</h3>
+          <p>
+            システム設定の <strong>「アクセシビリティ」</strong> 画面で
+            <strong>MonoFlick Companion.app</strong> の トグルを <strong>ON</strong> にします。
+            確認ダイアログが出たら Mac のログインパスワードまたは Touch ID で承認してください。
+          </p>
+          <ul>
+            <li>項目がリストに無い場合は左下の「+」から手動追加</li>
+            <li>ON にすると MonoFlick Companion が一度再起動します</li>
+            <li><strong>システム設定や確認ダイアログが他のウィンドウの背面に隠れている場合があります。</strong>反応が無いときは Mission Control や <kbd>⌘</kbd>+<kbd>Tab</kbd> で前面に出してください。</li>
+          </ul>
+        </div>
+        <div class="substep-img">
+          <img src="./images/guide/3-2.png" alt="システム設定 > アクセシビリティで MonoFlick Companion を ON にする画面">
+          <div class="caption">トグルを ON</div>
+        </div>
+      </div>
+
+      <div class="substep">
+        <div class="substep-text">
+          <h3><span class="substep-num">3-3.</span> 許可されたことを確認</h3>
+          <p>
+            再度メニューバーから MonoFlick を開き、
+            <strong>「Accessibility 権限: 許可済み」</strong> と緑のチェックが表示されていれば OK です。
+          </p>
+          <span class="hint tip">権限の確認が取れたら次のステップへ</span>
+        </div>
+        <div class="substep-img">
+          <img src="./images/guide/3-3.png" alt="Accessibility 権限が許可済みになった MonoFlick Companion のポップオーバー">
+          <div class="caption">Accessibility 権限: 許可済み</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== STEP 4 ===================== -->
+<section class="step-section" id="step4">
+  <div class="wrap">
+    <div class="step-head">
+      <span class="step-number">4</span>
+      <div>
+        <span class="step-eyebrow">STEP 4</span>
+        <h2>接続</h2>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="substep">
+        <div class="substep-text">
+          <h3><span class="substep-num">4-1.</span> iPhone アプリの設定を開く</h3>
+          <p>
+            iPhone で <strong>MonoFlick</strong> アプリを起動し、右上の <strong>歯車アイコン</strong>
+            (赤丸の部分) をタップして設定を開きます。
+          </p>
+          <ul>
+            <li>上部のステータスが「Mac を探しています」になっていれば探索中</li>
+            <li>同じ Wi-Fi または Bluetooth 圏内に Mac がある必要があります</li>
+          </ul>
+        </div>
+        <div class="substep-img">
+          <img src="./images/guide/4-1.png" alt="iPhone の MonoFlick アプリ。右上の歯車アイコンを赤丸で示している">
+          <div class="caption">右上の歯車をタップ</div>
+        </div>
+      </div>
+
+      <div class="substep reverse">
+        <div class="substep-text">
+          <h3><span class="substep-num">4-2.</span> 「ペアリングを開始」をタップ</h3>
+          <p>
+            設定画面の「ペア」セクションにある
+            <strong>「ペアリングを開始」</strong> をタップします。
+          </p>
+          <ul>
+            <li>MPC (Wi-Fi / AWDL) と BLE (CoreBluetooth) は両方とも初期状態では未接続</li>
+            <li>ここからペアリング相手を探します</li>
+          </ul>
+        </div>
+        <div class="substep-img">
+          <img src="./images/guide/4-2.png" alt="iPhone 側の設定画面。ペアリングを開始ボタンが赤枠で強調されている">
+          <div class="caption">ペアリングを開始</div>
+        </div>
+      </div>
+
+      <div class="substep">
+        <div class="substep-text">
+          <h3><span class="substep-num">4-3.</span> 接続先の Mac を選ぶ</h3>
+          <p>
+            近くで検出された Mac の一覧が表示されます。接続したい Mac の名前をタップしてください。
+          </p>
+          <ul>
+            <li>Wi-Fi なしの環境では下部の <strong>「Wi-Fi なしでペアリング (Bluetooth)」</strong> から BLE で接続(有料)</li>
+            <li>Mac 名は「<em>ユーザー名</em> の Mac mini」のように表示されます</li>
+          </ul>
+        </div>
+        <div class="substep-img">
+          <img src="./images/guide/4-3.png" alt="Mac とペアリング画面。検出された Mac mini が一覧に表示されている">
+          <div class="caption">該当の Mac を選択</div>
+        </div>
+      </div>
+
+      <div class="substep reverse">
+        <div class="substep-text">
+          <h3><span class="substep-num">4-4.</span> 6 桁の PIN を入力</h3>
+          <p>
+            Mac のメニューバーポップオーバーに表示されている <strong>6 桁の数字</strong>
+            (例: <code>599095</code>) を、iPhone 側のテンキーで入力します。
+          </p>
+          <ul>
+            <li>PIN は Mac 側で都度生成されます。タイムアウト時は「PIN を再生成」</li>
+            <li>正しく入力すると「接続」ボタンが有効になります</li>
+          </ul>
+        </div>
+        <div class="substep-img">
+          <img src="./images/guide/4-4.png" alt="iPhone のペアリング画面で 6 桁の PIN を入力するテンキー">
+          <div class="caption">Mac 側に表示中の PIN を入力</div>
+        </div>
+      </div>
+
+      <div class="substep">
+        <div class="substep-text">
+          <h3><span class="substep-num">4-5.</span> Wi-Fi (MPC) で接続完了</h3>
+          <p>
+            PIN が正しければ MPC (Wi-Fi / AWDL) 経由で接続が確立し、設定画面の
+            接続状態が <strong>「接続(<em>PCの名前</em>)・MPC」</strong>
+            になります。これで Wi-Fi 環境では既に利用可能です。
+          </p>
+          <ul>
+            <li>BLE (Bluetooth) 接続は <strong>課金コンテンツ</strong> です。アンロック後にご利用可能となります。</li>
+            <li>Wi-Fi だけでも入力・トラックパッド・ランチャー等すべての機能は動作します</li>
+          </ul>
+          <span class="hint tip">Wi-Fi のみの利用ならここで完了</span>
+        </div>
+        <div class="substep-img">
+          <img src="./images/guide/4-5.png" alt="MPC (Wi-Fi) で接続中、Bluetooth は課金コンテンツの案内が表示された iPhone の設定画面">
+          <div class="caption">MPC 接続中 / BLE は課金案内</div>
+        </div>
+      </div>
+
+      <div class="substep reverse">
+        <div class="substep-text">
+          <h3><span class="substep-num">4-6.</span> Mac 側でキーチェーンを許可</h3>
+          <p>
+            BLE を含めて接続する際、Mac に <strong>キーチェーンアクセスのパスワード入力ダイアログ</strong>
+            が表示されます。ログインパスワードを入力し、<strong>「常に許可」</strong> をクリックしてください。
+          </p>
+          <ul>
+            <li>共有秘密 (<code>dev.foo.MonoFlick.Companion.pair</code>) をキーチェーンに保存します</li>
+            <li>「常に許可」にしておくと次回以降このダイアログは出ません</li>
+            <li><strong>ダイアログが他のウィンドウの背面に隠れている場合があります。</strong>反応が無いときは Mission Control や <kbd>⌘</kbd>+<kbd>Tab</kbd> で前面に出してください。</li>
+          </ul>
+          <span class="hint">「許可」だと毎回ダイアログが出るので「常に許可」推奨</span>
+        </div>
+        <div class="substep-img">
+          <img src="./images/guide/4-6.png" alt="Mac のキーチェーンパスワード入力ダイアログ。常に許可ボタンが赤丸で示されている">
+          <div class="caption">「常に許可」をクリック</div>
+        </div>
+      </div>
+
+      <div class="substep">
+        <div class="substep-text">
+          <h3><span class="substep-num">4-7.</span> MPC + BLE で接続完了</h3>
+          <p>
+            接続状態が <strong>「接続(<em>PCの名前</em>)・MPC + BLE」</strong>
+            になり、MPC と BLE の両方が「接続中」と緑表示されれば成功です。
+          </p>
+          <ul>
+            <li>Wi-Fi がある屋内では MPC、無い屋外では BLE が active</li>
+            <li>初回以降は iPhone アプリを開くだけで自動再接続します</li>
+          </ul>
+        </div>
+        <div class="substep-img">
+          <img src="./images/guide/4-7.png" alt="ペアリング完了後の設定画面。MPC と BLE がいずれも接続中になっている">
+          <div class="caption">MPC + BLE 接続中</div>
+        </div>
+      </div>
+
+      <div class="complete">
+        <h2>🎉 これで初回接続は完了です</h2>
+        <p>iPhone のフリックキーボードで打った文字が、Mac のフォアグラウンドアプリに即時送信されます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <a href="./index.html">トップ</a>
+    &nbsp;·&nbsp;
+    <a href="./privacy-policy.html">Privacy Policy</a>
+    &nbsp;·&nbsp;
+    <a href="https://github.com/yoshinag/mono_flick_docs/issues">Contact (GitHub Issues)</a>
+  </div>
+  <div style="margin-top: 8px;">&copy; 2026 MonoFlick</div>
+</footer>
+
+</body>
+</html>
