@@ -169,14 +169,6 @@ input[type="color"] {
     margin: 0;
 }
 
-.preview-box canvas,
-.preview-box svg {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    image-rendering: pixelated;
-}
-
 .download-buttons {
     display: flex;
     gap: 10px;

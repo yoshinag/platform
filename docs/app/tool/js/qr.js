@@ -63,6 +63,10 @@
         const canvas = document.createElement('canvas');
         canvas.width = canvasSize;
         canvas.height = canvasSize;
+        canvas.style.maxWidth = '100%';
+        canvas.style.height = 'auto';
+        canvas.style.display = 'block';
+        canvas.style.imageRendering = 'pixelated';
         const ctx = canvas.getContext('2d');
 
         if (!transparent) {
