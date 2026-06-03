@@ -111,6 +111,49 @@
     .lang-picker { margin-left: 12px; font-size: 0.78rem; height: 30px; padding: 0 26px 0 28px; }
     .lang-picker__icon { left: 8px; width: 12px; height: 12px; }
   }
+
+  /* ---------- Mac app showcase ---------- */
+  #mac-app { padding-top: 56px; padding-bottom: 56px; }
+  .macshow-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+  }
+  .macshow-hero figure,
+  .macshow-prefs figure {
+    margin: 0;
+    background: var(--card-bg, #fff);
+    border: 1px solid var(--card-border, rgba(0,0,0,0.08));
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    text-align: center;
+  }
+  .macshow-hero figure img,
+  .macshow-prefs figure img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto;
+  }
+  .macshow-hero figcaption,
+  .macshow-prefs figcaption {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: var(--card-muted, #555);
+  }
+  .macshow-prefs {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+  }
+  .macshow-cta { text-align: center; margin-top: 26px; }
+  @media (max-width: 760px) {
+    .macshow-hero { grid-template-columns: 1fr; }
+  }
 </style>
 <script src="js/analytics.js"></script>
 </head>
@@ -238,6 +281,63 @@
   </div>
 </section>
 
+<!-- ===================== MAC APP SHOWCASE ===================== -->
+<section id="mac-app">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">MAC COMPANION</span>
+      <h2>Mac コンパニオンの画面</h2>
+      <p>メニューバー常駐の小さなアプリ。日々触るのはこの画面たちです。</p>
+    </div>
+
+    <div class="macshow-hero">
+      <figure>
+        <img src="./images/macos/home_macos.png" alt="メニューバーから開いたポップオーバー。ペアリング PIN、Accessibility 権限の状態、各 Window への導線が並ぶ" loading="lazy">
+        <figcaption>メニューバーポップオーバー（ペアリング待機中）</figcaption>
+      </figure>
+      <figure>
+        <img src="./images/macos/keystroke_visualizer.png" alt="Keystroke Visualizer ウィンドウ。キーボードモードで ANSI フルサイズの配列を表示" loading="lazy">
+        <figcaption>Keystroke Visualizer（キーボードモード）</figcaption>
+      </figure>
+    </div>
+
+    <div class="macshow-prefs">
+      <figure>
+        <img src="./images/macos/language_references_macos.png" alt="環境設定の「表示」セクション。言語を日本語に設定中" loading="lazy">
+        <figcaption>表示言語</figcaption>
+      </figure>
+      <figure>
+        <img src="./images/macos/security_references_macos.png" alt="セキュリティ設定の上段。危険ショートカットブロック、ランチャー厳格モード、キーストロークログのマスク、最大受信文字数" loading="lazy">
+        <figcaption>セキュリティ系トグル</figcaption>
+      </figure>
+      <figure>
+        <img src="./images/macos/pin_lockout_references_macos.png" alt="PIN 認証レート制限の設定。5 連続失敗で 3 分間ロックアウト" loading="lazy">
+        <figcaption>PIN 認証レート制限</figcaption>
+      </figure>
+      <figure>
+        <img src="./images/macos/clipboard_references_macos.png" alt="クリップボード履歴の設定。履歴の有効化、1 件の上限サイズ、保持件数、全削除ボタン" loading="lazy">
+        <figcaption>クリップボード履歴の設定</figcaption>
+      </figure>
+      <figure>
+        <img src="./images/macos/accessibility_references_macos.png" alt="アクセシビリティ設定。説明の再表示と権限のリセットボタン" loading="lazy">
+        <figcaption>アクセシビリティ</figcaption>
+      </figure>
+      <figure>
+        <img src="./images/macos/connectivity_references_macos.png" alt="接続設定。Wi-Fi / Bluetooth の有効化トグル、同時接続数の制限、Bluetooth / Bonjour 再起動・DNS キャッシュクリアボタン" loading="lazy">
+        <figcaption>接続まわりの設定</figcaption>
+      </figure>
+      <figure>
+        <img src="./images/macos/maintenance_references_macos.png" alt="メンテナンスセクション。MonoFlick Companion を再起動ボタン" loading="lazy">
+        <figcaption>メンテナンス</figcaption>
+      </figure>
+    </div>
+
+    <p class="macshow-cta">
+      <a class="btn primary" href="./spec_macos.html">Mac 機能ガイドを見る</a>
+    </p>
+  </div>
+</section>
+
 <!-- ===================== CONNECT ===================== -->
 <section id="connect">
   <div class="wrap connect">
@@ -296,7 +396,8 @@
       <div class="card">
         <div class="label">Mac コンパニオン (必須)</div>
         <div class="value">macOS 15+</div>
-        <a class="download" href="./assets/MonoFlick-Companion-1.0.0.dmg" download>dmg をダウンロード (v1.0.0)</a>
+        <a class="download" href="https://github.com/yoshinag/homebrew-monoflick-companion-for-macos/releases/download/MonoFlick-Companion-1.0.1/MonoFlick-Companion-1.0.1.dmg" download>dmg をダウンロード (v1.0.1)</a>
+        <a class="guide-link" href="./spec_macos.html">Mac 機能ガイドを見る</a>
       </div>
     </div>
   </div>
