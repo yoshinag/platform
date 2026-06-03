@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>よくある質問 — MonoFlick</title>
-<meta name="description" content="MonoFlick の使い方とトラブル対処をまとめた FAQ。初回ペアリング、接続トラブル、セキュリティ、Dock 取り込み、キーバインド送信、電池節約、MPC と BLE の使い分けまで。">
+<meta name="description" content="MonoFlick の使い方とトラブル対処をまとめた FAQ。初回ペアリング、接続トラブル、セキュリティ、Dock 取り込み、電池節約、MPC と BLE の使い分けまで。">
 <meta name="theme-color" content="#7398A9">
 <link rel="icon" type="image/svg+xml" href="./icons/favicon.svg">
 <link rel="icon" type="image/png" sizes="48x48" href="./icons/favicon-48.png">
@@ -216,19 +216,22 @@
   }
   ol.steps li {
     counter-increment: step;
-    display: grid;
-    grid-template-columns: 28px 1fr;
-    gap: 12px;
-    padding: 6px 0;
+    position: relative;
+    padding: 6px 0 6px 40px;
     color: var(--card-muted);
     line-height: 1.75;
   }
   ol.steps li::before {
     content: counter(step) ".";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 28px;
     color: var(--accent);
     font-weight: 700;
     font-size: 0.95rem;
     text-align: right;
+    line-height: 1.75;
   }
 
   /* Bullet item (sub-headed list) */
@@ -374,9 +377,9 @@
     <a href="#q3"><span class="num">3</span>接続トラブル</a>
     <a href="#q4"><span class="num">4</span>通信と権限</a>
     <a href="#q5"><span class="num">5</span>Dock 取り込み</a>
-    <a href="#q6"><span class="num">6</span>キーバインド送信</a>
-    <a href="#q7"><span class="num">7</span>電池節約</a>
-    <a href="#q8"><span class="num">8</span>MPC と BLE</a>
+    <a href="#q6"><span class="num">6</span>電池節約</a>
+    <a href="#q7"><span class="num">7</span>MPC と BLE</a>
+    <a href="#q8"><span class="num">8</span>アンインストール</a>
   </div>
 </div>
 
@@ -567,40 +570,11 @@
   </div>
 </section>
 
-<!-- ===================== Q6: Keybind sync ===================== -->
+<!-- ===================== Q6: Battery saving ===================== -->
 <section class="faq-section" id="q6">
   <div class="wrap">
     <div class="faq-card">
-      <h2><span class="qnum">Q6.</span> Mac で作ったキーバインドを iPhone に送るには？</h2>
-      <ul class="bullets">
-        <li>
-          <div>
-            <span class="bul-title">直送（推奨、ペア接続中のみ）</span>
-            <span class="bul-body">「キーバインドを登録」を開く → タブを作成して登録 → 右上の iPhone アイコンをタップ。iPhone 側でタブ単位の取り込みシートが自動で開きます。</span>
-          </div>
-        </li>
-        <li>
-          <div>
-            <span class="bul-title">ファイル経由（オフライン共有）</span>
-            <span class="bul-body">右上の「↑」アイコンで JSON 書き出し → AirDrop や iCloud Drive で iPhone に渡す → iPhone の「ペア」セクションの「Mac の書き出しを取り込み」で同じシートが開きます。</span>
-          </div>
-        </li>
-        <li>
-          <div>
-            <span class="bul-title">Minecraft の F3+B のような chord</span>
-            <span class="bul-body">Mac の登録 UI で複数キーをまとめて押せば同時押し chord として保存され、iPhone 側もそのまま取り込まれます。</span>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== Q7: Battery saving ===================== -->
-<section class="faq-section" id="q7">
-  <div class="wrap">
-    <div class="faq-card">
-      <h2><span class="qnum">Q7.</span> iPhone の電池を長持ちさせるコツは？</h2>
+      <h2><span class="qnum">Q6.</span> iPhone の電池を長持ちさせるコツは？</h2>
       <p>
         iPhone 側で Wi-Fi を OFF にすると BLE だけが使われるようになり、Wi-Fi 無線の常時 ON 状態が解消されて電池消費が大幅に下がります。
       </p>
@@ -608,7 +582,7 @@
         <li>
           <div>
             <span class="bul-title">影響あり</span>
-            <span class="bul-body">Mac から大きなデータ（キーバインドの一括同期、Dock 取り込み、起動中アプリのアイコン）を送る場面は少し遅くなる。</span>
+            <span class="bul-body">Mac から大きなデータ（Dock 取り込み、起動中アプリのアイコン）を送る場面は少し遅くなる。</span>
           </div>
         </li>
         <li>
@@ -628,11 +602,11 @@
   </div>
 </section>
 
-<!-- ===================== Q8: Transport comparison ===================== -->
-<section class="faq-section" id="q8">
+<!-- ===================== Q7: Transport comparison ===================== -->
+<section class="faq-section" id="q7">
   <div class="wrap">
     <div class="faq-card">
-      <h2><span class="qnum">Q8.</span> MPC と BLE、どちらが使われるの？</h2>
+      <h2><span class="qnum">Q7.</span> MPC と BLE、どちらが使われるの？</h2>
       <p>
         両方有効な場合は MPC を優先し、Wi-Fi が無い／不安定な環境では BLE に自動フォールバックします。下表が比較です。
       </p>
@@ -672,7 +646,7 @@
             <td class="win-mpc">MPC</td>
           </tr>
           <tr>
-            <td>keybindBundle / runningApps (数 KB〜数十 KB)</td>
+            <td>runningApps / Dock 一覧 (数 KB〜数十 KB)</td>
             <td>一瞬で届く</td>
             <td>数百 ms〜秒オーダー</td>
             <td class="win-mpc">MPC</td>
@@ -709,7 +683,7 @@
         <li>
           <div>
             <span class="bul-title">デスク作業・室内</span>
-            <span class="bul-body">両方 ON のまま運用。実質 MPC が使われ、keybindBundle 送信などの重い操作も速い。</span>
+            <span class="bul-body">両方 ON のまま運用。実質 MPC が使われ、runningApps / Dock 取り込みなどの重い操作も速い。</span>
           </div>
         </li>
         <li>
@@ -734,6 +708,110 @@
       <div class="footnote">
         MenuBar の MPC / BLE バッジで現在どちらが繋がっているかを確認できます。両方点灯＝室内モード、BLE だけ点灯＝屋外モード、と読み替えられます。
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Q8: Uninstall ===================== -->
+<section class="faq-section" id="q8">
+  <div class="wrap">
+    <div class="faq-card">
+      <h2><span class="qnum">Q8.</span> アンインストール（完全削除）の手順</h2>
+      <p>
+        MonoFlick はサーバを介さない 2 点間アプリのため、削除も各端末でローカルに行います。
+        通常の「アプリを捨てる」だけでは残るデータがいくつかあります。完全削除したい場合は下の手順で進めてください。
+      </p>
+
+      <p class="subhead" style="margin-top: 18px;">Mac コンパニオン — まず Preferences で権限をリセット</p>
+      <p>
+        アプリ本体を削除する <strong>前に</strong>、MonoFlick Companion の環境設定からアクセシビリティ／Bluetooth の許可を
+        リセットしておくと、システム設定のプライバシーリストから自動的に項目が外れます。
+        後で「リストに残ったまま消せない」と困らないための一番楽な順番です。
+      </p>
+      <ol class="steps">
+        <li>メニューバーの MonoFlick アイコンをクリック → <strong>「環境設定」</strong> を開きます。</li>
+        <li>「アクセシビリティ」セクションの <strong>「アクセシビリティ権限をリセット」</strong> ボタンを押し、確認ダイアログで「リセット」を選択。<br>
+          内部的に <code>tccutil reset Accessibility dev.foo.MonoFlick.Companion</code> が走り、自アプリ分の TCC レコードのみが削除されます（管理者パスワードは不要）。</li>
+        <li>同じ環境設定の「接続」セクションにある <strong>「Bluetooth 権限をリセット」</strong> ボタンも同様に実行します。</li>
+        <li>2 つのリセットが完了したら、メニューバーから <strong>「終了」</strong> でアプリを停止します。</li>
+      </ol>
+      <div class="footnote">
+        ローカルネットワーク権限には <code>tccutil reset</code> が公式に対応していないため、リスト残りが気になる場合は後述「③」で手動削除します。
+      </div>
+
+      <p class="subhead" style="margin-top: 22px;">Mac コンパニオン（本体の削除）</p>
+      <ol class="steps">
+        <li>Finder で <code>/Applications</code> を開き、<strong>MonoFlick Companion.app</strong> をゴミ箱へ移動します。</li>
+        <li>ゴミ箱を空にしてください。</li>
+      </ol>
+      <div class="footnote">
+        ここまでの「Preferences リセット → 終了 → アプリ削除」で、再インストール時には「初回起動と同じプロンプトから」になります。
+        ペアリングのし直しもこれで完了。
+      </div>
+
+      <p class="subhead" style="margin-top: 22px;">Mac コンパニオン（完全削除 — 残存データも消す）</p>
+      <ul class="bullets">
+        <li>
+          <div>
+            <span class="bul-title">① 環境設定などの UserDefaults</span>
+            <span class="bul-body">
+              ターミナルで以下を実行すると、MonoFlick Companion のすべての設定値が削除されます。<br>
+              <code>defaults delete dev.foo.MonoFlick.Companion</code><br>
+              （対応するファイル: <code>~/Library/Preferences/dev.foo.MonoFlick.Companion.plist</code>）
+            </span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="bul-title">② 共有秘密（キーチェーン）</span>
+            <span class="bul-body">
+              ペアリング完了時に保存される暗号鍵を削除します。Keychain Access.app を開き、検索欄に
+              <code>dev.foo.MonoFlick.Companion.pair</code> と入力 → 該当項目を右クリック → <strong>「削除」</strong>。<br>
+              ターミナル派は次のコマンドでも同じ結果になります:<br>
+              <code>security delete-generic-password -s "dev.foo.MonoFlick.Companion.pair"</code>
+            </span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="bul-title">③ ローカルネットワーク権限（リスト残り）</span>
+            <span class="bul-body">
+              アクセシビリティ・Bluetooth は前述の Preferences リセットで既に消えています。<strong>ローカルネットワーク</strong>だけは <code>tccutil reset</code> 非対応のため、気になる場合は「システム設定 → プライバシーとセキュリティ → ローカルネットワーク」のリストから MonoFlick Companion のトグルを OFF にしてください（アプリ本体を消した時点で項目は無効化されていますが、リストには残ります）。
+            </span>
+          </div>
+        </li>
+      </ul>
+      <div class="footnote">
+        ①②を消すと、再インストール時は完全な初回状態（PIN ペアリングから）になります。
+        家族の Mac を譲るなど「自分の痕跡を完全に消したい」場面ではここまで実施するのが安心です。
+      </div>
+
+      <p class="subhead" style="margin-top: 22px;">iPhone アプリ</p>
+      <ol class="steps">
+        <li>ホーム画面で MonoFlick アイコンを長押し → <strong>「App を削除」</strong> → <strong>「App を削除」</strong> を選択。</li>
+        <li>App とともに、UserDefaults / アプリ内データ・キーチェーンに保存された共有秘密も削除されます。</li>
+        <li>App Store 経由のアプリは「設定 → 一般 → iPhone ストレージ」からも個別削除できます。</li>
+      </ol>
+      <div class="footnote">
+        ペアリング後にキーチェーンに保存される MonoFlick 用エントリは、アプリ削除時に同時に消えます（iOS の標準挙動）。
+        再インストール後は新たに PIN ペアリングから始まります。
+      </div>
+
+      <p class="subhead" style="margin-top: 22px;">片側だけ消したとき</p>
+      <ul class="bullets">
+        <li>
+          <div>
+            <span class="bul-title">Mac だけ削除し、iPhone は残している</span>
+            <span class="bul-body">iPhone 側に共有秘密だけが残ります。Mac を再インストールした場合、PIN ペアリングからやり直しになります。iPhone のペア情報は次回ペアリング時に上書きされます。</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="bul-title">iPhone だけ削除し、Mac は残している</span>
+            <span class="bul-body">Mac 側のキーチェーンに古い共有秘密が残ります。再インストール後の初回 PIN ペアリングで自動的に上書きされるため、放置しても実害はありません。気になる場合は上記「② キーチェーン」の手順で削除してください。</span>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>
