@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mac コンパニオン機能ガイド — MonoFlick</title>
-<meta name="description" content="MonoFlick Companion for Mac の機能を一覧で紹介。メニューバー UI、キーストロークビジュアライザ、クリップボード履歴、ペアリング、環境設定までを使い方ベースでまとめます。">
+<meta name="description" content="MonoFlick Companion for Mac の機能を一覧で紹介。メニューバー UI、キーストロークビジュアライザ、ペアリング、環境設定までを使い方ベースでまとめます。">
 <meta name="theme-color" content="#7398A9">
 <meta property="og:title" content="Mac コンパニオン機能ガイド — MonoFlick">
 <meta property="og:description" content="MonoFlick Companion for Mac の機能・設定・接続性をまとめたユーザー向けガイド。">
@@ -312,7 +312,7 @@
   <h1>MonoFlick Companion for Mac でできること</h1>
   <p class="lead">
     メニューバーに常駐する小さなアプリですが、機能は思っているより豊富です。<br>
-    キー入力の可視化、クリップボード履歴、安全な接続、細やかな環境設定までを 1 ページで俯瞰できます。
+    キー入力の可視化、安全な接続、細やかな環境設定までを 1 ページで俯瞰できます。
   </p>
 </section>
 
@@ -378,7 +378,7 @@
         <li><strong>エラーが 1 件以上ある場合のみ</strong>: 「エラー一覧」セクションが赤字で出現（件数表示 + 「開く」）</li>
         <li><strong>ペアリング待機中のみ</strong>: 6 桁の <strong>PIN 大表示</strong> + 「PIN を再生成」ボタン</li>
         <li>Accessibility 権限の状態 + システム設定への誘導</li>
-        <li>各 Window（Keystroke Visualizer / Clipboard History）への「開く」ボタン</li>
+        <li>Keystroke Visualizer ウィンドウへの「開く」ボタン</li>
         <li>よくある質問: ボタン押下で <strong>既定ブラウザで FAQ ページを開きます</strong>（Web 提供）</li>
         <li>フッター: 環境設定 / このアプリについて / 終了</li>
       </ul>
@@ -397,9 +397,8 @@
         </thead>
         <tbody>
           <tr><td>Keystroke Visualizer</td><td>iPhone から送られたキーと Mac の物理入力を可視化（ログ / キーボード切替）</td><td>760 × 480</td></tr>
-          <tr><td>Clipboard History</td><td>クリップボード履歴の閲覧・行末アイコンで lock / 可視化 / コピー / 削除</td><td>680 × 560</td></tr>
           <tr><td>エラー一覧</td><td>接続・注入・権限まわりのエラー履歴（件数 &gt; 0 のとき MenuBar に導線が現れる）</td><td>700 × 560</td></tr>
-          <tr><td>環境設定</td><td>言語切替・セキュリティ・接続上限・履歴上限・各種リセットボタン</td><td>520 × 440</td></tr>
+          <tr><td>環境設定</td><td>言語切替・セキュリティ・接続上限・各種リセットボタン</td><td>520 × 440</td></tr>
           <tr><td>アクセシビリティ案内</td><td>初回起動時の権限案内（Preferences から再表示も可能）</td><td>460 × 380</td></tr>
           <tr><td>このアプリについて</td><td>バージョンとライセンス情報</td><td>480 × 600</td></tr>
         </tbody>
@@ -435,26 +434,6 @@
           <figcaption>キーボードモード（ANSI フルサイズ配列）</figcaption>
         </figure>
         <span class="hint">「何が押されたか」を後から確認できる、デバッグ／デモ用ツールです</span>
-      </div>
-
-      <div class="spec-card">
-        <h3>Clipboard History（クリップボード履歴）</h3>
-        <p>Mac の「コピー」と、iPhone から送られた「クリップボード書き込み」を 1 か所に集約します。</p>
-        <ul>
-          <li>過去のコピー内容は <strong>先頭 3 文字 + ***** のマスク表示</strong>がデフォルト</li>
-          <li>各行の右端に <strong>4 つのアイコン操作</strong>がそろっています:
-            <ul style="margin-top: 4px;">
-              <li><strong>🔒 ロック / 解除</strong>: ロック中の行は <strong>件数オーバーでも、個別削除でも、「履歴を全削除」でも消えません</strong>（メモリ内のみで保持、再起動で解除）</li>
-              <li><strong>👁 全文表示 / マスクに戻す</strong>: 個別行のマスクを切替（全体一括の「すべて表示 / すべて隠す」と協調動作）</li>
-              <li><strong>📋 クリップボードに戻す</strong>: 押下で現在のクリップボードに上書き</li>
-              <li><strong>🗑 削除</strong>: 個別行を履歴から削除（ロック中は無効化、解除してから削除する流れ）</li>
-            </ul>
-          </li>
-          <li>件数上限・サイズ上限（既定 50 件 / 1 件あたり 5 MB）は環境設定で変更可能</li>
-          <li>履歴は <strong>メモリのみ保存</strong>。アプリ終了で消えます（ディスクに残りません）</li>
-          <li>画像・リッチテキストなど非テキストは履歴に残しません</li>
-        </ul>
-        <span class="hint tip">「何度も同じ文字列をペーストしたい」場面で便利。ロック機能で大事な行を保護できます</span>
       </div>
 
       <div class="spec-card">
@@ -556,20 +535,6 @@
     </div>
 
     <div class="spec-card">
-      <h3>クリップボード履歴の設定</h3>
-      <ul>
-        <li>履歴の有効化（ON / OFF）</li>
-        <li>件数上限（既定 50 件）</li>
-        <li>1 件あたりのサイズ上限（既定 5 MB）</li>
-        <li>「履歴を全削除」ボタン（確認ダイアログ付き）</li>
-      </ul>
-      <figure class="spec-figure medium">
-        <img src="./images/macos/clipboard_references_macos.png" alt="クリップボード履歴の設定。履歴の有効化、1 件の上限サイズ、保持件数、全削除ボタン" loading="lazy">
-        <figcaption>クリップボード履歴の設定一覧</figcaption>
-      </figure>
-    </div>
-
-    <div class="spec-card">
       <h3>アクセシビリティ Onboarding の再表示</h3>
       <p>初回起動時のアクセシビリティ案内をもう一度見たい場合に押す再表示ボタンを用意しています。あわせて、復旧手順として TCC データベースから本アプリのレコードのみを消す「アクセシビリティ権限をリセット」ボタンも用意しています。</p>
       <figure class="spec-figure medium">
@@ -635,13 +600,6 @@
       </p>
     </div>
 
-    <div class="spec-card">
-      <h3>iPhone 側からのクリップボード書き込み</h3>
-      <p>
-        iPhone で「Mac のクリップボードに送る」操作を行うと、
-        Mac の <code>NSPasteboard</code> に書き込まれ、同時に履歴にも source=<strong>iPhone</strong> として記録されます。
-      </p>
-    </div>
   </div>
 </section>
 
@@ -709,7 +667,6 @@
       <ul>
         <li>解析 SDK・広告 SDK・クラッシュレポート SDK のいずれも導入していません</li>
         <li>外部サーバとの通信は <strong>一切なし</strong></li>
-        <li>クリップボード履歴はメモリのみ。ディスクや iCloud には残りません</li>
       </ul>
     </div>
   </div>
