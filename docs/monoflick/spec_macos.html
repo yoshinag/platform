@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mac コンパニオン機能ガイド — MonoFlick</title>
+<meta name="description" content="MonoFlick Companion for Mac の機能を一覧で紹介。メニューバー UI、キーストロークビジュアライザ、クリップボード履歴、ペアリング、環境設定までを使い方ベースでまとめます。">
+<meta name="theme-color" content="#7398A9">
+<meta property="og:title" content="Mac コンパニオン機能ガイド — MonoFlick">
+<meta property="og:description" content="MonoFlick Companion for Mac の機能・設定・接続性をまとめたユーザー向けガイド。">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/svg+xml" href="./icons/favicon.svg">
+<link rel="icon" type="image/png" sizes="48x48" href="./icons/favicon-48.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
+<link rel="stylesheet" href="./css/style.css">
+<style>
+  /* ---------- Hero ---------- */
+  .spec-hero {
+    padding-top: 64px;
+    padding-bottom: 40px;
+    text-align: center;
+  }
+  .spec-hero h1 {
+    font-size: 2.4rem;
+    margin: 0 0 12px;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+  .spec-hero .lead {
+    font-size: 1.05rem;
+    color: var(--on-bg-muted);
+    max-width: 680px;
+    margin: 0 auto 24px;
+  }
+  .spec-hero .badge { margin-bottom: 18px; }
+
+  /* ---------- Sticky TOC ---------- */
+  .toc {
+    position: sticky;
+    top: 56px;
+    z-index: 5;
+    background: rgba(115, 152, 169, 0.78);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .toc-inner {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 10px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 16px;
+    font-size: 0.85rem;
+  }
+  .toc a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    color: var(--on-bg-muted);
+    border: 1px solid transparent;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .toc a:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: var(--on-bg);
+    text-decoration: none;
+    border-color: var(--border);
+  }
+  .toc a .num {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.75rem;
+  }
+
+  /* ---------- Sections ---------- */
+  .spec-section { padding: 56px 0; }
+  .spec-section + .spec-section { border-top: 1px solid var(--border); }
+
+  .spec-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .spec-icon {
+    flex: 0 0 auto;
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow);
+  }
+  .spec-head h2 {
+    font-size: 1.7rem;
+    margin: 0;
+    color: var(--on-bg);
+    letter-spacing: -0.02em;
+  }
+  .spec-head .spec-eyebrow {
+    display: block;
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .spec-card {
+    background: var(--card-bg);
+    color: var(--card-fg);
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: var(--shadow);
+  }
+  .spec-card + .spec-card { margin-top: 20px; }
+  .spec-card h3 {
+    margin: 0 0 10px;
+    font-size: 1.15rem;
+    color: var(--card-fg);
+    letter-spacing: -0.01em;
+  }
+  .spec-card p {
+    margin: 0 0 10px;
+    color: var(--card-muted);
+    font-size: 0.97rem;
+    line-height: 1.75;
+  }
+  .spec-card ul {
+    margin: 8px 0 0;
+    padding-left: 1.2em;
+    color: var(--card-muted);
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+  .spec-card ul li { margin: 4px 0; }
+  .spec-card .hint {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .spec-card .hint.tip {
+    background: rgba(16, 185, 129, 0.18);
+    color: var(--accent-2);
+  }
+  .spec-card .hint.warn {
+    background: rgba(244, 162, 97, 0.22);
+    color: #b86a2b;
+  }
+
+  /* Two-column grid of feature cards */
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .spec-grid .spec-card { margin-top: 0; }
+
+  /* Table-like rows */
+  .spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.93rem;
+    color: var(--card-muted);
+  }
+  .spec-table th,
+  .spec-table td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px dashed var(--card-border);
+    vertical-align: top;
+  }
+  .spec-table th {
+    color: var(--card-fg);
+    font-weight: 600;
+    background: rgba(115, 152, 169, 0.08);
+  }
+  .spec-table tr:last-child td { border-bottom: none; }
+  .spec-table code {
+    background: rgba(115, 152, 169, 0.12);
+    padding: 1px 6px;
+    border-radius: 6px;
+    font-size: 0.86em;
+  }
+
+  .spec-kbd {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--card-border);
+    background: rgba(0,0,0,0.04);
+    font-size: 0.85em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  .spec-pill {
+    display: inline-block;
+    padding: 2px 10px;
+    margin: 0 4px 4px 0;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  /* Screenshot figures inside cards */
+  .spec-figure {
+    margin: 18px 0 0;
+    text-align: center;
+  }
+  .spec-figure img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  }
+  .spec-figure figcaption {
+    margin-top: 8px;
+    font-size: 0.82rem;
+    color: var(--card-muted);
+  }
+  .spec-figure.narrow img { max-width: 320px; }
+  .spec-figure.medium img { max-width: 460px; }
+  .spec-figure-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 18px;
+  }
+  .spec-figure-row .spec-figure {
+    flex: 1 1 320px;
+    margin: 0;
+    max-width: 460px;
+  }
+
+  /* CTA banner at bottom */
+  .spec-cta {
+    text-align: center;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    border-radius: 18px;
+    padding: 36px 24px;
+    color: #fff;
+    box-shadow: var(--shadow);
+    margin-top: 16px;
+  }
+  .spec-cta h2 { margin: 0 0 8px; font-size: 1.5rem; letter-spacing: -0.02em; }
+  .spec-cta p { margin: 0 0 14px; color: rgba(255, 255, 255, 0.92); font-size: 0.98rem; }
+  .spec-cta .btn { background: #fff; color: var(--accent); }
+  .spec-cta .btn + .btn { margin-left: 10px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px) {
+    .toc { top: 52px; }
+    .toc-inner { gap: 6px 10px; padding: 8px 16px; }
+    .spec-hero h1 { font-size: 1.9rem; }
+    .spec-head h2 { font-size: 1.4rem; }
+    .spec-icon { width: 48px; height: 48px; font-size: 1.2rem; border-radius: 12px; }
+    .spec-card { padding: 20px; border-radius: 14px; }
+    .spec-grid { grid-template-columns: 1fr; }
+  }
+</style>
+<script src="js/analytics.js"></script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="./index.html">
+      <img src="./icons/favicon.svg" alt="" width="28" height="28">
+      MonoFlick
+    </a>
+    <div class="nav-links">
+      <a href="./index.html#features">機能</a>
+      <a href="./index.html#requirements">ダウンロード</a>
+      <a href="./guide.html">初回接続ガイド</a>
+      <a href="./faq.html">FAQ</a>
+      <a href="./spec_macos.html" style="color: var(--on-bg);">Mac 機能ガイド</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<section class="spec-hero wrap">
+  <span class="badge">Mac コンパニオン機能ガイド</span>
+  <h1>MonoFlick Companion for Mac でできること</h1>
+  <p class="lead">
+    メニューバーに常駐する小さなアプリですが、機能は思っているより豊富です。<br>
+    キー入力の可視化、クリップボード履歴、安全な接続、細やかな環境設定までを 1 ページで俯瞰できます。
+  </p>
+</section>
+
+<!-- ===================== TOC ===================== -->
+<div class="toc">
+  <div class="toc-inner">
+    <a href="#overview"><span class="num">1</span>概要</a>
+    <a href="#menubar"><span class="num">2</span>メニューバー</a>
+    <a href="#features"><span class="num">3</span>主要機能</a>
+    <a href="#preferences"><span class="num">4</span>環境設定</a>
+    <a href="#connectivity"><span class="num">5</span>接続性</a>
+    <a href="#security"><span class="num">6</span>セキュリティ</a>
+    <a href="#requirements"><span class="num">7</span>動作環境</a>
+  </div>
+</div>
+
+<!-- ===================== 1. OVERVIEW ===================== -->
+<section class="spec-section" id="overview">
+  <div class="wrap">
+    <div class="spec-head">
+      <span class="spec-icon">①</span>
+      <div>
+        <span class="spec-eyebrow">OVERVIEW</span>
+        <h2>Mac コンパニオンの位置づけ</h2>
+      </div>
+    </div>
+    <div class="spec-card">
+      <p>
+        <strong>MonoFlick Companion</strong> は、iPhone で打った文字や操作を Mac で「実際のキー入力／マウス操作」として再現する常駐アプリです。
+        Dock には表示されず、メニューバー右上のアイコンから常にアクセスできます。
+      </p>
+      <ul>
+        <li>表示名: <strong>MonoFlick Companion</strong></li>
+        <li>UI 形態: メニューバー常駐（<code>LSUIElement</code>、Dock 非表示）</li>
+        <li>対応 OS: <strong>macOS 15 (Sequoia) 以降</strong></li>
+        <li>サンドボックス: OFF（アクセシビリティ権限と整合させるため、Mac App Store ではなく直接配布）</li>
+      </ul>
+      <span class="hint tip">「常に動いていて、必要なときだけ前に出てくる」アプリ設計です</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 2. MENU BAR ===================== -->
+<section class="spec-section" id="menubar">
+  <div class="wrap">
+    <div class="spec-head">
+      <span class="spec-icon">②</span>
+      <div>
+        <span class="spec-eyebrow">MENU BAR</span>
+        <h2>メニューバーから開ける画面</h2>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <h3>メニューバーポップオーバーの構成</h3>
+      <p>
+        メニューバーのアイコン(<span class="spec-kbd">iphone</span>)をクリックすると、320pt 幅のポップオーバーが開きます。
+        ここから現在の接続状態、ペアリング PIN、各種ウィンドウへの導線がすべて確認できます。
+      </p>
+      <ul>
+        <li>ヘッダー: アプリ名と ロゴ</li>
+        <li>接続状態: 色付きドット + 「MPC」「BLE」バッジで経路ごとの状態を表示</li>
+        <li><strong>エラーが 1 件以上ある場合のみ</strong>: 「エラー一覧」セクションが赤字で出現（件数表示 + 「開く」）</li>
+        <li><strong>ペアリング待機中のみ</strong>: 6 桁の <strong>PIN 大表示</strong> + 「PIN を再生成」ボタン</li>
+        <li>Accessibility 権限の状態 + システム設定への誘導</li>
+        <li>各 Window（Keystroke Visualizer / Clipboard History）への「開く」ボタン</li>
+        <li>よくある質問: ボタン押下で <strong>既定ブラウザで FAQ ページを開きます</strong>（Web 提供）</li>
+        <li>フッター: 環境設定 / このアプリについて / 終了</li>
+      </ul>
+      <figure class="spec-figure narrow">
+        <img src="./images/macos/home_macos.png" alt="メニューバーから開いたポップオーバー。ペアリング PIN、Accessibility 権限の状態、各 Window への導線が並ぶ" loading="lazy">
+        <figcaption>メニューバーから開いたポップオーバー（ペアリング待機中の表示例）</figcaption>
+      </figure>
+    </div>
+
+    <div class="spec-card">
+      <h3>ウィンドウ一覧</h3>
+      <p>起動時はすべて閉じた状態で、メニューバーから明示的に開きます。よくある質問は Web に移設したため、ローカルウィンドウはありません。</p>
+      <table class="spec-table">
+        <thead>
+          <tr><th>ウィンドウ</th><th>役割</th><th>既定サイズ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Keystroke Visualizer</td><td>iPhone から送られたキーと Mac の物理入力を可視化（ログ / キーボード切替）</td><td>760 × 480</td></tr>
+          <tr><td>Clipboard History</td><td>クリップボード履歴の閲覧・行末アイコンで lock / 可視化 / コピー / 削除</td><td>680 × 560</td></tr>
+          <tr><td>エラー一覧</td><td>接続・注入・権限まわりのエラー履歴（件数 &gt; 0 のとき MenuBar に導線が現れる）</td><td>700 × 560</td></tr>
+          <tr><td>環境設定</td><td>言語切替・セキュリティ・接続上限・履歴上限・各種リセットボタン</td><td>520 × 440</td></tr>
+          <tr><td>アクセシビリティ案内</td><td>初回起動時の権限案内（Preferences から再表示も可能）</td><td>460 × 380</td></tr>
+          <tr><td>このアプリについて</td><td>バージョンとライセンス情報</td><td>480 × 600</td></tr>
+        </tbody>
+      </table>
+      <span class="hint">ウィンドウは必ず最前面に出るよう調整済みです（背面に隠れません）</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 3. FEATURES ===================== -->
+<section class="spec-section" id="features">
+  <div class="wrap">
+    <div class="spec-head">
+      <span class="spec-icon">③</span>
+      <div>
+        <span class="spec-eyebrow">FEATURES</span>
+        <h2>主要機能</h2>
+      </div>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <h3>Keystroke Visualizer（入力の可視化）</h3>
+        <p>iPhone から送られてきたキー、Mac の物理キーボード入力を 2 つのモードで確認できます。</p>
+        <ul>
+          <li><strong>ログモード:</strong> 最新 200 件を上から新しい順に表示（フィルタ: すべて / iPhone から / Mac で押下）</li>
+          <li><strong>キーボードモード:</strong> ANSI / JIS / TKL / Magic Keyboard の 4 配列を切り替えて、押されたキーをハイライト</li>
+          <li>速い tap でも見えるよう、最低 200ms 点灯</li>
+          <li>フリック由来のテキストは、上部 Capsule に全文 overlay（2 秒）</li>
+        </ul>
+        <figure class="spec-figure">
+          <img src="./images/macos/keystroke_visualizer.png" alt="Keystroke Visualizer ウィンドウ。キーボードモードで ANSI フルサイズの配列を表示" loading="lazy">
+          <figcaption>キーボードモード（ANSI フルサイズ配列）</figcaption>
+        </figure>
+        <span class="hint">「何が押されたか」を後から確認できる、デバッグ／デモ用ツールです</span>
+      </div>
+
+      <div class="spec-card">
+        <h3>Clipboard History（クリップボード履歴）</h3>
+        <p>Mac の「コピー」と、iPhone から送られた「クリップボード書き込み」を 1 か所に集約します。</p>
+        <ul>
+          <li>過去のコピー内容は <strong>先頭 3 文字 + ***** のマスク表示</strong>がデフォルト</li>
+          <li>各行の右端に <strong>4 つのアイコン操作</strong>がそろっています:
+            <ul style="margin-top: 4px;">
+              <li><strong>🔒 ロック / 解除</strong>: ロック中の行は <strong>件数オーバーで自動削除されない</strong>（メモリ内のみで保持、再起動で解除）</li>
+              <li><strong>👁 全文表示 / マスクに戻す</strong>: 個別行のマスクを切替（全体一括の「すべて表示 / すべて隠す」と協調動作）</li>
+              <li><strong>📋 クリップボードに戻す</strong>: 押下で現在のクリップボードに上書き</li>
+              <li><strong>🗑 削除</strong>: 個別行を履歴から削除</li>
+            </ul>
+          </li>
+          <li>件数上限・サイズ上限（既定 50 件 / 1 件あたり 5 MB）は環境設定で変更可能</li>
+          <li>履歴は <strong>メモリのみ保存</strong>。アプリ終了で消えます（ディスクに残りません）</li>
+          <li>画像・リッチテキストなど非テキストは履歴に残しません</li>
+        </ul>
+        <span class="hint tip">「何度も同じ文字列をペーストしたい」場面で便利。ロック機能で大事な行を保護できます</span>
+      </div>
+
+      <div class="spec-card">
+        <h3>起動中アプリの取り込み</h3>
+        <p>
+          Mac で開いているアプリ一覧を iPhone 側のランチャーに反映します。
+          アプリの起動／終了を Mac で検知すると、自動的に iPhone へ通知します。
+        </p>
+        <ul>
+          <li>アイコンは 64×64 で iPhone に届きます</li>
+          <li>Dock の永続アプリ一覧も iPhone から取り込み可能</li>
+        </ul>
+      </div>
+
+      <div class="spec-card">
+        <h3>PIN ペアリング</h3>
+        <p>初回接続時は <strong>Mac 側に表示された 6 桁の PIN を iPhone に入力</strong>するだけで完了します。</p>
+        <ul>
+          <li>PIN はアプリ起動時に自動生成 / 「PIN を再生成」ボタンでいつでも作り直し可能</li>
+          <li>ペアリング成功後は PIN は表示されません</li>
+          <li>2 回目以降は PIN なしで自動再接続（共有秘密による HMAC 認証）</li>
+        </ul>
+        <span class="hint">PIN は「Mac が表示・iPhone が入力」の片方向で統一</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 4. PREFERENCES ===================== -->
+<section class="spec-section" id="preferences">
+  <div class="wrap">
+    <div class="spec-head">
+      <span class="spec-icon">④</span>
+      <div>
+        <span class="spec-eyebrow">PREFERENCES</span>
+        <h2>環境設定</h2>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <h3>表示言語</h3>
+      <p>システム言語に追従する <strong>「システム」</strong> がデフォルト。手動で日本語 / 英語を選ぶこともでき、切替は即時反映されます（一部のウィンドウタイトルは英語固定）。</p>
+      <figure class="spec-figure medium">
+        <img src="./images/macos/language_references_macos.png" alt="環境設定の「表示」セクション。言語を日本語に設定中" loading="lazy">
+        <figcaption>環境設定 → 表示 → 言語</figcaption>
+      </figure>
+    </div>
+
+    <div class="spec-card">
+      <h3>セキュリティ系トグル（既定はすべてセキュア寄り）</h3>
+      <table class="spec-table">
+        <thead>
+          <tr><th>項目</th><th>既定</th><th>挙動</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>危険ショートカットをブロック</td>
+            <td>ON</td>
+            <td><span class="spec-kbd">⌘Q</span> / <span class="spec-kbd">⌘⇧Q</span> / <span class="spec-kbd">⌃⌘Q</span> / <span class="spec-kbd">⌘⌥Esc</span> をリモートから無効化</td>
+          </tr>
+          <tr>
+            <td>ランチャー厳格モード</td>
+            <td>ON</td>
+            <td>任意パスのバイナリ起動・引数渡しを禁止</td>
+          </tr>
+          <tr>
+            <td>キーストロークログをマスク</td>
+            <td>ON</td>
+            <td>ログ表示時にテキストを先頭 2 文字 + 省略表示</td>
+          </tr>
+          <tr>
+            <td>insert 受信長の上限</td>
+            <td>4096 文字</td>
+            <td>1 度に流せる文字列の長さ上限（DoS 対策）</td>
+          </tr>
+          <tr>
+            <td>PIN 認証レート制限</td>
+            <td>ON</td>
+            <td>5 連続失敗で 3 分間ロックアウト</td>
+          </tr>
+          <tr>
+            <td>同時接続上限</td>
+            <td>OFF（既定無制限）</td>
+            <td>ON にすると 1〜8 台で制限。例: 2 台に絞ると「家族用 + 自分用」だけに固定</td>
+          </tr>
+        </tbody>
+      </table>
+      <span class="hint warn">どれもセキュア側がデフォルト。OFF にする際は影響を理解してから</span>
+      <div class="spec-figure-row">
+        <figure class="spec-figure">
+          <img src="./images/macos/security_references_macos.png" alt="セキュリティ設定の上段。危険ショートカットブロック、ランチャー厳格モード、キーストロークログのマスク、最大受信文字数" loading="lazy">
+          <figcaption>セキュリティ系トグルと受信文字数の上限</figcaption>
+        </figure>
+        <figure class="spec-figure">
+          <img src="./images/macos/pin_lockout_references_macos.png" alt="PIN 認証レート制限の設定。5 連続失敗で 3 分間ロックアウト" loading="lazy">
+          <figcaption>PIN 認証レート制限（5 連続失敗で 3 分 lockout）</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <h3>クリップボード履歴の設定</h3>
+      <ul>
+        <li>履歴の有効化（ON / OFF）</li>
+        <li>件数上限（既定 50 件）</li>
+        <li>1 件あたりのサイズ上限（既定 5 MB）</li>
+        <li>「履歴を全削除」ボタン（確認ダイアログ付き）</li>
+      </ul>
+      <figure class="spec-figure medium">
+        <img src="./images/macos/clipboard_references_macos.png" alt="クリップボード履歴の設定。履歴の有効化、1 件の上限サイズ、保持件数、全削除ボタン" loading="lazy">
+        <figcaption>クリップボード履歴の設定一覧</figcaption>
+      </figure>
+    </div>
+
+    <div class="spec-card">
+      <h3>アクセシビリティ Onboarding の再表示</h3>
+      <p>初回起動時のアクセシビリティ案内をもう一度見たい場合に押す再表示ボタンを用意しています。あわせて、復旧手順として TCC データベースから本アプリのレコードのみを消す「アクセシビリティ権限をリセット」ボタンも用意しています。</p>
+      <figure class="spec-figure medium">
+        <img src="./images/macos/accessibility_references_macos.png" alt="アクセシビリティ設定。説明の再表示と権限のリセットボタン" loading="lazy">
+        <figcaption>説明の再表示と権限リセット</figcaption>
+      </figure>
+    </div>
+
+    <div class="spec-card">
+      <h3>接続まわりの設定</h3>
+      <p>MPC（Wi-Fi）と BLE の有効化、同時接続数の制限、そして接続が不安定になったときの復旧手順を 1 か所にまとめています。</p>
+      <ul>
+        <li><strong>Wi-Fi 経由の接続（MPC）を有効化</strong> / <strong>Bluetooth 経由の接続（BLE）を有効化</strong>（既定はどちらも ON）</li>
+        <li><strong>同時接続数を制限</strong>（既定 OFF、ON にすると 1〜8 台で上限指定）</li>
+        <li><strong>Bluetooth サービスを再起動</strong> / <strong>Bluetooth 権限をリセット</strong></li>
+        <li><strong>Bonjour サービス（mDNSResponder）を再起動</strong> / <strong>DNS キャッシュをクリア</strong></li>
+      </ul>
+      <figure class="spec-figure medium">
+        <img src="./images/macos/connectivity_references_macos.png" alt="接続設定。Wi-Fi / Bluetooth の有効化トグル、同時接続数の制限、Bluetooth / Bonjour 再起動・DNS キャッシュクリアボタン" loading="lazy">
+        <figcaption>接続トグルと、不安定時の復旧ボタン群</figcaption>
+      </figure>
+      <span class="hint warn">サービス再起動は管理者パスワードの入力が必要です</span>
+    </div>
+
+    <div class="spec-card">
+      <h3>メンテナンス</h3>
+      <p><strong>MonoFlick Companion を再起動</strong>ボタンで、アプリ自身を終了して再起動します。接続中の iPhone / iPad は一時的に切断され、再起動後に自動で再接続されます（ペアリング情報は Keychain に保存されるため再ペアリング不要）。bluetoothd 再起動後の BLE 状態リセットや、アクセシビリティ権限の再要求にも使えます。</p>
+      <figure class="spec-figure medium">
+        <img src="./images/macos/maintenance_references_macos.png" alt="メンテナンスセクション。MonoFlick Companion を再起動ボタン" loading="lazy">
+        <figcaption>メンテナンス：アプリ自身の再起動</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 5. CONNECTIVITY ===================== -->
+<section class="spec-section" id="connectivity">
+  <div class="wrap">
+    <div class="spec-head">
+      <span class="spec-icon">⑤</span>
+      <div>
+        <span class="spec-eyebrow">CONNECTIVITY</span>
+        <h2>接続性</h2>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <h3>2 つの経路が並走</h3>
+      <ul>
+        <li><strong>MPC（Wi-Fi / AWDL）:</strong> 屋内・Wi-Fi がある環境で利用。低遅延・高スループット</li>
+        <li><strong>BLE + L2CAP CoC:</strong> 屋外・Wi-Fi OFF の環境で利用（有料機能）</li>
+        <li>先に確立した方が active になり、両経路を切替なく使えます</li>
+      </ul>
+      <span class="hint tip">Wi-Fi だけでも全機能が動作します</span>
+    </div>
+
+    <div class="spec-card">
+      <h3>スリープ復帰時の自動再接続</h3>
+      <p>
+        Mac がスリープしたとき、コンパニオンは自動的に MPC / BLE の advertise を停止し、
+        起床時に 1 秒の待機を挟んで再開します。
+        iPhone 側の操作は不要で、ペアリング済みの状態は維持されます。
+      </p>
+    </div>
+
+    <div class="spec-card">
+      <h3>iPhone 側からのクリップボード書き込み</h3>
+      <p>
+        iPhone で「Mac のクリップボードに送る」操作を行うと、
+        Mac の <code>NSPasteboard</code> に書き込まれ、同時に履歴にも source=<strong>iPhone</strong> として記録されます。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 6. SECURITY ===================== -->
+<section class="spec-section" id="security">
+  <div class="wrap">
+    <div class="spec-head">
+      <span class="spec-icon">⑥</span>
+      <div>
+        <span class="spec-eyebrow">SECURITY</span>
+        <h2>セキュリティ・プライバシー</h2>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <h3>必要な権限</h3>
+      <table class="spec-table">
+        <thead>
+          <tr><th>権限</th><th>用途</th><th>取得方法</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ローカルネットワーク</td>
+            <td>iPhone との MPC 通信</td>
+            <td>初回 OS プロンプトで「許可」</td>
+          </tr>
+          <tr>
+            <td>Bluetooth</td>
+            <td>BLE での通信（屋外・Wi-Fi OFF 経路）</td>
+            <td>初回 OS プロンプトで「許可」</td>
+          </tr>
+          <tr>
+            <td>アクセシビリティ</td>
+            <td>キー入力・マウス操作の合成（CGEvent）</td>
+            <td>システム設定 → プライバシーとセキュリティ → アクセシビリティ で手動 ON</td>
+          </tr>
+        </tbody>
+      </table>
+      <span class="hint warn">アクセシビリティを切ると、iPhone から送ったキーが Mac に反映されません</span>
+    </div>
+
+    <div class="spec-card">
+      <h3>通信の安全性</h3>
+      <ul>
+        <li>MPC は <strong>セッション暗号化（required）</strong>で常時暗号化</li>
+        <li>BLE は <strong>AEAD（認証付き暗号）</strong>で 1 メッセージごとに seal / open</li>
+        <li>鍵交換は <strong>Curve25519 ECDH + HKDF</strong>、共有秘密は Mac のキーチェーンに保存</li>
+        <li>サーバ経由しない 2 点間通信。インターネット越しの通信は一切ありません</li>
+      </ul>
+    </div>
+
+    <div class="spec-card">
+      <h3>受信メッセージの防御</h3>
+      <ul>
+        <li>未認証 peer からの注入メッセージは拒否</li>
+        <li><span class="spec-kbd">⌘Q</span> など <strong>危険ショートカットの deny-list</strong>（既定 ON）</li>
+        <li>insert 受信長 / バックスペース回数 / ポインタ移動量に <strong>絶対値上限</strong></li>
+        <li>任意パスのバイナリ起動・任意引数は <strong>厳格モード</strong>で拒否（既定 ON）</li>
+        <li>ログに残るテキストは <strong>マスク表示</strong>（既定 ON、生表示への切替も可）</li>
+      </ul>
+    </div>
+
+    <div class="spec-card">
+      <h3>プライバシー</h3>
+      <ul>
+        <li>解析 SDK・広告 SDK・クラッシュレポート SDK のいずれも導入していません</li>
+        <li>外部サーバとの通信は <strong>一切なし</strong></li>
+        <li>クリップボード履歴はメモリのみ。ディスクや iCloud には残りません</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 7. REQUIREMENTS ===================== -->
+<section class="spec-section" id="requirements">
+  <div class="wrap">
+    <div class="spec-head">
+      <span class="spec-icon">⑦</span>
+      <div>
+        <span class="spec-eyebrow">REQUIREMENTS</span>
+        <h2>動作環境と配布</h2>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <h3>必要環境</h3>
+      <ul>
+        <li><strong>macOS 15 (Sequoia) 以降</strong></li>
+        <li>iPhone 側: <strong>iOS 18 以降</strong> の MonoFlick アプリ</li>
+        <li>初回ペアリングは Wi-Fi 環境を推奨（屋外オンリーでも BLE で初回 PIN 入力可能）</li>
+      </ul>
+    </div>
+
+    <div class="spec-card">
+      <h3>配布方法</h3>
+      <ul>
+        <li><strong>DMG での直接配布</strong>（Mac App Store ではありません）</li>
+        <li>ad-hoc 署名（Sign to Run Locally）で個人配布</li>
+        <li>初回起動時は Gatekeeper の警告が出る場合があります → 右クリック「開く」で許可</li>
+      </ul>
+      <span class="hint">初回接続の詳細手順は <a href="./guide.html">初回接続ガイド</a> をご参照ください</span>
+    </div>
+
+    <div class="spec-cta">
+      <h2>まずはダウンロード</h2>
+      <p>Mac コンパニオンと iPhone アプリを揃えれば、5〜10 分で接続できます。</p>
+      <a class="btn primary" href="./index.html#requirements">ダウンロードページへ</a>
+      <a class="btn" href="./guide.html">初回接続ガイドを見る</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <a href="./index.html">トップ</a>
+    &nbsp;·&nbsp;
+    <a href="./privacy-policy.html">Privacy Policy</a>
+    &nbsp;·&nbsp;
+    <a href="https://github.com/yoshinag/mono_flick_docs/issues">Contact (GitHub Issues)</a>
+  </div>
+  <div style="margin-top: 8px;">&copy; 2026 MonoFlick</div>
+</footer>
+
+</body>
+</html>
