@@ -379,7 +379,8 @@
     <a href="#q5"><span class="num">5</span>Dock 取り込み</a>
     <a href="#q6"><span class="num">6</span>電池節約</a>
     <a href="#q7"><span class="num">7</span>MPC と BLE</a>
-    <a href="#q8"><span class="num">8</span>アンインストール</a>
+    <a href="#q8"><span class="num">8</span>マウスがカクつく</a>
+    <a href="#q9"><span class="num">9</span>アンインストール</a>
   </div>
 </div>
 
@@ -712,11 +713,32 @@
   </div>
 </section>
 
-<!-- ===================== Q8: Uninstall ===================== -->
+<!-- ===================== Q8: Mouse stutter ===================== -->
 <section class="faq-section" id="q8">
   <div class="wrap">
     <div class="faq-card">
-      <h2><span class="qnum">Q8.</span> アンインストール（完全削除）の手順</h2>
+      <h2><span class="qnum">Q8.</span> マウス操作がカクつくときは？</h2>
+      <p>
+        Mac でマウス／トラックパッドの動きがカクつく場合は、メニューバーの MonoFlick アイコン → <strong>「環境設定」→ 接続</strong> セクションで <strong>「Bluetooth 経由の接続（BLE）を有効化」を OFF</strong> にしてください。
+        Bluetooth マウスなど他の BT 機器と帯域や connection interval を取り合うことでカクつくケースがあります。MPC（Wi-Fi）経路は引き続き有効なので、屋内利用ならこのままで動作に支障はありません。
+      </p>
+      <ol class="steps">
+        <li>メニューバーの MonoFlick アイコン → <strong>「環境設定」</strong> を開きます。</li>
+        <li>「接続」セクションの <strong>「Bluetooth 経由の接続（BLE）を有効化」</strong> を OFF にします。</li>
+        <li>iPhone との通信は MPC（Wi-Fi）のみに切り替わり、マウス動作が回復します。</li>
+      </ol>
+      <div class="footnote">
+        屋外や Wi-Fi の無い環境に出るときは、BLE を再度 ON に戻してください（Wi-Fi が使えない状況では BLE が唯一の経路です）。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Q9: Uninstall ===================== -->
+<section class="faq-section" id="q9">
+  <div class="wrap">
+    <div class="faq-card">
+      <h2><span class="qnum">Q9.</span> アンインストール（完全削除）の手順</h2>
       <p>
         MonoFlick はサーバを介さない 2 点間アプリのため、削除も各端末でローカルに行います。
         通常の「アプリを捨てる」だけでは残るデータがいくつかあります。完全削除したい場合は下の手順で進めてください。
