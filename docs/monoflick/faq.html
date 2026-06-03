@@ -722,13 +722,42 @@
         Mac でマウス／トラックパッドの動きがカクつく場合は、メニューバーの MonoFlick アイコン → <strong>「環境設定」→ 接続</strong> セクションで <strong>「Bluetooth 経由の接続（BLE）を有効化」を OFF</strong> にしてください。
         Bluetooth マウスなど他の BT 機器と帯域や connection interval を取り合うことでカクつくケースがあります。MPC（Wi-Fi）経路は引き続き有効なので、屋内利用ならこのままで動作に支障はありません。
       </p>
+
+      <p class="subhead" style="margin-top: 18px;">手順 1: BLE を OFF にする</p>
       <ol class="steps">
         <li>メニューバーの MonoFlick アイコン → <strong>「環境設定」</strong> を開きます。</li>
         <li>「接続」セクションの <strong>「Bluetooth 経由の接続（BLE）を有効化」</strong> を OFF にします。</li>
         <li>iPhone との通信は MPC（Wi-Fi）のみに切り替わり、マウス動作が回復します。</li>
       </ol>
+      <p class="subhead" style="margin-top: 22px;">手順 2: 屋外で BLE が必要になったら再起動</p>
+      <p>
+        屋外 / Wi-Fi が無い環境に出るときは BLE を ON に戻します。OFF → ON の切替直後にうまく再接続しない場合は、後述の Bluetooth サービス再起動を試してください。
+      </p>
+      <ol class="steps">
+        <li>メニューバーの MonoFlick アイコン → <strong>「環境設定」</strong> を開きます。</li>
+        <li>「接続」セクションの <strong>「Bluetooth 経由の接続（BLE）を有効化」</strong> を ON に戻します。</li>
+        <li>iPhone 側でアプリを開き、しばらく待つと自動的に BLE 再接続します（ペアリング情報は Keychain に保持されているため再ペアリング不要）。</li>
+        <li>30 秒待っても接続されない場合 → 次の「Bluetooth サービスを再起動」へ。</li>
+      </ol>
+
+      <p class="subhead" style="margin-top: 22px;">手順 3: それでも繋がらないとき（Bluetooth サービス再起動）</p>
+      <p>
+        macOS の <code>bluetoothd</code> プロセスが内部的に詰まっていると、BLE を ON にしても advertising が動かないことがあります。Companion 側に再起動ボタンを用意しています:
+      </p>
+      <ol class="steps">
+        <li>メニューバーの MonoFlick アイコン → <strong>「環境設定」→ 接続</strong> を開きます。</li>
+        <li><strong>「Bluetooth サービスを再起動」</strong> ボタンを押下します。</li>
+        <li>macOS の管理者パスワード入力ダイアログが出るので入力（TouchID 可）。</li>
+        <li><code>bluetoothd</code> が SIGTERM で停止 → launchd が即時 respawn → BLE radio はそのまま ON のままで内部 state だけ初期化されます。</li>
+        <li>無線マウス等の Classic BT 機器の切断時間は最小限（数秒）。</li>
+        <li>その後 Companion を一旦終了して再起動すると確実です。</li>
+      </ol>
+      <p style="margin-top: 12px;">
+        ターミナル派は次のコマンドで同じ結果になります:
+      </p>
+      <pre style="background: rgba(115, 152, 169, 0.10); padding: 10px 14px; border-radius: 8px; font-size: 0.88em; overflow-x: auto;"><code>sudo pkill bluetoothd</code></pre>
       <div class="footnote">
-        屋外や Wi-Fi の無い環境に出るときは、BLE を再度 ON に戻してください（Wi-Fi が使えない状況では BLE が唯一の経路です）。
+        Bluetooth を OFF→ON の手順でも復旧しますが、無線マウス利用中は OFF にした瞬間にマウスが効かなくなり ON に戻せなくなることがあるため <strong>非推奨</strong>です。「Bluetooth サービスを再起動」ボタンか <code>sudo pkill bluetoothd</code> なら BT チップは ON のままなので安全です。
       </div>
     </div>
   </div>
