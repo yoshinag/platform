@@ -366,6 +366,69 @@ section + section { border-top: 1px solid var(--border); }
   text-decoration: none;
 }
 
+/* ===== Homebrew install (under Requirements) ===== */
+.brew {
+  max-width: 880px;
+  margin: 32px auto 0;
+}
+.brew-head {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.brew-head h3 {
+  margin: 0 0 6px;
+  font-size: 1.2rem;
+  letter-spacing: -0.01em;
+  color: var(--on-bg);
+}
+.brew-head p {
+  margin: 0;
+  color: var(--on-bg-muted);
+  font-size: 0.9rem;
+}
+.brew-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.brew-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 16px 16px 14px;
+  box-shadow: var(--shadow);
+  color: var(--card-fg);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.brew-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.brew-code {
+  margin: 0;
+  padding: 12px 14px;
+  background: rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--card-fg);
+  white-space: pre;
+}
+@media (prefers-color-scheme: dark) {
+  .brew-code { background: rgba(255, 255, 255, 0.06); }
+}
+@media (max-width: 760px) {
+  .brew-grid { grid-template-columns: 1fr; }
+}
+
 /* ===== English summary ===== */
 .en-summary {
   text-align: center;
