@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
+Sitemap: https://iroirotool.com/sitemap.xml
 Sitemap: https://iroirotool.com/monoflick/sitemap.xml
