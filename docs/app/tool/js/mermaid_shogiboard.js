@@ -342,9 +342,11 @@ export function renderBoard(data) {
             const d = disp(c, r);
             const cx = cellX(d.col) + CELL / 2;
             const cy = cellY(d.row) + CELL / 2;
-            const kanji = piece.promoted
+            let kanji = piece.promoted
                 ? (PROMOTED_KANJI[piece.letter] || PIECE_KANJI[piece.letter])
                 : PIECE_KANJI[piece.letter];
+            // 玉将は先手=王 / 後手=玉 で書き分ける
+            if (piece.letter === 'K') kanji = piece.side === 'black' ? '王' : '玉';
             const rotate = piece.side !== bottomSide;
             const transform = rotate ? ` transform="rotate(180 ${cx} ${cy})"` : '';
             const fill = piece.promoted ? C.arrow : C.text;
