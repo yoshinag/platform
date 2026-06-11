@@ -16,48 +16,86 @@
         <a href="../index.html">アプリトップへ戻る</a>
     </div>
     <h1>将棋盤ダイアグラム生成</h1>
-    <p class="lead">SFEN と注釈から将棋の局面図を描く Mermaid 外部ダイアグラムプラグイン（<code>shogiboard</code> 記法）のデモです。</p>
+    <p class="lead">盤面をクリック操作すると <code>shogiboard</code> 記法（Mermaid 外部ダイアグラム）が自動生成されます。テキストを直接編集しても盤に反映される双方向エディタです。</p>
 
-    <details open>
-        <summary>使用方法</summary>
+    <details>
+        <summary>使い方</summary>
         <ol>
-            <li><code>shogiboard</code> で始め、<code>sfen:</code> 行に局面を一行で記述します（初形は省略可）。</li>
-            <li><code>highlight:</code>（マス強調）、<code>arrow:</code>（矢印）、<code>label:</code>（注釈）、<code>flip:</code>（後手視点）、<code>caption:</code>（図題）を追加できます。</li>
-            <li>マス目は「筋(1-9)+段(a-i)」で表記します（例: <code>7f</code> = 7 筋 f 段 = 7六）。</li>
-            <li>PNG / SVG でダウンロードできます。処理はすべてブラウザ上で完結します。</li>
+            <li><strong>駒を置く</strong>: 「手番側（先手 / 後手）」と駒を選び、盤のマスをクリック。<strong>空</strong>を選んでクリックすると駒を消せます。</li>
+            <li><strong>ハイライト</strong>: マスをクリックで強調の ON / OFF。</li>
+            <li><strong>矢印</strong>: 始点 → 終点の順にマスをクリック。</li>
+            <li><strong>ラベル</strong>: マスをクリックして注釈文字を入力（空で削除）。</li>
+            <li>右下のテキストが <code>shogiboard</code> 記法です。直接編集しても盤へ反映されます。PNG / SVG でダウンロード可。処理はすべてブラウザ上で完結します。</li>
         </ol>
-        <pre class="syntax-example">shogiboard
-  sfen: lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 2
-  highlight: 7f
-  arrow: 7g -&gt; 7f
-  label: 7f "▲7六歩"
-  caption: "▲7六歩まで"</pre>
     </details>
 
     <div class="editor">
-        <div class="input-area">
-            <div class="input-head">
-                <label for="codeInput" class="input-label">shogiboard 記法</label>
-                <label class="sample-label">
-                    サンプル
-                    <select id="sampleSelect">
-                        <option value="">選択…</option>
-                        <option value="initial">平手初形</option>
-                        <option value="move" selected>▲7六歩（矢印＋注釈）</option>
-                        <option value="hand">持駒あり</option>
-                        <option value="flip">後手視点</option>
+        <div class="edit-pane">
+            <div class="toolbar">
+                <span class="tb-label">モード</span>
+                <div class="mode-group" id="modeGroup">
+                    <button type="button" class="mode-btn active" data-mode="place">駒を置く</button>
+                    <button type="button" class="mode-btn" data-mode="highlight">ハイライト</button>
+                    <button type="button" class="mode-btn" data-mode="arrow">矢印</button>
+                    <button type="button" class="mode-btn" data-mode="label">ラベル</button>
+                </div>
+            </div>
+
+            <div class="palette" id="palettePanel">
+                <div class="pal-row">
+                    <span class="tb-label">手番側</span>
+                    <div class="side-group" id="sideGroup">
+                        <button type="button" class="side-btn active" data-side="black">▲先手</button>
+                        <button type="button" class="side-btn" data-side="white">△後手</button>
+                    </div>
+                    <label class="promote-toggle"><input type="checkbox" id="promoteChk"> 成駒</label>
+                </div>
+                <div class="pal-row pieces" id="piecePalette"></div>
+            </div>
+
+            <div class="pos-controls">
+                <label>手番
+                    <select id="turnSelect">
+                        <option value="black">先手番</option>
+                        <option value="white">後手番</option>
                     </select>
                 </label>
+                <label class="chk"><input type="checkbox" id="flipChk"> 後手視点（反転）</label>
+                <label class="caption-label">図題
+                    <input type="text" id="captionInput" placeholder="（任意）">
+                </label>
             </div>
-            <textarea id="codeInput" rows="9" spellcheck="false"></textarea>
-            <div class="input-meta">
-                <span id="errorMessage" class="error" hidden></span>
+
+            <details class="hands-editor">
+                <summary>持駒を編集</summary>
+                <div id="handsEditor"></div>
+            </details>
+
+            <div class="status" id="statusMsg"></div>
+
+            <div class="input-area">
+                <div class="input-head">
+                    <label for="codeInput" class="input-label">shogiboard 記法（テキスト編集可）</label>
+                    <label class="sample-label">
+                        サンプル
+                        <select id="sampleSelect">
+                            <option value="">選択…</option>
+                            <option value="initial">平手初形</option>
+                            <option value="move" selected>▲7六歩（矢印＋注釈）</option>
+                            <option value="hand">持駒あり</option>
+                            <option value="flip">後手視点</option>
+                            <option value="empty">空の盤</option>
+                        </select>
+                    </label>
+                </div>
+                <textarea id="codeInput" rows="7" spellcheck="false"></textarea>
+                <div class="input-meta"><span id="errorMessage" class="error" hidden></span></div>
             </div>
         </div>
 
         <div class="preview-area">
             <div class="preview-box" id="previewBox">
-                <p class="placeholder">記法を入力すると、ここに盤面が表示されます。</p>
+                <p class="placeholder">盤を操作するか記法を入力すると、ここに局面が表示されます。</p>
             </div>
             <div class="download-buttons">
                 <button type="button" id="downloadPngBtn" disabled>PNG ダウンロード</button>

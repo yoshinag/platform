@@ -166,6 +166,86 @@ function esc(s) {
         .replace(/"/g, '&quot;');
 }
 
+/** 実盤面座標 (col0=9 筋/row0=a 段) → "7f" 形式のマス名 */
+export function squareName(col, row) {
+    return String(9 - col) + String.fromCharCode('a'.charCodeAt(0) + row);
+}
+
+/**
+ * SVG ビューポート座標 (x,y) がどのマスかを判定。GUI エディタ用。
+ * data は { flip, caption } を参照する (描画寸法に影響するため)。
+ * 盤外なら null、盤内なら { col, row, square } (実盤面座標) を返す。
+ */
+export function hitTest(data, x, y) {
+    const capH = data && data.caption ? 26 : 0;
+    const boardX = LEFT_PAD;
+    const boardY = capH + HAND_H + TOP;
+    const dCol = Math.floor((x - boardX) / CELL);
+    const dRow = Math.floor((y - boardY) / CELL);
+    if (dCol < 0 || dCol > 8 || dRow < 0 || dRow > 8) return null;
+    const flip = !!(data && data.flip);
+    const col = flip ? 8 - dCol : dCol;
+    const row = flip ? 8 - dRow : dRow;
+    return { col, row, square: squareName(col, row) };
+}
+
+/** board / 手番 / 持駒 から SFEN 文字列を生成 */
+export function serializeSfen(board, turn, blackHand, whiteHand, moveNo) {
+    const rankStrs = [];
+    for (let r = 0; r < 9; r++) {
+        let s = '';
+        let empty = 0;
+        for (let c = 0; c < 9; c++) {
+            const piece = board[r][c];
+            if (!piece) { empty++; continue; }
+            if (empty) { s += empty; empty = 0; }
+            const letter = piece.side === 'black'
+                ? piece.letter.toUpperCase()
+                : piece.letter.toLowerCase();
+            s += (piece.promoted ? '+' : '') + letter;
+        }
+        if (empty) s += empty;
+        rankStrs.push(s || '9');
+    }
+
+    const handStr = (hand, upper) => {
+        let s = '';
+        for (const letter of HAND_ORDER) {
+            const n = hand && hand[letter];
+            if (!n) continue;
+            s += (n > 1 ? n : '') + (upper ? letter : letter.toLowerCase());
+        }
+        return s;
+    };
+    const hands = handStr(blackHand, true) + handStr(whiteHand, false);
+
+    return [
+        rankStrs.join('/'),
+        turn === 'white' ? 'w' : 'b',
+        hands || '-',
+        moveNo || 1,
+    ].join(' ');
+}
+
+/** 描画用 state ({ board, turn, hands, highlights, arrows, labels, flip, caption, moveNo }) を shogiboard DSL テキストへ */
+export function serializeDsl(state) {
+    const lines = ['shogiboard'];
+    lines.push('  sfen: ' + serializeSfen(
+        state.board, state.turn, state.blackHand, state.whiteHand, state.moveNo));
+    if (state.highlights && state.highlights.length) {
+        lines.push('  highlight: ' + state.highlights.join(' '));
+    }
+    for (const a of (state.arrows || [])) {
+        lines.push('  arrow: ' + a.from + ' -> ' + a.to);
+    }
+    for (const l of (state.labels || [])) {
+        lines.push('  label: ' + l.sq + ' "' + l.text + '"');
+    }
+    if (state.flip) lines.push('  flip: true');
+    if (state.caption) lines.push('  caption: "' + state.caption + '"');
+    return lines.join('\n');
+}
+
 function handText(prefix, hand) {
     const items = [];
     for (const letter of HAND_ORDER) {
@@ -374,4 +454,7 @@ export function register(mermaid) {
     mermaid.registerExternalDiagrams([shogiboardDiagram()]);
 }
 
-export default { register, shogiboardDiagram, parseSfen, parseShogiDsl, renderBoard, INITIAL_SFEN };
+export default {
+    register, shogiboardDiagram, parseSfen, parseShogiDsl, renderBoard,
+    serializeSfen, serializeDsl, hitTest, squareName, INITIAL_SFEN,
+};
