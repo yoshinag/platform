@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- Google Analytics -->
+    <script src="../js/common/analytics.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>将棋盤ダイアグラム生成（Mermaid プラグイン）</title>
+    <link rel="stylesheet" href="css/shogi_board.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="../index.html">アプリトップへ戻る</a>
+    </div>
+    <h1>将棋盤ダイアグラム生成</h1>
+    <p class="lead">SFEN と注釈から将棋の局面図を描く Mermaid 外部ダイアグラムプラグイン（<code>shogiboard</code> 記法）のデモです。</p>
+
+    <details open>
+        <summary>使用方法</summary>
+        <ol>
+            <li><code>shogiboard</code> で始め、<code>sfen:</code> 行に局面を一行で記述します（初形は省略可）。</li>
+            <li><code>highlight:</code>（マス強調）、<code>arrow:</code>（矢印）、<code>label:</code>（注釈）、<code>flip:</code>（後手視点）、<code>caption:</code>（図題）を追加できます。</li>
+            <li>マス目は「筋(1-9)+段(a-i)」で表記します（例: <code>7f</code> = 7 筋 f 段 = 7六）。</li>
+            <li>PNG / SVG でダウンロードできます。処理はすべてブラウザ上で完結します。</li>
+        </ol>
+        <pre class="syntax-example">shogiboard
+  sfen: lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 2
+  highlight: 7f
+  arrow: 7g -&gt; 7f
+  label: 7f "▲7六歩"
+  caption: "▲7六歩まで"</pre>
+    </details>
+
+    <div class="editor">
+        <div class="input-area">
+            <div class="input-head">
+                <label for="codeInput" class="input-label">shogiboard 記法</label>
+                <label class="sample-label">
+                    サンプル
+                    <select id="sampleSelect">
+                        <option value="">選択…</option>
+                        <option value="initial">平手初形</option>
+                        <option value="move" selected>▲7六歩（矢印＋注釈）</option>
+                        <option value="hand">持駒あり</option>
+                        <option value="flip">後手視点</option>
+                    </select>
+                </label>
+            </div>
+            <textarea id="codeInput" rows="9" spellcheck="false"></textarea>
+            <div class="input-meta">
+                <span id="errorMessage" class="error" hidden></span>
+            </div>
+        </div>
+
+        <div class="preview-area">
+            <div class="preview-box" id="previewBox">
+                <p class="placeholder">記法を入力すると、ここに盤面が表示されます。</p>
+            </div>
+            <div class="download-buttons">
+                <button type="button" id="downloadPngBtn" disabled>PNG ダウンロード</button>
+                <button type="button" id="downloadSvgBtn" disabled>SVG ダウンロード</button>
+            </div>
+        </div>
+    </div>
+
+    <details>
+        <summary>記法リファレンス</summary>
+        <table class="ref-table">
+            <thead>
+            <tr><th>キー</th><th>意味</th><th>例</th></tr>
+            </thead>
+            <tbody>
+            <tr><td><code>sfen</code></td><td>局面（SFEN 一行）。大文字=先手、小文字=後手、<code>+</code>=成駒</td><td><code>sfen: lnsgkgsnl/... b - 1</code></td></tr>
+            <tr><td><code>highlight</code></td><td>マス強調（空白区切りで複数可）</td><td><code>highlight: 7f 2f</code></td></tr>
+            <tr><td><code>arrow</code></td><td>矢印（行ごとに 1 本）</td><td><code>arrow: 7g -&gt; 7f</code></td></tr>
+            <tr><td><code>label</code></td><td>マスへの注釈</td><td><code>label: 7f "▲7六歩"</code></td></tr>
+            <tr><td><code>flip</code></td><td>後手視点に反転</td><td><code>flip: true</code></td></tr>
+            <tr><td><code>caption</code></td><td>図のキャプション</td><td><code>caption: "図1"</code></td></tr>
+            </tbody>
+        </table>
+        <p class="note">Mermaid v10 以降の <code>registerExternalDiagrams()</code> で登録された外部ダイアグラムです。プラグイン本体は <code>js/mermaid_shogiboard.js</code>、他の Mermaid 図と同居できます。</p>
+    </details>
+</div>
+
+<script type="module" src="js/shogi_board.js"></script>
+</body>
+</html>
