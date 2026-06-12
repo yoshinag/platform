@@ -346,21 +346,24 @@ frameBtn.addEventListener('click', () => {
     const step = currentHighlightStep();
     state.typeSeq = state.typeSeq || [];
     state.typeSeq.push(step);
-    if (!state.sleep) state.sleep = Math.max(40, parseInt(sleepInput.value, 10) || 400);
+    if (!state.sleep) state.sleep = Math.max(40, parseInt(sleepInput.value, 10) || 1000);
+    state.hgroups = [[], [], [], []];   // コマ確定したら記憶（強調）を自動クリア
     applyState();
     setStatus(step.length
-        ? `コマ ${state.typeSeq.length}（${step.map(displayName).join('+')}）を追加。「記憶クリア」→次のキーへ。`
+        ? `コマ ${state.typeSeq.length}（${step.map(displayName).join('+')}）を追加。次のキーを押してください。`
         : `ポーズ（空コマ）${state.typeSeq.length} を追加。`);
+    if (isLiveMode()) previewBox.focus();
 });
 
 memClearBtn.addEventListener('click', () => {
     state.hgroups = [[], [], [], []];
     applyState();
     setStatus('記憶（現在のコマ）をクリア。次のキーを押してください。');
+    if (isLiveMode()) previewBox.focus();
 });
 
 sleepInput.addEventListener('input', () => {
-    state.sleep = Math.max(40, parseInt(sleepInput.value, 10) || 400);
+    state.sleep = Math.max(40, parseInt(sleepInput.value, 10) || 1000);
     if (state.typeSeq && state.typeSeq.length) applyState();
 });
 
@@ -372,7 +375,7 @@ toTypeBtn.addEventListener('click', () => {
         return;
     }
     state.typeSeq = steps;
-    if (!state.sleep) state.sleep = 400;
+    if (!state.sleep) state.sleep = 1000;
     state.chords = [];
     chordFresh = true;
     applyState();

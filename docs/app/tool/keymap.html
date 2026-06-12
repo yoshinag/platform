@@ -53,7 +53,7 @@
             <li><strong>記法をコピー</strong>で Markdown 用のコードブロックを、<strong>共有 URL をコピー</strong>でこの図を再現するリンクを取得できます。</li>
             <li><strong>テーマ</strong>はページが OS のライト/ダークに自動追従し、プレビューと出力（PNG / SVG）の配色は「テーマ」で選べます。</li>
             <li><code>type</code> と <code>sleep</code> で<strong>連続タイピングのアニメ</strong>を表現できます（アニメは SVG に埋め込まれるため、書き出した SVG でも再生されます。PNG は静止画）。</li>
-            <li><strong>アニメを手動でコマ撮り</strong>: 「実キー：記憶」や盤面クリックで 1 コマ分のキーを強調 →「<strong>sleep（コマ追加）</strong>」でそのコマを記録 →「<strong>記憶クリア</strong>」→ 次のキー…を繰り返すと動きを 1 コマずつ作れます。何も強調せずに「sleep（コマ追加）」を押すと<strong>ポーズ（空コマ）</strong>になります。各コマの長さは <code>sleep</code>（ミリ秒）です。</li>
+            <li><strong>アニメを手動でコマ撮り</strong>: 「実キー：記憶」や盤面クリックで 1 コマ分のキーを強調 →「<strong>sleep（コマ追加）</strong>」でそのコマを記録（強調は自動でクリアされます）→ 次のキー…を繰り返すと動きを 1 コマずつ作れます。何も強調せずに「sleep（コマ追加）」を押すと<strong>ポーズ（空コマ）</strong>になります。各コマの長さは <code>sleep</code>（ミリ秒、既定 1000）です。</li>
             <li>手順（チョード）は記法で <code>chord: Ctrl+K -&gt; Ctrl+S</code> と書くと番号バッジ付きで表示。</li>
             <li>キー名は <code>Ctrl</code> / <code>Shift</code> / <code>Alt</code> / <code>Win</code> / <code>Enter</code> / <code>Esc</code> / <code>A</code>–<code>Z</code> / <code>F1</code>–<code>F12</code> など。別名（cmd, opt, control…）も可。</li>
             <li>PNG / SVG でダウンロードできます。処理はすべてブラウザ上で完結します。</li>
@@ -72,7 +72,7 @@
                     <button type="button" class="mode-btn" data-mode="livechord">実キー：手順</button>
                 </div>
                 <label class="sleep-label">sleep
-                    <input type="number" id="sleepInput" min="40" max="5000" step="20" value="400"> ms
+                    <input type="number" id="sleepInput" min="40" max="5000" step="50" value="1000"> ms
                 </label>
                 <button type="button" class="ghost-btn" id="frameBtn" title="いま強調しているキーを1コマとしてアニメに追加">sleep（コマ追加）</button>
                 <button type="button" class="ghost-btn" id="memClearBtn" title="現在のコマ（強調）だけ消す。アニメのコマは残す">記憶クリア</button>
