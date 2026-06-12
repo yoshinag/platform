@@ -53,7 +53,7 @@
             <li><strong>記法をコピー</strong>で Markdown 用のコードブロックを、<strong>共有 URL をコピー</strong>でこの図を再現するリンクを取得できます。</li>
             <li><strong>テーマ</strong>はページが OS のライト/ダークに自動追従し、プレビューと出力（PNG / SVG）の配色は「テーマ」で選べます。</li>
             <li><strong>シーン記法（アニメ）</strong>: <code>chord:</code> 行を縦に並べる（間に <code>sleep:</code> 行で消灯ポーズを挟める）と、文書順のコマ送りアニメになります。例: <code>chord: Win+C "コピー"</code> → <code>sleep: 1000</code> → <code>chord: Win+V "ペースト"</code> で「コピー → 間 → ペースト」。キーのコマの長さは直近の <code>sleep</code> 値に追従します。アニメは SVG に埋め込まれるため、書き出した SVG でも再生されます（PNG は静止画）。</li>
-            <li><strong>キーへのコメント</strong>: <code>chord: Win+C "コピー"</code> のように引用符で書くと、そのステップの最後のキーに注釈が付きます（<code>label:</code> 行と同じ表示）。</li>
+            <li><strong>キーへのコメント</strong>: <code>chord: Win+C "コピー"</code> のように引用符で書くと、そのステップの最後のキーに注釈が付きます。アニメでは<strong>そのコマの点灯中だけ</strong>表示され、静的バッジ（chord 1 行）では常時表示です。常に表示したい注釈は <code>label:</code> 行を使います。</li>
             <li><strong>アニメを手動でコマ撮り</strong>: 「実キー：記憶」や盤面クリックで 1 コマ分のキーを強調 →「<strong>sleep（コマ追加）</strong>」でそのコマを記録（強調は自動でクリアされます）→ 次のキー…を繰り返すと動きを 1 コマずつ作れます。何も強調せずに「sleep（コマ追加）」を押すと<strong>ポーズ（空コマ）</strong>になります。各コマの長さは <code>sleep</code>（ミリ秒、既定 1000）です。</li>
             <li>手順（チョード）は記法で <code>chord: Ctrl+K -&gt; Ctrl+S</code> と書くと番号バッジ付きで表示。</li>
             <li>キー名は <code>Ctrl</code> / <code>Shift</code> / <code>Alt</code> / <code>Win</code> / <code>Enter</code> / <code>Esc</code> / <code>A</code>–<code>Z</code> / <code>F1</code>–<code>F12</code> など。別名（cmd, opt, control…）も可。</li>

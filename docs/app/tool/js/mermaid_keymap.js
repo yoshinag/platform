@@ -228,17 +228,17 @@ export function parseKeymapDsl(text) {
                 break;
             }
             case 'chord': {
-                // 各ステップは keys + 任意の "コメント"（最後のキーへの注釈になる）
+                // 各ステップは keys + 任意の "コメント"（最後のキーへの注釈。
+                // アニメではそのコマの点灯中だけ表示、静的バッジでは常時表示）
                 const steps = [];
                 for (const seg of val.split(/->|→/)) {
                     const nm = seg.match(/"([^"]*)"/);
                     const keys = seg.replace(/"[^"]*"/, '').split(/[\s+]+/).filter(Boolean);
                     if (!keys.length) continue;
-                    steps.push(keys);
-                    if (nm && nm[1]) out.labels.push({ key: keys[keys.length - 1], text: nm[1] });
+                    steps.push({ keys, note: nm && nm[1] ? nm[1] : '' });
                 }
                 if (steps.length) {
-                    out.chords.push(steps);
+                    out.chords.push(steps.map((st) => st.keys));
                     events.push({ kind: 'keys', steps });
                 }
                 break;
@@ -267,13 +267,23 @@ export function parseKeymapDsl(text) {
         let tempo = 1000; // キーのコマの長さ（直近の sleep 値に追従）
         for (const ev of events) {
             if (ev.kind === 'keys') {
-                for (const step of ev.steps) out.frames.push({ keys: step, ms: tempo });
+                for (const st of ev.steps) {
+                    out.frames.push({ keys: st.keys, ms: tempo, note: st.note });
+                }
             } else {
                 out.frames.push({ keys: [], ms: ev.ms }); // 消灯ポーズ
                 tempo = ev.ms;
             }
         }
         out.chords = []; // アニメに変換したので静的バッジは出さない
+    } else {
+        // 静的バッジ: コメントは常時表示のラベルとして扱う
+        for (const ev of events) {
+            if (ev.kind !== 'keys') continue;
+            for (const st of ev.steps) {
+                if (st.note) out.labels.push({ key: st.keys[st.keys.length - 1], text: st.note });
+            }
+        }
     }
     return out;
 }
@@ -446,6 +456,7 @@ export function renderKeymap(data) {
     const totalMs = frames.reduce((acc, f) => acc + f.ms, 0);
     const animTotal = totalMs / 1000; // 秒
     const animMap = new Map();
+    const noteMap = new Map(); // code → [{text, win}] コマ点灯中だけ表示するコメント
     let accMs = 0;
     for (const f of frames) {
         const a = accMs / totalMs;
@@ -455,6 +466,11 @@ export function renderKeymap(data) {
             if (!animMap.has(code)) animMap.set(code, []);
             animMap.get(code).push([a, b]);
         });
+        if (f.note && f.keys.length) {
+            const code = canonKey(f.keys[f.keys.length - 1]);
+            if (!noteMap.has(code)) noteMap.set(code, []);
+            noteMap.get(code).push({ text: f.note, win: [a, b] });
+        }
         accMs += f.ms;
     }
     const G0 = GROUP_COLORS[0];
@@ -522,11 +538,23 @@ export function renderKeymap(data) {
                 + `font-size="10" font-weight="bold" fill="${C.badgeText}">${stepMap.get(code)}</text>`);
         }
 
-        // キー注釈
+        // キー注釈（label: 行 = 常時表示）
         if (labelMap.has(code)) {
             p.push(`<text x="${cx}" y="${k.y + k.h - 5}" text-anchor="middle" font-size="9" `
                 + `font-weight="bold" fill="${C.label}" stroke="${C.labelHalo}" stroke-width="2.5" `
                 + `paint-order="stroke">${esc(labelMap.get(code))}</text>`);
+        }
+
+        // コマのコメント（そのコマの点灯中だけ表示）
+        const notes = noteMap.get(code);
+        if (notes) {
+            for (const n of notes) {
+                p.push(`<text x="${cx}" y="${k.y + k.h - 5}" text-anchor="middle" font-size="9" `
+                    + `font-weight="bold" fill="${C.label}" stroke="${C.labelHalo}" stroke-width="2.5" `
+                    + `paint-order="stroke" opacity="0">`
+                    + animEl('opacity', '0', '1', [n.win], animTotal)
+                    + `${esc(n.text)}</text>`);
+            }
         }
     }
 
@@ -577,8 +605,11 @@ export function serializeKeymap(state) {
     if (state.frames && state.frames.length) {
         // シーン記法で書き戻す（キーのコマは 1 行ずつ、ポーズは sleep 行）
         for (const f of state.frames) {
-            if (f.keys.length) lines.push('  chord: ' + f.keys.join('+'));
-            else lines.push('  sleep: ' + f.ms);
+            if (f.keys.length) {
+                lines.push('  chord: ' + f.keys.join('+') + (f.note ? ' "' + f.note + '"' : ''));
+            } else {
+                lines.push('  sleep: ' + f.ms);
+            }
         }
     }
     for (const lb of (state.labels || [])) {
