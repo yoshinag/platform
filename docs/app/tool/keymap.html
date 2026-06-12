@@ -53,6 +53,7 @@
             <li><strong>記法をコピー</strong>で Markdown 用のコードブロックを、<strong>共有 URL をコピー</strong>でこの図を再現するリンクを取得できます。</li>
             <li><strong>テーマ</strong>はページが OS のライト/ダークに自動追従し、プレビューと出力（PNG / SVG）の配色は「テーマ」で選べます。</li>
             <li><code>type</code> と <code>sleep</code> で<strong>連続タイピングのアニメ</strong>を表現できます（アニメは SVG に埋め込まれるため、書き出した SVG でも再生されます。PNG は静止画）。</li>
+            <li><strong>シーン記法</strong>: <code>chord:</code> 行を <code>sleep:</code> 行で挟んで並べると、コマ送りアニメになります（例: <code>chord: Win+C</code> → <code>sleep: 1000</code> → <code>chord: Win+V</code> で「コピー → 間 → ペースト」）。キーのコマの長さは直近の <code>sleep</code> 値に追従します。</li>
             <li><strong>アニメを手動でコマ撮り</strong>: 「実キー：記憶」や盤面クリックで 1 コマ分のキーを強調 →「<strong>sleep（コマ追加）</strong>」でそのコマを記録（強調は自動でクリアされます）→ 次のキー…を繰り返すと動きを 1 コマずつ作れます。何も強調せずに「sleep（コマ追加）」を押すと<strong>ポーズ（空コマ）</strong>になります。各コマの長さは <code>sleep</code>（ミリ秒、既定 1000）です。</li>
             <li>手順（チョード）は記法で <code>chord: Ctrl+K -&gt; Ctrl+S</code> と書くと番号バッジ付きで表示。</li>
             <li>キー名は <code>Ctrl</code> / <code>Shift</code> / <code>Alt</code> / <code>Win</code> / <code>Enter</code> / <code>Esc</code> / <code>A</code>–<code>Z</code> / <code>F1</code>–<code>F12</code> など。別名（cmd, opt, control…）も可。</li>
@@ -122,7 +123,7 @@
                         サンプル
                         <select id="sampleSelect">
                             <option value="">選択…</option>
-                            <option value="copy" selected>コピー（Ctrl+C）</option>
+                            <option value="copy">コピー（Ctrl+C）</option>
                             <option value="screenshot">範囲スクショ</option>
                             <option value="chord">手順（VSCode 全保存）</option>
                             <option value="mac">Mac スポットライト（⌘Space）</option>
@@ -134,6 +135,7 @@
                             <option value="compact">コンパクト表示</option>
                             <option value="typing">タイピング アニメ（Hello）</option>
                             <option value="typingchord">タイピング アニメ（コピー→ペースト）</option>
+                            <option value="scene">シーン記法（chord + sleep でアニメ）</option>
                             <option value="empty">空</option>
                         </select>
                     </label>
@@ -156,7 +158,7 @@
             <tr><td><code>legend</code></td><td>色グループの凡例（<code>/</code> 区切りで 1〜4）</td><td><code>legend: コピー / ペースト</code></td></tr>
             <tr><td><code>compact</code></td><td>テンキー/矢印を隠す</td><td><code>compact: true</code></td></tr>
             <tr><td><code>theme</code></td><td>配色（auto / light / dark）。プレビューと出力に反映</td><td><code>theme: dark</code></td></tr>
-            <tr><td><code>chord</code></td><td>順に押す操作。手順番号バッジ付き</td><td><code>chord: Ctrl+K -&gt; Ctrl+S</code></td></tr>
+            <tr><td><code>chord</code></td><td>順に押す操作。手順番号バッジ付き。<code>sleep</code> 行を挟んで複数書くと<strong>コマ送りアニメ</strong>になる（シーン記法）</td><td><code>chord: Win+C</code><br><code>sleep: 1000</code><br><code>chord: Win+V</code></td></tr>
             <tr><td><code>type</code></td><td>連続タイピング（アニメ）。各ステップは key / key+key、<code>_</code> はポーズ</td><td><code>type: Ctrl+C _ Ctrl+V</code></td></tr>
             <tr><td><code>sleep</code></td><td>type の 1 ステップの長さ（ミリ秒）</td><td><code>sleep: 220</code></td></tr>
             <tr><td><code>label</code></td><td>キーへの注釈</td><td><code>label: 4 "範囲指定"</code></td></tr>

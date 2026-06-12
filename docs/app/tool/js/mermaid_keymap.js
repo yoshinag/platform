@@ -190,9 +190,11 @@ export function parseKeymapDsl(text) {
         chords: [],
         typeSeq: [],
         sleep: 0,
+        frames: [],
         labels: [],
         caption: '',
     };
+    const events = []; // chord / sleep の文書順（シーン記法の検出用）
     const lines = String(text || '').split(/\r?\n/);
     for (const raw of lines) {
         const line = raw.trim();
@@ -225,6 +227,7 @@ export function parseKeymapDsl(text) {
             }
             case 'sleep':
                 out.sleep = Math.max(0, parseInt(val, 10) || 0);
+                events.push({ kind: 'sleep', ms: Math.max(40, out.sleep || 1000) });
                 break;
             case 'legend': {
                 const parts = val.split('/').map((s) => s.trim());
@@ -234,7 +237,10 @@ export function parseKeymapDsl(text) {
             case 'chord': {
                 const steps = val.split(/->|→/).map((s) => s.split(/[\s+]+/).filter(Boolean))
                     .filter((arr) => arr.length);
-                if (steps.length) out.chords.push(steps);
+                if (steps.length) {
+                    out.chords.push(steps);
+                    events.push({ kind: 'keys', steps });
+                }
                 break;
             }
             case 'label': {
@@ -249,6 +255,22 @@ export function parseKeymapDsl(text) {
             default:
                 break;
         }
+    }
+
+    // シーン記法: sleep 行の後に chord 行が現れたら、文書順をコマ送りアニメとして解釈
+    // （chord A / sleep N / chord B → A 点灯 → N ms 消灯 → B 点灯 → ループ）
+    const firstSleep = events.findIndex((e) => e.kind === 'sleep');
+    if (firstSleep >= 0 && events.some((e, i) => i > firstSleep && e.kind === 'keys')) {
+        let tempo = 1000; // キーのコマの長さ（直近の sleep 値に追従）
+        for (const ev of events) {
+            if (ev.kind === 'keys') {
+                for (const step of ev.steps) out.frames.push({ keys: step, ms: tempo });
+            } else {
+                out.frames.push({ keys: [], ms: ev.ms }); // 消灯ポーズ
+                tempo = ev.ms;
+            }
+        }
+        out.chords = []; // アニメに変換したので静的バッジは出さない
     }
     return out;
 }
@@ -416,20 +438,27 @@ export function renderKeymap(data) {
         });
     });
 
-    // 連続タイピング: コード→点灯時間枠（全体に対する割合）
-    const seq = data.typeSeq || [];
-    const sleep = Math.max(40, data.sleep || 1000);
-    const animTotal = (seq.length * sleep) / 1000; // 秒
+    // 連続タイピング: コード→点灯時間枠（全体に対する割合）。
+    // frames（シーン記法・可変長コマ）優先、なければ type+sleep（等間隔）。
+    let frames = (data.frames && data.frames.length) ? data.frames : null;
+    if (!frames) {
+        const sl = Math.max(40, data.sleep || 1000);
+        frames = (data.typeSeq || []).map((tokens) => ({ keys: tokens, ms: sl }));
+    }
+    const totalMs = frames.reduce((acc, f) => acc + f.ms, 0);
+    const animTotal = totalMs / 1000; // 秒
     const animMap = new Map();
-    seq.forEach((tokens, i) => {
-        const a = i / seq.length;
-        const b = (i + 0.8) / seq.length; // 各スロットの 80% 点灯（残りは離す間）
-        tokens.map(canonKey).forEach((code) => {
+    let accMs = 0;
+    for (const f of frames) {
+        const a = accMs / totalMs;
+        const b = (accMs + f.ms * 0.8) / totalMs; // 各コマの 80% 点灯（残りは離す間）
+        f.keys.map(canonKey).forEach((code) => {
             if (!code) return;
             if (!animMap.has(code)) animMap.set(code, []);
             animMap.get(code).push([a, b]);
         });
-    });
+        accMs += f.ms;
+    }
     const G0 = GROUP_COLORS[0];
 
     // ラベルをコード→テキストへ
@@ -546,6 +575,16 @@ export function serializeKeymap(state) {
 
     for (const steps of (state.chords || [])) {
         lines.push('  chord: ' + steps.map((s) => s.join('+')).join(' -> '));
+    }
+    if (state.frames && state.frames.length) {
+        // シーン記法で書き戻す（連続するキーのコマは 1 つの chord 行にまとめる）
+        let run = [];
+        for (const f of state.frames) {
+            if (f.keys.length) { run.push(f.keys.join('+')); continue; }
+            if (run.length) { lines.push('  chord: ' + run.join(' -> ')); run = []; }
+            lines.push('  sleep: ' + f.ms);
+        }
+        if (run.length) lines.push('  chord: ' + run.join(' -> '));
     }
     if (state.typeSeq && state.typeSeq.length) {
         lines.push('  type: ' + state.typeSeq.map((s) => (s.length ? s.join('+') : '_')).join(' '));

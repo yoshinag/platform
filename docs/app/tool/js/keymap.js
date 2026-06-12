@@ -53,6 +53,8 @@ const SAMPLES = {
         'keymap\n  layout: us\n  type: H e l l o\n  sleep: 220\n  caption: "Hello とタイピング（アニメ）"',
     typingchord:
         'keymap\n  layout: us\n  type: Ctrl+C Ctrl+V\n  sleep: 500\n  caption: "コピー→ペースト（アニメ）"',
+    scene:
+        'keymap\n  caption: "コピー"\n  layout: us\n  chord: Win+C\n  sleep: 1000\n  chord: Win+V',
     groups:
         'keymap\n  layout: us\n  highlight: Ctrl C\n  highlight2: Ctrl V\n  highlight3: Ctrl X\n  legend: コピー / ペースト / 切り取り\n  caption: "編集ショートカット"',
     compact:
@@ -61,7 +63,7 @@ const SAMPLES = {
         'keymap\n  layout: us',
 };
 
-let state = parseKeymapDsl(SAMPLES.copy);
+let state = parseKeymapDsl(SAMPLES.empty);
 let mode = 'highlight';
 let activeGroup = 0;   // 現在のハイライト色グループ (GUI のみ、非シリアライズ)
 let renderSeq = 0;
@@ -323,6 +325,7 @@ clearBtn.addEventListener('click', () => {
     state.legends = ['', '', '', ''];
     state.chords = [];
     state.typeSeq = [];
+    state.frames = [];
     state.labels = [];
     chordFresh = true;
     applyState();
@@ -344,14 +347,23 @@ function currentHighlightStep() {
 
 frameBtn.addEventListener('click', () => {
     const step = currentHighlightStep();
-    state.typeSeq = state.typeSeq || [];
-    state.typeSeq.push(step);
-    if (!state.sleep) state.sleep = Math.max(40, parseInt(sleepInput.value, 10) || 1000);
+    const ms = Math.max(40, parseInt(sleepInput.value, 10) || 1000);
+    let total;
+    if (state.frames && state.frames.length) {
+        // シーン記法の文書はそのままシーンに追記
+        state.frames.push({ keys: step, ms });
+        total = state.frames.length;
+    } else {
+        state.typeSeq = state.typeSeq || [];
+        state.typeSeq.push(step);
+        if (!state.sleep) state.sleep = ms;
+        total = state.typeSeq.length;
+    }
     state.hgroups = [[], [], [], []];   // コマ確定したら記憶（強調）を自動クリア
     applyState();
     setStatus(step.length
-        ? `コマ ${state.typeSeq.length}（${step.map(displayName).join('+')}）を追加。次のキーを押してください。`
-        : `ポーズ（空コマ）${state.typeSeq.length} を追加。`);
+        ? `コマ ${total}（${step.map(displayName).join('+')}）を追加。次のキーを押してください。`
+        : `ポーズ（空コマ）${total} を追加。`);
     if (isLiveMode()) previewBox.focus();
 });
 
@@ -532,7 +544,7 @@ function codeFromHash() {
 
 // --- 初期化 ---
 
-codeInput.value = codeFromHash() || SAMPLES.copy;
+codeInput.value = codeFromHash() || SAMPLES.empty;
 previewBox.style.cursor = 'pointer';
 previewBox.tabIndex = 0;   // 実キー入力モードでフォーカスを受けられるように
 setStatus('キーをクリックでハイライトの ON / OFF。');
