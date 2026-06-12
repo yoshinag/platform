@@ -227,12 +227,9 @@ function onKeyUp(e) {
     }
 
     if (mode === 'live') {
+        // 押しているキーだけを表示（全部離せば消える＝キーボードテスター）
         const held = heldCodes();
-        if (pressed.size > 0) {
-            state.hgroups[activeGroup] = cycleMax.filter((c) => held.has(c)); // ライブで縮む
-        } else {
-            state.hgroups[activeGroup] = cycleMax.slice();                    // 全離しでピークを保持
-        }
+        state.hgroups[activeGroup] = cycleMax.filter((c) => held.has(c));
         applyState();
     }
 }
@@ -306,7 +303,7 @@ modeGroup.addEventListener('click', (ev) => {
     const hints = {
         highlight: 'キーをクリックで選択中の色グループにハイライトの ON / OFF。',
         label: 'キーをクリックして注釈を入力。',
-        live: '押している間だけキーが光ります（離すと最後の組を保持）。テキスト欄外をクリックしてから操作。',
+        live: '押している間だけキーが光るキーボードテスターです（離すと消えます）。テキスト欄外をクリックしてから操作。',
         liveacc: '押したキーが消えずに累積します。「すべて解除」でクリア。',
         livechord: '順に押すと 1 押下ごとに手順（番号バッジ）が増えます。「手順→アニメ化」でタイピング動画に。',
     };
