@@ -177,6 +177,20 @@ function svgDocString() {
     return '<?xml version="1.0" encoding="UTF-8"?>\n' + s;
 }
 
+/** 現在のキーバインドからファイル名（拡張子なし）を作る。例: Ctrl+C / Ctrl+K_Ctrl+S */
+function comboName() {
+    const combos = [];
+    for (const steps of (state.chords || [])) {
+        combos.push(steps.map((tokens) => tokens.join('+')).join('_'));
+    }
+    if ((state.highlights || []).length) combos.push(state.highlights.join('+'));
+    const name = combos.join('_')
+        .replace(/[\\/:*?"<>|\s]+/g, '-')
+        .replace(/-{2,}/g, '-')
+        .replace(/^-+|-+$/g, '');
+    return name || 'keymap';
+}
+
 function downloadBlob(blob, filename) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -190,7 +204,7 @@ function downloadBlob(blob, filename) {
 
 downloadSvgBtn.addEventListener('click', () => {
     if (!currentSvg) return;
-    downloadBlob(new Blob([svgDocString()], { type: 'image/svg+xml' }), 'keymap.svg');
+    downloadBlob(new Blob([svgDocString()], { type: 'image/svg+xml' }), comboName() + '.svg');
 });
 
 downloadPngBtn.addEventListener('click', () => {
@@ -216,7 +230,7 @@ downloadPngBtn.addEventListener('click', () => {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         URL.revokeObjectURL(url);
-        canvas.toBlob((blob) => { if (blob) downloadBlob(blob, 'keymap.png'); }, 'image/png');
+        canvas.toBlob((blob) => { if (blob) downloadBlob(blob, comboName() + '.png'); }, 'image/png');
     };
     img.onerror = () => { URL.revokeObjectURL(url); showError('PNG 変換に失敗しました。'); };
     img.src = url;
