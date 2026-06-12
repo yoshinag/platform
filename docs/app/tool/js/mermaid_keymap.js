@@ -313,13 +313,15 @@ export function hitTest(data, x, y) {
 // ---------------------------------------------------------------------------
 
 const C = {
-    keyFill: '#ffffff',
-    keyStroke: '#b9b9bd',
-    keyText: '#2a2a2e',
-    badge: '#d8462f',
+    bg: '#1f2026',
+    keyFill: '#2c2d34',
+    keyStroke: '#474853',
+    keyText: '#e6e6ea',
+    badge: '#ff5a3d',
     badgeText: '#ffffff',
-    caption: '#1f1409',
-    label: '#1f1409',
+    caption: '#ececf1',
+    label: '#f4f4f7',
+    labelHalo: '#15161a',
 };
 
 // ハイライトのグループ別カラー (1〜4)
@@ -390,7 +392,7 @@ export function renderKeymap(data) {
     const totalH = height + legendH;
 
     const p = [];
-    p.push(`<rect x="0" y="0" width="${width}" height="${totalH}" fill="#ffffff"/>`);
+    p.push(`<rect x="0" y="0" width="${width}" height="${totalH}" fill="${C.bg}"/>`);
 
     if (data.caption) {
         p.push(`<text x="${width / 2}" y="20" text-anchor="middle" font-size="16" `
@@ -429,7 +431,7 @@ export function renderKeymap(data) {
         // キー注釈
         if (labelMap.has(code)) {
             p.push(`<text x="${cx}" y="${k.y + k.h - 5}" text-anchor="middle" font-size="9" `
-                + `font-weight="bold" fill="${C.label}" stroke="#ffffff" stroke-width="2.5" `
+                + `font-weight="bold" fill="${C.label}" stroke="${C.labelHalo}" stroke-width="2.5" `
                 + `paint-order="stroke">${esc(labelMap.get(code))}</text>`);
         }
     }

@@ -384,7 +384,7 @@ downloadPngBtn.addEventListener('click', () => {
         canvas.width = w * scale;
         canvas.height = h * scale;
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#ffffff';
+        ctx.fillStyle = '#1f2026';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         URL.revokeObjectURL(url);
