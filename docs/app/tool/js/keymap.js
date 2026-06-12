@@ -140,12 +140,24 @@ const pressed = new Set();
 let liveCombo = [];
 
 function onKeyDown(e) {
-    if (mode !== 'live' || isFormFocused()) return;
+    if ((mode !== 'live' && mode !== 'liveacc') || isFormFocused()) return;
     e.preventDefault();
     if (e.repeat) return;
     const code = physToCode(e);
     if (!code) return;
-    if (pressed.size === 0) liveCombo = [];   // 新しい押下サイクル開始
+
+    if (mode === 'liveacc') {
+        // 記憶モード: 押したキーを累積（重複は除外、自動クリアしない）
+        const cc = canonKey(code);
+        if (!state.highlights.some((h) => canonKey(h) === cc)) {
+            state.highlights.push(code);
+            applyState();
+        }
+        return;
+    }
+
+    // 現在モード: 押している組を表示し、新しい押下サイクルで置き換え
+    if (pressed.size === 0) liveCombo = [];
     pressed.add(e.code);
     if (!liveCombo.includes(code)) liveCombo.push(code);
     state.highlights = liveCombo.slice();
@@ -212,14 +224,16 @@ modeGroup.addEventListener('click', (ev) => {
     modeGroup.querySelectorAll('.mode-btn').forEach((b) => b.classList.remove('active'));
     btn.classList.add('active');
     pressed.clear();
-    previewBox.classList.toggle('live', mode === 'live');
+    const isLive = mode === 'live' || mode === 'liveacc';
+    previewBox.classList.toggle('live', isLive);
     const hints = {
         highlight: 'キーをクリックでハイライトの ON / OFF。',
         label: 'キーをクリックして注釈を入力。',
-        live: '実際のキーボードを押すと連動します（テキスト欄外をクリックしてから操作してください）。',
+        live: '実際のキーボードを押すと、押している組を表示します（テキスト欄外をクリックしてから操作）。',
+        liveacc: '実際のキーを押すたびに記憶（累積）します。「すべて解除」でクリア。',
     };
     setStatus(hints[mode] || '');
-    if (mode === 'live') {
+    if (isLive) {
         if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
         previewBox.focus();
     }
