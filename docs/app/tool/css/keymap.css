@@ -249,6 +249,15 @@ textarea:focus {
     height: auto;
 }
 
+.preview-box.live {
+    border-color: #d8462f;
+    box-shadow: 0 0 0 2px rgba(216, 70, 47, 0.25);
+}
+
+.preview-box:focus {
+    outline: none;
+}
+
 .preview-box .placeholder {
     color: #888;
     font-size: 0.9em;

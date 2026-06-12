@@ -33,6 +33,7 @@
         <ol>
             <li><strong>ハイライト</strong>モードでキーをクリックすると強調の ON / OFF。</li>
             <li><strong>ラベル</strong>モードでキーをクリックして注釈文字を入力（空で削除）。</li>
+            <li><strong>実キー入力</strong>モードでは実際のキーボードを押すと、その組み合わせがそのまま盤面に反映されます（押したショートカットをキャプチャ）。一部の OS / ブラウザ固有ショートカットは抑止できない場合があります。</li>
             <li>手順（チョード）は記法で <code>chord: Ctrl+K -&gt; Ctrl+S</code> と書くと番号バッジ付きで表示。</li>
             <li>キー名は <code>Ctrl</code> / <code>Shift</code> / <code>Alt</code> / <code>Win</code> / <code>Enter</code> / <code>Esc</code> / <code>A</code>–<code>Z</code> / <code>F1</code>–<code>F12</code> など。別名（cmd, opt, control…）も可。</li>
             <li>PNG / SVG でダウンロードできます。処理はすべてブラウザ上で完結します。</li>
@@ -46,6 +47,7 @@
                 <div class="mode-group" id="modeGroup">
                     <button type="button" class="mode-btn active" data-mode="highlight">ハイライト</button>
                     <button type="button" class="mode-btn" data-mode="label">ラベル</button>
+                    <button type="button" class="mode-btn" data-mode="live">実キー入力</button>
                 </div>
                 <button type="button" class="ghost-btn" id="clearBtn">すべて解除</button>
             </div>

@@ -99,6 +99,68 @@ async function render() {
     }
 }
 
+// --- 実キー入力（物理キーボードと連動） ---
+
+const PHYS_MAP = {
+    ControlLeft: 'Ctrl', ControlRight: 'Ctrl', ShiftLeft: 'Shift', ShiftRight: 'Shift',
+    AltLeft: 'Alt', AltRight: 'Alt', MetaLeft: 'Win', MetaRight: 'Win',
+    Enter: 'Enter', NumpadEnter: 'NumEnter', Backspace: 'Backspace', Tab: 'Tab',
+    Escape: 'Esc', Space: 'Space', CapsLock: 'CapsLock', ContextMenu: 'Menu',
+    ArrowUp: 'Up', ArrowDown: 'Down', ArrowLeft: 'Left', ArrowRight: 'Right',
+    Minus: '-', Equal: '=', BracketLeft: '[', BracketRight: ']', Backslash: '\\',
+    Semicolon: ';', Quote: "'", Comma: ',', Period: '.', Slash: '/', Backquote: '`',
+    NumpadDivide: 'NumDiv', NumpadMultiply: 'NumMul', NumpadSubtract: 'NumSub',
+    NumpadAdd: 'NumAdd', NumpadDecimal: 'NumDot', NumLock: 'NumLock',
+    Convert: '変換', NonConvert: '無変換', KanaMode: 'かな', Lang1: 'かな', Lang2: '英数',
+    IntlYen: '¥', IntlRo: 'Ro',
+};
+
+/** KeyboardEvent → 盤面のキーコード（配列依存の微調整つき）。該当なしは null */
+function physToCode(e) {
+    const c = e.code;
+    let m = /^Key([A-Z])$/.exec(c);
+    if (m) return m[1];
+    m = /^Digit([0-9])$/.exec(c);
+    if (m) return m[1];
+    m = /^Numpad([0-9])$/.exec(c);
+    if (m) return 'Num' + m[1];
+    if (/^F([1-9]|1[0-2])$/.test(c)) return c;
+    let code = PHYS_MAP[c] || null;
+    // JIS 系では Backquote が半角/全角キー
+    if (code === '`' && (state.layout === 'jis' || state.layout === 'macjis')) code = '半/全';
+    return code;
+}
+
+function isFormFocused() {
+    const a = document.activeElement;
+    return !!a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName);
+}
+
+const pressed = new Set();
+let liveCombo = [];
+
+function onKeyDown(e) {
+    if (mode !== 'live' || isFormFocused()) return;
+    e.preventDefault();
+    if (e.repeat) return;
+    const code = physToCode(e);
+    if (!code) return;
+    if (pressed.size === 0) liveCombo = [];   // 新しい押下サイクル開始
+    pressed.add(e.code);
+    if (!liveCombo.includes(code)) liveCombo.push(code);
+    state.highlights = liveCombo.slice();
+    applyState();
+}
+
+function onKeyUp(e) {
+    if (mode !== 'live') return;
+    pressed.delete(e.code);
+    // 全キーを離しても combo は保持（直前の組み合わせをキャプチャ結果として残す）
+}
+
+document.addEventListener('keydown', onKeyDown);
+document.addEventListener('keyup', onKeyUp);
+
 // --- 盤クリック ---
 
 function svgCoords(ev) {
@@ -122,6 +184,7 @@ function toggleHighlight(code) {
 }
 
 previewBox.addEventListener('click', (ev) => {
+    if (mode === 'live') return;
     const pt = svgCoords(ev);
     if (!pt) return;
     const hit = hitTest({ layout: state.layout, caption: state.caption }, pt.x, pt.y);
@@ -148,9 +211,18 @@ modeGroup.addEventListener('click', (ev) => {
     mode = btn.dataset.mode;
     modeGroup.querySelectorAll('.mode-btn').forEach((b) => b.classList.remove('active'));
     btn.classList.add('active');
-    setStatus(mode === 'highlight'
-        ? 'キーをクリックでハイライトの ON / OFF。'
-        : 'キーをクリックして注釈を入力。');
+    pressed.clear();
+    previewBox.classList.toggle('live', mode === 'live');
+    const hints = {
+        highlight: 'キーをクリックでハイライトの ON / OFF。',
+        label: 'キーをクリックして注釈を入力。',
+        live: '実際のキーボードを押すと連動します（テキスト欄外をクリックしてから操作してください）。',
+    };
+    setStatus(hints[mode] || '');
+    if (mode === 'live') {
+        if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+        previewBox.focus();
+    }
 });
 
 clearBtn.addEventListener('click', () => {
@@ -256,5 +328,6 @@ downloadPngBtn.addEventListener('click', () => {
 
 codeInput.value = SAMPLES.copy;
 previewBox.style.cursor = 'pointer';
+previewBox.tabIndex = 0;   // 実キー入力モードでフォーカスを受けられるように
 setStatus('キーをクリックでハイライトの ON / OFF。');
 applyText();
