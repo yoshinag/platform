@@ -27,6 +27,7 @@ const copyCodeBtn = document.getElementById('copyCodeBtn');
 const copySvgBtn = document.getElementById('copySvgBtn');
 const shareBtn = document.getElementById('shareBtn');
 const themeSelect = document.getElementById('themeSelect');
+const toTypeBtn = document.getElementById('toTypeBtn');
 
 const SAMPLES = {
     copy:
@@ -135,9 +136,8 @@ const PHYS_MAP = {
     IntlYen: '¥', IntlRo: 'Ro',
 };
 
-/** KeyboardEvent → 盤面のキーコード（配列依存の微調整つき）。該当なしは null */
-function physToCode(e) {
-    const c = e.code;
+/** 物理キーコード(e.code) → 盤面のキーコード（配列依存の微調整つき）。該当なしは null */
+function physToCode(c) {
     let m = /^Key([A-Z])$/.exec(c);
     if (m) return m[1];
     m = /^Digit([0-9])$/.exec(c);
@@ -156,55 +156,84 @@ function isFormFocused() {
     return !!a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName);
 }
 
-const pressed = new Set();
-let liveCombo = [];
+const pressed = new Set();   // 物理 e.code の押下集合
+let cycleMax = [];           // 現在モード: この押下サイクルのピーク組（押し順）
+let liveCombo = [];          // 手順モード: 現ステップの押下組
+let chordFresh = true;       // 手順モード: 次ステップで新しい chord を起こす
 
 function isLiveMode() {
     return mode === 'live' || mode === 'liveacc' || mode === 'livechord';
+}
+
+/** 現在押下中のキーを盤面コード（canon）の集合で返す */
+function heldCodes() {
+    const s = new Set();
+    for (const ec of pressed) {
+        const cc = physToCode(ec);
+        if (cc) s.add(canonKey(cc));
+    }
+    return s;
 }
 
 function onKeyDown(e) {
     if (!isLiveMode() || isFormFocused()) return;
     e.preventDefault();
     if (e.repeat) return;
-    const code = physToCode(e);
+    const code = physToCode(e.code);
     if (!code) return;
-    const arr = state.hgroups[activeGroup];
+    const cc = canonKey(code);
 
     if (mode === 'liveacc') {
-        // 記憶モード: 押したキーを現グループに累積（重複は除外）
-        const cc = canonKey(code);
+        // 記憶: 押したキーを現グループに累積（重複は除外、消えない）
+        const arr = state.hgroups[activeGroup];
         if (!arr.some((h) => canonKey(h) === cc)) { arr.push(code); applyState(); }
         return;
     }
 
     if (mode === 'livechord') {
-        // 手順モード: 押下サイクルを 1 ステップとして蓄積（keyup で確定）
+        // 手順: 押下中の組をライブ表示し、離したら 1 ステップ確定
         if (pressed.size === 0) liveCombo = [];
         pressed.add(e.code);
-        if (!liveCombo.includes(code)) liveCombo.push(code);
+        if (!liveCombo.includes(cc)) liveCombo.push(cc);
+        state.hgroups[activeGroup] = liveCombo.slice();
+        applyState();
         return;
     }
 
-    // 現在モード: 押している組を表示し、新しい押下サイクルで置き換え
-    if (pressed.size === 0) liveCombo = [];
+    // 現在: 押している間だけ光らせる（ライブ追従）。ピークを記録
+    if (pressed.size === 0) cycleMax = [];
     pressed.add(e.code);
-    if (!liveCombo.includes(code)) liveCombo.push(code);
-    state.hgroups[activeGroup] = liveCombo.slice();
+    if (!cycleMax.includes(cc)) cycleMax.push(cc);
+    const held = heldCodes();
+    state.hgroups[activeGroup] = cycleMax.filter((c) => held.has(c));
     applyState();
 }
 
 function onKeyUp(e) {
-    if (mode === 'live') { pressed.delete(e.code); return; }
+    if (!isLiveMode()) return;
+    pressed.delete(e.code);
+
     if (mode === 'livechord') {
-        pressed.delete(e.code);
         if (pressed.size === 0 && liveCombo.length) {
-            if (!state.chords.length) state.chords.push([]);
+            state.hgroups[activeGroup] = [];           // ライブ表示を消す
+            if (chordFresh) { state.chords.push([]); chordFresh = false; }
             state.chords[state.chords.length - 1].push(liveCombo.slice());
+            const n = state.chords[state.chords.length - 1].length;
             liveCombo = [];
             applyState();
-            setStatus(`手順 ${state.chords[state.chords.length - 1].length} 個を記録中（「すべて解除」でリセット）。`);
+            setStatus(`手順 ${n} 個を記録。「手順→アニメ化」でタイピング動画にできます。`);
         }
+        return;
+    }
+
+    if (mode === 'live') {
+        const held = heldCodes();
+        if (pressed.size > 0) {
+            state.hgroups[activeGroup] = cycleMax.filter((c) => held.has(c)); // ライブで縮む
+        } else {
+            state.hgroups[activeGroup] = cycleMax.slice();                    // 全離しでピークを保持
+        }
+        applyState();
     }
 }
 
@@ -270,14 +299,16 @@ modeGroup.addEventListener('click', (ev) => {
     btn.classList.add('active');
     pressed.clear();
     liveCombo = [];
+    cycleMax = [];
+    chordFresh = true;   // 手順モードに入るたび新しい chord から
     const isLive = isLiveMode();
     previewBox.classList.toggle('live', isLive);
     const hints = {
         highlight: 'キーをクリックで選択中の色グループにハイライトの ON / OFF。',
         label: 'キーをクリックして注釈を入力。',
-        live: '実際のキーボードを押すと、押している組を表示します（テキスト欄外をクリックしてから操作）。',
-        liveacc: '実際のキーを押すたびに現グループに記憶（累積）します。「すべて解除」でクリア。',
-        livechord: '実際のキーを順に押すと、その手順を chord として記録します。「すべて解除」でリセット。',
+        live: '押している間だけキーが光ります（離すと最後の組を保持）。テキスト欄外をクリックしてから操作。',
+        liveacc: '押したキーが消えずに累積します。「すべて解除」でクリア。',
+        livechord: '順に押すと 1 押下ごとに手順（番号バッジ）が増えます。「手順→アニメ化」でタイピング動画に。',
     };
     setStatus(hints[mode] || '');
     if (isLive) {
@@ -290,9 +321,26 @@ clearBtn.addEventListener('click', () => {
     state.hgroups = [[], [], [], []];
     state.legends = ['', '', '', ''];
     state.chords = [];
+    state.typeSeq = [];
     state.labels = [];
+    chordFresh = true;
     applyState();
     setStatus('ハイライト・手順・ラベル・凡例を解除しました。');
+});
+
+// 記録した手順（chord）→ タイピングアニメ（type + sleep）へ変換
+toTypeBtn.addEventListener('click', () => {
+    const steps = (state.chords || []).reduce((acc, c) => acc.concat(c), []);
+    if (!steps.length) {
+        setStatus('記録された手順がありません。「実キー：手順」で順に押してください。');
+        return;
+    }
+    state.typeSeq = steps;
+    if (!state.sleep) state.sleep = 400;
+    state.chords = [];
+    chordFresh = true;
+    applyState();
+    setStatus(`手順 ${steps.length} 個をタイピングアニメに変換しました（sleep=${state.sleep}ms）。`);
 });
 
 captionInput.addEventListener('input', () => { state.caption = captionInput.value.trim(); applyState(); });
