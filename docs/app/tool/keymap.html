@@ -25,6 +25,9 @@
         <div class="download-buttons">
             <button type="button" id="downloadPngBtn" disabled>PNG ダウンロード</button>
             <button type="button" id="downloadSvgBtn" disabled>SVG ダウンロード</button>
+            <button type="button" class="ghost-btn" id="copyCodeBtn">記法をコピー</button>
+            <button type="button" class="ghost-btn" id="copySvgBtn">SVG をコピー</button>
+            <button type="button" class="ghost-btn" id="shareBtn">共有 URL をコピー</button>
         </div>
     </div>
 
@@ -34,7 +37,10 @@
             <li><strong>ハイライト</strong>モードでキーをクリックすると強調の ON / OFF。</li>
             <li><strong>ラベル</strong>モードでキーをクリックして注釈文字を入力（空で削除）。</li>
             <li><strong>実キー：現在</strong>モードは、実際に押している組み合わせを表示します（離すと最後の組を保持、新たに押すと置き換え）。</li>
-            <li><strong>実キー：記憶</strong>モードは、押したキーを累積して覚えます（「すべて解除」でクリア）。一部の OS / ブラウザ固有ショートカットは抑止できない場合があります。</li>
+            <li><strong>実キー：記憶</strong>モードは、押したキーを累積して覚えます（「すべて解除」でクリア）。</li>
+            <li><strong>実キー：手順</strong>モードは、順番に押した操作を chord（番号バッジ付き）として記録します。一部の OS / ブラウザ固有ショートカットは抑止できない場合があります。</li>
+            <li><strong>色</strong>チップで 4 グループを色分けでき、<strong>凡例</strong>欄でラベルを付けると 1 枚で複数ショートカットを比較できます。<strong>コンパクト</strong>でテンキー/矢印を隠せます。</li>
+            <li><strong>記法をコピー</strong>で Markdown 用のコードブロックを、<strong>共有 URL をコピー</strong>でこの図を再現するリンクを取得できます。</li>
             <li>手順（チョード）は記法で <code>chord: Ctrl+K -&gt; Ctrl+S</code> と書くと番号バッジ付きで表示。</li>
             <li>キー名は <code>Ctrl</code> / <code>Shift</code> / <code>Alt</code> / <code>Win</code> / <code>Enter</code> / <code>Esc</code> / <code>A</code>–<code>Z</code> / <code>F1</code>–<code>F12</code> など。別名（cmd, opt, control…）も可。</li>
             <li>PNG / SVG でダウンロードできます。処理はすべてブラウザ上で完結します。</li>
@@ -50,6 +56,7 @@
                     <button type="button" class="mode-btn" data-mode="label">ラベル</button>
                     <button type="button" class="mode-btn" data-mode="live">実キー：現在</button>
                     <button type="button" class="mode-btn" data-mode="liveacc">実キー：記憶</button>
+                    <button type="button" class="mode-btn" data-mode="livechord">実キー：手順</button>
                 </div>
                 <button type="button" class="ghost-btn" id="clearBtn">すべて解除</button>
             </div>
@@ -63,6 +70,18 @@
                         <option value="mac">Mac (US)</option>
                     </select>
                 </label>
+                <span class="color-control">色
+                    <span class="group-chips" id="groupChips">
+                        <button type="button" class="chip active" data-g="0" style="--c:#ffd24a" title="グループ1"></button>
+                        <button type="button" class="chip" data-g="1" style="--c:#86c5ff" title="グループ2"></button>
+                        <button type="button" class="chip" data-g="2" style="--c:#9be8a0" title="グループ3"></button>
+                        <button type="button" class="chip" data-g="3" style="--c:#ffb3c8" title="グループ4"></button>
+                    </span>
+                </span>
+                <label class="legend-label">凡例
+                    <input type="text" id="legendInput" placeholder="（選択色の凡例）">
+                </label>
+                <label class="chk"><input type="checkbox" id="compactChk"> コンパクト</label>
                 <label class="caption-label">図題
                     <input type="text" id="captionInput" placeholder="（任意）">
                 </label>
@@ -85,6 +104,8 @@
                             <option value="macjis">JIS-Mac（⌘かな）</option>
                             <option value="arrows">カーソル移動（矢印）</option>
                             <option value="numpad">テンキー（Num 5）</option>
+                            <option value="groups">複数色＋凡例（コピー/ペースト/切取）</option>
+                            <option value="compact">コンパクト表示</option>
                             <option value="empty">空</option>
                         </select>
                     </label>
@@ -103,7 +124,9 @@
             </thead>
             <tbody>
             <tr><td><code>layout</code></td><td>配列（us / mac / jis）</td><td><code>layout: mac</code></td></tr>
-            <tr><td><code>highlight</code></td><td>押すキーを強調（空白 / + 区切り）</td><td><code>highlight: Ctrl Shift 4</code></td></tr>
+            <tr><td><code>highlight</code></td><td>押すキーを強調（空白 / + 区切り）。<code>highlight2〜4</code> で色分け</td><td><code>highlight: Ctrl Shift 4</code></td></tr>
+            <tr><td><code>legend</code></td><td>色グループの凡例（<code>/</code> 区切りで 1〜4）</td><td><code>legend: コピー / ペースト</code></td></tr>
+            <tr><td><code>compact</code></td><td>テンキー/矢印を隠す</td><td><code>compact: true</code></td></tr>
             <tr><td><code>chord</code></td><td>順に押す操作。手順番号バッジ付き</td><td><code>chord: Ctrl+K -&gt; Ctrl+S</code></td></tr>
             <tr><td><code>label</code></td><td>キーへの注釈</td><td><code>label: 4 "範囲指定"</code></td></tr>
             <tr><td><code>caption</code></td><td>図のキャプション</td><td><code>caption: "保存"</code></td></tr>

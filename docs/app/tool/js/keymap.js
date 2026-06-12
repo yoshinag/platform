@@ -20,6 +20,12 @@ const modeGroup = document.getElementById('modeGroup');
 const captionInput = document.getElementById('captionInput');
 const clearBtn = document.getElementById('clearBtn');
 const layoutSelect = document.getElementById('layoutSelect');
+const groupChips = document.getElementById('groupChips');
+const legendInput = document.getElementById('legendInput');
+const compactChk = document.getElementById('compactChk');
+const copyCodeBtn = document.getElementById('copyCodeBtn');
+const copySvgBtn = document.getElementById('copySvgBtn');
+const shareBtn = document.getElementById('shareBtn');
 
 const SAMPLES = {
     copy:
@@ -38,12 +44,17 @@ const SAMPLES = {
         'keymap\n  layout: us\n  highlight: Up Down Left Right\n  caption: "カーソル移動"',
     numpad:
         'keymap\n  layout: us\n  highlight: Num5\n  label: Num5 "中央"\n  caption: "テンキー"',
+    groups:
+        'keymap\n  layout: us\n  highlight: Ctrl C\n  highlight2: Ctrl V\n  highlight3: Ctrl X\n  legend: コピー / ペースト / 切り取り\n  caption: "編集ショートカット"',
+    compact:
+        'keymap\n  layout: us\n  compact: true\n  highlight: Ctrl Shift P\n  caption: "コマンドパレット（コンパクト表示）"',
     empty:
         'keymap\n  layout: us',
 };
 
 let state = parseKeymapDsl(SAMPLES.copy);
 let mode = 'highlight';
+let activeGroup = 0;   // 現在のハイライト色グループ (GUI のみ、非シリアライズ)
 let renderSeq = 0;
 let currentSvg = '';
 
@@ -72,6 +83,9 @@ function applyText() {
 function syncControls() {
     captionInput.value = state.caption || '';
     layoutSelect.value = state.layout || 'us';
+    compactChk.checked = !!state.compact;
+    [...groupChips.children].forEach((b, i) => b.classList.toggle('active', i === activeGroup));
+    legendInput.value = (state.legends && state.legends[activeGroup]) || '';
 }
 
 async function render() {
@@ -139,20 +153,30 @@ function isFormFocused() {
 const pressed = new Set();
 let liveCombo = [];
 
+function isLiveMode() {
+    return mode === 'live' || mode === 'liveacc' || mode === 'livechord';
+}
+
 function onKeyDown(e) {
-    if ((mode !== 'live' && mode !== 'liveacc') || isFormFocused()) return;
+    if (!isLiveMode() || isFormFocused()) return;
     e.preventDefault();
     if (e.repeat) return;
     const code = physToCode(e);
     if (!code) return;
+    const arr = state.hgroups[activeGroup];
 
     if (mode === 'liveacc') {
-        // 記憶モード: 押したキーを累積（重複は除外、自動クリアしない）
+        // 記憶モード: 押したキーを現グループに累積（重複は除外）
         const cc = canonKey(code);
-        if (!state.highlights.some((h) => canonKey(h) === cc)) {
-            state.highlights.push(code);
-            applyState();
-        }
+        if (!arr.some((h) => canonKey(h) === cc)) { arr.push(code); applyState(); }
+        return;
+    }
+
+    if (mode === 'livechord') {
+        // 手順モード: 押下サイクルを 1 ステップとして蓄積（keyup で確定）
+        if (pressed.size === 0) liveCombo = [];
+        pressed.add(e.code);
+        if (!liveCombo.includes(code)) liveCombo.push(code);
         return;
     }
 
@@ -160,14 +184,22 @@ function onKeyDown(e) {
     if (pressed.size === 0) liveCombo = [];
     pressed.add(e.code);
     if (!liveCombo.includes(code)) liveCombo.push(code);
-    state.highlights = liveCombo.slice();
+    state.hgroups[activeGroup] = liveCombo.slice();
     applyState();
 }
 
 function onKeyUp(e) {
-    if (mode !== 'live') return;
-    pressed.delete(e.code);
-    // 全キーを離しても combo は保持（直前の組み合わせをキャプチャ結果として残す）
+    if (mode === 'live') { pressed.delete(e.code); return; }
+    if (mode === 'livechord') {
+        pressed.delete(e.code);
+        if (pressed.size === 0 && liveCombo.length) {
+            if (!state.chords.length) state.chords.push([]);
+            state.chords[state.chords.length - 1].push(liveCombo.slice());
+            liveCombo = [];
+            applyState();
+            setStatus(`手順 ${state.chords[state.chords.length - 1].length} 個を記録中（「すべて解除」でリセット）。`);
+        }
+    }
 }
 
 document.addEventListener('keydown', onKeyDown);
@@ -189,14 +221,21 @@ function svgCoords(ev) {
 
 function toggleHighlight(code) {
     const cc = canonKey(code);
-    const idx = state.highlights.findIndex((h) => canonKey(h) === cc);
-    if (idx >= 0) state.highlights.splice(idx, 1);
-    else state.highlights.push(code);
+    // 同じキーは 1 グループのみ: 他グループから除去
+    state.hgroups.forEach((g, i) => {
+        if (i === activeGroup) return;
+        const j = g.findIndex((h) => canonKey(h) === cc);
+        if (j >= 0) g.splice(j, 1);
+    });
+    const arr = state.hgroups[activeGroup];
+    const idx = arr.findIndex((h) => canonKey(h) === cc);
+    if (idx >= 0) arr.splice(idx, 1);
+    else arr.push(code);
     applyState();
 }
 
 previewBox.addEventListener('click', (ev) => {
-    if (mode === 'live') return;
+    if (isLiveMode()) return;
     const pt = svgCoords(ev);
     if (!pt) return;
     const hit = hitTest({ layout: state.layout, caption: state.caption }, pt.x, pt.y);
@@ -224,13 +263,15 @@ modeGroup.addEventListener('click', (ev) => {
     modeGroup.querySelectorAll('.mode-btn').forEach((b) => b.classList.remove('active'));
     btn.classList.add('active');
     pressed.clear();
-    const isLive = mode === 'live' || mode === 'liveacc';
+    liveCombo = [];
+    const isLive = isLiveMode();
     previewBox.classList.toggle('live', isLive);
     const hints = {
-        highlight: 'キーをクリックでハイライトの ON / OFF。',
+        highlight: 'キーをクリックで選択中の色グループにハイライトの ON / OFF。',
         label: 'キーをクリックして注釈を入力。',
         live: '実際のキーボードを押すと、押している組を表示します（テキスト欄外をクリックしてから操作）。',
-        liveacc: '実際のキーを押すたびに記憶（累積）します。「すべて解除」でクリア。',
+        liveacc: '実際のキーを押すたびに現グループに記憶（累積）します。「すべて解除」でクリア。',
+        livechord: '実際のキーを順に押すと、その手順を chord として記録します。「すべて解除」でリセット。',
     };
     setStatus(hints[mode] || '');
     if (isLive) {
@@ -240,15 +281,29 @@ modeGroup.addEventListener('click', (ev) => {
 });
 
 clearBtn.addEventListener('click', () => {
-    state.highlights = [];
+    state.hgroups = [[], [], [], []];
+    state.legends = ['', '', '', ''];
     state.chords = [];
     state.labels = [];
     applyState();
-    setStatus('ハイライト・手順・ラベルを解除しました。');
+    setStatus('ハイライト・手順・ラベル・凡例を解除しました。');
 });
 
 captionInput.addEventListener('input', () => { state.caption = captionInput.value.trim(); applyState(); });
 layoutSelect.addEventListener('change', () => { state.layout = layoutSelect.value; applyState(); });
+compactChk.addEventListener('change', () => { state.compact = compactChk.checked; applyState(); });
+legendInput.addEventListener('input', () => {
+    state.legends[activeGroup] = legendInput.value.trim();
+    applyState();
+});
+groupChips.addEventListener('click', (ev) => {
+    const b = ev.target.closest('.chip');
+    if (!b) return;
+    activeGroup = parseInt(b.dataset.g, 10) || 0;
+    [...groupChips.children].forEach((x, i) => x.classList.toggle('active', i === activeGroup));
+    legendInput.value = (state.legends && state.legends[activeGroup]) || '';
+    setStatus(`色グループ ${activeGroup + 1} を選択中。`);
+});
 
 let debounce;
 codeInput.addEventListener('input', () => {
@@ -285,7 +340,8 @@ function comboName() {
     for (const steps of (state.chords || [])) {
         combos.push(steps.map((tokens) => tokens.map(displayName).join('+')).join('_'));
     }
-    if ((state.highlights || []).length) combos.push(state.highlights.map(displayName).join('+'));
+    const hg = (state.hgroups || []).find((g) => g && g.length);
+    if (hg) combos.push(hg.map(displayName).join('+'));
     const name = combos.join('_')
         .replace(/[\\/:*?"<>|\s]+/g, '-')
         .replace(/-{2,}/g, '-')
@@ -338,9 +394,40 @@ downloadPngBtn.addEventListener('click', () => {
     img.src = url;
 });
 
+// --- 埋め込み支援（コピー・共有 URL） ---
+
+async function copyText(text, okMsg) {
+    try {
+        await navigator.clipboard.writeText(text);
+        setStatus(okMsg);
+    } catch (e) {
+        showError('クリップボードにコピーできませんでした。');
+    }
+}
+
+copyCodeBtn.addEventListener('click', () => {
+    copyText('```keymap\n' + codeInput.value.trim() + '\n```',
+        '記法をコピーしました（Markdown 用フェンス付き）。Mermaid ビューワ等に貼れます。');
+});
+
+copySvgBtn.addEventListener('click', () => {
+    if (currentSvg) copyText(svgDocString(), 'SVG をコピーしました。');
+});
+
+shareBtn.addEventListener('click', () => {
+    const url = location.origin + location.pathname + '#k=' + encodeURIComponent(codeInput.value);
+    copyText(url, '共有 URL をコピーしました。リンクを開くとこの図が再現されます。');
+});
+
+function codeFromHash() {
+    const m = location.hash.match(/[#&]k=([^&]+)/);
+    if (m) { try { return decodeURIComponent(m[1]); } catch (e) { /* noop */ } }
+    return null;
+}
+
 // --- 初期化 ---
 
-codeInput.value = SAMPLES.copy;
+codeInput.value = codeFromHash() || SAMPLES.copy;
 previewBox.style.cursor = 'pointer';
 previewBox.tabIndex = 0;   // 実キー入力モードでフォーカスを受けられるように
 setStatus('キーをクリックでハイライトの ON / OFF。');

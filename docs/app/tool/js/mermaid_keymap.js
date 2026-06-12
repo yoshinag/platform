@@ -178,24 +178,44 @@ export function canonKey(token) {
 // パーサ
 // ---------------------------------------------------------------------------
 
+export const GROUP_COUNT = 4;
+
 export function parseKeymapDsl(text) {
-    const out = { layout: 'us', highlights: [], chords: [], labels: [], caption: '' };
+    const out = {
+        layout: 'us',
+        compact: false,
+        hgroups: [[], [], [], []],
+        legends: ['', '', '', ''],
+        chords: [],
+        labels: [],
+        caption: '',
+    };
     const lines = String(text || '').split(/\r?\n/);
     for (const raw of lines) {
         const line = raw.trim();
         if (!line || /^keymap\b/i.test(line) || line.startsWith('#')) continue;
-        const m = line.match(/^([A-Za-z]+)\s*:\s*(.*)$/);
+        const m = line.match(/^([A-Za-z][A-Za-z0-9]*)\s*:\s*(.*)$/);
         if (!m) continue;
         const key = m[1].toLowerCase();
         const val = m[2].trim();
+        const hg = key.match(/^highlight([2-4])?$/);
+        if (hg || key === 'keys') {
+            const gi = hg && hg[1] ? parseInt(hg[1], 10) - 1 : 0;
+            out.hgroups[gi].push(...val.split(/[\s+]+/).filter(Boolean));
+            continue;
+        }
         switch (key) {
             case 'layout':
                 if (LAYOUTS[val.toLowerCase()]) out.layout = val.toLowerCase();
                 break;
-            case 'highlight':
-            case 'keys':
-                out.highlights.push(...val.split(/[\s+]+/).filter(Boolean));
+            case 'compact':
+                out.compact = /^(true|1|yes|on)$/i.test(val);
                 break;
+            case 'legend': {
+                const parts = val.split('/').map((s) => s.trim());
+                for (let i = 0; i < GROUP_COUNT; i++) out.legends[i] = parts[i] || '';
+                break;
+            }
             case 'chord': {
                 const steps = val.split(/->|→/).map((s) => s.split(/[\s+]+/).filter(Boolean))
                     .filter((arr) => arr.length);
@@ -249,7 +269,7 @@ export function computeKeys(data) {
     });
 
     let contentRight = maxRight;
-    if (layout.full) {
+    if (layout.full && !(data && data.compact)) {
         const G = 0.5 * U;
         // 矢印キークラスタ (逆 T)。row4=↑, row5=←↓→
         const aX = maxRight + G;
@@ -296,14 +316,19 @@ const C = {
     keyFill: '#ffffff',
     keyStroke: '#b9b9bd',
     keyText: '#2a2a2e',
-    hlFill: '#ffd24a',
-    hlStroke: '#d99e00',
-    hlText: '#1a1a00',
     badge: '#d8462f',
     badgeText: '#ffffff',
     caption: '#1f1409',
     label: '#1f1409',
 };
+
+// ハイライトのグループ別カラー (1〜4)
+export const GROUP_COLORS = [
+    { fill: '#ffd24a', stroke: '#d99e00', text: '#1a1a00' }, // 1 amber
+    { fill: '#86c5ff', stroke: '#1f7fd1', text: '#06243a' }, // 2 blue
+    { fill: '#9be8a0', stroke: '#36a73f', text: '#0c2e10' }, // 3 green
+    { fill: '#ffb3c8', stroke: '#e0507e', text: '#3a0c1c' }, // 4 pink
+];
 
 function esc(s) {
     return String(s)
@@ -320,18 +345,32 @@ function keyFont(label) {
     return 11;
 }
 
+// 後方互換: 旧 data.highlights を hgroups[0] に取り込む
+function readGroups(data) {
+    if (data.hgroups) return data.hgroups;
+    return [data.highlights || [], [], [], []];
+}
+
 /** 描画データから SVG の中身と寸法を返す */
 export function renderKeymap(data) {
     const { keys, width, height } = computeKeys(data);
 
-    // ハイライト集合と手順番号
-    const hlSet = new Set((data.highlights || []).map(canonKey).filter(Boolean));
+    // グループ別ハイライト集合（コード→グループ index、若い番号優先）
+    const hgroups = readGroups(data);
+    const groupOf = new Map();
+    for (let g = GROUP_COLORS.length - 1; g >= 0; g--) {
+        for (const tok of (hgroups[g] || [])) {
+            const c = canonKey(tok);
+            if (c) groupOf.set(c, g);
+        }
+    }
+    // 手順番号（chord はグループ 1 色）
     const stepMap = new Map();
     (data.chords || []).forEach((steps) => {
         steps.forEach((tokens, i) => {
             tokens.map(canonKey).forEach((code) => {
                 if (!code) return;
-                hlSet.add(code);
+                if (!groupOf.has(code)) groupOf.set(code, 0);
                 if (!stepMap.has(code)) stepMap.set(code, i + 1);
             });
         });
@@ -341,8 +380,17 @@ export function renderKeymap(data) {
     const labelMap = new Map();
     for (const lb of (data.labels || [])) labelMap.set(canonKey(lb.key), lb.text);
 
+    // 凡例の高さ
+    const legends = data.legends || [];
+    const legendItems = [];
+    for (let g = 0; g < GROUP_COLORS.length; g++) {
+        if (legends[g]) legendItems.push({ g, label: legends[g] });
+    }
+    const legendH = legendItems.length ? 28 : 0;
+    const totalH = height + legendH;
+
     const p = [];
-    p.push(`<rect x="0" y="0" width="${width}" height="${height}" fill="#ffffff"/>`);
+    p.push(`<rect x="0" y="0" width="${width}" height="${totalH}" fill="#ffffff"/>`);
 
     if (data.caption) {
         p.push(`<text x="${width / 2}" y="20" text-anchor="middle" font-size="16" `
@@ -351,10 +399,12 @@ export function renderKeymap(data) {
 
     for (const k of keys) {
         const code = canonKey(k.code);
-        const hot = hlSet.has(code);
-        const fill = hot ? C.hlFill : C.keyFill;
-        const stroke = hot ? C.hlStroke : C.keyStroke;
-        const textFill = hot ? C.hlText : C.keyText;
+        const g = groupOf.has(code) ? groupOf.get(code) : -1;
+        const hot = g >= 0;
+        const col = hot ? GROUP_COLORS[g] : null;
+        const fill = hot ? col.fill : C.keyFill;
+        const stroke = hot ? col.stroke : C.keyStroke;
+        const textFill = hot ? col.text : C.keyText;
         const cx = k.x + k.w / 2;
         const cy = k.y + k.h / 2;
 
@@ -384,7 +434,22 @@ export function renderKeymap(data) {
         }
     }
 
-    return { inner: p.join(''), width, height };
+    // 凡例（色見本＋ラベル）
+    if (legendItems.length) {
+        let lx = 12;
+        const ly = height + legendH / 2;
+        for (const it of legendItems) {
+            const col = GROUP_COLORS[it.g];
+            p.push(`<rect x="${lx}" y="${ly - 8}" width="16" height="16" rx="3" `
+                + `fill="${col.fill}" stroke="${col.stroke}"/>`);
+            lx += 22;
+            p.push(`<text x="${lx}" y="${ly}" dominant-baseline="central" font-size="13" `
+                + `fill="${C.caption}">${esc(it.label)}</text>`);
+            lx += Array.from(it.label).length * 13 + 24;
+        }
+    }
+
+    return { inner: p.join(''), width, height: totalH };
 }
 
 // ---------------------------------------------------------------------------
@@ -394,9 +459,21 @@ export function renderKeymap(data) {
 export function serializeKeymap(state) {
     const lines = ['keymap'];
     lines.push('  layout: ' + (state.layout || 'us'));
-    if (state.highlights && state.highlights.length) {
-        lines.push('  highlight: ' + state.highlights.join(' '));
+    if (state.compact) lines.push('  compact: true');
+
+    const hgroups = readGroups(state);
+    hgroups.forEach((keys, g) => {
+        if (keys && keys.length) {
+            lines.push('  highlight' + (g === 0 ? '' : g + 1) + ': ' + keys.join(' '));
+        }
+    });
+
+    const legends = state.legends || [];
+    const lastLegend = legends.reduce((acc, l, i) => (l ? i : acc), -1);
+    if (lastLegend >= 0) {
+        lines.push('  legend: ' + legends.slice(0, lastLegend + 1).join(' / '));
     }
+
     for (const steps of (state.chords || [])) {
         lines.push('  chord: ' + steps.map((s) => s.join('+')).join(' -> '));
     }
