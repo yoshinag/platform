@@ -50,11 +50,9 @@ const SAMPLES = {
     numpad:
         'keymap\n  layout: us\n  highlight: Num5\n  label: Num5 "中央"\n  caption: "テンキー"',
     typing:
-        'keymap\n  layout: us\n  type: H e l l o\n  sleep: 220\n  caption: "Hello とタイピング（アニメ）"',
-    typingchord:
-        'keymap\n  layout: us\n  type: Ctrl+C Ctrl+V\n  sleep: 500\n  caption: "コピー→ペースト（アニメ）"',
+        'keymap\n  layout: us\n  sleep: 250\n  chord: H\n  chord: e\n  chord: l\n  chord: l\n  chord: o\n  caption: "Hello とタイピング（アニメ）"',
     scene:
-        'keymap\n  caption: "コピー"\n  layout: us\n  chord: Win+C\n  sleep: 1000\n  chord: Win+V',
+        'keymap\n  caption: "コピー&ペースト"\n  layout: us\n  chord: Win+C "コピー"\n  sleep: 1000\n  chord: Win+V "ペースト"',
     groups:
         'keymap\n  layout: us\n  highlight: Ctrl C\n  highlight2: Ctrl V\n  highlight3: Ctrl X\n  legend: コピー / ペースト / 切り取り\n  caption: "編集ショートカット"',
     compact:
@@ -324,7 +322,6 @@ clearBtn.addEventListener('click', () => {
     state.hgroups = [[], [], [], []];
     state.legends = ['', '', '', ''];
     state.chords = [];
-    state.typeSeq = [];
     state.frames = [];
     state.labels = [];
     chordFresh = true;
@@ -348,17 +345,9 @@ function currentHighlightStep() {
 frameBtn.addEventListener('click', () => {
     const step = currentHighlightStep();
     const ms = Math.max(40, parseInt(sleepInput.value, 10) || 1000);
-    let total;
-    if (state.frames && state.frames.length) {
-        // シーン記法の文書はそのままシーンに追記
-        state.frames.push({ keys: step, ms });
-        total = state.frames.length;
-    } else {
-        state.typeSeq = state.typeSeq || [];
-        state.typeSeq.push(step);
-        if (!state.sleep) state.sleep = ms;
-        total = state.typeSeq.length;
-    }
+    state.frames = state.frames || [];
+    state.frames.push({ keys: step, ms });
+    const total = state.frames.length;
     state.hgroups = [[], [], [], []];   // コマ確定したら記憶（強調）を自動クリア
     applyState();
     setStatus(step.length
@@ -376,7 +365,6 @@ memClearBtn.addEventListener('click', () => {
 
 sleepInput.addEventListener('input', () => {
     state.sleep = Math.max(40, parseInt(sleepInput.value, 10) || 1000);
-    if (state.typeSeq && state.typeSeq.length) applyState();
 });
 
 // 記録した手順（chord）→ タイピングアニメ（type + sleep）へ変換
@@ -386,12 +374,12 @@ toTypeBtn.addEventListener('click', () => {
         setStatus('記録された手順がありません。「実キー：手順」で順に押してください。');
         return;
     }
-    state.typeSeq = steps;
-    if (!state.sleep) state.sleep = 1000;
+    const ms = Math.max(40, parseInt(sleepInput.value, 10) || 1000);
+    state.frames = steps.map((keys) => ({ keys, ms }));
     state.chords = [];
     chordFresh = true;
     applyState();
-    setStatus(`手順 ${steps.length} 個をタイピングアニメに変換しました（sleep=${state.sleep}ms）。`);
+    setStatus(`手順 ${steps.length} 個をコマ送りアニメに変換しました（${ms}ms/コマ）。`);
 });
 
 captionInput.addEventListener('input', () => { state.caption = captionInput.value.trim(); applyState(); });
@@ -452,9 +440,9 @@ function comboName() {
     for (const steps of (state.chords || [])) {
         combos.push(steps.map((tokens) => tokens.map(displayName).join('+')).join('_'));
     }
-    const typeSteps = (state.typeSeq || []).filter((s) => s.length); // ポーズは名前に含めない
-    if (typeSteps.length) {
-        combos.push(typeSteps.map((tokens) => tokens.map(displayName).join('+')).join('_'));
+    const frameSteps = (state.frames || []).filter((f) => f.keys.length); // ポーズは名前に含めない
+    if (frameSteps.length) {
+        combos.push(frameSteps.map((f) => f.keys.map(displayName).join('+')).join('_'));
     }
     const hg = (state.hgroups || []).find((g) => g && g.length);
     if (hg) combos.push(hg.map(displayName).join('+'));
