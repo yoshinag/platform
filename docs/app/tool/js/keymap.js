@@ -26,6 +26,7 @@ const compactChk = document.getElementById('compactChk');
 const copyCodeBtn = document.getElementById('copyCodeBtn');
 const copySvgBtn = document.getElementById('copySvgBtn');
 const shareBtn = document.getElementById('shareBtn');
+const themeSelect = document.getElementById('themeSelect');
 
 const SAMPLES = {
     copy:
@@ -44,6 +45,10 @@ const SAMPLES = {
         'keymap\n  layout: us\n  highlight: Up Down Left Right\n  caption: "カーソル移動"',
     numpad:
         'keymap\n  layout: us\n  highlight: Num5\n  label: Num5 "中央"\n  caption: "テンキー"',
+    typing:
+        'keymap\n  layout: us\n  type: H e l l o\n  sleep: 220\n  caption: "Hello とタイピング（アニメ）"',
+    typingchord:
+        'keymap\n  layout: us\n  type: Ctrl+C Ctrl+V\n  sleep: 500\n  caption: "コピー→ペースト（アニメ）"',
     groups:
         'keymap\n  layout: us\n  highlight: Ctrl C\n  highlight2: Ctrl V\n  highlight3: Ctrl X\n  legend: コピー / ペースト / 切り取り\n  caption: "編集ショートカット"',
     compact:
@@ -84,6 +89,7 @@ function syncControls() {
     captionInput.value = state.caption || '';
     layoutSelect.value = state.layout || 'us';
     compactChk.checked = !!state.compact;
+    themeSelect.value = state.theme || 'auto';
     [...groupChips.children].forEach((b, i) => b.classList.toggle('active', i === activeGroup));
     legendInput.value = (state.legends && state.legends[activeGroup]) || '';
 }
@@ -292,6 +298,13 @@ clearBtn.addEventListener('click', () => {
 captionInput.addEventListener('input', () => { state.caption = captionInput.value.trim(); applyState(); });
 layoutSelect.addEventListener('change', () => { state.layout = layoutSelect.value; applyState(); });
 compactChk.addEventListener('change', () => { state.compact = compactChk.checked; applyState(); });
+themeSelect.addEventListener('change', () => { state.theme = themeSelect.value; applyState(); });
+if (window.matchMedia) {
+    // OS のライト/ダーク切替で auto テーマのプレビューを追従
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+        if ((state.theme || 'auto') === 'auto') render();
+    });
+}
 legendInput.addEventListener('input', () => {
     state.legends[activeGroup] = legendInput.value.trim();
     applyState();
@@ -384,7 +397,8 @@ downloadPngBtn.addEventListener('click', () => {
         canvas.width = w * scale;
         canvas.height = h * scale;
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#1f2026';
+        const bgRect = svgEl.querySelector('rect');
+        ctx.fillStyle = (bgRect && bgRect.getAttribute('fill')) || '#ffffff';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         URL.revokeObjectURL(url);

@@ -51,6 +51,8 @@
             <li><strong>実キー：手順</strong>モードは、順番に押した操作を chord（番号バッジ付き）として記録します。一部の OS / ブラウザ固有ショートカットは抑止できない場合があります。</li>
             <li><strong>色</strong>チップで 4 グループを色分けでき、<strong>凡例</strong>欄でラベルを付けると 1 枚で複数ショートカットを比較できます。<strong>コンパクト</strong>でテンキー/矢印を隠せます。</li>
             <li><strong>記法をコピー</strong>で Markdown 用のコードブロックを、<strong>共有 URL をコピー</strong>でこの図を再現するリンクを取得できます。</li>
+            <li><strong>テーマ</strong>はページが OS のライト/ダークに自動追従し、プレビューと出力（PNG / SVG）の配色は「テーマ」で選べます。</li>
+            <li><code>type</code> と <code>sleep</code> で<strong>連続タイピングのアニメ</strong>を表現できます（アニメは SVG に埋め込まれるため、書き出した SVG でも再生されます。PNG は静止画）。</li>
             <li>手順（チョード）は記法で <code>chord: Ctrl+K -&gt; Ctrl+S</code> と書くと番号バッジ付きで表示。</li>
             <li>キー名は <code>Ctrl</code> / <code>Shift</code> / <code>Alt</code> / <code>Win</code> / <code>Enter</code> / <code>Esc</code> / <code>A</code>–<code>Z</code> / <code>F1</code>–<code>F12</code> など。別名（cmd, opt, control…）も可。</li>
             <li>PNG / SVG でダウンロードできます。処理はすべてブラウザ上で完結します。</li>
@@ -92,6 +94,13 @@
                     <input type="text" id="legendInput" placeholder="（選択色の凡例）">
                 </label>
                 <label class="chk"><input type="checkbox" id="compactChk"> コンパクト</label>
+                <label>テーマ
+                    <select id="themeSelect" title="プレビューと出力（PNG/SVG）のテーマ">
+                        <option value="auto">自動（OS）</option>
+                        <option value="light">ライト</option>
+                        <option value="dark">ダーク</option>
+                    </select>
+                </label>
                 <label class="caption-label">図題
                     <input type="text" id="captionInput" placeholder="（任意）">
                 </label>
@@ -116,6 +125,8 @@
                             <option value="numpad">テンキー（Num 5）</option>
                             <option value="groups">複数色＋凡例（コピー/ペースト/切取）</option>
                             <option value="compact">コンパクト表示</option>
+                            <option value="typing">タイピング アニメ（Hello）</option>
+                            <option value="typingchord">タイピング アニメ（コピー→ペースト）</option>
                             <option value="empty">空</option>
                         </select>
                     </label>
@@ -137,7 +148,10 @@
             <tr><td><code>highlight</code></td><td>押すキーを強調（空白 / + 区切り）。<code>highlight2〜4</code> で色分け</td><td><code>highlight: Ctrl Shift 4</code></td></tr>
             <tr><td><code>legend</code></td><td>色グループの凡例（<code>/</code> 区切りで 1〜4）</td><td><code>legend: コピー / ペースト</code></td></tr>
             <tr><td><code>compact</code></td><td>テンキー/矢印を隠す</td><td><code>compact: true</code></td></tr>
+            <tr><td><code>theme</code></td><td>配色（auto / light / dark）。プレビューと出力に反映</td><td><code>theme: dark</code></td></tr>
             <tr><td><code>chord</code></td><td>順に押す操作。手順番号バッジ付き</td><td><code>chord: Ctrl+K -&gt; Ctrl+S</code></td></tr>
+            <tr><td><code>type</code></td><td>連続タイピング（アニメ）。各ステップは key / key+key</td><td><code>type: H e l l o</code></td></tr>
+            <tr><td><code>sleep</code></td><td>type の 1 ステップの長さ（ミリ秒）</td><td><code>sleep: 220</code></td></tr>
             <tr><td><code>label</code></td><td>キーへの注釈</td><td><code>label: 4 "範囲指定"</code></td></tr>
             <tr><td><code>caption</code></td><td>図のキャプション</td><td><code>caption: "保存"</code></td></tr>
             </tbody>

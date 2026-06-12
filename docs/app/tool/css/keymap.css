@@ -1,19 +1,60 @@
-/* keymap ツール — monoflick ダークトーン配色 */
+/* keymap ツール — monoflick トーン。ライト基調 + prefers-color-scheme: dark 追従 */
 :root {
-    --card-bg: #1f2026;
-    --panel-bg: #15161a;
-    --field-bg: #2a2b31;
-    --field-bg-hover: #34353d;
-    --fg: #f0f0f3;
-    --fg-muted: rgba(240, 240, 243, 0.66);
-    --fg-dim: rgba(240, 240, 243, 0.5);
-    --border: rgba(255, 255, 255, 0.14);
-    --accent: #FF8A3D;
-    --accent-hover: #FF7A1E;
-    --accent-soft: rgba(255, 138, 61, 0.18);
-    --accent-2: #34D399;
-    --accent-2-hover: #1FB87F;
-    --danger: #ff6b5e;
+    --bg: linear-gradient(180deg, #7A98A9 0%, #68889C 100%);
+    --card-bg: #ffffff;
+    --panel-bg: #fafafa;
+    --field-bg: #f4f4f6;
+    --field-bg-hover: #e9e9ee;
+    --fg: #1a1a1a;
+    --fg-muted: #5a5a5a;
+    --fg-dim: #8a8a8a;
+    --border: rgba(0, 0, 0, 0.14);
+    --accent: #E6781E;
+    --accent-hover: #D26910;
+    --accent-soft: rgba(230, 120, 30, 0.16);
+    --accent-2: #10B981;
+    --accent-2-hover: #0E9F71;
+    --danger: #c0392b;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 16px 40px rgba(0, 0, 0, 0.18);
+    --code-bg: rgba(0, 0, 0, 0.06);
+    --code-fg: #b5530c;
+    --th-bg: #f4f4f6;
+    --chip-active-border: #333;
+    --chip-active-ring: rgba(0, 0, 0, 0.18);
+    --btn-fg: #ffffff;
+    --btn2-fg: #ffffff;
+    --disabled-bg: #d8d8db;
+    --disabled-fg: #9a9a9a;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: linear-gradient(180deg, #3d4d58 0%, #2d3a44 100%);
+        --card-bg: #1f2026;
+        --panel-bg: #15161a;
+        --field-bg: #2a2b31;
+        --field-bg-hover: #34353d;
+        --fg: #f0f0f3;
+        --fg-muted: rgba(240, 240, 243, 0.66);
+        --fg-dim: rgba(240, 240, 243, 0.5);
+        --border: rgba(255, 255, 255, 0.14);
+        --accent: #FF8A3D;
+        --accent-hover: #FF7A1E;
+        --accent-soft: rgba(255, 138, 61, 0.18);
+        --accent-2: #34D399;
+        --accent-2-hover: #1FB87F;
+        --danger: #ff6b5e;
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 40px rgba(0, 0, 0, 0.4);
+        --code-bg: rgba(255, 255, 255, 0.09);
+        --code-fg: #ffd9b8;
+        --th-bg: rgba(255, 255, 255, 0.05);
+        --chip-active-border: #fff;
+        --chip-active-ring: rgba(255, 255, 255, 0.3);
+        --btn-fg: #1a1206;
+        --btn2-fg: #062417;
+        --disabled-bg: #3a3b42;
+        --disabled-fg: rgba(240, 240, 243, 0.5);
+    }
 }
 
 body {
@@ -22,7 +63,7 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    background: linear-gradient(180deg, #3d4d58 0%, #2d3a44 100%);
+    background: var(--bg);
     background-attachment: fixed;
     color: var(--fg);
     margin: 0;
@@ -33,7 +74,7 @@ body {
     color: var(--fg);
     padding: 24px;
     border-radius: 8px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 40px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--shadow);
     max-width: 1120px;
     width: 94%;
 }
@@ -66,8 +107,8 @@ h1 {
 }
 
 code {
-    background: rgba(255, 255, 255, 0.09);
-    color: #ffd9b8;
+    background: var(--code-bg);
+    color: var(--code-fg);
     padding: 1px 4px;
     border-radius: 3px;
     font-size: 0.9em;
@@ -138,7 +179,7 @@ details ol {
 
 .mode-btn.active {
     background: var(--accent);
-    color: #1a1206;
+    color: var(--btn-fg);
     font-weight: bold;
 }
 
@@ -201,8 +242,8 @@ details ol {
 }
 
 .chip.active {
-    border-color: #fff;
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+    border-color: var(--chip-active-border);
+    box-shadow: 0 0 0 2px var(--chip-active-ring);
 }
 
 .legend-label input {
@@ -262,7 +303,7 @@ textarea {
     line-height: 1.5;
     resize: vertical;
     background: var(--panel-bg);
-    color: #e6e6ea;
+    color: var(--fg);
 }
 
 textarea:focus {
@@ -314,7 +355,7 @@ textarea:focus {
 
 .preview-box.live {
     border-color: var(--danger);
-    box-shadow: 0 0 0 2px rgba(255, 107, 94, 0.3);
+    box-shadow: 0 0 0 2px var(--chip-active-ring);
 }
 
 .preview-box:focus {
@@ -341,7 +382,7 @@ button {
     border: none;
     border-radius: 6px;
     background-color: var(--accent);
-    color: #1a1206;
+    color: var(--btn-fg);
     font-weight: bold;
     font-size: 0.9em;
     transition: background-color 0.2s;
@@ -352,14 +393,14 @@ button {
 }
 
 button:disabled {
-    background-color: #3a3b42;
-    color: var(--fg-dim);
+    background-color: var(--disabled-bg);
+    color: var(--disabled-fg);
     cursor: not-allowed;
 }
 
 #downloadSvgBtn {
     background-color: var(--accent-2);
-    color: #062417;
+    color: var(--btn2-fg);
 }
 
 #downloadSvgBtn:hover:not(:disabled) {
@@ -382,7 +423,7 @@ button:disabled {
 }
 
 .ref-table th {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--th-bg);
 }
 
 .note {

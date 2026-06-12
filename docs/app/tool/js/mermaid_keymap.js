@@ -184,9 +184,12 @@ export function parseKeymapDsl(text) {
     const out = {
         layout: 'us',
         compact: false,
+        theme: 'auto',
         hgroups: [[], [], [], []],
         legends: ['', '', '', ''],
         chords: [],
+        typeSeq: [],
+        sleep: 0,
         labels: [],
         caption: '',
     };
@@ -210,6 +213,18 @@ export function parseKeymapDsl(text) {
                 break;
             case 'compact':
                 out.compact = /^(true|1|yes|on)$/i.test(val);
+                break;
+            case 'theme':
+                if (/^(auto|light|dark)$/i.test(val)) out.theme = val.toLowerCase();
+                break;
+            case 'type': {
+                // 連続タイピング: 空白区切りの各ステップ（key または key+key）
+                out.typeSeq = val.split(/\s+/).map((s) => s.split('+').filter(Boolean))
+                    .filter((arr) => arr.length);
+                break;
+            }
+            case 'sleep':
+                out.sleep = Math.max(0, parseInt(val, 10) || 0);
                 break;
             case 'legend': {
                 const parts = val.split('/').map((s) => s.trim());
@@ -312,17 +327,27 @@ export function hitTest(data, x, y) {
 // レンダラ
 // ---------------------------------------------------------------------------
 
-const C = {
-    bg: '#1f2026',
-    keyFill: '#2c2d34',
-    keyStroke: '#474853',
-    keyText: '#e6e6ea',
-    badge: '#ff5a3d',
-    badgeText: '#ffffff',
-    caption: '#ececf1',
-    label: '#f4f4f7',
-    labelHalo: '#15161a',
+// ライト / ダークのキーボード配色
+const THEMES = {
+    light: {
+        bg: '#ffffff', keyFill: '#ffffff', keyStroke: '#b9b9bd', keyText: '#2a2a2e',
+        caption: '#1f1409', label: '#1f1409', labelHalo: '#ffffff',
+        badge: '#d8462f', badgeText: '#ffffff',
+    },
+    dark: {
+        bg: '#1f2026', keyFill: '#2c2d34', keyStroke: '#474853', keyText: '#e6e6ea',
+        caption: '#ececf1', label: '#f4f4f7', labelHalo: '#15161a',
+        badge: '#ff5a3d', badgeText: '#ffffff',
+    },
 };
+
+/** theme 指定を実テーマへ解決（auto は OS 設定を参照） */
+export function resolveTheme(theme) {
+    if (theme === 'light' || theme === 'dark') return theme;
+    if (typeof window !== 'undefined' && window.matchMedia
+        && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
+    return 'light';
+}
 
 // ハイライトのグループ別カラー (1〜4)
 export const GROUP_COLORS = [
@@ -353,9 +378,22 @@ function readGroups(data) {
     return [data.highlights || [], [], [], []];
 }
 
+/** 連続タイピング用 SMIL アニメ要素を生成（discrete 切替・無限ループ） */
+function animEl(attr, def, hl, windows, durSec) {
+    const map = new Map();
+    map.set(0, def);
+    for (const [a, b] of windows) { map.set(a, hl); map.set(b, def); }
+    if (!map.has(1)) map.set(1, def);
+    const times = [...map.keys()].map((t) => t.toFixed(4)).join(';');
+    const vals = [...map.values()].join(';');
+    return `<animate attributeName="${attr}" calcMode="discrete" dur="${durSec}s" `
+        + `repeatCount="indefinite" keyTimes="${times}" values="${vals}"/>`;
+}
+
 /** 描画データから SVG の中身と寸法を返す */
 export function renderKeymap(data) {
     const { keys, width, height } = computeKeys(data);
+    const C = THEMES[resolveTheme(data.theme)];
 
     // グループ別ハイライト集合（コード→グループ index、若い番号優先）
     const hgroups = readGroups(data);
@@ -377,6 +415,22 @@ export function renderKeymap(data) {
             });
         });
     });
+
+    // 連続タイピング: コード→点灯時間枠（全体に対する割合）
+    const seq = data.typeSeq || [];
+    const sleep = Math.max(40, data.sleep || 350);
+    const animTotal = (seq.length * sleep) / 1000; // 秒
+    const animMap = new Map();
+    seq.forEach((tokens, i) => {
+        const a = i / seq.length;
+        const b = (i + 0.8) / seq.length; // 各スロットの 80% 点灯（残りは離す間）
+        tokens.map(canonKey).forEach((code) => {
+            if (!code) return;
+            if (!animMap.has(code)) animMap.set(code, []);
+            animMap.get(code).push([a, b]);
+        });
+    });
+    const G0 = GROUP_COLORS[0];
 
     // ラベルをコード→テキストへ
     const labelMap = new Map();
@@ -401,8 +455,10 @@ export function renderKeymap(data) {
 
     for (const k of keys) {
         const code = canonKey(k.code);
+        const aWin = animMap.get(code);
+        const animated = !!aWin && aWin.length > 0;
         const g = groupOf.has(code) ? groupOf.get(code) : -1;
-        const hot = g >= 0;
+        const hot = !animated && g >= 0;
         const col = hot ? GROUP_COLORS[g] : null;
         const fill = hot ? col.fill : C.keyFill;
         const stroke = hot ? col.stroke : C.keyStroke;
@@ -410,13 +466,24 @@ export function renderKeymap(data) {
         const cx = k.x + k.w / 2;
         const cy = k.y + k.h / 2;
 
-        p.push(`<rect x="${k.x + 2}" y="${k.y + 2}" width="${k.w - 4}" height="${k.h - 4}" `
-            + `rx="6" ry="6" fill="${fill}" stroke="${stroke}" stroke-width="${hot ? 2 : 1}"/>`);
+        const rectAnim = animated
+            ? animEl('fill', C.keyFill, G0.fill, aWin, animTotal)
+            + animEl('stroke', C.keyStroke, G0.stroke, aWin, animTotal)
+            : '';
+        if (rectAnim) {
+            p.push(`<rect x="${k.x + 2}" y="${k.y + 2}" width="${k.w - 4}" height="${k.h - 4}" `
+                + `rx="6" ry="6" fill="${C.keyFill}" stroke="${C.keyStroke}" stroke-width="2">`
+                + `${rectAnim}</rect>`);
+        } else {
+            p.push(`<rect x="${k.x + 2}" y="${k.y + 2}" width="${k.w - 4}" height="${k.h - 4}" `
+                + `rx="6" ry="6" fill="${fill}" stroke="${stroke}" stroke-width="${hot ? 2 : 1}"/>`);
+        }
 
         if (k.label !== '') {
+            const textAnim = animated ? animEl('fill', C.keyText, G0.text, aWin, animTotal) : '';
             p.push(`<text x="${cx}" y="${cy}" text-anchor="middle" dominant-baseline="central" `
                 + `font-size="${keyFont(k.label)}" font-weight="${hot ? 'bold' : 'normal'}" `
-                + `fill="${textFill}">${esc(k.label)}</text>`);
+                + `fill="${textFill}">${textAnim}${esc(k.label)}</text>`);
         }
 
         // 手順番号バッジ
@@ -462,6 +529,7 @@ export function serializeKeymap(state) {
     const lines = ['keymap'];
     lines.push('  layout: ' + (state.layout || 'us'));
     if (state.compact) lines.push('  compact: true');
+    if (state.theme && state.theme !== 'auto') lines.push('  theme: ' + state.theme);
 
     const hgroups = readGroups(state);
     hgroups.forEach((keys, g) => {
@@ -478,6 +546,10 @@ export function serializeKeymap(state) {
 
     for (const steps of (state.chords || [])) {
         lines.push('  chord: ' + steps.map((s) => s.join('+')).join(' -> '));
+    }
+    if (state.typeSeq && state.typeSeq.length) {
+        lines.push('  type: ' + state.typeSeq.map((s) => s.join('+')).join(' '));
+        if (state.sleep) lines.push('  sleep: ' + state.sleep);
     }
     for (const lb of (state.labels || [])) {
         lines.push('  label: ' + lb.key + ' "' + lb.text + '"');
