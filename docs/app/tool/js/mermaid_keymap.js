@@ -42,6 +42,61 @@ export const LAYOUTS = {
                 { c: 'Menu', l: 'Menu', w: 1.25 }, { c: 'Ctrl', l: 'Ctrl', w: 1.25 }],
         ],
     },
+
+    // Mac (US 配列)。修飾キーは ⌘⌥⌃⇧ で表示。コードは canonical のまま
+    // (Command=Win / Option=Alt / Control=Ctrl) なので highlight: Cmd 等で一致する。
+    mac: {
+        unit: 46,
+        rows: [
+            [{ c: 'Esc', l: 'esc' }, { gap: 1 },
+                { c: 'F1' }, { c: 'F2' }, { c: 'F3' }, { c: 'F4' }, { gap: 0.5 },
+                { c: 'F5' }, { c: 'F6' }, { c: 'F7' }, { c: 'F8' }, { gap: 0.5 },
+                { c: 'F9' }, { c: 'F10' }, { c: 'F11' }, { c: 'F12' }],
+            [{ c: '`' }, { c: '1' }, { c: '2' }, { c: '3' }, { c: '4' }, { c: '5' }, { c: '6' },
+                { c: '7' }, { c: '8' }, { c: '9' }, { c: '0' }, { c: '-' }, { c: '=' },
+                { c: 'Backspace', l: '⌫', w: 2 }],
+            [{ c: 'Tab', l: '⇥', w: 1.5 }, { c: 'Q' }, { c: 'W' }, { c: 'E' }, { c: 'R' }, { c: 'T' },
+                { c: 'Y' }, { c: 'U' }, { c: 'I' }, { c: 'O' }, { c: 'P' }, { c: '[' }, { c: ']' },
+                { c: '\\', l: '\\', w: 1.5 }],
+            [{ c: 'CapsLock', l: '⇪', w: 1.75 }, { c: 'A' }, { c: 'S' }, { c: 'D' }, { c: 'F' },
+                { c: 'G' }, { c: 'H' }, { c: 'J' }, { c: 'K' }, { c: 'L' }, { c: ';' }, { c: "'" },
+                { c: 'Enter', l: 'return', w: 2.25 }],
+            [{ c: 'Shift', l: '⇧', w: 2.25 }, { c: 'Z' }, { c: 'X' }, { c: 'C' }, { c: 'V' },
+                { c: 'B' }, { c: 'N' }, { c: 'M' }, { c: ',' }, { c: '.' }, { c: '/' },
+                { c: 'Shift', l: '⇧', w: 2.75 }],
+            [{ c: 'Fn', l: 'fn', w: 1.25 }, { c: 'Ctrl', l: '⌃', w: 1.25 },
+                { c: 'Alt', l: '⌥', w: 1.25 }, { c: 'Win', l: '⌘', w: 1.25 },
+                { c: 'Space', l: '', w: 6.25 }, { c: 'Win', l: '⌘', w: 1.25 },
+                { c: 'Alt', l: '⌥', w: 1.25 }, { c: 'Ctrl', l: '⌃', w: 1.25 }],
+        ],
+    },
+
+    // JIS (日本語 109 系)。L 字 Enter は h:2 の縦長キーで近似。
+    jis: {
+        unit: 46,
+        rows: [
+            [{ c: 'Esc', l: 'Esc' }, { gap: 1 },
+                { c: 'F1' }, { c: 'F2' }, { c: 'F3' }, { c: 'F4' }, { gap: 0.5 },
+                { c: 'F5' }, { c: 'F6' }, { c: 'F7' }, { c: 'F8' }, { gap: 0.5 },
+                { c: 'F9' }, { c: 'F10' }, { c: 'F11' }, { c: 'F12' }],
+            [{ c: '半/全', l: '半/全' }, { c: '1' }, { c: '2' }, { c: '3' }, { c: '4' }, { c: '5' },
+                { c: '6' }, { c: '7' }, { c: '8' }, { c: '9' }, { c: '0' }, { c: '-' }, { c: '^' },
+                { c: '¥', l: '¥' }, { c: 'Backspace', l: '⌫' }],
+            [{ c: 'Tab', l: 'Tab', w: 1.5 }, { c: 'Q' }, { c: 'W' }, { c: 'E' }, { c: 'R' }, { c: 'T' },
+                { c: 'Y' }, { c: 'U' }, { c: 'I' }, { c: 'O' }, { c: 'P' }, { c: '@' }, { c: '[' },
+                { c: 'Enter', l: 'Enter', w: 1.5, h: 2 }],
+            [{ c: 'CapsLock', l: '英数', w: 1.5 }, { c: 'A' }, { c: 'S' }, { c: 'D' }, { c: 'F' },
+                { c: 'G' }, { c: 'H' }, { c: 'J' }, { c: 'K' }, { c: 'L' }, { c: ';' }, { c: ':' },
+                { c: ']' }],
+            [{ c: 'Shift', l: 'Shift', w: 2.25 }, { c: 'Z' }, { c: 'X' }, { c: 'C' }, { c: 'V' },
+                { c: 'B' }, { c: 'N' }, { c: 'M' }, { c: ',' }, { c: '.' }, { c: '/' },
+                { c: 'Ro', l: 'ろ' }, { c: 'Shift', l: 'Shift', w: 1.75 }],
+            [{ c: 'Ctrl', l: 'Ctrl', w: 1.25 }, { c: 'Win', l: 'Win' }, { c: 'Alt', l: 'Alt' },
+                { c: '無変換', l: '無変換' }, { c: 'Space', l: '', w: 3.5 }, { c: '変換', l: '変換' },
+                { c: 'かな', l: 'かな' }, { c: 'Alt', l: 'Alt' }, { c: 'Win', l: 'Win' },
+                { c: 'Menu', l: 'Menu' }, { c: 'Ctrl', l: 'Ctrl', w: 1.25 }],
+        ],
+    },
 };
 
 const ALIAS = {
@@ -51,6 +106,7 @@ const ALIAS = {
     win: 'Win', windows: 'Win', super: 'Win', meta: 'Win', cmd: 'Win', command: 'Win', gui: 'Win',
     esc: 'Esc', escape: 'Esc',
     enter: 'Enter', return: 'Enter', ret: 'Enter',
+    fn: 'Fn',
     tab: 'Tab',
     backspace: 'Backspace', bksp: 'Backspace', bs: 'Backspace',
     space: 'Space', spacebar: 'Space', spc: 'Space',
@@ -136,7 +192,7 @@ export function computeKeys(data) {
             keys.push({
                 code: item.c,
                 label: item.l !== undefined ? item.l : item.c,
-                x, y, w, h: U,
+                x, y, w, h: (item.h || 1) * U,
             });
             x += w;
         }

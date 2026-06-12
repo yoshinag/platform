@@ -19,6 +19,7 @@ const sampleSelect = document.getElementById('sampleSelect');
 const modeGroup = document.getElementById('modeGroup');
 const captionInput = document.getElementById('captionInput');
 const clearBtn = document.getElementById('clearBtn');
+const layoutSelect = document.getElementById('layoutSelect');
 
 const SAMPLES = {
     copy:
@@ -27,6 +28,10 @@ const SAMPLES = {
         'keymap\n  layout: us\n  highlight: Win Shift S\n  label: S "範囲指定"\n  caption: "範囲スクリーンショット (Windows)"',
     chord:
         'keymap\n  layout: us\n  chord: Ctrl+K -> Ctrl+S\n  caption: "VSCode: すべて保存"',
+    mac:
+        'keymap\n  layout: mac\n  highlight: Cmd Space\n  caption: "Spotlight 検索 (macOS)"',
+    jis:
+        'keymap\n  layout: jis\n  highlight: 変換\n  caption: "JIS: 変換キー"',
     empty:
         'keymap\n  layout: us',
 };
@@ -60,6 +65,7 @@ function applyText() {
 
 function syncControls() {
     captionInput.value = state.caption || '';
+    layoutSelect.value = state.layout || 'us';
 }
 
 async function render() {
@@ -150,6 +156,7 @@ clearBtn.addEventListener('click', () => {
 });
 
 captionInput.addEventListener('input', () => { state.caption = captionInput.value.trim(); applyState(); });
+layoutSelect.addEventListener('change', () => { state.layout = layoutSelect.value; applyState(); });
 
 let debounce;
 codeInput.addEventListener('input', () => {
