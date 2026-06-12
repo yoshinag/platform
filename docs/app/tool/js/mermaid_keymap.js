@@ -19,6 +19,7 @@
 export const LAYOUTS = {
     us: {
         unit: 46,
+        full: true,
         rows: [
             [{ c: 'Esc', l: 'Esc' }, { gap: 1 },
                 { c: 'F1' }, { c: 'F2' }, { c: 'F3' }, { c: 'F4' }, { gap: 0.5 },
@@ -47,6 +48,7 @@ export const LAYOUTS = {
     // (Command=Win / Option=Alt / Control=Ctrl) なので highlight: Cmd 等で一致する。
     mac: {
         unit: 46,
+        full: true,
         rows: [
             [{ c: 'Esc', l: 'esc' }, { gap: 1 },
                 { c: 'F1' }, { c: 'F2' }, { c: 'F3' }, { c: 'F4' }, { gap: 0.5 },
@@ -74,6 +76,7 @@ export const LAYOUTS = {
     // JIS (日本語 109 系)。L 字 Enter は h:2 の縦長キーで近似。
     jis: {
         unit: 46,
+        full: true,
         rows: [
             [{ c: 'Esc', l: 'Esc' }, { gap: 1 },
                 { c: 'F1' }, { c: 'F2' }, { c: 'F3' }, { c: 'F4' }, { gap: 0.5 },
@@ -97,6 +100,34 @@ export const LAYOUTS = {
                 { c: 'Menu', l: 'Menu' }, { c: 'Ctrl', l: 'Ctrl', w: 1.25 }],
         ],
     },
+
+    // JIS-Mac (JIS 配列 + ⌘⌥⌃⇧ キーキャップ)。ボトム行は 英数 / かな を
+    // スペース両脇に配置。修飾コードは canonical (⌘=Win / ⌥=Alt)。
+    macjis: {
+        unit: 46,
+        full: true,
+        rows: [
+            [{ c: 'Esc', l: 'esc' }, { gap: 1 },
+                { c: 'F1' }, { c: 'F2' }, { c: 'F3' }, { c: 'F4' }, { gap: 0.5 },
+                { c: 'F5' }, { c: 'F6' }, { c: 'F7' }, { c: 'F8' }, { gap: 0.5 },
+                { c: 'F9' }, { c: 'F10' }, { c: 'F11' }, { c: 'F12' }],
+            [{ c: '半/全', l: '半/全' }, { c: '1' }, { c: '2' }, { c: '3' }, { c: '4' }, { c: '5' },
+                { c: '6' }, { c: '7' }, { c: '8' }, { c: '9' }, { c: '0' }, { c: '-' }, { c: '^' },
+                { c: '¥', l: '¥' }, { c: 'Backspace', l: '⌫' }],
+            [{ c: 'Tab', l: '⇥', w: 1.5 }, { c: 'Q' }, { c: 'W' }, { c: 'E' }, { c: 'R' }, { c: 'T' },
+                { c: 'Y' }, { c: 'U' }, { c: 'I' }, { c: 'O' }, { c: 'P' }, { c: '@' }, { c: '[' },
+                { c: 'Enter', l: 'return', w: 1.5, h: 2 }],
+            [{ c: 'CapsLock', l: '⇪', w: 1.5 }, { c: 'A' }, { c: 'S' }, { c: 'D' }, { c: 'F' },
+                { c: 'G' }, { c: 'H' }, { c: 'J' }, { c: 'K' }, { c: 'L' }, { c: ';' }, { c: ':' },
+                { c: ']' }],
+            [{ c: 'Shift', l: '⇧', w: 2.25 }, { c: 'Z' }, { c: 'X' }, { c: 'C' }, { c: 'V' },
+                { c: 'B' }, { c: 'N' }, { c: 'M' }, { c: ',' }, { c: '.' }, { c: '/' },
+                { c: 'Ro', l: 'ろ' }, { c: 'Shift', l: '⇧', w: 1.75 }],
+            [{ c: 'Fn', l: 'fn', w: 1.25 }, { c: 'Ctrl', l: '⌃', w: 1.25 }, { c: 'Alt', l: '⌥', w: 1.25 },
+                { c: 'Win', l: '⌘', w: 1.25 }, { c: '英数', l: '英数', w: 1.25 }, { c: 'Space', l: '', w: 2.5 },
+                { c: 'かな', l: 'かな', w: 1.25 }, { c: 'Win', l: '⌘', w: 1.25 }, { c: 'Alt', l: '⌥', w: 1.25 }],
+        ],
+    },
 };
 
 const ALIAS = {
@@ -112,6 +143,21 @@ const ALIAS = {
     space: 'Space', spacebar: 'Space', spc: 'Space',
     caps: 'CapsLock', capslock: 'CapsLock',
     menu: 'Menu', apps: 'Menu',
+    up: 'Up', arrowup: 'Up', '↑': 'Up',
+    down: 'Down', arrowdown: 'Down', '↓': 'Down',
+    left: 'Left', arrowleft: 'Left', '←': 'Left',
+    right: 'Right', arrowright: 'Right', '→': 'Right',
+};
+
+// テンキー名 (numlock / numadd など) の正規化
+const NUMPAD_NAMED = {
+    numlock: 'NumLock',
+    numadd: 'NumAdd', numplus: 'NumAdd',
+    numsub: 'NumSub', numminus: 'NumSub',
+    nummul: 'NumMul', numstar: 'NumMul', numtimes: 'NumMul',
+    numdiv: 'NumDiv', numslash: 'NumDiv',
+    numdot: 'NumDot', numperiod: 'NumDot', numdecimal: 'NumDot',
+    numenter: 'NumEnter',
 };
 
 /** キー名を正規コードへ正規化 (別名・大小・F キー対応) */
@@ -122,6 +168,9 @@ export function canonKey(token) {
     if (ALIAS[low]) return ALIAS[low];
     if (/^[a-z]$/.test(low)) return low.toUpperCase();
     if (/^f([1-9]|1[0-2])$/.test(low)) return 'F' + low.slice(1);
+    if (NUMPAD_NAMED[low]) return NUMPAD_NAMED[low];
+    const mnum = low.match(/^(?:num|numpad|kp|np)([0-9])$/);
+    if (mnum) return 'Num' + mnum[1];
     return t;
 }
 
@@ -198,9 +247,34 @@ export function computeKeys(data) {
         }
         if (x > maxRight) maxRight = x;
     });
+
+    let contentRight = maxRight;
+    if (layout.full) {
+        const G = 0.5 * U;
+        // 矢印キークラスタ (逆 T)。row4=↑, row5=←↓→
+        const aX = maxRight + G;
+        keys.push({ code: 'Up', label: '↑', x: aX + U, y: top + 4 * U, w: U, h: U });
+        keys.push({ code: 'Left', label: '←', x: aX, y: top + 5 * U, w: U, h: U });
+        keys.push({ code: 'Down', label: '↓', x: aX + U, y: top + 5 * U, w: U, h: U });
+        keys.push({ code: 'Right', label: '→', x: aX + 2 * U, y: top + 5 * U, w: U, h: U });
+        contentRight = Math.max(contentRight, aX + 3 * U);
+
+        // テンキー (4 列 × row1〜5)。+ と Enter は h:2
+        const nX = aX + 3 * U + G;
+        const np = (c, r, code, label, w = 1, h = 1) => keys.push({
+            code, label, x: nX + c * U, y: top + r * U, w: w * U, h: h * U,
+        });
+        np(0, 1, 'NumLock', 'Num'); np(1, 1, 'NumDiv', '/'); np(2, 1, 'NumMul', '*'); np(3, 1, 'NumSub', '-');
+        np(0, 2, 'Num7', '7'); np(1, 2, 'Num8', '8'); np(2, 2, 'Num9', '9'); np(3, 2, 'NumAdd', '+', 1, 2);
+        np(0, 3, 'Num4', '4'); np(1, 3, 'Num5', '5'); np(2, 3, 'Num6', '6');
+        np(0, 4, 'Num1', '1'); np(1, 4, 'Num2', '2'); np(2, 4, 'Num3', '3'); np(3, 4, 'NumEnter', 'Enter', 1, 2);
+        np(0, 5, 'Num0', '0', 2); np(2, 5, 'NumDot', '.');
+        contentRight = Math.max(contentRight, nX + 4 * U);
+    }
+
     return {
         keys,
-        width: maxRight + PAD,
+        width: contentRight + PAD,
         height: top + layout.rows.length * U + PAD,
     };
 }

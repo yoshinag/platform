@@ -16,7 +16,7 @@
         <a href="../index.html">アプリトップへ戻る</a>
     </div>
     <h1>キーボードショートカット図 生成</h1>
-    <p class="lead">キーボード（US / Mac / JIS）上に押すキーや操作手順を図示します。盤面クリックで <code>keymap</code> 記法（Mermaid 外部ダイアグラム）が自動生成される双方向エディタです。</p>
+    <p class="lead">キーボード（US / Mac / JIS / JIS-Mac、矢印・テンキー付き）上に押すキーや操作手順を図示します。盤面クリックで <code>keymap</code> 記法（Mermaid 外部ダイアグラム）が自動生成される双方向エディタです。</p>
 
     <details>
         <summary>使い方</summary>
@@ -46,6 +46,7 @@
                         <option value="us">US</option>
                         <option value="mac">Mac (US)</option>
                         <option value="jis">JIS (日本語)</option>
+                        <option value="macjis">JIS-Mac</option>
                     </select>
                 </label>
                 <label class="caption-label">図題
@@ -67,6 +68,9 @@
                             <option value="chord">手順（VSCode 全保存）</option>
                             <option value="mac">Mac スポットライト（⌘Space）</option>
                             <option value="jis">JIS 変換</option>
+                            <option value="macjis">JIS-Mac（⌘かな）</option>
+                            <option value="arrows">カーソル移動（矢印）</option>
+                            <option value="numpad">テンキー（Num 5）</option>
                             <option value="empty">空</option>
                         </select>
                     </label>

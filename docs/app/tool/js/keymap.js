@@ -32,6 +32,12 @@ const SAMPLES = {
         'keymap\n  layout: mac\n  highlight: Cmd Space\n  caption: "Spotlight 検索 (macOS)"',
     jis:
         'keymap\n  layout: jis\n  highlight: 変換\n  caption: "JIS: 変換キー"',
+    macjis:
+        'keymap\n  layout: macjis\n  highlight: Cmd かな\n  caption: "JIS-Mac: かな入力切替"',
+    arrows:
+        'keymap\n  layout: us\n  highlight: Up Down Left Right\n  caption: "カーソル移動"',
+    numpad:
+        'keymap\n  layout: us\n  highlight: Num5\n  label: Num5 "中央"\n  caption: "テンキー"',
     empty:
         'keymap\n  layout: us',
 };
@@ -177,13 +183,23 @@ function svgDocString() {
     return '<?xml version="1.0" encoding="UTF-8"?>\n' + s;
 }
 
-/** 現在のキーバインドからファイル名（拡張子なし）を作る。例: Ctrl+C / Ctrl+K_Ctrl+S */
+/** キーコードを配列に応じた表示名へ（Mac 系は Command→Cmd / Option→Opt） */
+function displayName(token) {
+    const cc = canonKey(token);
+    if (state.layout === 'mac' || state.layout === 'macjis') {
+        if (cc === 'Win') return 'Cmd';
+        if (cc === 'Alt') return 'Opt';
+    }
+    return cc;
+}
+
+/** 現在のキーバインドからファイル名（拡張子なし）を作る。例: Ctrl+C / Cmd+Space / Ctrl+K_Ctrl+S */
 function comboName() {
     const combos = [];
     for (const steps of (state.chords || [])) {
-        combos.push(steps.map((tokens) => tokens.join('+')).join('_'));
+        combos.push(steps.map((tokens) => tokens.map(displayName).join('+')).join('_'));
     }
-    if ((state.highlights || []).length) combos.push(state.highlights.join('+'));
+    if ((state.highlights || []).length) combos.push(state.highlights.map(displayName).join('+'));
     const name = combos.join('_')
         .replace(/[\\/:*?"<>|\s]+/g, '-')
         .replace(/-{2,}/g, '-')
