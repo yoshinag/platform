@@ -418,7 +418,7 @@ export function renderKeymap(data) {
 
     // 連続タイピング: コード→点灯時間枠（全体に対する割合）
     const seq = data.typeSeq || [];
-    const sleep = Math.max(40, data.sleep || 350);
+    const sleep = Math.max(40, data.sleep || 1000);
     const animTotal = (seq.length * sleep) / 1000; // 秒
     const animMap = new Map();
     seq.forEach((tokens, i) => {

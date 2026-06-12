@@ -9,10 +9,10 @@
     <meta name="description" content="US / JIS / Mac 配列のキーボード上に押すキーや操作手順を図示するツール。Mermaid 外部ダイアグラム（keymap 記法）。実際のキー入力と連動し、複数色・凡例・テンキー・矢印に対応、PNG / SVG / 共有 URL で出力できます。">
     <meta name="keywords" content="キーボードショートカット, ショートカットキー 図, ショートカット 図解, キーマップ, keymap, Mermaid, 外部ダイアグラム, US配列, JIS配列, Mac, テンキー, 矢印キー, ショートカット 作成, ショートカット 一覧, SVG, PNG, 共有">
     <link rel="stylesheet" href="css/keymap.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+    <!-- オーバーレイ（アンカー）広告: client は push 側で指定（?client= 併用は二重設定エラーになる） -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
             crossorigin="anonymous"></script>
     <script>
-        // オーバーレイ（アンカー）広告を有効化
         (adsbygoogle = window.adsbygoogle || []).push({
             google_ad_client: 'ca-pub-1932463298924191',
             enable_page_level_ads: true,
@@ -151,7 +151,7 @@
             <tr><th>キー</th><th>意味</th><th>例</th></tr>
             </thead>
             <tbody>
-            <tr><td><code>layout</code></td><td>配列（us / mac / jis）</td><td><code>layout: mac</code></td></tr>
+            <tr><td><code>layout</code></td><td>配列（jis / macjis / us / mac）</td><td><code>layout: mac</code></td></tr>
             <tr><td><code>highlight</code></td><td>押すキーを強調（空白 / + 区切り）。<code>highlight2〜4</code> で色分け</td><td><code>highlight: Ctrl Shift 4</code></td></tr>
             <tr><td><code>legend</code></td><td>色グループの凡例（<code>/</code> 区切りで 1〜4）</td><td><code>legend: コピー / ペースト</code></td></tr>
             <tr><td><code>compact</code></td><td>テンキー/矢印を隠す</td><td><code>compact: true</code></td></tr>

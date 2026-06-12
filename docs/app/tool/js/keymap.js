@@ -274,7 +274,7 @@ previewBox.addEventListener('click', (ev) => {
     if (isLiveMode()) return;
     const pt = svgCoords(ev);
     if (!pt) return;
-    const hit = hitTest({ layout: state.layout, caption: state.caption }, pt.x, pt.y);
+    const hit = hitTest({ layout: state.layout, caption: state.caption, compact: state.compact }, pt.x, pt.y);
     if (!hit) return;
 
     if (mode === 'highlight') {
@@ -439,6 +439,10 @@ function comboName() {
     const combos = [];
     for (const steps of (state.chords || [])) {
         combos.push(steps.map((tokens) => tokens.map(displayName).join('+')).join('_'));
+    }
+    const typeSteps = (state.typeSeq || []).filter((s) => s.length); // ポーズは名前に含めない
+    if (typeSteps.length) {
+        combos.push(typeSteps.map((tokens) => tokens.map(displayName).join('+')).join('_'));
     }
     const hg = (state.hgroups || []).find((g) => g && g.length);
     if (hg) combos.push(hg.map(displayName).join('+'));
