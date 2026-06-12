@@ -18,6 +18,16 @@
     <h1>キーボードショートカット図 生成</h1>
     <p class="lead">キーボード（US / Mac / JIS / JIS-Mac、矢印・テンキー付き）上に押すキーや操作手順を図示します。盤面クリックで <code>keymap</code> 記法（Mermaid 外部ダイアグラム）が自動生成される双方向エディタです。</p>
 
+    <div class="preview-area">
+        <div class="preview-box" id="previewBox">
+            <p class="placeholder">キーをクリックするか記法を入力すると、ここに図が表示されます。</p>
+        </div>
+        <div class="download-buttons">
+            <button type="button" id="downloadPngBtn" disabled>PNG ダウンロード</button>
+            <button type="button" id="downloadSvgBtn" disabled>SVG ダウンロード</button>
+        </div>
+    </div>
+
     <details>
         <summary>使い方</summary>
         <ol>
@@ -77,16 +87,6 @@
                 </div>
                 <textarea id="codeInput" rows="7" spellcheck="false"></textarea>
                 <div class="input-meta"><span id="errorMessage" class="error" hidden></span></div>
-            </div>
-        </div>
-
-        <div class="preview-area">
-            <div class="preview-box" id="previewBox">
-                <p class="placeholder">キーをクリックするか記法を入力すると、ここに図が表示されます。</p>
-            </div>
-            <div class="download-buttons">
-                <button type="button" id="downloadPngBtn" disabled>PNG ダウンロード</button>
-                <button type="button" id="downloadSvgBtn" disabled>SVG ダウンロード</button>
             </div>
         </div>
     </div>
