@@ -218,9 +218,9 @@ export function parseKeymapDsl(text) {
                 if (/^(auto|light|dark)$/i.test(val)) out.theme = val.toLowerCase();
                 break;
             case 'type': {
-                // 連続タイピング: 空白区切りの各ステップ（key または key+key）
-                out.typeSeq = val.split(/\s+/).map((s) => s.split('+').filter(Boolean))
-                    .filter((arr) => arr.length);
+                // 連続タイピング: 空白区切りの各ステップ（key / key+key / _=ポーズ）
+                out.typeSeq = val.split(/\s+/).filter(Boolean)
+                    .map((s) => (s === '_' ? [] : s.split('+').filter(Boolean)));
                 break;
             }
             case 'sleep':
@@ -548,7 +548,7 @@ export function serializeKeymap(state) {
         lines.push('  chord: ' + steps.map((s) => s.join('+')).join(' -> '));
     }
     if (state.typeSeq && state.typeSeq.length) {
-        lines.push('  type: ' + state.typeSeq.map((s) => s.join('+')).join(' '));
+        lines.push('  type: ' + state.typeSeq.map((s) => (s.length ? s.join('+') : '_')).join(' '));
         if (state.sleep) lines.push('  sleep: ' + state.sleep);
     }
     for (const lb of (state.labels || [])) {

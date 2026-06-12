@@ -28,6 +28,9 @@ const copySvgBtn = document.getElementById('copySvgBtn');
 const shareBtn = document.getElementById('shareBtn');
 const themeSelect = document.getElementById('themeSelect');
 const toTypeBtn = document.getElementById('toTypeBtn');
+const frameBtn = document.getElementById('frameBtn');
+const memClearBtn = document.getElementById('memClearBtn');
+const sleepInput = document.getElementById('sleepInput');
 
 const SAMPLES = {
     copy:
@@ -91,6 +94,7 @@ function syncControls() {
     layoutSelect.value = state.layout || 'us';
     compactChk.checked = !!state.compact;
     themeSelect.value = state.theme || 'auto';
+    if (state.sleep) sleepInput.value = state.sleep;
     [...groupChips.children].forEach((b, i) => b.classList.toggle('active', i === activeGroup));
     legendInput.value = (state.legends && state.legends[activeGroup]) || '';
 }
@@ -323,6 +327,41 @@ clearBtn.addEventListener('click', () => {
     chordFresh = true;
     applyState();
     setStatus('ハイライト・手順・ラベル・凡例を解除しました。');
+});
+
+// アニメを手動でコマ撮り: いま強調しているキー集合を 1 コマ（type ステップ）として追加
+function currentHighlightStep() {
+    const seen = new Set();
+    const out = [];
+    for (const g of state.hgroups) {
+        for (const tok of g) {
+            const cc = canonKey(tok);
+            if (cc && !seen.has(cc)) { seen.add(cc); out.push(tok); }
+        }
+    }
+    return out;
+}
+
+frameBtn.addEventListener('click', () => {
+    const step = currentHighlightStep();
+    state.typeSeq = state.typeSeq || [];
+    state.typeSeq.push(step);
+    if (!state.sleep) state.sleep = Math.max(40, parseInt(sleepInput.value, 10) || 400);
+    applyState();
+    setStatus(step.length
+        ? `コマ ${state.typeSeq.length}（${step.map(displayName).join('+')}）を追加。「記憶クリア」→次のキーへ。`
+        : `ポーズ（空コマ）${state.typeSeq.length} を追加。`);
+});
+
+memClearBtn.addEventListener('click', () => {
+    state.hgroups = [[], [], [], []];
+    applyState();
+    setStatus('記憶（現在のコマ）をクリア。次のキーを押してください。');
+});
+
+sleepInput.addEventListener('input', () => {
+    state.sleep = Math.max(40, parseInt(sleepInput.value, 10) || 400);
+    if (state.typeSeq && state.typeSeq.length) applyState();
 });
 
 // 記録した手順（chord）→ タイピングアニメ（type + sleep）へ変換
