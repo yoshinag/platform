@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- Google Analytics -->
+    <script src="../js/common/analytics.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>キーボードショートカット図 生成（Mermaid プラグイン）</title>
+    <link rel="stylesheet" href="css/keymap.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1932463298924191"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <div class="navigation-links">
+        <a href="../index.html">アプリトップへ戻る</a>
+    </div>
+    <h1>キーボードショートカット図 生成</h1>
+    <p class="lead">US 配列のキーボード上に押すキーや操作手順を図示します。盤面クリックで <code>keymap</code> 記法（Mermaid 外部ダイアグラム）が自動生成される双方向エディタです。</p>
+
+    <details>
+        <summary>使い方</summary>
+        <ol>
+            <li><strong>ハイライト</strong>モードでキーをクリックすると強調の ON / OFF。</li>
+            <li><strong>ラベル</strong>モードでキーをクリックして注釈文字を入力（空で削除）。</li>
+            <li>手順（チョード）は記法で <code>chord: Ctrl+K -&gt; Ctrl+S</code> と書くと番号バッジ付きで表示。</li>
+            <li>キー名は <code>Ctrl</code> / <code>Shift</code> / <code>Alt</code> / <code>Win</code> / <code>Enter</code> / <code>Esc</code> / <code>A</code>–<code>Z</code> / <code>F1</code>–<code>F12</code> など。別名（cmd, opt, control…）も可。</li>
+            <li>PNG / SVG でダウンロードできます。処理はすべてブラウザ上で完結します。</li>
+        </ol>
+    </details>
+
+    <div class="editor">
+        <div class="edit-pane">
+            <div class="toolbar">
+                <span class="tb-label">モード</span>
+                <div class="mode-group" id="modeGroup">
+                    <button type="button" class="mode-btn active" data-mode="highlight">ハイライト</button>
+                    <button type="button" class="mode-btn" data-mode="label">ラベル</button>
+                </div>
+                <button type="button" class="ghost-btn" id="clearBtn">すべて解除</button>
+            </div>
+
+            <div class="pos-controls">
+                <label class="caption-label">図題
+                    <input type="text" id="captionInput" placeholder="（任意）">
+                </label>
+            </div>
+
+            <div class="status" id="statusMsg"></div>
+
+            <div class="input-area">
+                <div class="input-head">
+                    <label for="codeInput" class="input-label">keymap 記法（テキスト編集可）</label>
+                    <label class="sample-label">
+                        サンプル
+                        <select id="sampleSelect">
+                            <option value="">選択…</option>
+                            <option value="copy" selected>コピー（Ctrl+C）</option>
+                            <option value="screenshot">範囲スクショ</option>
+                            <option value="chord">手順（VSCode 全保存）</option>
+                            <option value="empty">空</option>
+                        </select>
+                    </label>
+                </div>
+                <textarea id="codeInput" rows="7" spellcheck="false"></textarea>
+                <div class="input-meta"><span id="errorMessage" class="error" hidden></span></div>
+            </div>
+        </div>
+
+        <div class="preview-area">
+            <div class="preview-box" id="previewBox">
+                <p class="placeholder">キーをクリックするか記法を入力すると、ここに図が表示されます。</p>
+            </div>
+            <div class="download-buttons">
+                <button type="button" id="downloadPngBtn" disabled>PNG ダウンロード</button>
+                <button type="button" id="downloadSvgBtn" disabled>SVG ダウンロード</button>
+            </div>
+        </div>
+    </div>
+
+    <details>
+        <summary>記法リファレンス</summary>
+        <table class="ref-table">
+            <thead>
+            <tr><th>キー</th><th>意味</th><th>例</th></tr>
+            </thead>
+            <tbody>
+            <tr><td><code>layout</code></td><td>配列（現状 us のみ）</td><td><code>layout: us</code></td></tr>
+            <tr><td><code>highlight</code></td><td>押すキーを強調（空白 / + 区切り）</td><td><code>highlight: Ctrl Shift 4</code></td></tr>
+            <tr><td><code>chord</code></td><td>順に押す操作。手順番号バッジ付き</td><td><code>chord: Ctrl+K -&gt; Ctrl+S</code></td></tr>
+            <tr><td><code>label</code></td><td>キーへの注釈</td><td><code>label: 4 "範囲指定"</code></td></tr>
+            <tr><td><code>caption</code></td><td>図のキャプション</td><td><code>caption: "保存"</code></td></tr>
+            </tbody>
+        </table>
+        <p class="note">Mermaid v10 以降の <code>registerExternalDiagrams()</code> で登録された外部ダイアグラムです。プラグイン本体は <code>js/mermaid_keymap.js</code>、<code>shogiboard</code> など他の Mermaid 図と同居できます。</p>
+    </details>
+</div>
+
+<script type="module" src="js/keymap.js"></script>
+</body>
+</html>
