@@ -4,17 +4,16 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    background-color: #22372b;
-    background-image: linear-gradient(160deg, #2a4234 0%, #1c2f24 100%);
+    background: linear-gradient(180deg, #7A98A9 0%, #68889C 100%);
     background-attachment: fixed;
     margin: 0;
 }
 
 .container {
-    background-color: white;
+    background-color: #ffffff;
     padding: 24px;
     border-radius: 8px;
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 16px 40px rgba(0, 0, 0, 0.18);
     max-width: 1120px;
     width: 94%;
 }
@@ -38,7 +37,7 @@ h1 {
 }
 
 .navigation-links a {
-    color: #007aff;
+    color: #E6781E;
     text-decoration: none;
 }
 
@@ -112,11 +111,11 @@ details ol {
 }
 
 .mode-btn:hover:not(.active) {
-    background: #eaf3ff;
+    background: #fbeede;
 }
 
 .mode-btn.active {
-    background: #007aff;
+    background: #E6781E;
     color: #fff;
 }
 
@@ -186,7 +185,7 @@ details ol {
 .status {
     min-height: 1.3em;
     font-size: 0.82em;
-    color: #007aff;
+    color: #E6781E;
     margin-bottom: 8px;
 }
 
@@ -238,7 +237,7 @@ textarea {
 
 textarea:focus {
     outline: none;
-    border-color: #007aff;
+    border-color: #E6781E;
 }
 
 .input-meta {
@@ -311,14 +310,14 @@ button {
     cursor: pointer;
     border: none;
     border-radius: 6px;
-    background-color: #007aff;
+    background-color: #E6781E;
     color: white;
     font-size: 0.9em;
     transition: background-color 0.2s;
 }
 
 #downloadPngBtn:hover:not(:disabled) {
-    background-color: #005bbf;
+    background-color: #D26910;
 }
 
 button:disabled {
@@ -327,11 +326,11 @@ button:disabled {
 }
 
 #downloadSvgBtn {
-    background-color: #34c759;
+    background-color: #10B981;
 }
 
 #downloadSvgBtn:hover:not(:disabled) {
-    background-color: #28a745;
+    background-color: #0E9F71;
 }
 
 .ref-table {
