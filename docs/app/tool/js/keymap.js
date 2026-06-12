@@ -50,9 +50,29 @@ const SAMPLES = {
     numpad:
         'keymap\n  layout: us\n  highlight: Num5\n  label: Num5 "中央"\n  caption: "テンキー"',
     typing:
-        'keymap\n  layout: us\n  sleep: 250\n  chord: H\n  chord: e\n  chord: l\n  chord: l\n  chord: o\n  caption: "Hello とタイピング（アニメ）"',
+        'keymap\n  layout: us\n  sleep: 250\n  chord: H\n  chord: e\n  chord: l\n  chord: l\n  chord: o\n  sleep: 1000\n  caption: "Hello とタイピング（アニメ）"',
     scene:
-        'keymap\n  caption: "コピー&ペースト"\n  layout: us\n  chord: Win+C "コピー"\n  sleep: 1000\n  chord: Win+V "ペースト"',
+        'keymap\n  caption: "コピー&ペースト"\n  layout: us\n  chord: Win+C "コピー"\n  sleep: 1000\n  chord: Win+V "ペースト"\n  sleep: 1000',
+    emacs:
+        'keymap\n  caption: "Emacs 基本操作（移動 / 単語移動 / undo・redo / 保存）"\n  layout: us\n'
+        + '  chord: Ctrl+P "↑ 前の行"\n  chord: Ctrl+N "↓ 次の行"\n  chord: Ctrl+B "← 戻る"\n  chord: Ctrl+F "→ 進む"\n'
+        + '  sleep: 800\n'
+        + '  chord: Alt+B "← 単語戻る"\n  chord: Alt+F "→ 単語進む"\n'
+        + '  sleep: 800\n'
+        + '  chord: Ctrl+/ "undo"\n  chord: Ctrl+G "中断"\n  chord: Ctrl+/ "redo"\n'
+        + '  sleep: 800\n'
+        + '  chord: Ctrl+X "C-x"\n  chord: Ctrl+S "保存"\n'
+        + '  sleep: 1000',
+    vi:
+        'keymap\n  caption: "Vim 基本操作（hjkl / 単語移動 / undo・redo / :wq）"\n  layout: us\n'
+        + '  chord: H "← 左へ"\n  chord: J "↓ 下へ"\n  chord: K "↑ 上へ"\n  chord: L "→ 右へ"\n'
+        + '  sleep: 800\n'
+        + '  chord: B "← 単語戻る"\n  chord: W "→ 単語進む"\n'
+        + '  sleep: 800\n'
+        + '  chord: U "undo"\n  chord: Ctrl+R "redo"\n'
+        + '  sleep: 800\n'
+        + '  chord: Esc "ノーマルモードへ"\n  chord: Shift+; ":"\n  chord: W "write"\n  chord: Q "quit"\n  chord: Enter "実行"\n'
+        + '  sleep: 1000',
     groups:
         'keymap\n  layout: us\n  highlight: Ctrl C\n  highlight2: Ctrl V\n  highlight3: Ctrl X\n  legend: コピー / ペースト / 切り取り\n  caption: "編集ショートカット"',
     compact:

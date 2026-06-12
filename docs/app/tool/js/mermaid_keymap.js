@@ -229,9 +229,16 @@ export function parseKeymapDsl(text) {
             }
             case 'chord': {
                 // 各ステップは keys + 任意の "コメント"（最後のキーへの注釈。
-                // アニメではそのコマの点灯中だけ表示、静的バッジでは常時表示）
+                // アニメではそのコマの点灯中だけ表示、静的バッジでは常時表示）。
+                // コメント内の -> や → を区切りと誤認しないよう、引用符内を退避してから分割する
+                const quotes = [];
+                const masked = val.replace(/"[^"]*"/g, (m) => {
+                    quotes.push(m);
+                    return '\u0000' + (quotes.length - 1) + '\u0000';
+                });
                 const steps = [];
-                for (const seg of val.split(/->|→/)) {
+                for (const rawSeg of masked.split(/->|→/)) {
+                    const seg = rawSeg.replace(/\u0000(\d+)\u0000/g, (_, i) => quotes[+i]);
                     const nm = seg.match(/"([^"]*)"/);
                     const keys = seg.replace(/"[^"]*"/, '').split(/[\s+]+/).filter(Boolean);
                     if (!keys.length) continue;
