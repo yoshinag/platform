@@ -122,9 +122,34 @@
     font-size: 0.85rem;
     text-align: center;
   }
+  /* Official-site announcement banner */
+  .site-move-banner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 4px 14px;
+    padding: 10px 20px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+  }
+  .site-move-banner:hover { filter: brightness(0.94); text-decoration: none; }
+  .site-move-banner strong { font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+  .site-move-banner__cta { white-space: nowrap; opacity: 0.95; }
 </style>
 </head>
 <body>
+
+<a class="site-move-banner" href="https://foo-tec.com/monoflick" rel="noopener">
+  <span class="site-move-banner__text">✨ MonoFlick 公式サイトを公開しました — <strong>foo-tec.com/monoflick</strong></span>
+  <span class="site-move-banner__cta">公式サイトはこちら →</span>
+</a>
+
 <div class="wrap">
 
 <a class="back" href="./index.html">&larr; MonoFlick トップへ</a>
